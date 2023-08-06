@@ -1,0 +1,29 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --primary: red;
+  --primary-contrast: white;
+  --secondary-theme: blue;
+}
+
+html {
+  box-sizing: border-box;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: inherit;
+}
+
+label {
+  @apply text-xs font-bold;
+}
+
+input,
+select,
+textarea {
+  @apply border-2 rounded-lg px-2 py-1 text-xs;
+}
