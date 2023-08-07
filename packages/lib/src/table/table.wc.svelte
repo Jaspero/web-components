@@ -6,7 +6,6 @@
 />
 
 <script lang="ts">
-  import Button from '../Button.svelte';
   import { onMount } from 'svelte';
   import type { BPMNService } from '../types/bpmn.service';
   import type { BPMNVersion } from '../types/bpmn-version.interface';
@@ -92,8 +91,19 @@
 
   <div id="layout" class="flex flex-col w-full h-full">
     <nav class="flex justify-between bg-white p-4 border-b-2">
-      <Button variant="outlined" href={baseLink}>Back</Button>
-      <Button on:click={save} loading={saveLoading}>Save</Button>
+      <a class="relative inline-block rounded cursor-pointer font-normal no-underline select-none font-bold overflow-hidden border-2 border-[#F9D8CD] hover:border-[#E66439] text-[#E66439] duration-200" href={baseLink}>
+        Back
+      </a>
+      <button class="relative inline-block rounded cursor-pointer font-normal no-underline select-none font-bold overflow-hidden bg-[#EA7B57] hover:bg-[#E66439] text-white duration-200" on:click={save}>
+        {#if saveLoading}
+          <div class="w-full h-full text-white flex bg-orange justify-center items-center gap-2 px-4 py-2">
+            <div class="w-6 h-6 border-4 border-l-white border-white/50 rounded-full animate-spin" />
+            Loading...
+          </div>
+        {:else}
+          Save
+        {/if}
+      </button>
     </nav>
 
     <div class="flex-1 flex">
