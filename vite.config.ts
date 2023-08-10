@@ -1,8 +1,7 @@
-import { defineConfig } from 'vite';
-import { svelte } from '@sveltejs/vite-plugin-svelte';
-import { transform } from 'esbuild';
-import { viteStaticCopy } from 'vite-plugin-static-copy'
-import pkg from './package.json';
+import {defineConfig} from 'vite';
+import {svelte} from '@sveltejs/vite-plugin-svelte';
+import {transform} from 'esbuild';
+import {viteStaticCopy} from 'vite-plugin-static-copy';
 
 const bundleComponents = false;
 
@@ -10,27 +9,18 @@ const bundleComponents = false;
 export default defineConfig({
   root: './packages/lib/',
   build: {
-    outDir: '../../dist/lib',
+    outDir: '../../dist',
     emptyOutDir: true,
     lib: {
-      entry: './index.ts',
-      formats: bundleComponents ? (['es', 'esm', 'umd'] as any) : ['es'],
-      name: pkg.name.replace(/-./g, (char) => char[1].toUpperCase()),
-      fileName: (format) =>
-        ({
-          es: `${pkg.name}.js`,
-          esm: `${pkg.name}.min.js`,
-          umd: `${pkg.name}.umd.js`
-        })[format]
+      entry: ['./index.ts', './src/alert/render-alert.ts'],
+      formats: ['es'],
     },
     rollupOptions: {
-      output: bundleComponents
-        ? {}
-        : {
-            inlineDynamicImports: false,
-            chunkFileNames: '[name].js',
-            manualChunks: { svelte: ['svelte'] }
-          }
+      output: {
+        inlineDynamicImports: false,
+        chunkFileNames: '[name].js',
+        manualChunks: {svelte: ['svelte']}
+      }
     }
   },
   plugins: [
@@ -47,7 +37,7 @@ export default defineConfig({
       targets: [
         {
           src: './src/types/',
-          dest: '../../dist/lib/'
+          dest: './'
         }
       ]
     }),
@@ -62,12 +52,10 @@ function minifyEs() {
     renderChunk: {
       order: 'post' as const,
       async handler(code, chunk, outputOptions) {
-        if (
-          outputOptions.format === 'es' &&
-          (!bundleComponents || chunk.fileName.endsWith('.min.js'))
-        ) {
-          return await transform(code, { minify: true });
+        if (outputOptions.format === 'es') {
+          return await transform(code, {minify: true});
         }
+
         return code;
       }
     }

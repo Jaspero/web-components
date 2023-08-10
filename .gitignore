@@ -23,3 +23,4 @@ TODO
 *.njsproj
 *.sln
 *.sw?
+packages/demo/src/env-config.ts

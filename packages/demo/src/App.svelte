@@ -1,6 +1,8 @@
 <script lang="ts">
   import { onMount } from 'svelte';
-  import '../../../dist/lib/async-table.wc';
+  import '../../../dist/alert.wc.js';
+  import '../../../dist/async-table.wc.js';
+  import {renderAlert} from '../../../dist/render-alert.js';
   import {FirebaseTableService} from './firebase-table.service';
 
   let el: HTMLDivElement;
@@ -27,6 +29,8 @@
     ];
 
     el.appendChild(instanceEl);
+
+    renderAlert({title: 'bla'})
   });
 </script>
 

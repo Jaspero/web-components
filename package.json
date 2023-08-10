@@ -38,7 +38,7 @@
   },
   "license": "MIT",
   "files": [
-    "dist/lib"
+    "dist"
   ],
   "repository": {
     "type": "git",

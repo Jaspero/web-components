@@ -8,9 +8,9 @@
 <script lang="ts">
   import { createEventDispatcher, onMount } from 'svelte';
   import {get} from '../utils/json-pointer';
-  import type {TableHeader} from '../table/table-header.interface';
-  import type {TableSort} from '../table/table-sort.interface';
-  import type {TableService} from './table.service';
+  import type {TableHeader} from '../types/table-header.interface';
+  import type {TableSort} from '../types/table-sort.interface';
+  import type {TableService} from '../types/table.service';
 
   export let headers: TableHeader[] = [];
   export let sort: TableSort;
