@@ -6,14 +6,19 @@
 />
 
 <script lang="ts">
-  import { createEventDispatcher } from 'svelte';
+  import { createEventDispatcher, onMount } from 'svelte';
   import {get} from '../utils/json-pointer';
   import type {TableHeader} from '../table/table-header.interface';
   import type {TableSort} from '../table/table-sort.interface';
+  import type {TableService} from './table.service';
 
   export let headers: TableHeader[] = [];
-  export let rows: any[] = [];
   export let sort: TableSort;
+  export let service: TableService;
+
+  let loading = true;
+  let hasMore = false;
+  let rows: any[] = [];
 
   const dispatch = createEventDispatcher();
 
@@ -39,54 +44,37 @@
     return value;
   }
 
-  function adjustSort(header: TableHeader) {
-    const {sortable, sortMethod} = header;
+  async function adjustSort(header: TableHeader) {
+    const {sortable} = header;
 
     if (!sortable) {
       return;
     }
 
-    const direction = sort?.key === header.key ? sort.direction === 'asc' ? 'desc' : 'asc' : 'asc';
-
-    if (sortMethod) {
-      rows = [...rows.sort((a, b) => sortMethod(direction, a, b))];
-      return;
-    }
-
-    rows = [...rows.sort((a, b) => {
-      let aValue: any;
-      let bValue: any;
-
-      try {
-        aValue = get(a, header.key);
-      } catch {
-        return direction === 'asc' ? 1 : -1
-      }
-
-      try {
-        bValue = get(b, header.key);
-      } catch {
-        return direction === 'asc' ? -1 : 1
-      }
-
-      if (aValue === bValue) {
-        return 0;
-      }
-
-      switch (typeof aValue) {
-        case 'number':
-          return direction === 'asc' ? aValue - bValue : bValue - aValue;
-        case 'string':
-          return direction === 'asc' ? aValue.localeCompare(bValue) : bValue.localeCompare(aValue);
-        default:
-          return 0;
-      }
-    })];
+    loading = true;
 
     sort = {
       key: header.key,
-      direction
+      direction: sort?.key === header.key ? sort.direction === 'asc' ? 'desc' : 'asc' : 'asc'
     };
+
+    const data = await service.get(sort);
+
+    rows = data.rows;
+    hasMore = data.hasMore;
+
+    loading = false;
+  }
+
+  async function loadMore() {
+    loading = true;
+
+    const data = await service.loadMore(sort);
+
+    rows = [...rows, ...data.rows];
+    hasMore = data.hasMore;
+    
+    loading = false;
   }
 
   function rowClick(row: any, index: number, header: TableHeader) {
@@ -96,6 +84,15 @@
       header
     });
   }
+
+  onMount(async () => {
+    const data = await service.get(sort);
+
+    rows = data.rows;
+    hasMore = data.hasMore;
+    
+    loading = false;
+  });
 </script>
 
 <div class="overflow-x-auto border">
@@ -127,6 +124,8 @@
       {/each}
     {/if}
   </table>
+
+  <button class:loading={loading} disabled={!hasMore} on:click={loadMore}>Load More</button>
 </div>
 
 <style lang="postcss">

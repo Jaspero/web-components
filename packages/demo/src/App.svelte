@@ -1,18 +1,23 @@
 <script lang="ts">
   import { onMount } from 'svelte';
-  import '../../../dist/lib/table.wc';
+  import '../../../dist/lib/async-table.wc';
+  import {FirebaseTableService} from './firebase-table.service';
 
   let el: HTMLDivElement;
 
   onMount(() => {
     // const instanceEl = document.createElement('jp-bpmn-overview');
-    const instanceEl = document.createElement('jp-table');
+    const instanceEl = document.createElement('jp-async-table');
+
+    // @ts-ignore
+    instanceEl.service = new FirebaseTableService();
+
 
     // @ts-ignore
     instanceEl.headers = [
       {
-        key: '/name',
-        label: 'Name',
+        key: '/title',
+        label: 'Title',
         sortable: true
       },
       {
@@ -20,12 +25,6 @@
         label: 'Phone Number'
       }
     ];
-
-    // @ts-ignore
-    instanceEl.rows = [
-      {name: 'Filip', phoneNumber: '123456789'},
-      {name: 'John', phoneNumber: '+111 111 111'}
-    ]
 
     el.appendChild(instanceEl);
   });

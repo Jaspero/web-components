@@ -22,9 +22,11 @@
     "@tsconfig/svelte": "5.0.0",
     "autoprefixer": "10.4.14",
     "concurrently": "8.2.0",
+    "firebase": "10.1.0",
     "postcss": "8.4.27",
     "prettier": "3.0.0",
     "prettier-plugin-svelte": "3.0.0",
+    "semantic-release": "^21.0.7",
     "svelte": "4.1.1",
     "svelte-check": "3.4.6",
     "svelte-preprocess": "5.0.4",
@@ -32,8 +34,7 @@
     "tslib": "2.6.0",
     "typescript": "5.1.6",
     "vite": "4.4.6",
-    "vite-plugin-static-copy": "0.17.0",
-    "semantic-release": "^21.0.7"
+    "vite-plugin-static-copy": "0.17.0"
   },
   "license": "MIT",
   "files": [
