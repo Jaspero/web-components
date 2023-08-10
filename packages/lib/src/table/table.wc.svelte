@@ -6,6 +6,7 @@
 />
 
 <script lang="ts">
+  import { createEventDispatcher } from 'svelte';
   import {get} from '../utils/json-pointer';
   import type {TableHeader} from './table-header.interface';
   import type {TableSort} from './table-sort.interface';
@@ -13,6 +14,8 @@
   export let headers: TableHeader[] = [];
   export let rows: any[] = [];
   export let sort: TableSort;
+
+  const dispatch = createEventDispatcher();
 
   async function handleColumn(header: TableHeader, row: any, index: number) {
     const {key, fallback, pipes} = header;
@@ -85,6 +88,14 @@
       direction
     };
   }
+
+  function rowClick(row: any, index: number, header: TableHeader) {
+    dispatch('rowClick', {
+      row,
+      index,
+      header
+    });
+  }
 </script>
 
 <div class="overflow-x-auto border">
@@ -106,7 +117,7 @@
       {#each rows as row, index}
         <tr class="odd:bg-[#F1F5F3]">
           {#each headers as header}
-            <td>
+            <td on:click={() => rowClick(row, index, header)}>
               {#await handleColumn(header, row, index) then val}
                 {@html val}
               {/await}
