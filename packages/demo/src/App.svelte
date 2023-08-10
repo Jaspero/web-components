@@ -12,7 +12,8 @@
     instanceEl.headers = [
       {
         key: '/name',
-        label: 'Name'
+        label: 'Name',
+        sortable: true
       },
       {
         key: '/phoneNumber',

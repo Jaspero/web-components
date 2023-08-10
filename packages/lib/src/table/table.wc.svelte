@@ -8,9 +8,11 @@
 <script lang="ts">
   import {get} from '../utils/json-pointer';
   import type {TableHeader} from './table-header.interface';
+  import type {TableSort} from './table-sort.interface';
 
   export let headers: TableHeader[] = [];
   export let rows: any[] = [];
+  export let sort: TableSort;
 
   async function handleColumn(header: TableHeader, row: any, index: number) {
     const {key, fallback, pipes} = header;
@@ -33,6 +35,56 @@
 
     return value;
   }
+
+  function adjustSort(header: TableHeader) {
+    const {sortable, sortMethod} = header;
+
+    if (!sortable) {
+      return;
+    }
+
+    const direction = sort?.key === header.key ? sort.direction === 'asc' ? 'desc' : 'asc' : 'asc';
+
+    if (sortMethod) {
+      rows = [...rows.sort((a, b) => sortMethod(direction, a, b))];
+      return;
+    }
+
+    rows = [...rows.sort((a, b) => {
+      let aValue: any;
+      let bValue: any;
+
+      try {
+        aValue = get(a, header.key);
+      } catch {
+        return direction === 'asc' ? 1 : -1
+      }
+
+      try {
+        bValue = get(b, header.key);
+      } catch {
+        return direction === 'asc' ? -1 : 1
+      }
+
+      if (aValue === bValue) {
+        return 0;
+      }
+
+      switch (typeof aValue) {
+        case 'number':
+          return direction === 'asc' ? aValue - bValue : bValue - aValue;
+        case 'string':
+          return direction === 'asc' ? aValue.localeCompare(bValue) : bValue.localeCompare(aValue);
+        default:
+          return 0;
+      }
+    })];
+
+    sort = {
+      key: header.key,
+      direction
+    };
+  }
 </script>
 
 <div class="overflow-x-auto border">
@@ -40,7 +92,12 @@
     {#if headers}
       <tr class="odd:bg-[#F1F5F3]">
         {#each headers as header}
-          <th>{@html header.label}</th>
+          <th class:sortable={header.sortable} on:click={() => adjustSort(header)}>
+            <span>{@html header.label}</span>
+            {#if sort?.key === header.key}
+              <span>{sort.direction === 'asc' ? '↑' : '↓'}</span>
+            {/if}
+          </th>
         {/each}
       </tr>
     {/if}
