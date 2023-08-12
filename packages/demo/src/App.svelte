@@ -2,10 +2,12 @@
   import { onMount } from 'svelte';
   import '../../../dist/alert.wc.js';
   import '../../../dist/async-table.wc.js';
-  import {renderAlert} from '../../../dist/render-alert.js';
-  import {FirebaseTableService} from './firebase-table.service';
+  import '../../../dist/input.wc.js';
+  import { renderAlert } from '../../../dist/render-alert.js';
+  import { FirebaseTableService } from './firebase-table.service';
 
   let el: HTMLDivElement;
+  let formEl: HTMLFormElement;
 
   onMount(() => {
     // const instanceEl = document.createElement('jp-bpmn-overview');
@@ -13,7 +15,6 @@
 
     // @ts-ignore
     instanceEl.service = new FirebaseTableService();
-
 
     // @ts-ignore
     instanceEl.headers = [
@@ -30,8 +31,29 @@
 
     el.appendChild(instanceEl);
 
-    renderAlert({title: 'bla'})
+    renderAlert({ title: 'bla' });
+
+    const inputEl = document.createElement('jp-input') as HTMLInputElement;
+
+    inputEl.value = 'pero';
+    inputEl.label = 'Perica';
+    inputEl.name = 'cool';
+
+    formEl.appendChild(inputEl);
   });
+
+  function submit(e) {
+    const formData = new FormData(e.target);
+    const formProps = Object.fromEntries(formData);
+
+    console.log(formProps, formData);
+  }
 </script>
 
 <div bind:this={el}></div>
+
+<form bind:this={formEl} on:submit|preventDefault={submit}>
+  <input type="text" id="pero" name="pero" />
+
+  <button type="submit">Submit</button>
+</form>
