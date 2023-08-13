@@ -16,6 +16,8 @@
 />
 
 <script lang="ts">
+	import { createEventDispatcher } from 'svelte';
+
 	export let attachedInternals: ElementInternals;
 	export let value: string = '';
 	export let label: string;
@@ -27,10 +29,15 @@
 	export let minlength: number | null = null;
 	export let maxlength: number | null = null;
 	export let pattern: string | null = null;
+	
+	export const getValue = () => value;
+ 
+	const dispatch = createEventDispatcher();
 
 	$: {
 		attachedInternals.checkValidity();
 		attachedInternals.setFormValue(value);
+		dispatch('value', { value });
 	}
 
 </script>
