@@ -3,6 +3,7 @@
   import '../../../dist/alert.wc.js';
   import '../../../dist/async-table.wc.js';
   import '../../../dist/input.wc.js';
+  import '../../../dist/quill.wc.js';
   import { renderAlert } from '../../../dist/render-alert.js';
   import { FirebaseTableService } from './firebase-table.service';
 
@@ -40,6 +41,12 @@
     inputEl.name = 'cool';
 
     formEl.appendChild(inputEl);
+
+    const quillEl = document.createElement('jp-quill') as HTMLInputElement;
+
+    quillEl.value = `<p>Blup</p>`;
+
+    formEl.appendChild(quillEl);
   });
 
   function submit(e) {
