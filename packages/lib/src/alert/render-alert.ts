@@ -1,6 +1,6 @@
 import type {AlertOptions} from '../types/alert-options.interface';
 
-export async function renderAlert(options?: AlertOptions) {
+export async function renderAlert(options?: AlertOptions, callback?: (action?: string) => void) {
 	options = {
 		duration: 5000,
 		state: 'error',
@@ -16,13 +16,17 @@ export async function renderAlert(options?: AlertOptions) {
 
 	options.host.appendChild(alertEl);
 
-	alertEl.addEventListener('close', () => {
+	function clear(action: string) {
 		options.host.removeChild(alertEl);
-	});
+
+		if (callback) {
+			callback(action);
+		}
+	}
+
+	alertEl.addEventListener('close', () => clear('close'));
 
 	if (options.duration) {
-		setTimeout(() => {
-			options.host.removeChild(alertEl);
-		}, options.duration);
+		setTimeout(() => clear('timeout'), options.duration);
 	}
 }
