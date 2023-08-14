@@ -20,9 +20,7 @@
   const dispatch = createEventDispatcher();
 </script>
 
-<svelte:window on:keydown|preventDefault={(e) => {
-    if(e.key == 'Escape' && closable) dispatch('close')
-}} />
+<svelte:window on:keydown|preventDefault={(e) => e.key === 'Escape' && closable && dispatch('close')} />
 
 <div
   class="fixed z-10 left-0 top-0 flex justify-center items-center w-screen h-screen"
