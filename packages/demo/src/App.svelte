@@ -5,6 +5,7 @@
   import '../../../dist/async-table.wc.js';
   import '../../../dist/input.wc.js';
   import '../../../dist/quill.wc.js';
+  import '../../../dist/checkbox.wc.js'
   import { renderAlert } from '../../../dist/render-alert.js';
   import { renderConfirm } from '../../../dist/render-confirm.js'
   import { FirebaseTableService } from './firebase-table.service';
@@ -46,11 +47,25 @@
 
     const quillEl = document.createElement('jp-quill') as HTMLInputElement;
 
+    
     quillEl.value = `<p>Blup</p>`;
     quillEl.name = 'quill';
 
     formEl.appendChild(quillEl);
 
+    const checkboxEl = document.createElement('jp-checkbox') as HTMLInputElement;
+
+    checkboxEl.options = [
+      {label: 'aaa', value: false},
+      {label: 'lorem aa', value: true},
+      {label: 'lorem adasda', value: true},
+      {label: 'ipsum dolorrr', value: false, disabled: true},
+    ]
+
+    checkboxEl.minSelects = 2
+
+    formEl.appendChild(checkboxEl)
+    
     renderConfirm({
       title: 'Remove campaign?', 
       // message: 'Are you sure you want to remove this campaign?'
