@@ -53,14 +53,11 @@
 
     const checkboxEl = document.createElement('jp-checkbox') as HTMLInputElement;
 
-    checkboxEl.name = 'checkboxes'
-
-    checkboxEl.value = ''
-
     checkboxEl.options = [
       {label: 'aaa', value: false},
       {label: 'lorem aa', value: true},
-      {label: 'ipsum dolorrr', value: false},
+      {label: 'lorem adasda', value: true},
+      {label: 'ipsum dolorrr', value: false, disabled: true},
     ]
 
     checkboxEl.minSelects = 2
