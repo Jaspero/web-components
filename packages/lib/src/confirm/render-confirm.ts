@@ -6,8 +6,9 @@ export async function renderConfirm(
 ) {
   options = {
     host: document.body,
-    duration: null,
-    closable: true,
+    closable: false,
+    reject: 'no',
+    accept: 'yes',
     ...(options || {})
   };
 
@@ -15,6 +16,8 @@ export async function renderConfirm(
 
   confirmEl.title = options.title || '';
   confirmEl.message = options.message || '';
+  confirmEl.reject = options.reject;
+  confirmEl.accept = options.accept;
 
   options.host.appendChild(confirmEl);
 
@@ -26,15 +29,9 @@ export async function renderConfirm(
     }
   }
 
-  ['yes', 'no'].forEach((event) => {
-    confirmEl.addEventListener(event, () => clear(event));
-  });
+  confirmEl.addEventListener('confirmation', (e) => clear(e.detail));
 
   if (options.closable) {
     confirmEl.addEventListener('close', () => clear('close'));
-  }
-
-  if (options.duration) {
-    setTimeout(() => clear('timeout'), options.duration);
   }
 }

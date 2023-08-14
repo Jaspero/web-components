@@ -52,7 +52,8 @@
 
     renderConfirm({
       title: 'Remove campaign?', 
-      message: 'Are you sure you want to remove this campaign?'
+      // message: 'Are you sure you want to remove this campaign?'
+      reject: 'rejected'
     }, (e) => console.log(e))
   });
 

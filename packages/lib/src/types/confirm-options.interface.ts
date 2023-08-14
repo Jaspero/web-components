@@ -1,11 +1,12 @@
 export interface ConfirmOptions {
 	title?: string;
 	message?: string;
-	
-	// @default true
+	// @default 'no'
+	reject: string;
+	// @default 'yes'
+	accept: string;	
+	// @default false
 	closable?: boolean;
 	// @default body
 	host?: HTMLElement;
-	// @default null
-	duration?: number | null;
 }

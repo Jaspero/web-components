@@ -12,6 +12,9 @@
   export let title = '';
   export let message = '';
 
+  export let reject = '';
+  export let accept = '';
+
   const dispatch = createEventDispatcher();
 </script>
 
@@ -24,20 +27,27 @@
     use:clickOutside
     on:click_outside={() => dispatch('close')}
   >
-    <h1 class="text-3xl mb-6">
-      {@html title}
-    </h1>
-    <p class="text-lg mb-7">
-      {@html message}
-    </p>
+    {#if title}
+      <h1 class="text-3xl mb-6">
+        {@html title}
+      </h1>
+    {/if}
+    {#if message}
+      <p class="text-lg mb-7">
+        {@html message}
+      </p>
+    {/if}
     <button
       class="bg-blue-800 w-full text-white py-3 rounded-3xl mb-2"
-      on:click={() => dispatch('no')}
+      on:click={() => dispatch('confirmation', { confirmed: false })}
     >
-      No
+      {reject}
     </button>
-    <button class="border border-blue-800 w-full py-3 rounded-3xl" on:click={() => dispatch('yes')}>
-      Yes
+    <button
+      class="border border-blue-800 w-full py-3 rounded-3xl"
+      on:click={() => dispatch('confirmation', { confirmed: true })}
+    >
+      {accept}
     </button>
   </div>
 </div>
