@@ -1,57 +1,43 @@
-<script>
-    import { clickOutside } from '../clickOutside';
+<svelte:options
+  customElement={{
+    tag: 'jp-confirm',
+    shadow: 'none'
+  }}
+/>
 
-    export let open = false;
+<script>
+  import { clickOutside } from '../clickOutside';
+  import { createEventDispatcher } from 'svelte';
+
+  export let title = '';
+  export let message = '';
+
+  const dispatch = createEventDispatcher();
 </script>
 
-{#if open}
-    <div class="overlay">
-        <div class="dialog" use:clickOutside on:click_outside={() => open = false}>
-            <div class="flex justify-between items-center gap-4 border-b p-4">
-                <h1>Confirm</h1>
-
-                <button on:click={() => open = false} class="w-6 h-6">
-                <span class="material-symbols-outlined">
-                close
-                </span>
-                </button>
-            </div>
-
-            <p class="p-4" style="max-width: 32ch;">
-                Lorem ipsum dolor sit amet, consectetur adipisicing elit.
-            </p>
-
-            <div class="flex border-t divide-x">
-                <button class="flex-1 p-4 font-bold text-blue-500" on:click={() => open = false}>Cancel</button>
-                <button class="flex-1 p-4 font-bold text-red-500">Delete it</button>
-            </div>
-        </div>
-    </div>
-{/if}
-
-<style>
-    .overlay {
-        z-index: 10;
-        position: fixed;
-        top: 0;
-        left: 0;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        width: 100vw;
-        height: 100vh;
-        background-color: rgba(0,0,0,.2);
-    }
-
-    .dialog {
-        min-width: 300px;
-        background-color: var(--fg);
-        box-shadow: 0 3px 6px rgba(0,0,0,.16);
-        border-radius: .5rem;
-    }
-
-    h1 {
-        font-size: 1.5rem;
-        font-weight: bold;
-    }
-</style>
+<div
+  class="fixed z-10 left-0 top-0 flex justify-center items-center w-screen h-screen"
+  style="background-color: rgba(0, 0, 0, 0.2)"
+>
+  <div
+    class="bg-slate-50 px-12 py-16 rounded-xl max-w-sm"
+    use:clickOutside
+    on:click_outside={() => dispatch('close')}
+  >
+    <h1 class="text-3xl mb-6">
+      {@html title}
+    </h1>
+    <p class="text-lg mb-7">
+      {@html message}
+    </p>
+    <button
+      class="bg-blue-800 w-full text-white py-3 rounded-3xl mb-2"
+      on:click={() => dispatch('no')}
+    >
+      No
+    </button>
+    <button class="border border-blue-800 w-full py-3 rounded-3xl" on:click={() => dispatch('yes')}>
+      Yes
+    </button>
+  </div>
+</div>

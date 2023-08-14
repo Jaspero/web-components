@@ -1,10 +1,12 @@
 <script lang="ts">
   import { onMount } from 'svelte';
   import '../../../dist/alert.wc.js';
+  import '../../../dist/confirm.wc.js'
   import '../../../dist/async-table.wc.js';
   import '../../../dist/input.wc.js';
   import '../../../dist/quill.wc.js';
   import { renderAlert } from '../../../dist/render-alert.js';
+  import { renderConfirm } from '../../../dist/render-confirm.js'
   import { FirebaseTableService } from './firebase-table.service';
 
   let el: HTMLDivElement;
@@ -47,6 +49,11 @@
     quillEl.value = `<p>Blup</p>`;
 
     formEl.appendChild(quillEl);
+
+    renderConfirm({
+      title: 'Remove campaign?', 
+      message: 'Are you sure you want to remove this campaign?'
+    }, (e) => console.log(e))
   });
 
   function submit(e) {
