@@ -7,4 +7,5 @@ export default () => {
 
   import('./src/form-fields/input.wc.svelte');
   import('./src/form-fields/quill.wc.svelte');
+  import('./src/form-fields/checkbox.wc.svelte');
 };

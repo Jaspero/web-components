@@ -4,6 +4,7 @@
   import '../../../dist/async-table.wc.js';
   import '../../../dist/input.wc.js';
   import '../../../dist/quill.wc.js';
+  import '../../../dist/checkbox.wc.js'
   import { renderAlert } from '../../../dist/render-alert.js';
   import { FirebaseTableService } from './firebase-table.service';
 
@@ -38,15 +39,33 @@
 
     inputEl.value = 'pero';
     inputEl.label = 'Perica';
-    inputEl.name = 'cool';
+    inputEl.name = 'input';
 
     formEl.appendChild(inputEl);
 
     const quillEl = document.createElement('jp-quill') as HTMLInputElement;
 
+    
     quillEl.value = `<p>Blup</p>`;
+    quillEl.name = 'quill';
 
     formEl.appendChild(quillEl);
+
+    const checkboxEl = document.createElement('jp-checkbox') as HTMLInputElement;
+
+    checkboxEl.name = 'checkboxes'
+
+    checkboxEl.value = ''
+
+    checkboxEl.options = [
+      {label: 'aaa', value: false},
+      {label: 'lorem aa', value: true},
+      {label: 'ipsum dolorrr', value: false},
+    ]
+
+    checkboxEl.minSelects = 2
+
+    formEl.appendChild(checkboxEl)
   });
 
   function submit(e) {
