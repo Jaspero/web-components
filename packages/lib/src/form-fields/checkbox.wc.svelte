@@ -30,6 +30,8 @@
 
   export const getValue = () => value;
 
+  const dispatch = createEventDispatcher();
+
   $: {
     if (options.filter((el) => el.value).length < minSelects) {
       attachedInternals.setValidity({ customError: true }, 'Below limit checks.');
@@ -40,12 +42,12 @@
     }
     value = JSON.stringify(options);
     attachedInternals.setFormValue(value);
-    console.log(value);
+    dispatch('value', { value });
   }
 
   onMount(() => {
     maxSelects = value.length;
-    value = JSON.parse(value)
+    value = JSON.stringify(options)
   });
 </script>
 
