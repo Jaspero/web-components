@@ -18,6 +18,7 @@ export async function renderConfirm(
   confirmEl.message = options.message || '';
   confirmEl.reject = options.reject;
   confirmEl.accept = options.accept;
+  confirmEl.closable = options.closable;
 
   options.host.appendChild(confirmEl);
 

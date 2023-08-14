@@ -15,11 +15,13 @@
   export let reject = '';
   export let accept = '';
 
+  export let closable = false;
+
   const dispatch = createEventDispatcher();
 </script>
 
 <svelte:window on:keydown|preventDefault={(e) => {
-    if(e.key == 'Escape') dispatch('close')
+    if(e.key == 'Escape' && closable) dispatch('close')
 }} />
 
 <div
@@ -29,7 +31,7 @@
   <div
     class="bg-slate-50 px-12 py-16 rounded-xl max-w-sm"
     use:clickOutside
-    on:click_outside={() => dispatch('close')}
+    on:click_outside={() => {if(closable) dispatch('close')}}
   >
     {#if title}
       <h1 class="text-3xl mb-6">
