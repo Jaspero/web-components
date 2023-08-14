@@ -18,6 +18,10 @@
   const dispatch = createEventDispatcher();
 </script>
 
+<svelte:window on:keydown|preventDefault={(e) => {
+    if(e.key == 'Escape') dispatch('close')
+}} />
+
 <div
   class="fixed z-10 left-0 top-0 flex justify-center items-center w-screen h-screen"
   style="background-color: rgba(0, 0, 0, 0.2)"

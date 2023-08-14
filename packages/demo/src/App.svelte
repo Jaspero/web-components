@@ -53,7 +53,8 @@
     renderConfirm({
       title: 'Remove campaign?', 
       // message: 'Are you sure you want to remove this campaign?'
-      reject: 'rejected'
+      reject: 'rejected',
+      closable: true
     }, (e) => console.log(e))
   });
 
