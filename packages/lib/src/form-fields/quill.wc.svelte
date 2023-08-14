@@ -21,6 +21,8 @@
 
   export let attachedInternals: ElementInternals;
   export let value: string = '';
+  export let id: string | null = null;
+  export let name: string | null = null;
   export let options: any = {
     modules: { toolbar: true },
     theme: 'snow'
@@ -60,3 +62,4 @@
 </script>
 
 <div bind:this={containerEl}></div>
+<textarea {id} {name} {value} hidden></textarea>

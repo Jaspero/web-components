@@ -38,13 +38,14 @@
 
     inputEl.value = 'pero';
     inputEl.label = 'Perica';
-    inputEl.name = 'cool';
+    inputEl.name = 'input';
 
     formEl.appendChild(inputEl);
 
     const quillEl = document.createElement('jp-quill') as HTMLInputElement;
 
     quillEl.value = `<p>Blup</p>`;
+    quillEl.name = 'quill';
 
     formEl.appendChild(quillEl);
   });
