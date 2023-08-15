@@ -37,7 +37,7 @@
   export let inputFocused: boolean = false;
   export let inputValue: string = '';
 
-  export const getValue = () => value;
+  export const getValue = () => chips;
 
   const dispatch = createEventDispatcher();
 
@@ -62,7 +62,7 @@
     }
     attachedInternals.checkValidity();
     attachedInternals.setFormValue(value);
-    dispatch('value', { value });
+    dispatch('value', chips);
   }
 
   $: {
