@@ -6,6 +6,7 @@
   import '../../../dist/input.wc.js';
   import '../../../dist/quill.wc.js';
   import '../../../dist/checkbox.wc.js'
+  import '../../../dist/chips.wc.js'
   import { renderAlert } from '../../../dist/render-alert.js';
   import { renderConfirm } from '../../../dist/render-confirm.js'
   import { FirebaseTableService } from './firebase-table.service';
@@ -72,7 +73,16 @@
       reject: 'rejected',
       closable: true
     }, (e) => console.log(e))
+
+    const chipsEl = document.createElement('jp-chips') as HTMLInputElement;
+  
+    chipsEl.name = 'chips'
+    chipsEl.label = 'label 1212'
+    chipsEl.placeholder = 'placeholder'
+  
+    formEl.appendChild(chipsEl)
   });
+
 
   function submit(e) {
     const formData = new FormData(e.target);
