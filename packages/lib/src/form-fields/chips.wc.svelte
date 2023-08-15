@@ -24,6 +24,13 @@
 
   export let label: string | null = null;
   export let placeholder: string | null = null;
+  export let minitems: number = 0;
+  export let maxitems: number | null = null;
+
+  // export let pattern: RegExp | null = null;
+
+  export let required: boolean = false;
+  export let unique: boolean = false;
 
   export let chips: Array<string> = [];
 
@@ -36,6 +43,23 @@
 
   $: {
     value = chips.join(',')
+    /* console.log('-------')
+    console.log(chips.filter(el => pattern.test(el)))
+    console.log(chips) */
+    if(chips.length < minitems){
+      attachedInternals.setValidity({ customError: true }, 'Below limit chips.');
+    }
+    else if(maxitems && chips.length > maxitems){
+      attachedInternals.setValidity({ customError: true }, 'Above limit chips.');
+    }
+    else if (unique && ((new Set(chips)).size !== chips.length)) {
+      attachedInternals.setValidity({ customError: true }, 'Chips are not unique.')
+    }
+    /*else if(pattern != null && chips.filter(el => pattern.test(el)).length != chips.length){
+      attachedInternals.setValidity({ customError: true }, 'Chips dont satisfy pattern.');
+    }*/ else {
+      attachedInternals.setValidity({});
+    }
     attachedInternals.checkValidity();
     attachedInternals.setFormValue(value);
     dispatch('value', { value });
@@ -105,4 +129,4 @@
     >
   </div>
 </div>
-<textarea {id} {name} {value} hidden></textarea>
+<textarea {id} {name} {value} {required} hidden></textarea>

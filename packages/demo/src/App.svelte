@@ -79,6 +79,11 @@
     chipsEl.name = 'chips'
     chipsEl.label = 'label 1212'
     chipsEl.placeholder = 'placeholder'
+    chipsEl.minitems = 2
+    chipsEl.maxitems = 4
+    chipsEl.required = true
+    chipsEl.unique = true
+    // chipsEl.pattern = new RegExp('foo*', 'g');
   
     formEl.appendChild(chipsEl)
   });
