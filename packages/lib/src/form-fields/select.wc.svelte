@@ -23,6 +23,7 @@
   export let options: Array<string> = [];
 
   export let disabled: boolean = false;
+  export let required: boolean = false;
   export let value: string = '';
   export let id: string | null = null;
   export let name: string | null = null;
@@ -77,4 +78,4 @@
     </div>
   {/if}
 </div>
-<input bind:value {id} {name} hidden>
+<input bind:value {id} {name} {required} hidden>
