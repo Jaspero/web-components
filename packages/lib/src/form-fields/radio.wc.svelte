@@ -24,7 +24,6 @@
   export let disabled: boolean = false;
   export let required: boolean = false;
   export let value: string = '';
-  export let id: string | null = null;
   export let name: string | null = null;
 
   export const getValue = () => value;
@@ -40,6 +39,7 @@
 <div class="flex flex-col">
   {#each options as option}
     <button class="flex items-center" on:click|preventDefault={() => (value = option)} {disabled}>
+      <input hidden type="radio" name={name} value={option} {required} bind:group={value} />
       <div class="mr-1">
         {#if option == value}
           <svg xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 512 512"
@@ -59,4 +59,3 @@
     </button>
   {/each}
 </div>
-<input bind:value {id} {name} {required} hidden />
