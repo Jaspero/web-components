@@ -6,6 +6,7 @@
   import '../../../dist/input.wc.js';
   import '../../../dist/quill.wc.js';
   import '../../../dist/checkbox.wc.js'
+  import '../../../dist/multiselect.wc.js'
   import { renderAlert } from '../../../dist/render-alert.js';
   import { renderConfirm } from '../../../dist/render-confirm.js'
   import { FirebaseTableService } from './firebase-table.service';
@@ -72,6 +73,23 @@
       reject: 'rejected',
       closable: true
     }, (e) => console.log(e))
+
+    const multiselectEl = document.createElement('jp-multiselect') as HTMLInputElement;
+
+    multiselectEl.name = 'multiselect'
+    // multiselectEl.minSelects = 1
+    // multiselectEl.maxSelects = 2
+    multiselectEl.required = true
+    multiselectEl.placeholder = 'placeholder'
+    multiselectEl.options = [
+      {label: 'label1', selected: false},
+      {label: 'label2', selected: true},
+      {label: 'label3', selected: true},
+      {label: 'label4', selected: false, disabled: true},
+      {label: 'label5', selected: false},
+    ]
+
+    formEl.appendChild(multiselectEl)
   });
 
   function submit(e) {
