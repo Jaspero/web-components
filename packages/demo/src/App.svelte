@@ -6,6 +6,7 @@
   import '../../../dist/input.wc.js';
   import '../../../dist/quill.wc.js';
   import '../../../dist/checkbox.wc.js'
+  import '../../../dist/select.wc.js'
   import { renderAlert } from '../../../dist/render-alert.js';
   import { renderConfirm } from '../../../dist/render-confirm.js'
   import { FirebaseTableService } from './firebase-table.service';
@@ -72,6 +73,15 @@
       reject: 'rejected',
       closable: true
     }, (e) => console.log(e))
+
+    const selectEl = document.createElement('jp-select') as HTMLInputElement;
+
+    selectEl.placeholder = "placeholder"
+    selectEl.options = ['aaa', 'bbb', 'ccc']
+    selectEl.name = 'selectel'
+    selectEl.disabled = true
+
+    formEl.appendChild(selectEl)
   });
 
   function submit(e) {
