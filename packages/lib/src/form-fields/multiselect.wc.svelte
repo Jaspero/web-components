@@ -37,9 +37,10 @@
   const dispatch = createEventDispatcher();
 
   $: {
-    if (options.filter((el) => el.selected).length < minSelects) {
+    const selects = options.filter((el) => el.selected).length
+    if (selects < minSelects) {
       attachedInternals.setValidity({ customError: true }, 'Below limit checks.');
-    } else if (options.filter((el) => el.selected).length > maxSelects) {
+    } else if (selects > maxSelects) {
       attachedInternals.setValidity({ customError: true }, 'Above limit checks.');
     } else {
       attachedInternals.setValidity({});
