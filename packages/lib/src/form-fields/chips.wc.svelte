@@ -47,10 +47,10 @@
     console.log(chips.filter(el => pattern.test(el)))
     console.log(chips) */
     if(chips.length < minitems){
-      attachedInternals.setValidity({ customError: true }, 'Below limit chips.');
+      attachedInternals.setValidity({ customError: true }, `A minimum of ${minitems} items need to be added.`);
     }
     else if(maxitems && chips.length > maxitems){
-      attachedInternals.setValidity({ customError: true }, 'Above limit chips.');
+      attachedInternals.setValidity({ customError: true }, `A maximum of ${maxitems} items are allowed.`);
     }
     else if (unique && ((new Set(chips)).size !== chips.length)) {
       attachedInternals.setValidity({ customError: true }, 'Chips are not unique.')
@@ -66,11 +66,9 @@
   }
 
   $: {
-    if(!inputFocused){
-      if(inputValue){
-        chips = [...chips, inputValue]
-        inputValue = ''
-      }
+    if(!inputFocused && inputValue ) {
+      chips = [...chips, inputValue];
+      inputValue = '';
     }
   }
 </script>
