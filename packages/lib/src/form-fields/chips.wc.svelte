@@ -104,7 +104,8 @@
         <button 
           class="mx-0.5"
           on:click|preventDefault={() => {
-            chips = chips.filter(el => el !== chip)
+            chips.splice(chips.indexOf(chip), 1)
+            chips = chips
           }}
         >
           <svg xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 512 512">
