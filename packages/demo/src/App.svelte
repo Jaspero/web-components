@@ -6,10 +6,12 @@
   import '../../../dist/input.wc.js';
   import '../../../dist/quill.wc.js';
   import '../../../dist/checkbox.wc.js'
+  import '../../../dist/progress-spinner.wc.js'
   import '../../../dist/chips.wc.js'
   import '../../../dist/multiselect.wc.js'
   import '../../../dist/select.wc.js'
   import '../../../dist/radio.wc.js'
+
   import { renderAlert } from '../../../dist/render-alert.js';
   import { renderConfirm } from '../../../dist/render-confirm.js'
   import { FirebaseTableService } from './firebase-table.service';
@@ -76,6 +78,14 @@
       reject: 'rejected',
       closable: true
     }, (e) => console.log(e))
+
+
+    const spinnerEl = document.createElement('jp-progress-spinner');
+    spinnerEl.determinate = false
+    spinnerEl.progress = 44
+    spinnerEl.radius = 100;
+    spinnerEl.stroke = 20;
+    el.appendChild(spinnerEl)
 
     const chipsEl = document.createElement('jp-chips') as HTMLInputElement;
   
