@@ -86,7 +86,7 @@
     chipsEl.maxitems = 4
     chipsEl.required = true
     chipsEl.unique = true
-    // chipsEl.pattern = new RegExp('foo*', 'g');
+    // chipsEl.pattern = /kjh/;
   
     formEl.appendChild(chipsEl)
 

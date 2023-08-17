@@ -27,7 +27,7 @@
   export let minitems: number = 0;
   export let maxitems: number | null = null;
 
-  // export let pattern: RegExp | null = null;
+  export let pattern: RegExp | null = null;
 
   export let required: boolean = false;
   export let unique: boolean = false;
@@ -43,9 +43,6 @@
 
   $: {
     value = chips.join(',')
-    /* console.log('-------')
-    console.log(chips.filter(el => pattern.test(el)))
-    console.log(chips) */
     if(chips.length < minitems){
       attachedInternals.setValidity({ customError: true }, `A minimum of ${minitems} items need to be added.`);
     }
@@ -55,9 +52,9 @@
     else if (unique && ((new Set(chips)).size !== chips.length)) {
       attachedInternals.setValidity({ customError: true }, 'Chips are not unique.')
     }
-    /*else if(pattern != null && chips.filter(el => pattern.test(el)).length != chips.length){
+    else if(pattern != null && chips.filter(el => pattern.test(el)).length != chips.length){
       attachedInternals.setValidity({ customError: true }, 'Chips dont satisfy pattern.');
-    }*/ else {
+    } else {
       attachedInternals.setValidity({});
     }
     attachedInternals.checkValidity();
