@@ -10,4 +10,7 @@ export default () => {
   import('./src/form-fields/quill.wc.svelte');
   import('./src/form-fields/checkbox.wc.svelte');
   import('./src/form-fields/chips.wc.svelte');
+  import('./src/form-fields/multiselect.wc.svelte');
+  import('./src/form-fields/select.wc.svelte');
+  import('./src/form-fields/radio.wc.svelte');
 };

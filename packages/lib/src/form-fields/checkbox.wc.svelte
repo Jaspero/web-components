@@ -16,13 +16,17 @@
 />
 
 <script lang="ts">
-  import { onMount } from 'svelte';
+  import { createEventDispatcher, onMount } from 'svelte';
 
   export let attachedInternals: ElementInternals;
 
   export let options: Array<{ label: string; value: boolean; disabled?: boolean }> = [];
   export let minSelects: number = 0;
   export let maxSelects: number | null = null;
+
+  export const getValue = () => options.filter(el => el.value).map(el => el.label);
+  
+  const dispatch = createEventDispatcher();
   
   $: {
     if (options.filter((el) => el.value).length < minSelects) {
@@ -32,6 +36,9 @@
     } else {
       attachedInternals.setValidity({});
     }
+
+
+    dispatch('value', options.filter(el => el.value).map(el => el.label));
   }
 
   onMount(() => {
