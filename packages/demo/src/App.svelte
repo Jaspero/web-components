@@ -7,6 +7,8 @@
   import '../../../dist/quill.wc.js';
   import '../../../dist/checkbox.wc.js'
   import '../../../dist/multiselect.wc.js'
+  import '../../../dist/select.wc.js'
+  import '../../../dist/radio.wc.js'
   import { renderAlert } from '../../../dist/render-alert.js';
   import { renderConfirm } from '../../../dist/render-confirm.js'
   import { FirebaseTableService } from './firebase-table.service';
@@ -74,6 +76,7 @@
       closable: true
     }, (e) => console.log(e))
 
+
     const multiselectEl = document.createElement('jp-multiselect') as HTMLInputElement;
 
     multiselectEl.name = 'multiselect'
@@ -90,6 +93,26 @@
     ]
 
     formEl.appendChild(multiselectEl)
+
+
+    const selectEl = document.createElement('jp-select') as HTMLInputElement;
+
+    selectEl.placeholder = "placeholder"
+    selectEl.options = ['aaa', 'bbb', 'ccc']
+    selectEl.name = 'selectel'
+    selectEl.disabled = true
+
+    formEl.appendChild(selectEl)
+
+    const radioEl = document.createElement('jp-radio') as HTMLInputElement;
+
+    radioEl.options = ['aaa', 'bbb', 'ccc']
+    radioEl.value = 'aaa'
+    radioEl.name = 'radioel'
+    // radioEl.required = true
+    // radioEl.disabled = true
+
+    formEl.appendChild(radioEl);
   });
 
   function submit(e) {

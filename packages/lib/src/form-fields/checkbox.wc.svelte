@@ -26,6 +26,8 @@
 
   export const getValue = () => options.filter(el => el.value).map(el => el.label);
   
+  const dispatch = createEventDispatcher();
+  
   $: {
     if (options.filter((el) => el.value).length < minSelects) {
       attachedInternals.setValidity({ customError: true }, 'Below limit checks.');
@@ -35,7 +37,6 @@
       attachedInternals.setValidity({});
     }
 
-    const dispatch = createEventDispatcher();
 
     dispatch('value', options.filter(el => el.value).map(el => el.label));
   }
