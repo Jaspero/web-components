@@ -6,6 +6,7 @@
   import '../../../dist/input.wc.js';
   import '../../../dist/quill.wc.js';
   import '../../../dist/checkbox.wc.js'
+  import '../../../dist/select.wc.js'
   import '../../../dist/radio.wc.js'
   import { renderAlert } from '../../../dist/render-alert.js';
   import { renderConfirm } from '../../../dist/render-confirm.js'
@@ -74,6 +75,16 @@
       closable: true
     }, (e) => console.log(e))
 
+
+    const selectEl = document.createElement('jp-select') as HTMLInputElement;
+
+    selectEl.placeholder = "placeholder"
+    selectEl.options = ['aaa', 'bbb', 'ccc']
+    selectEl.name = 'selectel'
+    selectEl.disabled = true
+
+    formEl.appendChild(selectEl)
+
     const radioEl = document.createElement('jp-radio') as HTMLInputElement;
 
     radioEl.options = ['aaa', 'bbb', 'ccc']
@@ -82,7 +93,7 @@
     // radioEl.required = true
     // radioEl.disabled = true
 
-    formEl.appendChild(radioEl)
+    formEl.appendChild(radioEl);
   });
 
   function submit(e) {
