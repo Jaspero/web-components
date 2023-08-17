@@ -16,12 +16,10 @@
   let normalizedRadius: number = 0;
   let circumference: number = 0;
 
-  $: {
-    if (determinate) {
-      normalizedRadius = radius - stroke * 2;
-      circumference = normalizedRadius * 2 * Math.PI;
-      strokeDashoffset = circumference - (progress / 100) * circumference;
-    }
+  $: if (determinate) {
+    normalizedRadius = radius - stroke * 2;
+    circumference = normalizedRadius * 2 * Math.PI;
+    strokeDashoffset = circumference - (progress / 100) * circumference;
   }
 </script>
 
@@ -40,12 +38,10 @@
     />
   </svg>
 {:else}
-  <svg
-    width={radius * 2}
-    height={radius * 2}
-    stroke={color}
-    viewBox="0 0 24 24"
-    ><g class="spinner"><circle cx="12" cy="12" r="9.5" fill="none" stroke-width={12/radius * stroke}></circle></g
+  <svg width={radius * 2} height={radius * 2} stroke={color} viewBox="0 0 24 24"
+    ><g class="spinner"
+      ><circle cx="12" cy="12" r="9.5" fill="none" stroke-width={(12 / radius) * stroke}
+      ></circle></g
     ></svg
   >
 {/if}
