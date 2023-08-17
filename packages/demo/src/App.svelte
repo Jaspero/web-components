@@ -6,6 +6,7 @@
   import '../../../dist/input.wc.js';
   import '../../../dist/quill.wc.js';
   import '../../../dist/checkbox.wc.js'
+  import '../../../dist/chips.wc.js'
   import '../../../dist/multiselect.wc.js'
   import '../../../dist/select.wc.js'
   import '../../../dist/radio.wc.js'
@@ -76,6 +77,18 @@
       closable: true
     }, (e) => console.log(e))
 
+    const chipsEl = document.createElement('jp-chips') as HTMLInputElement;
+  
+    chipsEl.name = 'chips'
+    chipsEl.label = 'label 1212'
+    chipsEl.placeholder = 'placeholder'
+    chipsEl.minitems = 2
+    chipsEl.maxitems = 4
+    chipsEl.required = true
+    chipsEl.unique = true
+    // chipsEl.pattern = new RegExp('foo*', 'g');
+  
+    formEl.appendChild(chipsEl)
 
     const multiselectEl = document.createElement('jp-multiselect') as HTMLInputElement;
 
@@ -114,6 +127,7 @@
 
     formEl.appendChild(radioEl);
   });
+
 
   function submit(e) {
     const formData = new FormData(e.target);
