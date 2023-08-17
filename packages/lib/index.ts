@@ -6,6 +6,7 @@ export default () => {
   import('./src/alert/render-alert');
   import('./src/confirm/confirm.wc.svelte');
   import('./src/confirm/render-confirm');
+  import('./src/progress-spinner/progress-spinner.wc.svelte');
   import('./src/form-fields/input.wc.svelte');
   import('./src/form-fields/quill.wc.svelte');
   import('./src/form-fields/checkbox.wc.svelte');
