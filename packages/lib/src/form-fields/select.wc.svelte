@@ -41,9 +41,10 @@
   }
 </script>
 
-<div>
+<div class="relative select">
   <button
     class="flex w-full justify-between items-center p-2 rounded-md border"
+    class:rounded-b-none={open}
     on:click|preventDefault={() => (open = !open)}
   >
     {#if disabled}
@@ -62,7 +63,7 @@
     </div>
   </button>
   {#if open}
-    <div class="flex flex-col max-h-56 overflow-auto">
+    <div class="absolute top-full w-full flex flex-col max-h-56 overflow-auto select-menu">
       {#each options as option}
         <button
           class="w-full hover:bg-orange-400"
@@ -78,4 +79,15 @@
     </div>
   {/if}
 </div>
+
 <input bind:value {id} {name} {required} hidden>
+
+<style>
+  .select {
+    min-width: 10rem;
+  }
+
+  .select-menu {
+    background-color: var(--primary-color);
+  }
+</style>

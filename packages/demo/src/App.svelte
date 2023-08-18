@@ -1,16 +1,16 @@
 <script lang="ts">
   import { onMount } from 'svelte';
-  import '../../../dist/alert.wc.js';
-  import '../../../dist/confirm.wc.js'
-  import '../../../dist/async-table.wc.js';
+  /*import '../../../dist/alert.wc.js';*/
+  /*import '../../../dist/confirm.wc.js'*/
+  /*import '../../../dist/async-table.wc.js';*/
   import '../../../dist/input.wc.js';
-  import '../../../dist/quill.wc.js';
+  /*import '../../../dist/quill.wc.js';*/
   import '../../../dist/checkbox.wc.js'
-  import '../../../dist/progress-spinner.wc.js'
+  /*import '../../../dist/progress-spinner.wc.js'*/
   import '../../../dist/chips.wc.js'
-  import '../../../dist/multiselect.wc.js'
-  import '../../../dist/select.wc.js'
-  import '../../../dist/radio.wc.js'
+  /*import '../../../dist/multiselect.wc.js'*/
+  /*import '../../../dist/select.wc.js'*/
+  /*import '../../../dist/radio.wc.js'*/
 
   import { renderAlert } from '../../../dist/render-alert.js';
   import { renderConfirm } from '../../../dist/render-confirm.js'
@@ -147,9 +147,9 @@
   }
 </script>
 
-<div bind:this={el}></div>
+<div bind:this={el} class="p-4"></div>
 
-<form bind:this={formEl} on:submit|preventDefault={submit}>
+<form bind:this={formEl} class="p-4" on:submit|preventDefault={submit}>
   <input type="text" id="pero" name="pero" />
 
   <button type="submit">Submit</button>

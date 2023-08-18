@@ -95,10 +95,10 @@
   });
 </script>
 
-<div class="overflow-x-auto border">
+<div class="overflow-x-auto table-container">
   <table>
     {#if headers}
-      <tr class="odd:bg-[#F1F5F3]">
+      <tr>
         {#each headers as header}
           <th class:sortable={header.sortable} on:click={() => adjustSort(header)}>
             <span>{@html header.label}</span>
@@ -112,7 +112,7 @@
 
     {#if rows}
       {#each rows as row, index}
-        <tr class="odd:bg-[#F1F5F3]">
+        <tr>
           {#each headers as header}
             <td on:click={() => rowClick(row, index, header)}>
               {#await handleColumn(header, row, index) then val}
@@ -129,12 +129,21 @@
 </div>
 
 <style lang="postcss">
+  .table-container {
+    @apply rounded-lg;
+    border: 1px solid var(--border-primary);
+  }
+
   table {
-    @apply w-full rounded-lg overflow-hidden;
+    @apply w-full;
   }
 
   tr {
     @apply w-full;
+  }
+
+  tr:nth-child(2n - 1) {
+    background-color: var(--background-tertiary);
   }
 
   th {

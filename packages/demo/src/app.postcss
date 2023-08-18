@@ -3,33 +3,86 @@
 @tailwind utilities;
 
 :root {
-  --primary: #32664c;
-  --primary-contrast: #FFFFFF
-  --secondary: #E66439;
-  --secondary-contrast: #FFFFFF;
-  --warning: #F6AE2D;
-  --error: #E66439;
-  --success: #3CB371;
+    /* Foundational Colors */
+    --primary-color: #e65100; /* Main color for brand and CTAs */
+    --secondary-color: #ff9800; /* Supporting color or alternative primary color */
+    --tertiary-color: #ffcc80; /* Additional accent color, often used for less critical actions or indicators */
 
-  --fg: #FFFFFF
+    /* Feedback Colors */
+    --success-color: #4caf50; /* Indication of a successful action or positive message */
+    --error-color: #f44336; /* Indication of an error or negative message */
+    --warning-color: #ffeb3b; /* Indication of caution or a potential issue */
+    --info-color: #2196f3; /* Indication of general information */
+
+    /* Interactive States */
+    --hover-color: #e64a19; /* Color change on mouse hover */
+    --active-color: #ff5722; /* Color when the element is being clicked or tapped */
+    --focus-color: #ffab91; /* Color when the element is in focus (important for accessibility) */
+    --disabled-color: #bdbdbd; /* Color indication that an element is inactive or non-interactable */
+
+    /* Background Colors */
+    --background-primary: #ffffff; /* Main background color for the app or website */
+    --background-secondary: #e0e0e0; /* Darkened alternative background color, used for UI differentiation */
+    --background-tertiary: #eeeeee; /* Often used for subtle distinctions in the UI */
+
+    /* Text Colors */
+    --text-primary: #212121; /* Main text color */
+    --text-secondary: #757575; /* Secondary or lighter text color, often used for metadata or less important information */
+    --text-tertiary: #bdbdbd; /* Even lighter text color for non-critical information */
+    --text-on-primary: #ffffff; /* Color of text that will appear on top of the primary color (important for contrast) */
+    --text-on-secondary: #212121; /* Color of text that will appear on top of the secondary color */
+
+    /* Borders and Dividers */
+    --border-primary: #e0e0e0; /* Main color for borders */
+    --border-secondary: #eeeeee; /* Alternative or lighter border color */
+    --divider-color: #bdbdbd; /* Color for separating sections or elements */
+
+    /* Special Cases */
+    --inverse-color: #ffffff; /* Color for elements on dark backgrounds */
+    --highlight-color: #ffeb3b; /* Color for highlighting text or elements */
+    --muted-color: #fafafa; /* Extremely light color, often used for background areas to be less pronounced */
+
+    /* Gradient Colors (if using gradients) */
+    --gradient-start: #e65100; /* Gradient start color */
+    --gradient-end: #ff9800; /* Gradient end color */
+
+    /* Shadows (though not a color, still relevant) */
+    --shadow-color: rgba(0, 0, 0, 0.26); /* Color for shadows to ensure consistent depth cues across UI */
 }
 
 html {
-  box-sizing: border-box;
+    box-sizing: border-box;
+    font-size: 16px;
 }
 
 *,
 *::before,
 *::after {
-  box-sizing: inherit;
+    box-sizing: inherit;
+}
+
+body {
+    background-color: var(--background-primary);
 }
 
 label {
-  @apply text-xs font-bold;
+    @apply text-xs font-bold;
 }
 
 input,
 select,
 textarea {
-  @apply border-2 rounded-lg px-2 py-1 text-xs;
+    @apply border-2 rounded-lg px-2 py-1 text-xs;
+}
+
+.border {
+  border-color: var(--border-primary);
+}
+
+.border-focus {
+  border-color: var(--focus-color);
+}
+
+.outline-focus {
+  outline-color: var(--focus-color);
 }

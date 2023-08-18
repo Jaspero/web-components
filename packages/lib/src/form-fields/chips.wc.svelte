@@ -85,24 +85,26 @@
   }
 }} />
 
-<div class="max-w-md relative bg-slate-100 hover:bg-slate-200 pt-4 px-2 pb-1">
-  {#if label}
-    <label 
-      class="absolute top-0 left-2
-      {chips.length > 0 || inputFocused || inputValue ? 
-        "block font-thin" : 
-        "flex items-center h-full text-lg font-light"
-      }"
-      for={name}>
-      {@html label}
-    </label>
-  {/if}
-  <div class="flex w-full flex-wrap gap-y-1.5">
+<div>
+  <div class="flex items-center justify-between mb-1">
+    {#if label}
+      <label for={name}>
+        {@html label}
+      </label>
+    {/if}
+    {#if chips.length > 1}
+      <button class="p-0 text-xs underline"
+              on:click|preventDefault={() => {chips = []}}>
+        Clear All Chips
+      </button>
+    {/if}
+  </div>
+
+  <div class="flex flex-wrap p-2 gap-2 border rounded {inputFocused ? 'outline outline-focus border-focus' : '' }">
     {#each chips as chip}
-      <div class="flex items-center py-0.5 px-1 text-xs rounded-3xl bg-slate-300 mr-1">
-        <span>{chip}</span>
-        <button 
-          class="mx-0.5"
+      <div class="flex items-center gap-2 chip p-1 rounded">
+        <span class="text-sm">{chip}</span>
+        <button
           on:click|preventDefault={() => {
             chips.splice(chips.indexOf(chip), 1)
             chips = chips
@@ -117,12 +119,18 @@
     {/each}
     <input 
       type="text" 
-      class="bg-transparent outline-0 border-0 w-full relative z-10"
+      class="flex-1 border-none outline-none text-base p-0"
       placeholder={chips.length > 0 || inputFocused || inputValue ? placeholder : ''}
-      on:focus={() => inputFocused = true} 
+      on:focus={() => inputFocused = true}
       on:blur={() => inputFocused = false}
       bind:value={inputValue}
     >
   </div>
 </div>
 <textarea {id} {name} {value} {required} hidden></textarea>
+
+<style>
+  .chip {
+    background: var(--background-secondary);
+  }
+</style>
