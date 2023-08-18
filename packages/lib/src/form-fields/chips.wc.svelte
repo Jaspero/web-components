@@ -37,6 +37,8 @@
   export let inputFocused: boolean = false;
   export let inputValue: string = '';
 
+  export let clearAll: boolean = true;
+
   export const getValue = () => chips;
 
   const dispatch = createEventDispatcher();
@@ -92,10 +94,10 @@
         {@html label}
       </label>
     {/if}
-    {#if chips.length > 1}
+    {#if chips.length > 1 & clearAll}
       <button class="p-0 text-xs underline"
               on:click|preventDefault={() => {chips = []}}>
-        Clear All Chips
+        Clear All
       </button>
     {/if}
   </div>
