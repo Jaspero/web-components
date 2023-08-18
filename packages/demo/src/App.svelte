@@ -2,7 +2,7 @@
   import { onMount } from 'svelte';
   /*import '../../../dist/alert.wc.js';*/
   /*import '../../../dist/confirm.wc.js'*/
-  /*import '../../../dist/async-table.wc.js';*/
+  import '../../../dist/async-table.wc.js';
   import '../../../dist/input.wc.js';
   /*import '../../../dist/quill.wc.js';*/
   import '../../../dist/checkbox.wc.js'
