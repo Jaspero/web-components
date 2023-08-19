@@ -15,4 +15,5 @@ export default () => {
   import('./src/form-fields/select.wc.svelte');
   import('./src/form-fields/radio.wc.svelte');
   import('./src/editors/json-editor.wc.svelte');
+  import('./src/editors/code-editor.wc.svelte')
 };

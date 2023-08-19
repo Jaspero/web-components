@@ -12,6 +12,11 @@
   import '../../../dist/select.wc.js'
   import '../../../dist/radio.wc.js'
   import '../../../dist/json-editor.wc.js'
+  /*import '../../../dist/multiselect.wc.js'*/
+  /*import '../../../dist/select.wc.js'*/
+  /*import '../../../dist/radio.wc.js'*/
+  import '../../../dist/code-editor.wc.js'
+
   import { renderAlert } from '../../../dist/render-alert.js';
   import { renderConfirm } from '../../../dist/render-confirm.js'
   import { FirebaseTableService } from './firebase-table.service';
@@ -154,6 +159,15 @@
     el.appendChild(jsonEditor)
     
     jsonEditor.addEventListener('change', (e) => console.log(e.detail))
+
+    const codeEditor = document.createElement('jp-code-editor')
+
+    codeEditor.content = "function myScript(){return 100;}\n"
+    codeEditor.options = {mode:"javascript"}
+
+    el.appendChild(codeEditor)
+
+    codeEditor.addEventListener('change', (e) => console.log(e.detail))
   });
 
 
