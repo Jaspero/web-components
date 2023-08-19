@@ -46,10 +46,13 @@
   });
 </script>
 
-<div>
+<div class="flex flex-col gap-2">
   {#each options as option}
-    <label >
-      <input type="checkbox" name={option.label} bind:checked={option.value} disabled={option.disabled}/>
+    <label class="flex items-center gap-2 {option.disabled ? 'opacity-50' : ''}">
+      <input type="checkbox"
+             name={option.label}
+             bind:checked={option.value}
+             disabled={option.disabled} />
       {@html option.label}
     </label>
   {/each}
