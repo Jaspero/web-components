@@ -11,6 +11,7 @@
   /*import '../../../dist/multiselect.wc.js'*/
   /*import '../../../dist/select.wc.js'*/
   /*import '../../../dist/radio.wc.js'*/
+  import '../../../dist/code-editor.wc.js'
 
   import { renderAlert } from '../../../dist/render-alert.js';
   import { renderConfirm } from '../../../dist/render-confirm.js'
@@ -136,6 +137,15 @@
     // radioEl.disabled = true
 
     formEl.appendChild(radioEl);
+
+    const codeEditor = document.createElement('jp-code-editor')
+
+    codeEditor.content = "function myScript(){return 100;}\n"
+    codeEditor.options = {mode:"javascript"}
+
+    el.appendChild(codeEditor)
+
+    codeEditor.addEventListener('change', (e) => console.log(e.detail))
   });
 
 
