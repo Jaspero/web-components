@@ -4,10 +4,14 @@
   /*import '../../../dist/confirm.wc.js'*/
   import '../../../dist/async-table.wc.js';
   import '../../../dist/input.wc.js';
-  /*import '../../../dist/quill.wc.js';*/
+  import '../../../dist/quill.wc.js';
   import '../../../dist/checkbox.wc.js'
-  /*import '../../../dist/progress-spinner.wc.js'*/
+  import '../../../dist/progress-spinner.wc.js'
   import '../../../dist/chips.wc.js'
+  import '../../../dist/multiselect.wc.js'
+  import '../../../dist/select.wc.js'
+  import '../../../dist/radio.wc.js'
+  import '../../../dist/json-editor.wc.js'
   /*import '../../../dist/multiselect.wc.js'*/
   /*import '../../../dist/select.wc.js'*/
   /*import '../../../dist/radio.wc.js'*/
@@ -137,6 +141,24 @@
     // radioEl.disabled = true
 
     formEl.appendChild(radioEl);
+
+    const jsonEditor = document.createElement('jp-json-editor')
+
+    jsonEditor.content = {
+      json: {
+        array: [1, 2, 3],
+        boolean: true,
+        color: '#82b92c',
+        null: null,
+        number: 123,
+        object: { a: 'b', c: 'd' },
+        string: 'Hello World'
+      }
+    }
+
+    el.appendChild(jsonEditor)
+    
+    jsonEditor.addEventListener('change', (e) => console.log(e.detail))
 
     const codeEditor = document.createElement('jp-code-editor')
 
