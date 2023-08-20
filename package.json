@@ -40,6 +40,10 @@
   "files": [
     "dist"
   ],
+  "keywords": [
+    "web-components",
+    "svelte"
+  ],
   "repository": {
     "type": "git",
     "url": "https://github.com/Jaspero/web-components.git"
