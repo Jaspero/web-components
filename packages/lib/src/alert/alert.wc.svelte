@@ -35,7 +35,7 @@
       </button>
     </div>
     {#if message}
-      <p class="text-sm">
+      <p class="text-sm max-w-lg">
         {@html message}
       </p>
     {/if}
@@ -53,10 +53,10 @@
   }
 
   .alert-error {
-    border-left: 4px solid var(--error);
+    border-left: 4px solid var(--danger-color);
   }
 
   .alert-success {
-    border-left: 4px solid var(--success);
+    border-left: 4px solid var(--success-color);
   }
 </style>
