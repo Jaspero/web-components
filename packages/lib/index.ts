@@ -1,6 +1,8 @@
 export default () => {
   import('./src/table/table.wc.svelte');
   import('./src/async-table/async-table.wc.svelte');
+  import('./src/button/button.wc.svelte');
+  import('./src/link/link.wc.svelte');
   import('./src/image-upload/image-upload.wc.svelte');
   import('./src/alert/alert.wc.svelte');
   import('./src/alert/render-alert');
