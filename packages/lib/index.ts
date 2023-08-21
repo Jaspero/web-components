@@ -4,6 +4,7 @@ export default () => {
   import('./src/button/button.wc.svelte');
   import('./src/link/link.wc.svelte');
   import('./src/image-upload/image-upload.wc.svelte');
+  import('./src/slider/slider.wc.svelte');
   import('./src/alert/alert.wc.svelte');
   import('./src/alert/render-alert');
   import('./src/confirm/confirm.wc.svelte');
