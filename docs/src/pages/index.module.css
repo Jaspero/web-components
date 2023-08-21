@@ -36,6 +36,10 @@
 
 .heroUpperContainer img {
   max-width: 400px;
+  filter: drop-shadow(0 0 100px rgba(255,255,255,1));
+}
+
+[data-theme='dark'] .heroUpperContainer img {
   filter: drop-shadow(0 0 50px rgba(0,0,0,.8));
 }
 
