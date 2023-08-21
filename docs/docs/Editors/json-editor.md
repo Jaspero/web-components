@@ -21,11 +21,7 @@ It's a wrapper around https://github.com/josdejong/jsoneditor.
 In order for this component to work you have to include the following
 
 ```html
-<link
-  href="https://cdnjs.cloudflare.com/ajax/libs/jsoneditor/9.10.2/jsoneditor.min.css"
-  rel="stylesheet"
-  type="text/css"
-/>
+<link href="https://cdnjs.cloudflare.com/ajax/libs/jsoneditor/9.10.2/jsoneditor.min.css" rel="stylesheet" type="text/css" />
 ```
 
 ```html
