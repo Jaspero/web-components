@@ -3,11 +3,11 @@
   /*import '../../../dist/alert.wc.js';*/
   /*import '../../../dist/confirm.wc.js'*/
   import '../../../dist/async-table.wc.js';
-  import '../../../dist/input.wc.js';
+  /*import '../../../dist/input.wc.js';*/
   import '../../../dist/quill.wc.js';
-  import '../../../dist/checkbox.wc.js'
+  /*import '../../../dist/checkbox.wc.js'*/
   /*import '../../../dist/progress-spinner.wc.js'*/
-  import '../../../dist/chips.wc.js'
+  /*import '../../../dist/chips.wc.js'*/
   import '../../../dist/multiselect.wc.js'
   import '../../../dist/select.wc.js'
   import '../../../dist/radio.wc.js'
