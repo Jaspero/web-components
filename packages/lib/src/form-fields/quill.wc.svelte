@@ -23,6 +23,7 @@
   export let value: string = '';
   export let id: string | null = null;
   export let name: string | null = null;
+  export let label = '';
   export let options: any = {
     modules: { toolbar: true },
     theme: 'snow'
@@ -61,5 +62,8 @@
   }
 </script>
 
+{#if label}
+  <span>{label}</span>
+{/if}
 <div bind:this={containerEl}></div>
 <textarea {id} {name} {value} hidden></textarea>
