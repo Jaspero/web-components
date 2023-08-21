@@ -28,10 +28,11 @@
   
   const dispatch = createEventDispatcher();
   
-  $: {
-    if (options.filter((el) => el.value).length < minSelects) {
+  $: if(Array.isArray(options)) {
+    const checkedAmount = options.filter((el) => el.value).length
+    if (checkedAmount < minSelects) {
       attachedInternals.setValidity({ customError: true }, 'Below limit checks.');
-    } else if (options.filter((el) => el.value).length > maxSelects) {
+    } else if (checkedAmount > maxSelects) {
       attachedInternals.setValidity({ customError: true }, 'Above limit checks.');
     } else {
       attachedInternals.setValidity({});
@@ -42,6 +43,7 @@
   }
 
   onMount(() => {
+    if(typeof options == 'string') options = JSON.parse(options)
     maxSelects = options.length;
   });
 </script>

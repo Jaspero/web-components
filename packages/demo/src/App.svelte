@@ -1,21 +1,21 @@
 <script lang="ts">
   import { onMount } from 'svelte';
-  /*import '../../../dist/alert.wc.js';*/
-  /*import '../../../dist/confirm.wc.js'*/
+  import '../../../dist/alert.wc.js';
+  import '../../../dist/confirm.wc.js'
   import '../../../dist/async-table.wc.js';
-  /*import '../../../dist/input.wc.js';*/
+  import '../../../dist/input.wc.js';
   import '../../../dist/quill.wc.js';
-  /*import '../../../dist/checkbox.wc.js'*/
-  /*import '../../../dist/progress-spinner.wc.js'*/
-  /*import '../../../dist/chips.wc.js'*/
+  import '../../../dist/checkbox.wc.js'
+  import '../../../dist/progress-spinner.wc.js'
+  import '../../../dist/chips.wc.js'
   import '../../../dist/multiselect.wc.js'
   import '../../../dist/select.wc.js'
   import '../../../dist/radio.wc.js'
-  /*import '../../../dist/json-editor.wc.js'*/
-  /*import '../../../dist/multiselect.wc.js'*/
-  /*import '../../../dist/select.wc.js'*/
-  /*import '../../../dist/radio.wc.js'*/
-  /*import '../../../dist/code-editor.wc.js'*/
+  import '../../../dist/json-editor.wc.js'
+  import '../../../dist/multiselect.wc.js'
+  import '../../../dist/select.wc.js'
+  import '../../../dist/radio.wc.js'
+  import '../../../dist/code-editor.wc.js'
 
   import { renderAlert } from '../../../dist/render-alert.js';
   import { renderConfirm } from '../../../dist/render-confirm.js'
@@ -66,12 +66,7 @@
 
     const checkboxEl = document.createElement('jp-checkbox') as HTMLInputElement;
 
-    checkboxEl.options = [
-      {label: 'aaa', value: false},
-      {label: 'lorem aa', value: true},
-      {label: 'lorem adasda', value: true},
-      {label: 'ipsum dolorrr', value: false, disabled: true},
-    ]
+    checkboxEl.options = '[{"label": "aaa", "value": false},{"label": "lorem aa", "value": true},{"label": "lorem adasda", "value": true},{"label": "ipsum dolorrr", "value": false, "disabled": true}]'
 
     checkboxEl.minSelects = 2
 
@@ -112,13 +107,7 @@
     // multiselectEl.maxSelects = 2
     multiselectEl.required = true
     multiselectEl.placeholder = 'placeholder'
-    multiselectEl.options = [
-      {label: 'label1', selected: false},
-      {label: 'label2', selected: true},
-      {label: 'label3', selected: true},
-      {label: 'label4', selected: false, disabled: true},
-      {label: 'label5', selected: false},
-    ]
+    multiselectEl.options = '[{"label": "label1", "selected": false},{"label": "label2", "selected": true},{"label": "label3", "selected": true},{"label": "label4", "selected": false, "disabled": true},{"label": "label5", "selected": false}]'
 
     formEl.appendChild(multiselectEl)
 
@@ -126,15 +115,14 @@
     const selectEl = document.createElement('jp-select') as HTMLInputElement;
 
     selectEl.placeholder = "placeholder"
-    selectEl.options = ['aaa', 'bbb', 'ccc']
+    selectEl.options = '["aaa", "bbb", "ccc"]'
     selectEl.name = 'selectel'
-    selectEl.disabled = true
 
     formEl.appendChild(selectEl)
 
     const radioEl = document.createElement('jp-radio') as HTMLInputElement;
 
-    radioEl.options = ['aaa', 'bbb', 'ccc']
+    radioEl.options = '["aaa", "bbb", "ccc"]'
     radioEl.value = 'aaa'
     radioEl.name = 'radioel'
     // radioEl.required = true
@@ -144,17 +132,7 @@
 
     const jsonEditor = document.createElement('jp-json-editor')
 
-    jsonEditor.content = {
-      json: {
-        array: [1, 2, 3],
-        boolean: true,
-        color: '#82b92c',
-        null: null,
-        number: 123,
-        object: { a: 'b', c: 'd' },
-        string: 'Hello World'
-      }
-    }
+    jsonEditor.content = '{"array": [1, 2, 3],"boolean": true,"color": "#82b92c","null": null,"number": 123,"object": { "a": "b", "c": "d" },"string": "Hello World"}'
 
     el.appendChild(jsonEditor)
     
@@ -185,4 +163,6 @@
   <input type="text" id="pero" name="pero" />
 
   <button type="submit">Submit</button>
+
+  <jp-radio options={['aaa', 'bbb']}></jp-radio>
 </form>

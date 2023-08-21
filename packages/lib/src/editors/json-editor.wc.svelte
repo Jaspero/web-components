@@ -28,6 +28,8 @@
   }
 
   onMount(() => {
+    if(typeof content == 'string') content = {json: JSON.parse(content)}
+    else content = {json: content}
     options.onChange = changeHandler;
     editor = new window.JSONEditor(containerEl, options)
     editor.set(content)

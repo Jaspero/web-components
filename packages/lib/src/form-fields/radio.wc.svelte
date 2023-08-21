@@ -20,7 +20,7 @@
 
   export let attachedInternals: ElementInternals;
 
-  export let options: Array<string> = [];
+  export let options: Array<string> | string = [];
   export let disabled: boolean = false;
   export let required: boolean = false;
   export let value: string = '';
@@ -34,6 +34,10 @@
     attachedInternals.checkValidity();
     dispatch('value', value);
   }
+
+  onMount(() => {
+    if(typeof options == 'string') options = JSON.parse(options)
+  })
 </script>
 
 <div class="flex flex-col">

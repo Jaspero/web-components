@@ -20,7 +20,7 @@
 
   export let attachedInternals: ElementInternals;
 
-  export let options: Array<{ label: string; selected: boolean; disabled?: boolean }> = [];
+  export let options: Array<{ label: string; selected: boolean; disabled?: boolean }> | string = [];
 
   export let minSelects: number = 0;
   export let maxSelects: number | null = null;
@@ -36,7 +36,7 @@
 
   const dispatch = createEventDispatcher();
 
-  $: {
+  $: if(Array.isArray(options)) {
     const selects = options.filter((el) => el.selected).length
     if (selects < minSelects) {
       attachedInternals.setValidity({ customError: true }, 'Below limit checks.');
@@ -59,6 +59,7 @@
   }
 
   onMount(() => {
+    if(typeof options == 'string') options = JSON.parse(options) 
     if (!maxSelects) {
       maxSelects = options.length;
     }
