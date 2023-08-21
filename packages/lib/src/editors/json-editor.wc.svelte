@@ -1,39 +1,62 @@
 <svelte:options
   customElement={{
     tag: 'jp-json-editor',
-    shadow: 'none'
+    shadow: 'none',
+    extend: (customElementConstructor) => {
+      return class extends customElementConstructor {
+        static formAssociated = true;
+
+        constructor() {
+          super();
+          this.attachedInternals = this.attachInternals();
+        }
+      };
+    }
   }}
 />
 
 <script lang="ts">
   import { createEventDispatcher, onMount } from 'svelte';
 
-  export let content = {};
+  export let label = '';
+  export let name: string | null = null;
+  export let id: string | null = null;
+  export let value: any = {};
   export let options = {};
 
   let editor;
-
+  let stringValue;
   let containerEl: HTMLDivElement;
 
   const dispatch = createEventDispatcher();
 
-  $: dispatch('change', content);
-
-  const changeHandler = async () => {
-    try {
-      content = editor.get()
-    } catch (err) {
-      console.log(err)
-    }
-  }
-
   onMount(() => {
-    if(typeof content == 'string') content = {json: JSON.parse(content)}
-    else content = {json: content}
-    options.onChange = changeHandler;
-    editor = new window.JSONEditor(containerEl, options)
-    editor.set(content)
-  })
+    if (typeof value == 'string') {
+      value = { json: JSON.parse(value) };
+    } else {
+      value = { json: value };
+    };
+    
+    options.onChange = async () => {
+      try {
+        value = editor.get();
+
+        dispatch('change', {value});
+
+        stringValue = JSON.stringify(value);
+
+      } catch (err) {
+        console.log(err);
+      }
+    };
+    
+    editor = new window.JSONEditor(containerEl, options);
+    editor.set(value);
+  });
 </script>
 
+{#if label}
+  <span>{label}</span>
+{/if}
 <div bind:this={containerEl}></div>
+<textarea {name} {id} value={stringValue} hidden></textarea>
