@@ -44,16 +44,6 @@ This component does not have any events.
 
 ```jsx live
 <jp-json-editor
-  content={{
-    json: {
-      array: [1, 2, 3],
-      boolean: true,
-      color: '#82b92c',
-      null: null,
-      number: 123,
-      object: { a: 'b', c: 'd' },
-      string: 'Hello World'
-    }
-  }}
+  content='{"array": [1, 2, 3],"boolean": true,"color": "#82b92c","null": null,"number": 123,"object": { "a": "b", "c": "d" },"string": "Hello World"}'
 ></jp-json-editor>
 ```
