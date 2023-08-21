@@ -84,7 +84,7 @@
     </div>
   </button>
   {#if open}
-    <div class="z-10 absolute top-full border rounded-b flex flex-col max-h-56 overflow-auto w-full select-menu">
+    <div class="z-10 absolute top-full border-x border-b rounded-b flex flex-col max-h-56 overflow-auto w-full select-menu">
       {#each options as option}
         <button
           class="flex justify-between items-center gap-2 text-left select-button transition-colors duration-300 p-2
