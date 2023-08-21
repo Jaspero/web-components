@@ -87,12 +87,10 @@
   }
 }} />
 
-<div>
+<label>
   <div class="flex items-center justify-between mb-1">
     {#if label}
-      <label for={name}>
-        {@html label}
-      </label>
+        <span class="font-bold">{@html label}</span>
     {/if}
     {#if chips.length > 1 & clearAll}
       <button class="p-0 text-xs underline"
@@ -128,7 +126,7 @@
       bind:value={inputValue}
     >
   </div>
-</div>
+</label>
 <textarea {id} {name} {value} {required} hidden></textarea>
 
 <style>

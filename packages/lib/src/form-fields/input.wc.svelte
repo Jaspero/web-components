@@ -29,6 +29,9 @@
 	export let minlength: number | null = null;
 	export let maxlength: number | null = null;
 	export let pattern: string | null = null;
+	export let placeholder: string | null = null;
+
+	export let inputFocused: boolean = false;
 	
 	export const getValue = () => value;
  
@@ -43,18 +46,26 @@
 </script>
 
 <label>
-	{#if label}
-		<span>{label}</span>
-	{/if}
-	<input
-		type="text"
-		bind:value
-		{required}
-		{disabled}
-		{readonly}
-		{id}
-		{name}
-		{minlength}
-		{maxlength}
-		{pattern} />
+	<div class="mb-1">
+		{#if label}
+			<span class="font-bold">{@html label}</span>
+		{/if}
+	</div>
+
+	<div class="flex flex-wrap p-2 gap-2 border rounded {inputFocused ? 'outline outline-focus border-focus' : '' }">
+		<input
+				class="flex-1 border-none outline-none text-base p-0"
+				type="text"
+				bind:value
+				{required}
+				{disabled}
+				{readonly}
+				{id}
+				{name}
+				{minlength}
+				{maxlength}
+				on:focus={() => inputFocused = true}
+				on:blur={() => inputFocused = false}
+				{pattern} />
+	</div>
 </label>
