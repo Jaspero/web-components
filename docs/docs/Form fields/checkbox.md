@@ -32,12 +32,7 @@ This component does not have any methods.
 
 ```jsx live
 <form>
-  <jp-checkbox options={[
-      {label: 'aaa', value: false},
-      {label: 'lorem aa', value: true},
-      {label: 'lorem adasda', value: true},
-      {label: 'ipsum dolorrr', value: false, disabled: true},
-    ]}>
+  <jp-checkbox options='[{"label": "aaa", "value": false},{"label": "lorem aa", "value": true},{"label": "lorem adasda", "value": true},{"label": "ipsum dolorrr", "value": false, "disabled": true}]'>
   </jp-checkbox>
 </form>
 ```

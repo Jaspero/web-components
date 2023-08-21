@@ -39,7 +39,7 @@ This component does not have any methods.
 
 ```jsx live
 <form>
-  <jp-select options={['aaa', 'bbb', 'ccc']}>
+  <jp-select options='["aaa", "bbb", "ccc"]'>
   </jp-select>
 </form>
 ```
