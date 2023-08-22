@@ -30,6 +30,8 @@
 
   const dispatch = createEventDispatcher();
 
+  export const getValue = () => editor.get();
+
   onMount(() => {
     if (typeof value == 'string') {
       value = { json: JSON.parse(value) };
