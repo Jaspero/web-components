@@ -41,7 +41,7 @@
       try {
         value = editor.get();
 
-        dispatch('change', {value});
+        dispatch('value', {value});
 
         stringValue = JSON.stringify(value);
 

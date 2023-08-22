@@ -41,7 +41,7 @@
       attachedInternals.checkValidity();
       attachedInternals.setFormValue(value);
       
-      dispatch('change', {event: e, value});
+      dispatch('value', {value});
     })
   });
 </script>
