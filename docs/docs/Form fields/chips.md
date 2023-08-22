@@ -9,8 +9,8 @@ import '@jaspero/web-components/dist/chips.wc';
 ### Attributes
 
 - `id`
-  - `required` for native form submission
 - `name`
+  - `required` for native form submission
 - `label` (`string`)
   - Shows at top of the input
 - `placeholder`
