@@ -25,6 +25,8 @@
             currentIndex = images.length - imagesPerSlide;
         } else if (remainingImages === 0) {
             currentIndex = 0;  // Loop back to the start
+        } else if (imagesPerSlide % 1 !== 0) {
+            currentIndex = potentialNextIndex - (imagesPerSlide - 1);
         } else {
             currentIndex = potentialNextIndex;
         }
