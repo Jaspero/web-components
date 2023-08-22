@@ -23,6 +23,8 @@
 </button>
 
 <style>
+    @import 'packages/demo/src/app.postcss';
+
     :host {
         display: inline-flex;
     }
