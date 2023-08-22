@@ -101,9 +101,7 @@
 
     {#if sliderBar}
         <div class="slider-bar">
-            <div class="slider-bar-bg" style={`width: calc(calc(${currentIndex} + 1) / ${images.length} * 100%);`}>
-
-            </div>
+            <div class="slider-bar-bg" style={`width: calc(calc(${currentIndex} + ${imagesPerSlide}) / ${images.length} * 100%);`}></div>
         </div>
     {/if}
 
