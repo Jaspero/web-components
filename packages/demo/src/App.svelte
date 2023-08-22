@@ -16,7 +16,7 @@
   import '../../../dist/select.wc.js'
   import '../../../dist/radio.wc.js'
   import '../../../dist/code-editor.wc.js'*/
-  import '../../../dist/slider.wc.js'
+  import '../../../dist/image-gallery.wc.js'
 
   import { renderAlert } from '../../../dist/render-alert.js';
   import { renderConfirm } from '../../../dist/render-confirm.js'
@@ -181,4 +181,4 @@
   <jp-radio options={['aaa', 'bbb']}></jp-radio>
 </form>
 
-<jp-slider {images}></jp-slider>
+<jp-image-gallery {images} interval={5000}></jp-image-gallery>
