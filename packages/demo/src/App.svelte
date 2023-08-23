@@ -153,6 +153,8 @@
 
     console.log(formProps, formData);
   }
+
+  let lol = '';
 </script>
 
 <div bind:this={el} class="p-4"></div>
@@ -167,6 +169,14 @@
 
 <div class="relative flex overflow-hidden">
   <jp-multiselect options={['aaa', 'bbb']}></jp-multiselect>
-  <jp-select required options={['United States', 'United Kingdom', 'Canada', 'Croatia', 'Cambodia', 'Italy', '1 Apple', '2 Trees', '3 Mugs', '4 Police Officers']}></jp-select>
   <jp-testing options={['United States', 'Canada', 'Croatia', 'Cambodia', 'Italy', '1 Apple', '2 Trees', '3 Mugs', '4 Police Officers']}></jp-testing>
+  <jp-select options={['United States', 'United Kingdom', 'Canada', 'Croatia', 'Cambodia', 'Italy', '1 Apple', '2 Trees', '3 Mugs', '4 Police Officers']}></jp-select>
 </div>
+
+<form action="">
+  <input type="text">
+
+  <jp-select required options={['United States', 'United Kingdom', 'Canada', 'Croatia', 'Cambodia', 'Italy', '1 Apple', '2 Trees', '3 Mugs', '4 Police Officers']}></jp-select>
+
+  <button>asdf</button>
+</form>

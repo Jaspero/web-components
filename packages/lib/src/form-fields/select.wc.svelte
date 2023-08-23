@@ -44,11 +44,23 @@
 
   function toggleMenu() {
     const rect = bindingElement.getBoundingClientRect();
-    const style = `
-                width: ${rect.width}px;
-                left: ${rect.left}px;
-                top: ${rect.bottom}px;
-            `;
+    const availableSpaceBelow = window.innerHeight - rect.bottom;
+    const dropdownHeight = 160;
+
+    let style: string = '';
+    if (availableSpaceBelow < dropdownHeight) {
+      style = `
+            min-width: ${rect.width}px;
+            bottom: ${window.innerHeight - rect.top}px;
+            left: ${rect.left}px;
+        `;
+    } else {
+      style = `
+            min-width: ${rect.width}px;
+            top: ${rect.bottom}px;
+            left: ${rect.left}px;
+        `;
+    }
 
     menuStyle = style;
     open = !open;
@@ -162,7 +174,7 @@
       {value || ''}
     </span>
 
-    <svg xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 320 512" class="select-arrow" class:rotate={open}>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512" class="select-arrow" class:rotate={open}>
       <!--! Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2023 Fonticons, Inc.-->
       <path d="M137.4 374.6c12.5 12.5 32.8 12.5 45.3 0l128-128c9.2-9.2 11.9-22.9 6.9-34.9s-16.6-19.8-29.6-19.8L32 192c-12.9 0-24.6 7.8-29.6 19.8s-2.2 25.7 6.9 34.9l128 128z"/>
     </svg>
@@ -177,7 +189,14 @@
                 class:selected={value === option}
                 bind:this={optionElements[index]}
                 on:click={() => value = option}>
-          {option}
+          <span>{option}</span>
+
+          {#if value === option}
+            <svg xmlns="http://www.w3.org/2000/svg" width="1rem" height="1rem" viewBox="0 0 448 512">
+              <!--! Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2023 Fonticons, Inc. -->
+              <path d="M438.6 105.4c12.5 12.5 12.5 32.8 0 45.3l-256 256c-12.5 12.5-32.8 12.5-45.3 0l-128-128c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0L160 338.7 393.4 105.4c12.5-12.5 32.8-12.5 45.3 0z"/>
+            </svg>
+          {/if}
         </button>
       {/each}
     </div>
@@ -216,7 +235,6 @@
     -ms-flex-align: center;
     align-items: center;
     text-align: left;
-    min-width: 8rem;
     width: 100%;
     height: 3rem;
     -webkit-user-select: none;
@@ -274,16 +292,29 @@
     content: ' *';
   }
 
+  input:required:invalid + .select {
+    border-color: var(--danger-color);
+  }
+
   .select-option {
     -webkit-box-flex: 1;
-    -webkit-flex: 1 1 0;
+    -webkit-flex: auto;
     -moz-box-flex: 1;
-    -ms-flex: 1 1 0px;
-    flex: 1 1 0;
+    -ms-flex: auto;
+    flex: auto;
+    width: 10rem;
+    white-space: nowrap;
+    overflow: hidden;
+    -o-text-overflow: ellipsis;
+    text-overflow: ellipsis;
     padding-top: 1rem;
   }
 
   .select-arrow {
+    width: 1rem;
+    height: 1rem;
+    min-width: 1rem;
+    min-height: 1rem;
     -webkit-transition: .3s;
     -o-transition: .3s;
     -moz-transition: .3s;
@@ -330,17 +361,33 @@
   }
 
   .menu-button {
-    padding: .5rem .75rem;
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: -moz-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-pack: justify;
+    -webkit-justify-content: space-between;
+    -moz-box-pack: justify;
+    -ms-flex-pack: justify;
+    justify-content: space-between;
+    -webkit-box-align: center;
+    -webkit-align-items: center;
+    -moz-box-align: center;
+    -ms-flex-align: center;
+    align-items: center;
+    gap: .75rem;
+    padding: .75rem;
     text-align: left;
     outline: none;
   }
 
-  .menu-button:hover, .menu-button:focus {
+  .menu-button:hover, .menu-button:focus, .menu-button.selected  {
     background-color: var(--background-tertiary);
   }
 
   .menu-button.selected {
-    background-color: var(--primary-color);
-    color: var(--text-on-primary);
+    color: var(--primary-color);
+    fill: var(--primary-color);
   }
 </style>
