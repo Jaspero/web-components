@@ -4,7 +4,7 @@ import '@jaspero/web-components/dist/alert.wc';
 
 ### Description
 
-`<jp-alert>` is a component for displaying alert messages.
+`<jp-alert>` is a component with the functionality of displaying alert messages.
 
 ### Attributes
 

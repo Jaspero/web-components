@@ -11,7 +11,7 @@ import '@jaspero/web-components/dist/input.wc';
 - `value` (`string`)
   - Currently selected option
 - `label`(`string`)
-  - Shows at top of the input
+  - Shows at the top of the input
 - `disabled` (`boolean`)
 - `required` (`boolean`)
 - `readonly` (`boolean`)

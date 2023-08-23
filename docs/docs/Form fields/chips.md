@@ -12,7 +12,7 @@ import '@jaspero/web-components/dist/chips.wc';
 - `name`
   - `required` for native form submission
 - `label` (`string`)
-  - Shows at top of the input
+  - Shows at the top of the input
 - `placeholder`
 - `minitems` (`number`)
   - Minimum number of items allowed

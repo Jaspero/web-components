@@ -1,19 +1,18 @@
-import '@jaspero/web-components/dist/async-table.wc';
+import '@jaspero/web-components/dist/table.wc';
 
-# Async Table
+# Table
 
 ### Description
 
-`<jp-async-table>` is a table component that loads its data asynchronously.
+`<jp-table>` is a table component with the functionality of displaying tabular data. 
 
 ### Attributes
 
-- `headers` (`TableHeader`)
+- `headers` (`TableHeader[]`)
   - Column names
 - `sort` (`TableSort`)
   - Current sorting state of the table
-- `service` (`TableService`)
-  - 
+- `rows` (`any[]`)
 
 ### Slots
 
