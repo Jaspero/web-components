@@ -167,6 +167,6 @@
 
 <div class="relative flex overflow-hidden">
   <jp-multiselect options={['aaa', 'bbb']}></jp-multiselect>
-  <jp-select options={['aaa', 'bbb']}></jp-select>
-  <jp-testing options={['United States', 'Canada', 'Croatia', 'Cambodia', 'Italy']}></jp-testing>
+  <jp-select required options={['United States', 'United Kingdom', 'Canada', 'Croatia', 'Cambodia', 'Italy', '1 Apple', '2 Trees', '3 Mugs', '4 Police Officers']}></jp-select>
+  <jp-testing options={['United States', 'Canada', 'Croatia', 'Cambodia', 'Italy', '1 Apple', '2 Trees', '3 Mugs', '4 Police Officers']}></jp-testing>
 </div>
