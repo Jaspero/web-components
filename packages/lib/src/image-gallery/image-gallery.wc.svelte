@@ -1,7 +1,7 @@
 <svelte:options
         customElement={{
             tag: 'jp-image-gallery',
-            shadow: 'open'
+            shadow: 'none'
         }}
 />
 

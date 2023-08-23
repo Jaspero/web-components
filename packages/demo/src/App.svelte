@@ -14,6 +14,7 @@
   import '../../../dist/json-editor.wc.js'
   import '../../../dist/code-editor.wc.js'*/
   import '../../../dist/image-gallery.wc.js'
+  import '../../../dist/testing.wc.js'
 
   import { renderAlert } from '../../../dist/render-alert.js';
   import { renderConfirm } from '../../../dist/render-confirm.js'
@@ -146,26 +147,12 @@
     codeEditor.addEventListener('change', (e) => console.log(e.detail))
   });
 
-
   function submit(e) {
     const formData = new FormData(e.target);
     const formProps = Object.fromEntries(formData);
 
     console.log(formProps, formData);
   }
-
-  let images = [
-    'https://www.searchenginejournal.com/wp-content/uploads/2022/06/image-search-1600-x-840-px-62c6dc4ff1eee-sej.png',
-    'https://images.ctfassets.net/hrltx12pl8hq/3j5RylRv1ZdswxcBaMi0y7/b84fa97296bd2350db6ea194c0dce7db/Music_Icon.jpg',
-    'https://www.simplilearn.com/ice9/free_resources_article_thumb/what_is_image_Processing.jpg',
-    'https://imgv3.fotor.com/images/blog-richtext-image/part-blurry-image.jpg',
-    'https://th.bing.com/th/id/OIG.CO2sHWK_IEYIwzXsC2hX',
-    'https://www.searchenginejournal.com/wp-content/uploads/2022/06/image-search-1600-x-840-px-62c6dc4ff1eee-sej.png',
-    'https://images.ctfassets.net/hrltx12pl8hq/3j5RylRv1ZdswxcBaMi0y7/b84fa97296bd2350db6ea194c0dce7db/Music_Icon.jpg',
-    'https://www.simplilearn.com/ice9/free_resources_article_thumb/what_is_image_Processing.jpg',
-    'https://imgv3.fotor.com/images/blog-richtext-image/part-blurry-image.jpg',
-    'https://th.bing.com/th/id/OIG.CO2sHWK_IEYIwzXsC2hX'
-  ]
 </script>
 
 <div bind:this={el} class="p-4"></div>
@@ -178,4 +165,8 @@
   <jp-radio options={['aaa', 'bbb']}></jp-radio>
 </form>
 
-<jp-image-gallery {images} interval={5000}></jp-image-gallery>
+<div class="relative flex overflow-hidden">
+  <jp-multiselect options={['aaa', 'bbb']}></jp-multiselect>
+  <jp-select options={['aaa', 'bbb']}></jp-select>
+  <jp-testing options={['United States', 'Canada', 'Croatia', 'Cambodia', 'Italy']}></jp-testing>
+</div>

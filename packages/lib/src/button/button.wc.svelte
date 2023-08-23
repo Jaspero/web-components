@@ -1,7 +1,7 @@
 <svelte:options
         customElement={{
             tag: 'jp-button',
-            shadow: 'open'
+            shadow: 'none'
         }}
 />
 
