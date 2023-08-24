@@ -10,14 +10,13 @@ It's a wrapper around https://quilljs.com/.
 
 ### Attributes
 
-- `value` (`string`)
-  - value of the input field (quill content)
-- `id` (`string`)
-- `name` (`string`)
-  - `required` for native form submission
-- `options` (`Object`)
-  - Quill config
-  - https://quilljs.com/docs/configuration/
+| **Name** | **Type** | **Description** |
+| :----: | :----: | :---: |
+| value | `string` | value of the input field (quill content) |
+| id | `string`| unique identifier |
+| name | `string` |  `required` for native form submission |
+| options|`object` | [Quill config](https://quilljs.com/docs/configuration/)|
+| label | `string` | shows at the top |
 
 ### Includes
 

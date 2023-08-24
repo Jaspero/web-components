@@ -8,22 +8,17 @@ import '@jaspero/web-components/dist/multiselect.wc';
 
 ### Attributes
 
-- `options` (`Array<{ label: string; selected: boolean; disabled: boolean }>`)
-  - Select options
-- `minSelects` (`number`)
-  - Minimum number of selects allowed
-- `maxSelects` (`number`)
-  - Maximum number of selects allowed
-- `required` (`boolean`)
-- `id` (`string`)
-- `name` (`string`)
-  - `required` for native form submission
-- `placeholder` (`string`)
-- `value` (`string`)
-  - Currently selected option
-- `open` (`boolean`)
-  - `true` - select is open
-  - `false` - select is closed
+| **Name** | **Type** | **Description** |
+| :----: | :----: | :---: |
+| options|`Array<{ label: string; selected:`  <br></br> ` boolean; disabled: boolean }>` | select options |
+| minSelects | `number` | minimum number of selects allowed |
+| maxSelects | `number` | maximum number of selects allowed |
+| required | `boolean` | determines if a selection is required |
+| disabled | `boolean` | determines if a selection is disabled |
+| id | `string`| unique identifier |
+| name | `string` |  `required` for native form submission |
+| value | `string` | currently selected option |
+| label | `string` | shows at the top of a selection |
 
   
 ### Slots

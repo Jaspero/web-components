@@ -8,12 +8,11 @@ import '@jaspero/web-components/dist/checkbox.wc';
 
 ### Attributes
 
-- `options` (`Array<{ label: string; value: boolean; disabled?: boolean }>`)
-  - Checkboxes
-- `minSelects` (`number`)
-  - Minimum number of checks allowed
-- `maxSelects` (`number`)
-  - Minimum number of checks allowed
+| **Name** | **Type** | **Description** |
+| :----: | :----: | :---: |
+| options | `Array<{ label: string; value:` <br></br> `boolean; disabled?: boolean }>` | checkboxes |
+| minSelects | `number` | minimum number of checks allowed |
+| maxSelects | `number` | minimum number of checks allowed |
 
 ### Slots
 

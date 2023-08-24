@@ -8,12 +8,11 @@ import '@jaspero/web-components/dist/async-table.wc';
 
 ### Attributes
 
-- `headers` (`TableHeader`)
-  - Column names
-- `sort` (`TableSort`)
-  - Current sorting state of the table
-- `service` (`TableService`)
-  - 
+| **Name** | **Type** | **Description** |
+| :----: | :----: | :---: |
+| headers |`TableHeader` | column names |
+| sort | `TableSort` | current sorting state of the table |
+| service | `TableService` | _ |
 
 ### Slots
 

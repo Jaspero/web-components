@@ -8,12 +8,13 @@ import '@jaspero/web-components/dist/button.wc';
 
 ### Attributes
 
-- `disabled` (`boolean`)
-- `loading` (`boolean`)
-- `variant` (`'basic' | 'raised' | 'stroked' | 'flat' | 'icon' | 'fab' | 'mini-fab'`)
-  -  Visual style of the button
-- `color` (`'default' | 'primary' | 'accent' | 'warn'`)
-- `type` (`'button' | 'submit'`)
+| **Name** | **Type** | **Description** |
+| :----: | :----: | :---: |
+| disabled |`boolean` | determines if a button is disabled |
+| loading | `boolean` | determines the display of a loading state | 
+| variant  | `'basic'` \| `'raised'` \| `'stroked'` \| <br></br> `flat` \| `icon` \| `fab` \| `mini-fab` | visual style of the button |
+| color | `dafault` \| `primary` \| `accent` \| `warn` | visual appearance of the button |
+| type | `button` \| `submit`| determines the behaviour of the button |
 
 ### Slots
 

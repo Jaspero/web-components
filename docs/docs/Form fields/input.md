@@ -8,26 +8,21 @@ import '@jaspero/web-components/dist/input.wc';
 
 ### Attributes
 
-- `value` (`string`)
-  - Currently selected option
-- `label`(`string`)
-  - Shows at the top of the input
-- `disabled` (`boolean`)
-- `required` (`boolean`)
-- `readonly` (`boolean`)
-- `id` (`string`)
-- `name` (`string`)
-  - `required` for native form submission
-- `minlength` (`number`)
-  - Minimum character count allowed
-- `maxlength` (`number`)
-  - Maximum character count required for a field
-- `pattern` (`string`)
-  - Input has to satisfy pattern
-- `placeholder` (`string`)
-- `inputFocused` (`boolean`)
-  - `true` - input is focused
-  - `false` - input is not focused
+| **Name** | **Type** | **Description** |
+| :----: | :----: | :---: |
+| value | `string` | currently selected option |
+| label | `string` | shows at the top of an input |
+| disabled | `boolean` | determines if an input is disabled |
+| required | `boolean` | determines if an input is required |
+| readonly | `boolean` | determines if an input is read-only |
+| id | `string`| unique identifier |
+| name | `string` |  `required` for native form submission |
+| minlength | `number` | minimum character count allowed |
+| maxlength | `number` | maximum character count allowed |
+| label | `string` | shows at the top of an input |
+| pattern | `string` | each chip has to satisfy pattern |
+| placeholder | `string` | temporary text that appears in an input field before any input is entered |
+| inputFocused | `boolean` | determines if an input is focused |
 
   
 ### Slots

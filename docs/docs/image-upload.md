@@ -1,15 +1,16 @@
 import '@jaspero/web-components/dist/image-upload.wc';
 
-# Image Gallery
+# Image Upload
 
 ### Description
 
-`<jp-image-gallery>` is a component with the functionality of uploading images.
+`<jp-image-upload>` is a component with the functionality of uploading images.
 
 ### Attributes
 
-- `label` (`string`)
-  - Shows at the top of the upload input
+| **Name** | **Type** | **Description** |
+| :----: | :----: | :---: |
+| label |`string` | shows at the top of the upload input |
 
 ### Slots
 

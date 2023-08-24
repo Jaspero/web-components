@@ -8,11 +8,11 @@ import '@jaspero/web-components/dist/table.wc';
 
 ### Attributes
 
-- `headers` (`TableHeader[]`)
-  - Column names
-- `sort` (`TableSort`)
-  - Current sorting state of the table
-- `rows` (`any[]`)
+| **Name** | **Type** | **Description** |
+| :----: | :----: | :----: |
+| headers | `TableHeader[]` | column names |
+| sort | `TableSort` | current sorting state of the table |
+| rows | `any[]` | _ |
 
 ### Slots
 

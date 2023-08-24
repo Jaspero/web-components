@@ -8,12 +8,12 @@ import '@jaspero/web-components/dist/link.wc';
 
 ### Attributes
 
-- `disabled` (`boolean`)
-- `variant` (`'basic' | 'raised' | 'stroked' | 'flat' | 'icon' | 'fab' | 'mini-fab'`) 
-  - Visual style
-- `color` (`'default' | 'primary' | 'accent' | 'warn'`)
-- `href` (`string`)
-- `target` (`string`)
+| **Name** | **Type** | **Description** |
+| :----: | :----: | :---: |
+| disabled |`boolean` | determines if a link is enabled |
+| variant | `basic` \| `raised` \| `stroked` \| <br></br> `flat` \|`icon` \| `fab` \| `mini-fab` | visual style |
+| href  | `string` | specification of the URL or web address, <br></br> used for navigation |
+| target | `string` | _ |
   
 ### Slots
 

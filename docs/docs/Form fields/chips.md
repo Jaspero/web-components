@@ -8,32 +8,21 @@ import '@jaspero/web-components/dist/chips.wc';
 
 ### Attributes
 
-- `id`
-- `name`
-  - `required` for native form submission
-- `label` (`string`)
-  - Shows at the top of the input
-- `placeholder`
-- `minitems` (`number`)
-  - Minimum number of items allowed
-- `maxitems` (`number`)
-  - Maximum number of items allowed
-- `pattern` (`string`)
-  - Each chip has to satisfy pattern
-- `clearAll` (`boolean`)
-  - Clears all chips
-- `required` (`bool`)
-- `unique` (`bool`)
-  - `true` - each chip has to be different
-  - `false` - chips don't have to be different
-- `chips` (`Array<string>`)
-  - Array of chips
-  - Binded to input
-- `inputFocused` (`boolean`)
-  - `true` - input is focused
-  - `false` - input is not focused
-- `inputValue` (`string`)
-  - content of input
+| **Name** | **Type** | **Description** |
+| :----: | :----: | :---: |
+| id | `string` | unique identifier |
+| name | `string` | `required` for native form submission |
+| placeholder | `string` | temporary text that appears in an input field before any input is entered |
+| label | `string` | shows at the top of an input |
+| minitems | `number` | minimum number of items allowed |
+| maxitems |  `number` |  maximum number of items allowed |
+| pattern | `string` | each chip has to satisfy pattern |
+| required | `boolean` | determines if an input is required |
+| unique | `boolean` | determines if each chip has to be different | 
+| chips |  `Array<string>` | array of chips |
+| inputFocused | `boolean` | determines if an input is focused |
+| inputValue | `string` | content of an input |
+
 
 ### Slots
 

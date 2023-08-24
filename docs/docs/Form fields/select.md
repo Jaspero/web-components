@@ -8,19 +8,16 @@ import '@jaspero/web-components/dist/select.wc';
 
 ### Attributes
 
-- `options` (`Array<string>`)
-  - Select options
-- `disabled` (`boolean`)
-- `required` (`boolean`)
-- `value` (`string`)
-  - Currently selected option
-- `id` (`string`)
-- `name` (`string`)
-  - `required` for native form submission
-- `placeholder` (`string`)
-- `open` (`boolean`)
-  - `true` - select is open
-  - `false` - select is closed
+| **Name** | **Type** | **Description** |
+| :----: | :----: | :---: |
+| options| `Array<string>` | select options |
+| disabled | `boolean` | determines if a selection is disabled |
+| required | `boolean` | determines if a selection is required |
+| value | `string` | currently selected option |
+| id | `string`| unique identifier |
+| name | `string` |  `required` for native form submission |
+| label | `string` | shows at the top of a selection |
+
 
 ### Slots
 

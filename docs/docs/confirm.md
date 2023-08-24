@@ -8,14 +8,13 @@ import '@jaspero/web-components/dist/confirm.wc';
 
 ### Attributes
 
-- `title` (`string`)
-- `message` (`string`)
-- `reject` (`string`)
-   - Rejects action
-- `accept` (`string`)
-   - Accepts action
-- `closable` (`boolean`) 
-   - Determines if the confirmation can be closed 
+| **Name** | **Type** | **Description** |
+| :----: | :----: | :---: |
+| title |`string` | _ |
+| message | `string` | _ |
+| reject | `string` | rejects action |
+| accept | `string` | accepts action |
+| closable | `boolean` | determines if a confirmation can be closed |
 
 ### Slots
 

@@ -10,11 +10,11 @@ It's a wrapper around https://codemirror.net/5/.
 
 ### Attributes
 
-- `content` (`JSON`)
-  - content of the editor
-- `options` (`Object`)
-  - codemirror options
-  - https://codemirror.net/5/doc/manual.html#config
+| **Name** | **Type** | **Description** |
+| :----: | :----: | :---: |
+| content | `JSON` | content of the editor |
+| options | `Object` | [CodeMirror options](https://codemirror.net/5/doc/manual.html#config) |
+
 
 ### Includes
 

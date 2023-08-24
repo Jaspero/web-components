@@ -10,11 +10,11 @@ It's a wrapper around https://github.com/josdejong/jsoneditor.
 
 ### Attributes
 
-- `content` (`JSON`)
-  - content of the editor
-- `options` (`Object`)
-  - jsoneditor options
-  - https://github.com/josdejong/jsoneditor/blob/master/docs/api.md
+
+| **Name** | **Type** | **Description** |
+| :----: | :----: | :---: |
+| content | `JSON` | content of the editor |
+| options | `Object` |   [jsoneditor options](https://github.com/josdejong/jsoneditor/blob/master/docs/api.md) |
 
 ### Includes
 

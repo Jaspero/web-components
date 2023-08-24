@@ -8,15 +8,14 @@ import '@jaspero/web-components/dist/image-gallery.wc';
 
 ### Attributes
 
-- `images` (`Array`)
-- `imagesPerSlide` (`number`)
-- `enablePagination` (`boolean`)
-- `sliderBar` (`boolean`)
-   - `true` - sliding content visible
-   - `false` - sliding content invisible
-- `autoSlide` (`boolean`) 
-- `interval` (`number`) 
-   -  Time interval between automatic slides
+| **Name** | **Type** | **Description** |
+| :----: | :----: | :---: |
+| images |`Array` | _ |
+| imagesPerSlide | `number` | number of images shown on a slide |
+| enablePagination | `boolean` | determines if pagination is enabled |
+| sliderBar | `boolean` | determines visability of a sliding content |
+| autoSlide | `boolean` | determines if automatic slides are enabled |
+| interval | `number` | time interval between automatic slides |
   
 ### Slots
 
@@ -31,3 +30,4 @@ This component does not have any methods.
 ### Events
 
 This component does not have any events. 
+>

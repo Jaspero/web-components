@@ -7,15 +7,13 @@ import '@jaspero/web-components/dist/radio.wc';
 `<jp-radio>` is an enhanced form component with the functionality of selecting a single choice from multiple options.
 
 ### Attributes
-
-- `options` (`Array<string>`)
-  - Select options
-- `disabled` (`boolean`)
-- `required` (`boolean`)
-- `value` (`string`)
-  - Currently selected option
-- `name` (`string`)
-  - `required` for native form submission
+| **Name** | **Type** | **Description** |
+| :----: | :----: | :---: |
+| options|`Array<string>` | select options |
+| disabled | `boolean` | determines if a selection is disabled |
+| required | `boolean` | determines if a selection is required |
+| value | `string` | currently selected option |
+| name | `string` |  `required` for native form submission |
   
 ### Slots
 

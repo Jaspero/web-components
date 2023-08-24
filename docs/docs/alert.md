@@ -8,9 +8,11 @@ import '@jaspero/web-components/dist/alert.wc';
 
 ### Attributes
 
-- `title` (`string`)
-- `message` (`string`)
-- `state` (`error`)
+| **Name** | **Type** | 
+| :----: | :----: |
+| title|`string`| 
+| message | `string` |
+| state | `error` | 
 
 ### Slots
 
