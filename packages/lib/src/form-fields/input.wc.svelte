@@ -52,6 +52,7 @@
         {#if type === 'text'}
             <input type="text"
                    class="field-input"
+                   {placeholder}
                    {required}
                    {disabled}
                    {readonly}
@@ -66,6 +67,7 @@
         {:else if type === 'password'}
             <input type="password"
                    class="field-input"
+                   {placeholder}
                    {required}
                    {disabled}
                    {readonly}
@@ -80,6 +82,7 @@
         {:else if type === 'email'}
             <input type="email"
                    class="field-input"
+                   {placeholder}
                    {required}
                    {disabled}
                    {readonly}
@@ -94,6 +97,7 @@
         {:else if type === 'tel'}
             <input type="tel"
                    class="field-input"
+                   {placeholder}
                    {required}
                    {disabled}
                    {readonly}
@@ -108,6 +112,7 @@
         {:else if type === 'url'}
             <input type="url"
                    class="field-input"
+                   {placeholder}
                    {required}
                    {disabled}
                    {readonly}
@@ -182,10 +187,10 @@
         -o-transform: translateY(-50%);
         transform: translateY(-50%);
         font-size: 1rem;
-        -webkit-transition: .3s;
-        -o-transition: .3s;
-        -moz-transition: .3s;
-        transition: .3s;
+        -webkit-transition: transform .3s, top .3s, font-size .3s;
+        -o-transition: transform .3s, top .3s, font-size .3s;
+        -moz-transition: transform .3s, top .3s, font-size .3s;
+        transition: transform .3s, top .3s, font-size .3s;
     }
 
     .field-label.move {
@@ -196,6 +201,22 @@
         -o-transform: translateY(0);
         transform: translateY(0);
         font-size: .75rem;
+    }
+
+    .field-label.move + .field-input:-moz-placeholder {
+        opacity: 1;
+    }
+    .field-label.move + .field-input::-moz-placeholder {
+        opacity: 1;
+    }
+    .field-label.move + .field-input:-ms-input-placeholder {
+        opacity: 1;
+    }
+    .field-label.move + .field-input::-ms-input-placeholder {
+        opacity: 1;
+    }
+    .field-label.move + .field-input::placeholder {
+        opacity: 1;
     }
 
     .field-input {
@@ -216,5 +237,33 @@
         -webkit-border-radius: 0;
         -moz-border-radius: 0;
         border-radius: 0;
+    }
+
+    .field-input:-moz-placeholder {
+        opacity: 0;
+        -moz-transition: opacity .3s;
+        transition: opacity .3s;
+    }
+    .field-input::-moz-placeholder {
+        opacity: 0;
+        -moz-transition: opacity .3s;
+        transition: opacity .3s;
+    }
+    .field-input:-ms-input-placeholder {
+        opacity: 0;
+        -ms-transition: opacity .3s;
+        transition: opacity .3s;
+    }
+    .field-input::-ms-input-placeholder {
+        opacity: 0;
+        -ms-transition: opacity .3s;
+        transition: opacity .3s;
+    }
+    .field-input::placeholder {
+        opacity: 0;
+        -webkit-transition: opacity .3s;
+        -o-transition: opacity .3s;
+        -moz-transition: opacity .3s;
+        transition: opacity .3s;
     }
 </style>

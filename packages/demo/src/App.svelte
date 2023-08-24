@@ -152,8 +152,6 @@
 
     console.log(formProps, formData);
   }
-
-  let lol = '';
 </script>
 
 <div bind:this={el} class="p-4"></div>
@@ -170,7 +168,7 @@
   <jp-multiselect options={[{label: 'Audi'}, {label: 'Volvo'}, {label: 'BMW'}, {label: 'Peugeot'}, {label: 'Renault'}, {label: 'Ford'}, {label: 'Opel'}]}></jp-multiselect>
   <jp-select disabled options={['United States', 'United Kingdom', 'Canada', 'Croatia', 'Cambodia', 'Italy', '1 Apple', '2 Trees', '3 Mugs', '4 Police Officers']}></jp-select>
   <jp-input></jp-input>
-  <jp-input required></jp-input>
+  <jp-input required placeholder="adsfasmf"></jp-input>
   <jp-input disabled value="adsofjioasdjfioj"></jp-input>
 </div>
 

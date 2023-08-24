@@ -281,10 +281,10 @@
     -ms-transform: translateY(-50%);
     -o-transform: translateY(-50%);
     transform: translateY(-50%);
-    -webkit-transition: .3s;
-    -o-transition: .3s;
-    -moz-transition: .3s;
-    transition: .3s;
+    -webkit-transition: transform .3s, top .3s, font-size .3s;
+    -o-transition: transform .3s, top .3s, font-size .3s;
+    -moz-transition: transform .3s, top .3s, font-size .3s;
+    transition: transform .3s, top .3s, font-size .3s;
   }
 
   .select-label.move {
@@ -324,10 +324,10 @@
     height: 1rem;
     min-width: 1rem;
     min-height: 1rem;
-    -webkit-transition: .3s;
-    -o-transition: .3s;
-    -moz-transition: .3s;
-    transition: .3s;
+    -webkit-transition: transform .3s;
+    -o-transition: transform .3s;
+    -moz-transition: transform .3s;
+    transition: transform .3s;
   }
 
   .select-arrow.rotate {
@@ -389,10 +389,10 @@
     padding: .75rem;
     text-align: left;
     outline: none;
-    -webkit-transition: .3s;
-    -o-transition: .3s;
-    -moz-transition: .3s;
-    transition: .3s;
+    -webkit-transition: background-color .3s, color .3s, fill .3s;
+    -o-transition: background-color .3s, color .3s, fill .3s;
+    -moz-transition: background-color .3s, color .3s, fill .3s;
+    transition: background-color .3s, color .3s, fill .3s;
   }
 
   .menu-button.selected {
