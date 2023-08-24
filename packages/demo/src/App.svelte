@@ -3,13 +3,15 @@
   /*import '../../../dist/alert.wc.js';
   import '../../../dist/confirm.wc.js'
   import '../../../dist/async-table.wc.js';*/
-  import '../../../dist/input.wc.js';
+  /*import '../../../dist/input.wc.js';*/
   /*import '../../../dist/quill.wc.js';*/
   import '../../../dist/checkbox.wc.js'
   /*import '../../../dist/progress-spinner.wc.js'*/
   import '../../../dist/chips.wc.js'
   import '../../../dist/multiselect.wc.js'
   import '../../../dist/select.wc.js'
+  import '../../../dist/accordion.wc.js'
+  import '../../../dist/bellow.wc.js'
   /*import '../../../dist/radio.wc.js'
   import '../../../dist/json-editor.wc.js'
   import '../../../dist/code-editor.wc.js'*/
@@ -170,6 +172,11 @@
   <jp-input></jp-input>
   <jp-input required placeholder="adsfasmf"></jp-input>
   <jp-input disabled value="adsofjioasdjfioj"></jp-input>
+  <jp-accordion multiple>
+    <jp-bellow title="First Panel">Content for the first panel</jp-bellow>
+    <jp-bellow title="Second Panel">Content for the second panel</jp-bellow>
+    <jp-bellow title="Third Panel">Content for the third panel</jp-bellow>
+  </jp-accordion>
 </div>
 
 <form action="">
