@@ -172,6 +172,9 @@
   <jp-input></jp-input>
   <jp-input required placeholder="adsfasmf"></jp-input>
   <jp-input disabled value="adsofjioasdjfioj"></jp-input>
+</div>
+
+<div class="max-w-xl mx-auto">
   <jp-accordion multiple>
     <jp-bellow title="First Panel">Content for the first panel</jp-bellow>
     <jp-bellow title="Second Panel">Content for the second panel</jp-bellow>

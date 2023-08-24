@@ -1,7 +1,7 @@
 <svelte:options
         customElement={{
         tag: 'jp-accordion',
-        shadow: 'none'
+        shadow: 'open'
     }}
 />
 
@@ -30,3 +30,11 @@
 <div class="accordion">
     <slot/>
 </div>
+
+<style>
+    .accordion {
+        width: 100%;
+        margin: 1rem;
+        border-radius: 50%;
+    }
+</style>
