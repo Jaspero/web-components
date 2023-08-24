@@ -26,7 +26,6 @@
   export let id: string | null = null;
   export let name: string | null = null;
   export let label = 'Label';
-  export let placeholder: string = '';
   export const getValue = () => value;
 
   let open = false;
@@ -181,7 +180,7 @@
 </div>
 
 {#if open}
-  <div class="overlay" on:click={toggleMenu} on:keydown={handleKeydown} tabindex="-1">
+  <div class="overlay" on:click={toggleMenu} on:keydown={handleKeydown} tabindex="-1" role="dialog">
     <div class="menu" style={menuStyle}>
       {#each options as option, index (option)}
         <button class="menu-button"
@@ -249,6 +248,14 @@
     border-radius: .25rem;
   }
 
+  .select:focus {
+    outline: none;
+    border-color: var(--primary-color);
+    -webkit-box-shadow: inset 0 0 0 1px var(--primary-color);
+    -moz-box-shadow: inset 0 0 0 1px var(--primary-color);
+    box-shadow: inset 0 0 0 1px var(--primary-color);
+  }
+
   .select.toggled {
     -webkit-border-bottom-left-radius: 0;
     -moz-border-radius-bottomleft: 0;
@@ -257,6 +264,9 @@
     -moz-border-radius-bottomright: 0;
     border-bottom-right-radius: 0;
     border-bottom-color: var(--primary-color);
+    -webkit-box-shadow: inset 0 -2px 1px -1px var(--primary-color);
+    -moz-box-shadow: inset 0 -2px 1px -1px var(--primary-color);
+    box-shadow: inset 0 -2px 1px -1px var(--primary-color);
   }
 
   .select:disabled .select-label, .select:disabled .select-arrow {

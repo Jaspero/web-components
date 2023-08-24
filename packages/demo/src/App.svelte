@@ -4,17 +4,16 @@
   import '../../../dist/confirm.wc.js'
   import '../../../dist/async-table.wc.js';*/
   import '../../../dist/input.wc.js';
-  /*import '../../../dist/quill.wc.js';
+  /*import '../../../dist/quill.wc.js';*/
   import '../../../dist/checkbox.wc.js'
-  import '../../../dist/progress-spinner.wc.js'
-  import '../../../dist/chips.wc.js'*/
+  /*import '../../../dist/progress-spinner.wc.js'*/
+  import '../../../dist/chips.wc.js'
   import '../../../dist/multiselect.wc.js'
   import '../../../dist/select.wc.js'
   /*import '../../../dist/radio.wc.js'
   import '../../../dist/json-editor.wc.js'
   import '../../../dist/code-editor.wc.js'*/
   import '../../../dist/image-gallery.wc.js'
-  import '../../../dist/testing.wc.js'
 
   import { renderAlert } from '../../../dist/render-alert.js';
   import { renderConfirm } from '../../../dist/render-confirm.js'
@@ -164,17 +163,18 @@
 
   <button type="submit">Submit</button>
 
-  <jp-radio options={['aaa', 'bbb']}></jp-radio>
+  <!--<jp-radio options={['aaa', 'bbb']}></jp-radio>-->
 </form>
 
 <div class="relative flex overflow-hidden">
   <jp-multiselect options={[{label: 'Audi'}, {label: 'Volvo'}, {label: 'BMW'}, {label: 'Peugeot'}, {label: 'Renault'}, {label: 'Ford'}, {label: 'Opel'}]}></jp-multiselect>
-  <jp-testing options={['United States', 'Canada', 'Croatia', 'Cambodia', 'Italy', '1 Apple', '2 Trees', '3 Mugs', '4 Police Officers']}></jp-testing>
-  <jp-select options={['United States', 'United Kingdom', 'Canada', 'Croatia', 'Cambodia', 'Italy', '1 Apple', '2 Trees', '3 Mugs', '4 Police Officers']}></jp-select>
+  <jp-select disabled options={['United States', 'United Kingdom', 'Canada', 'Croatia', 'Cambodia', 'Italy', '1 Apple', '2 Trees', '3 Mugs', '4 Police Officers']}></jp-select>
+  <jp-input></jp-input>
+  <jp-input required></jp-input>
+  <jp-input disabled value="adsofjioasdjfioj"></jp-input>
 </div>
 
 <form action="">
-
   <jp-select required options={['United States', 'United Kingdom', 'Canada', 'Croatia', 'Cambodia', 'Italy', '1 Apple', '2 Trees', '3 Mugs', '4 Police Officers']}></jp-select>
 
   <button>asdf</button>

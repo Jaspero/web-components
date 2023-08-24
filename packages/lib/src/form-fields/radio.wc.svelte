@@ -48,6 +48,7 @@
             {name}
             value={option}
             {required}
+            {disabled}
             bind:group={value}
         />
         <span class="fake-button">
