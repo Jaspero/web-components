@@ -43,7 +43,6 @@
         attachedInternals.setFormValue(value);
         dispatch('value', { value });
     }
-
 </script>
 
 <div>
@@ -158,6 +157,10 @@
         border-radius: .25rem;
     }
 
+    .field.required .field-label::after {
+        content: ' *';
+    }
+
     .field.disabled .field-label, .field.disabled .field-input {
         opacity: .33;
         background: none;
@@ -213,9 +216,5 @@
         -webkit-border-radius: 0;
         -moz-border-radius: 0;
         border-radius: 0;
-    }
-
-    .field.required .field-label::after {
-        content: ' *';
     }
 </style>
