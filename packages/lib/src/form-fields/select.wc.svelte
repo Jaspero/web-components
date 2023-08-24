@@ -163,7 +163,7 @@
           class:toggled={open}
           bind:this={bindingElement}
           {disabled}
-          on:click={toggleMenu}
+          on:click|preventDefault={toggleMenu}
           on:keydown={handleKeydown}>
     <span class="select-label" class:move={value || open}>
       { label || 'Select an option'}
@@ -187,7 +187,7 @@
         <button class="menu-button"
                 class:selected={value === option}
                 bind:this={optionElements[index]}
-                on:click={() => value = option}>
+                on:click|preventDefault={() => value = option}>
           <span>{option}</span>
 
           {#if value === option}
