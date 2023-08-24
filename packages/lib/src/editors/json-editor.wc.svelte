@@ -34,10 +34,8 @@
 
   onMount(() => {
     if (typeof value == 'string') {
-      value = { json: JSON.parse(value) };
-    } else {
-      value = { json: value };
-    };
+      value = JSON.parse(value);
+    }
     
     options.onChange = async () => {
       try {
