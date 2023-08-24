@@ -127,7 +127,6 @@
           }
         }
 
-
         optionElements[nextIndex].focus();
       }
 
@@ -380,14 +379,19 @@
     padding: .75rem;
     text-align: left;
     outline: none;
-  }
-
-  .menu-button:hover, .menu-button:focus, .menu-button.selected  {
-    background-color: var(--background-tertiary);
+    -webkit-transition: .3s;
+    -o-transition: .3s;
+    -moz-transition: .3s;
+    transition: .3s;
   }
 
   .menu-button.selected {
+    background-color: var(--background-tertiary);
     color: var(--primary-color);
     fill: var(--primary-color);
+  }
+
+  .menu-button:hover, .menu-button:focus {
+    background-color: var(--background-secondary);
   }
 </style>
