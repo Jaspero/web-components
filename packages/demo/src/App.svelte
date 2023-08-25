@@ -135,8 +135,7 @@
 
     const textareaEl = document.createElement('jp-textarea') as HTMLInputElement;
 
-    textareaEl.value = 'aaaaaaaaa';
-    textareaEl.label = 'textarea label';
+    textareaEl.value = 'pattern text';
     textareaEl.name = 'textarea';
 
     formEl.appendChild(textareaEl);
