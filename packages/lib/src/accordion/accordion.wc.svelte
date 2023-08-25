@@ -34,7 +34,7 @@
 <style>
     .accordion {
         width: 100%;
-        margin: 1rem;
+        margin: 1rem 0;
         border-radius: 50%;
     }
 </style>

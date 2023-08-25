@@ -175,7 +175,7 @@
 </div>
 
 <div class="max-w-xl mx-auto">
-  <jp-accordion multiple>
+  <jp-accordion>
     <jp-bellow title="First Panel"><input type="text">Content for the first panel</jp-bellow>
     <jp-bellow title="Second Panel">Content for the second panel</jp-bellow>
     <jp-bellow title="Third Panel">Content for the third panel</jp-bellow>
