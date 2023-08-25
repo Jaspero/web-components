@@ -1,0 +1,1 @@
+function c(n){return n.replace(/~1/g,"/").replace(/~0/g,"~")}function a(n){return n===""?[]:(n.charAt(0)!=="/"&&(n="/"+n),n.substring(1).split(/\//).map(c))}function i(n,t){const o=Array.isArray(t)?t:a(t);for(let e=0;e<o.length;++e){const r=o[e];if(!(typeof n=="object"&&r in n))throw new Error("Invalid reference token: "+r);n=n[r]}return n}export{i as g};

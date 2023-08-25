@@ -1,0 +1,1 @@
+function o(e){function t(){e.dispatchEvent(new CustomEvent("click_outside",e))}function c(n){e&&!e.contains(n.target)&&!n.defaultPrevented&&t()}function i(n){n.key==="Escape"&&t()}return window.addEventListener("keydown",i,!0),document.addEventListener("click",c,!0),{destroy(){document.removeEventListener("click",c,!0),window.removeEventListener("keydown",i,!0)}}}export{o as c};

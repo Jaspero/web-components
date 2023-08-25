@@ -1,0 +1,1 @@
+async function a(t,o){t={duration:5e3,state:"error",host:document.body,...t||{}};const e=document.createElement("jp-alert");e.title=t.title||"",e.message=t.message||"",e.state=t.state,t.host.appendChild(e);function s(n){t.host.removeChild(e),o&&o(n)}e.addEventListener("close",()=>s("close")),t.duration&&setTimeout(()=>s("timeout"),t.duration)}export{a as renderAlert};
