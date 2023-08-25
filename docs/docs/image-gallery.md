@@ -1,5 +1,3 @@
-import '@jaspero/web-components/dist/image-gallery.wc';
-
 # Image Gallery
 
 ### Description

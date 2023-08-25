@@ -1,5 +1,3 @@
-import '@jaspero/web-components/dist/confirm.wc';
-
 # Confirm
 
 ### Description

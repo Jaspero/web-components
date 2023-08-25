@@ -1,5 +1,3 @@
-import '@jaspero/web-components/dist/json-editor.wc';
-
 # JSON Editor
 
 ### Description

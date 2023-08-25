@@ -1,5 +1,3 @@
-import '@jaspero/web-components/dist/code-editor.wc';
-
 # Code Editor
 
 ### Description

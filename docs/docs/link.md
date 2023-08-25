@@ -1,5 +1,3 @@
-import '@jaspero/web-components/dist/link.wc';
-
 # Link
 
 ### Description

@@ -1,5 +1,3 @@
-import '@jaspero/web-components/dist/alert.wc';
-
 # Alert
 
 ### Description

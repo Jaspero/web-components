@@ -1,5 +1,3 @@
-import '@jaspero/web-components/dist/progress-spinner.wc';
-
 # Progress-Spinner
 
 ### Description

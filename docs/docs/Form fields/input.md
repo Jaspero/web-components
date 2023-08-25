@@ -1,5 +1,3 @@
-import '@jaspero/web-components/dist/input.wc';
-
 # Input
 
 ### Description

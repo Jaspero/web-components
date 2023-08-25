@@ -1,5 +1,3 @@
-import '@jaspero/web-components/dist/select.wc';
-
 # Select
 
 ### Description

@@ -1,5 +1,3 @@
-import '@jaspero/web-components/dist/async-table.wc';
-
 # Async Table
 
 ### Description

@@ -1,5 +1,3 @@
-import '@jaspero/web-components/dist/image-upload.wc';
-
 # Image Upload
 
 ### Description
