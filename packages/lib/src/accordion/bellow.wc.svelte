@@ -44,8 +44,7 @@
     <div
             class="expansion-content"
             bind:this={contentElement}
-            style="height: {expanded ? `${contentHeight}px` : '0px' }"
-    >
+            style="height: {expanded ? `${contentHeight}px` : '0px' }">
         <slot/>
     </div>
 </div>
@@ -55,6 +54,10 @@
         background-color: var(--background-primary);
         box-shadow: 0 3px 6px rgba(0, 0, 0, .16);
         transition: .3s;
+    }
+
+    .expansion-panel:not(.expanded) .expansion-content {
+        visibility: hidden;
     }
 
     .expansion-panel.expanded {
@@ -76,6 +79,11 @@
         font-size: 1rem;
         cursor: pointer;
         padding: .75rem 1rem;
+        transition: background-color .3s;
+    }
+
+    .expansion-header:hover, .expansion-header:focus {
+        background: var(--background-tertiary);
     }
 
     .expansion-header-title {
