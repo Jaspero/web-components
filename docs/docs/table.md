@@ -12,7 +12,7 @@ import '@jaspero/web-components/dist/table.wc';
 | :----: | :----: | :----: |
 | headers | `TableHeader[]` | column names |
 | sort | `TableSort` | current sorting state of the table |
-| rows | `any[]` | _ |
+| rows | `any[]` | data displayed in the table |
 
 ### Slots
 

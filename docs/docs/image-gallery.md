@@ -10,7 +10,7 @@ import '@jaspero/web-components/dist/image-gallery.wc';
 
 | **Name** | **Type** | **Description** |
 | :----: | :----: | :---: |
-| images |`Array` | _ |
+| images |`Array` | stores an image collection |
 | imagesPerSlide | `number` | number of images shown on a slide |
 | enablePagination | `boolean` | determines if pagination is enabled |
 | sliderBar | `boolean` | determines visability of a sliding content |

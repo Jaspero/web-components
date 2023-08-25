@@ -12,7 +12,7 @@ import '@jaspero/web-components/dist/async-table.wc';
 | :----: | :----: | :---: |
 | headers |`TableHeader` | column names |
 | sort | `TableSort` | current sorting state of the table |
-| service | `TableService` | _ |
+| service | `TableService` | data handling |
 
 ### Slots
 

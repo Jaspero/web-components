@@ -13,7 +13,7 @@ import '@jaspero/web-components/dist/link.wc';
 | disabled |`boolean` | determines if a link is enabled |
 | variant | `basic` \| `raised` \| `stroked` \| <br></br> `flat` \|`icon` \| `fab` \| `mini-fab` | visual style |
 | href  | `string` | specification of the URL or web address, <br></br> used for navigation |
-| target | `string` | _ |
+| target | `string` | destination of the link |
   
 ### Slots
 

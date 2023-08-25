@@ -10,8 +10,8 @@ import '@jaspero/web-components/dist/confirm.wc';
 
 | **Name** | **Type** | **Description** |
 | :----: | :----: | :---: |
-| title |`string` | _ |
-| message | `string` | _ |
+| title |`string` | label of the confirmation |
+| message | `string` | information within the confirmation |
 | reject | `string` | rejects action |
 | accept | `string` | accepts action |
 | closable | `boolean` | determines if a confirmation can be closed |

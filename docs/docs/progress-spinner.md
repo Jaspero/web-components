@@ -12,9 +12,9 @@ import '@jaspero/web-components/dist/progress-spinner.wc';
 | :----: | :----: | :----: |
 | determinate | `boolean` | `true` - component renders as a progress bar <br></br> `false` - component renders as a spinner |
 | progress | `number` | from `0` to `100` <br></br> number indicating the progress | 
-| radius | `number` | _ |
-| stroke | `number` | _ |
-| color | `string` | _ |
+| radius | `number` | determines the size of the progress spinner |
+| stroke | `number` | determines the thickness of the progress spinner |
+| color | `string` | visual enchancement of the progress spinner |
 
 ### Slots
 
