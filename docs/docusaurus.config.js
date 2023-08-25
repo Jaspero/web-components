@@ -95,7 +95,7 @@ const config = {
       src: 'https://cdn.quilljs.com/1.3.6/quill.js'
     },
     {
-      src: '/web-components/code-editor.wc.js'
+      src: '/web-components/c/code-editor.wc.js'
     }
   ],
 
