@@ -21,19 +21,18 @@
     export let attachedInternals: ElementInternals;
     export let value: string = '';
     export let label: string = 'Label';
+    export let hint: string = '';
     export let required: boolean = false;
     export let disabled: boolean = false;
     export let readonly: boolean = false;
     export let type: 'text' | 'password' | 'email' | 'tel' | 'url' = 'text';
-    export let id: string | null = null;
-    export let name: string | null = null;
+    export let id: string = '';
+    export let name: string = '';
     export let minlength: number | null = null;
     export let maxlength: number | null = null;
-    export let pattern: string | null = null;
-    export let placeholder: string | null = null;
-
+    export let pattern: string = '';
+    export let placeholder: string = '';
     export let inputFocused: boolean = false;
-
     export const getValue = () => value;
 
     const dispatch = createEventDispatcher();
@@ -45,7 +44,7 @@
     }
 </script>
 
-<div>
+<div class:has-hint={hint}>
     <label class="field" class:disabled class:required>
         <span class="field-label" class:move={inputFocused || value}>{@html label}</span>
 
@@ -126,9 +125,20 @@
                    on:blur={() => inputFocused = false}>
         {/if}
     </label>
+
+    {#if hint}
+        <span class="field-hint">
+            {@html hint}
+        </span>
+    {/if}
 </div>
 
 <style>
+    .has-hint {
+        position: relative;
+        margin-bottom: 1.25rem;
+    }
+
     .field {
         position: relative;
         display: -webkit-box;
@@ -265,5 +275,26 @@
         -o-transition: opacity .3s;
         -moz-transition: opacity .3s;
         transition: opacity .3s;
+    }
+
+    .field-hint {
+        position: absolute;
+        top: 100%;
+        left: 0;
+        width: 100%;
+        height: 1.25rem;
+        line-height: 1.25rem;
+        font-size: .75rem;
+        padding: 0 .75rem;
+        white-space: nowrap;
+        overflow: hidden;
+        -o-text-overflow: ellipsis;
+        text-overflow: ellipsis;
+        color: var(--text-secondary);
+    }
+
+    .field-hint:hover {
+        z-index: 255;
+        overflow: unset;
     }
 </style>
