@@ -5,7 +5,7 @@ export default () => {
   import('./src/link/link.wc.svelte');
   import('./src/accordion/accordion.wc.svelte');
   import('./src/accordion/bellow.wc.svelte');
-  import('./src/image-upload/image-upload.wc.svelte');
+  import('./src/form-fields/image-upload.wc.svelte');
   import('./src/image-gallery/image-gallery.wc.svelte');
   import('./src/alert/alert.wc.svelte');
   import('./src/alert/render-alert');

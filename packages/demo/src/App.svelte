@@ -16,6 +16,7 @@
   import '../../../dist/json-editor.wc.js'
   import '../../../dist/code-editor.wc.js'*/
   import '../../../dist/image-gallery.wc.js'
+  import '../../../dist/image-upload.wc.js'
 
   import { renderAlert } from '../../../dist/render-alert.js';
   import { renderConfirm } from '../../../dist/render-confirm.js'
@@ -86,7 +87,7 @@
     spinnerEl.radius = 100;
     spinnerEl.stroke = 20;
     el.appendChild(spinnerEl)
-
+/*
     const chipsEl = document.createElement('jp-chips') as HTMLInputElement;
   
     chipsEl.name = 'chips'
@@ -98,7 +99,7 @@
     chipsEl.unique = true
     // chipsEl.pattern = /kjh/;
   
-    formEl.appendChild(chipsEl)
+    formEl.appendChild(chipsEl)*/
 
     const multiselectEl = document.createElement('jp-multiselect') as HTMLInputElement;
 
@@ -146,6 +147,20 @@
     el.appendChild(codeEditor)
 
     codeEditor.addEventListener('change', (e) => console.log(e.detail))
+
+    const imageUploadEl = document.createElement('jp-image-upload')
+
+    imageUploadEl.service = {
+      image: '',
+      acceptedFiles: "image/png, image/jpeg",
+      imageChange: (e) => console.log(e),
+      uploadFile: () => console.log(this.image)
+    }
+
+    imageUploadEl.name = 'nameeeee'
+    imageUploadEl.id = 'imageuploadid'
+
+    formEl.appendChild(imageUploadEl)
   });
 
   function submit(e) {
