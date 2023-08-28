@@ -22,10 +22,8 @@
   export let id: string | null = null;
   export let value: string = '';
   export let name: string | null = null;
-  export let placeholder: string | null = null;
-  export let pattern: string | null = null;
+  export let placeholder: string = '';
 
-  export let disabled: boolean = false;
   export let required: boolean = false;
   export let readonly: boolean = false;
 
@@ -46,12 +44,10 @@
 <textarea
   {placeholder}
   {required}
-  {disabled}
   {readonly}
   {id}
   {name}
   {minlength}
   {maxlength}
-  {pattern}
   bind:value
 ></textarea>
