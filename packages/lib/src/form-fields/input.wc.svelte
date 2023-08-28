@@ -30,7 +30,7 @@
     export let name: string = '';
     export let minlength: number | null = null;
     export let maxlength: number | null = null;
-    export let pattern: string = '';
+    export let pattern: string | null = null;
     export let placeholder: string = '';
     export let inputFocused: boolean = false;
     export const getValue = () => value;
