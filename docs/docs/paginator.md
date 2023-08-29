@@ -35,6 +35,6 @@ This component does not have any methods.
 ### Demo
 
 ```jsx live
-<jp-pagination>
-</jp-pagination>
+<jp-paginator>
+</jp-paginator>
 ```
