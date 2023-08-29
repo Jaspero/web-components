@@ -24,6 +24,14 @@ export class FirebaseTableService {
 
 		this.ref = snap.docs[snap.docs.length - 1];
 
+		console.log({
+			hasMore: snap.docs.length > this.pageSize,
+			rows: snap.docs.slice(0, this.pageSize).map(doc => ({
+				id: doc.id,
+				...doc.data() as any
+			}))
+		});
+
 		return {
 			hasMore: snap.docs.length > this.pageSize,
 			rows: snap.docs.slice(0, this.pageSize).map(doc => ({

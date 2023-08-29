@@ -33,7 +33,7 @@
       return fallback || '';
     }
 
-    if (!row.pipes) {
+    if (!pipes) {
       return value;
     }
 
