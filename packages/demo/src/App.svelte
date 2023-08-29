@@ -16,6 +16,7 @@
   import '../../../dist/json-editor.wc.js'
   import '../../../dist/code-editor.wc.js'*/
   import '../../../dist/image-gallery.wc.js'
+  import '../../../dist/paginator.wc.js'
 
   import { renderAlert } from '../../../dist/render-alert.js';
   import { renderConfirm } from '../../../dist/render-confirm.js'
@@ -86,6 +87,11 @@
     spinnerEl.radius = 100;
     spinnerEl.stroke = 20;
     el.appendChild(spinnerEl)
+
+    const paginatorEl = document.createElement('jp-paginator');
+
+    paginatorEl.addEventListener('change', (e) => console.log(e.detail))
+    el.appendChild(paginatorEl)
 
     const chipsEl = document.createElement('jp-chips') as HTMLInputElement;
   
