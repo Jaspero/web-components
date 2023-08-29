@@ -16,7 +16,7 @@
 | pageSize | | `number` | number of items per page |
 | pageSizeOptions | | `number []` | list of different page sizes to choose from |
 | getRangeLabel | | `string` | text of the range label |
-| itemsPerPageLabel | | `string`  | label |
+| itemsPerPageLabel | | `string`  | label for number of items shown per page |
 
   
 ### Slots
