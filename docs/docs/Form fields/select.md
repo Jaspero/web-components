@@ -6,16 +6,16 @@
 
 ### Attributes
 
-| **Name** | **Type** | **Description** |
-| :----: | :----: | :---: |
-| options| `Array<string>` | select options |
-| disabled | `boolean` | determines if a selection is disabled |
-| required | `boolean` | determines if a selection is required |
-| value | `string` | currently selected option |
-| id | `string`| unique identifier |
-| name | `string` |  `required` for native form submission |
-| label | `string` | shows at the top of a selection |
-
+| **Name** | **Required** | **Type** | **Description** |
+| :----: | :----: | :----: | :---: |
+| options | ✓ | `Array<string>` | select options |
+| disabled | | `boolean` | determines if a selection is disabled |
+| required | | `boolean` | determines if a selection is required |
+| value | | `string` | currently selected option |
+| id | | `string`| unique identifier |
+| name | ✓ | `string` |  name of the form control |
+| label | | `string` | shows at the top of the field |
+| hint | | `string` | shows below the field |
 
 ### Slots
 

@@ -6,11 +6,11 @@
 
 ### Attributes
 
-| **Name** | **Type** | **Description** |
-| :----: | :----: | :---: |
-| options | `Array<{ label: string; value:` <br></br> `boolean; disabled?: boolean }>` | checkboxes |
-| minSelects | `number` | minimum number of checks allowed |
-| maxSelects | `number` | minimum number of checks allowed |
+| **Name** | **Required** | **Type** | **Description** |
+| :----: | :----: | :----: | :---: |
+| options | ✓ | `Array<{ label: string; value:` <br></br> `boolean; disabled?: boolean }>` | List of checkboxes |
+| minSelects | | `number` | minimum number of checks allowed |
+| maxSelects | | `number` | maximum number of checks allowed |
 
 ### Slots
 

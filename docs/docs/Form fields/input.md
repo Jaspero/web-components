@@ -6,21 +6,20 @@
 
 ### Attributes
 
-| **Name** | **Type** | **Description** |
-| :----: | :----: | :---: |
-| value | `string` | currently selected option |
-| label | `string` | shows at the top of an input |
-| disabled | `boolean` | determines if an input is disabled |
-| required | `boolean` | determines if an input is required |
-| readonly | `boolean` | determines if an input is read-only |
-| id | `string`| unique identifier |
-| name | `string` |  `required` for native form submission |
-| minlength | `number` | minimum character count allowed |
-| maxlength | `number` | maximum character count allowed |
-| label | `string` | shows at the top of an input |
-| pattern | `string` | each chip has to satisfy pattern |
-| placeholder | `string` | temporary text that appears in an input field before any input is entered |
-| inputFocused | `boolean` | determines if an input is focused |
+| **Name** | **Required** | **Type** | **Description** |
+| :----: | :----: | :----: | :---: |
+| label | | `string` | shows at the top of an input |
+| placeholder | | `string` | temporary text that appears in an <br></br> input field before any input is entered |
+| name | ✓ | `string` |  name of the form control |
+| id | | `string`| unique identifier |
+| hint | | `string` | shows below the input |
+| disabled | | `boolean` | determines if an input is disabled |
+| required | | `boolean` | determines if an input is required |
+| readonly | | `boolean` | determines if an input is read-only |
+| type | | One of the following: <br></br> `'text'`, `'password'`, <br></br> `'email'`, `'tel'`, `'url'`  | type of input |
+| minlength | | `number` | minimum character count allowed |
+| maxlength | | `number` | maximum character count allowed |
+| pattern | | `string` | pattern that input has to satisfy |
 
   
 ### Slots

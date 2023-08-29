@@ -24,9 +24,10 @@
   export let options: Array<{ label: string; selected: boolean; disabled?: boolean }> | string = [];
   export let disabled: boolean = false;
   export let required: boolean = false;
+  export let hint: string = '';
   export let value: string = '';
-  export let id: string | null = null;
-  export let name: string | null = null;
+  export let id: string = '';
+  export let name: string = '';
   export let label = 'Label';
   export const getValue = () => options.filter((el) => el.selected).map((el) => el.label);
 
@@ -181,7 +182,7 @@
   });
 </script>
 
-<div>
+<div class:has-hint={hint}>
   <input bind:value={value} {id} {name} {required} hidden>
 
   <button class="select"
@@ -203,6 +204,12 @@
       <path d="M137.4 374.6c12.5 12.5 32.8 12.5 45.3 0l128-128c9.2-9.2 11.9-22.9 6.9-34.9s-16.6-19.8-29.6-19.8L32 192c-12.9 0-24.6 7.8-29.6 19.8s-2.2 25.7 6.9 34.9l128 128z"/>
     </svg>
   </button>
+
+  {#if hint}
+        <span class="select-hint">
+            {@html hint}
+        </span>
+  {/if}
 </div>
 
 {#if open}
@@ -228,6 +235,13 @@
 {/if}
 
 <style>
+  .has-hint {
+    position: relative;
+    margin-bottom: 1.25rem;
+  }
+
+
+
   /* Overlay */
   .overlay {
     z-index: 100;
@@ -363,6 +377,28 @@
     -o-transform: rotate(-180deg);
     transform: rotate(-180deg);
   }
+
+  .select-hint {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    width: 100%;
+    height: 1.25rem;
+    line-height: 1.25rem;
+    font-size: .75rem;
+    padding: 0 .75rem;
+    white-space: nowrap;
+    overflow: hidden;
+    -o-text-overflow: ellipsis;
+    text-overflow: ellipsis;
+    color: var(--text-secondary);
+  }
+
+  .select-hint:hover {
+    z-index: 255;
+    overflow: unset;
+  }
+
 
 
 

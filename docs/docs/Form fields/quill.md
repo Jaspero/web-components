@@ -8,15 +8,15 @@ It's a wrapper around https://quilljs.com/.
 
 ### Attributes
 
-| **Name** | **Type** | **Description** |
-| :----: | :----: | :---: |
-| value | `string` | value of the input field (quill content) |
-| id | `string`| unique identifier |
-| name | `string` |  `required` for native form submission |
-| options|`object` | [Quill config](https://quilljs.com/docs/configuration/)|
-| label | `string` | shows at the top |
+| **Name** | **Required** | **Type** | **Description** |
+| :----: | :----: | :----: | :---: |
+| value | | `string` | value of the input field (quill content) |
+| id | | `string`| unique identifier |
+| options | |`Object` | [Quill config](https://quilljs.com/docs/configuration/)|
+| name | ✓ | `string` |  name of the form control |
+| label | | `string` | shows at the top |
 
-### Includes
+### Dependencies
 
 In order for this component to work you have to include the following
 
@@ -38,7 +38,7 @@ This component does not have any methods.
 ### Events
 
 - `value` 
-  - triggers when value of the field changes
+  - triggers when value of the quill changes
 
 ### Demo
 

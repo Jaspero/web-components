@@ -6,11 +6,11 @@
 
 ### Attributes
 
-| **Name** | **Type** | **Description** |
-| :----: | :----: | :----: |
-| title|`string`| label of the alert |
-| message | `string` | information within an alert |
-| state | `error` | type of alert | 
+| **Name** | **Required** | **Type** | **Description** |
+| :----: | :----: | :----: | :----: |
+| title | | `string` | title of the alert |
+| message | | `string` | information within an alert |
+| state | ✓ | `'error'` or `'success'` | type of alert | 
 
 ### Slots
 
@@ -24,3 +24,5 @@ This component does not have any methods.
 
 - `close`
     - triggers when the "close" button is clicked
+
+### TODO: DEMO
