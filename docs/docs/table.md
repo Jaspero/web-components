@@ -6,11 +6,11 @@
 
 ### Attributes
 
-| **Name** | **Type** | **Description** |
-| :----: | :----: | :----: |
-| headers | `TableHeader[]` | column names |
-| sort | `TableSort` | current sorting state of the table |
-| rows | `any[]` | data displayed in the table |
+| **Name** | **Required** | **Type** | **Description** |
+| :----: | :----: | :----: | :----: |
+| headers | ✓ | `TableHeader[]` | column names |
+| sort | ✓ | `TableSort` | current sorting state of the table |
+| rows | ✓ | `any[]` | data displayed in the table |
 
 ### Slots
 

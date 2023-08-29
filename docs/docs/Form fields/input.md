@@ -16,10 +16,10 @@
 | disabled | | `boolean` | determines if an input is disabled |
 | required | | `boolean` | determines if an input is required |
 | readonly | | `boolean` | determines if an input is read-only |
-| type | | One of the following: <br></br> `'text'`, `'password'`, <br></br> `'email'`, `'tel'`, `'url'`  | determines if an input is read-only |
+| type | | One of the following: <br></br> `'text'`, `'password'`, <br></br> `'email'`, `'tel'`, `'url'`  | type of input |
 | minlength | | `number` | minimum character count allowed |
 | maxlength | | `number` | maximum character count allowed |
-| pattern | | `string` | pattern that each chip has to satisfy |
+| pattern | | `string` | pattern that input has to satisfy |
 
   
 ### Slots

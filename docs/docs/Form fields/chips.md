@@ -15,7 +15,7 @@
 | minitems | | `number` | minimum number of items allowed |
 | maxitems | |  `number` |  maximum number of items allowed |
 | pattern | | `RegExp` | each chip has to satisfy pattern |
-| required | | `boolean` | determines if an input is required |
+| required | | `boolean` | determines if a chips is required |
 | unique | | `boolean` | determines if each chip has to be different | 
 
 

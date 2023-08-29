@@ -22,7 +22,9 @@ jobs:
           node-version: 18
 
       - name: Install dependencies
-        run: npm i
+        run: |
+          npm i
+          npm list @jaspero/web-components
       - name: Copy Web Components
         run: |
           cp -r node_modules/@jaspero/web-components/dist static/c
