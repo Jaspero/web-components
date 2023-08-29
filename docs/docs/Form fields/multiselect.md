@@ -15,7 +15,7 @@
 | disabled | | `boolean` | determines if a selection is disabled |
 | id | | `string`| unique identifier |
 | name | ✓ | `string` | name of the form control |
-| label | | `string` | shows at the top of a field |
+| label | | `string` | shows at the top of the field |
 | hint | | `string` | shows below the field |
 
   
