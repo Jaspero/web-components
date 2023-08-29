@@ -6,14 +6,14 @@
 
 ### Attributes
 
-| **Name** | **Type** | **Description** |
-| :----: | :----: | :---: |
-| images |`Array` | stores an image collection |
-| imagesPerSlide | `number` | number of images shown on a slide |
-| enablePagination | `boolean` | determines if pagination is enabled |
-| sliderBar | `boolean` | determines visability of a sliding content |
-| autoSlide | `boolean` | determines if automatic slides are enabled |
-| interval | `number` | time interval between automatic slides |
+| **Name** | **Required** | **Type** | **Description** |
+| :----: | :----: | :---: | :---: |
+| images | ✓ | `string[]` | stores an image collection |
+| imagesPerSlide | | `number` | number of images shown on a slide |
+| enablePagination | | `boolean` | determines if pagination is enabled |
+| sliderBar | | `boolean` | determines visability of a slider bar |
+| autoSlide | | `boolean` | determines if automatic slide is enabled |
+| interval | | `number` | time interval between slides in miliseconds |
   
 ### Slots
 
@@ -28,4 +28,6 @@ This component does not have any methods.
 ### Events
 
 This component does not have any events. 
->
+
+
+### TODO: DEMO

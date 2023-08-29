@@ -6,13 +6,13 @@
 
 ### Attributes
 
-| **Name** | **Type** | **Description**|
-| :----: | :----: | :----: |
-| determinate | `boolean` | `true` - component renders as a progress bar <br></br> `false` - component renders as a spinner |
-| progress | `number` | from `0` to `100` <br></br> number indicating the progress | 
-| radius | `number` | determines the size of the progress spinner |
-| stroke | `number` | determines the thickness of the progress spinner |
-| color | `string` | visual enchancement of the progress spinner |
+| **Name** | **Required** | **Type** | **Description**|
+| :----: | :----: | :----: | :----: |
+| determinate | | `boolean` | `true` - component renders as a progress bar <br></br> `false` - component renders as a spinner |
+| progress | | `number` | from `0` to `100` <br></br> number indicating the progress | 
+| radius | | `number` | determines the size of the progress/spinner |
+| stroke | | `number` | determines the thickness of the line |
+| color | | `string` | determines the color of the line |
 
 ### Slots
 

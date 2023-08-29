@@ -6,17 +6,17 @@
 
 ### Attributes
 
-| **Name** | **Type** | **Description** |
-| :----: | :----: | :---: |
-| options|`Array<{ label: string; selected:`  <br></br> ` boolean; disabled: boolean }>` | select options |
-| minSelects | `number` | minimum number of selects allowed |
-| maxSelects | `number` | maximum number of selects allowed |
-| required | `boolean` | determines if a selection is required |
-| disabled | `boolean` | determines if a selection is disabled |
-| id | `string`| unique identifier |
-| name | `string` |  `required` for native form submission |
-| value | `string` | currently selected option |
-| label | `string` | shows at the top of a selection |
+| **Name** | **Required** | **Type** | **Description** |
+| :----: | :----: | :---: | :---: |
+| options | ✓ |`Array<{ label: string; selected:`  <br></br> ` boolean; disabled: boolean }>` | select options |
+| minSelects | | `number` | minimum number of selects allowed |
+| maxSelects | | `number` | maximum number of selects allowed |
+| required | | `boolean` | determines if a selection is required |
+| disabled | | `boolean` | determines if a selection is disabled |
+| id | | `string`| unique identifier |
+| name | ✓ | `string` | name of the form control |
+| label | | `string` | shows at the top of a field |
+| hint | | `string` | shows below the field |
 
   
 ### Slots
