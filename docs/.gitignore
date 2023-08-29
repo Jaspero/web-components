@@ -3,7 +3,7 @@
 
 # Production
 /build
-/static/web-components
+/static/c
 
 # Generated files
 .docusaurus

@@ -25,7 +25,8 @@ jobs:
         run: npm i
       - name: Copy Web Components
         run: |
-          cp node_modules/@jaspero/web-components/dist static/web-components
+          cp -r node_modules/@jaspero/web-components/dist static/c
+          echo "t()" >> static/c/index.js
       - name: Build website
         run: npm run build
 
