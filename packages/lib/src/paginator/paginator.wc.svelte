@@ -9,9 +9,9 @@
   import { createEventDispatcher } from 'svelte';
 
   export let disabled: boolean = false;
-  export let hidePageSize: boolean = false;
+  // export let hidePageSize: boolean = false;
   //export let showFirstLastButtons: boolean = true;
-  export let showPageSizeOptions: boolean = true;
+  // export let showPageSizeOptions: boolean = true;
 
   export let length: number = 50;
   export let pageIndex: number = 0;
@@ -76,14 +76,14 @@
 </script>
 
 <div>
-  <label> {itemsPerPageLabel}: </label>
+  {itemsPerPageLabel}
 
   <select bind:value={selectedPageSize} on:change={handlePageSize}>
     {#each pageSizeOptions as option (option)}
       <option value={option}>{option}</option>
     {/each}
   </select>
-  <label> {currentPage} - {pageSizeIt} {getRangeLabel} {length} </label>
+  {currentPage} - {pageSizeIt} {getRangeLabel} {length}
 
   {#if currentPage == 1}
     <button {disabled}>
