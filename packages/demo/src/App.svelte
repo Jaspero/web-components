@@ -1,8 +1,8 @@
 <script lang="ts">
   import { onMount } from 'svelte';
-  /*import '../../../dist/alert.wc.js';
-  import '../../../dist/confirm.wc.js'
-  import '../../../dist/async-table.wc.js';*/
+  /*import '../../../dist/alert.wc.js';*/
+  /*import '../../../dist/confirm.wc.js'*/
+  /*import '../../../dist/async-table.wc.js';*/
   import '../../../dist/input.wc.js';
   /*import '../../../dist/quill.wc.js';*/
   import '../../../dist/checkbox.wc.js';
@@ -76,8 +76,9 @@
     renderConfirm(
       {
         title: 'Remove campaign?',
-        // message: 'Are you sure you want to remove this campaign?'
-        reject: 'rejected',
+        message: 'Are you sure you want to remove this campaign?',
+        reject: 'Decline',
+        accept: 'Accept',
         closable: true
       },
       (e) => console.log(e)
