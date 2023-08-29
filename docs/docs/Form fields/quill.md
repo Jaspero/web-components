@@ -16,7 +16,7 @@ It's a wrapper around https://quilljs.com/.
 | options|`object` | [Quill config](https://quilljs.com/docs/configuration/)|
 | label | `string` | shows at the top |
 
-### Includes
+### Dependencies
 
 In order for this component to work you have to include the following
 

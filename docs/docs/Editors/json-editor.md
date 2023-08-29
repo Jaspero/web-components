@@ -14,7 +14,7 @@ It's a wrapper around https://github.com/josdejong/jsoneditor.
 | content | `JSON` | content of the editor |
 | options | `Object` |   [jsoneditor options](https://github.com/josdejong/jsoneditor/blob/master/docs/api.md) |
 
-### Includes
+### Dependencies
 
 In order for this component to work you have to include the following
 

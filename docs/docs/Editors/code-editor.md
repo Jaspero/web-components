@@ -14,7 +14,7 @@ It's a wrapper around https://codemirror.net/5/.
 | options | `Object` | [CodeMirror options](https://codemirror.net/5/doc/manual.html#config) |
 
 
-### Includes
+### Dependencies
 
 In order for this component to work you have to include the following
 
