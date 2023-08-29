@@ -21,6 +21,7 @@
   import { renderAlert } from '../../../dist/render-alert.js';
   import { renderConfirm } from '../../../dist/render-confirm.js'
   import { FirebaseTableService } from './firebase-table.service';
+  import { MockImageService } from './mock-image.service..js';
 
   let el: HTMLDivElement;
   let formEl: HTMLFormElement;
@@ -150,13 +151,7 @@
 
     const imageUploadEl = document.createElement('jp-image-upload')
 
-    imageUploadEl.service = {
-      image: '',
-      acceptedFiles: "image/png, image/jpeg",
-      imageChange: (e) => console.log(e),
-      uploadFile: () => console.log(this.image)
-    }
-
+    imageUploadEl.service = new MockImageService()
     imageUploadEl.name = 'nameeeee'
     imageUploadEl.id = 'imageuploadid'
 

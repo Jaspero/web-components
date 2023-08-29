@@ -1,5 +1,4 @@
-export interface ImageService<T = any> {
+export default interface ImageService {
   acceptedFiles: string;
-  imageChange: (e: Event) => Promise<void>;
-  uploadFile: () => Promise<void>;
+  uploadFile: (file: any) => Promise<string>;
 }
