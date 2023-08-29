@@ -16,12 +16,14 @@
   import '../../../dist/json-editor.wc.js'
   import '../../../dist/code-editor.wc.js'*/
   import '../../../dist/image-gallery.wc.js'
+  import '../../../dist/image-upload.wc.js'
   import '../../../dist/paginator.wc.js'
   import '../../../dist/textarea.wc.js';
 
   import { renderAlert } from '../../../dist/render-alert.js';
   import { renderConfirm } from '../../../dist/render-confirm.js';
   import { FirebaseTableService } from './firebase-table.service';
+  import { MockImageService } from './mock-image.service..js';
 
   let el: HTMLDivElement;
   let formEl: HTMLFormElement;
@@ -90,7 +92,7 @@
     spinnerEl.progress = 44;
     spinnerEl.radius = 100;
     spinnerEl.stroke = 20;
-    el.appendChild(spinnerEl);
+    el.appendChild(spinnerEl)
 
     const paginatorEl = document.createElement('jp-paginator');
 
@@ -109,6 +111,7 @@
     // chipsEl.pattern = /kjh/;
 
     formEl.appendChild(chipsEl);
+
 
     const multiselectEl = document.createElement('jp-multiselect') as HTMLInputElement;
 
@@ -153,6 +156,17 @@
       '{"array": [1, 2, 3],"boolean": true,"color": "#82b92c","null": null,"number": 123,"object": { "a": "b", "c": "d" },"string": "Hello World"}';
 
     el.appendChild(jsonEditor);
+
+
+    codeEditor.addEventListener('change', (e) => console.log(e.detail))
+
+    const imageUploadEl = document.createElement('jp-image-upload')
+
+    imageUploadEl.service = new MockImageService()
+    imageUploadEl.name = 'nameeeee'
+    imageUploadEl.id = 'imageuploadid'
+
+    formEl.appendChild(imageUploadEl)
 
     jsonEditor.addEventListener('change', (e) => console.log(e.detail));
 
