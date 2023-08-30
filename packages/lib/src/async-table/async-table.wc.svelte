@@ -127,13 +127,26 @@
     </table>
   </div>
 
-  <button class="load-button" class:loading={loading} disabled={!hasMore} on:click={loadMore}>Load More</button>
+  <div class="table-actions">
+    <button class="load-button" class:loading={loading} disabled={!hasMore} on:click={loadMore}>
+      {#if loading}
+        <span class="spinner"></span>
+        Loading
+      {:else}
+        Load More
+      {/if}
+    </button>
+  </div>
 </div>
 
 <style>
   .table-card {
     background-color: var(--background-primary);
+    -webkit-border-radius: .25rem;
+    -moz-border-radius: .25rem;
     border-radius: .25rem;
+    -webkit-box-shadow: 0 3px 12px rgba(0,0,0,.16);
+    -moz-box-shadow: 0 3px 12px rgba(0,0,0,.16);
     box-shadow: 0 3px 12px rgba(0,0,0,.16);
   }
 
@@ -159,13 +172,83 @@
     opacity: .75;
   }
 
+  .table-actions {
+    padding: 1rem;
+  }
+
   .load-button {
-    margin: 1rem;
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: -moz-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-pack: center;
+    -webkit-justify-content: center;
+    -moz-box-pack: center;
+    -ms-flex-pack: center;
+    justify-content: center;
+    -webkit-box-align: center;
+    -webkit-align-items: center;
+    -moz-box-align: center;
+    -ms-flex-align: center;
+    align-items: center;
+    -webkit-border-radius: .25rem;
+    -moz-border-radius: .25rem;
     border-radius: .25rem;
     min-width: 4rem;
     height: 2.25rem;
     padding: 0 1rem;
     background-color: var(--primary-color);
     color: var(--text-on-primary);
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+  }
+
+  .load-button:disabled {
+    opacity: .5;
+  }
+
+  .load-button.loading {
+    pointer-events: none;
+  }
+
+  .spinner {
+    display: block;
+    border-top: 2px solid var(--text-on-primary);
+    border-bottom: 2px solid var(--text-on-primary);
+    border-left: 2px solid transparent;
+    border-right: 2px solid transparent;
+    -webkit-border-radius: 50%;
+    -moz-border-radius: 50%;
+    border-radius: 50%;
+    width: 1rem;
+    height: 1rem;
+    margin-right: .5rem;
+    -webkit-animation: spin 1s linear infinite;
+    -moz-animation: spin 1s linear infinite;
+    -o-animation: spin 1s linear infinite;
+    animation: spin 1s linear infinite;
+  }
+
+  @-webkit-keyframes spin {
+    0% { -webkit-transform: rotate(0deg); transform: rotate(0deg); }
+    100% { -webkit-transform: rotate(360deg); transform: rotate(360deg); }
+  }
+
+  @-moz-keyframes spin {
+    0% { -moz-transform: rotate(0deg); transform: rotate(0deg); }
+    100% { -moz-transform: rotate(360deg); transform: rotate(360deg); }
+  }
+
+  @-o-keyframes spin {
+    0% { -o-transform: rotate(0deg); transform: rotate(0deg); }
+    100% { -o-transform: rotate(360deg); transform: rotate(360deg); }
+  }
+
+  @keyframes spin {
+    0% { -webkit-transform: rotate(0deg); -moz-transform: rotate(0deg); -o-transform: rotate(0deg); transform: rotate(0deg); }
+    100% { -webkit-transform: rotate(360deg); -moz-transform: rotate(360deg); -o-transform: rotate(360deg); transform: rotate(360deg); }
   }
 </style>
