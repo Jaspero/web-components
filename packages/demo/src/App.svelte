@@ -19,6 +19,7 @@
   import '../../../dist/image-upload.wc.js'
   import '../../../dist/paginator.wc.js'
   import '../../../dist/textarea.wc.js';
+  import '../../../dist/datepicker.wc.js'
 
   import { renderAlert } from '../../../dist/render-alert.js';
   import { renderConfirm } from '../../../dist/render-confirm.js';
@@ -109,9 +110,7 @@
     chipsEl.name = 'chips';
     chipsEl.label = 'label 1212';
     chipsEl.placeholder = 'placeholder';
-    chipsEl.minitems = 2;
     chipsEl.maxitems = 4;
-    chipsEl.required = true;
     chipsEl.unique = true;
     // chipsEl.pattern = /kjh/;
 
@@ -162,9 +161,6 @@
 
     el.appendChild(jsonEditor);
 
-
-    codeEditor.addEventListener('change', (e) => console.log(e.detail))
-
     const imageUploadEl = document.createElement('jp-image-upload')
 
     imageUploadEl.service = new MockImageService()
@@ -179,10 +175,16 @@
 
     codeEditor.content = 'function myScript(){return 100;}\n';
     codeEditor.options = { mode: 'javascript' };
+    codeEditor.addEventListener('change', (e) => console.log(e.detail));
 
     el.appendChild(codeEditor);
 
-    codeEditor.addEventListener('change', (e) => console.log(e.detail));
+    const datepickerEl = document.createElement('jp-datepicker')
+
+    datepickerEl.addEventListener('value', (e) => console.log(e))
+    datepickerEl.name = 'datepickerrr'
+
+    formEl.appendChild(datepickerEl)
   });
 
   function submit(e) {

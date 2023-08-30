@@ -23,4 +23,5 @@ export default () => {
   import('./src/editors/code-editor.wc.svelte');
   import('./src/paginator/paginator.wc.svelte');
   import('./src/form-fields/textarea.wc.svelte');
+  import('./src/form-fields/datepicker.wc.svelte');
 };
