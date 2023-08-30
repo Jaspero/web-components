@@ -31,6 +31,7 @@
 
   export let required: boolean = false;
   export let unique: boolean = false;
+  export let disabled: boolean = false;
 
   export let chips: Array<string> = [];
 
@@ -86,7 +87,7 @@
 }} />
 
 <div>
-  <label class="field">
+  <label class="field" class:disabled class:required>
     {#if label}
       <span class="field-label" class:move={inputFocused || value}>{@html label}</span>
     {/if}
@@ -159,9 +160,9 @@
     content: ' *';
   }
 
-  .field.disabled .field-label, .field.disabled .field-input {
+  .field.disabled {
+    pointer-events: none;
     opacity: .33;
-    background: none;
   }
 
   .field:focus-within {

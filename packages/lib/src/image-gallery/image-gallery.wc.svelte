@@ -82,7 +82,7 @@
     <div class="slider-container" style="--images-per-slide: {imagesPerSlide};">
         <div class="slider-images" style={`transform: translateX(-${currentIndex * (100 / imagesPerSlide)}%);`}>
             {#each images as image}
-                <img class="slider-image" src={image} alt="Slider Image" />
+                <img class="slider-image" src={image.src} alt={image.alt} />
             {/each}
         </div>
         <button class="prev" on:click={prevImage}>
