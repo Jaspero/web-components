@@ -18,6 +18,7 @@
   import '../../../dist/image-gallery.wc.js'
   import '../../../dist/image-upload.wc.js'
   import '../../../dist/paginator.wc.js'
+  import '../../../dist/table.wc.js'
   import '../../../dist/textarea.wc.js';
 
   import { renderAlert } from '../../../dist/render-alert.js';
@@ -38,6 +39,10 @@
     // @ts-ignore
     instanceEl.headers = [
       {
+        key: '/publicationDate',
+        label: 'Publication Date'
+      },
+      {
         key: '/readTime',
         label: 'Read Time',
         pipes: [(value) => value + 'min']
@@ -48,8 +53,36 @@
         sortable: true
       },
       {
-        key: '/phoneNumber',
-        label: 'Phone Number'
+        key: '/author',
+        label: 'Author'
+      },
+      {
+        key: '/author',
+        label: 'Author'
+      },
+      {
+        key: '/author',
+        label: 'Author'
+      },
+      {
+        key: '/author',
+        label: 'Author'
+      },
+      {
+        key: '/author',
+        label: 'Author'
+      },
+      {
+        key: '/author',
+        label: 'Author'
+      },
+      {
+        key: '/author',
+        label: 'Author'
+      },
+      {
+        key: '/author',
+        label: 'Author'
       }
     ];
 
@@ -163,7 +196,6 @@
     el.appendChild(jsonEditor);
 
 
-    codeEditor.addEventListener('change', (e) => console.log(e.detail))
 
     const imageUploadEl = document.createElement('jp-image-upload')
 
@@ -175,14 +207,33 @@
 
     jsonEditor.addEventListener('change', (e) => console.log(e.detail));
 
-    const codeEditor = document.createElement('jp-code-editor');
 
-    codeEditor.content = 'function myScript(){return 100;}\n';
-    codeEditor.options = { mode: 'javascript' };
+    let headers = [
+      { label: 'Name', key: 'name' },
+      { label: 'Age', key: 'age' },
+      { label: 'Location', key: 'location' },
+      { label: 'Job', key: 'job' },
+      { label: 'Status', key: 'status' },
+    ];
 
-    el.appendChild(codeEditor);
+    let rows = [
+      { name: 'John', age: 28, location: 'NY', job: 'Engineer', status: 'Active' },
+      { name: 'Jane', age: 32, location: 'LA', job: 'Doctor', status: 'Inactive' },
+      { name: 'Doe', age: 45, location: 'TX', job: 'Teacher', status: 'Active' },
+      { name: 'Smith', age: 37, location: 'WA', job: 'Dentist', status: 'Pending' },
+      { name: 'Brown', age: 50, location: 'FL', job: 'Lawyer', status: 'Active' },
+    ];
 
-    codeEditor.addEventListener('change', (e) => console.log(e.detail));
+    let sort = {
+      key: 'name',
+      direction: 'asc'
+    };
+
+    let tableEl = document.createElement('jp-table')
+    tableEl.headers = headers
+    tableEl.rows = rows
+    tableEl.sort = sort
+    el.appendChild(tableEl)
   });
 
   function submit(e) {
@@ -191,6 +242,27 @@
 
     console.log(formProps, formData);
   }
+
+  let headers = [
+    { label: 'Name', key: 'name', sortable: true },
+    { label: 'Age', key: 'age', sortable: true },
+    { label: 'Location', key: 'location', sortable: false },
+    { label: 'Job', key: 'job', sortable: true },
+    { label: 'Status', key: 'status', sortable: true },
+  ];
+
+  let rows = [
+    { name: 'John', age: 28, location: 'NY', job: 'Engineer', status: 'Active' },
+    { name: 'Jane', age: 32, location: 'LA', job: 'Doctor', status: 'Inactive' },
+    { name: 'Doe', age: 45, location: 'TX', job: 'Teacher', status: 'Active' },
+    { name: 'Smith', age: 37, location: 'WA', job: 'Dentist', status: 'Pending' },
+    { name: 'Brown', age: 50, location: 'FL', job: 'Lawyer', status: 'Active' },
+  ];
+
+  let sort = {
+    key: 'name',
+    direction: 'asc'
+  };
 </script>
 
 <div bind:this={el} class="p-4"></div>
@@ -202,6 +274,7 @@
 
   <!--<jp-radio options={['aaa', 'bbb']}></jp-radio>-->
 </form>
+
 
 <div class="relative flex overflow-hidden">
   <jp-multiselect hint="Ovo je hint" options={[{label: 'Audi'}, {label: 'Volvo'}, {label: 'BMW'}, {label: 'Peugeot'}, {label: 'Renault'}, {label: 'Ford'}, {label: 'Opel'}]}></jp-multiselect>
