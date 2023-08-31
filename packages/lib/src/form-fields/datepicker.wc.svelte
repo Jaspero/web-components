@@ -50,10 +50,18 @@
     'Nov',
     'Dec'
   ];
+  let yearPickerIndex = 0;
 
   export const getValue = () => value;
 
   const dispatch = createEventDispatcher();
+
+  const getYearPickerRows = (yearPickerIndex) => {
+    const tmp = Array.from(Array(4*6).keys()).map(el => el + 2000 + yearPickerIndex*4*6)
+    return Array.from(Array(6).keys()).map((el) => {
+      return tmp.slice(el * 4, (el + 1) * 4);
+    });
+  }
 
   const getPickerRows = (month, year) => {
     const thisMonthDays = 40 - new Date(year, month, 40).getDate();
@@ -148,6 +156,8 @@
     pickerYear--
   }
 
+  $: pickerYearRows = getYearPickerRows(yearPickerIndex)
+
   $: pickerRows = getPickerRows(pickerMonth, pickerYear);
 
   $: {
@@ -182,8 +192,21 @@
   </span>
 </button>
 
+<div>
+  <button on:click={() => yearPickerIndex--}>down</button>
+  <button on:click={() => yearPickerIndex++}>up</button>
+  {#each pickerYearRows as row}
+  <div>
+    {#each row as year}
+      <button on:click={() => yearSelected = year}>{year}</button>
+    {/each}
+  </div>
+  {/each}
+</div>
+
 <input type="date" {name} bind:value hidden />
 {#if openPicker}
+  <!-- svelte-ignore a11y-no-noninteractive-element-interactions -->
   <div class="overlay" on:click|stopPropagation={toggleMenu} on:keydown={handleKeydown} tabindex="-1" role="dialog">
     <div class="menu" style={menuStyle}>
       <div class="menu-nav">
