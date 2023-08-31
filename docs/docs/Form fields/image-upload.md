@@ -6,10 +6,11 @@
 
 ### Attributes
 
-| **Name** | **Required** | **Type** | **Description** |
-| :----: | :----: | :----: | :---: |
-| id | | `string`| unique identifier |
-| name | ✓ | `string` |  name of the form control |
+| Name | Required |   Type   |     Description      |
+|:--------:|:------------:|:------------:|:------------------------:|
+|    id    |              |   string   |    unique identifier     |
+| service  |              | ImageService |      image service       |
+|   name   |      ✓       |   string   | name of the form control |
 
 ### Slots
 

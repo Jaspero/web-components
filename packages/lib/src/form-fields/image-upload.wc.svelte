@@ -78,7 +78,7 @@
     <span class="field-upload-container">
       <input type="file"
              class="field-upload"
-             accept={service.acceptedFiles}
+             accept={service.acceptedFiles ? service.acceptedFiles : 'image/png, image/jpeg' }
              {id}
              {name}
              bind:value
