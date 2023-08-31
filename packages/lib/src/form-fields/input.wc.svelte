@@ -45,12 +45,14 @@
 </script>
 
 <div class:has-hint={hint}>
-    <label class="field" class:disabled class:required>
+    <label class="field" class:disabled={disabled || readonly} class:required>
         <span class="field-label" class:move={inputFocused || value}>{@html label}</span>
 
         {#if type === 'text'}
             <input type="text"
                    class="field-input"
+                   aria-hidden={disabled || readonly}
+                   tabindex={disabled || readonly ? -1 : 0}
                    {placeholder}
                    {required}
                    {disabled}
@@ -66,6 +68,8 @@
         {:else if type === 'password'}
             <input type="password"
                    class="field-input"
+                   aria-hidden={disabled || readonly}
+                   tabindex={disabled || readonly ? -1 : 0}
                    {placeholder}
                    {required}
                    {disabled}
@@ -81,6 +85,8 @@
         {:else if type === 'email'}
             <input type="email"
                    class="field-input"
+                   aria-hidden={disabled || readonly}
+                   tabindex={disabled || readonly ? -1 : 0}
                    {placeholder}
                    {required}
                    {disabled}
@@ -96,6 +102,8 @@
         {:else if type === 'tel'}
             <input type="tel"
                    class="field-input"
+                   aria-hidden={disabled || readonly}
+                   tabindex={disabled || readonly ? -1 : 0}
                    {placeholder}
                    {required}
                    {disabled}
@@ -111,6 +119,8 @@
         {:else if type === 'url'}
             <input type="url"
                    class="field-input"
+                   aria-hidden={disabled || readonly}
+                   tabindex={disabled || readonly ? -1 : 0}
                    {placeholder}
                    {required}
                    {disabled}
@@ -177,6 +187,7 @@
     }
 
     .field.disabled .field-label, .field.disabled .field-input {
+        pointer-events: none;
         opacity: .33;
         background: none;
     }
