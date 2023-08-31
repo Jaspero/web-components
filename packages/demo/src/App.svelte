@@ -201,6 +201,7 @@
 
     imageUploadEl.service = new MockImageService()
     imageUploadEl.name = 'nameeeee'
+    imageUploadEl.label = 'Upload a file'
     imageUploadEl.id = 'imageuploadid'
 
     formEl.appendChild(imageUploadEl)
