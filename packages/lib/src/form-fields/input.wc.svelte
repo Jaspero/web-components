@@ -186,10 +186,9 @@
         content: ' *';
     }
 
-    .field.disabled .field-label, .field.disabled .field-input {
+    .field.disabled {
         pointer-events: none;
         opacity: .33;
-        background: none;
     }
 
     .field:focus-within {
