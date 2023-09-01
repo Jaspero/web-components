@@ -82,7 +82,7 @@
       row,
       index,
       header,
-      target: event.target
+      originalEvent: event
     });
   }
 
