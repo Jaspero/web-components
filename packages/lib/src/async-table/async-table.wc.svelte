@@ -77,11 +77,12 @@
     loading = false;
   }
 
-  function rowClick(row: any, index: number, header: TableHeader) {
+  function rowClick(row: any, index: number, header: TableHeader, event: any) {
     dispatch('rowClick', {
       row,
       index,
-      header
+      header,
+      originalEvent: event
     });
   }
 
@@ -115,7 +116,7 @@
         {#each rows as row, index}
           <tr>
             {#each headers as header}
-              <td on:click={() => rowClick(row, index, header)}>
+              <td on:click={(e) => rowClick(row, index, header, e)}>
                 {#await handleColumn(header, row, index) then val}
                   {@html val}
                 {/await}
