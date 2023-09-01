@@ -188,7 +188,7 @@
 
     .field.disabled {
         pointer-events: none;
-        opacity: .33;
+        opacity: .5;
     }
 
     .field:focus-within {

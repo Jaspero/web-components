@@ -185,6 +185,7 @@
 
     textareaEl.value = 'pattern text';
     textareaEl.name = 'textarea';
+    textareaEl.readonly = true;
 
     formEl.appendChild(textareaEl);
 
@@ -278,7 +279,7 @@
 
 
 <div class="relative flex overflow-hidden">
-  <jp-multiselect hint="Ovo je hint" options={[{label: 'Audi'}, {label: 'Volvo'}, {label: 'BMW'}, {label: 'Peugeot'}, {label: 'Renault'}, {label: 'Ford'}, {label: 'Opel'}]}></jp-multiselect>
+  <jp-multiselect disabled hint="Ovo je hint" options={[{label: 'Audi'}, {label: 'Volvo'}, {label: 'BMW'}, {label: 'Peugeot'}, {label: 'Renault'}, {label: 'Ford'}, {label: 'Opel'}]}></jp-multiselect>
   <jp-select hint="Ovo je hint" options={['United States', 'United Kingdom', 'Canada', 'Croatia', 'Cambodia', 'Italy', '1 Apple', '2 Trees', '3 Mugs', '4 Police Officers']}></jp-select>
   <jp-input hint="This is a hintasfaskfaksfiojfaiosjfiosjiof"></jp-input>
   <jp-input readonly value="this is a read only input"></jp-input>
@@ -295,7 +296,7 @@
 
 <form action="">
   <jp-select
-    required
+    disabled
     options={[
       'United States',
       'United Kingdom',

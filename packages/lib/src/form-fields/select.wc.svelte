@@ -283,8 +283,8 @@
     box-shadow: inset 0 -2px 1px -1px var(--primary-color);
   }
 
-  .select:disabled .select-label, .select:disabled .select-arrow {
-    opacity: .33;
+  .select:disabled {
+    opacity: .5;
   }
 
   .select-label {
