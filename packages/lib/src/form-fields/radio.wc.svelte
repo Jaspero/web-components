@@ -20,7 +20,7 @@
 
   export let attachedInternals: ElementInternals;
 
-  export let options: Array<string> | string = [];
+  export let options: Array<{name?: string, value: any}> | string = [];
   export let disabled: boolean = false;
   export let required: boolean = false;
   export let value: string = '';
@@ -46,7 +46,7 @@
         <input
             type="radio"
             {name}
-            value={option}
+            value={option.value}
             {required}
             {disabled}
             bind:group={value}
@@ -56,7 +56,13 @@
                 <span></span>
             </span>
         </span>
-        <span>{option}</span>
+        <span>
+          {#if option.name}
+            {option.name}
+          {:else}
+            {option.value}
+          {/if}
+        </span>
     </label>
   {/each}
 </div>

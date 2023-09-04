@@ -7,7 +7,7 @@
 ### Attributes
 | **Name** | **Required** | **Type** | **Description** |
 | :----: | :----: | :----: | :---: |
-| options | ✓ |`Array<string>` | select options |
+| options | ✓ |`Array<{name?: string, value: any}>` | select options |
 | name | ✓ | `string` |  name of the form control |
 | disabled | | `boolean` | determines if a selection is disabled |
 | required | | `boolean` | determines if a selection is required |
@@ -29,7 +29,7 @@ This component does not have any methods.
 
 ```jsx live
 <form>
-  <jp-radio options='["aaa", "bbb", "ccc"]'>
+  <jp-radio options='[{"value": "aaa"}, {"name": "bcb", "value":"bbb"}, {"value":"ccc"}]'>
   </jp-radio>
 </form>
 ```
