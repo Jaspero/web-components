@@ -9,7 +9,8 @@
 | Name | Required |   Type   |     Description      |
 |:--------:|:------------:|:------------:|:------------------------:|
 |    id    |              |   string   |    unique identifier     |
-| service  |              | ImageService |      image service       |
+|    label    |              |   string   |    label of the input field     |
+| service  |      ✓       | ImageService |      image service       |
 |   name   |      ✓       |   string   | name of the form control |
 
 ### Slots
