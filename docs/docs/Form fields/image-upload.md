@@ -8,10 +8,25 @@
 
 | Name | Required |   Type   |     Description      |
 |:--------:|:------------:|:------------:|:------------------------:|
-|    id    |              |   string   |    unique identifier     |
-|    label    |              |   string   |    label of the input field     |
-| service  |      ✓       | ImageService |      image service       |
-|   name   |      ✓       |   string   | name of the form control |
+|    id    |              |   `string`   |    unique identifier     |
+|    label    |              |   `string`   |    label of the input field     |
+| service  |      ✓       | [`ImageService`](#imageservice) |      image service       |
+|   name   |      ✓       |   `string`   | name of the form control |
+
+### Interfaces
+
+#### `ImageService`
+
+Defines the accepted file types and provides a method to upload a file.
+
+##### Properties
+
+| **Name** | **Required** | **Type** |**Description** |
+| :----: | :----: | :----: | :---: |
+| acceptedFiles | ✓ | `string` | defines acceptable file types for uploading images |
+| uploadFile |  |`function` | uploads a file and returns a promise <br></br> which is a string that represents an identifier for the image |
+
+<br></br>
 
 ### Slots
 
