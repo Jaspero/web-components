@@ -18,8 +18,8 @@
   import '../../../dist/image-gallery.wc.js'
   import '../../../dist/image-upload.wc.js'
   import '../../../dist/paginator.wc.js'
-  import '../../../dist/table.wc.js'
   import '../../../dist/textarea.wc.js';
+  import '../../../dist/datepicker.wc.js'
 
   import { renderAlert } from '../../../dist/render-alert.js';
   import { renderConfirm } from '../../../dist/render-confirm.js';
