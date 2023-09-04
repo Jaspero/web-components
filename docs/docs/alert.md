@@ -24,9 +24,3 @@ This component does not have any methods.
 
 - `close`
     - triggers when the "close" button is clicked
-
-### Demo
-
-```jsx live
-<jp-alert></jp-alert>
-```

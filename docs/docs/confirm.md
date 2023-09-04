@@ -30,9 +30,3 @@ This component does not have any methods.
    - triggers when closing the confirmation
 - `confirmation`
    - triggers when confirmation is accepted or rejected
-
-### Demo
-
-```jsx live
-<jp-confirm title='title'> confirm </jp-confirm>
-```
