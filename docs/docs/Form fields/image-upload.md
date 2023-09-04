@@ -6,10 +6,12 @@
 
 ### Attributes
 
-| **Name** | **Required** | **Type** | **Description** |
-| :----: | :----: | :----: | :---: |
-| id | | `string`| unique identifier |
-| name | ✓ | `string` |  name of the form control |
+| Name | Required |   Type   |     Description      |
+|:--------:|:------------:|:------------:|:------------------------:|
+|    id    |              |   string   |    unique identifier     |
+|    label    |              |   string   |    label of the input field     |
+| service  |      ✓       | ImageService |      image service       |
+|   name   |      ✓       |   string   | name of the form control |
 
 ### Slots
 

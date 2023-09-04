@@ -98,51 +98,65 @@
   }
 </script>
 
-<div class="overflow-x-auto border">
-  <table>
-    {#if headers}
-      <tr class="odd:bg-[#F1F5F3]">
-        {#each headers as header}
-          <th class:sortable={header.sortable} on:click={() => adjustSort(header)}>
-            <span>{@html header.label}</span>
-            {#if sort?.key === header.key}
-              <span>{sort.direction === 'asc' ? '↑' : '↓'}</span>
-            {/if}
-          </th>
-        {/each}
-      </tr>
-    {/if}
-
-    {#if rows}
-      {#each rows as row, index}
-        <tr class="odd:bg-[#F1F5F3]">
+<div class="table-card">
+  <div class="table-container">
+    <table>
+      {#if headers}
+        <tr>
           {#each headers as header}
-            <td on:click={() => rowClick(row, index, header)}>
-              {#await handleColumn(header, row, index) then val}
-                {@html val}
-              {/await}
-            </td>
+            <th class:sortable={header.sortable} on:click={() => adjustSort(header)}>
+              <span>{@html header.label}</span>
+              {#if sort?.key === header.key}
+                <span>{sort.direction === 'asc' ? '↑' : '↓'}</span>
+              {/if}
+            </th>
           {/each}
         </tr>
-      {/each}
-    {/if}
-  </table>
+      {/if}
+
+      {#if rows}
+        {#each rows as row, index}
+          <tr>
+            {#each headers as header}
+              <td on:click={() => rowClick(row, index, header)}>
+                {#await handleColumn(header, row, index) then val}
+                  {@html val}
+                {/await}
+              </td>
+            {/each}
+          </tr>
+        {/each}
+      {/if}
+    </table>
+  </div>
 </div>
 
-<style lang="postcss">
-  table {
-    @apply w-full rounded-lg overflow-hidden;
+<style>
+  .table-card {
+    background-color: var(--background-primary);
+    border-radius: .25rem;
+    box-shadow: 0 3px 12px rgba(0,0,0,.16);
   }
 
-  tr {
-    @apply w-full;
+  .table-container {
+    overflow-x: auto;
+    width: 100%;
+  }
+
+  table {
+    width: 100%;
+  }
+
+  th, td {
+    text-align: left;
+    white-space: nowrap;
+    font-size: .75rem;
+    font-weight: normal;
+    padding: .5rem;
+    border-bottom: 1px solid rgba(0,0,0,.16);
   }
 
   th {
-    @apply text-left px-2 py-1;
-  }
-
-  td {
-    @apply text-left px-2 py-1;
+    opacity: .75;
   }
 </style>

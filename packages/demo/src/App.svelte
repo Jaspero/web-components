@@ -39,6 +39,10 @@
     // @ts-ignore
     instanceEl.headers = [
       {
+        key: '/publicationDate',
+        label: 'Publication Date'
+      },
+      {
         key: '/readTime',
         label: 'Read Time',
         pipes: [(value) => value + 'min']
@@ -49,8 +53,36 @@
         sortable: true
       },
       {
-        key: '/phoneNumber',
-        label: 'Phone Number'
+        key: '/author',
+        label: 'Author'
+      },
+      {
+        key: '/author',
+        label: 'Author'
+      },
+      {
+        key: '/author',
+        label: 'Author'
+      },
+      {
+        key: '/author',
+        label: 'Author'
+      },
+      {
+        key: '/author',
+        label: 'Author'
+      },
+      {
+        key: '/author',
+        label: 'Author'
+      },
+      {
+        key: '/author',
+        label: 'Author'
+      },
+      {
+        key: '/author',
+        label: 'Author'
       }
     ];
 
@@ -110,7 +142,9 @@
     chipsEl.name = 'chips';
     chipsEl.label = 'label 1212';
     chipsEl.placeholder = 'placeholder';
+    chipsEl.minitems = 2;
     chipsEl.maxitems = 4;
+    chipsEl.required = true;
     chipsEl.unique = true;
     // chipsEl.pattern = /kjh/;
 
@@ -151,6 +185,7 @@
 
     textareaEl.value = 'pattern text';
     textareaEl.name = 'textarea';
+    textareaEl.readonly = true;
 
     formEl.appendChild(textareaEl);
 
@@ -161,31 +196,46 @@
 
     el.appendChild(jsonEditor);
 
+
+
     const imageUploadEl = document.createElement('jp-image-upload')
 
     imageUploadEl.service = new MockImageService()
     imageUploadEl.name = 'nameeeee'
+    imageUploadEl.label = 'Upload a file'
     imageUploadEl.id = 'imageuploadid'
 
     formEl.appendChild(imageUploadEl)
 
     jsonEditor.addEventListener('change', (e) => console.log(e.detail));
 
-    const codeEditor = document.createElement('jp-code-editor');
 
-    codeEditor.content = 'function myScript(){return 100;}\n';
-    codeEditor.options = { mode: 'javascript' };
-    codeEditor.addEventListener('change', (e) => console.log(e.detail));
+    let headers = [
+      { label: 'Name', key: 'name' },
+      { label: 'Age', key: 'age' },
+      { label: 'Location', key: 'location' },
+      { label: 'Job', key: 'job' },
+      { label: 'Status', key: 'status' },
+    ];
 
-    el.appendChild(codeEditor);
+    let rows = [
+      { name: 'John', age: 28, location: 'NY', job: 'Engineer', status: 'Active' },
+      { name: 'Jane', age: 32, location: 'LA', job: 'Doctor', status: 'Inactive' },
+      { name: 'Doe', age: 45, location: 'TX', job: 'Teacher', status: 'Active' },
+      { name: 'Smith', age: 37, location: 'WA', job: 'Dentist', status: 'Pending' },
+      { name: 'Brown', age: 50, location: 'FL', job: 'Lawyer', status: 'Active' },
+    ];
 
-    const datepickerEl = document.createElement('jp-datepicker')
+    let sort = {
+      key: 'name',
+      direction: 'asc'
+    };
 
-    datepickerEl.addEventListener('value', (e) => console.log(e))
-    datepickerEl.name = 'datepickerrr'
-    datepickerEl.label = 'Choose a date'
-
-    formEl.appendChild(datepickerEl)
+    let tableEl = document.createElement('jp-table')
+    tableEl.headers = headers
+    tableEl.rows = rows
+    tableEl.sort = sort
+    el.appendChild(tableEl)
   });
 
   function submit(e) {
@@ -194,6 +244,27 @@
 
     console.log(formProps, formData);
   }
+
+  let headers = [
+    { label: 'Name', key: 'name', sortable: true },
+    { label: 'Age', key: 'age', sortable: true },
+    { label: 'Location', key: 'location', sortable: false },
+    { label: 'Job', key: 'job', sortable: true },
+    { label: 'Status', key: 'status', sortable: true },
+  ];
+
+  let rows = [
+    { name: 'John', age: 28, location: 'NY', job: 'Engineer', status: 'Active' },
+    { name: 'Jane', age: 32, location: 'LA', job: 'Doctor', status: 'Inactive' },
+    { name: 'Doe', age: 45, location: 'TX', job: 'Teacher', status: 'Active' },
+    { name: 'Smith', age: 37, location: 'WA', job: 'Dentist', status: 'Pending' },
+    { name: 'Brown', age: 50, location: 'FL', job: 'Lawyer', status: 'Active' },
+  ];
+
+  let sort = {
+    key: 'name',
+    direction: 'asc'
+  };
 </script>
 
 <div bind:this={el} class="p-4"></div>
@@ -206,11 +277,12 @@
   <!--<jp-radio options={['aaa', 'bbb']}></jp-radio>-->
 </form>
 
+
 <div class="relative flex overflow-hidden">
-  <jp-multiselect hint="Ovo je hint" options={[{label: 'Audi'}, {label: 'Volvo'}, {label: 'BMW'}, {label: 'Peugeot'}, {label: 'Renault'}, {label: 'Ford'}, {label: 'Opel'}]}></jp-multiselect>
+  <jp-multiselect disabled hint="Ovo je hint" options={[{label: 'Audi'}, {label: 'Volvo'}, {label: 'BMW'}, {label: 'Peugeot'}, {label: 'Renault'}, {label: 'Ford'}, {label: 'Opel'}]}></jp-multiselect>
   <jp-select hint="Ovo je hint" options={['United States', 'United Kingdom', 'Canada', 'Croatia', 'Cambodia', 'Italy', '1 Apple', '2 Trees', '3 Mugs', '4 Police Officers']}></jp-select>
   <jp-input hint="This is a hintasfaskfaksfiojfaiosjfiosjiof"></jp-input>
-  <jp-input></jp-input>
+  <jp-input readonly value="this is a read only input"></jp-input>
   <jp-input></jp-input>
 </div>
 
@@ -224,7 +296,7 @@
 
 <form action="">
   <jp-select
-    required
+    disabled
     options={[
       'United States',
       'United Kingdom',

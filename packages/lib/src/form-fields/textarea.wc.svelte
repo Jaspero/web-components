@@ -27,6 +27,7 @@
   export let name: string | null = null;
   export let placeholder: string = '';
   export let inputFocused: boolean = false;
+  export let rows: number = 4;
 
   export let required: boolean = false;
   export let readonly: boolean = false;
@@ -46,11 +47,13 @@
 </script>
 
 <div class:has-hint={hint}>
-    <label class="field" class:disabled class:required>
+    <label class="field" class:disabled={disabled || readonly} class:required>
         <span class="field-label" class:move={inputFocused || value}>{@html label}</span>
 
         <textarea
                 class="field-input"
+                aria-hidden={disabled || readonly}
+                tabindex={disabled || readonly ? -1 : 0}
                 {disabled}
                 {placeholder}
                 {required}
@@ -59,6 +62,7 @@
                 {name}
                 {minlength}
                 {maxlength}
+                {rows}
                 bind:value
                 on:focus={() => inputFocused = true}
                 on:blur={() => inputFocused = false}></textarea>
@@ -114,9 +118,9 @@
         content: ' *';
     }
 
-    .field.disabled .field-label, .field.disabled .field-input {
-        opacity: .33;
-        background: none;
+    .field.disabled {
+        pointer-events: none;
+        opacity: .5;
     }
 
     .field:focus-within {
@@ -169,7 +173,9 @@
         overflow: hidden;
         -o-text-overflow: ellipsis;
         text-overflow: ellipsis;
-        padding: 1.5rem 0 0 0;
+        margin: 1.5rem 0 0 0;
+        padding: 0 0 .25rem 0;
+        line-height: 1.375rem;
         border: none;
         outline: none;
         -webkit-border-radius: 0;
