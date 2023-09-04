@@ -33,8 +33,8 @@ Defines the structure of a table header.
 
  #### TablePipe 
  - **value** (required, type: `any`) - represents a data element
- - **index** (type: `number`) - numerical position in the table
  - **row** (type: `any`) - reference to the entire data row
+ - **index** (type: `number`) - numerical position in the table
 
 <br></br>
 
