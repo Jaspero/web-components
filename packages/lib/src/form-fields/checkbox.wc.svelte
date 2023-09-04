@@ -20,16 +20,16 @@
 
   export let attachedInternals: ElementInternals;
 
-  export let options: Array<{ label: string; value: boolean; disabled?: boolean }> = [];
+  export let options: Array<{ label?: string; value: string; checked: boolean; disabled?: boolean }> = [];
   export let minSelects: number = 0;
   export let maxSelects: number | null = null;
 
-  export const getValue = () => options.filter(el => el.value).map(el => el.label);
+  export const getValue = () => options.filter(el => el.checked).map(el => el.value);
   
   const dispatch = createEventDispatcher();
   
   $: if(Array.isArray(options)) {
-    const checkedAmount = options.filter((el) => el.value).length
+    const checkedAmount = options.filter((el) => el.checked).length
     if (checkedAmount < minSelects) {
       attachedInternals.setValidity({ customError: true }, 'Below limit checks.');
     } else if (checkedAmount > maxSelects) {
@@ -39,7 +39,7 @@
     }
 
 
-    dispatch('value', options.filter(el => el.value).map(el => el.label));
+    dispatch('value', options.filter(el => el.checked).map(el => el.value));
   }
 
   onMount(() => {
@@ -52,10 +52,14 @@
   {#each options as option}
     <label class="flex items-center gap-2 {option.disabled ? 'opacity-50' : ''}">
       <input type="checkbox"
-             name={option.label}
-             bind:checked={option.value}
+             name={option.value}
+             bind:checked={option.checked}
              disabled={option.disabled} />
-      {@html option.label}
+             {#if option.label}
+              {@html option.label}
+            {:else}
+              {option.value}
+            {/if}
     </label>
   {/each}
 </div>
