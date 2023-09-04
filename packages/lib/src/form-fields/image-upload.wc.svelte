@@ -15,6 +15,7 @@
 />
 
 <script lang="ts">
+  import { clickOutside } from '../clickOutside';
   import type ImageService from '../types/image.service'
   import { createEventDispatcher } from 'svelte'
 
@@ -72,52 +73,64 @@
 </script>
 
 <div>
-  <label class="field">
+  <div class="field">
     <span class="field-label" class:move={inputFocused || value}>{@html label}</span>
 
     <span class="field-upload-container">
-      <input type="file"
-             class="field-upload"
-             accept={service.acceptedFiles ? service.acceptedFiles : 'image/png, image/jpeg' }
-             {id}
+      <input class="field-input"
+             type="text"
              {name}
-             bind:value
-             on:change={(e) => {fileChanged(e)}}
+             {id}
              on:focus={() => inputFocused = true}
-             on:blur={() => inputFocused = false}>
-
-      <input class="field-input" type="text" {name} {id} bind:value={value} disabled={isLocal}>
+             on:blur={() => inputFocused = false}
+             bind:value={value}
+             disabled={isLocal}>
     </span>
 
     <div class="field-icons">
-      <div class="field-icon clickable">
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+      <div class="field-icon field-icon-upload">
+        <input type="file"
+               class="field-upload"
+               accept={service.acceptedFiles ? service.acceptedFiles : 'image/png, image/jpeg' }
+               {id}
+               {name}
+               bind:value
+               on:change={(e) => {fileChanged(e)}}
+               on:focus={() => inputFocused = true}
+               on:blur={() => inputFocused = false}>
+
+        <svg xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 512 512">
           <!--! Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2023 Fonticons, Inc. -->
           <path d="M64 480H448c35.3 0 64-28.7 64-64V160c0-35.3-28.7-64-64-64H288c-10.1 0-19.6-4.7-25.6-12.8L243.2 57.6C231.1 41.5 212.1 32 192 32H64C28.7 32 0 60.7 0 96V416c0 35.3 28.7 64 64 64z"/>
         </svg>
       </div>
       <div class="field-icon preview-button" class:hidden={!isLocal}>
         <button on:click|preventDefault={() => showPreview = !showPreview}>
-          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512">
+          <svg xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 576 512">
             <!--! Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2023 Fonticons, Inc. -->
             <path d="M288 32c-80.8 0-145.5 36.8-192.6 80.6C48.6 156 17.3 208 2.5 243.7c-3.3 7.9-3.3 16.7 0 24.6C17.3 304 48.6 356 95.4 399.4C142.5 443.2 207.2 480 288 480s145.5-36.8 192.6-80.6c46.8-43.5 78.1-95.4 93-131.1c3.3-7.9 3.3-16.7 0-24.6c-14.9-35.7-46.2-87.7-93-131.1C433.5 68.8 368.8 32 288 32zM144 256a144 144 0 1 1 288 0 144 144 0 1 1 -288 0zm144-64c0 35.3-28.7 64-64 64c-7.1 0-13.9-1.2-20.3-3.3c-5.5-1.8-11.9 1.6-11.7 7.4c.3 6.9 1.3 13.8 3.2 20.7c13.7 51.2 66.4 81.6 117.6 67.9s81.6-66.4 67.9-117.6c-11.1-41.5-47.8-69.4-88.6-71.1c-5.8-.2-9.2 6.1-7.4 11.7c2.1 6.4 3.3 13.2 3.3 20.3z"/>
           </svg>
         </button>
 
         {#if showPreview}
-          <img class="preview" src={isLocal ? img : value} alt="preview" hidden={!value && !img}>
+          <img class="preview"
+               src={isLocal ? img : value}
+               alt="preview"
+               hidden={!value && !img}
+               use:clickOutside
+               on:click_outside={() => showPreview = false}>
         {/if}
       </div>
       <div class="field-icon" class:hidden={!isLocal}>
         <button on:click|preventDefault={() => {isLocal = false; img = ''; value = ''}}>
-          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+          <svg xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 512 512">
             <!--! Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2023 Fonticons, Inc. -->
             <path d="M256 512A256 256 0 1 0 256 0a256 256 0 1 0 0 512zM175 175c9.4-9.4 24.6-9.4 33.9 0l47 47 47-47c9.4-9.4 24.6-9.4 33.9 0s9.4 24.6 0 33.9l-47 47 47 47c9.4 9.4 9.4 24.6 0 33.9s-24.6 9.4-33.9 0l-47-47-47 47c-9.4 9.4-24.6 9.4-33.9 0s-9.4-24.6 0-33.9l47-47-47-47c-9.4-9.4-9.4-24.6 0-33.9z"/>
           </svg>
         </button>
       </div>
     </div>
-  </label>
+  </div>
 </div>
 
 <style>
@@ -219,17 +232,16 @@
   }
 
   .field-upload {
+    z-index: 1;
     position: absolute;
     top: 0;
     left: 0;
     width: 100%;
     height: 100%;
-    border: 1px solid red;
     -webkit-border-radius: 0;
     -moz-border-radius: 0;
     border-radius: 0;
     opacity: 0;
-    cursor: pointer;
   }
 
   .field-upload-container {
@@ -279,19 +291,42 @@
     -moz-box-align: center;
     -ms-flex-align: center;
     align-items: center;
-    width: 1rem;
-    height: 1rem;
+    width: 2rem;
+    height: 2rem;
+    -webkit-border-radius: 50%;
+    -moz-border-radius: 50%;
+    border-radius: 50%;
+    cursor: pointer;
   }
 
-  .field-icon.clickable {
-    cursor: pointer;
+  .field-icon:hover {
+    background: var(--background-tertiary);
   }
 
   .field-icon.hidden {
     display: none;
   }
 
+  .field-icon-upload {
+    position: relative;
+  }
+
   .field-icon button {
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: -moz-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-pack: center;
+    -webkit-justify-content: center;
+    -moz-box-pack: center;
+    -ms-flex-pack: center;
+    justify-content: center;
+    -webkit-box-align: center;
+    -webkit-align-items: center;
+    -moz-box-align: center;
+    -ms-flex-align: center;
+    align-items: center;
     width: 100%;
     height: 100%;
   }
@@ -304,7 +339,7 @@
     position: absolute;
     bottom: 100%;
     right: 0;
-    max-width: 75vw;
+    max-width: 400px;
     width: auto;
     background-color: var(--background-primary);
     -webkit-border-radius: .5rem;
