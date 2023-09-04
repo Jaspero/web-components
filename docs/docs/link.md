@@ -27,4 +27,8 @@ This component does not have any methods.
 
 This component does not have any events. 
 
-### TODO: DEMO
+### Demo
+
+```jsx live
+<jp-link> link </jp-link>
+```

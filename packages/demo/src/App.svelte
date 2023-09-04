@@ -1,7 +1,7 @@
 <script lang="ts">
   import { onMount } from 'svelte';
-  /*import '../../../dist/alert.wc.js';*/
-  /*import '../../../dist/confirm.wc.js'*/
+  import '../../../dist/alert.wc.js';
+  import '../../../dist/confirm.wc.js'
   /*import '../../../dist/async-table.wc.js';*/
   import '../../../dist/input.wc.js';
   /*import '../../../dist/quill.wc.js';*/
@@ -18,8 +18,10 @@
   import '../../../dist/image-gallery.wc.js'
   import '../../../dist/image-upload.wc.js'
   import '../../../dist/paginator.wc.js'
+  import '../../../dist/table.wc.js'
   import '../../../dist/textarea.wc.js';
-  import '../../../dist/datepicker.wc.js'
+  import '../../../dist/button.wc.js'
+  import '../../../dist/link.wc.js'
 
   import { renderAlert } from '../../../dist/render-alert.js';
   import { renderConfirm } from '../../../dist/render-confirm.js';
@@ -196,7 +198,7 @@
 
     el.appendChild(jsonEditor);
 
-
+    
 
     const imageUploadEl = document.createElement('jp-image-upload')
 
@@ -208,7 +210,13 @@
     formEl.appendChild(imageUploadEl)
 
     jsonEditor.addEventListener('change', (e) => console.log(e.detail));
+    
+    const buttonEl = document.createElement('jp-button')
+    buttonEl.disabled = false;
+    el.appendChild(buttonEl);
 
+    const linkEl = document.createElement('jp-link')
+    el.appendChild(linkEl)
 
     let headers = [
       { label: 'Name', key: 'name' },
@@ -265,8 +273,8 @@
     key: 'name',
     direction: 'asc'
   };
-</script>
 
+</script>
 <div bind:this={el} class="p-4"></div>
 
 <form bind:this={formEl} class="p-4" on:submit|preventDefault={submit}>
@@ -294,6 +302,8 @@
   </jp-accordion>
 </div>
 
+<jp-button> button on the right </jp-button> 
+<jp-link> link </jp-link>
 <form action="">
   <jp-select
     disabled
@@ -309,7 +319,6 @@
       '3 Mugs',
       '4 Police Officers'
     ]}
-  ></jp-select>
-
+  ></jp-select>   
   <button>asdf</button>
 </form>

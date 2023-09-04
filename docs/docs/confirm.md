@@ -31,4 +31,8 @@ This component does not have any methods.
 - `confirmation`
    - triggers when confirmation is accepted or rejected
 
-### TODO: DEMO
+### Demo
+
+```jsx live
+<jp-confirm title='title'> confirm </jp-confirm>
+```
