@@ -28,6 +28,3 @@ This component does not have any methods.
 ### Events
 
 This component does not have any events. 
-
-
-### TODO: DEMO
