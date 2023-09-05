@@ -21,7 +21,7 @@
   export let attachedInternals: ElementInternals;
   export let minSelects: number = 0;
   export let maxSelects: number | null = null;
-  export let options: Array<{ label: string; selected: boolean; disabled?: boolean }> | string = [];
+  export let options: Array<{ label: string; value?: string; selected: boolean; disabled?: boolean }> | string = [];
   export let disabled: boolean = false;
   export let required: boolean = false;
   export let hint: string = '';
@@ -29,7 +29,7 @@
   export let id: string = '';
   export let name: string = '';
   export let label = 'Label';
-  export const getValue = () => options.filter((el) => el.selected).map((el) => el.label);
+  export const getValue = () => options.filter((el) => el.selected).map((el) => el.value ? el.value : el.label);
 
   let open = false;
   let bindingElement;
@@ -52,12 +52,12 @@
 
     value = options
       .filter((el) => el.selected)
-      .map((el) => el.label)
+      .map((el) => el.value ? el.value : el.label)
       .join(',');
 
     dispatch(
       'value',
-      options.filter((el) => el.selected).map((el) => el.label)
+      options.filter((el) => el.selected).map((el) => el.value ? el.value : el.label)
     );
   }
 
