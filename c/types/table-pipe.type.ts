@@ -1,1 +1,1 @@
-export type TablePipe = (value: any, index?: number, row?: any) => any;
+export type TablePipe = (value: any, row?: any, index?: number) => any;
