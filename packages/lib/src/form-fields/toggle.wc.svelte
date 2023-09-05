@@ -25,13 +25,13 @@
   export let value: string = '';
   export let checked: boolean = false;
 
-  export const getValue = () => value;
+  export const getValue = () => checked;
 
   const dispatch = createEventDispatcher();
 
   $: {
     attachedInternals.checkValidity();
-    dispatch('value', value);
+    dispatch('value', checked);
   }
 </script>
 
