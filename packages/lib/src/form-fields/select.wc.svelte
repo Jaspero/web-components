@@ -19,7 +19,7 @@
   import { createEventDispatcher, onMount } from 'svelte';
 
   export let attachedInternals: ElementInternals;
-  export let options: Array<string> | string = [];
+  export let options: Array<{label?: string, value: string}> | string = [];
   export let disabled: boolean = false;
   export let required: boolean = false;
   export let hint: string = '';
@@ -35,6 +35,8 @@
   let optionElements = [];  // Array to store references to option buttons
   let searchTerm = '';
   let searchTimeout;
+  let selected;
+
   const dispatch = createEventDispatcher();
 
   $: {
@@ -170,7 +172,7 @@
     </span>
 
     <span class="select-option">
-      {value || ''}
+      {selected || ''}
     </span>
 
     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512" class="select-arrow" class:rotate={open}>
@@ -187,16 +189,17 @@
 </div>
 
 {#if open}
+  <!-- svelte-ignore a11y-no-noninteractive-element-interactions -->
   <div class="overlay" on:click={toggleMenu} on:keydown={handleKeydown} tabindex="-1" role="dialog">
     <div class="menu" style={menuStyle}>
       {#each options as option, index (option)}
         <button class="menu-button"
-                class:selected={value === option}
+                class:selected={value == option.value}
                 bind:this={optionElements[index]}
-                on:click|preventDefault={() => value = option}>
-          <span>{option}</span>
+                on:click|preventDefault={() => {value = option.value; selected = option.label ? option.label : option.value}}>
+          <span>{option.label ? option.label : option.value}</span>
 
-          {#if value === option}
+          {#if value == option.value}
             <svg xmlns="http://www.w3.org/2000/svg" width="1rem" height="1rem" viewBox="0 0 448 512">
               <!--! Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2023 Fonticons, Inc. -->
               <path d="M438.6 105.4c12.5 12.5 12.5 32.8 0 45.3l-256 256c-12.5 12.5-32.8 12.5-45.3 0l-128-128c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0L160 338.7 393.4 105.4c12.5-12.5 32.8-12.5 45.3 0z"/>
