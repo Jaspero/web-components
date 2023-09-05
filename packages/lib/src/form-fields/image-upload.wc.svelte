@@ -92,9 +92,6 @@
         <input type="file"
                class="field-upload"
                accept={service.acceptedFiles ? service.acceptedFiles : 'image/png, image/jpeg' }
-               {id}
-               {name}
-               bind:value
                on:change={(e) => {fileChanged(e)}}
                on:focus={() => inputFocused = true}
                on:blur={() => inputFocused = false}>
