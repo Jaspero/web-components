@@ -21,7 +21,7 @@
   export let attachedInternals: ElementInternals;
   export let minSelects: number = 0;
   export let maxSelects: number | null = null;
-  export let options: Array<{ label: string; value?: string; selected: boolean; disabled?: boolean }> | string = [];
+  export let options: Array<{ label?: string; value: string; selected: boolean; disabled?: boolean }> | string = [];
   export let disabled: boolean = false;
   export let required: boolean = false;
   export let hint: string = '';
@@ -29,7 +29,7 @@
   export let id: string = '';
   export let name: string = '';
   export let label = 'Label';
-  export const getValue = () => options.filter((el) => el.selected).map((el) => el.value ? el.value : el.label);
+  export const getValue = () => options.filter((el) => el.selected).map((el) => el.value);
 
   let open = false;
   let bindingElement;
@@ -37,6 +37,7 @@
   let optionElements = [];  // Array to store references to option buttons
   let searchTerm = '';
   let searchTimeout;
+  let displayValue;
   const dispatch = createEventDispatcher();
 
   $: if(Array.isArray(options)) {
@@ -52,12 +53,14 @@
 
     value = options
       .filter((el) => el.selected)
-      .map((el) => el.value ? el.value : el.label)
+      .map((el) => el.value)
       .join(',');
+
+    displayValue = options.filter((el) => el.selected).map((el) => el.label ? el.label : el.value)
 
     dispatch(
       'value',
-      options.filter((el) => el.selected).map((el) => el.value ? el.value : el.label)
+      options.filter((el) => el.selected).map((el) => el.value)
     );
   }
 
@@ -196,7 +199,7 @@
     </span>
 
     <span class="select-option">
-      {value || ''}
+      {displayValue || ''}
     </span>
 
     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512" class="select-arrow" class:rotate={open}>
@@ -220,7 +223,7 @@
                 class:selected={option.selected}
                 bind:this={optionElements[index]}
                 on:click|preventDefault={() => option.selected = !option.selected}>
-          <span>{option.label}</span>
+          <span>{option.label ? option.label : option.value}</span>
 
           {#if option.selected}
             <svg xmlns="http://www.w3.org/2000/svg" width="1rem" height="1rem" viewBox="0 0 448 512">
