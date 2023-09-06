@@ -20,8 +20,7 @@
 
   export let attachedInternals: ElementInternals;
 
-  export let options: Array<{name?: string, value: any}> | string = [];
-  export let disabled: boolean = false;
+  export let options: Array<{name?: string, value: any, disabled?: boolean;}> | string = [];
   export let required: boolean = false;
   export let value: string = '';
   export let name: string | null = null;
@@ -42,13 +41,13 @@
 
 <div class="flex flex-col">
   {#each options as option}
-    <label>
+    <label class:disabled={option.disabled}>
         <input
             type="radio"
             {name}
             value={option.value}
             {required}
-            {disabled}
+            disabled={option.disabled}
             bind:group={value}
         />
         <span class="fake-button">
@@ -90,9 +89,22 @@
 
 <style>
     label {
+        display: -webkit-box;
+        display: -webkit-flex;
+        display: -moz-box;
+        display: -ms-flexbox;
         display: flex;
+        -webkit-box-align: center;
+        -webkit-align-items: center;
+        -moz-box-align: center;
+        -ms-flex-align: center;
         align-items: center;
         font-size: 1rem;
+    }
+
+    label.disabled {
+        pointer-events: none;
+        opacity: .33;
     }
 
     input {
@@ -112,8 +124,13 @@
         width: 1rem;
         height: 1rem;
         border: 1px solid var(--border-primary);
+        -webkit-border-radius: 50%;
+        -moz-border-radius: 50%;
         border-radius: 50%;
         padding: .125rem;
+        -webkit-transition: .2s;
+        -o-transition: .2s;
+        -moz-transition: .2s;
         transition: .2s;
     }
 
@@ -121,7 +138,12 @@
         display: block;
         width: 100%;
         height: 100%;
+        -webkit-border-radius: 50%;
+        -moz-border-radius: 50%;
         border-radius: 50%;
+        -webkit-transition: .2s;
+        -o-transition: .2s;
+        -moz-transition: .2s;
         transition: .2s;
     }
 
@@ -133,9 +155,18 @@
         left: 50%;
         width: 0;
         height: 0;
+        -webkit-transform: translate(-50%, -50%);
+        -moz-transform: translate(-50%, -50%);
+        -ms-transform: translate(-50%, -50%);
+        -o-transform: translate(-50%, -50%);
         transform: translate(-50%, -50%);
         background-color: var(--background-tertiary);
+        -webkit-border-radius: 50%;
+        -moz-border-radius: 50%;
         border-radius: 50%;
+        -webkit-transition: .2s;
+        -o-transition: .2s;
+        -moz-transition: .2s;
         transition: .2s;
     }
 

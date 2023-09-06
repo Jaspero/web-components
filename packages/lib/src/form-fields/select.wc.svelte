@@ -19,7 +19,7 @@
   import { createEventDispatcher, onMount } from 'svelte';
 
   export let attachedInternals: ElementInternals;
-  export let options: Array<{label?: string, value: string}> | string = [];
+  export let options: Array<{label?: string, value: string, disabled?: boolean}> | string = [];
   export let disabled: boolean = false;
   export let required: boolean = false;
   export let hint: string = '';
@@ -29,6 +29,7 @@
   export let label = 'Label';
   export const getValue = () => value;
 
+  let isTabbing = false;  // Variable to track if the user is tabbing
   let open = false;
   let bindingElement;
   let menuStyle;
@@ -47,7 +48,7 @@
   function toggleMenu() {
     const rect = bindingElement.getBoundingClientRect();
     const availableSpaceBelow = window.innerHeight - rect.bottom;
-    const dropdownHeight = 160;
+    const dropdownHeight = 300;
 
     let style: string = '';
     if (availableSpaceBelow < dropdownHeight) {
@@ -69,9 +70,12 @@
 
     if (open) {
       setTimeout(() => {
-        const indexToFocus = value ? options.indexOf(value) : 0;
-        optionElements[indexToFocus].focus();
-      }, 1); // A short delay, 10ms
+        // Find the first non-disabled option
+        const firstEnabledOptionIndex = options.findIndex(option => !option.disabled);
+        if (firstEnabledOptionIndex !== -1) {
+          optionElements[firstEnabledOptionIndex].focus();
+        }
+      }, 10); // A short delay, 10ms
     }
 
     if (!open) { // If the menu is being closed
@@ -79,6 +83,23 @@
         bindingElement.focus();
       }, 10);
     }
+  }
+
+  function getAdjacentFocusableIndex(currentIndex: number, direction: 'next' | 'previous'): number {
+    if (direction === 'next') {
+      for (let i = currentIndex + 1; i < options.length; i++) {
+        if (!options[i].disabled) {
+          return i;
+        }
+      }
+    } else if (direction === 'previous') {
+      for (let i = currentIndex - 1; i >= 0; i--) {
+        if (!options[i].disabled) {
+          return i;
+        }
+      }
+    }
+    return currentIndex;  // Return current index if no focusable option is found in the desired direction
   }
 
   function handleKeydown(event: KeyboardEvent) {
@@ -99,15 +120,36 @@
       // Check for End (Windows/Linux) or Cmd+DownArrow (Mac)
       const isEnd = event.key === 'End' || (event.key === 'ArrowDown' && event.metaKey);
 
+      // Check for Home (Windows/Linux) or Cmd+UpArrow (Mac)
       if (isHome) {
         event.preventDefault();
-        optionElements[0].focus();
+
+        // Find the first non-disabled option's index
+        const firstEnabledOptionIndex = options.findIndex(option => !option.disabled);
+
+        // If there's a non-disabled option, focus on it
+        if (firstEnabledOptionIndex !== -1) {
+          optionElements[firstEnabledOptionIndex].focus();
+        }
+
         return;
       }
 
+      // Check for End (Windows/Linux) or Cmd+DownArrow (Mac)
       if (isEnd) {
         event.preventDefault();
-        optionElements[options.length - 1].focus();
+
+        // Find the last non-disabled option's index by starting from the end of the list
+        const lastEnabledOptionIndex = options.slice().reverse().findIndex(option => !option.disabled);
+
+        // Convert the reversed index back to the original array's indexing
+        const actualIndex = lastEnabledOptionIndex !== -1 ? options.length - 1 - lastEnabledOptionIndex : -1;
+
+        // If there's a non-disabled option, focus on it
+        if (actualIndex !== -1) {
+          optionElements[actualIndex].focus();
+        }
+
         return;
       }
 
@@ -115,17 +157,34 @@
       if (['ArrowDown', 'ArrowUp'].includes(event.key)) {
         event.preventDefault(); // Prevent default scroll behavior
 
-        if (event.key === 'ArrowDown') {
-          if (currentIndex < options.length - 1) {
-            nextIndex = currentIndex + 1;
-          } else {
-            nextIndex = currentIndex;
+        if (event.key === 'ArrowUp') {
+          nextIndex = getAdjacentFocusableIndex(currentIndex, 'previous');
+        } else {
+          nextIndex = getAdjacentFocusableIndex(currentIndex, 'next');
+        }
+
+        optionElements[nextIndex].focus();
+      }
+
+      if (event.key === 'Tab') {
+        event.preventDefault();  // Prevent default tabbing behavior
+        isTabbing = true;
+
+        if (event.shiftKey) {  // Shift + Tab pressed
+          nextIndex = getAdjacentFocusableIndex(currentIndex, 'previous');
+          if (currentIndex === nextIndex) {
+            // Close the menu and focus the bindingElement if we're at the first non-disabled option
+            toggleMenu();
+            bindingElement.focus();
+            return;  // Early exit
           }
         } else {
-          if (currentIndex > 0) {
-            nextIndex = currentIndex - 1;
-          } else {
-            nextIndex = currentIndex;
+          nextIndex = getAdjacentFocusableIndex(currentIndex, 'next');
+          if (currentIndex === nextIndex) {
+            // Close the menu and focus the bindingElement if we're at the last non-disabled option
+            toggleMenu();
+            bindingElement.focus();
+            return;  // Early exit
           }
         }
 
@@ -151,6 +210,12 @@
         }, 500);
       }
     }
+  }
+
+  $: if (open) {
+    document.documentElement.style.overflowY = 'hidden';
+  } else {
+    document.documentElement.style.overflowY = '';
   }
 
   onMount(() => {
@@ -196,6 +261,7 @@
         <button class="menu-button"
                 class:selected={value == option.value}
                 bind:this={optionElements[index]}
+                disabled={option.disabled}
                 on:click|preventDefault={() => {value = option.value; selected = option.label ? option.label : option.value}}>
           <span>{option.label ? option.label : option.value}</span>
 
@@ -301,7 +367,12 @@
     -webkit-transition: transform .3s, top .3s, font-size .3s;
     -o-transition: transform .3s, top .3s, font-size .3s;
     -moz-transition: transform .3s, top .3s, font-size .3s;
+    -webkit-transition: top .3s, font-size .3s, -webkit-transform .3s;
+    transition: top .3s, font-size .3s, -webkit-transform .3s;
+    -o-transition: top .3s, font-size .3s, -o-transform .3s;
+    -moz-transition: transform .3s, top .3s, font-size .3s, -moz-transform .3s;
     transition: transform .3s, top .3s, font-size .3s;
+    transition: transform .3s, top .3s, font-size .3s, -webkit-transform .3s, -moz-transform .3s, -o-transform .3s;
   }
 
   .select-label.move {
@@ -344,7 +415,12 @@
     -webkit-transition: transform .3s;
     -o-transition: transform .3s;
     -moz-transition: transform .3s;
+    -webkit-transition: -webkit-transform .3s;
+    transition: -webkit-transform .3s;
+    -o-transition: -o-transform .3s;
+    -moz-transition: transform .3s, -moz-transform .3s;
     transition: transform .3s;
+    transition: transform .3s, -webkit-transform .3s, -moz-transform .3s, -o-transform .3s;
   }
 
   .select-arrow.rotate {
@@ -393,7 +469,7 @@
     -moz-box-direction: normal;
     -ms-flex-direction: column;
     flex-direction: column;
-    max-height: 20rem;
+    max-height: 300px;
     overflow-y: auto;
     -webkit-border-bottom-left-radius: .25rem;
     -moz-border-radius-bottomleft: .25rem;
@@ -439,7 +515,11 @@
     fill: var(--primary-color);
   }
 
-  .menu-button:hover, .menu-button:focus {
+  .menu-button:disabled {
+    opacity: .33;
+  }
+
+  .menu-button:not(:disabled):hover, .menu-button:focus {
     background-color: var(--background-secondary);
   }
 </style>
