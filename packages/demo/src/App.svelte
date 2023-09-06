@@ -12,8 +12,8 @@
   import '../../../dist/select.wc.js';
   import '../../../dist/accordion.wc.js';
   import '../../../dist/bellow.wc.js';
-  /*import '../../../dist/radio.wc.js'
-  import '../../../dist/json-editor.wc.js'
+  import '../../../dist/radio.wc.js'
+  /*import '../../../dist/json-editor.wc.js'
   import '../../../dist/code-editor.wc.js'*/
   import '../../../dist/image-gallery.wc.js'
   import '../../../dist/image-upload.wc.js'
@@ -161,7 +161,7 @@
     multiselectEl.required = true;
     multiselectEl.placeholder = 'placeholder';
     multiselectEl.options =
-      '[{"label": "label1", "selected": false},{"label": "label2", "selected": true},{"label": "label3", "selected": true},{"label": "label4", "selected": false, "disabled": true},{"label": "label5", "selected": false}]';
+      '[{"label": "label1", "selected": false, "disabled": true},{"label": "label2", "selected": true},{"label": "label3", "selected": true},{"label": "label4", "selected": false, "disabled": true},{"label": "label5", "selected": false}]';
 
     formEl.appendChild(multiselectEl);
 
@@ -288,7 +288,15 @@
 
 <div class="relative flex overflow-hidden">
   <jp-multiselect disabled hint="Ovo je hint" options={[{label: 'Audi'}, {label: 'Volvo'}, {label: 'BMW'}, {label: 'Peugeot'}, {label: 'Renault'}, {label: 'Ford'}, {label: 'Opel'}]}></jp-multiselect>
-  <jp-select hint="Ovo je hint" options={['United States', 'United Kingdom', 'Canada', 'Croatia', 'Cambodia', 'Italy', '1 Apple', '2 Trees', '3 Mugs', '4 Police Officers']}></jp-select>
+  <jp-select hint="Ovo je hint" options={[
+          {value: 'United States', disabled: true},
+          {value: 'Croatia'},
+          {value: 'Serbia', disabled: true},
+          {value: 'Kosovo', disabled: true},
+          {value: 'Germany'}
+          ]}>
+  </jp-select>
+  <jp-radio options={[{value: 'Audi', disabled: true}, {value: 'Volvo', disabled: true}, {value: 'BMW'}, {value: 'Peugeot'}, {value: 'Renault'}, {value: 'Ford'}, {value: 'Opel'}]}></jp-radio>
   <jp-input hint="This is a hintasfaskfaksfiojfaiosjfiosjiof"></jp-input>
   <jp-input readonly value="this is a read only input"></jp-input>
   <jp-input></jp-input>
@@ -306,7 +314,6 @@
 <jp-link> link </jp-link>
 <form action="">
   <jp-select
-    disabled
     options={[
       'United States',
       'United Kingdom',
