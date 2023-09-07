@@ -3,7 +3,7 @@
   /*import '../../../dist/alert.wc.js'; */
   /*import '../../../dist/confirm.wc.js'*/
   /*import '../../../dist/async-table.wc.js';*/
-  import '../../../dist/input.wc.js';
+  /*import '../../../dist/input.wc.js';
   /*import '../../../dist/quill.wc.js';*/
   import '../../../dist/checkbox.wc.js';
   /*import '../../../dist/progress-spinner.wc.js'*/
@@ -22,6 +22,7 @@
   import '../../../dist/textarea.wc.js';
   import '../../../dist/button.wc.js'
   import '../../../dist/link.wc.js'
+  import '../../../dist/stepper.wc.js';
 
   import { renderAlert } from '../../../dist/render-alert.js';
   import { renderConfirm } from '../../../dist/render-confirm.js';
@@ -217,6 +218,9 @@
 
     const linkEl = document.createElement('jp-link')
     el.appendChild(linkEl)
+    
+    const stepperEl = document.createElement('jp-stepper')
+    el.appendChild(stepperEl)
 
     let headers = [
       { label: 'Name', key: 'name' },
