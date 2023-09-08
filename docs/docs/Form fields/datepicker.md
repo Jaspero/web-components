@@ -1,4 +1,4 @@
-# Input
+# Datepicker
 
 ### Description
 
@@ -9,6 +9,9 @@
 | **Name** | **Required** | **Type** | **Description** |
 | :----: | :----: | :----: | :---: |
 | name | ✓ | `string` |  name of the form control |
+| label |  | `string` |  label displayed on date field |
+| displayFormat |  | `normal` \| `short` \| `medium` \| `long` \| `full` |  format of displayed date in the field |
+| returnFormat |  | `json` \| `unix` \| `js` \| `utc` |  format of exposing value (through events and methods) |
 
   
 ### Slots
