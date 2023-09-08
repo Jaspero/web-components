@@ -24,10 +24,12 @@
     export let name: string = '';
     export let label: string = 'Pick a date';
     export let displayFormat: string = 'normal';
+    export let displayFormatFunction: (date:Date) => string = (date) => date.toDateString()
     export let returnFormat: string = 'js'
+    export let returnFormatFunction: (date:Date) => any = (date) => date.valueOf()
 
     let selectedDateObject = new Date(Date.now());
-    let displayedDateString = formatDisplayDate(selectedDateObject, displayFormat);
+    let displayedDateString = formatDisplayDate(selectedDateObject, displayFormat, displayFormatFunction);
     let borderTop: boolean = false;
     let borderBottom: boolean = false;
     let bindingElement;
@@ -58,7 +60,7 @@
     ];
     let yearPickerIndex = 0;
 
-    export const getValue = () => formatReturnDate(selectedDateObject, returnFormat);
+    export const getValue = () => formatReturnDate(selectedDateObject, returnFormat, returnFormatFunction);
 
     const dispatch = createEventDispatcher();
 
@@ -159,10 +161,10 @@
     $: {
         value = `${yearSelected}-${monthSelected + 1 < 10 ? '0' : ''}${monthSelected + 1}-${dateSelected < 10 ? '0' : ''}${dateSelected}`
         selectedDateObject = new Date(value)
-        displayedDateString = formatDisplayDate(selectedDateObject, displayFormat);
+        displayedDateString = formatDisplayDate(selectedDateObject, displayFormat, displayFormatFunction);
         attachedInternals.checkValidity();
         attachedInternals.setFormValue(value);
-        dispatch('value', { value: formatReturnDate(selectedDateObject, returnFormat) });
+        dispatch('value', { value: formatReturnDate(selectedDateObject, returnFormat, returnFormatFunction) });
     }
 
     $: if (openPicker) {
