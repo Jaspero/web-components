@@ -21,7 +21,7 @@
   export let attachedInternals: ElementInternals;
   export let minSelects: number = 0;
   export let maxSelects: number | null = null;
-  export let options: Array<{ label?: string; value: string; selected: boolean; disabled?: boolean }> | string = [];
+  export let options: Array<{ label?: string; value: string; selected?: boolean; disabled?: boolean }> | string = [];
   export let disabled: boolean = false;
   export let required: boolean = false;
   export let hint: string = '';
@@ -225,7 +225,7 @@
 
         searchTerm += event.key;
 
-        const matchingIndex = options.findIndex(option =>
+        const matchingIndex = options.map(el => el.label ? el.label : el.value).findIndex(option =>
                 option.toLowerCase().includes(searchTerm.toLowerCase())
         );
 
@@ -251,6 +251,12 @@
     if (!maxSelects) {
       maxSelects = options.length;
     }
+    options = options.map(el => {
+      if(el.selected == undefined){
+        el.selected = false
+      }
+      return el
+    })
   });
 </script>
 
