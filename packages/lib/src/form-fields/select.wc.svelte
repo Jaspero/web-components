@@ -220,6 +220,13 @@
 
   onMount(() => {
     if(typeof options == 'string') options = JSON.parse(options)
+    if(value){
+      options.forEach(el => {
+        if(el.value == value){
+          selected = el.label ? el.label : el.value
+        }
+      })
+    }
   })
 </script>
 
