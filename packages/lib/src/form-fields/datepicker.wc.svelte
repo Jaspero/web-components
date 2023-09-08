@@ -17,12 +17,17 @@
 
 <script lang="ts">
     import { createEventDispatcher, onMount } from 'svelte';
+    import { formatDisplayDate, formatReturnDate } from '../utils/dateFormatter';
 
     export let attachedInternals: ElementInternals;
     export let value: string = '';
     export let name: string = '';
     export let label: string = 'Pick a date';
+    export let displayFormat: string = 'normal';
+    export let returnFormat: string = 'js'
 
+    let selectedDateObject = new Date(Date.now());
+    let displayedDateString = formatDisplayDate(selectedDateObject, displayFormat);
     let borderTop: boolean = false;
     let borderBottom: boolean = false;
     let bindingElement;
@@ -53,7 +58,7 @@
     ];
     let yearPickerIndex = 0;
 
-    export const getValue = () => value;
+    export const getValue = () => formatReturnDate(selectedDateObject, returnFormat);
 
     const dispatch = createEventDispatcher();
 
@@ -153,9 +158,11 @@
 
     $: {
         value = `${yearSelected}-${monthSelected + 1 < 10 ? '0' : ''}${monthSelected + 1}-${dateSelected < 10 ? '0' : ''}${dateSelected}`
+        selectedDateObject = new Date(value)
+        displayedDateString = formatDisplayDate(selectedDateObject, displayFormat);
         attachedInternals.checkValidity();
         attachedInternals.setFormValue(value);
-        dispatch('value', { value });
+        dispatch('value', { value: formatReturnDate(selectedDateObject, returnFormat) });
     }
 
     $: if (openPicker) {
@@ -172,7 +179,7 @@
         class:borderTop
         on:click|preventDefault={toggleMenu}>
     <span class="field-label" class:move={openPicker || value}>{@html label}</span>
-    <p class="field-input">{dateSelected} {monthSelected + 1} {yearSelected}</p>
+    <p class="field-input">{displayedDateString}</p>
 
     <span class="field-icon">
     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512">
