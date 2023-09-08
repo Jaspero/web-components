@@ -22,11 +22,15 @@
   import '../../../dist/textarea.wc.js';
   import '../../../dist/button.wc.js'
   import '../../../dist/link.wc.js'
+  /*import '../../../dist/tabs.wc.js'*/
+
+
 
   import { renderAlert } from '../../../dist/render-alert.js';
   import { renderConfirm } from '../../../dist/render-confirm.js';
   import { FirebaseTableService } from './firebase-table.service';
   import { MockImageService } from './mock-image.service..js';
+  import Tabs from '../../lib/src/tabs/tabs.wc.svelte';
 
   let el: HTMLDivElement;
   let formEl: HTMLFormElement;
@@ -217,6 +221,9 @@
 
     const linkEl = document.createElement('jp-link')
     el.appendChild(linkEl)
+
+    const tabsEl = document.createElement('jp-tabs');
+    el.appendChild(tabsEl);
 
     let headers = [
       { label: 'Name', key: 'name' },
