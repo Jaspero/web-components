@@ -24,8 +24,8 @@ export default function Home() {
 
   return (
       <Layout
-          title={`Hello from ${siteConfig.title}`}
-          description="Description will go into a meta tag in <head />"
+          title="Jaspero Web Components"
+          description="A collection of commonly used web components. Each distributed independently."
       >
         <div className={styles.hero}>
           <div className={styles.heroUpper}>
