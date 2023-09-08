@@ -17,12 +17,11 @@
 
 <script lang="ts">
     import { createEventDispatcher, onMount } from 'svelte';
-    import {options} from "./multiselect.wc.svelte";
 
     export let attachedInternals: ElementInternals;
     export let value: string = '';
     export let name: string = '';
-    export let label: string = '';
+    export let label: string = 'Pick a date';
 
     let borderTop: boolean = false;
     let borderBottom: boolean = false;
@@ -186,11 +185,12 @@
 <input type="date" {name} bind:value hidden />
 {#if openPicker}
     <!-- svelte-ignore a11y-no-noninteractive-element-interactions -->
+    <!-- svelte-ignore a11y-click-events-have-key-events -->
     <div class="overlay" on:click|stopPropagation={toggleMenu} tabindex="-1" role="dialog">
         <div class="menu" style={menuStyle}>
             <div class="menu-nav">
                 <!--<button on:click|preventDefault={() => (pickerYear = pickerYear - 1)}>&lt;&lt;</button>-->
-                <button class="menu-nav-date" on:click={() => yearSelector = true}>
+                <button class="menu-nav-date" on:click|preventDefault={() => yearSelector = true}>
                     <p>{monthMap[pickerMonth]}, {pickerYear}</p>
                     <svg xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 512 512">
                         <!--! Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2023 Fonticons, Inc. -->
@@ -256,13 +256,13 @@
                             </svg>
                         </button>
                         <div class="menu-year-nav-buttons">
-                            <button on:click={() => yearPickerIndex--}>
+                            <button on:click|preventDefault={() => yearPickerIndex--}>
                                 <svg xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 320 512">
                                     <!--! Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2023 Fonticons, Inc. -->
                                     <path d="M9.4 233.4c-12.5 12.5-12.5 32.8 0 45.3l192 192c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L77.3 256 246.6 86.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0l-192 192z"/>
                                 </svg>
                             </button>
-                            <button on:click={() => yearPickerIndex++}>
+                            <button on:click|preventDefault={() => yearPickerIndex++}>
                                 <svg xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 320 512">
                                     <!--! Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2023 Fonticons, Inc. -->
                                     <path d="M310.6 233.4c12.5 12.5 12.5 32.8 0 45.3l-192 192c-12.5 12.5-32.8 12.5-45.3 0s-12.5-32.8 0-45.3L242.7 256 73.4 86.6c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0l192 192z"/>
@@ -273,7 +273,7 @@
                     {#each pickerYearRows as row}
                         <div class="menu-year-row">
                             {#each row as year}
-                                <button class="menu-year-row-cell" class:active={yearSelected === year} on:click|stopPropagation={() => {
+                                <button class="menu-year-row-cell" class:active={yearSelected === year} on:click|preventDefault|stopPropagation={() => {
                   yearSelected = year;
                   yearSelector = false;
                   monthSelector = true;
@@ -288,7 +288,7 @@
                 <div class="menu-month">
                     <div class="menu-month-nav">
                         <button class="menu-month-nav-date"
-                                on:click={() => {
+                                on:click|preventDefault={() => {
                                     monthSelector = false;
                                 }}>
                             <p>{yearSelected}</p>
@@ -315,7 +315,7 @@
 
                     <div class="menu-month-grid">
                         {#each monthMap as month, index}
-                            <button on:click={() => {monthSelected = index;monthSelector = false;}}
+                            <button on:click|preventDefault={() => {monthSelected = index;monthSelector = false;}}
                                     class:active={monthSelected === index}>
                                 {month}
                             </button>
