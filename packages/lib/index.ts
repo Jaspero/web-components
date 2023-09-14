@@ -25,4 +25,5 @@ export default () => {
   import('./src/form-fields/textarea.wc.svelte');
   import('./src/form-fields/datepicker.wc.svelte');
   import('./src/form-fields/toggle.wc.svelte')
+  import('./src/form-fields/slider.wc.svelte');
 };

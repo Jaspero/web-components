@@ -22,6 +22,7 @@
   import '../../../dist/textarea.wc.js';
   import '../../../dist/button.wc.js'
   import '../../../dist/link.wc.js'
+  import '../../../dist/slider.wc.js'
 
   import { renderAlert } from '../../../dist/render-alert.js';
   import { renderConfirm } from '../../../dist/render-confirm.js';
@@ -190,6 +191,11 @@
     textareaEl.readonly = true;
 
     formEl.appendChild(textareaEl);
+
+    const sliderEl = document.createElement('jp-slider') as HTMLInputElement; 
+
+    formEl.appendChild(sliderEl);
+
 
     const jsonEditor = document.createElement('jp-json-editor');
 
