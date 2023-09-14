@@ -49,5 +49,12 @@
 {#if label}
   <span>{label}</span>
 {/if}
-<div bind:this={containerEl}></div>
+<div class="code-editor" bind:this={containerEl}></div>
 <textarea {name} {id} {value} hidden></textarea>
+
+<style>
+  .code-editor {
+    border: 1px solid var(--border-primary);
+    border-radius: .25rem;
+  }
+</style>
