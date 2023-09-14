@@ -13,8 +13,8 @@
   import '../../../dist/accordion.wc.js';
   import '../../../dist/bellow.wc.js';
   import '../../../dist/radio.wc.js'
-  /*import '../../../dist/json-editor.wc.js'
-  import '../../../dist/code-editor.wc.js'*/
+  import '../../../dist/json-editor.wc.js'
+  import '../../../dist/code-editor.wc.js'
   import '../../../dist/image-gallery.wc.js'
   import '../../../dist/image-upload.wc.js'
   import '../../../dist/paginator.wc.js'
@@ -309,6 +309,8 @@
     <jp-bellow title="Third Panel">Content for the third panel</jp-bellow>
   </jp-accordion>
 </div>
+
+<jp-code-editor label="asdf"></jp-code-editor>
 
 <jp-button> button on the right </jp-button> 
 <jp-link> link </jp-link>
