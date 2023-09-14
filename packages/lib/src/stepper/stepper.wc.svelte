@@ -1,115 +1,99 @@
 <svelte:options
-  customElement={{
+        customElement={{
     tag: 'jp-stepper',
     shadow: 'none'
   }}
 />
 
 <script lang="ts">
-  import { createEventDispatcher } from 'svelte';
-  export let steps: string[] = ['Make an order', 'label 2', 'label 3', 'label 4', 'label 5'];
-  export let step: number = 0;
+    import { createEventDispatcher } from 'svelte';
+    export let steps: string[] = ['Make an order', 'label 2', 'label 3', 'label 4', 'label 5'];
+    export let step: number = 0;
 
-  export function next() {
-    if (step < steps.length - 1) {
-      step += 1;
+    export function next() {
+        if (step < steps.length - 1) {
+            step += 1;
+        }
+        dispatch('next', {step})
     }
-    dispatch('next', {step})
-  }
 
-  export function previous() {
-    if (step > 0) {
-      step -= 1;
+    export function previous() {
+        if (step > 0) {
+            step -= 1;
+        }
+        dispatch('previous', {step})
     }
-    dispatch('previous', {step}) 
-  }
 
-  export function reset() {
-    step = 0;
-  }
+    export function reset() {
+        step = 0;
+    }
 
-  const dispatch = createEventDispatcher();
+    const dispatch = createEventDispatcher();
 
 </script>
 
-<div class="whole-div">
-  <div class="step-class">
+<div class="stepper">
     {#each steps as label, index}
-      <div class="step-container">
-        <div class="circle {index <= step ? 'circle-red' : 'circle-grey'}">
-          <span class="number">{index + 1}</span>
+        <div class="stepper-step">
+            <div class="stepper-step-circle {index <= step ? 'active' : 'inactive'}">
+                {index + 1}
+            </div>
+
+            <div class="stepper-step-label">
+                {label}
+            </div>
         </div>
-        <div class="label">
-          {label}
-        </div>
-      </div>
-      {#if index < steps.length - 1}
-          <div class="connector-line"></div> 
-      {/if}
+
+        {#if index < steps.length - 1}
+            <div class="connector-line"></div>
+        {/if}
     {/each}
-  </div>
+</div>
 
-  </div>
 <style>
-  .whole-div {
-    width: 50%;
-    margin: auto;
-  }
+    .stepper {
+        display: flex;
+        justify-content: space-between;
+        padding: 2rem;
+        gap: 1rem;
+    }
 
-  .step-class {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    gap: 16px;
-    justify-content: space-between;
-  }
-  
-  .step-container {
-    position: relative;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    text-align: center;
-    justify-content: space-between;
-  } 
+    .stepper-step {
+        position: relative;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
 
-  .label {
-    position: absolute;
-    margin-top: 103%;
-    line-height: 1.2;
-  }
+    .stepper-step-label {
+        position: absolute;
+        top: 2.25rem;
+        width: 5rem;
+        text-align: center;
+    }
 
-  .circle {
-    width: 30px;
-    height: 30px;
-    border-radius: 50%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    font-size: 24px;
-    font-weight: bold;
-    color: #333;
-  }
+    .stepper-step-circle {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: 2rem;
+        height: 2rem;
+        border-radius: 50%;
+    }
 
-  .circle-red {
-    background-color: #e65000; 
-  }
+    .active {
+        color: var(--text-on-primary);
+        background-color: var(--primary-color);
+    }
 
-  .circle-grey {
-    background-color: #ccc; 
-  }
+    .inactive {
+        background-color: var(--background-secondary);
+    }
 
-  
-  span{
-    font-size: 13px;
-    font-weight: 600;
-    color: white;
-  }  
-
-  .connector-line {
-    flex-grow: 1;
-    height: 1px;
-    background-color: #ccc;
-}
-
+    .connector-line {
+        margin-top: 1rem;
+        flex-grow: 1;
+        height: 1px;
+        background-color: #ccc;
+    }
 </style>

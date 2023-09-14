@@ -312,6 +312,9 @@
     <jp-bellow title="Second Panel">Content for the second panel</jp-bellow>
     <jp-bellow title="Third Panel">Content for the third panel</jp-bellow>
   </jp-accordion>
+
+  <jp-stepper>
+  </jp-stepper>
 </div>
 
 <jp-button> button on the right </jp-button> 
