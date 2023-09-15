@@ -7,9 +7,8 @@
 ### Attributes
 | **Name** | **Required** | **Type** | **Description** |
 | :----: | :----: | :----: | :---: |
-| options | ✓ |`Array<{name?: string, value: any}>` | select options |
+| options | ✓ |`Array<{name?: string, value: any, disabled?: boolean;}>` | select options |
 | name | ✓ | `string` |  name of the form control |
-| disabled | | `boolean` | determines if a selection is disabled |
 | required | | `boolean` | determines if a selection is required |
   
 ### Slots
