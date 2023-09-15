@@ -33,7 +33,7 @@
     }
 
     onMount(() => {
-        if(!Array.isArray(steps)){
+        if(typeof steps == 'string'){
             steps = JSON.parse(steps)
         }
     })
