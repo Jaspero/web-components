@@ -24,6 +24,6 @@ export default () => {
   import('./src/paginator/paginator.wc.svelte');
   import('./src/form-fields/textarea.wc.svelte');
   import('./src/form-fields/datepicker.wc.svelte');
-  import('./src/form-fields/toggle.wc.svelte')
-  import('./src/stepper/stepper.wc.svelte')
+  import('./src/form-fields/toggle.wc.svelte');
+  import('./src/stepper/stepper.wc.svelte');
 };
