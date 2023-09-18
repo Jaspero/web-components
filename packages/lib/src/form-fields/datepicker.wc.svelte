@@ -21,6 +21,7 @@
 
   export let attachedInternals: ElementInternals;
   export let value: string = '';
+  export let internalValue: string = '';
   export let name: string = '';
   export let label: string = 'Pick a date';
   export let displayFormat: string = 'normal';
@@ -148,6 +149,14 @@
   }
 
   onMount(() => {
+    if(value){
+      const tmp = new Date(value)
+      yearSelected = tmp.getFullYear()
+      monthSelected = tmp.getMonth()
+      dateSelected = tmp.getDate()
+      pickerMonth = monthSelected
+      pickerYear = yearSelected
+    }
     pickerRows = getPickerRows(pickerMonth, pickerYear);
   });
 
@@ -164,17 +173,17 @@
   $: pickerRows = getPickerRows(pickerMonth, pickerYear);
 
   $: {
-    value = `${yearSelected}-${monthSelected + 1 < 10 ? '0' : ''}${monthSelected + 1}-${
+    internalValue = `${yearSelected}-${monthSelected + 1 < 10 ? '0' : ''}${monthSelected + 1}-${
       dateSelected < 10 ? '0' : ''
     }${dateSelected}`;
-    selectedDateObject = new Date(value);
+    selectedDateObject = new Date(internalValue);
     displayedDateString = formatDisplayDate(
       selectedDateObject,
       displayFormat,
       displayFormatFunction
     );
     attachedInternals.checkValidity();
-    attachedInternals.setFormValue(value);
+    attachedInternals.setFormValue(internalValue);
     dispatch('value', {
       value: formatReturnDate(selectedDateObject, returnFormat, returnFormatFunction)
     });
@@ -195,7 +204,7 @@
   class:borderTop
   on:click|preventDefault={toggleMenu}
 >
-  <span class="field-label" class:move={openPicker || value}>{@html label}</span>
+  <span class="field-label" class:move={openPicker || internalValue}>{@html label}</span>
   <p class="field-input">{displayedDateString}</p>
 
   <span class="field-icon">
@@ -208,7 +217,7 @@
   </span>
 </button>
 
-<input type="date" {name} bind:value hidden />
+<input type="date" {name} bind:value={internalValue} hidden />
 {#if openPicker}
   <!-- svelte-ignore a11y-no-noninteractive-element-interactions -->
   <!-- svelte-ignore a11y-click-events-have-key-events -->
