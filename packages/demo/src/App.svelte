@@ -8,6 +8,7 @@
   import '../../../dist/checkbox.wc.js';
   /*import '../../../dist/progress-spinner.wc.js'*/
   import '../../../dist/chips.wc.js';
+  import '../../../dist/datepicker.wc.js';
   import '../../../dist/multiselect.wc.js';
   import '../../../dist/select.wc.js';
   import '../../../dist/accordion.wc.js';
@@ -312,10 +313,9 @@
     <jp-bellow title="Second Panel">Content for the second panel</jp-bellow>
     <jp-bellow title="Third Panel">Content for the third panel</jp-bellow>
   </jp-accordion>
-
-  <jp-stepper>
-  </jp-stepper>
 </div>
+
+<jp-datepicker></jp-datepicker>
 
 <jp-code-editor label="asdf"></jp-code-editor>
 
