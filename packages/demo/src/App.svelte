@@ -319,7 +319,7 @@
 
 <jp-code-editor label="asdf"></jp-code-editor>
 
-<jp-button> button on the right </jp-button> 
+<jp-button variant="flat" color="accent"> button on the right </jp-button>
 <jp-link> link </jp-link>
 <form action="">
   <jp-select
