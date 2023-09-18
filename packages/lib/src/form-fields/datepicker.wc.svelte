@@ -692,13 +692,24 @@
 
   table {
     width: max-content;
+    margin-bottom: 0;
+  }
+
+  table tr, table tr:nth-child(2n) {
+    background-color: transparent;
+  }
+
+  table tr {
+    border-top: none
   }
 
   td {
     width: 40px;
     height: 40px;
     max-width: 40px;
+    line-height: 40px;
     text-align: center;
+    padding: 0;
   }
 
   td button {
