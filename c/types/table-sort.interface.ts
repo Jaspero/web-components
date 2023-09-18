@@ -1,4 +1,4 @@
 export interface TableSort {
-	key: string; 
-	direction: 'asc' | 'desc';
+  key: string;
+  direction: 'asc' | 'desc';
 }
