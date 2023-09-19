@@ -132,13 +132,11 @@
     let style: string = '';
     if (availableSpaceBelow < dropdownHeight) {
       style = `
-            min-width: ${rect.width}px;
             bottom: ${window.innerHeight - rect.top}px;
             left: ${rect.left}px;
         `;
     } else {
       style = `
-            min-width: ${rect.width}px;
             top: ${rect.bottom}px;
             left: ${rect.left}px;
         `;
@@ -256,19 +254,19 @@
       </div>
 
       <div>
-        <table>
+        <div class="table">
           {#each daysMap as day}
-            <td>
+            <div class="table-cell">
               {day}
-            </td>
+            </div>
           {/each}
-        </table>
+        </div>
 
-        <table>
+        <div class="table">
           {#each pickerRows as row}
-            <tr>
+            <div class="table-row">
               {#each row as col}
-                <td>
+                <div class="table-cell">
                   <button
                     class:gray={col.gray}
                     class:active={dateSelected == col.day &&
@@ -282,18 +280,18 @@
                   >
                     {col.day}
                   </button>
-                </td>
+                </div>
               {/each}
-            </tr>
+            </div>
           {/each}
-        </table>
+        </div>
       </div>
 
       {#if yearSelector}
         <div class="menu-year">
           <div class="menu-year-nav">
             <button
-              class="menu-year-nav-years"
+              class="menu-year-nav-date"
               on:click|stopPropagation={() => (yearSelector = false)}
             >
               <p>
@@ -384,15 +382,17 @@
 
           <div class="menu-month-grid">
             {#each monthMap as month, index}
-              <button
-                on:click|preventDefault={() => {
+              <div class="menu-month-grid-cell">
+                <button
+                        on:click|preventDefault={() => {
                   monthSelected = index;
                   monthSelector = false;
                 }}
-                class:active={monthSelected === index}
-              >
-                {month}
-              </button>
+                        class:active={monthSelected === index}
+                >
+                  {month}
+                </button>
+              </div>
             {/each}
           </div>
         </div>
@@ -420,6 +420,7 @@
     -ms-flex-align: center;
     align-items: center;
     text-align: left;
+    width: 100%;
     height: 3rem;
     -webkit-user-select: none;
     -moz-user-select: none;
@@ -548,7 +549,9 @@
     -moz-box-direction: normal;
     -ms-flex-direction: column;
     flex-direction: column;
+    max-width: 312px;
     max-height: 700px;
+    width: 100%;
     padding: 1rem;
     overflow-y: auto;
     -webkit-border-bottom-left-radius: 0.25rem;
@@ -579,13 +582,14 @@
     grid-template-columns: repeat(3, minmax(0, 1fr));
   }
 
-  .menu-month-grid button {
+  .menu-month-grid-cell button {
+    width: 100%;
     border-radius: 999px;
     padding: 0.25rem 0.75rem;
   }
 
-  .menu-month-grid button.active,
-  .menu-month-grid button:hover {
+  .menu-month-grid-cell button.active,
+  .menu-month-grid-cell button:hover {
     background-color: var(--primary-color);
     color: var(--text-on-primary);
   }
@@ -602,25 +606,14 @@
     background-color: var(--background-primary);
   }
 
-  .menu-year-nav,
-  .menu-month-nav {
+  .menu-nav,
+  .menu-month-nav,
+  .menu-year-nav {
     display: flex;
     justify-content: space-between;
     align-items: center;
     margin-bottom: 1rem;
-  }
-
-  .menu-year-nav-years {
-    display: flex;
-    align-items: center;
-    text-align: left;
-    gap: 0.5rem;
-    padding: 0.5rem 1rem;
-    border-radius: 0.25rem;
-  }
-
-  .menu-year-nav-years:hover {
-    background-color: var(--background-secondary);
+    gap: .5rem;
   }
 
   .menu-year-nav-buttons,
@@ -667,16 +660,9 @@
     color: var(--text-on-primary);
   }
 
-  .menu-nav {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    gap: 0.5rem;
-    margin-bottom: 1rem;
-  }
-
   .menu-nav-date,
-  .menu-month-nav-date {
+  .menu-month-nav-date,
+  .menu-year-nav-date {
     display: flex;
     align-items: center;
     gap: 0.75rem;
@@ -686,24 +672,17 @@
   }
 
   .menu-nav-date:hover,
-  .menu-month-nav-date:hover {
+  .menu-month-nav-date:hover,
+  .menu-year-nav-date:hover {
     background-color: var(--background-secondary);
   }
 
-  table {
+  .table {
+    display: table;
     width: max-content;
-    margin-bottom: 0;
   }
 
-  table tr, table tr:nth-child(2n) {
-    background-color: transparent;
-  }
-
-  table tr {
-    border-top: none
-  }
-
-  td {
+  .table-cell {
     width: 40px;
     height: 40px;
     max-width: 40px;
@@ -712,21 +691,21 @@
     padding: 0;
   }
 
-  td button {
+  .table-cell button {
     width: 100%;
     height: 100%;
     border-radius: 50%;
   }
 
-  td button:hover {
+  .table-cell button:hover {
     background-color: var(--background-secondary);
   }
 
-  td button.gray {
+  .table-cell button.gray {
     opacity: 0.5;
   }
 
-  td button.active {
+  .table-cell button.active {
     background-color: var(--primary-color);
     color: var(--text-on-primary);
     opacity: 1;
