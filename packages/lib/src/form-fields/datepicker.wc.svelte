@@ -683,6 +683,7 @@
   }
 
   .table-cell {
+    display: table-cell;
     width: 40px;
     height: 40px;
     max-width: 40px;
