@@ -26,4 +26,6 @@ export default () => {
   import('./src/form-fields/datepicker.wc.svelte');
   import('./src/form-fields/toggle.wc.svelte')
   import('./src/stepper/stepper.wc.svelte')
+  import('./src/tree/tree.wc.svelte')
+  import('./src/tree/branch.wc.svelte')
 };

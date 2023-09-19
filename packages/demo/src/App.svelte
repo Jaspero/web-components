@@ -23,6 +23,9 @@
   import '../../../dist/button.wc.js'
   import '../../../dist/link.wc.js'
   import '../../../dist/stepper.wc.js';
+  import '../../../dist/tree.wc.js';
+  import '../../../dist/branch.wc.js';
+
 
   import { renderAlert } from '../../../dist/render-alert.js';
   import { renderConfirm } from '../../../dist/render-confirm.js';
@@ -312,6 +315,25 @@
     <jp-bellow title="Second Panel">Content for the second panel</jp-bellow>
     <jp-bellow title="Third Panel">Content for the third panel</jp-bellow>
   </jp-accordion>
+
+  <jp-tree title="Fruit"> 
+    <jp-branch> Apple </jp-branch>
+    <jp-branch>Banana</jp-branch>
+    <jp-branch>Fruit Loops</jp-branch>
+  </jp-tree>
+  <jp-tree title="Vegetables">
+    <jp-tree title="Green">
+    <jp-branch>Broccoli</jp-branch>
+    <jp-branch>Brussels sprouts</jp-branch>
+  </jp-tree>
+  <jp-tree title="Orange">a</jp-tree>
+  </jp-tree>
+  <jp-tree title="something"> 
+    <jp-branch> Apple </jp-branch>
+    <jp-branch>Banana</jp-branch>
+    <jp-branch>Fruit Loops</jp-branch>
+  </jp-tree>
+
 
   <jp-stepper>
   </jp-stepper>
