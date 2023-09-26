@@ -6,15 +6,9 @@
 />
 
 <script lang="ts">
-  import { createEventDispatcher } from 'svelte';
-
-  export let tabs: string[] = ['tab 1', 'tab 2', 'tab 3'];
-  export let content: string[] = ['content 1', 'content 2', 'content 3'];
-  export let disabled: boolean = false;
-  export let isActive: boolean = false;
-  export let id: string = '';
+  import { createEventDispatcher, onMount } from 'svelte';
   export let tab: number = 1;
-
+  let tabs = [];
   const dispatch = createEventDispatcher();
 
   $: dispatch('change', { tab });
@@ -22,26 +16,37 @@
   function changeTab(index: number) {
     tab = index + 1;
   }
+
+  onMount(() => {
+    tabs = Array.from(document.querySelectorAll('jp-tabs *')).filter(element=>element.getAttribute('data-label') &&(!element.parentNode || element.parentNode.tagName.toLowerCase() === 'jp-tabs'));
+    console.log(tabs)
+  });
+
 </script>
 
 <div class="tab-class">
-    {#each tabs as Tab, index}
+  {#each tabs as Tab, index}
+    {#if Tab.getAttribute('data-label')}
       <div class="tab-container">
-        <button on:click={() => changeTab(index)} class:active={tab === index + 1}>{Tab}</button>
+        <button on:click={() => changeTab(index)} class:active={tab === index + 1}>{Tab.getAttribute('data-label')}</button>
       </div>
-    {/each}
-  </div>
-  
-  <div class="content-container">
-    {#each tabs as Tab, index}
-      {#if tab === index + 1}
-        <div class="scrollable-content">
-          <p>{content[index]}</p>
-        </div>
-      {/if}
-    {/each}
-  </div>
-  
+    {/if}
+  {/each}
+</div>
+
+
+
+<div class="content-container">
+  {#each tabs as Tab, index}
+    {#if tab === index + 1}
+      <div class="scrollable-content">
+        {@html Tab.innerHTML}
+        <slot />
+      </div>
+    {/if}
+  {/each}
+
+</div>
 
 <style>
   .tab-class {
@@ -50,7 +55,7 @@
     align-items: center;
     gap: 0;
     justify-content: space-between;
-    width: 100%;
+    width: 70%;
   }
 
   .tab-container {
@@ -77,45 +82,28 @@
     border: none;
     white-space: nowrap;
     width: 100%;
-    position: relative; 
   }
 
   button:hover {
-    background-color: rgb(252, 243, 239);
+    background-color: rgb(250, 245, 243);
   }
 
   button:active {
-    background: rgba(251, 216, 201, 0.808) ;
-    transition: background 0.4s ease; 
+    background: linear-gradient(
+      to right,
+      rgb(251, 235, 227),
+      rgb(255, 231, 222),
+      rgb(255, 244, 239)
+    );
   }
 
   button.active {
-    border-bottom: 2px solid rgb(180, 31, 31);
+    border-bottom: 2px solid rgb(215, 73, 12);
     color: rgb(199, 64, 15);
   }
 
   .scrollable-content {
     word-wrap: break-word;
     width: 100%;
-  }
-
-  button:active::before {
-    content: '';
-    position: absolute;
-    border-radius: 50%;
-    background: rgba(255, 255, 255, 0.4); 
-    transform: scale(0);
-    animation: ripple 0.4s linear;
-    width: 100%;
-    height: 100%;
-    top: 0;
-    left: 0;
-  }
-
-  @keyframes ripple {
-    to {
-      transform: scale(4); 
-      opacity: 0; 
-    }
   }
 </style>
