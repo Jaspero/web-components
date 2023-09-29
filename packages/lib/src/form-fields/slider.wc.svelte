@@ -19,11 +19,14 @@
   import { createEventDispatcher } from 'svelte';
 
   export let disabled: boolean = false;
-  export let discrete: boolean = true; // true -> displays a numeric value
+  export let showValue: boolean = true; 
   export let max: number = 100;
   export let min: number = 0;
   export let value: number = 0;
   export let step: number = 1;
+  export let name: string = '';
+  export let discrete : boolean = true; //if true -> ticks, false -> smooth
+  export const getValue = () => value;
 
   const dispatch = createEventDispatcher();
 
@@ -31,9 +34,13 @@
 </script>
 
 <div class="slider-container">
-  <input type="range" class="range-input" bind:value {disabled} {min} {max} {step} />
   {#if discrete == true}
-    <p>{value}</p>
+  <input type="range" class="range-input" bind:value {disabled} {min} {max} {step} {name} />
+  {:else}
+  <input type="range" class="range-input" bind:value {disabled} {min} {max}  step="any" {name} />
+  {/if}
+  {#if showValue == true}
+    <p>{Math.round(value)}</p>
   {/if}
 </div>
 
@@ -76,7 +83,7 @@
     appearance: none;
     background: rgb(233, 69, 19);
     height: 4px;
-    transition-delay: 30ms;
+    transition-delay: 50ms;
   }
 
   .range-input::-moz-range-thumb:hover {
@@ -104,7 +111,7 @@
     height: 16px;
     width: 16px;
     border-radius: 50%;
-    background: #f04e08;
+    background: #f04208;
     transition: 0.2s ease-in-out;
   }
 
