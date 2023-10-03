@@ -8,7 +8,7 @@
 
 | **Name** | **Required** | **Type** | **Description** |
 | :----: | :----: | :----: | :---: |
-| options | ✓ | `Array<{ label: string; value:` <br></br> `boolean; disabled?: boolean }>` | List of checkboxes |
+| options | ✓ | `Array<{ label?: string; value:` <br></br> `boolean; checked?: boolean;` <br></br> `disabled?: boolean }>` | List of checkboxes |
 | minSelects | | `number` | minimum number of checks allowed |
 | maxSelects | | `number` | maximum number of checks allowed |
 
@@ -29,7 +29,7 @@ This component does not have any methods.
 
 ```jsx live
 <form>
-  <jp-checkbox options='[{"label": "aaa", "value": false},{"label": "lorem aa", "value": true},{"label": "lorem adasda", "value": true},{"label": "ipsum dolorrr", "value": false, "disabled": true}]'>
+  <jp-checkbox options='[{"value": "aaa"},{"value": "lorem aa"},{"value": "lorem adasda"}]'>
   </jp-checkbox>
 </form>
 ```

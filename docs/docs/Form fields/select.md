@@ -8,7 +8,7 @@
 
 | **Name** | **Required** | **Type** | **Description** |
 | :----: | :----: | :----: | :---: |
-| options | ✓ | `Array<string>` | select options |
+| options | ✓ | `Array<{label?: string, value: string, disabled?: boolean}>` | select options |
 | disabled | | `boolean` | determines if a selection is disabled |
 | required | | `boolean` | determines if a selection is required |
 | value | | `string` | currently selected option |
@@ -34,7 +34,7 @@ This component does not have any methods.
 
 ```jsx live
 <form>
-  <jp-select options='["aaa", "bbb", "ccc"]'>
+  <jp-select options='[{"value":"aaa"}, {value:"bbb"}, {value:"ccc"}]'>
   </jp-select>
 </form>
 ```

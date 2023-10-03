@@ -25,7 +25,8 @@
   export let disabled: boolean = false;
   export let required: boolean = false;
   export let hint: string = '';
-  export let value: string = '';
+  export let value;
+  export let internalValue: string = '';
   export let id: string = '';
   export let name: string = '';
   export let label = 'Label';
@@ -52,7 +53,7 @@
     }
     attachedInternals.checkValidity();
 
-    value = options
+    internalValue = options
       .filter((el) => el.selected)
       .map((el) => el.value)
       .join(',');
@@ -257,11 +258,22 @@
       }
       return el
     })
+    if(value){
+      if(typeof value == 'string'){
+        value.split(',').forEach(el => {
+          options[options.findIndex((o) => o.value == el)].selected = true
+        })
+      } else {
+        value.forEach(el => {
+          options[options.findIndex((o) => o.value == el)].selected = true
+        })
+      }
+    }
   });
 </script>
 
 <div class:has-hint={hint}>
-  <input bind:value={value} {id} {name} {required} hidden>
+  <input bind:value={internalValue} {id} {name} {required} hidden>
 
   <button class="select"
           class:toggled={open}
@@ -269,7 +281,7 @@
           {disabled}
           on:click|preventDefault={toggleMenu}
           on:keydown={handleKeydown}>
-    <span class="select-label" class:move={value || open}>
+    <span class="select-label" class:move={internalValue || open}>
       { label || 'Select an option'}
     </span>
 

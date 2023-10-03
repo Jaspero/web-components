@@ -8,7 +8,7 @@
 
 | **Name** | **Required** | **Type** | **Description** |
 | :----: | :----: | :---: | :---: |
-| options | ✓ |`Array<{ label: string; selected:`  <br></br> ` boolean; disabled: boolean }>` | select options |
+| options | ✓ |`Array<{ label?: string; value:` <br></br> ` string; selected?: boolean;`  <br></br> `disabled?: boolean }>` | select options |
 | minSelects | | `number` | minimum number of selects allowed |
 | maxSelects | | `number` | maximum number of selects allowed |
 | required | | `boolean` | determines if a selection is required |
@@ -36,7 +36,7 @@ This component does not have any methods.
 
 ```jsx live
 <form>
-  <jp-multiselect required={true} options= '[{"label": "label1", "selected": false},{"label": "label2", "selected": true},{"label": "label3", "selected": true},{"label": "label4", "selected": false, "disabled": true},{"label": "label5", "selected": false}]' placeholder = 'placeholder' name = 'multiselect'>
+  <jp-multiselect options='[{"value":"aaa"}, {value:"bbb"}, {value:"ccc"}]'>
   </jp-multiselect>
 </form>
 ```

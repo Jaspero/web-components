@@ -7,10 +7,7 @@ export default {
   // for more information about preprocessors
   preprocess: sveltePreprocess({
     postcss: {
-      plugins: [
-        tailwind,
-        autoprefixer
-      ]
+      plugins: [tailwind, autoprefixer]
     }
   }),
   compilerOptions: {
