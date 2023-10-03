@@ -1,7 +1,7 @@
 <svelte:options
   customElement={{
     tag: 'jp-tabs',
-    shadow: 'none'
+    shadow: 'open'
   }}
 />
 
@@ -18,30 +18,32 @@
   }
 
   onMount(() => {
-    tabs = Array.from(document.querySelectorAll('jp-tabs *')).filter(element=>element.getAttribute('data-label') &&(!element.parentNode || element.parentNode.tagName.toLowerCase() === 'jp-tabs'));
-    console.log(tabs)
+    tabs = Array.from(document.querySelectorAll('jp-tabs *')).filter(
+      (element) =>
+        element.getAttribute('data-label') &&
+        (!element.parentNode || element.parentNode.tagName.toLowerCase() === 'jp-tabs')
+    );
+    console.log(tabs);
   });
-
 </script>
 
 <div class="tab-class">
   {#each tabs as Tab, index}
     {#if Tab.getAttribute('data-label')}
       <div class="tab-container">
-        <button on:click={() => changeTab(index)} class:active={tab === index + 1}>{Tab.getAttribute('data-label')}</button>
+        <button on:click={() => changeTab(index)} class:active={tab === index + 1}
+          >{Tab.getAttribute('data-label')}</button
+        >
       </div>
     {/if}
   {/each}
 </div>
-
-
 
 <div class="content-container">
   {#each tabs as Tab, index}
     {#if tab === index + 1}
       <div class="scrollable-content">
         {@html Tab.innerHTML}
-        <slot />
       </div>
     {/if}
   {/each}
@@ -75,6 +77,7 @@
 
   button {
     color: rgb(82, 81, 80);
+    background: transparent;
     font-weight: 400;
     padding: 10px 20px;
     border-top-left-radius: 2px;
@@ -82,6 +85,7 @@
     border: none;
     white-space: nowrap;
     width: 100%;
+
   }
 
   button:hover {
