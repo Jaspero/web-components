@@ -18,6 +18,7 @@
   import { clickOutside } from '../clickOutside';
   import type ImageService from '../types/image.service';
   import { createEventDispatcher } from 'svelte';
+  import {options} from "./select.wc.svelte";
 
   export let label: string = 'Upload a file';
   export let attachedInternals: ElementInternals;
@@ -25,11 +26,13 @@
   export let id: string = '';
   export let name: string = '';
 
+  let previewStyle;
+  let bindingElement;
   let inputFocused: boolean = false;
   let isLocal = false;
   let img = '';
   let file = null;
-  let showPreview = false;
+  let preview = false;
 
   export let service: ImageService;
 
@@ -61,6 +64,28 @@
     img = base64;
   }
 
+  function showPreview() {
+    const rect = bindingElement.getBoundingClientRect();
+    const availableSpaceBelow = window.innerHeight - rect.bottom;
+    const dropdownHeight = 300;
+
+    let style: string = '';
+    if (availableSpaceBelow < dropdownHeight) {
+      style = `
+            bottom: ${window.innerHeight - rect.top}px;
+            right: ${rect.left}px;
+        `;
+    } else {
+      style = `
+            top: ${rect.bottom}px;
+            right: ${rect.left}px;
+        `;
+    }
+
+    previewStyle = style;
+    preview = !preview;
+  }
+
   const convertBase64 = (file) => {
     return new Promise((resolve, reject) => {
       const fileReader = new FileReader();
@@ -73,44 +98,33 @@
 </script>
 
 <div>
-  <div class="field">
-    <span class="field-label" class:move={inputFocused || value}>{@html label}</span>
+  <div class="field" bind:this={bindingElement}>
+    <span class="field-label" class:move={inputFocused || value} >{@html label}</span>
 
-    <span class="field-upload-container">
-      <input
-        class="field-input"
-        type="text"
-        {name}
-        {id}
-        on:focus={() => (inputFocused = true)}
-        on:blur={() => (inputFocused = false)}
-        bind:value
-        disabled={isLocal}
-      />
-    </span>
-
-    <div class="field-icons">
-      <div class="field-icon field-icon-upload">
-        <input
-          type="file"
-          class="field-upload"
-          accept={service.acceptedFiles ? service.acceptedFiles : 'image/png, image/jpeg'}
-          on:change={(e) => {
+    <input
+            type="file"
+            id={`${name}`}
+            class="field-upload"
+            accept={service.acceptedFiles ? service.acceptedFiles : 'image/png, image/jpeg'}
+            on:change={(e) => {
             fileChanged(e);
           }}
-          on:focus={() => (inputFocused = true)}
-          on:blur={() => (inputFocused = false)}
-        />
+            on:focus={() => (inputFocused = true)}
+            on:blur={() => (inputFocused = false)}
+    />
 
-        <svg xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 512 512">
+    <div class="field-icons">
+      <label for={`${name}`} class="field-icon field-icon-upload">
+        <svg xmlns="http://www.w3.org/2000/svg" height="1rem" viewBox="0 0 512 512">
           <!--! Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2023 Fonticons, Inc. -->
           <path
             d="M64 480H448c35.3 0 64-28.7 64-64V160c0-35.3-28.7-64-64-64H288c-10.1 0-19.6-4.7-25.6-12.8L243.2 57.6C231.1 41.5 212.1 32 192 32H64C28.7 32 0 60.7 0 96V416c0 35.3 28.7 64 64 64z"
           />
         </svg>
-      </div>
+      </label>
+
       <div class="field-icon preview-button" class:hidden={!isLocal && !value}>
-        <button on:click|preventDefault={() => (showPreview = !showPreview)}>
+        <button on:click|preventDefault={showPreview}>
           <svg xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 576 512">
             <!--! Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2023 Fonticons, Inc. -->
             <path
@@ -119,34 +133,50 @@
           </svg>
         </button>
 
-        {#if showPreview}
+        {#if preview}
           <img
             class="preview"
+            style={previewStyle}
             src={isLocal ? img : value}
             alt="preview"
             hidden={!value && !img}
             use:clickOutside
-            on:click_outside={() => (showPreview = false)}
+            on:click_outside={() => (preview = false)}
           />
         {/if}
       </div>
-      <div class="field-icon">
-        <button
-          on:click|preventDefault={() => {
+      {#if img || value || isLocal}
+        <div class="field-icon">
+          <button
+                  on:click|preventDefault={() => {
             isLocal = false;
             img = '';
             value = '';
           }}
-        >
-          <svg xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 512 512">
-            <!--! Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2023 Fonticons, Inc. -->
-            <path
-              d="M256 512A256 256 0 1 0 256 0a256 256 0 1 0 0 512zM175 175c9.4-9.4 24.6-9.4 33.9 0l47 47 47-47c9.4-9.4 24.6-9.4 33.9 0s9.4 24.6 0 33.9l-47 47 47 47c9.4 9.4 9.4 24.6 0 33.9s-24.6 9.4-33.9 0l-47-47-47 47c-9.4 9.4-24.6 9.4-33.9 0s-9.4-24.6 0-33.9l47-47-47-47c-9.4-9.4-9.4-24.6 0-33.9z"
-            />
-          </svg>
-        </button>
-      </div>
+          >
+            <svg xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 512 512">
+              <!--! Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2023 Fonticons, Inc. -->
+              <path
+                      d="M256 512A256 256 0 1 0 256 0a256 256 0 1 0 0 512zM175 175c9.4-9.4 24.6-9.4 33.9 0l47 47 47-47c9.4-9.4 24.6-9.4 33.9 0s9.4 24.6 0 33.9l-47 47 47 47c9.4 9.4 9.4 24.6 0 33.9s-24.6 9.4-33.9 0l-47-47-47 47c-9.4 9.4-24.6 9.4-33.9 0s-9.4-24.6 0-33.9l47-47-47-47c-9.4-9.4-9.4-24.6 0-33.9z"
+              />
+            </svg>
+          </button>
+        </div>
+      {/if}
     </div>
+
+    <span class="field-upload-container">
+      <input
+              class="field-input"
+              type="text"
+              {name}
+              {id}
+              on:focus={() => (inputFocused = true)}
+              on:blur={() => (inputFocused = false)}
+              bind:value
+              disabled={isLocal}
+      />
+    </span>
   </div>
 </div>
 
@@ -158,6 +188,13 @@
     display: -moz-box;
     display: -ms-flexbox;
     display: flex;
+    -webkit-box-orient: horizontal;
+    -webkit-box-direction: reverse;
+    -webkit-flex-direction: row-reverse;
+    -moz-box-orient: horizontal;
+    -moz-box-direction: reverse;
+    -ms-flex-direction: row-reverse;
+    flex-direction: row-reverse;
     -webkit-box-align: center;
     -webkit-align-items: center;
     -moz-box-align: center;
@@ -285,8 +322,8 @@
     position: absolute;
     top: 0;
     left: 0;
-    width: 100%;
-    height: 100%;
+    width: 0;
+    height: 0;
     -webkit-border-radius: 0;
     -moz-border-radius: 0;
     border-radius: 0;
@@ -311,6 +348,8 @@
   }
 
   .field-icons {
+    z-index: 1;
+    position: relative;
     display: -webkit-box;
     display: -webkit-flex;
     display: -moz-box;
@@ -358,6 +397,7 @@
 
   .field-icon-upload {
     position: relative;
+    cursor: pointer;
   }
 
   .field-icon button {
@@ -385,6 +425,7 @@
   }
 
   .preview {
+    z-index: 1;
     position: absolute;
     bottom: 100%;
     right: 0;

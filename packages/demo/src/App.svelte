@@ -286,6 +286,8 @@
   };
 
 </script>
+<jp-image-upload service={MockImageService} name="kikitesting"></jp-image-upload>
+
 <div bind:this={el} class="p-4"></div>
 
 <form bind:this={formEl} class="p-4" on:submit|preventDefault={submit}>
