@@ -33,12 +33,53 @@
   export let pattern: string | null = null;
   export let placeholder: string = '';
   export let inputFocused: boolean = false;
+
+  export let validationMessages = {};
+  export let requiredValidationMessage;
+  export let minlengthValidationMessage;
+  export let maxlengthValidationMessage;
+  export let patternValidationMessage;
+
+  let inputEl;
+
   export const getValue = () => value;
 
   const dispatch = createEventDispatcher();
 
+  export const reportValidity = () => {
+    attachedInternals.reportValidity()
+  }
+
   $: {
     attachedInternals.checkValidity();
+    if(inputEl){
+      console.log(inputEl.validity)
+      if(inputEl.validity.patternMismatch){
+        if(patternValidationMessage || validationMessages.pattern){
+          attachedInternals.setValidity({ customError: true }, 
+          patternValidationMessage || validationMessages.pattern
+          );
+        }
+      } else if (inputEl.validity.tooShort){
+        if(minlengthValidationMessage || validationMessages.minlength){
+          attachedInternals.setValidity({ customError: true }, 
+          minlengthValidationMessage || validationMessages.minlength
+          );
+        }
+      } else if (inputEl.validity.tooLong){
+        if(maxlengthValidationMessage || validationMessages.maxlength){
+          attachedInternals.setValidity({ customError: true }, 
+          maxlengthValidationMessage || validationMessages.maxlength
+          );
+        }
+      } else if (inputEl.validity.valueMissing){
+        if(requiredValidationMessage || validationMessages.required){
+          attachedInternals.setValidity({ customError: true }, 
+            requiredValidationMessage || validationMessages.required
+          );
+        }
+      }
+    }
     attachedInternals.setFormValue(value);
     dispatch('value', { value });
   }
@@ -51,6 +92,7 @@
     {#if type === 'text'}
       <input
         type="text"
+        bind:this={inputEl}
         class="field-input"
         aria-hidden={disabled || readonly}
         tabindex={disabled || readonly ? -1 : 0}
@@ -70,6 +112,7 @@
     {:else if type === 'password'}
       <input
         type="password"
+        bind:this={inputEl}
         class="field-input"
         aria-hidden={disabled || readonly}
         tabindex={disabled || readonly ? -1 : 0}
@@ -89,6 +132,7 @@
     {:else if type === 'email'}
       <input
         type="email"
+        bind:this={inputEl}
         class="field-input"
         aria-hidden={disabled || readonly}
         tabindex={disabled || readonly ? -1 : 0}
@@ -108,6 +152,7 @@
     {:else if type === 'tel'}
       <input
         type="tel"
+        bind:this={inputEl}
         class="field-input"
         aria-hidden={disabled || readonly}
         tabindex={disabled || readonly ? -1 : 0}
@@ -127,6 +172,7 @@
     {:else if type === 'url'}
       <input
         type="url"
+        bind:this={inputEl}
         class="field-input"
         aria-hidden={disabled || readonly}
         tabindex={disabled || readonly ? -1 : 0}

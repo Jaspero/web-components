@@ -15,12 +15,16 @@
 | hint | | `string` | shows below the input |
 | disabled | | `boolean` | determines if an input is disabled |
 | required | | `boolean` | determines if an input is required |
+| requiredValidationMessage | | `string` | validation message for when component does not satisfy required |
 | readonly | | `boolean` | determines if an input is read-only |
 | type | | One of the following: <br></br> `'text'`, `'password'`, <br></br> `'email'`, `'tel'`, `'url'`  | type of input |
 | minlength | | `number` | minimum character count allowed |
+| minlengthValidationMessage | | `string` | validation message for when component does not satisfy minlength |
 | maxlength | | `number` | maximum character count allowed |
+| maxlengthValidationMessage | | `string` | validation message for when component does not satisfy maxlength |
 | pattern | | `string` | pattern that input has to satisfy |
-
+| patternValidationMessage | | `string` | validation message for when component does not satisfy pattern |
+| validationMessages | | `{[type]: message}` | compact way of writing validation messages in a single attribute |
   
 ### Slots
 

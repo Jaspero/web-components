@@ -13,15 +13,15 @@
 | placeholder | | `string` | temporary text that appears in an input field before any input is entered |
 | label | | `string` | shows at the top of an input |
 | minitems | | `number` | minimum number of items allowed |
-| minitemsValidationMessage | | `string` | validation message for when component do not satisfy minitems |
+| minitemsValidationMessage | | `string` | validation message for when component does not satisfy minitems |
 | maxitems | |  `number` |  maximum number of items allowed |
-| maxitemsValidationMessage | | `string` | validation message for when component do not satisfy maxitems |
+| maxitemsValidationMessage | | `string` | validation message for when component does not satisfy maxitems |
 | pattern | | `RegExp` | each chip has to satisfy pattern |
-| patternValidationMessage | | `string` | validation message for when component do not satisfy pattern |
+| patternValidationMessage | | `string` | validation message for when component does not satisfy pattern |
 | required | | `boolean` | determines if a chip is required |
-| requiredValidationMessage | | `number` | validation message for when component do not satisfy required |
+| requiredValidationMessage | | `string` | validation message for when component does not satisfy required |
 | unique | | `boolean` | determines if each chip has to be different | 
-| uniqueValidationMessage | | `string` | validation message for when component do not satisfy unique |
+| uniqueValidationMessage | | `string` | validation message for when component does not satisfy unique |
 | validationMessages | | `{[type]: message}` | compact way of writing validation messages in a single attribute |
 
 
