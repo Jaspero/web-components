@@ -24,15 +24,15 @@
 | maxlengthValidationMessage | | `string` | validation message for when component does not satisfy maxlength |
 | pattern | | `string` | pattern that input has to satisfy |
 | patternValidationMessage | | `string` | validation message for when component does not satisfy pattern |
-| validationMessages | | `{[type]: message}` | compact way of writing validation messages in a single attribute |
+| validationMessages | | `{[type]: string}` where `type` is `string` | compact way of writing validation messages in a single attribute |
   
 ### Slots
 
 This component does not have any slots.
 
 ### Methods
-
-This component does not have any methods.
+- `reportValidity` 
+  - triggers reportValidity
 
 ### Events
 

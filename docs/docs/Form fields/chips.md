@@ -22,7 +22,7 @@
 | requiredValidationMessage | | `string` | validation message for when component does not satisfy required |
 | unique | | `boolean` | determines if each chip has to be different | 
 | uniqueValidationMessage | | `string` | validation message for when component does not satisfy unique |
-| validationMessages | | `{[type]: message}` | compact way of writing validation messages in a single attribute |
+| validationMessages | | `{[type]: string}` where `type` is `string` | compact way of writing validation messages in a single attribute |
 
 
 ### Slots
