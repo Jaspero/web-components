@@ -32,7 +32,7 @@
     isGrabbed = true;
     startingX = e.clientX;
     startingY = e.clientY;
-    window.jpNodeGrabbed = node.parentNode.host
+    window.jpNodeGrabbed = node.parentNode.host;
   }}
   bind:this={node}
 >

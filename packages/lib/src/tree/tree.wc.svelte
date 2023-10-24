@@ -6,17 +6,8 @@
 />
 
 <script lang="ts">
-  import { createEventDispatcher } from 'svelte';
-
-  const dispatch = createEventDispatcher();
-
-  let expanded = false;
   export let title = 'Tree Title';
-
-  function toggleExpansion() {
-    expanded = !expanded;
-    dispatch('toggle', { expanded });
-  }
+  let expanded = false;
 </script>
 
 <svelte:document
@@ -36,7 +27,7 @@
 
 <div class="jp-tree">
   <div class="tree-header">
-    <button class="tree-arrow" on:click={toggleExpansion}>
+    <button class="tree-arrow" on:click={() => (expanded = !expanded)}>
       <svg
         xmlns="http://www.w3.org/2000/svg"
         height="1em"
