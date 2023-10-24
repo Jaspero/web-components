@@ -37,10 +37,42 @@
 
   export const getValue = () => value;
 
+  export let validationMessages = {};
+  export let requiredValidationMessage;
+  export let minlengthValidationMessage;
+  export let maxlengthValidationMessage;
+
   const dispatch = createEventDispatcher();
+
+  let textareaEl;
+
+  export const reportValidity = () => {
+    attachedInternals.reportValidity()
+  }
 
   $: {
     attachedInternals.checkValidity();
+    if(textareaEl){
+      if (textareaEl.validity.tooShort){
+        if(minlengthValidationMessage || validationMessages.minlength){
+          attachedInternals.setValidity({ customError: true }, 
+            minlengthValidationMessage || validationMessages.minlength
+          );
+        }
+      } else if (textareaEl.validity.tooLong){
+        if(maxlengthValidationMessage || validationMessages.maxlength){
+          attachedInternals.setValidity({ customError: true }, 
+            maxlengthValidationMessage || validationMessages.maxlength
+          );
+        }
+      } else if (textareaEl.validity.valueMissing){
+        if(requiredValidationMessage || validationMessages.required){
+          attachedInternals.setValidity({ customError: true }, 
+            requiredValidationMessage || validationMessages.required
+          );
+        }
+      }
+    }
     attachedInternals.setFormValue(value);
     dispatch('value', { value });
   }
@@ -64,6 +96,7 @@
       {maxlength}
       {rows}
       bind:value
+      bind:this={textareaEl}
       on:focus={() => (inputFocused = true)}
       on:blur={() => (inputFocused = false)}
     ></textarea>
