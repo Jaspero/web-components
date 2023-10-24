@@ -32,6 +32,11 @@
   export let label = 'Label';
   export const getValue = () => options.filter((el) => el.selected).map((el) => el.value);
 
+  export let validationMessages = {};
+  export let requiredValidationMessage;
+  export let minselectsValidationMessage;
+  export let maxselectsValidationMessage;
+
   let isTabbing = false;  // Variable to track if the user is tabbing
   let open = false;
   let bindingElement;
@@ -40,14 +45,28 @@
   let searchTerm = '';
   let searchTimeout;
   let displayValue;
+
   const dispatch = createEventDispatcher();
+
+  export const reportValidity = () => {
+    attachedInternals.reportValidity()
+  }
 
   $: if(Array.isArray(options)) {
     const selects = options.filter((el) => el.selected).length
-    if (selects < minSelects) {
-      attachedInternals.setValidity({ customError: true }, 'Below limit checks.');
+    if(selects == 0 && required) {
+      attachedInternals.setValidity({ customError: true }, 
+        requiredValidationMessage || validationMessages.required || `At least one item needs to be checked.`
+      );
+    }
+    else if (selects < minSelects) {
+      attachedInternals.setValidity({ customError: true }, 
+        minselectsValidationMessage || validationMessages.minselects || 'Below limit checks.'
+      );
     } else if (selects > maxSelects) {
-      attachedInternals.setValidity({ customError: true }, 'Above limit checks.');
+      attachedInternals.setValidity({ customError: true }, 
+        maxselectsValidationMessage || validationMessages.maxselects || 'Above limit checks.'
+      );
     } else {
       attachedInternals.setValidity({});
     }
