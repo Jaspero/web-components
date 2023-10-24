@@ -28,8 +28,8 @@
         if (!treeParent.isSameNode(node.parentNode)) {
           treeParent.appendChild(node);
         }
-        window.jpNodeGrabbed = null;
       }
+      window.jpNodeGrabbed = null;
     }
   }}
 />

@@ -6,7 +6,7 @@
 />
 
 <script lang="ts">
-  export let isGrabbed = false;
+  let isGrabbed = false;
   let node;
   let startingX, startingY;
 </script>
