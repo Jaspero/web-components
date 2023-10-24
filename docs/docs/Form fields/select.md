@@ -11,6 +11,7 @@
 | options | ✓ | `Array<{label?: string, value: string, disabled?: boolean}>` | select options |
 | disabled | | `boolean` | determines if a selection is disabled |
 | required | | `boolean` | determines if a selection is required |
+| requiredValidationMessage | | `string` | validation message for when component does not satisfy required |
 | value | | `string` | currently selected option |
 | id | | `string`| unique identifier |
 | name | ✓ | `string` |  name of the form control |
@@ -23,7 +24,8 @@ This component does not have any slots.
 
 ### Methods
 
-This component does not have any methods.
+- `reportValidity` 
+  - triggers reportValidity
 
 ### Events
 
