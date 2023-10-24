@@ -53,23 +53,22 @@
   $: {
     attachedInternals.checkValidity();
     if(inputEl){
-      console.log(inputEl.validity)
       if(inputEl.validity.patternMismatch){
         if(patternValidationMessage || validationMessages.pattern){
           attachedInternals.setValidity({ customError: true }, 
-          patternValidationMessage || validationMessages.pattern
+            patternValidationMessage || validationMessages.pattern
           );
         }
       } else if (inputEl.validity.tooShort){
         if(minlengthValidationMessage || validationMessages.minlength){
           attachedInternals.setValidity({ customError: true }, 
-          minlengthValidationMessage || validationMessages.minlength
+            minlengthValidationMessage || validationMessages.minlength
           );
         }
       } else if (inputEl.validity.tooLong){
         if(maxlengthValidationMessage || validationMessages.maxlength){
           attachedInternals.setValidity({ customError: true }, 
-          maxlengthValidationMessage || validationMessages.maxlength
+            maxlengthValidationMessage || validationMessages.maxlength
           );
         }
       } else if (inputEl.validity.valueMissing){
