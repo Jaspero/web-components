@@ -55,6 +55,16 @@
     dispatch('value', { value });
   }
 
+  export async function save(id?: string) {
+    await Promise.allSettled([...editor.root.querySelectorAll('img')].map(async img => {
+      const blob = await b64toBlob(img.src)
+      const url = await service.uploadFile(blob, id)
+      img.src = url
+    }))
+  }
+
+  const b64toBlob = (base64) => fetch(base64).then(res => res.blob())
+
   const convertBase64 = (file) => {
     return new Promise((resolve, reject) => {
       const fileReader = new FileReader();
@@ -71,18 +81,12 @@
     fileHolder.setAttribute("style", "visibility:hidden");
     fileHolder.onchange = async () => {
       const file = fileHolder.files[0];
-      // currentlyUploading = await convertBase64(file)
-      const url = await service.uploadFile(file)
-      // currentlyUploading = ''
-      insertToEditor(url)
+      const b64 = await convertBase64(file)
+      const range = editor.getSelection()
+      editor.insertEmbed(range.index, 'image', b64)
     }
     fileHolder.click();
     // Am I allowed to remove fileHolder here?
-  }
-
-  function insertToEditor(url) {
-    const range = editor.getSelection()
-    editor.insertEmbed(range.index, 'image', url)
   }
 
   onMount(() => {

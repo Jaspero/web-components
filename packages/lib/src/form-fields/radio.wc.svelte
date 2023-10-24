@@ -25,12 +25,27 @@
   export let value: string = '';
   export let name: string | null = null;
 
+  export let requiredValidationMessage;
+
+  let inputEl;
+
   export const getValue = () => value;
 
   const dispatch = createEventDispatcher();
 
+  export const reportValidity = () => {
+    attachedInternals.reportValidity()
+  }
+
   $: {
     attachedInternals.checkValidity();
+    if(inputEl){
+      if (inputEl.validity.valueMissing){
+        if(requiredValidationMessage){
+          attachedInternals.setValidity({ customError: true },  requiredValidationMessage);
+        }
+      }
+    }
     dispatch('value', value);
   }
 
@@ -44,6 +59,7 @@
     <label class:disabled={option.disabled}>
         <input
             type="radio"
+            bind:this={inputEl}
             {name}
             value={option.value}
             {required}

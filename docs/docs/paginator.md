@@ -9,8 +9,6 @@
 | **Name** | **Required** | **Type** | **Description** |
 | :----: | :----: | :----: | :---: |
 | disabled | | `boolean` | determines if the paginator is disabled |
-| hidePageSize | | `boolean` | determines if the size of the page should be hidden |
-| showPageSizeOptions | | `boolean` | determines if a set of page size options would be shown |
 | length| ✓ | `number`| total number of items |
 | pageIndex | | `number` | current page number |
 | pageSize | | `number` | number of items per page |

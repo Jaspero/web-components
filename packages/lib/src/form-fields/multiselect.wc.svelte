@@ -25,11 +25,17 @@
   export let disabled: boolean = false;
   export let required: boolean = false;
   export let hint: string = '';
-  export let value: string = '';
+  export let value;
+  export let internalValue: string = '';
   export let id: string = '';
   export let name: string = '';
   export let label = 'Label';
   export const getValue = () => options.filter((el) => el.selected).map((el) => el.value);
+
+  export let validationMessages = {};
+  export let requiredValidationMessage;
+  export let minselectsValidationMessage;
+  export let maxselectsValidationMessage;
 
   let isTabbing = false;  // Variable to track if the user is tabbing
   let open = false;
@@ -39,20 +45,34 @@
   let searchTerm = '';
   let searchTimeout;
   let displayValue;
+
   const dispatch = createEventDispatcher();
+
+  export const reportValidity = () => {
+    attachedInternals.reportValidity()
+  }
 
   $: if(Array.isArray(options)) {
     const selects = options.filter((el) => el.selected).length
-    if (selects < minSelects) {
-      attachedInternals.setValidity({ customError: true }, 'Below limit checks.');
+    if(selects == 0 && required) {
+      attachedInternals.setValidity({ customError: true }, 
+        requiredValidationMessage || validationMessages.required || `At least one item needs to be checked.`
+      );
+    }
+    else if (selects < minSelects) {
+      attachedInternals.setValidity({ customError: true }, 
+        minselectsValidationMessage || validationMessages.minselects || 'Below limit checks.'
+      );
     } else if (selects > maxSelects) {
-      attachedInternals.setValidity({ customError: true }, 'Above limit checks.');
+      attachedInternals.setValidity({ customError: true }, 
+        maxselectsValidationMessage || validationMessages.maxselects || 'Above limit checks.'
+      );
     } else {
       attachedInternals.setValidity({});
     }
     attachedInternals.checkValidity();
 
-    value = options
+    internalValue = options
       .filter((el) => el.selected)
       .map((el) => el.value)
       .join(',');
@@ -257,11 +277,22 @@
       }
       return el
     })
+    if(value){
+      if(typeof value == 'string'){
+        value.split(',').forEach(el => {
+          options[options.findIndex((o) => o.value == el)].selected = true
+        })
+      } else {
+        value.forEach(el => {
+          options[options.findIndex((o) => o.value == el)].selected = true
+        })
+      }
+    }
   });
 </script>
 
 <div class:has-hint={hint}>
-  <input bind:value={value} {id} {name} {required} hidden>
+  <input bind:value={internalValue} {id} {name} {required} hidden>
 
   <button class="select"
           class:toggled={open}
@@ -269,7 +300,7 @@
           {disabled}
           on:click|preventDefault={toggleMenu}
           on:keydown={handleKeydown}>
-    <span class="select-label" class:move={value || open}>
+    <span class="select-label" class:move={internalValue || open}>
       { label || 'Select an option'}
     </span>
 

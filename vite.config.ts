@@ -1,7 +1,7 @@
-import {defineConfig} from 'vite';
-import {svelte} from '@sveltejs/vite-plugin-svelte';
-import {transform} from 'esbuild';
-import {viteStaticCopy} from 'vite-plugin-static-copy';
+import { defineConfig } from 'vite';
+import { svelte } from '@sveltejs/vite-plugin-svelte';
+import { transform } from 'esbuild';
+import { viteStaticCopy } from 'vite-plugin-static-copy';
 
 const bundleComponents = false;
 
@@ -13,13 +13,13 @@ export default defineConfig({
     emptyOutDir: true,
     lib: {
       entry: ['./index.ts', './src/alert/render-alert.ts', './src/confirm/render-confirm.ts'],
-      formats: ['es'],
+      formats: ['es']
     },
     rollupOptions: {
       output: {
         inlineDynamicImports: false,
         chunkFileNames: '[name].js',
-        manualChunks: {svelte: ['svelte']}
+        manualChunks: { svelte: ['svelte'] }
       }
     }
   },
@@ -53,7 +53,7 @@ function minifyEs() {
       order: 'post' as const,
       async handler(code, chunk, outputOptions) {
         if (outputOptions.format === 'es') {
-          return await transform(code, {minify: true});
+          return await transform(code, { minify: true });
         }
 
         return code;

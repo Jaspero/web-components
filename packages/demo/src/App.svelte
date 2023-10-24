@@ -8,6 +8,7 @@
   import '../../../dist/checkbox.wc.js';
   /*import '../../../dist/progress-spinner.wc.js'*/
   import '../../../dist/chips.wc.js';
+  import '../../../dist/datepicker.wc.js';
   import '../../../dist/multiselect.wc.js';
   import '../../../dist/select.wc.js';
   import '../../../dist/accordion.wc.js';
@@ -22,6 +23,7 @@
   import '../../../dist/textarea.wc.js';
   import '../../../dist/button.wc.js'
   import '../../../dist/link.wc.js'
+  import '../../../dist/slider.wc.js'
   import '../../../dist/stepper.wc.js';
   import '../../../dist/tree.wc.js';
   import '../../../dist/branch.wc.js';
@@ -195,6 +197,11 @@
 
     formEl.appendChild(textareaEl);
 
+    const sliderEl = document.createElement('jp-slider') as HTMLInputElement; 
+
+    formEl.appendChild(sliderEl);
+
+
     const jsonEditor = document.createElement('jp-json-editor');
 
     jsonEditor.content =
@@ -282,6 +289,8 @@
   };
 
 </script>
+<jp-image-upload service={MockImageService} name="kikitesting"></jp-image-upload>
+
 <div bind:this={el} class="p-4"></div>
 
 <form bind:this={formEl} class="p-4" on:submit|preventDefault={submit}>
@@ -316,32 +325,13 @@
     <jp-bellow title="Third Panel">Content for the third panel</jp-bellow>
   </jp-accordion>
 
-  <jp-tree title="Fruit"> 
-    <jp-branch> Apple </jp-branch>
-    <jp-branch>Banana</jp-branch>
-    <jp-branch>Fruit Loops</jp-branch>
-  </jp-tree>
-  <jp-tree title="Vegetables">
-    <jp-tree title="Green">
-    <jp-branch>Broccoli</jp-branch>
-    <jp-branch>Brussels sprouts</jp-branch>
-  </jp-tree>
-  <jp-tree title="Orange">a</jp-tree>
-  </jp-tree>
-  <jp-tree title="something"> 
-    <jp-branch> Apple </jp-branch>
-    <jp-branch>Banana</jp-branch>
-    <jp-branch>Fruit Loops</jp-branch>
-  </jp-tree>
-
-
-  <jp-stepper>
-  </jp-stepper>
 </div>
+
+<jp-datepicker></jp-datepicker>
 
 <jp-code-editor label="asdf"></jp-code-editor>
 
-<jp-button> button on the right </jp-button> 
+<jp-button variant="flat" color="accent"> button on the right </jp-button>
 <jp-link> link </jp-link>
 <form action="">
   <jp-select

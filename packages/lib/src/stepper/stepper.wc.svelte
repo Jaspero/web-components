@@ -6,30 +6,37 @@
 />
 
 <script lang="ts">
-    import { createEventDispatcher } from 'svelte';
-    export let steps: string[] = ['Make an order', 'label 2', 'label 3', 'label 4', 'label 5'];
+    import { createEventDispatcher, onMount } from 'svelte';
+    
+    export let steps: string[] = [];
     export let step: number = 0;
+    
+    const dispatch = createEventDispatcher();
 
     export function next() {
         if (step < steps.length - 1) {
             step += 1;
         }
-        dispatch('next', {step})
+        dispatch('change', {step})
     }
 
     export function previous() {
         if (step > 0) {
             step -= 1;
         }
-        dispatch('previous', {step})
+        dispatch('change', {step})
     }
 
     export function reset() {
         step = 0;
+        dispatch('change', {step})
     }
 
-    const dispatch = createEventDispatcher();
-
+    onMount(() => {
+        if(typeof steps == 'string'){
+            steps = JSON.parse(steps)
+        }
+    })
 </script>
 
 <div class="stepper">

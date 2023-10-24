@@ -29,7 +29,7 @@ const config = {
   // to replace "en" with "zh-Hans".
   i18n: {
     defaultLocale: 'en',
-    locales: ['en'],
+    locales: ['en']
   },
 
   presets: [
@@ -38,18 +38,18 @@ const config = {
       /** @type {import('@docusaurus/preset-classic').Options} */
       ({
         docs: {
-          sidebarPath: require.resolve('./sidebars.js'),
+          sidebarPath: require.resolve('./sidebars.js')
           // Please change this to your repo.
           // Remove this to remove the "edit this page" links.
           // editUrl:
-            // 'https://github.com/Jaspero/web-components/tree/main/packages/create-docusaurus/templates/shared/',
+          // 'https://github.com/Jaspero/web-components/tree/main/packages/create-docusaurus/templates/shared/',
         },
         blog: false,
         theme: {
-          customCss: require.resolve('./src/css/custom.css'),
-        },
-      }),
-    ],
+          customCss: require.resolve('./src/css/custom.css')
+        }
+      })
+    ]
   ],
 
   themes: ['@docusaurus/theme-live-codeblock'],
@@ -59,23 +59,23 @@ const config = {
       tagName: 'link',
       attributes: {
         rel: 'stylesheet',
-        href: 'https://cdn.quilljs.com/1.3.6/quill.snow.css',
-      },
+        href: 'https://cdn.quilljs.com/1.3.6/quill.snow.css'
+      }
     },
     {
       tagName: 'link',
       attributes: {
         rel: 'stylesheet',
-        href: 'https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.14/codemirror.min.css',
-      },
+        href: 'https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.14/codemirror.min.css'
+      }
     },
     {
       tagName: 'link',
       attributes: {
         rel: 'stylesheet',
-        href: 'https://cdnjs.cloudflare.com/ajax/libs/jsoneditor/9.10.2/jsoneditor.min.css',
-      },
-    },
+        href: 'https://cdnjs.cloudflare.com/ajax/libs/jsoneditor/9.10.2/jsoneditor.min.css'
+      }
+    }
   ],
 
   scripts: [
@@ -104,20 +104,20 @@ const config = {
         title: '',
         logo: {
           alt: 'Logo',
-          src: 'img/logo.svg',
+          src: 'img/logo.svg'
         },
         items: [
           {
             type: 'docSidebar',
             sidebarId: 'docSidebar',
             position: 'left',
-            label: 'Docs',
+            label: 'Docs'
           }
-        ],
+        ]
       },
       prism: {
         theme: lightCodeTheme,
-        darkTheme: darkCodeTheme,
+        darkTheme: darkCodeTheme
       },
       themes: ['@docusaurus/theme-live-codeblock'],
       themeConfig: {
@@ -125,7 +125,7 @@ const config = {
           defaultMode: 'dark'
         }
       }
-    }),
+    })
 };
 
 module.exports = config;

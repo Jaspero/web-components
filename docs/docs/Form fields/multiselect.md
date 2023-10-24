@@ -8,15 +8,19 @@
 
 | **Name** | **Required** | **Type** | **Description** |
 | :----: | :----: | :---: | :---: |
-| options | ✓ |`Array<{ label: string; selected:`  <br></br> ` boolean; disabled: boolean }>` | select options |
+| options | ✓ |`Array<{ label?: string; value:` <br></br> ` string; selected?: boolean;`  <br></br> `disabled?: boolean }>` | select options |
 | minSelects | | `number` | minimum number of selects allowed |
+| minselectsValidationMessage | | `string` | validation message for when component does not satisfy minselects |
 | maxSelects | | `number` | maximum number of selects allowed |
+| maxselectsValidationMessage | | `string` | validation message for when component does not satisfy maxselects |
 | required | | `boolean` | determines if a selection is required |
+| requiredValidationMessage | | `string` | validation message for when component does not satisfy required |
 | disabled | | `boolean` | determines if a selection is disabled |
 | id | | `string`| unique identifier |
 | name | ✓ | `string` | name of the form control |
 | label | | `string` | shows at the top of the field |
 | hint | | `string` | shows below the field |
+| validationMessages | | `{[type]: string}` where `type` is `string` | compact way of writing validation messages in a single attribute |
 
   
 ### Slots
@@ -25,7 +29,8 @@ This component does not have any slots.
 
 ### Methods
 
-This component does not have any methods.
+- `reportValidity` 
+  - triggers reportValidity
 
 ### Events
 
@@ -36,7 +41,7 @@ This component does not have any methods.
 
 ```jsx live
 <form>
-  <jp-multiselect required={true} options= '[{"label": "label1", "selected": false},{"label": "label2", "selected": true},{"label": "label3", "selected": true},{"label": "label4", "selected": false, "disabled": true},{"label": "label5", "selected": false}]' placeholder = 'placeholder' name = 'multiselect'>
+  <jp-multiselect options='[{"value":"aaa"}, {value:"bbb"}, {value:"ccc"}]'>
   </jp-multiselect>
 </form>
 ```
