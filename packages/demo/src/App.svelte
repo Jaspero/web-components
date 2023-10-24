@@ -25,6 +25,9 @@
   import '../../../dist/link.wc.js'
   import '../../../dist/slider.wc.js'
   import '../../../dist/stepper.wc.js';
+  import '../../../dist/tree.wc.js';
+  import '../../../dist/branch.wc.js';
+
 
   import { renderAlert } from '../../../dist/render-alert.js';
   import { renderConfirm } from '../../../dist/render-confirm.js';
@@ -321,6 +324,7 @@
     <jp-bellow title="Second Panel">Content for the second panel</jp-bellow>
     <jp-bellow title="Third Panel">Content for the third panel</jp-bellow>
   </jp-accordion>
+
 </div>
 
 <jp-datepicker></jp-datepicker>
