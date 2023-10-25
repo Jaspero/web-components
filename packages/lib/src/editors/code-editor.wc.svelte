@@ -33,6 +33,9 @@
   const dispatch = createEventDispatcher();
   
   onMount(() => {
+    if(typeof options == 'string'){
+      options = JSON.parse(options)
+    }
     editor = new window.CodeMirror(containerEl, options);
     editor.setValue(value)
     editor.on('change', (e) => {
