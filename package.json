@@ -9,7 +9,7 @@
     "dev": "concurrently \"npm run dev:demo\" \"npm run dev:lib\"",
     "dev:demo": "vite --config vite.demo.config.ts",
     "dev:lib": "vite build --watch",
-    "build": "vite build",
+    "build": "vite build && node process.js",
     "build:demo": "vite build --config vite.demo.config.ts",
     "preview": "vite preview --config vite.demo.config.ts",
     "check": "svelte-check --tsconfig ./tsconfig.json",

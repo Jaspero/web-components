@@ -26,7 +26,6 @@
   import '../../../dist/slider.wc.js'
   import '../../../dist/stepper.wc.js';
   import '../../../dist/tree.wc.js';
-  import '../../../dist/branch.wc.js';
 
 
   import { renderAlert } from '../../../dist/render-alert.js';
