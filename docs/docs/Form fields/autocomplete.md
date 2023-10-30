@@ -8,6 +8,7 @@
 
 | **Name** | **Required** | **Type** | **Description** |
 | :----: | :----: | :----: | :---: |
+| options | | `string[]` | list of autocomplete options |
 | label | | `string` | shows at the top of an input |
 | placeholder | | `string` | temporary text that appears in an <br></br> input field before any input is entered |
 | name | ✓ | `string` |  name of the form control |

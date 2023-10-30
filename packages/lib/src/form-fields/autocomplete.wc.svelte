@@ -18,13 +18,13 @@
 <script lang="ts">
   import { createEventDispatcher, onMount } from 'svelte';
 
+  export let options: string[] | string = [];
   export let value = '';
   export let label = '';
   export let id: string | null = null;
   export let name: string | null = null;
   export let disabled: boolean = false;
   export let attachedInternals: ElementInternals;
-  export let options: string[] | string = [];
   export let required: boolean = false;
   export let placeholder: string = '';
   export let minlength: number | null = null;
