@@ -19,7 +19,10 @@
   import { createEventDispatcher, onMount } from 'svelte';
 
   export let value = '';
-  export let name;
+  export let label = '';
+  export let id: string | null = null;
+  export let name: string | null = null;
+  export let disabled: boolean = false;
   export let attachedInternals: ElementInternals;
   export let options: string[] | string = [];
   export let required: boolean = false;
@@ -84,9 +87,12 @@
 </script>
 
 <div>
+  <span>{@html label}</span>
   <input
     type="text"
+    {id}
     {name}
+    {disabled}
     {placeholder}
     {required}
     {minlength}
