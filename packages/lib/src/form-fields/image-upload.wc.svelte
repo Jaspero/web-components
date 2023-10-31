@@ -18,7 +18,6 @@
   import { clickOutside } from '../clickOutside';
   import type ImageService from '../types/image.service';
   import { createEventDispatcher } from 'svelte';
-  import {options} from "./select.wc.svelte";
 
   export let label: string = 'Upload a file';
   export let attachedInternals: ElementInternals;
@@ -99,22 +98,23 @@
 
 <div>
   <div class="field" bind:this={bindingElement}>
-    <span class="field-label" class:move={inputFocused || value} >{@html label}</span>
-
-    <input
-            type="file"
-            id={`${name}`}
-            class="field-upload"
-            accept={service.acceptedFiles ? service.acceptedFiles : 'image/png, image/jpeg'}
-            on:change={(e) => {
-            fileChanged(e);
-          }}
-            on:focus={() => (inputFocused = true)}
-            on:blur={() => (inputFocused = false)}
-    />
+    <span class="field-label" class:move={inputFocused || value}>{@html label}</span>
 
     <div class="field-icons">
       <label for={`${name}`} class="field-icon field-icon-upload">
+        <input
+          type="file"
+          id={`${name}`}
+          class="field-upload"
+          accept={service
+            ? service.acceptedFiles || 'image/png, image/jpeg'
+            : 'image/png, image/jpeg'}
+          on:change={(e) => {
+            fileChanged(e);
+          }}
+          on:focus={() => (inputFocused = true)}
+          on:blur={() => (inputFocused = false)}
+        />
         <svg xmlns="http://www.w3.org/2000/svg" height="1rem" viewBox="0 0 512 512">
           <!--! Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2023 Fonticons, Inc. -->
           <path
@@ -124,7 +124,7 @@
       </label>
 
       <div class="field-icon preview-button" class:hidden={!isLocal && !value}>
-        <button on:click|preventDefault={showPreview}>
+        <button on:click|preventDefault={() => showPreview()}>
           <svg xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 576 512">
             <!--! Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2023 Fonticons, Inc. -->
             <path
@@ -148,16 +148,16 @@
       {#if img || value || isLocal}
         <div class="field-icon">
           <button
-                  on:click|preventDefault={() => {
-            isLocal = false;
-            img = '';
-            value = '';
-          }}
+            on:click|preventDefault={() => {
+              isLocal = false;
+              img = '';
+              value = '';
+            }}
           >
             <svg xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 512 512">
               <!--! Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2023 Fonticons, Inc. -->
               <path
-                      d="M256 512A256 256 0 1 0 256 0a256 256 0 1 0 0 512zM175 175c9.4-9.4 24.6-9.4 33.9 0l47 47 47-47c9.4-9.4 24.6-9.4 33.9 0s9.4 24.6 0 33.9l-47 47 47 47c9.4 9.4 9.4 24.6 0 33.9s-24.6 9.4-33.9 0l-47-47-47 47c-9.4 9.4-24.6 9.4-33.9 0s-9.4-24.6 0-33.9l47-47-47-47c-9.4-9.4-9.4-24.6 0-33.9z"
+                d="M256 512A256 256 0 1 0 256 0a256 256 0 1 0 0 512zM175 175c9.4-9.4 24.6-9.4 33.9 0l47 47 47-47c9.4-9.4 24.6-9.4 33.9 0s9.4 24.6 0 33.9l-47 47 47 47c9.4 9.4 9.4 24.6 0 33.9s-24.6 9.4-33.9 0l-47-47-47 47c-9.4 9.4-24.6 9.4-33.9 0s-9.4-24.6 0-33.9l47-47-47-47c-9.4-9.4-9.4-24.6 0-33.9z"
               />
             </svg>
           </button>
@@ -167,14 +167,14 @@
 
     <span class="field-upload-container">
       <input
-              class="field-input"
-              type="text"
-              {name}
-              {id}
-              on:focus={() => (inputFocused = true)}
-              on:blur={() => (inputFocused = false)}
-              bind:value
-              disabled={isLocal}
+        class="field-input"
+        type="text"
+        {name}
+        {id}
+        on:focus={() => (inputFocused = true)}
+        on:blur={() => (inputFocused = false)}
+        bind:value
+        disabled={isLocal}
       />
     </span>
   </div>
@@ -322,12 +322,13 @@
     position: absolute;
     top: 0;
     left: 0;
-    width: 0;
-    height: 0;
+    width: 100%;
+    height: 100%;
     -webkit-border-radius: 0;
     -moz-border-radius: 0;
     border-radius: 0;
     opacity: 0;
+    cursor: pointer;
   }
 
   .field-upload-container {
