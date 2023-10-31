@@ -47,9 +47,5 @@ This component does not have any methods.
 ### Demo
 
 ```jsx live
-<div>
-  <jp-code-editor
-    options={{mode:"javascript"}}
-  ></jp-code-editor>
-</div>
+<jp-code-editor options='{"mode": "javascript"}'></jp-code-editor>
 ```
