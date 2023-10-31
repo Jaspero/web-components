@@ -59,9 +59,9 @@
   });
 </script>
 
-<div class="flex flex-col gap-2">
+<div>
   {#each options as option}
-    <label class="flex items-center gap-2 {option.disabled ? 'opacity-50' : ''}">
+    <label>
       <input type="checkbox"
              name={option.value}
              bind:checked={option.checked}
@@ -74,3 +74,21 @@
     </label>
   {/each}
 </div>
+
+<style>
+    div {
+        display: flex;
+        flex-direction: column;
+        gap: .5rem;
+    }
+
+    label {
+        display: flex;
+        align-items: center;
+        gap: .5rem;
+    }
+
+    .opacity-50 {
+        opacity: 50%;
+    }
+</style>

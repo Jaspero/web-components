@@ -5,6 +5,7 @@
   /*import '../../../dist/async-table.wc.js';*/
   /*import '../../../dist/input.wc.js';
   /*import '../../../dist/quill.wc.js';*/
+  import '../../../dist/autocomplete.wc.js';
   import '../../../dist/checkbox.wc.js';
   /*import '../../../dist/progress-spinner.wc.js'*/
   import '../../../dist/chips.wc.js';
@@ -143,6 +144,15 @@
 
     paginatorEl.addEventListener('change', (e) => console.log(e.detail))
     el.appendChild(paginatorEl)
+
+    const autocompleteEl = document.createElement('jp-autocomplete') as HTMLInputElement;
+
+    autocompleteEl.options = ["One", "Two", "Three"]
+    autocompleteEl.name = 'namename'
+    autocompleteEl.minlength = 10
+    autocompleteEl.label = 'THIS IS AUTOCOMPLETE'
+
+    formEl.appendChild(autocompleteEl)
 
     const chipsEl = document.createElement('jp-chips') as HTMLInputElement;
 
