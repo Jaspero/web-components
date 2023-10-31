@@ -40,7 +40,7 @@ This component does not have any slots.
 ### Demo
 
 ```jsx live
-<form>
+<form style={{marginBottom: 150}}>
   <jp-autocomplete options='["One", "Two", "Three"]'>
   </jp-autocomplete>
 </form>
