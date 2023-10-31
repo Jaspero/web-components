@@ -48,7 +48,9 @@
   const dispatch = createEventDispatcher();
   
   $: {
-    filteredOptions = options.filter((el) => el.toLowerCase().includes(value.toLowerCase()));
+    if(Array.isArray(options)){
+      filteredOptions = options.filter((el) => el.toLowerCase().includes(value.toLowerCase()));
+    }
     attachedInternals.checkValidity();
     if(inputEl){
       if(inputEl.validity.patternMismatch){
