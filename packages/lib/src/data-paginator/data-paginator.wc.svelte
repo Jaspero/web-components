@@ -1,6 +1,6 @@
 <svelte:options
   customElement={{
-    tag: 'jp-paginator',
+    tag: 'jp-data-paginator',
     shadow: 'none'
   }}
 />
