@@ -430,8 +430,10 @@
     position: absolute;
     bottom: 100%;
     right: 0;
-    max-width: 400px;
+    max-width: 300px;
+    max-height: 300px;
     width: auto;
+    height: auto;
     background-color: var(--background-primary);
     -webkit-border-radius: 0.5rem;
     -moz-border-radius: 0.5rem;
