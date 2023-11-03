@@ -1,8 +1,8 @@
-# Image Gallery
+# Carousel
 
 ### Description
 
-`<jp-image-gallery>` is a component with the functionality of creating an interactive image gallery.
+`<jp-carousel>` is a component with the functionality of creating an interactive image carousel.
 
 ### Attributes
 
@@ -32,6 +32,6 @@ This component does not have any events.
 ### Demo
 
 ```jsx live
-<jp-image-gallery images='[{"src": "https://picsum.photos/200/300"}, {"src": "https://picsum.photos/200/200"}, {"src": "https://picsum.photos/300/300"}]'>
-</jp-image-gallery>
+<jp-carousel images='[{"src": "https://picsum.photos/200/300"}, {"src": "https://picsum.photos/200/200"}, {"src": "https://picsum.photos/300/300"}]'>
+</jp-carousel>
 ```

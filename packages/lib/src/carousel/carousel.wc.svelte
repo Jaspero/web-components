@@ -1,6 +1,6 @@
 <svelte:options
         customElement={{
-            tag: 'jp-image-gallery',
+            tag: 'jp-carousel',
             shadow: 'none'
         }}
 />
