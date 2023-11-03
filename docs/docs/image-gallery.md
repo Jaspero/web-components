@@ -32,6 +32,6 @@ This component does not have any events.
 ### Demo
 
 ```jsx live
-<jp-image-gallery images={'[{"src": "https://picsum.photos/200/300"}, {"src": "https://picsum.photos/200/200"}, {"src": "https://picsum.photos/300/300"}]'}>
+<jp-image-gallery images='[{"src": "https://picsum.photos/200/300"}, {"src": "https://picsum.photos/200/200"}, {"src": "https://picsum.photos/300/300"}]'>
 </jp-image-gallery>
 ```
