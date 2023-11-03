@@ -23,6 +23,7 @@ export default () => {
   import('./src/editors/json-editor.wc.svelte');
   import('./src/editors/code-editor.wc.svelte');
   import('./src/data-paginator/data-paginator.wc.svelte');
+  import('./src/page-paginator/page-paginator.wc.svelte');
   import('./src/form-fields/textarea.wc.svelte');
   import('./src/form-fields/datepicker.wc.svelte');
   import('./src/form-fields/toggle.wc.svelte')
