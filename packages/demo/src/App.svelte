@@ -222,9 +222,6 @@
     const linkEl = document.createElement('jp-link')
     el.appendChild(linkEl)
 
-    const tabsEl = document.createElement('jp-tabs');
-    el.appendChild(tabsEl);
-
     let headers = [
       { label: 'Name', key: 'name' },
       { label: 'Age', key: 'age' },
