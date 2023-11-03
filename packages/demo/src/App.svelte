@@ -312,12 +312,6 @@
     <jp-bellow title="Second Panel">Content for the second panel</jp-bellow>
     <jp-bellow title="Third Panel">Content for the third panel</jp-bellow>
   </jp-accordion>
-
-  <jp-tabs>
-    <div data-label="one">Content 1 <input></div>
-    <div data-label="two">Content 2</div>
-    <div data-label="three">Content 3 <div data-label="four">Content 4</div></div>
-</jp-tabs>
 </div>
 
 <jp-button> button on the right </jp-button> 
@@ -339,3 +333,10 @@
   ></jp-select>   
   <button>asdf</button>
 </form>
+
+
+<jp-tabs>
+  <div data-label="one">Content 1 <input type="text" /></div>
+  <div data-label="two">Content 2</div>
+  <div data-label="three">Content 3 <div data-label="four">Content 4</div></div>
+</jp-tabs>
