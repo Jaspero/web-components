@@ -13,6 +13,7 @@
 ### Slots
 
 `<jp-bellow>` are panels (children) components of `<jp-accordion>`
+- `<jp-bellow>` needs to have an attribute `title` because it is used as unique identifier
 
 ### Methods
 
