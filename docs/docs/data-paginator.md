@@ -1,4 +1,4 @@
-# Data-paginator
+# Data Paginator
 
 ### Description
 
@@ -9,7 +9,7 @@
 | **Name** | **Required** | **Type** | **Description** |
 | :----: | :----: | :----: | :---: |
 | length | ✓ | `number`| total number of items |
-| pageIndex | | `number` | current page number |
+| pageIndex | | `number` | current page number starting from 0 |
 | pageSize | | `number` | number of items per page |
 | pageSizeOptions | | `number []` | list of different page sizes to choose from |
 | getRangeLabel | | `string` | text of the range label |
