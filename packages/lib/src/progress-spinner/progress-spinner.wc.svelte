@@ -27,7 +27,7 @@
   <svg height={radius * 2} width={radius * 2}>
     <circle
       class="progress"
-      stroke="blue"
+      stroke={color}
       fill="transparent"
       stroke-dasharray="{circumference} {circumference}"
       stroke-dashoffset={strokeDashoffset}
