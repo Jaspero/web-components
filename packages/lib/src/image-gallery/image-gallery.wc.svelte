@@ -62,6 +62,9 @@
     }
 
     onMount(() => {
+        if(typeof images == 'string'){
+            images = JSON.parse(images)
+        }
         if (autoSlide) {
             intervalFunction = setInterval(nextImage, interval);
         }
