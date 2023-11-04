@@ -24,6 +24,7 @@
   import '../../../dist/textarea.wc.js';
   import '../../../dist/button.wc.js'
   import '../../../dist/link.wc.js'
+  import '../../../dist/tabs.wc.js'
   import '../../../dist/slider.wc.js'
   import '../../../dist/stepper.wc.js';
   import '../../../dist/tree.wc.js';
@@ -359,3 +360,10 @@
   ></jp-select>   
   <button>asdf</button>
 </form>
+
+
+<jp-tabs>
+  <jp-tab title="one">Content 1</jp-tab>
+  <jp-tab title="two">Content 2</jp-tab>
+  <jp-tab title="three">Content 3</jp-tab>
+</jp-tabs>
