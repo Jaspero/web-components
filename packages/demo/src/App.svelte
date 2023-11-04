@@ -3,18 +3,20 @@
   /*import '../../../dist/alert.wc.js'; */
   /*import '../../../dist/confirm.wc.js'*/
   /*import '../../../dist/async-table.wc.js';*/
-  import '../../../dist/input.wc.js';
+  /*import '../../../dist/input.wc.js';
   /*import '../../../dist/quill.wc.js';*/
+  import '../../../dist/autocomplete.wc.js';
   import '../../../dist/checkbox.wc.js';
   /*import '../../../dist/progress-spinner.wc.js'*/
   import '../../../dist/chips.wc.js';
+  import '../../../dist/datepicker.wc.js';
   import '../../../dist/multiselect.wc.js';
   import '../../../dist/select.wc.js';
   import '../../../dist/accordion.wc.js';
   import '../../../dist/bellow.wc.js';
   import '../../../dist/radio.wc.js'
-  /*import '../../../dist/json-editor.wc.js'
-  import '../../../dist/code-editor.wc.js'*/
+  import '../../../dist/json-editor.wc.js'
+  import '../../../dist/code-editor.wc.js'
   import '../../../dist/image-gallery.wc.js'
   import '../../../dist/image-upload.wc.js'
   import '../../../dist/paginator.wc.js'
@@ -22,15 +24,16 @@
   import '../../../dist/textarea.wc.js';
   import '../../../dist/button.wc.js'
   import '../../../dist/link.wc.js'
-  /*import '../../../dist/tabs.wc.js'*/
-
+  import '../../../dist/tabs.wc.js'
+  import '../../../dist/slider.wc.js'
+  import '../../../dist/stepper.wc.js';
+  import '../../../dist/tree.wc.js';
 
 
   import { renderAlert } from '../../../dist/render-alert.js';
   import { renderConfirm } from '../../../dist/render-confirm.js';
   import { FirebaseTableService } from './firebase-table.service';
   import { MockImageService } from './mock-image.service..js';
-  import Tabs from '../../lib/src/tabs/tabs.wc.svelte';
 
   let el: HTMLDivElement;
   let formEl: HTMLFormElement;
@@ -143,6 +146,15 @@
     paginatorEl.addEventListener('change', (e) => console.log(e.detail))
     el.appendChild(paginatorEl)
 
+    const autocompleteEl = document.createElement('jp-autocomplete') as HTMLInputElement;
+
+    autocompleteEl.options = ["One", "Two", "Three"]
+    autocompleteEl.name = 'namename'
+    autocompleteEl.minlength = 10
+    autocompleteEl.label = 'THIS IS AUTOCOMPLETE'
+
+    formEl.appendChild(autocompleteEl)
+
     const chipsEl = document.createElement('jp-chips') as HTMLInputElement;
 
     chipsEl.name = 'chips';
@@ -195,6 +207,11 @@
 
     formEl.appendChild(textareaEl);
 
+    const sliderEl = document.createElement('jp-slider') as HTMLInputElement; 
+
+    formEl.appendChild(sliderEl);
+
+
     const jsonEditor = document.createElement('jp-json-editor');
 
     jsonEditor.content =
@@ -221,6 +238,9 @@
 
     const linkEl = document.createElement('jp-link')
     el.appendChild(linkEl)
+    
+    const stepperEl = document.createElement('jp-stepper')
+    el.appendChild(stepperEl)
 
     let headers = [
       { label: 'Name', key: 'name' },
@@ -279,6 +299,8 @@
   };
 
 </script>
+<jp-image-upload service={MockImageService} name="kikitesting"></jp-image-upload>
+
 <div bind:this={el} class="p-4"></div>
 
 <form bind:this={formEl} class="p-4" on:submit|preventDefault={submit}>
@@ -312,9 +334,14 @@
     <jp-bellow title="Second Panel">Content for the second panel</jp-bellow>
     <jp-bellow title="Third Panel">Content for the third panel</jp-bellow>
   </jp-accordion>
+
 </div>
 
-<jp-button> button on the right </jp-button> 
+<jp-datepicker></jp-datepicker>
+
+<jp-code-editor label="asdf"></jp-code-editor>
+
+<jp-button variant="flat" color="accent"> button on the right </jp-button>
 <jp-link> link </jp-link>
 <form action="">
   <jp-select
@@ -336,7 +363,7 @@
 
 
 <jp-tabs>
-  <div data-label="one">Content 1 <input type="text" /></div>
-  <div data-label="two">Content 2</div>
-  <div data-label="three">Content 3 <div data-label="four">Content 4</div></div>
+  <jp-tab title="one">Content 1</jp-tab>
+  <jp-tab title="two">Content 2</jp-tab>
+  <jp-tab title="three">Content 3</jp-tab>
 </jp-tabs>

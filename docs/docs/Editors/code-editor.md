@@ -29,6 +29,8 @@ In order for this component to work you have to include the following
 <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.14/codemirror.min.js"></script>
 ```
 
+Depending on your editor options, you might need additional dependancies that you can find on https://cdnjs.com/libraries/codemirror/5.65.14
+
 ### Slots
 
 This component does not have any slots.
@@ -45,9 +47,5 @@ This component does not have any methods.
 ### Demo
 
 ```jsx live
-<div>
-  <jp-code-editor
-    options={{mode:"javascript"}}
-  ></jp-code-editor>
-</div>
+<jp-code-editor options='{"mode": "javascript"}'></jp-code-editor>
 ```

@@ -24,20 +24,31 @@
   export let minSelects: number = 0;
   export let maxSelects: number | null = null;
 
+  export let minselectsValidationMessage;
+  export let maxselectsValidationMessage;
+  export let validationMessages = {};
+
   export const getValue = () => options.filter(el => el.checked).map(el => el.value);
   
   const dispatch = createEventDispatcher();
+
+  export const reportValidity = () => {
+    attachedInternals.reportValidity()
+  }
   
   $: if(Array.isArray(options)) {
     const checkedAmount = options.filter((el) => el.checked).length
     if (checkedAmount < minSelects) {
-      attachedInternals.setValidity({ customError: true }, 'Below limit checks.');
+      attachedInternals.setValidity({ customError: true }, 
+        minselectsValidationMessage || validationMessages.minselects || 'Below limit checks.'
+      );
     } else if (checkedAmount > maxSelects) {
-      attachedInternals.setValidity({ customError: true }, 'Above limit checks.');
+      attachedInternals.setValidity({ customError: true }, 
+        maxselectsValidationMessage || validationMessages.maxselects || 'Above limit checks.'
+      );
     } else {
       attachedInternals.setValidity({});
     }
-
 
     dispatch('value', options.filter(el => el.checked).map(el => el.value));
   }
@@ -48,9 +59,9 @@
   });
 </script>
 
-<div class="flex flex-col gap-2">
+<div>
   {#each options as option}
-    <label class="flex items-center gap-2 {option.disabled ? 'opacity-50' : ''}">
+    <label>
       <input type="checkbox"
              name={option.value}
              bind:checked={option.checked}
@@ -63,3 +74,21 @@
     </label>
   {/each}
 </div>
+
+<style>
+    div {
+        display: flex;
+        flex-direction: column;
+        gap: .5rem;
+    }
+
+    label {
+        display: flex;
+        align-items: center;
+        gap: .5rem;
+    }
+
+    .opacity-50 {
+        opacity: 50%;
+    }
+</style>

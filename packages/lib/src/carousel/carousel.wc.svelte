@@ -1,6 +1,6 @@
 <svelte:options
         customElement={{
-            tag: 'jp-image-gallery',
+            tag: 'jp-carousel',
             shadow: 'none'
         }}
 />
@@ -62,6 +62,9 @@
     }
 
     onMount(() => {
+        if(typeof images == 'string'){
+            images = JSON.parse(images)
+        }
         if (autoSlide) {
             intervalFunction = setInterval(nextImage, interval);
         }

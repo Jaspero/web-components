@@ -29,6 +29,10 @@
   export let label = 'Label';
   export const getValue = () => value;
 
+  export let requiredValidationMessage;
+  
+  let inputEl;
+
   let isTabbing = false;  // Variable to track if the user is tabbing
   let open = false;
   let bindingElement;
@@ -40,8 +44,19 @@
 
   const dispatch = createEventDispatcher();
 
+  export const reportValidity = () => {
+    attachedInternals.reportValidity()
+  }
+
   $: {
     attachedInternals.checkValidity();
+    if(inputEl){
+      if (inputEl.validity.valueMissing){
+        if(requiredValidationMessage){
+          attachedInternals.setValidity({ customError: true },  requiredValidationMessage);
+        }
+      }
+    }
     dispatch('value', value);
   }
 
@@ -220,11 +235,18 @@
 
   onMount(() => {
     if(typeof options == 'string') options = JSON.parse(options)
+    if(value){
+      options.forEach(el => {
+        if(el.value == value){
+          selected = el.label ? el.label : el.value
+        }
+      })
+    }
   })
 </script>
 
 <div class:has-hint={hint}>
-  <input bind:value={value} {id} {name} {required} hidden>
+  <input bind:value={value} {id} {name} {required} bind:this={inputEl} hidden>
 
   <button class="select"
           class:toggled={open}

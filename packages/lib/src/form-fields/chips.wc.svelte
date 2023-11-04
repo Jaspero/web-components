@@ -15,7 +15,7 @@
 />
 
 <script lang="ts">
-  import { createEventDispatcher, onMount } from 'svelte';
+  import { createEventDispatcher } from 'svelte';
 
   export let attachedInternals: ElementInternals;
   export let value: string = '';
@@ -38,23 +38,47 @@
   export let inputFocused: boolean = false;
   export let inputValue: string = '';
 
+  export let validationMessages = {};
+  export let requiredValidationMessage;
+  export let minitemsValidationMessage;
+  export let maxitemsValidationMessage;
+  export let uniqueValidationMessage;
+  export let patternValidationMessage;
+
   export const getValue = () => chips;
 
   const dispatch = createEventDispatcher();
 
+  export const reportValidity = () => {
+    attachedInternals.reportValidity()
+  }
+
   $: {
     value = chips.join(',')
-    if(chips.length < minitems){
-      attachedInternals.setValidity({ customError: true }, `A minimum of ${minitems} items need to be added.`);
+    if(!value){
+      attachedInternals.setValidity({ customError: true }, 
+        requiredValidationMessage || validationMessages.required || `Chips should be non-empty.`
+      );
+    }
+    else if(chips.length < minitems){
+      attachedInternals.setValidity({ customError: true }, 
+        minitemsValidationMessage || validationMessages.minitems || `A minimum of ${minitems} items need to be added.`
+      );
     }
     else if(maxitems && chips.length > maxitems){
-      attachedInternals.setValidity({ customError: true }, `A maximum of ${maxitems} items are allowed.`);
+      attachedInternals.setValidity({ customError: true }, 
+        maxitemsValidationMessage || validationMessages.maxitems || `A maximum of ${maxitems} items are allowed.`
+      );
     }
     else if (unique && ((new Set(chips)).size !== chips.length)) {
-      attachedInternals.setValidity({ customError: true }, 'Chips are not unique.')
+      attachedInternals.setValidity({ customError: true }, 
+        uniqueValidationMessage || validationMessages.unique || 'Chips are not unique.'
+      );
     }
     else if(pattern != null && chips.filter(el => pattern.test(el)).length != chips.length){
-      attachedInternals.setValidity({ customError: true }, 'Chips dont satisfy pattern.');
+      attachedInternals.setValidity({ customError: true }, 
+        patternValidationMessage || validationMessages.pattern || 'Chips dont satisfy pattern.'
+      );
     } else {
       attachedInternals.setValidity({});
     }
@@ -120,7 +144,7 @@
   </label>
 </div>
 
-<textarea {id} {name} {value} {required} hidden></textarea>
+<textarea {id} {name} {value} hidden></textarea>
 
 <style>
   .field {

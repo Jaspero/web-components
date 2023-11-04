@@ -23,9 +23,9 @@ You can type this command into Command Prompt, Powershell, Terminal, or any othe
 
 ## Component dependancies
 
-Certain components require us to import scripts and styles in order for them to work properly.
+Some components require imports to function properly.
 
-Easiest way to do this is to simply directly load the following *js* and *css* in your html.
+Simplest way to do this is to load the following scripts and stylesheets;
 
 ### Quill
 ```html
