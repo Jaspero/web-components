@@ -32,7 +32,7 @@ export default function Home() {
           <div className={styles.heroUpperContainer}>
             <div>
               <h1>JASPERO</h1>
-              <h2>Web Components</h2>
+              <h2>Web components</h2>
               <Link className="button button--secondary button--lg" to="/docs/intro">
                 Documentation
               </Link>
