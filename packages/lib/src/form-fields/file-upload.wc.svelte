@@ -122,7 +122,7 @@
           type="file"
           id={`${name}`}
           class="field-upload"
-          accept={service.acceptedFiles}
+          accept={service && service.acceptedFiles}
           on:change={(e) => {
             fileChanged(e);
           }}
