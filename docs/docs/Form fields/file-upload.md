@@ -23,8 +23,8 @@ Defines the accepted file types and provides a method to upload a file.
 
 | **Name** | **Required** | **Type** |**Description** |
 | :----: | :----: | :----: | :---: |
-| acceptedFiles | ✓ | `string` | defines acceptable file types for uploading images |
-| uploadFile |  | `function` | uploads a file and returns a promise <br></br> which is a string that represents a link to the image location |
+| acceptedFiles | ✓ | `string` | defines acceptable file types |
+| uploadFile |  | `function` | uploads a file and returns a promise <br></br> which is a string that represents a link to the file location |
 
 <br></br>
 
