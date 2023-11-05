@@ -44,8 +44,6 @@ This component does not have any methods.
 ### Demo
 
 ```jsx live
-<form>
-  <jp-file-upload>
-  </jp-file-upload>
-</form>
+<jp-file-upload>
+</jp-file-upload>
 ```
