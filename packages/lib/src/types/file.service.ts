@@ -1,4 +1,4 @@
-export default interface ImageService {
+export default interface FileService {
   acceptedFiles: string;
   uploadFile: (file: any, id?: string) => Promise<string>;
 }
