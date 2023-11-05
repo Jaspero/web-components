@@ -23,8 +23,9 @@ jobs:
 
       - name: Install dependencies
         run: |
-          npm ci --legacy-peer-deps
-          npm i --save @jaspero/web-components@latest --legacy-peer-deps
+          npm i
+          npm i --save @jaspero/web-components@latest
+          npm list @jaspero/web-components
       - name: Copy Web Components
         run: |
           cp -r node_modules/@jaspero/web-components/dist static/c
