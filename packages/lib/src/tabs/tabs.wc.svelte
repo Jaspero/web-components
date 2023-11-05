@@ -10,6 +10,7 @@
   export let tab: number = 1;
   let tabs = [];
   let tabsEl;
+  let contentEl;
   let overflownTabs = false;
 
   const dispatch = createEventDispatcher();
@@ -35,7 +36,8 @@
 
   onMount(() => {
     new ResizeObserver(checkOverflow).observe(tabsEl)
-    tabs = Array.from(document.querySelectorAll('jp-tab'));
+    tabs = Array.from(contentEl.children[0].assignedElements())
+    tabs = tabs.filter(el => el.tagName.toLowerCase() == 'jp-tab')
   });
 </script>
 
@@ -61,6 +63,10 @@
       /></svg
     >
   </button>
+</div>
+
+<div bind:this={contentEl} hidden>
+  <slot></slot>
 </div>
 
 <div class="content">
