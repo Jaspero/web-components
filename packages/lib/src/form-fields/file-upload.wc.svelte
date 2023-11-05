@@ -1,6 +1,6 @@
 <svelte:options
   customElement={{
-    tag: 'jp-image-upload',
+    tag: 'jp-file-upload',
     shadow: 'none',
     extend: (customElementConstructor) => {
       return class extends customElementConstructor {
@@ -16,7 +16,7 @@
 
 <script lang="ts">
   import { clickOutside } from '../clickOutside';
-  import type ImageService from '../types/image.service';
+  import type FileService from '../types/file.service';
   import { createEventDispatcher } from 'svelte';
 
   export let label: string = 'Upload a file';
@@ -33,7 +33,7 @@
   let file = null;
   let preview = false;
 
-  export let service: ImageService;
+  export let service: FileService;
 
   export const getValue = () => value;
 
@@ -59,8 +59,24 @@
     isLocal = true;
     value = event.target.value;
     file = event.target.files[0];
-    const base64 = (await convertBase64(file)) as string;
-    img = base64;
+    if(file['type'].split('/')[0] === 'image'){
+      const base64 = (await convertBase64(file)) as string;
+      img = base64;
+    } else {
+      img = ''
+    }
+  }
+
+  async function checkImage() {
+    if(!isLocal){
+      const res = await fetch(value);
+      const buff = await res.blob();
+      if(buff.type.startsWith('image/')){
+        img = value
+      } else {
+        img = ''
+      }
+    }
   }
 
   function showPreview() {
@@ -106,9 +122,7 @@
           type="file"
           id={`${name}`}
           class="field-upload"
-          accept={service
-            ? service.acceptedFiles || 'image/png, image/jpeg'
-            : 'image/png, image/jpeg'}
+          accept={service.acceptedFiles}
           on:change={(e) => {
             fileChanged(e);
           }}
@@ -123,7 +137,7 @@
         </svg>
       </label>
 
-      <div class="field-icon preview-button" class:hidden={!isLocal && !value}>
+      <div class="field-icon preview-button" class:hidden={!img}>
         <button on:click|preventDefault={() => showPreview()}>
           <svg xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 576 512">
             <!--! Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2023 Fonticons, Inc. -->
@@ -137,15 +151,14 @@
           <img
             class="preview"
             style={previewStyle}
-            src={isLocal ? img : value}
+            src={img}
             alt="preview"
-            hidden={!value && !img}
             use:clickOutside
             on:click_outside={() => (preview = false)}
           />
         {/if}
       </div>
-      {#if img || value || isLocal}
+      {#if value}
         <div class="field-icon">
           <button
             on:click|preventDefault={() => {
@@ -173,6 +186,7 @@
         {id}
         on:focus={() => (inputFocused = true)}
         on:blur={() => (inputFocused = false)}
+        on:change={() => checkImage()}
         bind:value
         disabled={isLocal}
       />
