@@ -16,11 +16,13 @@
 
 <script lang="ts">
   import { createEventDispatcher } from 'svelte';
+  import type FileService from '../types/file.service';
 
   export let attachedInternals: ElementInternals;
   export let value: string = '';
   export let id: string = '';
   export let name: string = '';
+  export let service: FileService;
   let files = [];
   let fileInputEl;
   let browseFilesEl;
@@ -41,12 +43,12 @@
       files = files.concat(
         Array.from(e.target.files).map((el) => {
           let size;
-          if(el.size < 1000){
-            size = el.size + 'b'
-          } else if (el.size < 1000000){
-            size = `${Number.parseFloat(el.size/1024).toFixed(1)}kb`
+          if (el.size < 1000) {
+            size = el.size + 'b';
+          } else if (el.size < 1000000) {
+            size = `${Number.parseFloat(el.size / 1024).toFixed(1)}kb`;
           } else {
-            size = `${Number.parseFloat(el.size/1024/1024).toFixed(1)}MB`
+            size = `${Number.parseFloat(el.size / 1024 / 1024).toFixed(1)}MB`;
           }
           let obj = {
             name: el.name,
@@ -67,12 +69,12 @@
       files = files.concat(
         Array.from(e.dataTransfer.files).map((el) => {
           let size;
-          if(el.size < 1000){
-            size = el.size + 'b'
-          } else if (el.size < 1000000){
-            size = `${Number.parseFloat(el.size/1024).toFixed(1)}kb`
+          if (el.size < 1000) {
+            size = el.size + 'b';
+          } else if (el.size < 1000000) {
+            size = `${Number.parseFloat(el.size / 1024).toFixed(1)}kb`;
           } else {
-            size = `${Number.parseFloat(el.size/1024/1024).toFixed(1)}MB`
+            size = `${Number.parseFloat(el.size / 1024 / 1024).toFixed(1)}MB`;
           }
           let obj = {
             name: el.name,
@@ -165,18 +167,31 @@
       {/each}
     </div>
     <button class="add-more" on:click|preventDefault={() => browseFilesEl.click()}>
-      <svg xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 448 512"><!--! Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2023 Fonticons, Inc. --><path d="M256 80c0-17.7-14.3-32-32-32s-32 14.3-32 32V224H48c-17.7 0-32 14.3-32 32s14.3 32 32 32H192V432c0 17.7 14.3 32 32 32s32-14.3 32-32V288H400c17.7 0 32-14.3 32-32s-14.3-32-32-32H256V80z"/></svg>
+      <svg xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 448 512"
+        ><!--! Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2023 Fonticons, Inc. --><path
+          d="M256 80c0-17.7-14.3-32-32-32s-32 14.3-32 32V224H48c-17.7 0-32 14.3-32 32s14.3 32 32 32H192V432c0 17.7 14.3 32 32 32s32-14.3 32-32V288H400c17.7 0 32-14.3 32-32s-14.3-32-32-32H256V80z"
+        /></svg
+      >
     </button>
   {/if}
 </div>
 <input
   type="file"
   multiple
+  accept={service && service.acceptedFiles}
   bind:this={browseFilesEl}
   on:change={(e) => handleFileInput(e)}
   hidden
 />
-<input type="file" {id} {name} bind:value bind:this={fileInputEl} hidden />
+<input
+  type="file"
+  {id}
+  {name}
+  bind:value
+  bind:this={fileInputEl}
+  accept={service && service.acceptedFiles}
+  hidden
+/>
 
 <style>
   .dropzone {
@@ -229,7 +244,7 @@
     bottom: -20px;
     border-radius: 50%;
     background-color: #e65000;
-    fill: #FFF;
+    fill: #fff;
   }
 
   .add-more svg {
