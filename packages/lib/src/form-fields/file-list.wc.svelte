@@ -15,7 +15,6 @@
 />
 
 <script lang="ts">
-  import type FileService from '../types/file.service';
   import { createEventDispatcher } from 'svelte';
 
   export let attachedInternals: ElementInternals;
@@ -26,8 +25,6 @@
   let fileInputEl;
   let browseFilesEl;
   let hoveringFile = false;
-
-  export let service: FileService;
 
   export const getValue = () => value;
 
@@ -43,8 +40,17 @@
     if (e.target.files.length) {
       files = files.concat(
         Array.from(e.target.files).map((el) => {
+          let size;
+          if(el.size < 1000){
+            size = el.size + 'b'
+          } else if (el.size < 1000000){
+            size = `${Number.parseFloat(el.size/1024).toFixed(1)}kb`
+          } else {
+            size = `${Number.parseFloat(el.size/1024/1024).toFixed(1)}MB`
+          }
           let obj = {
             name: el.name,
+            size: size,
             file: el
           };
           if (el['type'].split('/')[0] === 'image') {
@@ -60,8 +66,17 @@
     if (e.dataTransfer.files.length) {
       files = files.concat(
         Array.from(e.dataTransfer.files).map((el) => {
+          let size;
+          if(el.size < 1000){
+            size = el.size + 'b'
+          } else if (el.size < 1000000){
+            size = `${Number.parseFloat(el.size/1024).toFixed(1)}kb`
+          } else {
+            size = `${Number.parseFloat(el.size/1024/1024).toFixed(1)}MB`
+          }
           let obj = {
             name: el.name,
+            size: size,
             file: el
           };
           if (el['type'].split('/')[0] === 'image') {
@@ -80,25 +95,6 @@
       return dataTransfer;
     };
     return fileArr.reduce(reducer, new DataTransfer()).files;
-  };
-
-  export async function save(id?: string) {
-    /*try {
-      value = await service.uploadFile(file, id);
-    } catch (err) {
-      console.log(err);
-    }
-    return value;*/
-  }
-
-  const convertBase64 = (file) => {
-    return new Promise((resolve, reject) => {
-      const fileReader = new FileReader();
-      fileReader.readAsDataURL(file);
-
-      fileReader.onload = () => resolve(fileReader.result);
-      fileReader.onerror = (err) => reject(err);
-    });
   };
 </script>
 
@@ -122,8 +118,7 @@
       >
       <div>Drop your files here</div>
     </div>
-  {/if}
-  {#if files.length == 0}
+  {:else if files.length == 0}
     <!-- svelte-ignore a11y-no-static-element-interactions -->
     <div class="info" hidden={files.length != 0}>
       <!-- svelte-ignore a11y-missing-attribute -->
@@ -136,29 +131,56 @@
     <div class="files">
       {#each files as file, index}
         <div class="file">
-          <button class="file-remove" on:click|preventDefault={() => {files.splice(index, index); files = files}}>
-            <svg xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 512 512"><!--! Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2023 Fonticons, Inc. --><path d="M256 512A256 256 0 1 0 256 0a256 256 0 1 0 0 512zM175 175c9.4-9.4 24.6-9.4 33.9 0l47 47 47-47c9.4-9.4 24.6-9.4 33.9 0s9.4 24.6 0 33.9l-47 47 47 47c9.4 9.4 9.4 24.6 0 33.9s-24.6 9.4-33.9 0l-47-47-47 47c-9.4 9.4-24.6 9.4-33.9 0s-9.4-24.6 0-33.9l47-47-47-47c-9.4-9.4-9.4-24.6 0-33.9z"/></svg>
+          <button
+            class="file-remove"
+            on:click|preventDefault={() => {
+              files.splice(index, 1);
+              files = files;
+            }}
+          >
+            <svg xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 512 512"
+              ><!--! Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2023 Fonticons, Inc. --><path
+                d="M256 512A256 256 0 1 0 256 0a256 256 0 1 0 0 512zM175 175c9.4-9.4 24.6-9.4 33.9 0l47 47 47-47c9.4-9.4 24.6-9.4 33.9 0s9.4 24.6 0 33.9l-47 47 47 47c9.4 9.4 9.4 24.6 0 33.9s-24.6 9.4-33.9 0l-47-47-47 47c-9.4 9.4-24.6 9.4-33.9 0s-9.4-24.6 0-33.9l47-47-47-47c-9.4-9.4-9.4-24.6 0-33.9z"
+              /></svg
+            >
           </button>
           <div class="file-icon">
             {#if file.src}
               <img src={file.src} alt={file.name} />
             {:else}
-              <svg xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 384 512"><!--! Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2023 Fonticons, Inc. --><path d="M0 64C0 28.7 28.7 0 64 0H224V128c0 17.7 14.3 32 32 32H384V448c0 35.3-28.7 64-64 64H64c-35.3 0-64-28.7-64-64V64zm384 64H256V0L384 128z"/></svg>
+              <svg xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 384 512"
+                ><!--! Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2023 Fonticons, Inc. --><path
+                  d="M0 64C0 28.7 28.7 0 64 0H224V128c0 17.7 14.3 32 32 32H384V448c0 35.3-28.7 64-64 64H64c-35.3 0-64-28.7-64-64V64zm384 64H256V0L384 128z"
+                /></svg
+              >
             {/if}
           </div>
           <div class="file-name">
             {file.name}
           </div>
+          <div class="file-size">
+            {file.size}
+          </div>
         </div>
       {/each}
     </div>
+    <button class="add-more" on:click|preventDefault={() => browseFilesEl.click()}>
+      <svg xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 448 512"><!--! Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2023 Fonticons, Inc. --><path d="M256 80c0-17.7-14.3-32-32-32s-32 14.3-32 32V224H48c-17.7 0-32 14.3-32 32s14.3 32 32 32H192V432c0 17.7 14.3 32 32 32s32-14.3 32-32V288H400c17.7 0 32-14.3 32-32s-14.3-32-32-32H256V80z"/></svg>
+    </button>
   {/if}
 </div>
-<input type="file" multiple bind:this={browseFilesEl} on:change={(e) => handleFileInput(e)} hidden />
-<input type="file" {id} {name} bind:this={fileInputEl} hidden />
+<input
+  type="file"
+  multiple
+  bind:this={browseFilesEl}
+  on:change={(e) => handleFileInput(e)}
+  hidden
+/>
+<input type="file" {id} {name} bind:value bind:this={fileInputEl} hidden />
 
 <style>
   .dropzone {
+    position: relative;
     background-color: #f4f4f4;
     width: 750px;
     height: 500px;
@@ -189,11 +211,33 @@
   }
 
   .files {
+    height: 100%;
     display: flex;
     flex-wrap: wrap;
+    overflow: auto;
+  }
+
+  .add-more {
+    position: absolute;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    width: 40px;
+    height: 40px;
+    right: -20px;
+    bottom: -20px;
+    border-radius: 50%;
+    background-color: #e65000;
+    fill: #FFF;
+  }
+
+  .add-more svg {
+    height: 60%;
   }
 
   .file {
+    position: relative;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -201,19 +245,49 @@
     margin: 0 1%;
   }
 
+  .file-name {
+    width: 100%;
+    text-align: left;
+    font-size: 12px;
+    font-weight: 500;
+    line-height: 1.3;
+    margin-bottom: 5px;
+  }
+
+  .file-size {
+    width: 100%;
+    text-align: left;
+    color: #757575;
+    font-size: 11px;
+    font-weight: 400;
+  }
+
   .file-remove {
     cursor: pointer;
+    position: absolute;
+    right: 0;
+    top: 0;
   }
 
   .file-icon {
+    display: flex;
+    justify-content: center;
+    align-items: center;
     margin: 10px 0;
     width: 150px;
     height: 150px;
+    overflow: hidden;
+    background-color: #e65000;
+    fill: #fff;
   }
 
-  .file-icon img, .file-icon svg {
+  .file-icon img {
     object-fit: cover;
     min-width: 100%;
-    min-height: 100%
+    min-height: 100%;
+  }
+
+  .file-icon svg {
+    height: 50%;
   }
 </style>

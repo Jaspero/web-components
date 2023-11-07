@@ -1,10 +1,9 @@
 <script lang="ts">  
   import '../../../dist/file-list.wc.js'
   function submit(e) {
-    const formData = new FormData(e.target);
-    const formProps = Object.fromEntries(formData);
-
-    console.log(formProps, formData);
+    for (const pair of new FormData(e.target).entries()) {
+      console.log(`${pair[0]}, ${pair[1]}`);
+    }
   }
 </script>
 
