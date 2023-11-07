@@ -53,7 +53,7 @@
   let selectedTime = '';
   let yearPickerIndex = 0;
   let schedules = [];
-  let colSchedules = {};
+  let schedulesByDay = {};
 
   const dispatch = createEventDispatcher();
 
@@ -150,9 +150,8 @@
     const selectedDate = new Date(
       `${yearSelected}-${monthSelected + 1 < 10 ? '0' : ''}${monthSelected + 1}-${
         dateSelected < 10 ? '0' : ''
-      } ${selectedTime}`
+      }${dateSelected} ${selectedTime}`
     );
-    console.log(selectedTime);
     const newSchedule = {
       description: inputValue,
       date: selectedDate
@@ -161,6 +160,24 @@
     inputValue = '';
     selectedTime = null;
     modalOpen = false;
+  }
+
+  $: {
+    if (schedules) {
+      schedulesByDay = schedules.reduce((acc, cur) => {
+        const day = cur.date.toISOString().split('T')[0];
+
+        if (!acc[day]) {
+          acc[day] = [];
+        }
+
+        acc[day].push(cur);
+
+        return acc;
+      }, {});
+    }
+    schedulesByDay = { ...schedulesByDay };
+    console.log(schedulesByDay);
   }
 </script>
 
@@ -211,6 +228,7 @@
       {#each pickerRows as row}
         <tr>
           {#each row as col}
+            {@const key = col.year + '-' + col.month + '-' + col.day}
             <td
               on:click={() => {
                 yearSelected = col.year;
@@ -222,7 +240,9 @@
               <div class="cell-date">
                 {col.day}
               </div>
-              <!-- Tasks here -->
+              {#if schedulesByDay[key]}
+                {JSON.stringify(schedulesByDay[key])}
+              {/if}
             </td>
           {/each}
         </tr>
