@@ -35,6 +35,7 @@
   let openPicker = false;
   let yearSelector = false;
   let monthSelector = false;
+  let schedulesByDay = {};
   let daysMap = ['Sunday', 'Monday', 'Tuesday', 'Wendsday', 'Thursday', 'Friday', 'Saturday'];
   let monthMap = [
     'Jan',
@@ -53,7 +54,6 @@
   let selectedTime = '';
   let yearPickerIndex = 0;
   let schedules = [];
-  let schedulesByDay = {};
 
   const dispatch = createEventDispatcher();
 
@@ -147,11 +147,18 @@
   }
 
   function updateScheduleArray() {
+    console.log('yearSelected:', yearSelected);
+    console.log('monthSelected:', monthSelected);
+    console.log('dateSelected:', dateSelected);
+    console.log('selectedTime:', selectedTime);
+
     const selectedDate = new Date(
-      `${yearSelected}-${monthSelected + 1 < 10 ? '0' : ''}${monthSelected + 1}-${
-        dateSelected < 10 ? '0' : ''
-      }${dateSelected} ${selectedTime}`
+            `${yearSelected}-${monthSelected + 1 < 10 ? '0' : ''}${monthSelected}-${
+                    dateSelected < 10 ? '0' : ''
+            }${dateSelected} ${selectedTime}`
     );
+    console.log('selectedDate:', selectedDate);
+
     const newSchedule = {
       description: inputValue,
       date: selectedDate
@@ -161,6 +168,8 @@
     selectedTime = null;
     modalOpen = false;
   }
+
+
 
   $: {
     if (schedules) {
@@ -230,23 +239,26 @@
           {#each row as col}
             {@const key = col.year + '-' + col.month + '-' + col.day}
             <td
-              on:click={() => {
-                yearSelected = col.year;
-                monthSelected = col.month;
-                dateSelected = col.day;
-                modalOpen = true;
-              }}
+                    on:click={() => {
+          yearSelected = col.year;
+          monthSelected = col.month;
+          dateSelected = col.day;
+          modalOpen = true;
+        }}
             >
               <div class="cell-date">
                 {col.day}
               </div>
               {#if schedulesByDay[key]}
-                {JSON.stringify(schedulesByDay[key])}
+                {#each schedulesByDay[key] as event}
+                  <div>{event.description} {event.date.toLocaleString()}</div>
+                {/each}
               {/if}
             </td>
           {/each}
         </tr>
       {/each}
+
     </table>
   </div>
 
