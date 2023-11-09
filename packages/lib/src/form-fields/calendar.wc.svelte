@@ -253,6 +253,8 @@
           yearSelected = col.year;
           monthSelected = col.month;
           dateSelected = col.day;
+          inputValue = '';
+          selectedTime = null;
           modalOpen = true;
         }}
             >
