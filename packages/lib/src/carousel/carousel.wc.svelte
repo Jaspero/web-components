@@ -121,6 +121,8 @@
 </div>
 
 <style>
+    @import 'packages/demo/src/app.postcss';
+
     .slider {
         --slider-max-width: 600px
     }
@@ -180,14 +182,14 @@
         margin: 0 auto;
         width: 100%;
         height: 4px;
-        background-color: #e0e0e0;
+        background-color: var(--border-primary);
     }
 
     .slider-bar-bg {
         position: absolute;
         top: 50%;
         transform: translateY(-50%);
-        background-color: #e65100;
+        background-color: var(--primary-color);
         height: 8px;
         transition: .3s;
     }
@@ -203,17 +205,17 @@
         position: relative;
         width: .875rem;
         height: .875rem;
-        border: 2px solid #e0e0e0;
+        border: 2px solid var(--border-primary);
         border-radius: 50%;
         transition: .3s;
     }
 
     .pagination-button:hover {
-        background-color: #e0e0e0;
+        background-color: var(--background-secondary);
     }
 
     .pagination-button.active {
-        border-color: #e65100;
-        background-color: #e65100;
+        border-color: var(--primary-color);
+        background-color: var(--primary-color);
     }
 </style>

@@ -23,6 +23,8 @@
 </button>
 
 <style>
+    @import 'packages/demo/src/app.postcss';
+
     :host {
         display: inline-flex;
     }
@@ -75,19 +77,19 @@
     }
 
     .jp-button.default:hover::after {
-        background-color: #212121;
+        background-color: var(--text-primary);
     }
 
     .jp-button.primary:hover::after {
-        background-color: #e65100;
+        background-color: var(--primary-color);
     }
 
     .jp-button.accent:hover::after {
-        background-color: #ff9800;
+        background-color: var(--secondary-color);
     }
 
     .jp-button.warn:hover::after {
-        background-color: #f44336;
+        background-color: var(--danger-color);
     }
 
     .jp-basic-button {
@@ -95,23 +97,23 @@
     }
 
     .jp-basic-button.default {
-        color:  #212121;
+        color: var(--text-primary);
     }
 
     .jp-basic-button.primary {
-        color: #e65100;
+        color: var(--primary-color);
     }
 
     .jp-basic-button.accent {
-        color: #ff9800;
+        color: var(--secondary-color);
     }
 
     .jp-basic-button.warn {
-        color: #f44336;
+        color: var(--danger-color);
     }
 
     .jp-basic-button:disabled {
-        color: #888888
+        color: var(--disabled-color)
     }
 
     .jp-raised-button:not(:disabled) {
@@ -128,52 +130,52 @@
     }
 
     .jp-raised-button.default {
-        background-color: #ffffff;
-        color:  #212121;
+        background-color: var(--background-primary);
+        color: var(--text-primary);
     }
 
     .jp-raised-button.primary {
-        background-color: #e65100;
-        color: #ffffff;
+        background-color: var(--primary-color);
+        color: var(--text-on-primary);
     }
 
     .jp-raised-button.accent {
-        background-color: #ff9800;
-        color: #212121;
+        background-color: var(--secondary-color);
+        color: var(--text-on-secondary);
     }
 
     .jp-raised-button.warn {
-        background-color: #f44336;
-        color: #ffffff;
+        background-color: var(--danger-color);
+        color: var(--text-on-danger);
     }
 
     .jp-raised-button:disabled {
-        background-color: #dcdcdc;
-        color: #888888
+        background-color: var(--background-disabled);
+        color: var(--disabled-color)
     }
 
     .jp-stroked-button {
-        border: 1px solid #e0e0e0;
+        border: 1px solid var(--border-primary);
     }
 
     .jp-stroked-button.default {
-        color:  #212121;
+        color: var(--text-primary);
     }
 
     .jp-stroked-button.primary {
-        color: #e65100;
+        color: var(--primary-color);
     }
 
     .jp-stroked-button.accent {
-        color: #ff9800;
+        color: var(--secondary-color);
     }
 
     .jp-stroked-button.warn {
-        color: #f44336;
+        color: var(--danger-color);
     }
 
     .jp-stroked-button:disabled {
-        color: #888888
+        color: var(--disabled-color)
     }
 
     .jp-flat-button {
@@ -183,32 +185,32 @@
     .jp-flat-button.primary:active::after,
     .jp-flat-button.accent:active::after,
     .jp-flat-button.warn:active::after{
-        background-color: #ffffff;
+        background-color: var(--background-primary);
     }
 
     .jp-flat-button.default {
-        background-color: #ffffff;
-        color:  #212121;
+        background-color: var(--background-primary);
+        color: var(--text-primary);
     }
 
     .jp-flat-button.primary {
-        background-color: #e65100;
-        color: #ffffff;
+        background-color: var(--primary-color);
+        color: var(--text-on-primary);
     }
 
     .jp-flat-button.accent {
-        background-color: #ff9800;
-        color: #212121;
+        background-color: var(--secondary-color);
+        color: var(--text-on-secondary);
     }
 
     .jp-flat-button.warn {
-        background-color: #f44336;
-        color: #ffffff;
+        background-color: var(--danger-color);
+        color: var(--text-on-danger);
     }
 
     .jp-flat-button:disabled {
-        background-color: #dcdcdc;
-        color: #888888
+        background-color: var(--background-disabled);
+        color: var(--disabled-color)
     }
 
     .jp-icon-button {
@@ -217,28 +219,28 @@
     }
 
     .jp-icon-button.default {
-        color:  #212121;
-        fill:  #212121;
+        color: var(--text-primary);
+        fill: var(--text-primary);
     }
 
     .jp-icon-button.primary {
-        color: #e65100;
-        fill: #e65100;
+        color: var(--primary-color);
+        fill: var(--primary-color);
     }
 
     .jp-icon-button.accent {
-        color: #ff9800;
-        fill: #ff9800;
+        color: var(--secondary-color);
+        fill: var(--secondary-color);
     }
 
     .jp-icon-button.warn {
-        color: #f44336;
-        fill: #f44336;
+        color: var(--danger-color);
+        fill: var(--danger-color);
     }
 
     .jp-icon-button:disabled {
-        color: #888888;
-        fill: #888888;
+        color: var(--disabled-color);
+        fill: var(--disabled-color);
     }
 
     .jp-fab-button {
@@ -259,27 +261,27 @@
     }
 
     .jp-fab-button.default {
-        background-color: #ffffff;
+        background-color: var(--background-primary);
     }
 
     .jp-fab-button.primary {
-        background-color: #e65100;
-        color: #ffffff;
+        background-color: var(--primary-color);
+        color: var(--text-on-primary);
     }
 
     .jp-fab-button.accent {
-        background-color: #ff9800;
-        color: #212121;
+        background-color: var(--secondary-color);
+        color: var(--text-on-secondary);
     }
 
     .jp-fab-button.warn {
-        background-color: #f44336;
-        color: #ffffff;
+        background-color: var(--danger-color);
+        color: var(--text-on-danger);
     }
 
     .jp-fab-button:disabled {
-        background-color: #dcdcdc;
-        color: #888888
+        background-color: var(--background-disabled);
+        color: var(--disabled-color)
     }
 
     .jp-mini-fab-button {
@@ -301,27 +303,27 @@
     }
 
     .jp-mini-fab-button.default {
-        background-color: #ffffff;
-        color:  #212121;
+        background-color: var(--background-primary);
+        color: var(--text-primary);
     }
 
     .jp-mini-fab-button.primary {
-        background-color: #e65100;
-        color: #ffffff;
+        background-color: var(--primary-color);
+        color: var(--text-on-primary);
     }
 
     .jp-mini-fab-button.accent {
-        background-color: #ff9800;
-        color: #212121;
+        background-color: var(--secondary-color);
+        color: var(--text-on-secondary);
     }
 
     .jp-mini-fab-button.warn {
-        background-color: #f44336;
-        color: #ffffff;
+        background-color: var(--danger-color);
+        color: var(--text-on-danger);
     }
 
     .jp-mini-fab-button:disabled {
-        background-color: #dcdcdc;
-        color: #888888
+        background-color: var(--background-disabled);
+        color: var(--disabled-color)
     }
 </style>
