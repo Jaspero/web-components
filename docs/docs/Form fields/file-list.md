@@ -46,6 +46,8 @@ This component does not have any slots.
   - triggers when saved file is removed and contains information about url
 - `change` 
   - triggers when new files are added and contains information about unsaved files
+- `rejected` 
+  - triggers when added file is not accepted because it does not satisfy some service criteria
   
 ### Demo
 
