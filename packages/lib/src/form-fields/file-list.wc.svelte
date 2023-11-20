@@ -15,7 +15,7 @@
 />
 
 <script lang="ts">
-  import { createEventDispatcher } from 'svelte';
+  import { createEventDispatcher, onMount } from 'svelte';
   import type FileService from '../types/file.service';
 
   export let attachedInternals: ElementInternals;
@@ -23,81 +23,143 @@
   export let id: string = '';
   export let name: string = '';
   export let service: FileService;
-  let files = [];
-  let fileInputEl;
+  export let maxfiles = null;
+  export let minfiles = null;
+  export let maxfilesValidationMessage;
+  export let minfilesValidationMessage;
+  export let validationMessages = {};
+  let internalFiles = [];
   let browseFilesEl;
+  let loading = true;
   let hoveringFile = false;
 
   export const getValue = () => value;
 
   const dispatch = createEventDispatcher();
+
   $: {
+    if (minfiles && internalFiles.length < minfiles) {
+      attachedInternals.setValidity(
+        { customError: true },
+        minfilesValidationMessage || validationMessages.minfiles || 'Not enough files.'
+      );
+    } else if (maxfiles && internalFiles.length > maxfiles) {
+      attachedInternals.setValidity(
+        { customError: true },
+        maxfilesValidationMessage || validationMessages.maxfiles || 'Too many files.'
+      );
+    } else {
+      attachedInternals.setValidity({});
+    }
     attachedInternals.checkValidity();
     attachedInternals.setFormValue(value);
     dispatch('value', { value });
   }
-  $: if (fileInputEl) fileInputEl.files = makeFileList(files.map((el) => el.file));
+
+  export async function save() {
+    loading = true;
+    try {
+      await Promise.allSettled(
+        internalFiles.map(async (el) => {
+          if (!el.saved) {
+            const url = await service.uploadFile(el.file);
+            el.saved = true;
+            el.url = url;
+          }
+        })
+      );
+      internalFiles = internalFiles;
+      value = internalFiles
+        .filter((el) => el.saved)
+        .map((el) => el.url)
+        .join(',');
+    } catch (err) {
+      console.log(err);
+    } finally {
+      loading = false;
+    }
+  }
+
+  function removeFile(index) {
+    if(internalFiles[index].saved){
+      dispatch('removed', {url: internalFiles[index].url})
+    }
+    internalFiles.splice(index, 1);
+    internalFiles = internalFiles;
+  }
 
   function handleFileInput(e) {
     if (e.target.files.length) {
-      files = files.concat(
-        Array.from(e.target.files).map((el) => {
-          let size;
-          if (el.size < 1000) {
-            size = el.size + 'b';
-          } else if (el.size < 1000000) {
-            size = `${Number.parseFloat(el.size / 1024).toFixed(1)}kb`;
-          } else {
-            size = `${Number.parseFloat(el.size / 1024 / 1024).toFixed(1)}MB`;
-          }
-          let obj = {
-            name: el.name,
-            size: size,
-            file: el
-          };
-          if (el['type'].split('/')[0] === 'image') {
-            obj['src'] = URL.createObjectURL(el);
-          }
-          return obj;
-        })
-      );
+      internalFiles = internalFiles.concat(filesToObjs(Array.from(e.target.files)));
+      dispatch('change', { unsaved: internalFiles.filter((el) => !el.saved).length });
     }
   }
 
   function handleDrop(e) {
     if (e.dataTransfer.files.length) {
-      files = files.concat(
-        Array.from(e.dataTransfer.files).map((el) => {
-          let size;
-          if (el.size < 1000) {
-            size = el.size + 'b';
-          } else if (el.size < 1000000) {
-            size = `${Number.parseFloat(el.size / 1024).toFixed(1)}kb`;
-          } else {
-            size = `${Number.parseFloat(el.size / 1024 / 1024).toFixed(1)}MB`;
-          }
-          let obj = {
-            name: el.name,
-            size: size,
-            file: el
-          };
-          if (el['type'].split('/')[0] === 'image') {
-            obj['src'] = URL.createObjectURL(el);
-          }
-          return obj;
-        })
-      );
+      internalFiles = internalFiles.concat(filesToObjs(Array.from(e.dataTransfer.files)));
       hoveringFile = false;
+      dispatch('change', { unsaved: internalFiles.filter((el) => !el.saved).length });
     }
   }
 
-  const makeFileList = (fileArr) => {
-    const reducer = (dataTransfer, file) => {
-      dataTransfer.items.add(file);
-      return dataTransfer;
-    };
-    return fileArr.reduce(reducer, new DataTransfer()).files;
+  const returnFileSize = (size) => {
+    if (size < 1024) {
+      return `${size} bytes`;
+    } else if (size >= 1024 && size < 1048576) {
+      return `${(size / 1024).toFixed(1)} KB`;
+    } else if (size >= 1048576) {
+      return `${(size / 1048576).toFixed(1)} MB`;
+    }
   };
+
+  const filesToObjs = (files) => {
+    return files
+      .filter((el) => {
+        if (service && service.maxSize) {
+          dispatch('rejected', { file: el.name, code: 'maxSize' });
+          return el.size < service.maxSize;
+        } else return true;
+      })
+      .map((el) => {
+        let obj = {
+          name: el.name,
+          size: returnFileSize(el.size),
+          file: el,
+          saved: false
+        };
+        if (el['type'].split('/')[0] === 'image') {
+          obj['src'] = URL.createObjectURL(el);
+        }
+        return obj;
+      });
+  };
+
+  const blobToFile = (blob, filename) => {
+    return new File([blob], filename);
+  };
+
+  onMount(async () => {
+    if (value) {
+      const urls = value.split(',');
+      await Promise.allSettled(
+        urls.map(async (url) => {
+          const res = await fetch(url);
+          const urlFile = blobToFile(res.blob(), url);
+          let obj = {
+            name: urlFile.name,
+            size: '',
+            file: urlFile,
+            saved: true,
+            url: url
+          };
+          internalFiles.push(obj);
+        })
+      );
+      internalFiles = internalFiles;
+    }
+    loading = false;
+  });
 </script>
 
 <!-- svelte-ignore a11y-no-static-element-interactions -->
@@ -106,7 +168,11 @@
   class:fullBorder={hoveringFile}
   on:dragover|preventDefault={() => (hoveringFile = true)}
 >
-  {#if hoveringFile}
+  {#if loading}
+    <div class="loader">
+      <div class="spinner"></div>
+    </div>
+  {:else if hoveringFile}
     <div
       class="info"
       on:dragleave={() => (hoveringFile = false)}
@@ -120,9 +186,9 @@
       >
       <div>Drop your files here</div>
     </div>
-  {:else if files.length == 0}
+  {:else if internalFiles.length == 0}
     <!-- svelte-ignore a11y-no-static-element-interactions -->
-    <div class="info" hidden={files.length != 0}>
+    <div class="info" hidden={internalFiles.length != 0}>
       <!-- svelte-ignore a11y-missing-attribute -->
       <!-- svelte-ignore a11y-click-events-have-key-events -->
       <div>
@@ -131,15 +197,9 @@
     </div>
   {:else}
     <div class="files">
-      {#each files as file, index}
+      {#each internalFiles as file, index}
         <div class="file">
-          <button
-            class="file-remove"
-            on:click|preventDefault={() => {
-              files.splice(index, 1);
-              files = files;
-            }}
-          >
+          <button class="file-remove" on:click|preventDefault={() => removeFile(index)}>
             <svg xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 512 512"
               ><!--! Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2023 Fonticons, Inc. --><path
                 d="M256 512A256 256 0 1 0 256 0a256 256 0 1 0 0 512zM175 175c9.4-9.4 24.6-9.4 33.9 0l47 47 47-47c9.4-9.4 24.6-9.4 33.9 0s9.4 24.6 0 33.9l-47 47 47 47c9.4 9.4 9.4 24.6 0 33.9s-24.6 9.4-33.9 0l-47-47-47 47c-9.4 9.4-24.6 9.4-33.9 0s-9.4-24.6 0-33.9l47-47-47-47c-9.4-9.4-9.4-24.6 0-33.9z"
@@ -160,8 +220,13 @@
           <div class="file-name">
             {file.name}
           </div>
-          <div class="file-size">
-            {file.size}
+          <div class="file-info">
+            <span>
+              {file.size || ''}
+            </span>
+            <span style="color: rgb(26 151 26)">
+              {file.saved ? 'saved' : ''}
+            </span>
           </div>
         </div>
       {/each}
@@ -175,6 +240,7 @@
     </button>
   {/if}
 </div>
+
 <input
   type="file"
   multiple
@@ -183,15 +249,7 @@
   on:change={(e) => handleFileInput(e)}
   hidden
 />
-<input
-  type="file"
-  {id}
-  {name}
-  bind:value
-  bind:this={fileInputEl}
-  accept={service && service.acceptedFiles}
-  hidden
-/>
+<input type="text" {id} {name} bind:value hidden />
 
 <style>
   .dropzone {
@@ -218,7 +276,6 @@
   .info a {
     color: #e65000;
     cursor: pointer;
-    text-size: 20px;
   }
 
   .info a:hover {
@@ -267,11 +324,16 @@
     font-weight: 500;
     line-height: 1.3;
     margin-bottom: 5px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
   }
 
-  .file-size {
+  .file-info {
     width: 100%;
-    text-align: left;
+    padding: 0 5% 0 0;
+    display: flex;
+    justify-content: space-between;
     color: #757575;
     font-size: 11px;
     font-weight: 400;
@@ -304,5 +366,71 @@
 
   .file-icon svg {
     height: 50%;
+  }
+
+  .loader {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .spinner {
+    width: 150px;
+    height: 150px;
+    border-radius: 50%;
+    border: 9px solid var(--primary-color);
+    animation:
+      spinner-bulqg1 0.8s infinite linear alternate,
+      spinner-oaa3wk 1.6s infinite linear;
+  }
+
+  @keyframes spinner-bulqg1 {
+    0% {
+      clip-path: polygon(50% 50%, 0 0, 50% 0%, 50% 0%, 50% 0%, 50% 0%, 50% 0%);
+    }
+
+    12.5% {
+      clip-path: polygon(50% 50%, 0 0, 50% 0%, 100% 0%, 100% 0%, 100% 0%, 100% 0%);
+    }
+
+    25% {
+      clip-path: polygon(50% 50%, 0 0, 50% 0%, 100% 0%, 100% 100%, 100% 100%, 100% 100%);
+    }
+
+    50% {
+      clip-path: polygon(50% 50%, 0 0, 50% 0%, 100% 0%, 100% 100%, 50% 100%, 0% 100%);
+    }
+
+    62.5% {
+      clip-path: polygon(50% 50%, 100% 0, 100% 0%, 100% 0%, 100% 100%, 50% 100%, 0% 100%);
+    }
+
+    75% {
+      clip-path: polygon(50% 50%, 100% 100%, 100% 100%, 100% 100%, 100% 100%, 50% 100%, 0% 100%);
+    }
+
+    100% {
+      clip-path: polygon(50% 50%, 50% 100%, 50% 100%, 50% 100%, 50% 100%, 50% 100%, 0% 100%);
+    }
+  }
+
+  @keyframes spinner-oaa3wk {
+    0% {
+      transform: scaleY(1) rotate(0deg);
+    }
+
+    49.99% {
+      transform: scaleY(1) rotate(135deg);
+    }
+
+    50% {
+      transform: scaleY(-1) rotate(0deg);
+    }
+
+    100% {
+      transform: scaleY(-1) rotate(-135deg);
+    }
   }
 </style>
