@@ -35,6 +35,8 @@
 
   export const getValue = () => value;
 
+  export const reportValidity = () => attachedInternals.reportValidity();
+
   const dispatch = createEventDispatcher();
 
   $: {
