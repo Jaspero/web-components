@@ -94,7 +94,7 @@
         .map((el) => prevMonthDays - el)
         .toReversed()
         .map((el) => {
-          let obj = { day: el, month: month - 1, year: year };
+          let obj = { day: el, month: month, year: year };
           return obj;
         })
     ];
@@ -102,7 +102,7 @@
     mData = [
       ...mData,
       Array.from(Array(thisMonthDays).keys()).map((el) => {
-        let obj = { day: el + 1, month: month, year: year };
+        let obj = { day: el + 1, month: month + 1, year: year };
         return obj;
       })
     ];
@@ -110,7 +110,7 @@
     mData = [
       ...mData,
       Array.from(Array(daysAfter).keys()).map((el) => {
-        let obj = { day: el + 1, month: month + 1, year: year };
+        let obj = { day: el + 1, month: month, year: year };
         return obj;
       })
     ];
@@ -166,6 +166,7 @@
 
   $: {
     if (schedules) {
+      console.log(1, schedules);
       schedulesByDay = schedules.reduce((acc, cur) => {
         const day = cur.date.toISOString().split('T')[0];
 
@@ -180,6 +181,24 @@
     }
     schedulesByDay = { ...schedulesByDay };
     console.log(schedulesByDay);
+  }
+
+  function hideButton() {
+
+    const selectedDate = new Date(
+            `${yearSelected}-${monthSelected + 1 < 10 ? '0' : ''}${monthSelected}-${
+                    dateSelected < 10 ? '0' : ''
+            }${dateSelected} ${selectedTime}`
+    );
+
+    console.log(selectedDate);
+
+    return !selectedDate;
+
+    // console.log(selectedDate.toISOString());
+    // console.log(schedules);
+    //
+    // return !schedules.find((el) => el.date.toISOString() === selectedDate.toISOString());
   }
 
   function deleteModalData (data) {
@@ -198,6 +217,38 @@
         });
     }
   }
+
+  function prepareModalData(col) {
+    yearSelected = col.year;
+    monthSelected = col.month;
+    dateSelected = col.day;
+
+    const date = new Date(
+            `${yearSelected}-${monthSelected + 1 < 10 ? '0' : ''}${monthSelected}-${
+                    dateSelected < 10 ? '0' : ''
+            }${dateSelected}`
+    );
+
+    const selectedSchedule = schedules.find((el) => {
+      const day = el.date.toISOString().split('T')[0];
+      const selectedDay = date.toISOString().split('T')[0];
+      return day === selectedDay;
+    });
+
+    inputValue = selectedSchedule?.description || '';
+    selectedTime = selectedSchedule?.date.getTime() || null;
+
+
+    modalOpen = true;
+  }
+
+  document.addEventListener('keydown', (event) => {
+    if (event.key === 'Enter') {
+      updateScheduleArray();
+    } else if (event.key === 'Escape') {
+      modalOpen = false;
+    }
+  });
 </script>
 
 <!-- svelte-ignore a11y-no-noninteractive-element-interactions -->
@@ -250,12 +301,8 @@
             {@const key = col.year + '-' + col.month + '-' + col.day}
             <td
                     on:click={() => {
-          yearSelected = col.year;
-          monthSelected = col.month;
-          dateSelected = col.day;
-          inputValue = '';
-          selectedTime = null;
-          modalOpen = true;
+                      console.log(col);
+                      prepareModalData(col)
         }}
             >
               <div class="cell-date">
@@ -383,7 +430,8 @@
   {/if}
 </div>
 
-<div class="modal" style={`display: ${modalOpen ? 'flex' : 'none'}`}>
+{#if modalOpen}
+<div class="modal" style="display: flex;">
   <div class="modal-container">
     <div>
       <svg on:click|preventDefault={() => (modalOpen = false)} xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 384 512"><!--! Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2023 Fonticons, Inc. --><path d="M342.6 150.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L192 210.7 86.6 105.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3L146.7 256 41.4 361.4c-12.5 12.5-12.5 32.8 0 45.3s32.8 12.5 45.3 0L192 301.3 297.4 406.6c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L237.3 256 342.6 150.6z"/></svg>
@@ -393,15 +441,16 @@
     <input type="text" placeholder="Write a description" bind:value={inputValue} />
     <div>
       <div>
-        {dateSelected}.{monthMap[monthSelected]}.{yearSelected}
+        {dateSelected}.{monthMap[monthSelected - 1]}.{yearSelected}
       </div>
       <div>
         <input type="time" bind:value={selectedTime} />
       </div>
     </div>
     <div>
-      <button class="delete-button" on:click|preventDefault={() => deleteModalData()}>Delete</button
-      >
+      {#if hideButton()}
+        <button id="deleteButton" class="delete-button" on:click|preventDefault={() => deleteModalData()}>Delete</button>
+      {/if}
       <button
         on:click|preventDefault={() => updateScheduleArray()}
         disabled={!inputValue || !selectedTime}>Save</button
@@ -409,6 +458,7 @@
     </div>
   </div>
 </div>
+{/if}
 
 <input type="text" {id} {name} bind:value hidden />
 
