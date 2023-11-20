@@ -9,7 +9,7 @@
 | **Name** | **Required** | **Type** | **Description** |
 | :----: | :----: | :----: | :---: |
 | name | ✓ | `string` |  name of the form control |
-| size | | `large` or `small` | size of the toggle button |
+| size | | `'large'`|`'small'` | size of the toggle button |
 | checked | | `boolean`| is on by default |
 
   
