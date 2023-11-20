@@ -39,7 +39,7 @@ This component does not have any methods.
 ### Events
 
 - `value` 
-  - triggers when value of the quill changes
+  - triggers when value changes
 
 ### Demo
 
