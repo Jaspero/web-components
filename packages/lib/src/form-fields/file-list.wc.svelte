@@ -86,6 +86,10 @@
     }
     internalFiles.splice(index, 1);
     internalFiles = internalFiles;
+    value = internalFiles
+      .filter((el) => el.saved)
+      .map((el) => el.url)
+      .join(',');
   }
 
   function handleFileInput(e) {
