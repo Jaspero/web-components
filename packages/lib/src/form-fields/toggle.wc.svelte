@@ -15,7 +15,6 @@
   }}
 />
 
-
 <script lang="ts">
   import { createEventDispatcher, onMount } from 'svelte';
 
@@ -23,75 +22,99 @@
 
   export let name: string = '';
   export let value: string = '';
+  export let size: 'small' | 'large' = 'small';
   export let checked: boolean = false;
 
   export const getValue = () => checked;
 
   const dispatch = createEventDispatcher();
-
   $: {
     attachedInternals.checkValidity();
     dispatch('value', checked);
   }
 </script>
 
-<label class="switch">
-  <input type="checkbox" {name} bind:checked bind:value >
+<label class={"switch " + size}>
+  <input type="checkbox" {name} bind:checked bind:value />
   <span class="slider round"></span>
 </label>
 
 <style>
-.switch {
-  position: relative;
-  display: inline-block;
-  width: 60px;
-  height: 34px;
-}
+  .switch {
+    position: relative;
+    display: inline-block;
+  }
 
-.switch input {
-  opacity: 0;
-  width: 0;
-  height: 0;
-}
+  .large {
+    width: 60px;
+    height: 34px;
+  }
 
-.slider {
-  position: absolute;
-  cursor: pointer;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background-color: #ccc;
-  -webkit-transition: .4s;
-  transition: .4s;
-  border-radius: 34px;
-}
+  .small {
+    width: 40px;
+    height: 22px;
+  }
 
-.slider:before {
-  position: absolute;
-  content: "";
-  height: 26px;
-  width: 26px;
-  left: 4px;
-  bottom: 4px;
-  background-color: white;
-  -webkit-transition: .4s;
-  transition: .4s;
-  border-radius: 50%;
-}
+  .switch input {
+    opacity: 0;
+    width: 0;
+    height: 0;
+  }
 
-input:checked + .slider {
-  background-color: #e65000;
-}
+  .large .slider {
+    border-radius: 34px;
+  }
 
-input:focus + .slider {
-  box-shadow: 0 0 1px #e65000;
-}
+  .small .slider {
+    border-radius: 22px;
+  }
 
-input:checked + .slider:before {
-  -webkit-transform: translateX(26px);
-  -ms-transform: translateX(26px);
-  transform: translateX(26px);
-}
+  .slider {
+    position: absolute;
+    cursor: pointer;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: #ccc;
+    -webkit-transition: 0.4s;
+    transition: 0.4s;
+  }
+
+  .large .slider:before {
+    height: 26px;
+    width: 26px;
+    left: 4px;
+    bottom: 4px;
+  }
+
+  .small .slider:before {
+    height: 18px;
+    width: 18px;
+    left: 2px;
+    bottom: 2px;
+  }
+
+  .slider:before {
+    position: absolute;
+    content: '';
+    background-color: white;
+    -webkit-transition: 0.4s;
+    transition: 0.4s;
+    border-radius: 50%;
+  }
+
+  input:checked + .slider {
+    background-color: #e65000;
+  }
+
+  input:focus + .slider {
+    box-shadow: 0 0 1px #e65000;
+  }
+
+  input:checked + .slider:before {
+    -webkit-transform: translateX(100%);
+    -ms-transform: translateX(100%);
+    transform: translateX(100%);
+  }
 </style>
-

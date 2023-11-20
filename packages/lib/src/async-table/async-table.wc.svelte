@@ -118,7 +118,9 @@
             {#each headers as header}
               <td on:click={(e) => rowClick(row, index, header, e)}>
                 {#await handleColumn(header, row, index) then val}
-                  {@html val}
+                  <span class="cell">
+                    {@html val}
+                  </span>
                 {/await}
               </td>
             {/each}
@@ -171,6 +173,13 @@
 
   th {
     opacity: .75;
+  }
+
+  .cell {
+    display: block;
+    max-width: 64ch;
+    overflow: hidden;
+    text-overflow: ellipsis;
   }
 
   .table-actions {
