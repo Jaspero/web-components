@@ -23,7 +23,15 @@ You can type this command into Command Prompt, Powershell, Terminal, or any othe
 
 ## Component dependancies
 
-Some components require imports to function properly.
+For components to display properly, you'll need to import default styles and css variables at the top level of your project;
+
+```js
+<style>
+  @import '@jaspero/web-components/dist/index.css';
+</style>
+```
+
+Some components require additional imports to function properly.
 
 Simplest way to do this is to load the following scripts and stylesheets;
 
