@@ -35,7 +35,7 @@
 </script>
 
 <label class={"switch " + size}>
-  <input type="checkbox" {name} bind:checked bind:value />
+  <input type="checkbox" {name} bind:checked bind:value hidden />
   <span class="slider round"></span>
 </label>
 
