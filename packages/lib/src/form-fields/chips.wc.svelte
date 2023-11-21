@@ -284,6 +284,11 @@
     padding: .25rem;
   }
 
+  .field-container-chip-button {
+    display: flex;
+    align-items: center;
+  }
+
   .field-container-chip-label {
     font-size: .875rem;
     word-break: break-all;

@@ -1,12 +1,19 @@
 html {
   box-sizing: border-box;
   font-size: 16px;
+  font-family: "Proxima Nova", system-ui, sans-serif;
 }
 
 *,
 *::before,
 *::after {
   box-sizing: inherit;
+}
+
+button {
+  cursor: pointer;
+  background-color: transparent;
+  border: none;
 }
 
 :root {
