@@ -19,7 +19,8 @@
   import { createEventDispatcher } from 'svelte';
 
   export let disabled: boolean = false;
-  export let showValue: boolean = true; 
+  export let id: string = '';
+  export let showValue: boolean = false; 
   export let max: number = 100;
   export let min: number = 0;
   export let value: number = 0;
@@ -35,9 +36,9 @@
 
 <div class="slider-container">
   {#if discrete == true}
-  <input type="range" class="range-input" bind:value {disabled} {min} {max} {step} {name} />
+  <input type="range" class="range-input" bind:value {id} {disabled} {min} {max} {step} {name} />
   {:else}
-  <input type="range" class="range-input" bind:value {disabled} {min} {max}  step="any" {name} />
+  <input type="range" class="range-input" bind:value {id} {disabled} {min} {max}  step="any" {name} />
   {/if}
   {#if showValue == true}
     <p>{Math.round(value)}</p>
