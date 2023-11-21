@@ -1,6 +1,20 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+html {
+  box-sizing: border-box;
+  font-size: 16px;
+  font-family: "Proxima Nova", system-ui, sans-serif;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: inherit;
+}
+
+button {
+  cursor: pointer;
+  background-color: transparent;
+  border: none;
+}
 
 :root {
   /* Foundational Colors */
@@ -57,41 +71,4 @@
     0,
     0.16
   ); /* Color for shadows to ensure consistent depth cues across UI */
-}
-
-html {
-  box-sizing: border-box;
-  font-size: 16px;
-}
-
-*,
-*::before,
-*::after {
-  box-sizing: inherit;
-}
-
-body {
-  background-color: var(--background);
-}
-
-label {
-  @apply text-xs;
-}
-
-input,
-select,
-textarea {
-  @apply border-2 rounded-lg px-2 py-1 text-xs;
-}
-
-.border {
-  border-color: var(--border-primary);
-}
-
-.border-focus {
-  border-color: var(--focus-color);
-}
-
-.outline-focus {
-  outline-color: var(--focus-color);
 }

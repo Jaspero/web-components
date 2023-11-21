@@ -121,8 +121,6 @@
 </div>
 
 <style>
-    @import 'packages/demo/src/app.postcss';
-
     .slider {
         --slider-max-width: 600px
     }

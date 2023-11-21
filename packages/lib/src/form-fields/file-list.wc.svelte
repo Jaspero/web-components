@@ -274,7 +274,7 @@
   }
 
   .fullBorder {
-    border: 1px dashed #e65000;
+    border: 1px dashed var(--primary-color);
   }
 
   .info {
@@ -287,7 +287,7 @@
   }
 
   .info a {
-    color: #e65000;
+    color: var(--primary-color);
     cursor: pointer;
   }
 
@@ -313,8 +313,8 @@
     right: -20px;
     bottom: -20px;
     border-radius: 50%;
-    background-color: #e65000;
-    fill: #fff;
+    background-color: var(--primary-color);
+    fill: var(--text-on-primary);
   }
 
   .add-more svg {
@@ -367,8 +367,8 @@
     width: 150px;
     height: 150px;
     overflow: hidden;
-    background-color: #e65000;
-    fill: #fff;
+    background-color: var(--primary-color);
+    fill: var(--text-on-primary);
   }
 
   .file-icon img {

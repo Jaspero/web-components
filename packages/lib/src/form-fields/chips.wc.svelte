@@ -148,6 +148,8 @@
 
 <style>
   .field {
+    font-size: 0.75rem;
+    line-height: 1rem;
     position: relative;
     display: -webkit-box;
     display: -webkit-flex;
@@ -280,6 +282,11 @@
     -moz-border-radius: .25rem;
     border-radius: .25rem;
     padding: .25rem;
+  }
+
+  .field-container-chip-button {
+    display: flex;
+    align-items: center;
   }
 
   .field-container-chip-label {
