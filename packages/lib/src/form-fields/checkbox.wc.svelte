@@ -82,10 +82,14 @@
         gap: .5rem;
     }
 
+    
+
     label {
         display: flex;
         align-items: center;
         gap: .5rem;
+        font-size: 0.75rem;
+        line-height: 1rem;
     }
 
     .opacity-50 {

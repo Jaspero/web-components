@@ -38,6 +38,10 @@ export default defineConfig({
         {
           src: './src/types/',
           dest: './'
+        },
+        {
+          src: './src/index.css',
+          dest: './'
         }
       ]
     }),
