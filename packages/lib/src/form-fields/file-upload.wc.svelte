@@ -268,7 +268,7 @@
     right: 0;
     top: 0;
     bottom: 0;
-    border: 2px dashed #e65000;
+    border: 2px dashed var(--primary-color);
   }
 
   .field.required .field-label::after {
