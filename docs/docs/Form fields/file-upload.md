@@ -24,7 +24,8 @@ Defines the accepted file types and provides a method to upload a file.
 | **Name** | **Required** | **Type** |**Description** |
 | :----: | :----: | :----: | :---: |
 | acceptedFiles | ✓ | `string` | defines acceptable file types |
-| uploadFile |  | `function` | uploads a file and returns a promise <br></br> which is a string that represents a link to the file location |
+| maxSize |  | `number` | max file size in bytes |
+| uploadFile |  | `(file: any, id?: string) => Promise<string>` | uploads a file and returns a promise <br></br> which is a string that represents a link to the file location |
 
 <br></br>
 
@@ -39,7 +40,9 @@ This component does not have any methods.
 ### Events
 
 - `value` 
-  - triggers when value changes
+  - triggers when value (file) changes
+- `rejected`
+  - triggers when added file is not accepted because it does not satisfy some service criteria
 
 ### Demo
 
