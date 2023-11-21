@@ -82,27 +82,6 @@
   {/each}
 </div>
 
-<!--
-<button class="flex items-center" on:click|preventDefault={() => (value = option)} {disabled}>
-  <input hidden type="radio" name={name} value={option} {required} bind:group={value} />
-  <div class="mr-1">
-    {#if option == value}
-      <svg xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 512 512"
-      >&lt;!&ndash;! Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2023 Fonticons, Inc. &ndash;&gt;<path
-              d="M256 512A256 256 0 1 0 256 0a256 256 0 1 0 0 512z"
-      /></svg
-      >
-    {:else}
-      <svg xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 512 512"
-      >&lt;!&ndash;! Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2023 Fonticons, Inc. &ndash;&gt;<path
-              d="M464 256A208 208 0 1 0 48 256a208 208 0 1 0 416 0zM0 256a256 256 0 1 1 512 0A256 256 0 1 1 0 256z"
-      /></svg
-      >
-    {/if}
-  </div>
-  {option}
-</button>-->
-
 <style>
     label {
         display: -webkit-box;
@@ -116,6 +95,7 @@
         -ms-flex-align: center;
         align-items: center;
         font-size: 1rem;
+        line-height: 1rem;
     }
 
     label.disabled {
