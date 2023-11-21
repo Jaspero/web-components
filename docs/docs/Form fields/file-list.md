@@ -12,6 +12,11 @@
 |    id    |              |   `string`   |    unique identifier     |
 |   name   |      ✓       |   `string`   | name of the form control |
 | service  |      ✓       | [`FileService`](#fileservice) |      file service       |
+| maxfiles | | `number` | maximum number of files allowed |
+| maxfilesValidationMessage | | `string` | validation message for when component does not satisfy maxfiles |
+| minfiles | |  `number` |  minimum number of files allowed |
+| minfilesValidationMessage | | `string` | validation message for when component does not satisfy minfiles |
+| validationMessages | | `{[type]: string}` where `type` is `string` | compact way of writing validation messages in a single attribute |
 
 ### Interfaces
 
@@ -25,7 +30,7 @@ Defines the accepted file types and provides a method to upload a file.
 | :----: | :----: | :----: | :---: |
 | acceptedFiles | ✓ | `string` | defines acceptable file types |
 | maxSize |  | `number` | max file size in bytes |
-| uploadFile |  | `function` | uploads a file and returns a promise <br></br> which is a string that represents a link to the file location |
+| uploadFile |  | `(file: any, id?: string) => Promise<string>` | uploads a file and returns a promise <br></br> which is a string that represents a link to the file location |
 
 <br></br>
 
