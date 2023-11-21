@@ -20,7 +20,7 @@
 
   export let options: string[] | string = [];
   export let value = '';
-  export let label = '';
+  export let label = 'autocomplete';
   export let id: string | null = null;
   export let name: string | null = null;
   export let disabled: boolean = false;
