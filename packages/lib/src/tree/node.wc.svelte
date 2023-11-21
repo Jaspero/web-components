@@ -12,15 +12,19 @@
 </script>
 
 <svelte:document
-  on:mousemove|preventDefault={(e) => {
+  on:mousemove={(e) => {
     if (isGrabbed) {
+      e.preventDefault()
       node.style.transform = 'translateY(' + (e.clientY - startingY) + 'px)';
       node.style.transform += 'translateX(' + (e.clientX - startingX) + 'px)';
     }
   }}
-  on:mouseup|preventDefault={(e) => {
-    isGrabbed = false;
-    node.style = '';
+  on:mouseup={(e) => {
+    if(isGrabbed){
+      e.preventDefault()
+      isGrabbed = false;
+      node.style = '';
+    }
   }}
 />
 
