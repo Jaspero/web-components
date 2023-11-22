@@ -30,14 +30,14 @@
   }
   export function lastPage() {
     center = length - 3;
-    pageIndex = length - 1;
+    pageIndex = length;
   }
   export function firstPage() {
-    center = 3;
+    center = 4;
     pageIndex = 1;
   }
   export function toPage(index) {
-    center = Math.min(Math.max(index, 3), length - 3);
+    center = Math.min(Math.max(index, 4), length - 3);
     pageIndex = index;
   }
 </script>
@@ -57,9 +57,13 @@
   {:else}
     <button disabled>...</button>
   {/if}
-  <button class:selected={center - 1 == pageIndex}>{center - 1}</button>
-  <button class:selected={center == pageIndex}>{center}</button>
-  <button class:selected={center + 1 == pageIndex}>{center + 1}</button>
+  <button class:selected={center - 1 == pageIndex} on:click={() => toPage(center - 1)}
+    >{center - 1}</button
+  >
+  <button class:selected={center == pageIndex} on:click={() => toPage(center)}>{center}</button>
+  <button class:selected={center + 1 == pageIndex} on:click={() => toPage(center + 1)}
+    >{center + 1}</button
+  >
   {#if center > length - 4}
     <button on:click={() => toPage(length - 1)} class:selected={pageIndex == length - 1}>
       {length - 1}
