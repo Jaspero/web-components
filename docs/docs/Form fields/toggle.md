@@ -29,8 +29,6 @@ This component does not have any methods.
 ### Demo
 
 ```jsx live
-<form>
-  <jp-toggle>
-  </jp-toggle>
-</form>
+<jp-toggle>
+</jp-toggle>
 ```
