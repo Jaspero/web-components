@@ -26,6 +26,9 @@ jobs:
           npm i
           npm i --save @jaspero/web-components@latest
           npm list @jaspero/web-components
+      - name: Remove overflow hidden on playground
+        run: |
+          find node_modules/@docusaurus/theme-live-codeblock -name '*Playground*' -exec sed -i 's/overflow: hidden;/ /g'
       - name: Copy Web Components
         run: |
           cp -r node_modules/@jaspero/web-components/dist static/c
