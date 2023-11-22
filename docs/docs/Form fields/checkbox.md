@@ -31,8 +31,6 @@ This component does not have any slots.
 ### Demo
 
 ```jsx live
-<form>
-  <jp-checkbox options='[{"value": "aaa"},{"value": "lorem aa"},{"value": "lorem adasda"}]'>
-  </jp-checkbox>
-</form>
+<jp-checkbox options='[{"value": "aaa"},{"value": "lorem aa"},{"value": "lorem adasda"}]'>
+</jp-checkbox>
 ```

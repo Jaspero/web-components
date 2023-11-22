@@ -29,8 +29,6 @@ This component does not have any slots.
 ### Demo
 
 ```jsx live
-<form>
-  <jp-radio options='[{"value": "aaa"}, {"name": "bcb", "value":"bbb"}, {"value":"ccc"}]'>
-  </jp-radio>
-</form>
+<jp-radio options='[{"value": "aaa"}, {"name": "bcb", "value":"bbb"}, {"value":"ccc"}]'>
+</jp-radio>
 ```

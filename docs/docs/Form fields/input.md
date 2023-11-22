@@ -42,8 +42,6 @@ This component does not have any slots.
 ### Demo
 
 ```jsx live
-<form>
-  <jp-input value='pero' label='Perica' name='input'>
-  </jp-input>
-</form>
+<jp-input value='pero' label='Perica' name='input'>
+</jp-input>
 ```

@@ -32,8 +32,6 @@ This component does not have any methods.
 ### Demo
 
 ```jsx live
-<form>
-  <jp-datepicker>
-  </jp-datepicker>
-</form>
+<jp-datepicker>
+</jp-datepicker>
 ```

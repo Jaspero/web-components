@@ -40,8 +40,6 @@ This component does not have any slots.
 ### Demo
 
 ```jsx live
-<form>
-  <jp-multiselect options='[{"value":"aaa"}, {"value":"bbb"}, {"value":"ccc"}]'>
-  </jp-multiselect>
-</form>
+<jp-multiselect options='[{"value":"aaa"}, {"value":"bbb"}, {"value":"ccc"}]'>
+</jp-multiselect>
 ```
