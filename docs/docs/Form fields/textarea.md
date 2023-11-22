@@ -42,8 +42,6 @@ This component does not have any slots.
 ### Demo
 
 ```jsx live
-<form>
-  <jp-textarea value='pattern text' name='textarea'>
-  </jp-textarea>
-</form>
+<jp-textarea value='pattern text' name='textarea'>
+</jp-textarea>
 ```
