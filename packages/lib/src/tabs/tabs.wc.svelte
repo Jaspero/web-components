@@ -31,13 +31,13 @@
   }
 
   function checkOverflow(e) {
-    overflownTabs = e[0].contentRect.width < 150 * tabs.length
+    overflownTabs = e[0].contentRect.width < 150 * tabs.length;
   }
 
   onMount(() => {
-    new ResizeObserver(checkOverflow).observe(tabsEl)
-    tabs = Array.from(contentEl.children[0].assignedElements())
-    tabs = tabs.filter(el => el.tagName.toLowerCase() == 'jp-tab')
+    new ResizeObserver(checkOverflow).observe(tabsEl);
+    tabs = Array.from(contentEl.children[0].assignedElements());
+    tabs = tabs.filter((el) => el.tagName.toLowerCase() == 'jp-tab');
   });
 </script>
 
@@ -66,7 +66,7 @@
 </div>
 
 <div bind:this={contentEl} hidden>
-  <slot></slot>
+  <slot />
 </div>
 
 <div class="content">

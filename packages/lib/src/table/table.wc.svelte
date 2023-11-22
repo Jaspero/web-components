@@ -7,9 +7,9 @@
 
 <script lang="ts">
   import { createEventDispatcher } from 'svelte';
-  import {get} from '../utils/json-pointer';
-  import type {TableHeader} from '../types/table-header.interface';
-  import type {TableSort} from '../types/table-sort.interface';
+  import { get } from '../utils/json-pointer';
+  import type { TableHeader } from '../types/table-header.interface';
+  import type { TableSort } from '../types/table-sort.interface';
 
   export let headers: TableHeader[] = [];
   export let rows: any[] = [];
@@ -18,8 +18,8 @@
   const dispatch = createEventDispatcher();
 
   async function handleColumn(header: TableHeader, row: any, index: number) {
-    const {key, fallback, pipes} = header;
-    
+    const { key, fallback, pipes } = header;
+
     let value: any;
 
     try {
@@ -40,48 +40,53 @@
   }
 
   function adjustSort(header: TableHeader) {
-    const {sortable, sortMethod} = header;
+    const { sortable, sortMethod } = header;
 
     if (!sortable) {
       return;
     }
 
-    const direction = sort?.key === header.key ? sort.direction === 'asc' ? 'desc' : 'asc' : 'asc';
+    const direction =
+      sort?.key === header.key ? (sort.direction === 'asc' ? 'desc' : 'asc') : 'asc';
 
     if (sortMethod) {
       rows = [...rows.sort((a, b) => sortMethod(direction, a, b))];
       return;
     }
 
-    rows = [...rows.sort((a, b) => {
-      let aValue: any;
-      let bValue: any;
+    rows = [
+      ...rows.sort((a, b) => {
+        let aValue: any;
+        let bValue: any;
 
-      try {
-        aValue = get(a, header.key);
-      } catch {
-        return direction === 'asc' ? 1 : -1
-      }
+        try {
+          aValue = get(a, header.key);
+        } catch {
+          return direction === 'asc' ? 1 : -1;
+        }
 
-      try {
-        bValue = get(b, header.key);
-      } catch {
-        return direction === 'asc' ? -1 : 1
-      }
+        try {
+          bValue = get(b, header.key);
+        } catch {
+          return direction === 'asc' ? -1 : 1;
+        }
 
-      if (aValue === bValue) {
-        return 0;
-      }
-
-      switch (typeof aValue) {
-        case 'number':
-          return direction === 'asc' ? aValue - bValue : bValue - aValue;
-        case 'string':
-          return direction === 'asc' ? aValue.localeCompare(bValue) : bValue.localeCompare(aValue);
-        default:
+        if (aValue === bValue) {
           return 0;
-      }
-    })];
+        }
+
+        switch (typeof aValue) {
+          case 'number':
+            return direction === 'asc' ? aValue - bValue : bValue - aValue;
+          case 'string':
+            return direction === 'asc'
+              ? aValue.localeCompare(bValue)
+              : bValue.localeCompare(aValue);
+          default:
+            return 0;
+        }
+      })
+    ];
 
     sort = {
       key: header.key,
@@ -136,8 +141,8 @@
 <style>
   .table-card {
     background-color: var(--background-primary);
-    border-radius: .25rem;
-    box-shadow: 0 3px 12px rgba(0,0,0,.16);
+    border-radius: 0.25rem;
+    box-shadow: 0 3px 12px rgba(0, 0, 0, 0.16);
   }
 
   .table-container {
@@ -149,17 +154,18 @@
     width: 100%;
   }
 
-  th, td {
+  th,
+  td {
     text-align: left;
     white-space: nowrap;
-    font-size: .75rem;
+    font-size: 0.75rem;
     font-weight: normal;
-    padding: .5rem;
-    border-bottom: 1px solid rgba(0,0,0,.16);
+    padding: 0.5rem;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.16);
   }
 
   th {
-    opacity: .75;
+    opacity: 0.75;
   }
 
   .cell {

@@ -20,13 +20,13 @@
 
   export let disabled: boolean = false;
   export let id: string = '';
-  export let showValue: boolean = false; 
+  export let showValue: boolean = false;
   export let max: number = 100;
   export let min: number = 0;
   export let value: number = 0;
   export let step: number = 1;
   export let name: string = '';
-  export let discrete : boolean = true; //if true -> ticks, false -> smooth
+  export let discrete: boolean = true; //if true -> ticks, false -> smooth
   export const getValue = () => value;
 
   const dispatch = createEventDispatcher();
@@ -36,9 +36,19 @@
 
 <div class="slider-container">
   {#if discrete == true}
-  <input type="range" class="range-input" bind:value {id} {disabled} {min} {max} {step} {name} />
+    <input type="range" class="range-input" bind:value {id} {disabled} {min} {max} {step} {name} />
   {:else}
-  <input type="range" class="range-input" bind:value {id} {disabled} {min} {max}  step="any" {name} />
+    <input
+      type="range"
+      class="range-input"
+      bind:value
+      {id}
+      {disabled}
+      {min}
+      {max}
+      step="any"
+      {name}
+    />
   {/if}
   {#if showValue == true}
     <p>{Math.round(value)}</p>

@@ -47,33 +47,37 @@
   const dispatch = createEventDispatcher();
 
   export const reportValidity = () => {
-    attachedInternals.reportValidity()
-  }
+    attachedInternals.reportValidity();
+  };
 
   $: {
     attachedInternals.checkValidity();
-    if(inputEl){
-      if(inputEl.validity.patternMismatch){
-        if(patternValidationMessage || validationMessages.pattern){
-          attachedInternals.setValidity({ customError: true }, 
+    if (inputEl) {
+      if (inputEl.validity.patternMismatch) {
+        if (patternValidationMessage || validationMessages.pattern) {
+          attachedInternals.setValidity(
+            { customError: true },
             patternValidationMessage || validationMessages.pattern
           );
         }
-      } else if (inputEl.validity.tooShort){
-        if(minlengthValidationMessage || validationMessages.minlength){
-          attachedInternals.setValidity({ customError: true }, 
+      } else if (inputEl.validity.tooShort) {
+        if (minlengthValidationMessage || validationMessages.minlength) {
+          attachedInternals.setValidity(
+            { customError: true },
             minlengthValidationMessage || validationMessages.minlength
           );
         }
-      } else if (inputEl.validity.tooLong){
-        if(maxlengthValidationMessage || validationMessages.maxlength){
-          attachedInternals.setValidity({ customError: true }, 
+      } else if (inputEl.validity.tooLong) {
+        if (maxlengthValidationMessage || validationMessages.maxlength) {
+          attachedInternals.setValidity(
+            { customError: true },
             maxlengthValidationMessage || validationMessages.maxlength
           );
         }
-      } else if (inputEl.validity.valueMissing){
-        if(requiredValidationMessage || validationMessages.required){
-          attachedInternals.setValidity({ customError: true }, 
+      } else if (inputEl.validity.valueMissing) {
+        if (requiredValidationMessage || validationMessages.required) {
+          attachedInternals.setValidity(
+            { customError: true },
             requiredValidationMessage || validationMessages.required
           );
         }

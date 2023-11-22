@@ -36,20 +36,19 @@
     if (typeof value == 'string') {
       value = JSON.parse(value);
     }
-    
+
     options.onChange = async () => {
       try {
         value = editor.get();
 
-        dispatch('value', {value});
+        dispatch('value', { value });
 
         stringValue = JSON.stringify(value);
-
       } catch (err) {
         console.log(err);
       }
     };
-    
+
     editor = new window.JSONEditor(containerEl, options);
     editor.set(value);
   });

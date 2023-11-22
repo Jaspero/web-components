@@ -28,14 +28,17 @@
   export let name: string | null = null;
   export let label = '';
   export let options: any = {
-    modules: { toolbar: [
-      ['bold', 'italic', 'underline'],        // toggled buttons
-      [{ 'size': ['small', false, 'large', 'huge'] }],  // custom dropdown
-      [{ 'color': [] }, { 'background': [] }],          // dropdown with defaults from theme
-      [{ 'list': 'ordered'}, { 'list': 'bullet' }],
-      ['blockquote', 'code-block'],
-      ['image'],
-      [{ 'align': [] }], ['clean']]
+    modules: {
+      toolbar: [
+        ['bold', 'italic', 'underline'], // toggled buttons
+        [{ size: ['small', false, 'large', 'huge'] }], // custom dropdown
+        [{ color: [] }, { background: [] }], // dropdown with defaults from theme
+        [{ list: 'ordered' }, { list: 'bullet' }],
+        ['blockquote', 'code-block'],
+        ['image'],
+        [{ align: [] }],
+        ['clean']
+      ]
     },
     theme: 'snow'
   };
@@ -56,35 +59,37 @@
   }
 
   export async function save(id?: string) {
-    await Promise.allSettled([...editor.root.querySelectorAll('img')].map(async img => {
-      const blob = await b64toBlob(img.src)
-      const url = await service.uploadFile(blob, id)
-      img.src = url
-    }))
+    await Promise.allSettled(
+      [...editor.root.querySelectorAll('img')].map(async (img) => {
+        const blob = await b64toBlob(img.src);
+        const url = await service.uploadFile(blob, id);
+        img.src = url;
+      })
+    );
   }
 
-  const b64toBlob = (base64) => fetch(base64).then(res => res.blob())
+  const b64toBlob = (base64) => fetch(base64).then((res) => res.blob());
 
   const convertBase64 = (file) => {
     return new Promise((resolve, reject) => {
       const fileReader = new FileReader();
       fileReader.readAsDataURL(file);
-      fileReader.onload = () => resolve(fileReader.result)
-      fileReader.onerror = (err) => reject(err)
-    })
-  }
+      fileReader.onload = () => resolve(fileReader.result);
+      fileReader.onerror = (err) => reject(err);
+    });
+  };
 
   function selectLocalImage() {
     fileHolder = document.createElement('input');
     fileHolder.setAttribute('type', 'file');
-    fileHolder.setAttribute('accept', service.acceptedFiles)
-    fileHolder.setAttribute("style", "visibility:hidden");
+    fileHolder.setAttribute('accept', service.acceptedFiles);
+    fileHolder.setAttribute('style', 'visibility:hidden');
     fileHolder.onchange = async () => {
       const file = fileHolder.files[0];
-      const b64 = await convertBase64(file)
-      const range = editor.getSelection()
-      editor.insertEmbed(range.index, 'image', b64)
-    }
+      const b64 = await convertBase64(file);
+      const range = editor.getSelection();
+      editor.insertEmbed(range.index, 'image', b64);
+    };
     fileHolder.click();
     // Am I allowed to remove fileHolder here?
   }
@@ -92,17 +97,16 @@
   onMount(() => {
     let quill = getQull();
 
-		if (value) {
-			containerEl.innerHTML = value;
-		}
+    if (value) {
+      containerEl.innerHTML = value;
+    }
 
-    
     editor = new quill(containerEl, options);
-    
-    if(service){
+
+    if (service) {
       editor.getModule('toolbar').addHandler('image', () => {
-        selectLocalImage()
-      })
+        selectLocalImage();
+      });
     }
 
     editor.on('text-change', () => {

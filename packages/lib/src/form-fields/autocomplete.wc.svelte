@@ -46,34 +46,38 @@
   let open = false;
 
   const dispatch = createEventDispatcher();
-  
+
   $: {
-    if(Array.isArray(options)){
+    if (Array.isArray(options)) {
       filteredOptions = options.filter((el) => el.toLowerCase().includes(value.toLowerCase()));
     }
     attachedInternals.checkValidity();
-    if(inputEl){
-      if(inputEl.validity.patternMismatch){
-        if(patternValidationMessage || validationMessages.pattern){
-          attachedInternals.setValidity({ customError: true }, 
+    if (inputEl) {
+      if (inputEl.validity.patternMismatch) {
+        if (patternValidationMessage || validationMessages.pattern) {
+          attachedInternals.setValidity(
+            { customError: true },
             patternValidationMessage || validationMessages.pattern
           );
         }
-      } else if (inputEl.validity.tooShort){
-        if(minlengthValidationMessage || validationMessages.minlength){
-          attachedInternals.setValidity({ customError: true }, 
+      } else if (inputEl.validity.tooShort) {
+        if (minlengthValidationMessage || validationMessages.minlength) {
+          attachedInternals.setValidity(
+            { customError: true },
             minlengthValidationMessage || validationMessages.minlength
           );
         }
-      } else if (inputEl.validity.tooLong){
-        if(maxlengthValidationMessage || validationMessages.maxlength){
-          attachedInternals.setValidity({ customError: true }, 
+      } else if (inputEl.validity.tooLong) {
+        if (maxlengthValidationMessage || validationMessages.maxlength) {
+          attachedInternals.setValidity(
+            { customError: true },
             maxlengthValidationMessage || validationMessages.maxlength
           );
         }
-      } else if (inputEl.validity.valueMissing){
-        if(requiredValidationMessage || validationMessages.required){
-          attachedInternals.setValidity({ customError: true }, 
+      } else if (inputEl.validity.valueMissing) {
+        if (requiredValidationMessage || validationMessages.required) {
+          attachedInternals.setValidity(
+            { customError: true },
             requiredValidationMessage || validationMessages.required
           );
         }
@@ -92,27 +96,35 @@
 <div>
   <label class="field">
     <span class="field-label" class:move={open || value}>{@html label}</span>
-    <input class="field-input"
-           type="text"
-           class:disabled
-           {id}
-           {name}
-           {disabled}
-           {placeholder}
-           {required}
-           {minlength}
-           {maxlength}
-           {pattern}
-           bind:this={inputEl}
-           bind:value
-           on:focus={() => open = true}
-           on:blur={() => open = false}
+    <input
+      class="field-input"
+      type="text"
+      class:disabled
+      {id}
+      {name}
+      {disabled}
+      {placeholder}
+      {required}
+      {minlength}
+      {maxlength}
+      {pattern}
+      bind:this={inputEl}
+      bind:value
+      on:focus={() => (open = true)}
+      on:blur={() => (open = false)}
     />
 
     {#if open}
       <div class="menu">
         {#each filteredOptions as option}
-          <button class="menu-button" on:mousedown|preventDefault={() => {value = option; inputEl.blur()}} on:click|preventDefault>{option}</button>
+          <button
+            class="menu-button"
+            on:mousedown|preventDefault={() => {
+              value = option;
+              inputEl.blur();
+            }}
+            on:click|preventDefault>{option}</button
+          >
         {/each}
       </div>
     {/if}
@@ -181,21 +193,21 @@
     transform: translateY(-50%);
     font-size: 1rem;
     -webkit-transition:
-            transform 0.3s,
-            top 0.3s,
-            font-size 0.3s;
+      transform 0.3s,
+      top 0.3s,
+      font-size 0.3s;
     -o-transition:
-            transform 0.3s,
-            top 0.3s,
-            font-size 0.3s;
+      transform 0.3s,
+      top 0.3s,
+      font-size 0.3s;
     -moz-transition:
-            transform 0.3s,
-            top 0.3s,
-            font-size 0.3s;
+      transform 0.3s,
+      top 0.3s,
+      font-size 0.3s;
     transition:
-            transform 0.3s,
-            top 0.3s,
-            font-size 0.3s;
+      transform 0.3s,
+      top 0.3s,
+      font-size 0.3s;
   }
 
   .field-label.move {
@@ -293,15 +305,15 @@
     max-height: 300px;
     width: 100%;
     overflow-y: auto;
-    -webkit-border-bottom-left-radius: .25rem;
-    -moz-border-radius-bottomleft: .25rem;
-    border-bottom-left-radius: .25rem;
-    -webkit-border-bottom-right-radius: .25rem;
-    -moz-border-radius-bottomright: .25rem;
-    border-bottom-right-radius: .25rem;
-    -webkit-box-shadow: 0 6px 9px rgba(0,0,0,.16);
-    -moz-box-shadow: 0 6px 9px rgba(0,0,0,.16);
-    box-shadow: 0 6px 9px rgba(0,0,0,.16);
+    -webkit-border-bottom-left-radius: 0.25rem;
+    -moz-border-radius-bottomleft: 0.25rem;
+    border-bottom-left-radius: 0.25rem;
+    -webkit-border-bottom-right-radius: 0.25rem;
+    -moz-border-radius-bottomright: 0.25rem;
+    border-bottom-right-radius: 0.25rem;
+    -webkit-box-shadow: 0 6px 9px rgba(0, 0, 0, 0.16);
+    -moz-box-shadow: 0 6px 9px rgba(0, 0, 0, 0.16);
+    box-shadow: 0 6px 9px rgba(0, 0, 0, 0.16);
     background-color: var(--background-primary);
   }
 
@@ -321,14 +333,26 @@
     -moz-box-align: center;
     -ms-flex-align: center;
     align-items: center;
-    gap: .75rem;
-    padding: .75rem;
+    gap: 0.75rem;
+    padding: 0.75rem;
     text-align: left;
     outline: none;
-    -webkit-transition: background-color .3s, color .3s, fill .3s;
-    -o-transition: background-color .3s, color .3s, fill .3s;
-    -moz-transition: background-color .3s, color .3s, fill .3s;
-    transition: background-color .3s, color .3s, fill .3s;
+    -webkit-transition:
+      background-color 0.3s,
+      color 0.3s,
+      fill 0.3s;
+    -o-transition:
+      background-color 0.3s,
+      color 0.3s,
+      fill 0.3s;
+    -moz-transition:
+      background-color 0.3s,
+      color 0.3s,
+      fill 0.3s;
+    transition:
+      background-color 0.3s,
+      color 0.3s,
+      fill 0.3s;
   }
 
   .menu-button.selected {
@@ -338,10 +362,11 @@
   }
 
   .menu-button:disabled {
-    opacity: .33;
+    opacity: 0.33;
   }
 
-  .menu-button:not(:disabled):hover, .menu-button:focus {
+  .menu-button:not(:disabled):hover,
+  .menu-button:focus {
     background-color: var(--background-secondary);
   }
 </style>

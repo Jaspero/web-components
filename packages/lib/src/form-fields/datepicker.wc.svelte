@@ -147,13 +147,13 @@
   }
 
   onMount(() => {
-    if(value){
-      const tmp = new Date(value)
-      yearSelected = tmp.getFullYear()
-      monthSelected = tmp.getMonth()
-      dateSelected = tmp.getDate()
-      pickerMonth = monthSelected
-      pickerYear = yearSelected
+    if (value) {
+      const tmp = new Date(value);
+      yearSelected = tmp.getFullYear();
+      monthSelected = tmp.getMonth();
+      dateSelected = tmp.getDate();
+      pickerMonth = monthSelected;
+      pickerYear = yearSelected;
     }
     pickerRows = getPickerRows(pickerMonth, pickerYear);
   });
@@ -384,11 +384,11 @@
             {#each monthMap as month, index}
               <div class="menu-month-grid-cell">
                 <button
-                        on:click|preventDefault={() => {
-                  monthSelected = index;
-                  monthSelector = false;
-                }}
-                        class:active={monthSelected === index}
+                  on:click|preventDefault={() => {
+                    monthSelected = index;
+                    monthSelector = false;
+                  }}
+                  class:active={monthSelected === index}
                 >
                   {month}
                 </button>
@@ -613,7 +613,7 @@
     justify-content: space-between;
     align-items: center;
     margin-bottom: 1rem;
-    gap: .5rem;
+    gap: 0.5rem;
   }
 
   .menu-year-nav-buttons,

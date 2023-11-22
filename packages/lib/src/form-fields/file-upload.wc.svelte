@@ -56,9 +56,9 @@
     return value;
   }
 
-  async function handleLocalChange(file){
-    if(service && service.maxSize){
-      if(file.size > service.maxSize){
+  async function handleLocalChange(file) {
+    if (service && service.maxSize) {
+      if (file.size > service.maxSize) {
         dispatch('rejected', { file: file.name, code: 'maxSize' });
         return;
       }
@@ -76,13 +76,13 @@
 
   async function handleDrop(e) {
     if (e.dataTransfer.files.length) {
-      handleLocalChange(e.dataTransfer.files[0])
+      handleLocalChange(e.dataTransfer.files[0]);
     }
     hoveringFile = false;
   }
 
   async function filePicked(event) {
-    handleLocalChange(event.target.files[0])
+    handleLocalChange(event.target.files[0]);
   }
 
   async function checkImage() {

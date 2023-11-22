@@ -47,27 +47,30 @@
   let textareaEl;
 
   export const reportValidity = () => {
-    attachedInternals.reportValidity()
-  }
+    attachedInternals.reportValidity();
+  };
 
   $: {
     attachedInternals.checkValidity();
-    if(textareaEl){
-      if (textareaEl.validity.tooShort){
-        if(minlengthValidationMessage || validationMessages.minlength){
-          attachedInternals.setValidity({ customError: true }, 
+    if (textareaEl) {
+      if (textareaEl.validity.tooShort) {
+        if (minlengthValidationMessage || validationMessages.minlength) {
+          attachedInternals.setValidity(
+            { customError: true },
             minlengthValidationMessage || validationMessages.minlength
           );
         }
-      } else if (textareaEl.validity.tooLong){
-        if(maxlengthValidationMessage || validationMessages.maxlength){
-          attachedInternals.setValidity({ customError: true }, 
+      } else if (textareaEl.validity.tooLong) {
+        if (maxlengthValidationMessage || validationMessages.maxlength) {
+          attachedInternals.setValidity(
+            { customError: true },
             maxlengthValidationMessage || validationMessages.maxlength
           );
         }
-      } else if (textareaEl.validity.valueMissing){
-        if(requiredValidationMessage || validationMessages.required){
-          attachedInternals.setValidity({ customError: true }, 
+      } else if (textareaEl.validity.valueMissing) {
+        if (requiredValidationMessage || validationMessages.required) {
+          attachedInternals.setValidity(
+            { customError: true },
             requiredValidationMessage || validationMessages.required
           );
         }

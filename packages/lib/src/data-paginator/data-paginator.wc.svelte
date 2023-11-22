@@ -35,14 +35,14 @@
   }
 
   onMount(() => {
-    if(pageSizeOptions.includes(pageSize)){
-      internalPageSize = pageSize
+    if (pageSizeOptions.includes(pageSize)) {
+      internalPageSize = pageSize;
     }
-  })
+  });
 
   function pageSizeHandler() {
-    pageIndex = Math.floor(pageIndex * (internalPageSize/pageSize))
-    internalPageSize = pageSize
+    pageIndex = Math.floor(pageIndex * (internalPageSize / pageSize));
+    internalPageSize = pageSize;
   }
 </script>
 

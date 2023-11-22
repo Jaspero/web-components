@@ -7,10 +7,10 @@
 
 <script lang="ts">
   import { createEventDispatcher, onMount } from 'svelte';
-  import {get} from '../utils/json-pointer';
-  import type {TableHeader} from '../types/table-header.interface';
-  import type {TableSort} from '../types/table-sort.interface';
-  import type {TableService} from '../types/table.service';
+  import { get } from '../utils/json-pointer';
+  import type { TableHeader } from '../types/table-header.interface';
+  import type { TableSort } from '../types/table-sort.interface';
+  import type { TableService } from '../types/table.service';
 
   export let headers: TableHeader[] = [];
   export let sort: TableSort;
@@ -23,7 +23,7 @@
   const dispatch = createEventDispatcher();
 
   async function handleColumn(header: TableHeader, row: any, index: number) {
-    const {key, fallback, pipes} = header;
+    const { key, fallback, pipes } = header;
 
     let value: any;
 
@@ -45,7 +45,7 @@
   }
 
   async function adjustSort(header: TableHeader) {
-    const {sortable} = header;
+    const { sortable } = header;
 
     if (!sortable) {
       return;
@@ -55,7 +55,7 @@
 
     sort = {
       key: header.key,
-      direction: sort?.key === header.key ? sort.direction === 'asc' ? 'desc' : 'asc' : 'asc'
+      direction: sort?.key === header.key ? (sort.direction === 'asc' ? 'desc' : 'asc') : 'asc'
     };
 
     const data = await service.get(sort);
@@ -131,7 +131,7 @@
   </div>
 
   <div class="table-actions">
-    <button class="load-button" class:loading={loading} disabled={!hasMore} on:click={loadMore}>
+    <button class="load-button" class:loading disabled={!hasMore} on:click={loadMore}>
       {#if loading}
         <span class="spinner"></span>
         Loading
@@ -145,12 +145,12 @@
 <style>
   .table-card {
     background-color: var(--background-primary);
-    -webkit-border-radius: .25rem;
-    -moz-border-radius: .25rem;
-    border-radius: .25rem;
-    -webkit-box-shadow: 0 3px 12px rgba(0,0,0,.16);
-    -moz-box-shadow: 0 3px 12px rgba(0,0,0,.16);
-    box-shadow: 0 3px 12px rgba(0,0,0,.16);
+    -webkit-border-radius: 0.25rem;
+    -moz-border-radius: 0.25rem;
+    border-radius: 0.25rem;
+    -webkit-box-shadow: 0 3px 12px rgba(0, 0, 0, 0.16);
+    -moz-box-shadow: 0 3px 12px rgba(0, 0, 0, 0.16);
+    box-shadow: 0 3px 12px rgba(0, 0, 0, 0.16);
   }
 
   .table-container {
@@ -162,17 +162,18 @@
     width: 100%;
   }
 
-  th, td {
+  th,
+  td {
     text-align: left;
     white-space: nowrap;
-    font-size: .75rem;
+    font-size: 0.75rem;
     font-weight: normal;
-    padding: .5rem;
-    border-bottom: 1px solid rgba(0,0,0,.16);
+    padding: 0.5rem;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.16);
   }
 
   th {
-    opacity: .75;
+    opacity: 0.75;
   }
 
   .cell {
@@ -202,9 +203,9 @@
     -moz-box-align: center;
     -ms-flex-align: center;
     align-items: center;
-    -webkit-border-radius: .25rem;
-    -moz-border-radius: .25rem;
-    border-radius: .25rem;
+    -webkit-border-radius: 0.25rem;
+    -moz-border-radius: 0.25rem;
+    border-radius: 0.25rem;
     min-width: 4rem;
     height: 2.25rem;
     padding: 0 1rem;
@@ -217,7 +218,7 @@
   }
 
   .load-button:disabled {
-    opacity: .5;
+    opacity: 0.5;
   }
 
   .load-button.loading {
@@ -235,7 +236,7 @@
     border-radius: 50%;
     width: 1rem;
     height: 1rem;
-    margin-right: .5rem;
+    margin-right: 0.5rem;
     -webkit-animation: spin 1s linear infinite;
     -moz-animation: spin 1s linear infinite;
     -o-animation: spin 1s linear infinite;
@@ -243,22 +244,50 @@
   }
 
   @-webkit-keyframes spin {
-    0% { -webkit-transform: rotate(0deg); transform: rotate(0deg); }
-    100% { -webkit-transform: rotate(360deg); transform: rotate(360deg); }
+    0% {
+      -webkit-transform: rotate(0deg);
+      transform: rotate(0deg);
+    }
+    100% {
+      -webkit-transform: rotate(360deg);
+      transform: rotate(360deg);
+    }
   }
 
   @-moz-keyframes spin {
-    0% { -moz-transform: rotate(0deg); transform: rotate(0deg); }
-    100% { -moz-transform: rotate(360deg); transform: rotate(360deg); }
+    0% {
+      -moz-transform: rotate(0deg);
+      transform: rotate(0deg);
+    }
+    100% {
+      -moz-transform: rotate(360deg);
+      transform: rotate(360deg);
+    }
   }
 
   @-o-keyframes spin {
-    0% { -o-transform: rotate(0deg); transform: rotate(0deg); }
-    100% { -o-transform: rotate(360deg); transform: rotate(360deg); }
+    0% {
+      -o-transform: rotate(0deg);
+      transform: rotate(0deg);
+    }
+    100% {
+      -o-transform: rotate(360deg);
+      transform: rotate(360deg);
+    }
   }
 
   @keyframes spin {
-    0% { -webkit-transform: rotate(0deg); -moz-transform: rotate(0deg); -o-transform: rotate(0deg); transform: rotate(0deg); }
-    100% { -webkit-transform: rotate(360deg); -moz-transform: rotate(360deg); -o-transform: rotate(360deg); transform: rotate(360deg); }
+    0% {
+      -webkit-transform: rotate(0deg);
+      -moz-transform: rotate(0deg);
+      -o-transform: rotate(0deg);
+      transform: rotate(0deg);
+    }
+    100% {
+      -webkit-transform: rotate(360deg);
+      -moz-transform: rotate(360deg);
+      -o-transform: rotate(360deg);
+      transform: rotate(360deg);
+    }
   }
 </style>

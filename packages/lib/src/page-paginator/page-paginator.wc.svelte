@@ -17,13 +17,13 @@
   $: dispatch('change', { pageIndex, length });
 
   export function nextPage() {
-    if(pageIndex == center){
+    if (pageIndex == center) {
       center = Math.min(center + 1, length - 3);
     }
     pageIndex++;
   }
   export function prevPage() {
-    if(pageIndex == center){
+    if (pageIndex == center) {
       center = Math.max(center - 1, 4);
     }
     pageIndex--;
@@ -53,17 +53,15 @@
   </button>
   <button on:click={() => firstPage()} class:selected={pageIndex == 1}> 1 </button>
   {#if center < 5}
-    <button on:click={() => toPage(2)} class:selected={pageIndex == 2}>
-      2
-    </button>
+    <button on:click={() => toPage(2)} class:selected={pageIndex == 2}> 2 </button>
   {:else}
     <button disabled>...</button>
   {/if}
-  <button class:selected={center-1 == pageIndex}>{center - 1}</button>
+  <button class:selected={center - 1 == pageIndex}>{center - 1}</button>
   <button class:selected={center == pageIndex}>{center}</button>
-  <button class:selected={center+1 == pageIndex}>{center + 1}</button>
+  <button class:selected={center + 1 == pageIndex}>{center + 1}</button>
   {#if center > length - 4}
-    <button on:click={() => toPage(length - 1)} class:selected={pageIndex == length-1}>
+    <button on:click={() => toPage(length - 1)} class:selected={pageIndex == length - 1}>
       {length - 1}
     </button>
   {:else}

@@ -20,13 +20,17 @@
   const dispatch = createEventDispatcher();
 </script>
 
-<svelte:window on:keydown|preventDefault={(e) => e.key === 'Escape' && closable && dispatch('close')} />
+<svelte:window
+  on:keydown|preventDefault={(e) => e.key === 'Escape' && closable && dispatch('close')}
+/>
 
 <div class="overlay">
   <div
     class="dialog"
     use:clickOutside
-    on:click_outside={() => {if(closable) dispatch('close')}}
+    on:click_outside={() => {
+      if (closable) dispatch('close');
+    }}
   >
     {#if title}
       <div class="dialog-header">
@@ -43,12 +47,10 @@
     {/if}
 
     <div class="dialog-actions">
-      <button class="reject-button"
-              on:click={() => dispatch('confirmation', { confirmed: false })}>
+      <button class="reject-button" on:click={() => dispatch('confirmation', { confirmed: false })}>
         {reject}
       </button>
-      <button class="accept-button"
-              on:click={() => dispatch('confirmation', { confirmed: true })}>
+      <button class="accept-button" on:click={() => dispatch('confirmation', { confirmed: true })}>
         {accept}
       </button>
     </div>
@@ -78,14 +80,14 @@
     -moz-box-align: center;
     -ms-flex-align: center;
     align-items: center;
-    background-color: rgba(0,0,0,.2);
+    background-color: rgba(0, 0, 0, 0.2);
   }
 
   .dialog {
     background-color: var(--background-primary);
-    -webkit-border-radius: .25rem;
-    -moz-border-radius: .25rem;
-    border-radius: .25rem;
+    -webkit-border-radius: 0.25rem;
+    -moz-border-radius: 0.25rem;
+    border-radius: 0.25rem;
     max-width: 20rem;
   }
 
@@ -120,7 +122,8 @@
     padding: 1rem;
   }
 
-  .reject-button, .accept-button {
+  .reject-button,
+  .accept-button {
     position: relative;
     display: -webkit-inline-box;
     display: -webkit-inline-flex;
@@ -139,9 +142,9 @@
     justify-content: center;
     min-width: 4rem;
     padding: 0 1rem;
-    -webkit-border-radius: .25rem;
-    -moz-border-radius: .25rem;
-    border-radius: .25rem;
+    -webkit-border-radius: 0.25rem;
+    -moz-border-radius: 0.25rem;
+    border-radius: 0.25rem;
     height: 36px;
     border: none;
     outline: none;
@@ -155,7 +158,7 @@
     background: none;
     color: inherit;
     font-family: inherit;
-    font-size: .875rem;
+    font-size: 0.875rem;
     line-height: 1.5;
     text-transform: uppercase;
     overflow: hidden;

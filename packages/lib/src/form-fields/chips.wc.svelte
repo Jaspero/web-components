@@ -1,5 +1,5 @@
 <svelte:options
-        customElement={{
+  customElement={{
     tag: 'jp-chips',
     shadow: 'none',
     extend: (customElementConstructor) => {
@@ -50,33 +50,38 @@
   const dispatch = createEventDispatcher();
 
   export const reportValidity = () => {
-    attachedInternals.reportValidity()
-  }
+    attachedInternals.reportValidity();
+  };
 
   $: {
-    value = chips.join(',')
-    if(!value){
-      attachedInternals.setValidity({ customError: true }, 
+    value = chips.join(',');
+    if (!value) {
+      attachedInternals.setValidity(
+        { customError: true },
         requiredValidationMessage || validationMessages.required || `Chips should be non-empty.`
       );
-    }
-    else if(chips.length < minitems){
-      attachedInternals.setValidity({ customError: true }, 
-        minitemsValidationMessage || validationMessages.minitems || `A minimum of ${minitems} items need to be added.`
+    } else if (chips.length < minitems) {
+      attachedInternals.setValidity(
+        { customError: true },
+        minitemsValidationMessage ||
+          validationMessages.minitems ||
+          `A minimum of ${minitems} items need to be added.`
       );
-    }
-    else if(maxitems && chips.length > maxitems){
-      attachedInternals.setValidity({ customError: true }, 
-        maxitemsValidationMessage || validationMessages.maxitems || `A maximum of ${maxitems} items are allowed.`
+    } else if (maxitems && chips.length > maxitems) {
+      attachedInternals.setValidity(
+        { customError: true },
+        maxitemsValidationMessage ||
+          validationMessages.maxitems ||
+          `A maximum of ${maxitems} items are allowed.`
       );
-    }
-    else if (unique && ((new Set(chips)).size !== chips.length)) {
-      attachedInternals.setValidity({ customError: true }, 
+    } else if (unique && new Set(chips).size !== chips.length) {
+      attachedInternals.setValidity(
+        { customError: true },
         uniqueValidationMessage || validationMessages.unique || 'Chips are not unique.'
       );
-    }
-    else if(pattern != null && chips.filter(el => pattern.test(el)).length != chips.length){
-      attachedInternals.setValidity({ customError: true }, 
+    } else if (pattern != null && chips.filter((el) => pattern.test(el)).length != chips.length) {
+      attachedInternals.setValidity(
+        { customError: true },
         patternValidationMessage || validationMessages.pattern || 'Chips dont satisfy pattern.'
       );
     } else {
@@ -88,27 +93,29 @@
   }
 
   $: {
-    if(!inputFocused && inputValue ) {
+    if (!inputFocused && inputValue) {
       chips = [...chips, inputValue];
       inputValue = '';
     }
   }
 </script>
 
-<svelte:window on:keydown={(e) => {
-  if(inputFocused){
-    if(e.key == 'Enter'){
-      e.preventDefault()
-      if(inputValue){
-        chips = [...chips, inputValue]
-        inputValue = ''
+<svelte:window
+  on:keydown={(e) => {
+    if (inputFocused) {
+      if (e.key == 'Enter') {
+        e.preventDefault();
+        if (inputValue) {
+          chips = [...chips, inputValue];
+          inputValue = '';
+        }
+      }
+      if (e.key == 'Backspace' && !inputValue) {
+        chips = chips.slice(0, -1);
       }
     }
-    if(e.key == 'Backspace' && !inputValue) {
-      chips = chips.slice(0, -1)
-    }
-  }
-}} />
+  }}
+/>
 
 <div>
   <label class="field" class:disabled class:required>
@@ -120,26 +127,30 @@
       {#each chips as chip}
         <div class="field-container-chip">
           <span class="field-container-chip-label">{chip}</span>
-          <button class="field-container-chip-button"
-                  on:click|preventDefault={() => {
-                                chips.splice(chips.indexOf(chip), 1)
-                                chips = chips
-                            }}>
+          <button
+            class="field-container-chip-button"
+            on:click|preventDefault={() => {
+              chips.splice(chips.indexOf(chip), 1);
+              chips = chips;
+            }}
+          >
             <svg xmlns="http://www.w3.org/2000/svg" height=".875rem" viewBox="0 0 512 512">
               <!--! Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2023 Fonticons, Inc. -->
-              <path d="M256 512A256 256 0 1 0 256 0a256 256 0 1 0 0 512zM175 175c9.4-9.4 24.6-9.4 33.9 0l47 47 47-47c9.4-9.4 24.6-9.4 33.9 0s9.4 24.6 0 33.9l-47 47 47 47c9.4 9.4 9.4 24.6 0 33.9s-24.6 9.4-33.9 0l-47-47-47 47c-9.4 9.4-24.6 9.4-33.9 0s-9.4-24.6 0-33.9l47-47-47-47c-9.4-9.4-9.4-24.6 0-33.9z"/>
+              <path
+                d="M256 512A256 256 0 1 0 256 0a256 256 0 1 0 0 512zM175 175c9.4-9.4 24.6-9.4 33.9 0l47 47 47-47c9.4-9.4 24.6-9.4 33.9 0s9.4 24.6 0 33.9l-47 47 47 47c9.4 9.4 9.4 24.6 0 33.9s-24.6 9.4-33.9 0l-47-47-47 47c-9.4 9.4-24.6 9.4-33.9 0s-9.4-24.6 0-33.9l47-47-47-47c-9.4-9.4-9.4-24.6 0-33.9z"
+              />
             </svg>
           </button>
         </div>
       {/each}
       <input
-              type="text"
-              class="field-container-input"
-              {placeholder}
-              on:focus={() => inputFocused = true}
-              on:blur={() => inputFocused = false}
-              bind:value={inputValue}
-      >
+        type="text"
+        class="field-container-input"
+        {placeholder}
+        on:focus={() => (inputFocused = true)}
+        on:blur={() => (inputFocused = false)}
+        bind:value={inputValue}
+      />
     </div>
   </label>
 </div>
@@ -173,13 +184,13 @@
     -moz-user-select: none;
     -ms-user-select: none;
     user-select: none;
-    padding: 0 .75rem;
-    gap: .75rem;
+    padding: 0 0.75rem;
+    gap: 0.75rem;
     background-color: var(--background-primary);
     border: 1px solid var(--border-primary);
-    -webkit-border-radius: .25rem;
-    -moz-border-radius: .25rem;
-    border-radius: .25rem;
+    -webkit-border-radius: 0.25rem;
+    -moz-border-radius: 0.25rem;
+    border-radius: 0.25rem;
   }
 
   .field.required .field-label::after {
@@ -188,7 +199,7 @@
 
   .field.disabled {
     pointer-events: none;
-    opacity: .33;
+    opacity: 0.33;
   }
 
   .field:focus-within {
@@ -207,20 +218,32 @@
     -o-transform: translateY(-50%);
     transform: translateY(-50%);
     font-size: 1rem;
-    -webkit-transition: transform .3s, top .3s, font-size .3s;
-    -o-transition: transform .3s, top .3s, font-size .3s;
-    -moz-transition: transform .3s, top .3s, font-size .3s;
-    transition: transform .3s, top .3s, font-size .3s;
+    -webkit-transition:
+      transform 0.3s,
+      top 0.3s,
+      font-size 0.3s;
+    -o-transition:
+      transform 0.3s,
+      top 0.3s,
+      font-size 0.3s;
+    -moz-transition:
+      transform 0.3s,
+      top 0.3s,
+      font-size 0.3s;
+    transition:
+      transform 0.3s,
+      top 0.3s,
+      font-size 0.3s;
   }
 
   .field-label.move {
-    top: .125rem;
+    top: 0.125rem;
     -webkit-transform: translateY(0);
     -moz-transform: translateY(0);
     -ms-transform: translateY(0);
     -o-transform: translateY(0);
     transform: translateY(0);
-    font-size: .75rem;
+    font-size: 0.75rem;
   }
 
   .field-label.move + .field-container .field-container-input:-moz-placeholder {
@@ -248,7 +271,7 @@
     -webkit-flex-wrap: wrap;
     -ms-flex-wrap: wrap;
     flex-wrap: wrap;
-    gap: .5rem;
+    gap: 0.5rem;
     -webkit-box-flex: 1;
     -webkit-flex: auto;
     -moz-box-flex: 1;
@@ -257,7 +280,7 @@
     width: 10rem;
     font-size: 1rem;
     overflow: hidden;
-    padding: 1.25rem 0 .25rem 0;
+    padding: 1.25rem 0 0.25rem 0;
     border: none;
     outline: none;
     -webkit-border-radius: 0;
@@ -276,12 +299,12 @@
     -moz-box-align: center;
     -ms-flex-align: center;
     align-items: center;
-    gap: .25rem;
+    gap: 0.25rem;
     background-color: var(--background-secondary);
-    -webkit-border-radius: .25rem;
-    -moz-border-radius: .25rem;
-    border-radius: .25rem;
-    padding: .25rem;
+    -webkit-border-radius: 0.25rem;
+    -moz-border-radius: 0.25rem;
+    border-radius: 0.25rem;
+    padding: 0.25rem;
   }
 
   .field-container-chip-button {
@@ -290,7 +313,7 @@
   }
 
   .field-container-chip-label {
-    font-size: .875rem;
+    font-size: 0.875rem;
     word-break: break-all;
     white-space: normal;
   }
@@ -313,29 +336,29 @@
 
   .field-container-input:-moz-placeholder {
     opacity: 0;
-    -moz-transition: opacity .3s;
-    transition: opacity .3s;
+    -moz-transition: opacity 0.3s;
+    transition: opacity 0.3s;
   }
   .field-container-input::-moz-placeholder {
     opacity: 0;
-    -moz-transition: opacity .3s;
-    transition: opacity .3s;
+    -moz-transition: opacity 0.3s;
+    transition: opacity 0.3s;
   }
   .field-container-input:-ms-input-placeholder {
     opacity: 0;
-    -ms-transition: opacity .3s;
-    transition: opacity .3s;
+    -ms-transition: opacity 0.3s;
+    transition: opacity 0.3s;
   }
   .field-container-input::-ms-input-placeholder {
     opacity: 0;
-    -ms-transition: opacity .3s;
-    transition: opacity .3s;
+    -ms-transition: opacity 0.3s;
+    transition: opacity 0.3s;
   }
   .field-container-input::placeholder {
     opacity: 0;
-    -webkit-transition: opacity .3s;
-    -o-transition: opacity .3s;
-    -moz-transition: opacity .3s;
-    transition: opacity .3s;
+    -webkit-transition: opacity 0.3s;
+    -o-transition: opacity 0.3s;
+    -moz-transition: opacity 0.3s;
+    transition: opacity 0.3s;
   }
 </style>
