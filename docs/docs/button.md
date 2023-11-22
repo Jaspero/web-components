@@ -31,5 +31,5 @@ This component does not have any events.
 ### Demo
 
 ```jsx live
-<jp-button> button </jp-button>
+<jp-button>button</jp-button>
 ```
