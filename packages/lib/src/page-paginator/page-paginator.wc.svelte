@@ -55,7 +55,7 @@
   {#if center < 5}
     <button on:click={() => toPage(2)} class:selected={pageIndex == 2}> 2 </button>
   {:else}
-    <button disabled>...</button>
+    <div>...</div>
   {/if}
   <button class:selected={center - 1 == pageIndex} on:click={() => toPage(center - 1)}
     >{center - 1}</button
@@ -69,7 +69,7 @@
       {length - 1}
     </button>
   {:else}
-    <button disabled>...</button>
+    <div>...</div>
   {/if}
   <button on:click={() => lastPage()} class:selected={pageIndex == length}>
     {length}
@@ -87,19 +87,36 @@
 <style>
   .page-paginator {
     display: flex;
+    gap: .25rem;
   }
 
-  .page-paginator * {
+  button {
     display: flex;
     justify-content: center;
     align-items: center;
     border-radius: 50%;
-    width: 30px;
-    height: 30px;
+    width: 32px;
+    height: 32px;
+    border: none;
+    background: none;
+    cursor: pointer;
+    transition: .3s;
   }
 
-  .page-paginator *:hover:not([disabled]),
+  button:disabled {
+    opacity: 0.25;
+    pointer-events: none;
+  }
+
+  button:not(:disabled, .selected):hover {
+    background-color: rgba(0,0,0,.08);
+  }
+
   .selected {
-    background-color: gray;
+    background-color: var(--secondary-color);
+  }
+
+  button:not(.selected):active {
+    background-color: var(--active-color);
   }
 </style>

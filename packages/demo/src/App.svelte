@@ -1,5 +1,6 @@
 <script lang="ts">
   import { onMount } from 'svelte';
+  import "../../lib/src/index.css";
   /*import '../../../dist/alert.wc.js'; */
   /*import '../../../dist/confirm.wc.js'*/
   /*import '../../../dist/async-table.wc.js';*/
