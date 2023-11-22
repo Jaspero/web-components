@@ -17,9 +17,8 @@
   import '../../../dist/radio.wc.js'
   import '../../../dist/json-editor.wc.js'
   import '../../../dist/code-editor.wc.js'
-  /*import '../../../dist/image-gallery.wc.js'
-  import '../../../dist/image-upload.wc.js'
-  import '../../../dist/paginator.wc.js'*/
+  import '../../../dist/data-paginator.wc.js'
+  import '../../../dist/page-paginator.wc.js'
   import '../../../dist/table.wc.js'
   import '../../../dist/textarea.wc.js';
   import '../../../dist/button.wc.js'
@@ -365,3 +364,9 @@
   <jp-tab title="two">Content 2</jp-tab>
   <jp-tab title="three">Content 3</jp-tab>
 </jp-tabs>
+
+<jp-data-paginator>
+</jp-data-paginator>
+
+<jp-page-paginator>
+</jp-page-paginator>

@@ -46,7 +46,7 @@
   }
 </script>
 
-<div>
+<div class="paginator">
   {itemsPerPageLabel}
 
   <select bind:value={pageSize} on:change={() => pageSizeHandler()}>
@@ -87,3 +87,32 @@
     >
   </button>
 </div>
+
+<style>
+  .paginator {
+    font-size: 1rem;
+  }
+
+  select {
+    height: 32px;
+  }
+
+  button {
+    width: 32px;
+    height: 32px;
+    background: none;
+    border: none;
+    border-radius: 50%;
+    cursor: pointer;
+    transition: .3s;
+  }
+
+  button:disabled {
+    opacity: .5;
+    pointer-events: none;
+  }
+
+  button:not(:disabled):hover {
+    background: rgba(0,0,0,.08);
+  }
+</style>
