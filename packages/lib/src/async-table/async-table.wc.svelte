@@ -15,6 +15,14 @@
   export let headers: TableHeader[] = [];
   export let sort: TableSort;
   export let service: TableService;
+  export let getData = async () => {
+    const data = await service.get(sort);
+
+    rows = data.rows;
+    hasMore = data.hasMore;
+
+    loading = false;
+  }
 
   let loading = true;
   let hasMore = false;
@@ -87,12 +95,7 @@
   }
 
   onMount(async () => {
-    const data = await service.get(sort);
-
-    rows = data.rows;
-    hasMore = data.hasMore;
-
-    loading = false;
+    await getData();
   });
 </script>
 
