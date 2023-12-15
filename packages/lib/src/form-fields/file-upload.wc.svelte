@@ -56,16 +56,16 @@
     return value;
   }
 
-  async function handleLocalChange(file) {
+  async function handleLocalChange(f) {
     if (service && service.maxSize) {
-      if (file.size > service.maxSize) {
-        dispatch('rejected', { file: file.name, code: 'maxSize' });
+      if (f.size > service.maxSize) {
+        dispatch('rejected', { file: f.name, code: 'maxSize' });
         return;
       }
     }
     isLocal = true;
-    file = file;
-    value = file.name;
+    file = f;
+    value = f.name;
     if (file['type'].split('/')[0] === 'image') {
       const base64 = (await convertBase64(file)) as string;
       img = base64;
@@ -104,15 +104,9 @@
 
     let style: string = '';
     if (availableSpaceBelow < dropdownHeight) {
-      style = `
-            bottom: ${window.innerHeight - rect.top}px;
-            right: ${rect.left}px;
-        `;
+      style = `bottom: ${window.innerHeight - rect.top}px;right: ${rect.left}px;`;
     } else {
-      style = `
-            top: ${rect.bottom}px;
-            right: ${rect.left}px;
-        `;
+      style = `top:${rect.bottom}px;right: ${rect.left}px;`;
     }
 
     previewStyle = style;
@@ -148,15 +142,13 @@
       <span class="field-label" class:move={inputFocused || value}>{@html label}</span>
 
       <div class="field-icons">
-        <label for={`${name}`} class="field-icon field-icon-upload">
+        <label for={name} class="field-icon field-icon-upload">
           <input
             type="file"
-            id={`${name}`}
+            id={name}
             class="field-upload"
             accept={service && service.acceptedFiles}
-            on:change={(e) => {
-              filePicked(e);
-            }}
+            on:change={filePicked}
             on:focus={() => (inputFocused = true)}
             on:blur={() => (inputFocused = false)}
           />
