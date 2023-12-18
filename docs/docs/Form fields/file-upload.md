@@ -1,8 +1,8 @@
-# Image upload
+# File upload
 
 ### Description
 
-`<jp-image-upload>` is a component with functionality of `<input type="file">`, but also supports url links.
+`<jp-file-upload>` is a component with functionality of `<input type="file">`, but also supports url links.
 
 ### Attributes
 
@@ -10,12 +10,12 @@
 |:--------:|:------------:|:------------:|:------------------------:|
 |    id    |              |   `string`   |    unique identifier     |
 |    label    |              |   `string`   |    label of the input field     |
-| service  |      ✓       | [`ImageService`](#imageservice) |      image service       |
+| service  |      ✓       | [`FileService`](#fileservice) |      file service       |
 |   name   |      ✓       |   `string`   | name of the form control |
 
 ### Interfaces
 
-#### `ImageService`
+#### `FileService`
 
 Defines the accepted file types and provides a method to upload a file.
 
@@ -23,8 +23,9 @@ Defines the accepted file types and provides a method to upload a file.
 
 | **Name** | **Required** | **Type** |**Description** |
 | :----: | :----: | :----: | :---: |
-| acceptedFiles | ✓ | `string` | defines acceptable file types for uploading images |
-| uploadFile |  |`function` | uploads a file and returns a promise <br></br> which is a string that represents an identifier for the image |
+| acceptedFiles | ✓ | `string` | defines acceptable file types |
+| maxSize |  | `number` | max file size in bytes |
+| uploadFile |  | `(file: any, id?: string) => Promise<string>` | uploads a file and returns a promise <br></br> which is a string that represents a link to the file location |
 
 <br></br>
 
@@ -39,13 +40,13 @@ This component does not have any methods.
 ### Events
 
 - `value` 
-  - triggers when value of the quill changes
+  - triggers when value (file) changes
+- `rejected`
+  - triggers when added file is not accepted because it does not satisfy some service criteria
 
 ### Demo
 
 ```jsx live
-<form>
-  <jp-image-upload>
-  </jp-image-upload>
-</form>
+<jp-file-upload>
+</jp-file-upload>
 ```

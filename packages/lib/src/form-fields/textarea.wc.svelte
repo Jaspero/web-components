@@ -37,198 +37,249 @@
 
   export const getValue = () => value;
 
+  export let validationMessages = {};
+  export let requiredValidationMessage;
+  export let minlengthValidationMessage;
+  export let maxlengthValidationMessage;
+
   const dispatch = createEventDispatcher();
+
+  let textareaEl;
+
+  export const reportValidity = () => {
+    attachedInternals.reportValidity();
+  };
 
   $: {
     attachedInternals.checkValidity();
+    if (textareaEl) {
+      if (textareaEl.validity.tooShort) {
+        if (minlengthValidationMessage || validationMessages.minlength) {
+          attachedInternals.setValidity(
+            { customError: true },
+            minlengthValidationMessage || validationMessages.minlength
+          );
+        }
+      } else if (textareaEl.validity.tooLong) {
+        if (maxlengthValidationMessage || validationMessages.maxlength) {
+          attachedInternals.setValidity(
+            { customError: true },
+            maxlengthValidationMessage || validationMessages.maxlength
+          );
+        }
+      } else if (textareaEl.validity.valueMissing) {
+        if (requiredValidationMessage || validationMessages.required) {
+          attachedInternals.setValidity(
+            { customError: true },
+            requiredValidationMessage || validationMessages.required
+          );
+        }
+      }
+    }
     attachedInternals.setFormValue(value);
     dispatch('value', { value });
   }
 </script>
 
 <div class:has-hint={hint}>
-    <label class="field" class:disabled={disabled || readonly} class:required>
-        <span class="field-label" class:move={inputFocused || value}>{@html label}</span>
+  <label class="field" class:disabled={disabled || readonly} class:required>
+    <span class="field-label" class:move={inputFocused || value}>{@html label}</span>
 
-        <textarea
-                class="field-input"
-                aria-hidden={disabled || readonly}
-                tabindex={disabled || readonly ? -1 : 0}
-                {disabled}
-                {placeholder}
-                {required}
-                {readonly}
-                {id}
-                {name}
-                {minlength}
-                {maxlength}
-                {rows}
-                bind:value
-                on:focus={() => inputFocused = true}
-                on:blur={() => inputFocused = false}></textarea>
-    </label>
+    <textarea
+      class="field-input"
+      aria-hidden={disabled || readonly}
+      tabindex={disabled || readonly ? -1 : 0}
+      {disabled}
+      {placeholder}
+      {required}
+      {readonly}
+      {id}
+      {name}
+      {minlength}
+      {maxlength}
+      {rows}
+      bind:value
+      bind:this={textareaEl}
+      on:focus={() => (inputFocused = true)}
+      on:blur={() => (inputFocused = false)}
+    ></textarea>
+  </label>
 
-    {#if hint}
-        <span class="field-hint">
-            {@html hint}
-        </span>
-    {/if}
+  {#if hint}
+    <span class="field-hint">
+      {@html hint}
+    </span>
+  {/if}
 </div>
 
 <style>
-    .has-hint {
-        position: relative;
-        margin-bottom: 1.25rem;
-    }
+  .has-hint {
+    position: relative;
+    margin-bottom: 1.25rem;
+  }
 
-    .field {
-        position: relative;
-        display: -webkit-box;
-        display: -webkit-flex;
-        display: -moz-box;
-        display: -ms-flexbox;
-        display: flex;
-        -webkit-box-pack: justify;
-        -webkit-justify-content: space-between;
-        -moz-box-pack: justify;
-        -ms-flex-pack: justify;
-        justify-content: space-between;
-        -webkit-box-align: center;
-        -webkit-align-items: center;
-        -moz-box-align: center;
-        -ms-flex-align: center;
-        align-items: center;
-        text-align: left;
-        width: 100%;
-        min-height: 2rem;
-        -webkit-user-select: none;
-        -moz-user-select: none;
-        -ms-user-select: none;
-        user-select: none;
-        padding: 1px .75rem;
-        gap: .75rem;
-        background-color: var(--background-primary);
-        border: 1px solid var(--border-primary);
-        -webkit-border-radius: .25rem;
-        -moz-border-radius: .25rem;
-        border-radius: .25rem;
-    }
+  .field {
+    font-size: 0.75rem;
+    line-height: 1rem;
+    position: relative;
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: -moz-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-pack: justify;
+    -webkit-justify-content: space-between;
+    -moz-box-pack: justify;
+    -ms-flex-pack: justify;
+    justify-content: space-between;
+    -webkit-box-align: center;
+    -webkit-align-items: center;
+    -moz-box-align: center;
+    -ms-flex-align: center;
+    align-items: center;
+    text-align: left;
+    width: 100%;
+    min-height: 2rem;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    padding: 1px 0.75rem;
+    gap: 0.75rem;
+    background-color: var(--background-primary);
+    border: 1px solid var(--border-primary);
+    -webkit-border-radius: 0.25rem;
+    -moz-border-radius: 0.25rem;
+    border-radius: 0.25rem;
+  }
 
-    .field.required .field-label::after {
-        content: ' *';
-    }
+  .field.required .field-label::after {
+    content: ' *';
+  }
 
-    .field.disabled {
-        pointer-events: none;
-        opacity: .5;
-    }
+  .field.disabled {
+    pointer-events: none;
+    opacity: 0.5;
+  }
 
-    .field:focus-within {
-        border-color: var(--primary-color);
-        -webkit-box-shadow: inset 0 0 0 1px var(--primary-color);
-        -moz-box-shadow: inset 0 0 0 1px var(--primary-color);
-        box-shadow: inset 0 0 0 1px var(--primary-color);
-    }
+  .field:focus-within {
+    border-color: var(--primary-color);
+    -webkit-box-shadow: inset 0 0 0 1px var(--primary-color);
+    -moz-box-shadow: inset 0 0 0 1px var(--primary-color);
+    box-shadow: inset 0 0 0 1px var(--primary-color);
+  }
 
-    .field-label {
-        position: absolute;
-        top: 1.25rem;
-        font-size: 1rem;
-        -webkit-transition: transform .3s, top .3s, font-size .3s;
-        -o-transition: transform .3s, top .3s, font-size .3s;
-        -moz-transition: transform .3s, top .3s, font-size .3s;
-        transition: transform .3s, top .3s, font-size .3s;
-    }
+  .field-label {
+    position: absolute;
+    top: 1.25rem;
+    font-size: 1rem;
+    -webkit-transition:
+      transform 0.3s,
+      top 0.3s,
+      font-size 0.3s;
+    -o-transition:
+      transform 0.3s,
+      top 0.3s,
+      font-size 0.3s;
+    -moz-transition:
+      transform 0.3s,
+      top 0.3s,
+      font-size 0.3s;
+    transition:
+      transform 0.3s,
+      top 0.3s,
+      font-size 0.3s;
+  }
 
-    .field-label.move {
-        top: .25rem;
-        font-size: .75rem;
-    }
+  .field-label.move {
+    top: 0.25rem;
+    font-size: 0.75rem;
+  }
 
-    .field-label.move + .field-input:-moz-placeholder {
-        opacity: 1;
-    }
-    .field-label.move + .field-input::-moz-placeholder {
-        opacity: 1;
-    }
-    .field-label.move + .field-input:-ms-input-placeholder {
-        opacity: 1;
-    }
-    .field-label.move + .field-input::-ms-input-placeholder {
-        opacity: 1;
-    }
-    .field-label.move + .field-input::placeholder {
-        opacity: 1;
-    }
+  .field-label.move + .field-input:-moz-placeholder {
+    opacity: 1;
+  }
+  .field-label.move + .field-input::-moz-placeholder {
+    opacity: 1;
+  }
+  .field-label.move + .field-input:-ms-input-placeholder {
+    opacity: 1;
+  }
+  .field-label.move + .field-input::-ms-input-placeholder {
+    opacity: 1;
+  }
+  .field-label.move + .field-input::placeholder {
+    opacity: 1;
+  }
 
-    .field-input {
-        -webkit-box-flex: 1;
-        -webkit-flex: auto;
-        -moz-box-flex: 1;
-        -ms-flex: auto;
-        flex: auto;
-        width: 10rem;
-        font-size: 1rem;
-        white-space: nowrap;
-        overflow: hidden;
-        -o-text-overflow: ellipsis;
-        text-overflow: ellipsis;
-        margin: 1.5rem 0 0 0;
-        padding: 0 0 .25rem 0;
-        line-height: 1.375rem;
-        border: none;
-        outline: none;
-        -webkit-border-radius: 0;
-        -moz-border-radius: 0;
-        border-radius: 0;
-    }
+  .field-input {
+    -webkit-box-flex: 1;
+    -webkit-flex: auto;
+    -moz-box-flex: 1;
+    -ms-flex: auto;
+    flex: auto;
+    width: 10rem;
+    font-size: 1rem;
+    white-space: nowrap;
+    overflow: hidden;
+    -o-text-overflow: ellipsis;
+    text-overflow: ellipsis;
+    margin: 1.5rem 0 0 0;
+    padding: 0 0 0.25rem 0;
+    line-height: 1.375rem;
+    border: none;
+    outline: none;
+    -webkit-border-radius: 0;
+    -moz-border-radius: 0;
+    border-radius: 0;
+  }
 
-    .field-input:-moz-placeholder {
-        opacity: 0;
-        -moz-transition: opacity .3s;
-        transition: opacity .3s;
-    }
-    .field-input::-moz-placeholder {
-        opacity: 0;
-        -moz-transition: opacity .3s;
-        transition: opacity .3s;
-    }
-    .field-input:-ms-input-placeholder {
-        opacity: 0;
-        -ms-transition: opacity .3s;
-        transition: opacity .3s;
-    }
-    .field-input::-ms-input-placeholder {
-        opacity: 0;
-        -ms-transition: opacity .3s;
-        transition: opacity .3s;
-    }
-    .field-input::placeholder {
-        opacity: 0;
-        -webkit-transition: opacity .3s;
-        -o-transition: opacity .3s;
-        -moz-transition: opacity .3s;
-        transition: opacity .3s;
-    }
+  .field-input:-moz-placeholder {
+    opacity: 0;
+    -moz-transition: opacity 0.3s;
+    transition: opacity 0.3s;
+  }
+  .field-input::-moz-placeholder {
+    opacity: 0;
+    -moz-transition: opacity 0.3s;
+    transition: opacity 0.3s;
+  }
+  .field-input:-ms-input-placeholder {
+    opacity: 0;
+    -ms-transition: opacity 0.3s;
+    transition: opacity 0.3s;
+  }
+  .field-input::-ms-input-placeholder {
+    opacity: 0;
+    -ms-transition: opacity 0.3s;
+    transition: opacity 0.3s;
+  }
+  .field-input::placeholder {
+    opacity: 0;
+    -webkit-transition: opacity 0.3s;
+    -o-transition: opacity 0.3s;
+    -moz-transition: opacity 0.3s;
+    transition: opacity 0.3s;
+  }
 
-    .field-hint {
-        position: absolute;
-        top: 100%;
-        left: 0;
-        width: 100%;
-        height: 1.25rem;
-        line-height: 1.25rem;
-        font-size: .75rem;
-        padding: 0 .75rem;
-        white-space: nowrap;
-        overflow: hidden;
-        -o-text-overflow: ellipsis;
-        text-overflow: ellipsis;
-        color: var(--text-secondary);
-    }
+  .field-hint {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    width: 100%;
+    height: 1.25rem;
+    line-height: 1.25rem;
+    font-size: 0.75rem;
+    padding: 0 0.75rem;
+    white-space: nowrap;
+    overflow: hidden;
+    -o-text-overflow: ellipsis;
+    text-overflow: ellipsis;
+    color: var(--text-secondary);
+  }
 
-    .field-hint:hover {
-        z-index: 255;
-        overflow: unset;
-    }
+  .field-hint:hover {
+    z-index: 255;
+    overflow: unset;
+  }
 </style>

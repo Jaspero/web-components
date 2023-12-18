@@ -59,8 +59,6 @@ This component does not have any methods.
 ### Demo
 
 ```jsx live
-<form>
-  <jp-quill value="<p>Blup</p>">
-  </jp-quill>
-</form>
+<jp-quill value="<p>Blup</p>">
+</jp-quill>
 ```

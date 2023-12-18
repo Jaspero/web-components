@@ -13,10 +13,16 @@
 | placeholder | | `string` | temporary text that appears in an input field before any input is entered |
 | label | | `string` | shows at the top of an input |
 | minitems | | `number` | minimum number of items allowed |
+| minitemsValidationMessage | | `string` | validation message for when component does not satisfy minitems |
 | maxitems | |  `number` |  maximum number of items allowed |
+| maxitemsValidationMessage | | `string` | validation message for when component does not satisfy maxitems |
 | pattern | | `RegExp` | each chip has to satisfy pattern |
-| required | | `boolean` | determines if a chips is required |
+| patternValidationMessage | | `string` | validation message for when component does not satisfy pattern |
+| required | | `boolean` | determines if a chip is required |
+| requiredValidationMessage | | `string` | validation message for when component does not satisfy required |
 | unique | | `boolean` | determines if each chip has to be different | 
+| uniqueValidationMessage | | `string` | validation message for when component does not satisfy unique |
+| validationMessages | | `{[type]: string}` where `type` is `string` | compact way of writing validation messages in a single attribute |
 
 
 ### Slots
@@ -25,7 +31,8 @@ This component does not have any slots.
 
 ### Methods
 
-This component does not have any methods.
+- `reportValidity` 
+  - triggers reportValidity
 
 ### Events
 
@@ -35,8 +42,6 @@ This component does not have any methods.
 ### Demo
 
 ```jsx live
-<form>
-  <jp-chips name="chips" label="label12" placeholder="placeholder">
-  </jp-chips>
-</form>
+<jp-chips name="chips" label="label12" placeholder="placeholder">
+</jp-chips>
 ```

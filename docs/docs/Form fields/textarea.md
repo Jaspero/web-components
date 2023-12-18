@@ -16,9 +16,13 @@
 | name | ✓ | `string` |  name of the form control |
 | placeholder | | `string` | temporary text that appears in a <br></br> textarea field before any input is entered |
 | required | | `boolean` | determines if a textarea is required |
+| requiredValidationMessage | | `string` | validation message for when component does not satisfy required |
 | readonly | | `boolean` | determines if a textarea is read-only |
 | minlength | | `number` | minimum character count allowed |
+| minlengthValidationMessage | | `string` | validation message for when component does not satisfy minlength |
 | maxlength | | `number` | maximum character count allowed |
+| maxlengthValidationMessage | | `string` | validation message for when component does not satisfy maxlength |
+| validationMessages | | `{[type]: string}` where `type` is `string` | compact way of writing validation messages in a single attribute |
 
   
 ### Slots
@@ -27,7 +31,8 @@ This component does not have any slots.
 
 ### Methods
 
-This component does not have any methods.
+- `reportValidity` 
+  - triggers reportValidity
 
 ### Events
 
@@ -37,8 +42,6 @@ This component does not have any methods.
 ### Demo
 
 ```jsx live
-<form>
-  <jp-textarea value='pattern text' name='textarea'>
-  </jp-textarea>
-</form>
+<jp-textarea value='pattern text' name='textarea'>
+</jp-textarea>
 ```

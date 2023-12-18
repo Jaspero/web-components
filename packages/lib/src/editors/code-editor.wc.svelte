@@ -31,23 +31,37 @@
   export const getValue = () => value;
 
   const dispatch = createEventDispatcher();
-  
+
   onMount(() => {
+    if (typeof options == 'string') {
+      options = JSON.parse(options);
+    }
     editor = new window.CodeMirror(containerEl, options);
-    editor.setValue(value)
+    editor.setValue(value);
     editor.on('change', (e) => {
       value = editor.getValue();
 
       attachedInternals.checkValidity();
       attachedInternals.setFormValue(value);
-      
-      dispatch('value', {value});
-    })
+
+      dispatch('value', { value });
+    });
   });
 </script>
 
 {#if label}
   <span>{label}</span>
 {/if}
-<div bind:this={containerEl}></div>
+
+<div class="code-editor">
+  <div bind:this={containerEl}></div>
+</div>
+
 <textarea {name} {id} {value} hidden></textarea>
+
+<style>
+  .code-editor {
+    border: 1px solid var(--border-primary);
+    border-radius: 0.25rem;
+  }
+</style>

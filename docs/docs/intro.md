@@ -23,9 +23,17 @@ You can type this command into Command Prompt, Powershell, Terminal, or any othe
 
 ## Component dependancies
 
-Certain components require us to import scripts and styles in order for them to work properly.
+For components to display properly, you'll need to import default styles and css variables at the top level of your project;
 
-Easiest way to do this is to simply directly load the following *js* and *css* in your html.
+```js
+<style>
+  @import '@jaspero/web-components/dist/index.css';
+</style>
+```
+
+Some components require additional imports to function properly.
+
+Simplest way to do this is to load the following scripts and stylesheets;
 
 ### Quill
 ```html

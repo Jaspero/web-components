@@ -64,7 +64,7 @@
   .alert-container {
     display: flex;
     flex-direction: column;
-    gap: .5rem;
+    gap: 0.5rem;
     padding: 1rem;
     max-width: 40rem;
   }
@@ -91,6 +91,6 @@
   }
 
   .alert-container-message {
-    font-size: .875rem;
+    font-size: 0.875rem;
   }
 </style>
