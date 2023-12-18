@@ -86,7 +86,7 @@
   }
 }} />
 
-<div>
+<div on:click|preventDefault={() => {}}>
   <label class="field" class:disabled class:required>
     {#if label}
       <span class="field-label" class:move={inputFocused || value}>{@html label}</span>
