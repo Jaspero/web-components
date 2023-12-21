@@ -94,6 +94,8 @@
   }
 
   .tree-children {
+    display: flex;
+    flex-direction: column;
     padding-left: 50px;
   }
 </style>
