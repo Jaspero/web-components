@@ -13,7 +13,8 @@
 ### Slots
 
 Slot should be a list of `<jp-node>`'s.
-You can also nest trees by using `<jp-tree>` within the slot.
+If you want a node to be draggable, use `<jp-node-draggable>`.
+You can also nest trees by using `<jp-tree>` recursively.
 
 
 ### Methods
@@ -31,12 +32,12 @@ This component does not have any events.
 <div>
   <jp-tree title="Fruit"> 
     <jp-node>Apple</jp-node>
-    <jp-node>Banana</jp-node>
+    <jp-node-draggable>Banana</jp-node-draggable>
     <jp-node>Fruit Loops</jp-node>
   </jp-tree>
   <jp-tree title="Vegetables">
     <jp-tree title="Green">
-      <jp-node>Broccoli</jp-node>
+      <jp-node-draggable>Broccoli</jp-node-draggable>
       <jp-node>Brussels sprouts</jp-node>
     </jp-tree>
     <jp-node>Tomato</jp-node>
