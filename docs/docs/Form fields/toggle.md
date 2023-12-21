@@ -13,6 +13,8 @@
 | size | | `'large'`|`'small'` | size of the toggle button |
 | checked | | `boolean`| is on by default |
 | disabled | | `boolean`| determines if toggle is disabled |
+| required | | `boolean`| if true toggle needs to be check to pass validity |
+| requiredValidationMessage | | `string` | validation message for when component does not satisfy required |
 
   
 ### Slots
@@ -21,7 +23,8 @@ This component does not have any slots.
 
 ### Methods
 
-This component does not have any methods.
+- `reportValidity` 
+  - triggers reportValidity
 
 ### Events
 

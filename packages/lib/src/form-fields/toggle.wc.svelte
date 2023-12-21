@@ -23,15 +23,33 @@
   export let name: string = '';
   export let value: string = '';
   export let label: string | null = null;
+  export let required: boolean = false;
+  export let requiredValidationMessage: string = ''
   export let size: 'small' | 'large' = 'small';
   export let checked: boolean = false;
   export let disabled = false;
 
+  let checkboxEl;
+
   export const getValue = () => checked;
+
+  export const reportValidity = () => {
+    attachedInternals.reportValidity();
+  };
 
   const dispatch = createEventDispatcher();
   $: {
     attachedInternals.checkValidity();
+    if (checkboxEl) {
+      if (checkboxEl.validity.valueMissing) {
+        if (requiredValidationMessage) {
+          attachedInternals.setValidity(
+            { customError: true },
+            requiredValidationMessage
+          );
+        }
+      }
+    }
     dispatch('value', checked);
   }
 </script>
@@ -40,7 +58,7 @@
   <span class="label" style={`font-size: ${size == 'small' ? '12px' : '20px'}`}>{@html label}</span>
 {/if} 
 <label class={'switch ' + size}>
-  <input type="checkbox" {name} {disabled} bind:checked bind:value hidden />
+  <input type="checkbox" {name} {disabled} {required} bind:checked bind:value hidden bind:this={checkboxEl} />
   <span class="slider round" class:pointer={!disabled}></span>
 </label>
 
