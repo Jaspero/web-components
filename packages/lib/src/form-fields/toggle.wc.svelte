@@ -22,6 +22,7 @@
 
   export let name: string = '';
   export let value: string = '';
+  export let label: string | null = null;
   export let size: 'small' | 'large' = 'small';
   export let checked: boolean = false;
   export let disabled = false;
@@ -35,6 +36,9 @@
   }
 </script>
 
+{#if label}
+  <span class="label" style={`font-size: ${size == 'small' ? '12px' : '20px'}`}>{@html label}</span>
+{/if} 
 <label class={'switch ' + size}>
   <input type="checkbox" {name} {disabled} bind:checked bind:value hidden />
   <span class="slider round" class:pointer={!disabled}></span>
@@ -48,6 +52,11 @@
 
   .pointer {
     cursor: pointer;
+  }
+
+  .label {
+    display: block;
+    margin-bottom: 4px;
   }
 
   .large {
