@@ -1,0 +1,1 @@
+function a(e){if(e.tagName!=="JP-TREE"||!e.hasAttribute("value"))return"";let u={};u[e.getAttribute("value")]=[];for(const t of e.children)t.hasAttribute("value")&&(t.tagName=="JP-NODE"&&u[e.getAttribute("value")].push(t.getAttribute("value")),t.tagName=="JP-TREE"&&u[e.getAttribute("value")].push(a(t)));return u}export{a as jpTreeStructure};
