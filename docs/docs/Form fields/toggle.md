@@ -11,6 +11,7 @@
 | name | ✓ | `string` |  name of the form control |
 | size | | `'large'`|`'small'` | size of the toggle button |
 | checked | | `boolean`| is on by default |
+| disabled | | `boolean`| determines if toggle is disabled |
 
   
 ### Slots

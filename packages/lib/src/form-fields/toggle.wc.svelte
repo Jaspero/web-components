@@ -24,6 +24,7 @@
   export let value: string = '';
   export let size: 'small' | 'large' = 'small';
   export let checked: boolean = false;
+  export let disabled = false;
 
   export const getValue = () => checked;
 
@@ -35,14 +36,18 @@
 </script>
 
 <label class={'switch ' + size}>
-  <input type="checkbox" {name} bind:checked bind:value hidden />
-  <span class="slider round"></span>
+  <input type="checkbox" {name} {disabled} bind:checked bind:value hidden />
+  <span class="slider round" class:pointer={!disabled}></span>
 </label>
 
 <style>
   .switch {
     position: relative;
     display: inline-block;
+  }
+
+  .pointer {
+    cursor: pointer;
   }
 
   .large {
@@ -71,7 +76,6 @@
 
   .slider {
     position: absolute;
-    cursor: pointer;
     top: 0;
     left: 0;
     right: 0;
