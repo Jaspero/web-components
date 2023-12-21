@@ -12,7 +12,7 @@ export default defineConfig({
     outDir: '../../dist',
     emptyOutDir: true,
     lib: {
-      entry: ['./index.ts', './src/alert/render-alert.ts', './src/confirm/render-confirm.ts'],
+      entry: ['./index.ts', './src/alert/render-alert.ts', './src/confirm/render-confirm.ts', './src/tree/structure.ts'],
       formats: ['es']
     },
     rollupOptions: {

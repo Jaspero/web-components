@@ -21,6 +21,8 @@ You can also nest trees by using `<jp-tree>` recursively.
 
 This component does not have any methods.
 
+However, there is a `jpTreeStructure` function in `structure.js`. It takes a tree and returns object containing the structure of a tree. For it to work you have to assign `value` attribute to all nodes and subtrees.
+
 
 ### Events
 
