@@ -11,7 +11,7 @@
 <script src="https://cdn.quilljs.com/1.3.6/quill.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.14/mode/javascript/javascript.min.js"></script>
 <script src="/web-components/c/index.js" type="module"></script><link rel="stylesheet" href="/web-components/assets/css/styles.92ccbf68.css">
-<script src="/web-components/assets/js/runtime~main.dcb006bd.js" defer="defer"></script>
+<script src="/web-components/assets/js/runtime~main.5d875fbd.js" defer="defer"></script>
 <script src="/web-components/assets/js/main.5b19181e.js" defer="defer"></script>
 </head>
 <body class="navigation-with-keyboard">
@@ -19,11 +19,17 @@
 <h3 class="anchor anchorWithStickyNavbar_LWe7" id="description">Description<a href="#description" class="hash-link" aria-label="Direct link to Description" title="Direct link to Description">​</a></h3>
 <p><code>&lt;jp-toggle&gt;</code> is on/off switch component.</p>
 <h3 class="anchor anchorWithStickyNavbar_LWe7" id="attributes">Attributes<a href="#attributes" class="hash-link" aria-label="Direct link to Attributes" title="Direct link to Attributes">​</a></h3>
-<table><thead><tr><th style="text-align:center"><strong>Name</strong></th><th style="text-align:center"><strong>Required</strong></th><th style="text-align:center"><strong>Type</strong></th><th style="text-align:center"><strong>Description</strong></th></tr></thead><tbody><tr><td style="text-align:center">name</td><td style="text-align:center">✓</td><td style="text-align:center"><code>string</code></td><td style="text-align:center">name of the form control</td></tr><tr><td style="text-align:center">label</td><td style="text-align:center"></td><td style="text-align:center"><code>string</code></td><td style="text-align:center">text above the toggle</td></tr><tr><td style="text-align:center">size</td><td style="text-align:center"></td><td style="text-align:center"><code>&#x27;large&#x27;</code></td><td style="text-align:center"><code>&#x27;small&#x27;</code></td></tr><tr><td style="text-align:center">checked</td><td style="text-align:center"></td><td style="text-align:center"><code>boolean</code></td><td style="text-align:center">is on by default</td></tr><tr><td style="text-align:center">disabled</td><td style="text-align:center"></td><td style="text-align:center"><code>boolean</code></td><td style="text-align:center">determines if toggle is disabled</td></tr></tbody></table>
+<table><thead><tr><th style="text-align:center"><strong>Name</strong></th><th style="text-align:center"><strong>Required</strong></th><th style="text-align:center"><strong>Type</strong></th><th style="text-align:center"><strong>Description</strong></th></tr></thead><tbody><tr><td style="text-align:center">name</td><td style="text-align:center">✓</td><td style="text-align:center"><code>string</code></td><td style="text-align:center">name of the form control</td></tr><tr><td style="text-align:center">label</td><td style="text-align:center"></td><td style="text-align:center"><code>string</code></td><td style="text-align:center">text above the toggle</td></tr><tr><td style="text-align:center">size</td><td style="text-align:center"></td><td style="text-align:center"><code>&#x27;large&#x27;</code></td><td style="text-align:center"><code>&#x27;small&#x27;</code></td></tr><tr><td style="text-align:center">checked</td><td style="text-align:center"></td><td style="text-align:center"><code>boolean</code></td><td style="text-align:center">is on by default</td></tr><tr><td style="text-align:center">disabled</td><td style="text-align:center"></td><td style="text-align:center"><code>boolean</code></td><td style="text-align:center">determines if toggle is disabled</td></tr><tr><td style="text-align:center">required</td><td style="text-align:center"></td><td style="text-align:center"><code>boolean</code></td><td style="text-align:center">if true toggle needs to be check to pass validity</td></tr><tr><td style="text-align:center">requiredValidationMessage</td><td style="text-align:center"></td><td style="text-align:center"><code>string</code></td><td style="text-align:center">validation message for when component does not satisfy required</td></tr></tbody></table>
 <h3 class="anchor anchorWithStickyNavbar_LWe7" id="slots">Slots<a href="#slots" class="hash-link" aria-label="Direct link to Slots" title="Direct link to Slots">​</a></h3>
 <p>This component does not have any slots.</p>
 <h3 class="anchor anchorWithStickyNavbar_LWe7" id="methods">Methods<a href="#methods" class="hash-link" aria-label="Direct link to Methods" title="Direct link to Methods">​</a></h3>
-<p>This component does not have any methods.</p>
+<ul>
+<li><code>reportValidity</code>
+<ul>
+<li>triggers reportValidity</li>
+</ul>
+</li>
+</ul>
 <h3 class="anchor anchorWithStickyNavbar_LWe7" id="events">Events<a href="#events" class="hash-link" aria-label="Direct link to Events" title="Direct link to Events">​</a></h3>
 <ul>
 <li><code>value</code>
