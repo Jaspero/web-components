@@ -46,5 +46,7 @@ export function formatReturnDate(date: Date, format: string, formatter?: (date: 
       return date.toJSON();
     case 'utc':
       return date.toUTCString();
+    case 'iso':
+      return date.toISOString();
   }
 }
