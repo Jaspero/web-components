@@ -20,6 +20,10 @@
 
   export let options: string[] | string = [];
   export let value = '';
+  export let asyncOptions = null;
+  export let lag: number = 300;
+  let loading = false;
+  let lagTimeout;
   export let label = 'autocomplete';
   export let id: string | null = null;
   export let name: string | null = null;
@@ -51,6 +55,18 @@
     if (Array.isArray(options)) {
       filteredOptions = options.filter((el) => el.toLowerCase().includes(value.toLowerCase()));
     }
+  }
+
+  $: {
+    dispatch('value', value);
+
+    loading = true;
+    clearTimeout(lagTimeout);
+    lagTimeout = setTimeout(async () => {
+      options = await asyncOptions(value);
+      loading = false;
+    }, lag);
+
     attachedInternals.checkValidity();
     if (inputEl) {
       if (inputEl.validity.patternMismatch) {
@@ -83,7 +99,6 @@
         }
       }
     }
-    dispatch('value', value);
   }
 
   onMount(() => {
@@ -116,16 +131,20 @@
 
     {#if open}
       <div class="menu">
-        {#each filteredOptions as option}
-          <button
-            class="menu-button"
-            on:mousedown|preventDefault={() => {
-              value = option;
-              inputEl.blur();
-            }}
-            on:click|preventDefault>{option}</button
-          >
-        {/each}
+        {#if !loading}
+          {#each filteredOptions as option}
+            <button
+              class="menu-button"
+              on:mousedown|preventDefault={() => {
+                value = option;
+                inputEl.blur();
+              }}
+              on:click|preventDefault>{option}</button
+            >
+          {/each}
+        {:else}
+          Loading...
+        {/if}
       </div>
     {/if}
   </label>

@@ -9,6 +9,8 @@
 | **Name** | **Required** | **Type** | **Description** |
 | :----: | :----: | :----: | :---: |
 | options | | `string[]` | list of autocomplete options |
+| asyncOptions | | `(string) => Promise<array>` | async function that takes value of input and returns new options |
+| lag | | `number` | time it takes for asyncOptions to be called after input stops changing |
 | label | | `string` | shows at the top of an input |
 | placeholder | | `string` | temporary text that appears in an <br></br> input field before any input is entered |
 | name | ✓ | `string` |  name of the form control |
