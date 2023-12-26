@@ -7,7 +7,7 @@
 
 <script lang="ts">
   import { clickOutside } from '../clickOutside';
-  export let label: string = 'text';
+  export let label: string = 'label';
   export let mode: 'static' | 'dynamic' = 'static';
   let cloud;
   let bindingEl;
