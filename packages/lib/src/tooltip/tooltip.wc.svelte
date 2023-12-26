@@ -6,27 +6,28 @@
 />
 
 <script lang="ts">
+  import { clickOutside } from '../clickOutside';
   export let label: string = 'text';
   export let mode: 'static' | 'dynamic' = 'static';
   let cloud;
-  let spanEl;
+  let bindingEl;
   let cloudStyle = '';
 
   function toggleStaticCloud() {
     cloud.removeAttribute('hidden');
-    const rect = spanEl.getBoundingClientRect();
+    const rect = bindingEl.getBoundingClientRect();
     const availableSpaceRight = window.innerWidth - rect.right;
     const maxWidth = 250;
 
     if (availableSpaceRight < maxWidth) {
       cloudStyle = `
         top: 0;
-        left: -100%;
+        left: -101%;
       `;
     } else {
       cloudStyle = `
         top: 0;
-        left: ${rect.right - rect.x - 10}px; 
+        left: ${rect.right - rect.x + 5}px; 
       `;
     }
   }
@@ -47,25 +48,18 @@
       {@html label}
     </span>
   {:else}
-    <span 
-      bind:this={spanEl}
-      on:mouseover={() => toggleStaticCloud()} 
-      on:mouseout={() => {
-        if(!cloud.matches(':hover')){
-          cloud.setAttribute('hidden', true)
-        }
-      }}
-    >
+    <!-- svelte-ignore a11y-click-events-have-key-events -->
+    <span on:click={() => toggleStaticCloud()} bind:this={bindingEl} style="cursor: pointer">
       {@html label}
     </span>
   {/if}
   <div
     class="cloud"
     bind:this={cloud}
-    on:mouseout={() => {
-      console.log('aa')
-      if(spanEl && !spanEl.matches(':hover')){
-        cloud.setAttribute('hidden', true)
+    use:clickOutside
+    on:click_outside={() => {
+      if(!cloud.hasAttribute('hidden')){
+        cloud.setAttribute('hidden', 'true')
       }
     }}
     style={`position: ${mode == 'static' ? 'absolute' : 'fixed'};` + cloudStyle}
