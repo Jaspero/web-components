@@ -241,13 +241,11 @@
 
   onMount(() => {
     if (typeof options == 'string') options = JSON.parse(options);
-    if (value) {
-      options.forEach((el) => {
-        if (el.value == value) {
-          selected = el.label ? el.label : el.value;
-        }
-      });
-    }
+    (options as any).forEach((el) => {
+      if (el.value == value) {
+        selected = el.label ? el.label : el.value;
+      }
+    });
   });
 </script>
 
@@ -262,7 +260,7 @@
     on:click|preventDefault={toggleMenu}
     on:keydown={handleKeydown}
   >
-    <span class="select-label" class:move={value || open}>
+    <span class="select-label" class:move={selected || open}>
       {label || 'Select an option'}
     </span>
 
