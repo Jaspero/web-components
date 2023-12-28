@@ -35,6 +35,7 @@
   import '../../../dist/color.wc.js'
   import '../../../dist/input.wc.js'
   import '../../../dist/tooltip.wc.js'
+  import '../../../dist/multisearch.wc.js'
   import { renderAlert } from '../../../dist/render-alert.js';
   import { renderConfirm } from '../../../dist/render-confirm.js';
   import { FirebaseTableService } from './firebase-table.service';
@@ -45,7 +46,13 @@
   let formEl: HTMLFormElement;
 
   onMount(() => {
+    const multisearch = document.createElement('jp-multisearch')
+    multisearch.options = [{"value":"aaa"}, {"value":"bbb"}, {"value":"ccc"}]
+    multisearch.loadMore = async () => {
+      return [{"value":"g"}, {"value":"f"}, {"value":"h"}]
+    }
+    el.appendChild(multisearch)
   });
 </script>
 
-<jp-tooltip label='tooltip'>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed eleifend odio eu tellus scelerisque, sit amet convallis est dapibus. Vestibulum ornare nunc scelerisque nisl iaculis, scelerisque imperdiet purus tempus. Integer consequat eros sit amet risus auctor maximus. Morbi facilisis sagittis sem non maximus. Phasellus sodales nec ligula vitae varius. In vestibulum, lacus at rhoncus lacinia, velit mauris varius dolor, ac tincidunt velit turpis sit amet metus. In condimentum est nunc, sed tempus dolor vestibulum et. Sed sed ipsum iaculis, dapibus nulla id, egestas odio. In eros urna, vehicula ac accumsan ultricies, placerat eu libero. Pellentesque ac fermentum ipsum.</jp-tooltip>
+<div bind:this={el}></div>
