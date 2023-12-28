@@ -33,7 +33,10 @@
   export let pattern: string | null = null;
   export let placeholder: string = '';
   export let inputFocused: boolean = false;
-
+  export let list: string | null = null;
+  export let min: number | null = null;
+  export let max: number | null = null;
+  export let step: number | null | 'any' = null;
   export let validationMessages = {};
   export let requiredValidationMessage;
   export let minlengthValidationMessage;
@@ -188,6 +191,23 @@
         {minlength}
         {maxlength}
         {pattern}
+        bind:value
+        on:focus={() => (inputFocused = true)}
+        on:blur={() => (inputFocused = false)}
+      />
+    {:else if type === 'number'}
+      <input
+        type="number"
+        bind:this={inputEl}
+        class="field-input"
+        aria-hidden={disabled || readonly}
+        tabindex={disabled || readonly ? -1 : 0}
+        {list}
+        {min}
+        {max}
+        {placeholder}
+        {step}
+        {readonly}
         bind:value
         on:focus={() => (inputFocused = true)}
         on:blur={() => (inputFocused = false)}

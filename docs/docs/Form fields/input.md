@@ -14,6 +14,10 @@
 | id | | `string`| unique identifier |
 | hint | | `string` | shows below the input |
 | disabled | | `boolean` | determines if an input is disabled |
+| list | | `string` | id of datalist (list of predefined values) |
+| min | | `number` | minimal value on numeric input |
+| max | | `number` | maximal value on numeric input |
+| step | | `number` | `'any'` | number that specifies step on numeric input |
 | required | | `boolean` | determines if an input is required |
 | requiredValidationMessage | | `string` | validation message for when component does not satisfy required |
 | readonly | | `boolean` | determines if an input is read-only |
