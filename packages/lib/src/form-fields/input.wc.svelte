@@ -202,12 +202,19 @@
         class="field-input"
         aria-hidden={disabled || readonly}
         tabindex={disabled || readonly ? -1 : 0}
+        {required}
+        {disabled}
+        {minlength}
+        {maxlength}
+        {name}
+        {id}
         {list}
         {min}
         {max}
         {placeholder}
         {step}
         {readonly}
+        {pattern}
         bind:value
         on:focus={() => (inputFocused = true)}
         on:blur={() => (inputFocused = false)}
