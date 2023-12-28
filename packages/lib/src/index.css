@@ -16,6 +16,11 @@ button {
   border: none;
 }
 
+button:disabled,
+button[disabled] {
+  cursor: unset
+}
+
 :root {
   /* Foundational Colors */
   --primary-color: #e65100; /* Main color for brand and CTAs */
