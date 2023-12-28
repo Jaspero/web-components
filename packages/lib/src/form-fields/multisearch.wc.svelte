@@ -35,6 +35,7 @@
   export const getValue = () => options.filter((el) => el.selected).map((el) => el.value);
   export let loadMore = null;
   let loadingMore = false;
+  let searchValue = '';
 
   export let validationMessages = {};
   export let requiredValidationMessage;
@@ -50,6 +51,7 @@
   let searchTimeout;
   let displayValue;
   let filteredOptions;
+  let searchFocused = false;
 
   const dispatch = createEventDispatcher();
 
@@ -58,7 +60,16 @@
   };
 
   $: if (Array.isArray(options)) {
-    filteredOptions = options;
+    filteredOptions = options.filter((el) => el.selected);
+    filteredOptions = filteredOptions.concat(
+      options.filter((el) => {
+        if (el.label) {
+          return !el.selected && el.label.toLowerCase().includes(searchValue.toLowerCase());
+        } else {
+          return !el.selected && el.value.toLowerCase().includes(searchValue.toLowerCase());
+        }
+      })
+    );
     const selects = options.filter((el) => el.selected).length;
     if (selects == 0 && required) {
       attachedInternals.setValidity(
@@ -127,7 +138,7 @@
     if (open) {
       setTimeout(() => {
         // Find the first non-disabled option
-        const firstEnabledOptionIndex = options.findIndex((option) => !option.disabled);
+        const firstEnabledOptionIndex = filteredOptions.findIndex((option) => !option.disabled);
         if (firstEnabledOptionIndex !== -1) {
           optionElements[firstEnabledOptionIndex].focus();
         }
@@ -145,14 +156,14 @@
 
   function getAdjacentFocusableIndex(currentIndex: number, direction: 'next' | 'previous'): number {
     if (direction === 'next') {
-      for (let i = currentIndex + 1; i < options.length; i++) {
-        if (!options[i].disabled) {
+      for (let i = currentIndex + 1; i < filteredOptions.length; i++) {
+        if (!filteredOptions[i].disabled) {
           return i;
         }
       }
     } else if (direction === 'previous') {
       for (let i = currentIndex - 1; i >= 0; i--) {
-        if (!options[i].disabled) {
+        if (!filteredOptions[i].disabled) {
           return i;
         }
       }
@@ -161,6 +172,7 @@
   }
 
   function handleKeydown(event: KeyboardEvent) {
+    if(searchFocused) return;
     const currentIndex = optionElements.findIndex((el) => el === document.activeElement);
     let nextIndex;
 
@@ -183,7 +195,7 @@
         event.preventDefault();
 
         // Find the first non-disabled option's index
-        const firstEnabledOptionIndex = options.findIndex((option) => !option.disabled);
+        const firstEnabledOptionIndex = filteredOptions.findIndex((option) => !option.disabled);
 
         // If there's a non-disabled option, focus on it
         if (firstEnabledOptionIndex !== -1) {
@@ -198,14 +210,14 @@
         event.preventDefault();
 
         // Find the last non-disabled option's index by starting from the end of the list
-        const lastEnabledOptionIndex = options
+        const lastEnabledOptionIndex = filteredOptions
           .slice()
           .reverse()
           .findIndex((option) => !option.disabled);
 
         // Convert the reversed index back to the original array's indexing
         const actualIndex =
-          lastEnabledOptionIndex !== -1 ? options.length - 1 - lastEnabledOptionIndex : -1;
+          lastEnabledOptionIndex !== -1 ? filteredOptions.length - 1 - lastEnabledOptionIndex : -1;
 
         // If there's a non-disabled option, focus on it
         if (actualIndex !== -1) {
@@ -228,7 +240,7 @@
         optionElements[nextIndex].focus();
       }
 
-      // Handle tabbing through options
+      // Handle tabbing through filteredOptions
       if (event.key === 'Tab') {
         event.preventDefault(); // Prevent default tabbing behavior
         isTabbing = true;
@@ -261,7 +273,7 @@
 
         searchTerm += event.key;
 
-        const matchingIndex = options
+        const matchingIndex = filteredOptions
           .map((el) => (el.label ? el.label : el.value))
           .findIndex((option) => option.toLowerCase().includes(searchTerm.toLowerCase()));
 
@@ -357,7 +369,7 @@
   >
     <div class="menu" style={menuStyle}>
       <div class="search">
-        <input type="text" class="search-input" />
+        <input type="text" class="search-input" bind:value={searchValue} on:focus={() => searchFocused = true} on:blur={() => searchFocused = false} />
       </div>
       <div class="menu-buttons">
         {#each filteredOptions as option, index (option)}
@@ -389,11 +401,17 @@
       {#if loadMore != null}
         <div class="loadmore">
           {#if !loadingMore}
-          <button on:click|preventDefault={async () => {
-            loadingMore = true
-            options = options.concat(await loadMore())
-            loadingMore = false
-          }}> Load more </button>
+            {@html '<!--tried to wrap in sync function to try to fix event.target on overlay click-->'}
+            <button
+              on:click|preventDefault|stopPropagation={async () => {
+                  loadingMore = true;
+                  options = options.concat(await loadMore());
+                  loadingMore = false;
+                }
+              }
+            >
+              Load more
+            </button>
           {:else}
             <button disabled>Loading...</button>
           {/if}
