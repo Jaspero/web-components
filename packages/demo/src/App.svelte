@@ -49,6 +49,7 @@
     const multisearch = document.createElement('jp-multisearch')
     multisearch.options = [{"value":"aaa"}, {"value":"bbb"}, {"value":"ccc"}]
     multisearch.loadMore = async () => {
+      multisearch.loadMore = null
       return [{"value":"g"}, {"value":"f"}, {"value":"h"}]
     }
     el.appendChild(multisearch)
