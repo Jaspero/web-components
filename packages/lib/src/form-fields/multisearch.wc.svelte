@@ -17,6 +17,7 @@
 
 <script lang="ts">
   import { createEventDispatcher, onMount } from 'svelte';
+  import type SearchService from '../types/search.service';
 
   export let attachedInternals: ElementInternals;
   export let minSelects: number = 0;
@@ -33,9 +34,10 @@
   export let name: string = '';
   export let label = 'Label';
   export const getValue = () => options.filter((el) => el.selected).map((el) => el.value);
-  export let loadMore = null;
+  export let searchService: SearchService;
   let loadingMore = false;
-  let searchValue = '';
+  let loadingSearch = false;
+  let searchValue: string = '';
 
   export let validationMessages = {};
   export let requiredValidationMessage;
@@ -47,10 +49,9 @@
   let bindingElement;
   let menuStyle;
   let optionElements = []; // Array to store references to option buttons
-  let searchTerm = '';
-  let searchTimeout;
+  let searchTerm = ''; // focus search term
+  let searchTimeout; // focus search timeout
   let displayValue;
-  let filteredOptions;
   let searchFocused = false;
 
   const dispatch = createEventDispatcher();
@@ -60,16 +61,7 @@
   };
 
   $: if (Array.isArray(options)) {
-    filteredOptions = options.filter((el) => el.selected);
-    filteredOptions = filteredOptions.concat(
-      options.filter((el) => {
-        if (el.label) {
-          return !el.selected && el.label.toLowerCase().includes(searchValue.toLowerCase());
-        } else {
-          return !el.selected && el.value.toLowerCase().includes(searchValue.toLowerCase());
-        }
-      })
-    );
+    options = options.filter((el) => el.selected).concat(options.filter((el) => !el.selected));
     const selects = options.filter((el) => el.selected).length;
     if (selects == 0 && required) {
       attachedInternals.setValidity(
@@ -108,6 +100,21 @@
     );
   }
 
+  async function handleSearch() {
+    options = options.filter((el) => el.selected);
+    loadingSearch = true;
+    const searchResults = await searchService.search(searchValue);
+    console.log(searchResults);
+    options = [
+      ...options,
+      ...searchResults.map((el) => {
+        el.selected = false;
+        return el;
+      })
+    ] as any;
+    loadingSearch = false;
+  }
+
   function toggleMenu(event) {
     if (event && event.target && event.target.closest('.menu')) {
       return;
@@ -138,7 +145,7 @@
     if (open) {
       setTimeout(() => {
         // Find the first non-disabled option
-        const firstEnabledOptionIndex = filteredOptions.findIndex((option) => !option.disabled);
+        const firstEnabledOptionIndex = options.findIndex((option) => !option.disabled);
         if (firstEnabledOptionIndex !== -1) {
           optionElements[firstEnabledOptionIndex].focus();
         }
@@ -156,14 +163,14 @@
 
   function getAdjacentFocusableIndex(currentIndex: number, direction: 'next' | 'previous'): number {
     if (direction === 'next') {
-      for (let i = currentIndex + 1; i < filteredOptions.length; i++) {
-        if (!filteredOptions[i].disabled) {
+      for (let i = currentIndex + 1; i < options.length; i++) {
+        if (!options[i].disabled) {
           return i;
         }
       }
     } else if (direction === 'previous') {
       for (let i = currentIndex - 1; i >= 0; i--) {
-        if (!filteredOptions[i].disabled) {
+        if (!options[i].disabled) {
           return i;
         }
       }
@@ -172,7 +179,7 @@
   }
 
   function handleKeydown(event: KeyboardEvent) {
-    if(searchFocused) return;
+    if (searchFocused) return;
     const currentIndex = optionElements.findIndex((el) => el === document.activeElement);
     let nextIndex;
 
@@ -195,7 +202,7 @@
         event.preventDefault();
 
         // Find the first non-disabled option's index
-        const firstEnabledOptionIndex = filteredOptions.findIndex((option) => !option.disabled);
+        const firstEnabledOptionIndex = options.findIndex((option) => !option.disabled);
 
         // If there's a non-disabled option, focus on it
         if (firstEnabledOptionIndex !== -1) {
@@ -210,14 +217,14 @@
         event.preventDefault();
 
         // Find the last non-disabled option's index by starting from the end of the list
-        const lastEnabledOptionIndex = filteredOptions
+        const lastEnabledOptionIndex = options
           .slice()
           .reverse()
           .findIndex((option) => !option.disabled);
 
         // Convert the reversed index back to the original array's indexing
         const actualIndex =
-          lastEnabledOptionIndex !== -1 ? filteredOptions.length - 1 - lastEnabledOptionIndex : -1;
+          lastEnabledOptionIndex !== -1 ? options.length - 1 - lastEnabledOptionIndex : -1;
 
         // If there's a non-disabled option, focus on it
         if (actualIndex !== -1) {
@@ -240,7 +247,7 @@
         optionElements[nextIndex].focus();
       }
 
-      // Handle tabbing through filteredOptions
+      // Handle tabbing through options
       if (event.key === 'Tab') {
         event.preventDefault(); // Prevent default tabbing behavior
         isTabbing = true;
@@ -273,7 +280,7 @@
 
         searchTerm += event.key;
 
-        const matchingIndex = filteredOptions
+        const matchingIndex = options
           .map((el) => (el.label ? el.label : el.value))
           .findIndex((option) => option.toLowerCase().includes(searchTerm.toLowerCase()));
 
@@ -368,11 +375,22 @@
     role="dialog"
   >
     <div class="menu" style={menuStyle}>
-      <div class="search">
-        <input type="text" class="search-input" bind:value={searchValue} on:focus={() => searchFocused = true} on:blur={() => searchFocused = false} />
-      </div>
+      {#if searchService.search}
+        <div class="search">
+          <input
+            type="text"
+            class="search-input"
+            on:input={() => {
+              if (!loadingSearch) handleSearch();
+            }}
+            bind:value={searchValue}
+            on:focus={() => (searchFocused = true)}
+            on:blur={() => (searchFocused = false)}
+          />
+        </div>
+      {/if}
       <div class="menu-buttons">
-        {#each filteredOptions as option, index (option)}
+        {#each options as option, index (option)}
           <button
             class="menu-button"
             class:selected={option.selected}
@@ -397,18 +415,19 @@
             {/if}
           </button>
         {/each}
+        {#if loadingSearch}
+          Loading...
+        {/if}
       </div>
-      {#if loadMore != null}
+      {#if searchService.loadMore && !loadingSearch}
         <div class="loadmore">
           {#if !loadingMore}
-            {@html '<!--tried to wrap in sync function to try to fix event.target on overlay click-->'}
             <button
               on:click|preventDefault|stopPropagation={async () => {
-                  loadingMore = true;
-                  options = options.concat(await loadMore());
-                  loadingMore = false;
-                }
-              }
+                loadingMore = true;
+                options = options.concat(await searchService.loadMore(searchValue));
+                loadingMore = false;
+              }}
             >
               Load more
             </button>
