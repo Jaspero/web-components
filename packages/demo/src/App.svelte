@@ -52,7 +52,12 @@
       async search(str){
         await new Promise(resolve => setTimeout(resolve, 1500));
         return [{"value": "str+1"}, {"value": "str+2"}]
-      }
+      },
+      async loadMore(str){
+        await new Promise(resolve => setTimeout(resolve, 1500));
+        this.loadMore = null
+        return [{"value": str}]
+      } 
     }
     el.appendChild(multisearch)
   });
