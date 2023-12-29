@@ -48,7 +48,7 @@
   onMount(() => {
     const multisearch = document.createElement('jp-multisearch')
     multisearch.value = 'aaa, bbb'
-    multisearch.searchService = {
+    multisearch.service = {
       i: 0,
       async search(str){
         await new Promise(resolve => setTimeout(resolve, 1500));
