@@ -47,8 +47,9 @@
 
   onMount(() => {
     const multisearch = document.createElement('jp-multisearch')
-    multisearch.options = [{"value":"aaa"}, {"value":"bbb"}, {"value":"ccc"}]
+    multisearch.value = 'aaa, bbb'
     multisearch.searchService = {
+      i: 0,
       async search(str){
         await new Promise(resolve => setTimeout(resolve, 1500));
         return [{"value": "str+1"}, {"value": "str+2"}]
@@ -57,7 +58,11 @@
         await new Promise(resolve => setTimeout(resolve, 1500));
         this.loadMore = null
         return [{"value": str}]
-      } 
+      },
+      async getSingle(value){
+        await new Promise(resolve => setTimeout(resolve, 1500));
+        return {value: value, label: this.i++}
+      }
     }
     el.appendChild(multisearch)
   });
