@@ -9,6 +9,7 @@
 | **Name** | **Required** | **Type** | **Description** |
 | :----: | :----: | :----: | :---: |
 | id | | `string` | unique identifier |
+| value | | `string`| value of the input field |
 | name | ✓ | `string` | name of the form control |
 | placeholder | | `string` | temporary text that appears in an input field before any input is entered |
 | label | | `string` | shows at the top of an input |

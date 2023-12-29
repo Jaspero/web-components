@@ -54,7 +54,10 @@
   };
 
   $: {
-    value = chips.join(',');
+    if(value) chips = value.split(',')
+  }
+
+  $: {
     if (!value) {
       attachedInternals.setValidity(
         { customError: true },
@@ -91,13 +94,6 @@
     attachedInternals.setFormValue(value);
     dispatch('value', chips);
   }
-
-  $: {
-    if (!inputFocused && inputValue) {
-      chips = [...chips, inputValue];
-      inputValue = '';
-    }
-  }
 </script>
 
 <svelte:window
@@ -107,16 +103,20 @@
         e.preventDefault();
         if (inputValue) {
           chips = [...chips, inputValue];
+          value = chips.join(',')
           inputValue = '';
         }
       }
       if (e.key == 'Backspace' && !inputValue) {
         chips = chips.slice(0, -1);
+        value = chips.join(',')
       }
     }
   }}
 />
 
+<!-- svelte-ignore a11y-click-events-have-key-events -->
+<!-- svelte-ignore a11y-no-static-element-interactions -->
 <div on:click|preventDefault={() => {}}>
   <label class="field" class:disabled class:required>
     {#if label}
@@ -132,6 +132,7 @@
             on:click|preventDefault={() => {
               chips.splice(chips.indexOf(chip), 1);
               chips = chips;
+              value = chips.join(',')
             }}
           >
             <svg xmlns="http://www.w3.org/2000/svg" height=".875rem" viewBox="0 0 512 512">
@@ -148,7 +149,14 @@
         class="field-container-input"
         {placeholder}
         on:focus={() => (inputFocused = true)}
-        on:blur={() => (inputFocused = false)}
+        on:blur={() => {
+          inputFocused = false;
+          if (inputValue) {
+            chips = [...chips, inputValue];
+            value = chips.join(',')
+            inputValue = '';
+          }
+        }}
         bind:value={inputValue}
       />
     </div>
