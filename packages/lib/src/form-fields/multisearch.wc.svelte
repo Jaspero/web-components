@@ -22,9 +22,7 @@
   export let attachedInternals: ElementInternals;
   export let minSelects: number = 0;
   export let maxSelects: number | null = null;
-  export let options:
-    | Array<{ label?: string; value: string; selected?: boolean; disabled?: boolean }>
-    | string = [];
+  let options: Array<{ label?: string; value: string; selected?: boolean; disabled?: boolean }> = [];
   export let disabled: boolean = false;
   export let required: boolean = false;
   export let hint: string = '';
@@ -35,6 +33,7 @@
   export let label = 'Label';
   export const getValue = () => options.filter((el) => el.selected).map((el) => el.value);
   export let searchService: SearchService;
+  let initialLoad = true;
   let loadingMore = false;
   let loadingSearch = false;
   let searchValue: string = '';
@@ -60,7 +59,7 @@
     attachedInternals.reportValidity();
   };
 
-  $: if (Array.isArray(options)) {
+  $: {
     options = options.filter((el) => el.selected).concat(options.filter((el) => !el.selected));
     const selects = options.filter((el) => el.selected).length;
     if (selects == 0 && required) {
@@ -301,27 +300,23 @@
     document.documentElement.style.overflowY = '';
   }
 
-  onMount(() => {
-    if (typeof options == 'string') options = JSON.parse(options);
+  onMount(async () => {
     if (!maxSelects) {
       maxSelects = options.length;
     }
-    options = options.map((el) => {
-      if (el.selected == undefined) {
-        el.selected = false;
-      }
-      return el;
-    });
     if (value) {
-      if (typeof value == 'string') {
-        value.split(',').forEach((el) => {
-          options[options.findIndex((o) => o.value == el)].selected = true;
-        });
-      } else {
-        value.forEach((el) => {
-          options[options.findIndex((o) => o.value == el)].selected = true;
-        });
-      }
+      initialLoad = true;
+      await Promise.all(value.split(',').map(async (el) => {
+        let single;
+        if(searchService.getSingle){
+          single = await searchService.getSingle(el)
+          single.selected = true
+        } else {
+          single = {value: el, selected: true}
+        }
+        options = [...options, single]
+      }))
+      initialLoad = false;
     }
   });
 </script>
@@ -333,12 +328,12 @@
     class="select"
     class:toggled={open}
     bind:this={bindingElement}
-    {disabled}
+    disabled={disabled || initialLoad}
     on:click|preventDefault={toggleMenu}
     on:keydown={handleKeydown}
   >
     <span class="select-label" class:move={internalValue || open}>
-      {label || 'Select an option'}
+      {initialLoad ? 'Loading...' : label || 'Select an option'}
     </span>
 
     <span class="select-option">
