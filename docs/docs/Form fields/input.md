@@ -12,7 +12,6 @@
 | placeholder | | `string` | temporary text that appears in an <br></br> input field before any input is entered |
 | name | ✓ | `string` |  name of the form control |
 | id | | `string`| unique identifier |
-| hint | | `string` | shows below the input |
 | disabled | | `boolean` | determines if an input is disabled |
 | list | | `string` | id of datalist (list of predefined values) |
 | min | | `number` | minimal value on numeric input |
@@ -32,7 +31,8 @@
   
 ### Slots
 
-This component does not have any slots.
+- `hint`
+  - renders below the input field
 
 ### Methods
 - `reportValidity` 

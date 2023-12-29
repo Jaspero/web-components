@@ -1,7 +1,7 @@
 <svelte:options
   customElement={{
     tag: 'jp-input',
-    shadow: 'none',
+    shadow: 'open',
     extend: (customElementConstructor) => {
       return class extends customElementConstructor {
         static formAssociated = true;
@@ -21,7 +21,6 @@
   export let attachedInternals: ElementInternals;
   export let value: string = '';
   export let label: string = 'Label';
-  export let hint: string = '';
   export let required: boolean = false;
   export let disabled: boolean = false;
   export let readonly: boolean = false;
@@ -91,7 +90,7 @@
   }
 </script>
 
-<div class:has-hint={hint}>
+<div class:has-hint={$$slots.hint}>
   <label class="field" class:disabled={disabled || readonly} class:required>
     <span class="field-label" class:move={inputFocused || value}>{@html label}</span>
 
@@ -222,10 +221,10 @@
     {/if}
   </label>
 
-  {#if hint}
-    <span class="field-hint">
-      {@html hint}
-    </span>
+  {#if $$slots.hint}
+    <div class="field-hint">
+      <slot name="hint"/>
+    </div>
   {/if}
 </div>
 
