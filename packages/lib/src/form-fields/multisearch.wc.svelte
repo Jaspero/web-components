@@ -32,7 +32,7 @@
   export let name: string = '';
   export let label = 'Label';
   export const getValue = () => options.filter((el) => el.selected).map((el) => el.value);
-  export let searchService: SearchService;
+  export let service: SearchService;
   let initialLoad = true;
   let loadingMore = false;
   let loadingSearch = false;
@@ -102,7 +102,7 @@
   async function handleSearch() {
     options = options.filter((el) => el.selected);
     loadingSearch = true;
-    const searchResults = await searchService.search(searchValue);
+    const searchResults = await service.search(searchValue);
     console.log(searchResults);
     options = [
       ...options,
@@ -308,8 +308,8 @@
       initialLoad = true;
       await Promise.all(value.split(',').map(async (el) => {
         let single;
-        if(searchService.getSingle){
-          single = await searchService.getSingle(el)
+        if(service.getSingle){
+          single = await service.getSingle(el)
           single.selected = true
         } else {
           single = {value: el, selected: true}
@@ -370,7 +370,7 @@
     role="dialog"
   >
     <div class="menu" style={menuStyle}>
-      {#if searchService.search}
+      {#if service.search}
         <div class="search">
           <input
             type="text"
@@ -414,13 +414,13 @@
           Loading...
         {/if}
       </div>
-      {#if searchService.loadMore && !loadingSearch}
+      {#if service.loadMore && !loadingSearch}
         <div class="loadmore">
           {#if !loadingMore}
             <button
               on:click|preventDefault|stopPropagation={async () => {
                 loadingMore = true;
-                options = options.concat(await searchService.loadMore(searchValue));
+                options = options.concat(await service.loadMore(searchValue));
                 loadingMore = false;
               }}
             >
