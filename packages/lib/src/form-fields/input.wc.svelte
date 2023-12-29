@@ -93,7 +93,11 @@
 <div class:has-hint={$$slots.hint}>
   <label class="field" class:disabled={disabled || readonly} class:required>
     <span class="field-label" class:move={inputFocused || value}>{@html label}</span>
-
+    {#if $$slots.prefix && (value || inputFocused)}
+      <div class="prefix">
+        <slot name="prefix" />
+      </div>
+    {/if}
     {#if type === 'text'}
       <input
         type="text"
@@ -219,11 +223,16 @@
         on:blur={() => (inputFocused = false)}
       />
     {/if}
+    {#if $$slots.suffix}
+      <div class="suffix">
+        <slot name="suffix" />
+      </div>
+    {/if}
   </label>
 
   {#if $$slots.hint}
     <div class="field-hint">
-      <slot name="hint"/>
+      <slot name="hint" />
     </div>
   {/if}
 </div>
@@ -320,6 +329,10 @@
     -o-transform: translateY(0);
     transform: translateY(0);
     font-size: 0.75rem;
+  }
+
+  .prefix {
+    padding: 1rem 0 0 0;
   }
 
   .field-label.move + .field-input:-moz-placeholder {

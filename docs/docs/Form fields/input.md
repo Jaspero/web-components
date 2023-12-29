@@ -33,6 +33,10 @@
 
 - `hint`
   - renders below the input field
+- `prefix`
+  - renders in front of the input field
+- `suffix`
+  - renders after the input field
 
 ### Methods
 - `reportValidity` 
