@@ -294,11 +294,7 @@
     }
   }
 
-  $: if (open) {
-    document.documentElement.style.overflowY = 'hidden';
-  } else {
-    document.documentElement.style.overflowY = '';
-  }
+  $: document.documentElement.style.overflowY = open ? 'hidden' : '';
 
   onMount(async () => {
     if (!maxSelects) {
