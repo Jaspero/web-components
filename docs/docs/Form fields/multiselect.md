@@ -2,7 +2,7 @@
 
 ### Description
 
-`<jp-multiselection>` is a field component with multi `<select>` functionality.
+`<jp-multiselect>` is a field component with multi `<select>` functionality.
 
 ### Attributes
 
