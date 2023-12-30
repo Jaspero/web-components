@@ -202,7 +202,9 @@
   class:borderTop
   on:click|preventDefault={toggleMenu}
 >
-  <span class="field-label" class:move={openPicker || internalValue}>{@html label}</span>
+  {#if label}
+    <span class="field-label" class:move={openPicker || internalValue}>{@html label}</span>
+  {/if}
   <p class="field-input">{displayedDateString}</p>
 
   <span class="field-icon">

@@ -83,7 +83,9 @@
 
 <div class:has-hint={hint}>
   <label class="field" class:disabled={disabled || readonly} class:required>
-    <span class="field-label" class:move={inputFocused || value}>{@html label}</span>
+    {#if label}
+      <span class="field-label" class:move={inputFocused || value}>{@html label}</span>
+    {/if}
 
     <textarea
       class="field-input"

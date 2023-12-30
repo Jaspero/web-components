@@ -110,7 +110,9 @@
 
 <div>
   <label class="field">
-    <span class="field-label" class:move={open || value}>{@html label}</span>
+    {#if label}
+      <span class="field-label" class:move={open || value}>{@html label}</span>
+    {/if}
     <input
       class="field-input"
       type="text"

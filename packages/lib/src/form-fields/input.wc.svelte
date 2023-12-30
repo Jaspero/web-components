@@ -20,7 +20,7 @@
 
   export let attachedInternals: ElementInternals;
   export let value: string = '';
-  export let label: string = 'Label';
+  export let label: string = '';
   export let required: boolean = false;
   export let disabled: boolean = false;
   export let readonly: boolean = false;
@@ -92,7 +92,9 @@
 
 <div class:has-hint={$$slots.hint}>
   <label class="field" class:disabled={disabled || readonly} class:required>
-    <span class="field-label" class:move={inputFocused || value}>{@html label}</span>
+    {#if label}
+      <span class="field-label" class:move={inputFocused || value}>{@html label}</span>
+    {/if}
     {#if $$slots.prefix && (value || inputFocused)}
       <div class="prefix">
         <slot name="prefix" />

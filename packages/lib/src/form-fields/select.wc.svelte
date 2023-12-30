@@ -260,9 +260,11 @@
     on:click|preventDefault={toggleMenu}
     on:keydown={handleKeydown}
   >
-    <span class="select-label" class:move={selected || open}>
-      {label || 'Select an option'}
-    </span>
+    {#if label}
+      <span class="select-label" class:move={selected || open}>
+        {label || 'Select an option'}
+      </span>
+    {/if}
 
     <span class="select-option">
       {selected || ''}

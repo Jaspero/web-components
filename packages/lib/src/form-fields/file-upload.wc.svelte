@@ -139,7 +139,9 @@
         on:drop|preventDefault={(e) => handleDrop(e)}
       ></div>
     {:else}
-      <span class="field-label" class:move={inputFocused || value}>{@html label}</span>
+      {#if label}
+        <span class="field-label" class:move={inputFocused || value}>{@html label}</span>
+      {/if}
 
       <div class="field-icons">
         <label for={name} class="field-icon field-icon-upload">
