@@ -12,6 +12,8 @@
   import type { TableSort } from '../types/table-sort.interface';
   import type { TableService } from '../types/table.service';
 
+  export let showArrangingColumns = true;
+  export let showExport = true;
   export let headers: TableHeader[] = [];
   export let sort: TableSort;
   export let service: TableService;
@@ -22,11 +24,15 @@
     hasMore = data.hasMore;
 
     loading = false;
-  }
+  };
 
   let loading = true;
   let hasMore = false;
   let rows: any[] = [];
+  let exportLoading = false;
+  let activeHeaders: TableHeader[];
+
+  $: activeHeaders = headers.filter((it) => !it.disabled);
 
   const dispatch = createEventDispatcher();
 
@@ -94,17 +100,68 @@
     });
   }
 
+  async function exportData() {
+    exportLoading = true;
+
+    const data = await service.export();
+    const resolved = await Promise.all(data.map(async (row, index) => {
+      const columns = await Promise.all(
+        activeHeaders.map(header => handleColumn(header, row, index))
+      );
+
+      return columns.map(col => `"${col || ''}"`).join(',');
+    }));
+    const blob = new Blob(
+      [
+        [
+          activeHeaders
+            .map((h) => h.label)
+            .map((label) => `"${label}"`)
+            .join(','),
+          ...resolved
+        ].join('\n')
+      ],
+      { type: 'text/csv' }
+    );
+    const link = document.createElement('a');
+
+    link.href = URL.createObjectURL(blob);
+    link.download = 'export.csv';
+    link.click();
+
+    exportLoading = false;
+  }
+
+  async function arrangeColumns() {}
+
   onMount(async () => {
     await getData();
   });
 </script>
 
 <div class="table-card">
+  {#if showArrangingColumns || showExport}
+    <div class="table-header">
+      {#if showArrangingColumns}
+        <button type="button" class="table-button settings-button">Arrange Columns</button>
+      {/if}
+      {#if showExport}
+        &nbsp;
+        <button
+          type="button"
+          class="table-button settings-button"
+          on:click={exportData}
+          class:loading={exportLoading}>Export</button
+        >
+      {/if}
+    </div>
+  {/if}
+
   <div class="table-container">
     <table>
-      {#if headers}
+      {#if activeHeaders}
         <tr>
-          {#each headers as header}
+          {#each activeHeaders as header}
             <th class:sortable={header.sortable} on:click={() => adjustSort(header)}>
               <span>{@html header.label}</span>
               {#if sort?.key === header.key}
@@ -118,7 +175,7 @@
       {#if rows}
         {#each rows as row, index}
           <tr>
-            {#each headers as header}
+            {#each activeHeaders as header}
               <td on:click={(e) => rowClick(row, index, header, e)}>
                 {#await handleColumn(header, row, index) then val}
                   <span class="cell">
@@ -134,7 +191,7 @@
   </div>
 
   <div class="table-actions">
-    <button class="load-button" class:loading disabled={!hasMore} on:click={loadMore}>
+    <button class="table-button load-button" class:loading disabled={!hasMore} on:click={loadMore}>
       {#if loading}
         <span class="spinner"></span>
         Loading
@@ -190,7 +247,14 @@
     padding: 1rem;
   }
 
-  .load-button {
+  .table-header {
+    padding: 1rem;
+    min-height: 68px;
+    display: flex;
+    justify-content: flex-end;
+  }
+
+  .table-button {
     display: -webkit-box;
     display: -webkit-flex;
     display: -moz-box;
@@ -212,12 +276,20 @@
     min-width: 4rem;
     height: 2.25rem;
     padding: 0 1rem;
-    background-color: var(--primary-color);
-    color: var(--text-on-primary);
     -webkit-user-select: none;
     -moz-user-select: none;
     -ms-user-select: none;
     user-select: none;
+  }
+
+  .settings-button {
+    background-color: var(--background-secondary);
+    color: var(--text-on-secondary);
+  }
+
+  .load-button {
+    background-color: var(--primary-color);
+    color: var(--text-on-primary);
   }
 
   .load-button:disabled {
