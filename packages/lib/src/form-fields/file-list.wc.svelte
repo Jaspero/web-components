@@ -105,9 +105,9 @@
   function handleDrop(e) {
     if (e.dataTransfer.files.length) {
       internalFiles = internalFiles.concat(filesToObjs(Array.from(e.dataTransfer.files)));
-      hoveringFile = false;
       dispatch('change', { unsaved: internalFiles.filter((el) => !el.saved).length });
     }
+    hoveringFile = false;
   }
 
   const returnFileSize = (size) => {
@@ -376,6 +376,12 @@
     object-fit: cover;
     min-width: 100%;
     min-height: 100%;
+    user-drag: none;
+    -webkit-user-drag: none;
+    user-select: none;
+    -moz-user-select: none;
+    -webkit-user-select: none;
+    -ms-user-select: none;
   }
 
   .file-icon svg {
