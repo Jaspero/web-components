@@ -11,6 +11,8 @@
 | headers | ✓ | [`TableHeader[]`](#tableheader) | column names |
 | sort | ✓ | [`TableSort`](#tablesort) | current sorting state of the table |
 | service | ✓ | [`TableService`](#tableservice) | table data service |
+| showArrangingColumns | | `boolean` | should the button for arranging columns be shown |
+| showExport | | `boolean` | should the button for export be shown |
 
 <br></br>
 
@@ -30,6 +32,7 @@ Defines the structure of a table header.
 | sortMethod | | `function` | used for custom sorting with ascending ( *'asc'* ) or descending ( *'desc'* ) direction |
 | pipes | |  [`TablePipe`](#tablepipe) | used for transforming table data |
 | fallback | | `any` | optional value used as a replacement if the specific value isn't available |
+| disabled | | `boolean` | disabled headers aren't shown by default but are available when arranging columns |  
 
 <br></br>
 
@@ -63,6 +66,8 @@ Defines the sorting configuration of data.
 | :----: | :----: | :----: | 
 | get | `function` | retrieves data with optional sorting and returns a promise containing data rows |
 | loadMore | `function`| loads additional data with optional sorting and returns a promise containing rows of data |
+| export | `function` | retrieves all data that should be included when export is triggered by the table |
+| arrangeColumns | `function` | This method is intended for persisting column organization |
 
 <br></br>
 
