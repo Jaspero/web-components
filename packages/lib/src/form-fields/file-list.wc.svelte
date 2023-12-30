@@ -98,6 +98,7 @@
     if (e.target.files.length) {
       internalFiles = internalFiles.concat(filesToObjs(Array.from(e.target.files)));
       dispatch('change', { unsaved: internalFiles.filter((el) => !el.saved).length });
+      browseFilesEl.value = null
     }
   }
 
