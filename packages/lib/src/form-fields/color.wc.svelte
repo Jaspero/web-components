@@ -23,6 +23,8 @@
   export let name;
   export let value = 'e65100';
   export let label = ''
+  export let disabled = false;
+
 
   export const getValue = () => value;
 
@@ -35,7 +37,7 @@
 </script>
 
 <div>
-  <input type="color" {id} {name} bind:value />
+  <input type="color" {id} {name} {disabled} bind:value />
   {#if label}
     <!-- svelte-ignore a11y-label-has-associated-control -->
     <label>{label}</label>

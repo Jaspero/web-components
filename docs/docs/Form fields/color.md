@@ -12,6 +12,7 @@
 | id |  | `string` |  id of the form control |
 | label |  | `string` |  text right to the color picker |
 | value | | `string`| value of the color picker |
+| disabled | | `boolean`| determines if an input is disabled |
 
   
 ### Slots
