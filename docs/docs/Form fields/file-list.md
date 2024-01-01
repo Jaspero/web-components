@@ -12,6 +12,7 @@
 |    id    |              |   `string`   |    unique identifier     |
 |   name   |      ✓       |   `string`   | name of the form control |
 | service  |      ✓       | [`FileService`](#fileservice) |      file service       |
+| sortable | | `boolean` | enables/disables drag and drop sort |
 | maxfiles | | `number` | maximum number of files allowed |
 | maxfilesValidationMessage | | `string` | validation message for when component does not satisfy maxfiles |
 | minfiles | |  `number` |  minimum number of files allowed |

@@ -25,13 +25,18 @@
   export let service: FileService;
   export let maxfiles = null;
   export let minfiles = null;
-    export let maxfilesValidationMessage;
+  export let maxfilesValidationMessage;
   export let minfilesValidationMessage;
   export let validationMessages = {};
+  export let sortable = true;
+  let grabbedEl = null;
+  let grabbedIndex = -1;
+  let startingY, startingX;
   let internalFiles = [];
   let browseFilesEl;
   let loading = true;
   let hoveringFile = false;
+  let fileElements = [];
 
   export const getValue = () => value;
 
@@ -98,7 +103,7 @@
     if (e.target.files.length) {
       internalFiles = internalFiles.concat(filesToObjs(Array.from(e.target.files)));
       dispatch('change', { unsaved: internalFiles.filter((el) => !el.saved).length });
-      browseFilesEl.value = null
+      browseFilesEl.value = null;
     }
   }
 
@@ -148,8 +153,8 @@
 
   onMount(async () => {
     if (value) {
-      if(Array.isArray(value)){
-        value = value.join(',')
+      if (Array.isArray(value)) {
+        value = value.join(',');
       }
       const urls = value.split(',');
       await Promise.allSettled(
@@ -172,6 +177,30 @@
     loading = false;
   });
 </script>
+
+<svelte:document
+  on:mousemove={(e) => {
+    if (grabbedEl) {
+      e.preventDefault();
+      grabbedEl.style.transform = 'translateY(' + (e.clientY - startingY) + 'px)';
+      grabbedEl.style.transform += 'translateX(' + (e.clientX - startingX) + 'px)';
+    }
+  }}
+  on:mouseup={(e) => {
+    if (grabbedEl) {
+      e.preventDefault();
+      const fileEl = e.target.closest('.file');
+      if (fileEl) {
+        const i = [...fileEl.parentNode.children].indexOf(fileEl);
+        const tmp = internalFiles[i];
+        internalFiles[i] = internalFiles[grabbedIndex];
+        internalFiles[grabbedIndex] = tmp;
+      }
+      grabbedEl.style = '';
+      grabbedEl = null;
+    }
+  }}
+/>
 
 <!-- svelte-ignore a11y-no-static-element-interactions -->
 <div
@@ -209,7 +238,21 @@
   {:else}
     <div class="files">
       {#each internalFiles as file, index}
-        <div class="file">
+        <!-- svelte-ignore a11y-mouse-events-have-key-events -->
+        <div
+          class="file"
+          class:grab={sortable}
+          on:mousedown={(e) => {
+            if (sortable) {
+              grabbedEl = fileElements[index];
+              grabbedIndex = index;
+              grabbedEl.style.pointerEvents = 'none';
+              startingX = e.clientX;
+              startingY = e.clientY;
+            }
+          }}
+          bind:this={fileElements[index]}
+        >
           <button class="file-remove" on:click|preventDefault={() => removeFile(index)}>
             <svg xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 512 512"
               ><!--! Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2023 Fonticons, Inc. --><path
@@ -269,6 +312,12 @@
 <input type="text" {id} {name} bind:value hidden />
 
 <style>
+  .grab {
+    cursor: grab;
+  }
+  .grab:active {
+    cursor: grabbing;
+  }
   .dropzone {
     position: relative;
     background-color: #f4f4f4;
@@ -357,7 +406,7 @@
   }
 
   .file-remove {
-        cursor: pointer;
+    cursor: pointer;
     position: absolute;
     right: 0;
     top: 0;
@@ -385,7 +434,7 @@
     -moz-user-select: none;
     -webkit-user-select: none;
     -ms-user-select: none;
-      }
+  }
 
   .file-icon svg {
     height: 50%;
