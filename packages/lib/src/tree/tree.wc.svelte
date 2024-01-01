@@ -7,7 +7,8 @@
 
 <script lang="ts">
   export let title = 'Tree Title';
-  let expanded = false;
+  export let collapsable = true;
+  let expanded = !collapsable;
 </script>
 
 <svelte:document
@@ -27,7 +28,11 @@
 
 <div class="jp-tree">
   <div class="tree-header">
-    <button class="tree-arrow" on:click={() => (expanded = !expanded)}>
+    <button
+      class="tree-arrow"
+      on:click={() => expanded = !expanded}
+      disabled={!collapsable}
+    >
       <svg
         xmlns="http://www.w3.org/2000/svg"
         height="1em"

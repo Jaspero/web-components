@@ -9,6 +9,7 @@
 | **Name** | **Required** | **Type** | **Description** |
 | :----: | :----: | :----: | :---: |
 | title | |`string` | Title of the tree |
+| collapsable | | `boolean` | collapse enabled |
   
 ### Slots
 
