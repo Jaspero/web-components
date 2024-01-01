@@ -7,8 +7,10 @@
 ### Attributes
 | **Name** | **Required** | **Type** | **Description** |
 | :----: | :----: | :----: | :---: |
+| value | | `string` | initial value |
 | options | ✓ |`Array<{name?: string, value: any, disabled?: boolean;}>` | select options |
 | name | ✓ | `string` |  name of the form control |
+| inline | | `boolean` | row/columns |
 | required | | `boolean` | determines if a selection is required |
 | requiredValidationMessage | | `string` | validation message for when component does not satisfy required |
   

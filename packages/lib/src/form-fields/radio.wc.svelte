@@ -24,6 +24,7 @@
   export let required: boolean = false;
   export let value: string = '';
   export let name: string | null = null;
+  export let inline: boolean = false;
 
   export let requiredValidationMessage;
 
@@ -54,7 +55,7 @@
   });
 </script>
 
-<div class="flex flex-col">
+<div style={`display: flex; flex-direction: ${inline ? 'row' : 'column'}`}>
   {#each options as option}
     <label class:disabled={option.disabled}>
       <input
