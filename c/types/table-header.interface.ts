@@ -7,4 +7,5 @@ export interface TableHeader {
   sortMethod?: (direction: 'asc' | 'desc', one?: any, two?: any) => 1 | -1 | 0;
   pipes?: TablePipe[];
   fallback?: any;
+  disabled?: boolean;
 }
