@@ -25,7 +25,7 @@
   export let service: FileService;
   export let maxfiles = null;
   export let minfiles = null;
-  export let maxfilesValidationMessage;
+    export let maxfilesValidationMessage;
   export let minfilesValidationMessage;
   export let validationMessages = {};
   let internalFiles = [];
@@ -148,6 +148,9 @@
 
   onMount(async () => {
     if (value) {
+      if(Array.isArray(value)){
+        value = value.join(',')
+      }
       const urls = value.split(',');
       await Promise.allSettled(
         urls.map(async (url) => {
@@ -354,7 +357,7 @@
   }
 
   .file-remove {
-    cursor: pointer;
+        cursor: pointer;
     position: absolute;
     right: 0;
     top: 0;
@@ -382,7 +385,7 @@
     -moz-user-select: none;
     -webkit-user-select: none;
     -ms-user-select: none;
-  }
+      }
 
   .file-icon svg {
     height: 50%;
