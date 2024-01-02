@@ -97,7 +97,6 @@
 
     const rows = [];
     let currentRow = [];
-    let currentDate = new Date(firstDayOfMonth);
 
     // previous month
     for (let i = firstDayOfMonth.getDay() - 1; i >= 0; i--) {
@@ -112,21 +111,42 @@
 
     // current month
     for (let i = 1; i <= daysInMonth; i++) {
-      currentRow.push({ year, month, day: i });
-      if (currentRow.length === 7) {
+      currentRow.push({
+        year,
+        month,
+        day: i,
+      });
+
+      if (currentRow.length % 7 === 0) {
         rows.push(currentRow);
         currentRow = [];
       }
     }
 
-    // next month
-    for (let i = 1; currentRow.length < 7; i++) {
+    // remaining cells with days from the next month
+    const remainingCells = 42 - currentRow.length;
+    for (let i = 1; i <= remainingCells; i++) {
       const nextMonthDate = new Date(year, month + 1, i);
-      currentRow.push({ year: nextMonthDate.getFullYear(), month: nextMonthDate.getMonth(), day: nextMonthDate.getDate() });
+      currentRow.push({
+        year: nextMonthDate.getFullYear(),
+        month: nextMonthDate.getMonth(),
+        day: nextMonthDate.getDate(),
+      });
+    }
+
+    // Ensure there are exactly 6 rows
+    while (rows.length < 6) {
+      rows.push(currentRow.slice(0, 7));
+      currentRow = currentRow.slice(7);
     }
 
     return rows;
   };
+
+
+
+
+
 
   $: pickerRows = getCalendarRows(pickerYear, pickerMonth + 1);  // I've added this +1 because of indicies
 
