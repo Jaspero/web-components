@@ -34,17 +34,19 @@
   export let disabled: boolean = false;
 
   export let chips: Array<string> = [];
-
+    
   export let inputFocused: boolean = false;
   export let inputValue: string = '';
-
+  
   export let validationMessages = {};
   export let requiredValidationMessage;
   export let minitemsValidationMessage;
   export let maxitemsValidationMessage;
   export let uniqueValidationMessage;
   export let patternValidationMessage;
-
+  
+  let inputEl;
+  
   export const getValue = () => chips;
 
   const dispatch = createEventDispatcher();
@@ -117,7 +119,7 @@
 
 <!-- svelte-ignore a11y-click-events-have-key-events -->
 <!-- svelte-ignore a11y-no-static-element-interactions -->
-<div>
+<div on:click|preventDefault={() => inputEl.focus()}>
   <label class="field" class:disabled class:required>
     {#if label}
       <span class="field-label" class:move={inputFocused || value}>{@html label}</span>
@@ -158,6 +160,7 @@
           }
         }}
         bind:value={inputValue}
+        bind:this={inputEl}
       />
     </div>
   </label>
