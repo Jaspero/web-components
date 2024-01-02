@@ -265,6 +265,7 @@
     -ms-flex-align: center;
     align-items: center;
     text-align: left;
+    box-sizing: border-box;
     width: 100%;
     height: 3rem;
     -webkit-user-select: none;
