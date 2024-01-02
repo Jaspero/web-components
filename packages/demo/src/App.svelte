@@ -21,6 +21,7 @@
   import '../../../dist/image-upload.wc.js'
   import '../../../dist/paginator.wc.js'*/
   import '../../../dist/table.wc.js';
+  import '../../../dist/file-list.wc.js';
   import '../../../dist/textarea.wc.js';
   import '../../../dist/button.wc.js';
   import '../../../dist/link.wc.js';

@@ -329,8 +329,10 @@
   .dropzone {
     position: relative;
     background-color: #f4f4f4;
-    width: 750px;
+    max-width: 750px;
     height: 500px;
+    width: 100%;
+    border-radius: .25rem;
     border: 1px dashed #e6510030;
   }
 
