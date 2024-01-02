@@ -6,6 +6,8 @@
 />
 
 <script lang="ts">
+  import { clickOutside } from '../clickOutside';
+
   export let label = 'Menu';
   // Default needs to be invisible rather than unrendered because of .offsetHeight
   // It's pushed left by default so it doesn't expand the document size when not open
@@ -37,7 +39,15 @@
     {@html label}
   </button>
 
-  <div class="menu" bind:this={menuEl} style={menuStyle}>
+  <div
+    class="menu"
+    bind:this={menuEl}
+    style={menuStyle}
+    use:clickOutside
+    on:click_outside={() => {
+      if (open) toggleMenu();
+    }}
+  >
     <slot />
   </div>
 </div>
@@ -69,6 +79,9 @@
     z-index: 100;
     max-width: 280px;
     padding: 8px 0;
-    box-shadow: 0 5px 5px -3px #0003, 0 8px 10px 1px #00000024, 0 3px 14px 2px #0000001f;
+    box-shadow:
+      0 5px 5px -3px #0003,
+      0 8px 10px 1px #00000024,
+      0 3px 14px 2px #0000001f;
   }
 </style>
