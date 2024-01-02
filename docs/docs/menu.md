@@ -27,8 +27,10 @@ This component does not have any events.
 
 ### Demo
 
+```jsx live
 <jp-menu>
   <button style={{width: '200px'}} onClick={() => alert('first')}>First item</button>
   <button style={{width: '200px'}} onClick={() => alert('second')}>Second item</button>
   <button style={{width: '200px'}} onClick={() => alert('third')}>Third item</button>
 </jp-menu>
+```
