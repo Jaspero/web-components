@@ -60,12 +60,14 @@
   $: {
     dispatch('value', value);
 
-    loading = true;
-    clearTimeout(lagTimeout);
-    lagTimeout = setTimeout(async () => {
-      options = await asyncOptions(value);
-      loading = false;
-    }, lag);
+    if(asyncOptions){
+      loading = true;
+      clearTimeout(lagTimeout);
+      lagTimeout = setTimeout(async () => {
+        options = await asyncOptions(value);
+        loading = false;
+      }, lag);
+    }
 
     attachedInternals.checkValidity();
     if (inputEl) {
