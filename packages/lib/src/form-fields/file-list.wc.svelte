@@ -20,6 +20,7 @@
 
   export let attachedInternals: ElementInternals;
   export let value: string = '';
+  export let label: string = '';
   export let id: string = '';
   export let name: string = '';
   export let service: FileService;
@@ -201,6 +202,13 @@
     }
   }}
 />
+
+{#if label}
+  <!-- svelte-ignore a11y-label-has-associated-control -->
+  <label>
+    {@html label}
+  </label>
+{/if}
 
 <!-- svelte-ignore a11y-no-static-element-interactions -->
 <div

@@ -9,6 +9,7 @@
 | Name | Required |   Type   |     Description      |
 |:--------:|:------------:|:------------:|:------------------------:|
 |    value    |              |   `string` (list of urls separated by comma)   |    initial value     |
+|    label    |              |   `string` (HTML)   |    displayed above the field     |
 |    id    |              |   `string`   |    unique identifier     |
 |   name   |      ✓       |   `string`   | name of the form control |
 | service  |      ✓       | [`FileService`](#fileservice) |      file service       |
