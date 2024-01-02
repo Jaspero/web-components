@@ -35,6 +35,7 @@ export default () => {
   import('./src/tree/node.wc.svelte');
   import('./src/tree/node-draggable.wc.svelte');
   import('./src/tree/structure');
+  import('./src/menu/menu.wc.svelte');
   import('./src/tooltip/tooltip.wc.svelte');
   import('./src/form-fields/slider.wc.svelte');
   import('./src/form-fields/file-list.wc.svelte');
