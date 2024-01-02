@@ -117,7 +117,7 @@
 
 <!-- svelte-ignore a11y-click-events-have-key-events -->
 <!-- svelte-ignore a11y-no-static-element-interactions -->
-<div on:click|preventDefault={() => {}}>
+<div>
   <label class="field" class:disabled class:required>
     {#if label}
       <span class="field-label" class:move={inputFocused || value}>{@html label}</span>
