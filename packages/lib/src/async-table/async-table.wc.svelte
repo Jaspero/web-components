@@ -1,5 +1,5 @@
 <svelte:options
-  customElement={{
+        customElement={{
     tag: 'jp-async-table',
     shadow: 'none'
   }}
@@ -31,6 +31,9 @@
   let rows: any[] = [];
   let exportLoading = false;
   let activeHeaders: TableHeader[];
+  let arrangingColumns = false;
+  let isDraging = false;
+  let columnOrder: string[] = [];
 
   $: activeHeaders = headers.filter((it) => !it.disabled);
 
@@ -106,22 +109,22 @@
     const data = await service.export();
     const resolved = await Promise.all(data.map(async (row, index) => {
       const columns = await Promise.all(
-        activeHeaders.map(header => handleColumn(header, row, index))
+              activeHeaders.map(header => handleColumn(header, row, index))
       );
 
       return columns.map(col => `"${col || ''}"`).join(',');
     }));
     const blob = new Blob(
-      [
-        [
-          activeHeaders
-            .map((h) => h.label)
-            .map((label) => `"${label}"`)
-            .join(','),
-          ...resolved
-        ].join('\n')
-      ],
-      { type: 'text/csv' }
+            [
+              [
+                activeHeaders
+                        .map((h) => h.label)
+                        .map((label) => `"${label}"`)
+                        .join(','),
+                ...resolved
+              ].join('\n')
+            ],
+            { type: 'text/csv' }
     );
     const link = document.createElement('a');
 
@@ -132,7 +135,42 @@
     exportLoading = false;
   }
 
-  async function arrangeColumns() {}
+  function arrangeColumns() {
+    arrangingColumns = true;
+    columnOrder = activeHeaders.map((header) => header.key);
+  }
+
+  function finishArrangingColumns() {
+    arrangingColumns = false;
+  }
+
+  function dragstart(event: DragEvent, header: TableHeader) {
+    event.dataTransfer.setData('text/plain', header.key);
+    isDraging = true;
+  }
+
+  function dragover(event: DragEvent) {
+    event.preventDefault();
+    isDraging = false;
+  }
+
+  function drop(event: DragEvent) {
+    event.preventDefault();
+    const draggedColumn = event.dataTransfer.getData('text/plain');
+    const currentIndex = columnOrder.indexOf(draggedColumn);
+    const targetIndex = (event.target as HTMLElement)?.dataset.index;
+
+    if (currentIndex !== -1 && targetIndex) {
+      columnOrder.splice(currentIndex, 1);
+      columnOrder.splice(Number(targetIndex), 0, draggedColumn);
+
+      activeHeaders = headers.filter((it) => !it.disabled).sort((a, b) => {
+        const aIndex = columnOrder.indexOf(a.key);
+        const bIndex = columnOrder.indexOf(b.key);
+        return aIndex - bIndex;
+      });
+    }
+  }
 
   onMount(async () => {
     await getData();
@@ -143,15 +181,23 @@
   {#if showArrangingColumns || showExport}
     <div class="table-header">
       {#if showArrangingColumns}
-        <button type="button" class="table-button settings-button">Arrange Columns</button>
+        {#if !arrangingColumns}
+          <button type="button" on:click={arrangeColumns} class="table-button settings-button">
+            Arrange Columns
+          </button>
+        {:else}
+          <button type="button" on:click={finishArrangingColumns} class="table-button settings-button">
+            Finish Arranging
+          </button>
+        {/if}
       {/if}
       {#if showExport}
         &nbsp;
         <button
-          type="button"
-          class="table-button settings-button"
-          on:click={exportData}
-          class:loading={exportLoading}>Export</button
+                type="button"
+                class="table-button settings-button"
+                on:click={exportData}
+                class:loading={exportLoading}>Export</button
         >
       {/if}
     </div>
@@ -161,9 +207,18 @@
     <table>
       {#if activeHeaders}
         <tr>
-          {#each activeHeaders as header}
-            <th class:sortable={header.sortable} on:click={() => adjustSort(header)}>
-              <span>{@html header.label}</span>
+          {#each activeHeaders as header, index}
+            <th
+                    class:sortable={header.sortable}
+                    on:click={() => adjustSort(header)}
+                    on:drop={drop}
+                    on:dragover={dragover}
+                    data-index={index}
+            >
+              <span draggable="true"  on:dragstart={(e) => dragstart(e, header)}>
+                {@html header.label}
+              </span>
+
               {#if sort?.key === header.key}
                 <span>{sort.direction === 'asc' ? '↑' : '↓'}</span>
               {/if}
