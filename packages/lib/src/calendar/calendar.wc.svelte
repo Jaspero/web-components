@@ -17,6 +17,7 @@
 
 <script lang="ts">
   import { createEventDispatcher, onMount } from 'svelte';
+  import { writable } from 'svelte/store';
   import { formatReturnDate } from '../utils/dateFormatter';
 
   export let attachedInternals: ElementInternals;
@@ -56,6 +57,24 @@
   let schedules = [];
   let selectedTime;
 
+  const dispatch = createEventDispatcher();
+
+  export const getValue = () => JSON.parse(value);
+
+  $: {
+    value = JSON.stringify(
+            schedules.map((el) => {
+              const obj = { ...el };
+              obj.date = formatReturnDate(obj.date, returnFormat, returnFormatFunction);
+              return obj;
+            })
+    );
+    attachedInternals.setFormValue(value);
+  }
+
+  $: {
+    dispatch('value', { value: JSON.parse(value) });
+  }
 
   const getYearPickerRows = (yearPickerIndex) => {
     const tmp = Array.from(Array(4 * 6).keys()).map((el) => el + 2000 + yearPickerIndex * 4 * 6);
@@ -67,27 +86,16 @@
   $: pickerYearRows = getYearPickerRows(yearPickerIndex);
 
   function updateScheduleArray() {
-    const selectedDate = new Date(
-            `${yearSelected}-${monthSelected + 1 < 10 ? '0' : ''}${monthSelected}-${
-                    dateSelected < 10 ? '0' : ''
-            }${dateSelected} ${selectedTime}`
-    );
-    console.log('selectedDate:', selectedDate);
-
+    const selectedDate = new Date(`${yearSelected}-${monthSelected + 1 < 10 ? '0' : ''}
+    ${monthSelected}-${dateSelected < 10 ? '0' : ''}${dateSelected} ${selectedTime}`);
     const newSchedule = {
       description: inputValue,
       date: selectedDate
     };
-    schedules = [...schedules, newSchedule];
-    modalOpen = false;
-  }
 
-  $: if (pickerMonth == 12) {
-    pickerMonth = 0;
-    pickerYear++;
-  } else if (pickerMonth == -1) {
-    pickerMonth = 11;
-    pickerYear--;
+    $: schedules = [...schedules, newSchedule];
+
+    modalOpen = false;
   }
 
   const getCalendarRows = (year, month) => {
@@ -142,10 +150,6 @@
 
     return rows;
   };
-
-
-
-
 
 
   $: pickerRows = getCalendarRows(pickerYear, pickerMonth + 1);  // I've added this +1 because of indicies
@@ -277,17 +281,10 @@
       <tr>
         {#each row as col}
           {@const key = col.year + '-' + col.month + '-' + col.day}
-          <td
-                  on:click={() => {
-                console.log(col);
-                prepareModalData(col);
-              }}
-          >
-            <div class="cell-date">
-              {col.day}
-            </div>
-            {#if schedulesByDay[key]}
-              {#each schedulesByDay[key] as event}
+          <td on:click={() => prepareModalData(col)}>
+            <div class="cell-date">{col.day}</div>
+            {#if schedulesByDay[key] && schedulesByDay[key].length > 0}
+              {#each schedulesByDay[key] as event (event.date)}
                 <div>{event.description} {event.date.toLocaleString()}</div>
               {/each}
             {/if}
@@ -296,8 +293,6 @@
       </tr>
     {/each}
   </table>
-
-
 
   {#if yearSelector}
     <div class="calendar-year">
