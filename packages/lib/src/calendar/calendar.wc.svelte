@@ -17,8 +17,8 @@
 
 <script lang="ts">
   import { createEventDispatcher, onMount } from 'svelte';
-  import { writable } from 'svelte/store';
   import { formatReturnDate } from '../utils/dateFormatter';
+  import { clickOutside} from "../clickOutside.js";
 
   export let attachedInternals: ElementInternals;
   export let value: string = '';
@@ -56,6 +56,7 @@
   let yearPickerIndex = 0;
   let schedules = [];
   let selectedTime;
+  let saveButtonClicked = false;
 
   const dispatch = createEventDispatcher();
 
@@ -86,17 +87,28 @@
   $: pickerYearRows = getYearPickerRows(yearPickerIndex);
 
   function updateScheduleArray() {
-    const selectedDate = new Date(`${yearSelected}-${monthSelected + 1 < 10 ? '0' : ''}
-    ${monthSelected}-${dateSelected < 10 ? '0' : ''}${dateSelected} ${selectedTime}`);
+    console.log('inputValue:', inputValue);
+    console.log('selectedTime:', selectedTime);
+
+    const selectedDate = new Date(`${yearSelected}-${monthSelected + 1 < 10 ? '0' : ''}${monthSelected}-${dateSelected < 10 ? '0' : ''}${dateSelected} ${selectedTime}`);
+    console.log('selectedDate:', selectedDate);
+
+    if (!inputValue || !selectedTime || isNaN(selectedDate.getTime())) {
+      console.error('Invalid input. Event not added.');
+      return;
+    }
+
     const newSchedule = {
       description: inputValue,
       date: selectedDate
     };
 
-    $: schedules = [...schedules, newSchedule];
+    schedules = [...schedules, newSchedule];
 
+    saveButtonClicked = true;
     modalOpen = false;
   }
+
 
   const getCalendarRows = (year, month) => {
     const firstDayOfMonth = new Date(year, month, 1);
@@ -186,28 +198,48 @@
   }
 
   function prepareModalData(col) {
+    console.log('Selected col: ', col);
     yearSelected = col.year;
     monthSelected = col.month;
     dateSelected = col.day;
 
-    const date = new Date(
-            `${yearSelected}-${monthSelected + 1 < 10 ? '0' : ''}${monthSelected}-${
-                    dateSelected < 10 ? '0' : ''
-            }${dateSelected}`
-    );
+    if (saveButtonClicked) {
+      // Clean up modal and data
+      inputValue = '';
+      selectedTime = null;
+      saveButtonClicked = false;
+    } else {
+      const date = new Date(
+              `${yearSelected}-${monthSelected + 1 < 10 ? '0' : ''}${monthSelected}-${
+                      dateSelected < 10 ? '0' : ''
+              }${dateSelected}`
+      );
 
-    const selectedSchedule = schedules.find((el) => {
-      const day = el.date.toISOString().split('T')[0];
-      const selectedDay = date.toISOString().split('T')[0];
-      return day === selectedDay;
-    });
+      console.log('All schedules:', schedules);
 
-    inputValue = selectedSchedule?.description || '';
-    selectedTime = selectedSchedule?.date.getTime() || null;
+      const selectedSchedule = schedules.find((el) => {
+        const day = el.date.toISOString().split('T')[0];
+        const selectedDay = date.toISOString().split('T')[0];
+        return day === selectedDay;
+      });
 
+      console.log('selectedSchedule:', selectedSchedule);
 
-    modalOpen = true;
+      if (selectedSchedule) {
+        console.log('selectedSchedule.date type:', typeof selectedSchedule.date);
+        console.log('selectedSchedule.date value:', selectedSchedule.date);
+        selectedTime = selectedSchedule.date.getTime();
+      } else {
+        console.log('No schedule found for the selected date.');
+        selectedTime = null;
+      }
+
+      console.log('selectedTime after assignment:', selectedTime);
+
+      modalOpen = true;
+    }
   }
+
 
   document.addEventListener('keydown', (event) => {
     if (event.key === 'Enter') {
@@ -281,7 +313,10 @@
       <tr>
         {#each row as col}
           {@const key = col.year + '-' + col.month + '-' + col.day}
-          <td on:click={() => prepareModalData(col)}>
+          <td on:click={() => {
+            console.log('All schedules:', schedules);
+            prepareModalData(col);
+            }}>
             <div class="cell-date">{col.day}</div>
             {#if schedulesByDay[key] && schedulesByDay[key].length > 0}
               {#each schedulesByDay[key] as event (event.date)}
@@ -298,7 +333,7 @@
     <div class="calendar-year">
       <div class="calendar-year-nav">
         <button
-                class="calendar-year-nav-date"
+                class="calendar-year-nav-date">
                 on:click|stopPropagation={() => (yearSelector = false)}
         >
           <p>
@@ -404,14 +439,14 @@
 </div>
 
 {#if modalOpen}
-  <div class="modal" style="display: flex;">
+  <div class="modal" use:clickOutside on:click_outside={() => (modalOpen = false)}>
     <div class="modal-container">
       <div>
         <svg on:click|preventDefault={() => (modalOpen = false)} xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 384 512"><!--! Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2023 Fonticons, Inc. --><path d="M342.6 150.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L192 210.7 86.6 105.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3L146.7 256 41.4 361.4c-12.5 12.5-12.5 32.8 0 45.3s32.8 12.5 45.3 0L192 301.3 297.4 406.6c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L237.3 256 342.6 150.6z"/></svg>
         <h2>Add an event or task</h2>
         <hr />
       </div>
-      <input on:submbit type="text" placeholder="Write a description" bind:value={inputValue} />
+      <input on:submit type="text" placeholder="Write a description" bind:value={inputValue} />
       <div>
         <div>
           {dateSelected}.{monthMap[monthSelected - 1]}.{yearSelected}
