@@ -22,6 +22,8 @@
   export let attachedInternals: ElementInternals;
   export let value: string = '';
   export let internalValue: string = '';
+  export let required: boolean = false;
+  export let requiredValidationMessage: string = '';
   export let name: string = '';
   export let label: string = 'Pick a date';
   export let displayFormat: string = 'normal';
@@ -39,11 +41,11 @@
   let borderBottom: boolean = false;
   let bindingElement;
   let menuStyle;
-  let yearSelected = new Date(Date.now()).getFullYear();
-  let monthSelected = new Date(Date.now()).getMonth();
-  let dateSelected = new Date(Date.now()).getDate();
-  let pickerYear = yearSelected;
-  let pickerMonth = monthSelected;
+  let yearSelected = null;
+  let monthSelected;
+  let dateSelected;
+  let pickerYear = new Date(Date.now()).getFullYear();
+  let pickerMonth = new Date(Date.now()).getMonth();
   let pickerRows;
   let openPicker = false;
   let yearSelector = false;
@@ -65,10 +67,17 @@
   ];
   let yearPickerIndex = 0;
 
-  export const getValue = () =>
-    formatReturnDate(selectedDateObject, returnFormat, returnFormatFunction);
+  export const getValue = () => {
+    if (yearSelected) {
+      return formatReturnDate(selectedDateObject, returnFormat, returnFormatFunction);
+    } else {
+      return '';
+    }
+  };
 
   const dispatch = createEventDispatcher();
+
+  export const reportValidity = () => attachedInternals.reportValidity();
 
   const getYearPickerRows = (yearPickerIndex) => {
     const tmp = Array.from(Array(4 * 6).keys()).map((el) => el + 2000 + yearPickerIndex * 4 * 6);
@@ -171,20 +180,31 @@
   $: pickerRows = getPickerRows(pickerMonth, pickerYear);
 
   $: {
-    internalValue = `${yearSelected}-${monthSelected + 1 < 10 ? '0' : ''}${monthSelected + 1}-${
-      dateSelected < 10 ? '0' : ''
-    }${dateSelected}`;
-    selectedDateObject = new Date(internalValue);
-    displayedDateString = formatDisplayDate(
-      selectedDateObject,
-      displayFormat,
-      displayFormatFunction
-    );
-    attachedInternals.checkValidity();
-    attachedInternals.setFormValue(internalValue);
-    dispatch('value', {
-      value: formatReturnDate(selectedDateObject, returnFormat, returnFormatFunction)
-    });
+    if (yearSelected) {
+      internalValue = `${yearSelected}-${monthSelected + 1 < 10 ? '0' : ''}${monthSelected + 1}-${
+        dateSelected < 10 ? '0' : ''
+      }${dateSelected}`;
+      selectedDateObject = new Date(internalValue);
+      displayedDateString = formatDisplayDate(
+        selectedDateObject,
+        displayFormat,
+        displayFormatFunction
+      );
+      attachedInternals.setValidity({});
+      attachedInternals.setFormValue(internalValue);
+      dispatch('value', {
+        value: formatReturnDate(selectedDateObject, returnFormat, returnFormatFunction)
+      });
+    } else {
+      if (required) {
+        attachedInternals.setValidity(
+          { customError: true },
+          requiredValidationMessage || `Date is required.`
+        );
+      }
+      displayedDateString = '';
+      dispatch('value', { value: '' });
+    }
   }
 
   $: if (openPicker) {
