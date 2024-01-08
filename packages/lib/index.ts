@@ -40,4 +40,5 @@ export default () => {
   import('./src/tooltip/tooltip.wc.svelte');
   import('./src/form-fields/slider.wc.svelte');
   import('./src/form-fields/file-list.wc.svelte');
+  import('./src/review-stars/review-stars.wc.svelte');
 };
