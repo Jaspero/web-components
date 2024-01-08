@@ -6,7 +6,7 @@
 />
 
 <script lang="ts">
-  import {onMount} from 'svelte';
+  import {createEventDispatcher, onMount} from 'svelte';
 
   export let value: number;
   export let starsInput = false;
@@ -25,9 +25,9 @@
     percent: string;
     index: number;
   }[] = [];
-  let isModalOpen = false;
-  let comment = "";
-  let rating = 0;
+
+
+  let dispatch = createEventDispatcher();
 
   function getStarPoints() {
     let centerX = style.styleStarWidth / 2;
@@ -146,24 +146,11 @@
 
   function handleClick(index: number) {
     if(!starsInput) return;
-    rating = index;
-    openModal();
+    dispatch('rating', index);
   }
 
 
-  function openModal() {
-    isModalOpen = true;
-  }
 
-  function closeModal() {
-    comment = "";
-    isModalOpen = false;
-  }
-
-  function submitComment(comment) {
-    console.log(`Submitted comment: ${comment}, rating: ${rating}`);
-    closeModal();
-  }
 
   onMount(() => {
     initStars();
@@ -173,74 +160,6 @@
 </script>
 
 <style>
-    .modal-overlay {
-        position: fixed;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        background: rgba(0, 0, 0, 0.5);
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        z-index: 1000;
-    }
-
-    .modal-content {
-        background-color: #ffffff;
-        padding: 20px;
-        border-radius: 10px;
-        box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
-        width: 300px;
-        text-align: center;
-    }
-
-    h2 {
-        margin-bottom: 10px;
-        color: #333333;
-        font-size: 1.5rem;
-    }
-
-    textarea {
-        width: 100%;
-        margin-bottom: 15px;
-        padding: 10px;
-        box-sizing: border-box;
-        border: 1px solid #cccccc;
-        border-radius: 5px;
-        resize: vertical;
-        font-size: 1rem;
-    }
-
-    button.cancel {
-        background-color: #e57373;
-        color: #ffffff;
-        border: none;
-        padding: 10px 20px;
-        margin-right: 10px;
-        border-radius: 5px;
-        cursor: pointer;
-        transition: background-color 0.3s;
-    }
-
-    button.cancel:hover {
-        background-color: #d32f2f;
-    }
-
-    button.submit {
-        background-color: #4caf50;
-        color: #ffffff;
-        border: none;
-        padding: 10px 20px;
-        border-radius: 5px;
-        cursor: pointer;
-        transition: background-color 0.3s;
-    }
-
-    button.submit:hover {
-        background-color: #45a049;
-    }
-
     .star-rating {
         display: flex;
         align-items: center;
@@ -310,14 +229,3 @@
         {/if}
     </div>
 </div>
-
-{#if isModalOpen}
-    <div class="modal-overlay">
-        <div class="modal-content">
-            <h2>Enter your comment</h2>
-            <textarea bind:value={comment} rows="4" placeholder="Optional comment"></textarea>
-            <button on:click={() => submitComment(comment)} class="submit">Submit</button>
-            <button on:click={closeModal} class="cancel">Cancel</button>
-        </div>
-    </div>
-{/if}
