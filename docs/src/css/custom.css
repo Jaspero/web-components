@@ -93,7 +93,19 @@ html {
   border: 0 solid var(--border-primary);
 }
 
-blockquote, dl, dd, h1, h2, h3, h4, h5, h6, hr, figure, p, pre {
+blockquote,
+dl,
+dd,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+hr,
+figure,
+p,
+pre {
   margin: 0;
 }
 
@@ -101,11 +113,15 @@ input,
 select,
 textarea {
   border: 2px solid var(--border-primary);
-  padding: .25rem .5rem;
-  font-size: .875rem;
+  padding: 0.25rem 0.5rem;
+  font-size: 0.875rem;
 }
 
-button, input, optgroup, select, textarea {
+button,
+input,
+optgroup,
+select,
+textarea {
   font-family: inherit;
   font-feature-settings: inherit;
   font-variation-settings: inherit;
@@ -117,16 +133,21 @@ button, input, optgroup, select, textarea {
   padding: 0;
 }
 
-button, select {
+button,
+select {
   text-transform: none;
 }
 
-button, [role="button"] {
+button,
+[role='button'] {
   cursor: pointer;
 }
 
- button, [type='button'], [type='reset'], [type='submit'] {
-   -webkit-appearance: button;
-   background-color: transparent;
-   background-image: none;
- }
+button,
+[type='button'],
+[type='reset'],
+[type='submit'] {
+  -webkit-appearance: button;
+  background-color: transparent;
+  background-image: none;
+}

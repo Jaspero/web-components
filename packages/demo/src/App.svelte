@@ -98,8 +98,10 @@
           { name: 'John', age: 30, disabled: true },
           { name: 'Jane', age: 31, disabled: true }
         ];
-      }
+      },
+      adjustPageSize: async () => {},
     };
+    asyncTable.pageSizes = [10];
     el.appendChild(asyncTable);
   });
 </script>

@@ -1,5 +1,5 @@
 <svelte:options
-        customElement={{
+  customElement={{
     tag: 'jp-async-table',
     shadow: 'none'
   }}
@@ -15,10 +15,11 @@
   export let showArrangingColumns = true;
   export let showExport = true;
   export let headers: TableHeader[] = [];
+  export let pageSizes: number[];
   export let sort: TableSort;
   export let service: TableService;
   export let getData = async () => {
-    const data = await service.get(sort);
+    const data = await service.get(sort, pageSize);
 
     rows = data.rows;
     hasMore = data.hasMore;
@@ -26,6 +27,8 @@
     loading = false;
   };
 
+  let formattedPageSizes = JSON.stringify(pageSizes.map((s) => ({ label: s, value: s })));
+  let pageSize = pageSizes[0];
   let loading = true;
   let hasMore = false;
   let rows: any[] = [];
@@ -75,7 +78,10 @@
       direction: sort?.key === header.key ? (sort.direction === 'asc' ? 'desc' : 'asc') : 'asc'
     };
 
-    const data = await service.get(sort);
+    const [data] = await Promise.all([
+      service.get(sort, pageSize),
+      service.adjustSort(sort)
+    ]);
 
     rows = data.rows;
     hasMore = data.hasMore;
@@ -86,7 +92,7 @@
   async function loadMore() {
     loading = true;
 
-    const data = await service.loadMore(sort);
+    const data = await service.loadMore(sort, pageSize);
 
     rows = [...rows, ...data.rows];
     hasMore = data.hasMore;
@@ -103,28 +109,39 @@
     });
   }
 
+  async function updatePageSize(event: {detail: number}) {
+    pageSize = event.detail;
+    
+    await Promise.all([
+      getData(),
+      service.adjustPageSize(pageSize)
+    ]);
+  }
+
   async function exportData() {
     exportLoading = true;
 
     const data = await service.export();
-    const resolved = await Promise.all(data.map(async (row, index) => {
-      const columns = await Promise.all(
-              activeHeaders.map(header => handleColumn(header, row, index))
-      );
+    const resolved = await Promise.all(
+      data.map(async (row, index) => {
+        const columns = await Promise.all(
+          activeHeaders.map((header) => handleColumn(header, row, index))
+        );
 
-      return columns.map(col => `"${col || ''}"`).join(',');
-    }));
+        return columns.map((col) => `"${col || ''}"`).join(',');
+      })
+    );
     const blob = new Blob(
-            [
-              [
-                activeHeaders
-                        .map((h) => h.label)
-                        .map((label) => `"${label}"`)
-                        .join(','),
-                ...resolved
-              ].join('\n')
-            ],
-            { type: 'text/csv' }
+      [
+        [
+          activeHeaders
+            .map((h) => h.label)
+            .map((label) => `"${label}"`)
+            .join(','),
+          ...resolved
+        ].join('\n')
+      ],
+      { type: 'text/csv' }
     );
     const link = document.createElement('a');
 
@@ -164,11 +181,13 @@
       columnOrder.splice(currentIndex, 1);
       columnOrder.splice(Number(targetIndex), 0, draggedColumn);
 
-      activeHeaders = headers.filter((it) => !it.disabled).sort((a, b) => {
-        const aIndex = columnOrder.indexOf(a.key);
-        const bIndex = columnOrder.indexOf(b.key);
-        return aIndex - bIndex;
-      });
+      activeHeaders = headers
+        .filter((it) => !it.disabled)
+        .sort((a, b) => {
+          const aIndex = columnOrder.indexOf(a.key);
+          const bIndex = columnOrder.indexOf(b.key);
+          return aIndex - bIndex;
+        });
     }
   }
 
@@ -186,7 +205,11 @@
             Arrange Columns
           </button>
         {:else}
-          <button type="button" on:click={finishArrangingColumns} class="table-button settings-button">
+          <button
+            type="button"
+            on:click={finishArrangingColumns}
+            class="table-button settings-button"
+          >
             Finish Arranging
           </button>
         {/if}
@@ -194,10 +217,10 @@
       {#if showExport}
         &nbsp;
         <button
-                type="button"
-                class="table-button settings-button"
-                on:click={exportData}
-                class:loading={exportLoading}>Export</button
+          type="button"
+          class="table-button settings-button"
+          on:click={exportData}
+          class:loading={exportLoading}>Export</button
         >
       {/if}
     </div>
@@ -209,13 +232,13 @@
         <tr>
           {#each activeHeaders as header, index}
             <th
-                    class:sortable={header.sortable}
-                    on:click={() => adjustSort(header)}
-                    on:drop={drop}
-                    on:dragover={dragover}
-                    data-index={index}
+              class:sortable={header.sortable}
+              on:click={() => adjustSort(header)}
+              on:drop={drop}
+              on:dragover={dragover}
+              data-index={index}
             >
-              <span draggable="true"  on:dragstart={(e) => dragstart(e, header)}>
+              <span draggable="true" tabindex="-1" role="button" aria-label="Drag handle" on:dragstart={(e) => dragstart(e, header)}>
                 {@html header.label}
               </span>
 
@@ -254,6 +277,9 @@
         Load More
       {/if}
     </button>
+    {#if pageSizes.length > 1}
+      <jp-select label="Page Size" options={formattedPageSizes} value={pageSize} on:value={updatePageSize}></jp-select>
+    {/if}
   </div>
 </div>
 
@@ -300,6 +326,8 @@
 
   .table-actions {
     padding: 1rem;
+    display: flex;
+    justify-content: space-between;
   }
 
   .table-header {
