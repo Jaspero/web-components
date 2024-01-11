@@ -16,6 +16,7 @@
   export let showExport = true;
   export let headers: TableHeader[] = [];
   export let pageSizes: number[];
+  export let pageSize: number = pageSizes[0];
   export let sort: TableSort;
   export let service: TableService;
   export let getData = async () => {
@@ -28,7 +29,6 @@
   };
 
   let formattedPageSizes = JSON.stringify(pageSizes.map((s) => ({ label: s, value: s })));
-  let pageSize = pageSizes[0];
   let loading = true;
   let hasMore = false;
   let rows: any[] = [];
