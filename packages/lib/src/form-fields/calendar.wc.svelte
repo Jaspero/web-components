@@ -60,6 +60,11 @@
 
   export const getValue = () => JSON.parse(value);
 
+  $: if (!modalOpen) {
+    inputValue = '';
+    selectedTime = null;
+  }
+
   $: {
     value = JSON.stringify(
       schedules.map((el) => {
@@ -177,8 +182,6 @@
       date: selectedDate
     };
     schedules = [...schedules, newSchedule];
-    inputValue = '';
-    selectedTime = null;
     modalOpen = false;
   }
 </script>
@@ -362,7 +365,14 @@
   {/if}
 </div>
 
-<div class="modal" style={`display: ${modalOpen ? 'flex' : 'none'}`}>
+<!-- svelte-ignore a11y-no-static-element-interactions -->
+<div
+  class="modal"
+  style={`display: ${modalOpen ? 'flex' : 'none'}`}
+  on:keydown={(e) => {
+    if (e.key == 'Escape' && modalOpen) modalOpen = false;
+  }}
+>
   <div class="modal-container" use:clickOutside on:click_outside={() => (modalOpen = false)}>
     <h2>Add an event or task</h2>
     <hr />
