@@ -8,9 +8,9 @@
 <script lang="ts">
   import { createEventDispatcher, onMount } from 'svelte';
 
-  export let value: number;
-  export let starsInput = false;
-  export let isIndicatorActive = true;
+  export let value: number = 0;
+  export let starsInput = true;
+  export let indicator = true;
   export let style = {
     styleStarWidth: 15,
     styleEmptyStarColor: '#737373',
@@ -132,7 +132,7 @@
 
   function handleClick(index: number) {
     if (!starsInput) return;
-    dispatch('rating', index);
+    dispatch('value', index);
   }
 
   onMount(() => {
@@ -184,14 +184,14 @@
                 id="stop4"
                 offset="100%"
                 stop-opacity="1"
-                :stop-color={style.styleEmptyStarColor}
+                stop-color={style.styleEmptyStarColor}
               />
             </linearGradient>
           </defs>
         </svg>
       </button>
     {/each}
-    {#if isIndicatorActive}
+    {#if indicator}
       <div class="indicator">{value}</div>
     {/if}
   </div>
