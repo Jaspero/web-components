@@ -1,12 +1,12 @@
 <svelte:options
-        customElement={{
-    tag: 'jp-review-star-rating',
+  customElement={{
+    tag: 'jp-review-stars',
     shadow: 'none'
   }}
 />
 
 <script lang="ts">
-  import {createEventDispatcher, onMount} from 'svelte';
+  import { createEventDispatcher, onMount } from 'svelte';
 
   export let value: number;
   export let starsInput = false;
@@ -26,7 +26,6 @@
     index: number;
   }[] = [];
 
-
   let dispatch = createEventDispatcher();
 
   function getStarPoints() {
@@ -36,13 +35,7 @@
     let innerRadius = style.styleStarWidth / innerCircleArms;
     let innerOuterRadiusRatio = 2.5;
     let outerRadius = innerRadius * innerOuterRadiusRatio;
-    return calcStarPoints(
-      centerX,
-      centerY,
-      innerCircleArms,
-      innerRadius,
-      outerRadius
-    );
+    return calcStarPoints(centerX, centerY, innerCircleArms, innerRadius, outerRadius);
   }
 
   function calcStarPoints(
@@ -76,11 +69,7 @@
     }
   }
 
-  function calcStarFullness(starData: {
-    raw: number;
-    percent: string;
-    index: number;
-  }) {
+  function calcStarFullness(starData: { raw: number; percent: string; index: number }) {
     let starFullnessPercent = starData.raw * 100 + '%';
     return starFullnessPercent;
   }
@@ -102,8 +91,8 @@
   }
 
   function setStarsHover(numberOfStarsHovered: number) {
-    if(!starsInput) return;
-    stars.forEach(star => {
+    if (!starsInput) return;
+    stars.forEach((star) => {
       star.raw = emptyStar;
       star.percent = calcStarFullness(star);
     });
@@ -122,10 +111,9 @@
     }
   }
 
-
   function resetStars() {
-    if(!starsInput) return;
-    stars = oldStars.map(star => ({
+    if (!starsInput) return;
+    stars = oldStars.map((star) => ({
       ...star,
       raw: emptyStar,
       percent: calcStarFullness(star)
@@ -134,23 +122,18 @@
   }
 
   function getFullFillColor(starData: any) {
-    return starData.raw !== emptyStar
-      ? style.styleFullStarColor
-      : style.styleEmptyStarColor;
+    return starData.raw !== emptyStar ? style.styleFullStarColor : style.styleEmptyStarColor;
   }
 
   function handleMouseOver(index: number) {
-    if(!starsInput) return;
+    if (!starsInput) return;
     setStarsHover(index);
   }
 
   function handleClick(index: number) {
-    if(!starsInput) return;
+    if (!starsInput) return;
     dispatch('rating', index);
   }
-
-
-
 
   onMount(() => {
     initStars();
@@ -159,73 +142,73 @@
   });
 </script>
 
-<style>
-    .star-rating {
-        display: flex;
-        align-items: center;
-    }
-
-    .indicator {
-        font-size: 1rem;
-    }
-
-    .star-container:not(:last-child) {
-        margin-right: 5px;
-        position: relative;
-    }
-</style>
-
 <div class="star-container">
-    <div class="star-rating">
-        {#each stars as star}
-            <button
-                    on:mouseover={() => handleMouseOver(star.index)}
-                    on:click={() => handleClick(star.index)}
-                    on:mouseout={() => resetStars()}
-                    on:focus={() => handleMouseOver(star.index)}
-                    on:blur={() => resetStars()}
-                    disabled={!starsInput}
-                    aria-label={`Star ${star.index}`}
-            >
-                <svg
-                        class="star-svg"
-                        style="fill: url(#gradient{star.raw});height:{style.styleStarWidth}; width:{style.styleStarWidth}"
-                >
-                    <polygon points={getStarPoints()} style="fill-rule:nonzero;"/>
+  <div class="star-rating">
+    {#each stars as star}
+      <button
+        on:mouseover={() => handleMouseOver(star.index)}
+        on:click={() => handleClick(star.index)}
+        on:mouseout={() => resetStars()}
+        on:focus={() => handleMouseOver(star.index)}
+        on:blur={() => resetStars()}
+        disabled={!starsInput}
+        aria-label={`Star ${star.index}`}
+      >
+        <svg
+          class="star-svg"
+          style="fill: url(#gradient{star.raw});height:{style.styleStarWidth}; width:{style.styleStarWidth}"
+        >
+          <polygon points={getStarPoints()} style="fill-rule:nonzero;" />
 
-                    <defs>
-                        <linearGradient id={'gradient' + star.raw}>
-                            <stop
-                                    id="stop1"
-                                    offset={star.percent}
-                                    stop-opacity="1"
-                                    stop-color={getFullFillColor(star)}
-                            />
-                            <stop
-                                    id="stop2"
-                                    offset={star.percent}
-                                    stop-opacity="0"
-                                    stop-color={getFullFillColor(star)}
-                            />
-                            <stop
-                                    id="stop3"
-                                    offset={star.percent}
-                                    stop-opacity="1"
-                                    stop-color={style.styleEmptyStarColor}
-                            />
-                            <stop
-                                    id="stop4"
-                                    offset="100%"
-                                    stop-opacity="1"
-                                    :stop-color={style.styleEmptyStarColor}
-                            />
-                        </linearGradient>
-                    </defs>
-                </svg>
-            </button>
-        {/each}
-        {#if isIndicatorActive}
-            <div class="indicator">{value}</div>
-        {/if}
-    </div>
+          <defs>
+            <linearGradient id={'gradient' + star.raw}>
+              <stop
+                id="stop1"
+                offset={star.percent}
+                stop-opacity="1"
+                stop-color={getFullFillColor(star)}
+              />
+              <stop
+                id="stop2"
+                offset={star.percent}
+                stop-opacity="0"
+                stop-color={getFullFillColor(star)}
+              />
+              <stop
+                id="stop3"
+                offset={star.percent}
+                stop-opacity="1"
+                stop-color={style.styleEmptyStarColor}
+              />
+              <stop
+                id="stop4"
+                offset="100%"
+                stop-opacity="1"
+                :stop-color={style.styleEmptyStarColor}
+              />
+            </linearGradient>
+          </defs>
+        </svg>
+      </button>
+    {/each}
+    {#if isIndicatorActive}
+      <div class="indicator">{value}</div>
+    {/if}
+  </div>
 </div>
+
+<style>
+  .star-rating {
+    display: flex;
+    align-items: center;
+  }
+
+  .indicator {
+    font-size: 1rem;
+  }
+
+  .star-container:not(:last-child) {
+    margin-right: 5px;
+    position: relative;
+  }
+</style>
