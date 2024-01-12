@@ -18,6 +18,7 @@
 <script lang="ts">
   import { createEventDispatcher, onMount } from 'svelte';
   import { formatReturnDate } from '../utils/dateFormatter';
+  import { clickOutside } from '../clickOutside';
 
   export let attachedInternals: ElementInternals;
   export let value: string = '';
@@ -362,7 +363,7 @@
 </div>
 
 <div class="modal" style={`display: ${modalOpen ? 'flex' : 'none'}`}>
-  <div class="modal-container">
+  <div class="modal-container" use:clickOutside on:click_outside={() => (modalOpen = false)}>
     <h2>Add an event or task</h2>
     <hr />
     <input type="text" placeholder="Write a description" bind:value={inputValue} />
