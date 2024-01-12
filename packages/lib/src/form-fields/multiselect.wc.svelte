@@ -289,7 +289,11 @@
       }
       return el;
     });
+  });
+
+  $: {
     if (value) {
+      options = options.map(o => ({...o, selected: false}))
       if (typeof value == 'string') {
         value.split(',').forEach((el) => {
           options[options.findIndex((o) => o.value == el)].selected = true;
@@ -300,7 +304,7 @@
         });
       }
     }
-  });
+  }
 </script>
 
 <div class:has-hint={hint}>
@@ -343,6 +347,7 @@
 </div>
 
 {#if open}
+  <!-- svelte-ignore a11y-no-noninteractive-element-interactions -->
   <div
     class="overlay"
     on:click|stopPropagation={toggleMenu}

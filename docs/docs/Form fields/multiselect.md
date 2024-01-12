@@ -9,6 +9,7 @@
 | **Name** | **Required** | **Type** | **Description** |
 | :----: | :----: | :---: | :---: |
 | options | ✓ |`Array<{ label?: string; value:` <br></br> ` string; selected?: boolean;`  <br></br> `disabled?: boolean }>` | select options |
+| value | | `string` or `Array<string>` | value setter |
 | minSelects | | `number` | minimum number of selects allowed |
 | minselectsValidationMessage | | `string` | validation message for when component does not satisfy minselects |
 | maxSelects | | `number` | maximum number of selects allowed |
