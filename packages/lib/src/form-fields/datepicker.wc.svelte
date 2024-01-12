@@ -354,7 +354,7 @@
                   class="menu-year-row-cell"
                   class:active={yearSelected === year}
                   on:click|preventDefault|stopPropagation={() => {
-                    yearSelected = year;
+                    pickerYear = year;
                     yearSelector = false;
                     monthSelector = true;
                   }}>{year}</button
@@ -374,7 +374,7 @@
                 monthSelector = false;
               }}
             >
-              <p>{yearSelected}</p>
+              <p>{pickerYear}</p>
               <svg xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 512 512">
                 <!--! Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2023 Fonticons, Inc. -->
                 <path
@@ -383,7 +383,7 @@
               </svg>
             </button>
             <div class="menu-month-nav-buttons">
-              <button on:click|preventDefault={() => (yearSelected = yearSelected - 1)}>
+              <button on:click|preventDefault={() => (pickerYear = pickerYear - 1)}>
                 <svg xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 320 512">
                   <!--! Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2023 Fonticons, Inc. -->
                   <path
@@ -391,7 +391,7 @@
                   />
                 </svg>
               </button>
-              <button on:click|preventDefault={() => (yearSelected = yearSelected + 1)}>
+              <button on:click|preventDefault={() => (pickerYear = pickerYear + 1)}>
                 <svg xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 320 512">
                   <!--! Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2023 Fonticons, Inc. -->
                   <path
@@ -406,8 +406,8 @@
             {#each monthMap as month, index}
               <div class="menu-month-grid-cell">
                 <button
-                  on:click|preventDefault={() => {
-                    monthSelected = index;
+                  on:click|preventDefault|stopPropagation={() => {
+                    pickerMonth = index;
                     monthSelector = false;
                   }}
                   class:active={monthSelected === index}
