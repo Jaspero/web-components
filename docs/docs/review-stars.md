@@ -24,8 +24,8 @@ This component does not have any methods.
 
 ### Events
 
-- `value` 
-  - triggers when value (file) changes
+- `rating` 
+  - triggers when star is clicked
 
 ### Demo
 

@@ -132,7 +132,7 @@
 
   function handleClick(index: number) {
     if (!starsInput) return;
-    dispatch('value', index);
+    dispatch('rating', index);
   }
 
   onMount(() => {
