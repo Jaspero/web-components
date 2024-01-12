@@ -370,7 +370,15 @@
   class="modal"
   style={`display: ${modalOpen ? 'flex' : 'none'}`}
   on:keydown={(e) => {
-    if (e.key == 'Escape' && modalOpen) modalOpen = false;
+    if(modalOpen){
+      console.log()
+      if (e.key == 'Escape'){
+        modalOpen = false;
+      }
+      else if (e.key == 'Enter' && inputValue && selectedTime){
+        updateScheduleArray()
+      }
+    }
   }}
 >
   <div class="modal-container" use:clickOutside on:click_outside={() => (modalOpen = false)}>
