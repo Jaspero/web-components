@@ -18,7 +18,7 @@
 <script lang="ts">
   import { createEventDispatcher, onMount } from 'svelte';
   import { formatReturnDate } from '../utils/dateFormatter';
-  import { clickOutside} from "../clickOutside.js";
+  import { clickOutside } from "../clickOutside.js";
 
   export let attachedInternals: ElementInternals;
   export let value: string = '';
@@ -57,6 +57,11 @@
   let schedules = [];
   let selectedTime;
   let saveButtonClicked = false;
+
+  const rows = 6;
+  const columns = 6;
+
+  let currentSchedules = Array(rows).fill(0).map(() => Array(columns).fill([]));
 
   const dispatch = createEventDispatcher();
 
@@ -103,7 +108,9 @@
       date: selectedDate
     };
 
+    // Use set to ensure reactivity
     schedules = [...schedules, newSchedule];
+    schedules = [...schedules]; // Force reactivity update
 
     saveButtonClicked = true;
     modalOpen = false;
@@ -217,24 +224,17 @@
 
       console.log('All schedules:', schedules);
 
-      const selectedSchedule = schedules.find((el) => {
-        const day = el.date.toISOString().split('T')[0];
-        const selectedDay = date.toISOString().split('T')[0];
-        return day === selectedDay;
-      });
+      const rowIndex = Math.floor((dateSelected - 1) / 7);
+      const columnIndex = new Date(yearSelected, monthSelected, 1).getDay();
 
-      console.log('selectedSchedule:', selectedSchedule);
+      const selectedSchedules = currentSchedules[rowIndex][columnIndex];
 
-      if (selectedSchedule) {
-        console.log('selectedSchedule.date type:', typeof selectedSchedule.date);
-        console.log('selectedSchedule.date value:', selectedSchedule.date);
+      if (selectedSchedules.length > 0) {
+        const selectedSchedule = selectedSchedules[0]; // Assuming there's only one schedule for simplicity
         selectedTime = selectedSchedule.date.getTime();
       } else {
-        console.log('No schedule found for the selected date.');
         selectedTime = null;
       }
-
-      console.log('selectedTime after assignment:', selectedTime);
 
       modalOpen = true;
     }
@@ -252,21 +252,16 @@
 
   $: {
     if (schedules) {
-      console.log(1, schedules);
-      schedulesByDay = schedules.reduce((acc, cur) => {
-        const day = cur.date.toISOString().split('T')[0];
+      currentSchedules = Array(rows).fill(0).map(() => Array(columns).fill([]));
 
-        if (!acc[day]) {
-          acc[day] = [];
-        }
+      schedules.forEach((schedule) => {
+        const { year, month, day } = schedule.date;
+        const rowIndex = Math.floor((day - 1) / 7);
+        const columnIndex = new Date(year, month, 1).getDay();
 
-        acc[day].push(cur);
-
-        return acc;
-      }, {});
+        currentSchedules[rowIndex][columnIndex].push(schedule);
+      });
     }
-    schedulesByDay = { ...schedulesByDay };
-    console.log(schedulesByDay);
   }
 </script>
 
