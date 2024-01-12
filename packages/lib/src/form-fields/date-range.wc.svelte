@@ -18,7 +18,6 @@
 <script lang="ts">
   import { createEventDispatcher, onMount } from 'svelte';
   import { formatDisplayDate, formatReturnDate } from '../utils/dateFormatter';
-  import Accordion from '../accordion/accordion.wc.svelte';
 
   export let attachedInternals: ElementInternals;
   export let value: string = '';
@@ -163,8 +162,8 @@
     openPicker = !openPicker;
   }
 
-  function handleSelect(col){
-    const {day, month, year} = col;
+  function handleSelect(col) {
+    const { day, month, year } = col;
     if (selectingFirst) {
       firstDateSelected = day;
       firstYearSelected = year;
@@ -172,10 +171,10 @@
       secondYearSelected = null;
       selectingFirst = false;
     } else {
-      const lessThanFirst = 
+      const lessThanFirst =
         parseInt(firstInternalValue.split('-').join(''), 10) >
         parseInt(`${year}${month + 1 < 10 ? '0' : ''}${month + 1}${day < 10 ? '0' : ''}${day}`, 10);
-      if(lessThanFirst) {
+      if (lessThanFirst) {
         secondDateSelected = firstDateSelected;
         secondYearSelected = firstYearSelected;
         secondMonthSelected = firstMonthSelected;
