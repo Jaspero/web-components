@@ -25,6 +25,7 @@
   export let name: string = '';
   export let returnFormat: string = 'unix';
   export let returnFormatFunction: (date: Date) => any = (date) => date.valueOf();
+  export let schedules = [];
 
   let pickerYear = new Date(Date.now()).getFullYear();
   let pickerMonth = new Date(Date.now()).getMonth();
@@ -52,8 +53,7 @@
   ];
   let selectedTime = '';
   let yearPickerIndex = 0;
-  let schedules = [];
-  let colSchedules = {};
+  let pickerSchedules = [...Array(6)].map((_) => Array(7).fill([]));
 
   const dispatch = createEventDispatcher();
 
@@ -94,7 +94,9 @@
         .map((el) => prevMonthDays - el)
         .toReversed()
         .map((el) => {
-          let obj = { day: el, month: month - 1, year: year };
+          let obj = { day: el };
+          obj['month'] = month == 0 ? 11 : month - 1;
+          obj['year'] = month == 0 ? year - 1 : year;
           return obj;
         })
     ];
@@ -110,7 +112,9 @@
     mData = [
       ...mData,
       Array.from(Array(daysAfter).keys()).map((el) => {
-        let obj = { day: el + 1, month: month + 1, year: year };
+        let obj = { day: el + 1 };
+        obj['month'] = month == 11 ? 0 : month + 1;
+        obj['year'] = month == 11 ? year + 1 : year;
         return obj;
       })
     ];
@@ -138,7 +142,22 @@
 
   $: pickerYearRows = getYearPickerRows(yearPickerIndex);
 
-  $: pickerRows = getPickerRows(pickerMonth, pickerYear);
+  $: {
+    pickerRows = getPickerRows(pickerMonth, pickerYear);
+    pickerSchedules = [...Array(6)].map((_) => Array(7).fill([]));
+
+    pickerRows.forEach((row, i) => {
+      row.forEach((col, j) => {
+        pickerSchedules[i][j] = schedules.filter((el) => {
+          return (
+            el.date.getDate() == col.day &&
+            el.date.getMonth() == col.month &&
+            el.date.getFullYear() == col.year
+          );
+        });
+      });
+    });
+  }
 
   $: if (openPicker) {
     document.documentElement.style.overflowY = 'hidden';
@@ -150,9 +169,8 @@
     const selectedDate = new Date(
       `${yearSelected}-${monthSelected + 1 < 10 ? '0' : ''}${monthSelected + 1}-${
         dateSelected < 10 ? '0' : ''
-      } ${selectedTime}`
+      }${dateSelected}T${selectedTime}`
     );
-    console.log(selectedTime);
     const newSchedule = {
       description: inputValue,
       date: selectedDate
@@ -208,9 +226,9 @@
           </th>
         {/each}
       </tr>
-      {#each pickerRows as row}
+      {#each pickerRows as row, i}
         <tr>
-          {#each row as col}
+          {#each row as col, j}
             <td
               on:click={() => {
                 yearSelected = col.year;
@@ -222,6 +240,9 @@
               <div class="cell-date">
                 {col.day}
               </div>
+              {#each pickerSchedules[i][j] as sch}
+                {sch.description}
+              {/each}
               <!-- Tasks here -->
             </td>
           {/each}
