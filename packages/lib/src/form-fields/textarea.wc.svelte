@@ -21,7 +21,8 @@
   export let attachedInternals: ElementInternals;
   export let id: string | null = null;
   export let value: string = '';
-  export let label: string = 'Label';
+  export let label: string = '';
+  export let labelType: 'inside' | 'outside' = 'inside';
   export let hint: string = '';
   export let disabled: boolean = false;
   export let name: string | null = null;
@@ -81,14 +82,19 @@
   }
 </script>
 
+{#if label && labelType == 'outside'}
+  <div class="label">
+    {@html label}
+  </div>
+{/if}
 <div class:has-hint={hint}>
   <label class="field" class:disabled={disabled || readonly} class:required>
-    {#if label}
+    {#if label && labelType == 'inside'}
       <span class="field-label" class:move={inputFocused || value}>{@html label}</span>
     {/if}
 
     <textarea
-      class="field-input"
+      class={`field-input ${labelType == 'outside' ? '' : 'field-input-margin'}`}
       aria-hidden={disabled || readonly}
       tabindex={disabled || readonly ? -1 : 0}
       {disabled}
@@ -226,14 +232,17 @@
     overflow: hidden;
     -o-text-overflow: ellipsis;
     text-overflow: ellipsis;
-    margin: 1.5rem 0 0 0;
-    padding: 0 0 0.25rem 0;
+    padding: 0.25rem 0;
     line-height: 1.375rem;
     border: none;
     outline: none;
     -webkit-border-radius: 0;
     -moz-border-radius: 0;
     border-radius: 0;
+  }
+
+  .field-input-margin {
+    margin: 1.25rem 0 0 0;
   }
 
   .field-input:-moz-placeholder {

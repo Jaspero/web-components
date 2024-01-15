@@ -11,6 +11,7 @@
 | id | | `string`| unique identifier |
 | value | |`string` | content within textarea field |
 | label | | `string` | shows at the top of a textarea field|
+| labelType | | `'outside'` or `'inside'` | whether label is inside or outside of the field |
 | hint | | `string` | additional information that shows below textarea|
 | disabled | | `boolean` | determines if an input is disabled |
 | name | ✓ | `string` |  name of the form control |
