@@ -152,7 +152,6 @@
     -moz-user-select: none;
     -ms-user-select: none;
     user-select: none;
-    padding: 1px 0.75rem;
     gap: 0.75rem;
     background-color: var(--background-primary);
     border: 1px solid var(--border-primary);
@@ -177,9 +176,16 @@
     box-shadow: inset 0 0 0 1px var(--primary-color);
   }
 
+  .label {
+    margin-top: .5rem;
+    margin-bottom: .125rem;
+    font-size: .875rem;
+  }
+
   .field-label {
     position: absolute;
     top: 1.25rem;
+    left: .75rem;
     font-size: 1rem;
     -webkit-transition:
       transform 0.3s,
@@ -221,6 +227,7 @@
   }
 
   .field-input {
+    font-family: inherit;
     -webkit-box-flex: 1;
     -webkit-flex: auto;
     -moz-box-flex: 1;
@@ -232,17 +239,17 @@
     overflow: hidden;
     -o-text-overflow: ellipsis;
     text-overflow: ellipsis;
-    padding: 0.25rem 0;
+    padding: .75rem;
     line-height: 1.375rem;
     border: none;
     outline: none;
-    -webkit-border-radius: 0;
-    -moz-border-radius: 0;
-    border-radius: 0;
+    -webkit-border-radius: 0.25rem;
+    -moz-border-radius: 0.25rem;
+    border-radius: 0.25rem;
   }
 
   .field-input-margin {
-    margin: 1.25rem 0 0 0;
+    padding: 1.25rem .75rem .5rem;
   }
 
   .field-input:-moz-placeholder {

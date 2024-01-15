@@ -109,3 +109,5 @@
 <div bind:this={el}></div>
 
 <jp-input name="test" label="asdf" labelType="outside"></jp-input>
+<jp-chips name="Test" label="Test" labelType="outside"></jp-chips>
+<jp-textarea name="Test" label="Test" labeltype="outside"></jp-textarea>

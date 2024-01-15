@@ -204,7 +204,7 @@
     user-select: none;
     padding: 0 0.75rem;
     gap: 0.75rem;
-    background-color: var(--background-primary);
+    background-color: transparent;
     border: 1px solid var(--border-primary);
     -webkit-border-radius: 0.25rem;
     -moz-border-radius: 0.25rem;
@@ -227,9 +227,16 @@
     box-shadow: inset 0 0 0 1px var(--primary-color);
   }
 
+  .label {
+    margin-top: .5rem;
+    margin-bottom: .125rem;
+    font-size: .875rem;
+  }
+
   .field-label {
     position: absolute;
     top: 50%;
+    left: .75rem;
     -webkit-transform: translateY(-50%);
     -moz-transform: translateY(-50%);
     -ms-transform: translateY(-50%);
@@ -281,6 +288,7 @@
   }
 
   .field-container {
+    font-family: inherit;
     display: -webkit-box;
     display: -webkit-flex;
     display: -moz-box;
@@ -298,16 +306,16 @@
     width: 10rem;
     font-size: 1rem;
     overflow: hidden;
-    padding: 0.25rem 0 0.25rem 0;
+    padding: .75rem;
     border: none;
     outline: none;
-    -webkit-border-radius: 0;
-    -moz-border-radius: 0;
-    border-radius: 0;
+    -webkit-border-radius: 0.25rem;
+    -moz-border-radius: 0.25rem;
+    border-radius: 0.25rem;
   }
 
   .field-container-padding {
-    padding: 1.25rem 0 0.25rem 0;
+    padding: 1.25rem .75rem .5rem;
   }
 
   .field-container-chip {

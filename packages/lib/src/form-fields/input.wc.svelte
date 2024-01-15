@@ -277,7 +277,6 @@
     -moz-user-select: none;
     -ms-user-select: none;
     user-select: none;
-    padding: 0;
     gap: 0.75rem;
     background-color: var(--background-primary);
     border: 1px solid var(--border-primary);

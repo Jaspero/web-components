@@ -344,6 +344,7 @@
 
   /* Select */
   .select {
+    font-family: inherit;
     position: relative;
     display: -webkit-box;
     display: -webkit-flex;
@@ -369,7 +370,7 @@
     user-select: none;
     padding: 0 0.75rem;
     gap: 0.75rem;
-    background-color: var(--background-primary);
+    background-color: transparent;
     border: 1px solid var(--border-primary);
     -webkit-border-radius: 0.25rem;
     -moz-border-radius: 0.25rem;
