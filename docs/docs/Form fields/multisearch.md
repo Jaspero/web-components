@@ -55,6 +55,8 @@ This component does not have any methods.
 - `value` 
   - triggers when selected options change
 
+### Demo
+
 ```jsx live
 function multisearch(props){
   let el = useRef(null);
