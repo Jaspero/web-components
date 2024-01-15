@@ -107,3 +107,5 @@
 </script>
 
 <div bind:this={el}></div>
+
+<jp-input name="test" label="asdf" labelType="outside"></jp-input>

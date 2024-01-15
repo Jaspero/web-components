@@ -273,12 +273,11 @@
     text-align: left;
     box-sizing: border-box;
     width: 100%;
-    height: 3rem;
     -webkit-user-select: none;
     -moz-user-select: none;
     -ms-user-select: none;
     user-select: none;
-    padding: 0 0.75rem;
+    padding: 0;
     gap: 0.75rem;
     background-color: var(--background-primary);
     border: 1px solid var(--border-primary);
@@ -303,9 +302,16 @@
     box-shadow: inset 0 0 0 1px var(--primary-color);
   }
 
+  .label {
+    margin-top: .5rem;
+    margin-bottom: .125rem;
+    font-size: .875rem;
+  }
+
   .field-label {
     position: absolute;
     top: 50%;
+    left: .75rem;
     -webkit-transform: translateY(-50%);
     -moz-transform: translateY(-50%);
     -ms-transform: translateY(-50%);
@@ -372,15 +378,16 @@
     overflow: hidden;
     -o-text-overflow: ellipsis;
     text-overflow: ellipsis;
+    padding: .75rem;
     border: none;
     outline: none;
-    -webkit-border-radius: 0;
-    -moz-border-radius: 0;
-    border-radius: 0;
+    -webkit-border-radius: 0.25rem;
+    -moz-border-radius: 0.25rem;
+    border-radius: 0.25rem;
   }
 
   .field-input-padding {
-    padding: 1rem 0 0 0;
+    padding: 1.25rem .75rem .5rem;
   }
 
   .field-input:-moz-placeholder {
