@@ -43,6 +43,6 @@ This component does not have any slots.
 ### Demo
 
 ```jsx live
-<jp-autocomplete options='["One", "Two", "Three"]'>
+<jp-autocomplete options='["One", "Two", "Three"]' label="Autocomplete">
 </jp-autocomplete>
 ```

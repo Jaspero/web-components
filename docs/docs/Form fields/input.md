@@ -51,6 +51,6 @@
 ### Demo
 
 ```jsx live
-<jp-input value='pero' label='Perica' name='input'>
+<jp-input label='Input'>
 </jp-input>
 ```

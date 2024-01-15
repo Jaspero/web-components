@@ -48,6 +48,6 @@ This component does not have any methods.
 ### Demo
 
 ```jsx live
-<jp-file-upload>
+<jp-file-upload label="Upload a file">
 </jp-file-upload>
 ```
