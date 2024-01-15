@@ -8,6 +8,7 @@
 
 | **Name** | **Required** | **Type** | **Description** |
 | :----: | :----: | :----: | :---: |
+| value | | `Array<string>` or comma separated `string` | setter |
 | options | ✓ | `Array<{ label?: string; value:` <br></br> `boolean; checked?: boolean;` <br></br> `disabled?: boolean }>` | List of checkboxes |
 | minSelects | | `number` | minimum number of checks allowed |
 | minselectsValidationMessage | | `string` | validation message for when component does not satisfy minSelects |

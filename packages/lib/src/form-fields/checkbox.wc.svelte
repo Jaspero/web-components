@@ -20,6 +20,8 @@
 
   export let attachedInternals: ElementInternals;
 
+  export let value;
+
   export let options: Array<{
     label?: string;
     value: string;
@@ -40,6 +42,21 @@
   export const reportValidity = () => {
     attachedInternals.reportValidity();
   };
+
+  $: {
+    if (value && Array.isArray(options)) {
+      options = options.map((o) => ({ ...o, checked: false }));
+      if (typeof value == 'string') {
+        value.split(',').forEach((el) => {
+          options[options.findIndex((o) => o.value == el)].checked = true;
+        });
+      } else {
+        value.forEach((el) => {
+          options[options.findIndex((o) => o.value == el)].checked = true;
+        });
+      }
+    }
+  }
 
   $: if (Array.isArray(options)) {
     const checkedAmount = options.filter((el) => el.checked).length;
