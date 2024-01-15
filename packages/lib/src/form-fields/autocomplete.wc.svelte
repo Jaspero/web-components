@@ -19,6 +19,7 @@
   import { createEventDispatcher, onMount } from 'svelte';
 
   export let options: string[] | string = [];
+
   export let value = '';
   export let asyncOptions = null;
   export let lag: number = 300;
@@ -40,12 +41,12 @@
   export let minlengthValidationMessage;
   export let maxlengthValidationMessage;
   export let patternValidationMessage;
+  let bindingElement;
+  let optionElements = []; // Array to store references to option buttons
 
   export const reportValidity = () => {
     attachedInternals.reportValidity();
   };
-
-  let bindingElement;
   let filteredOptions = [];
   let inputEl;
   let open = false;
@@ -61,7 +62,7 @@
   $: {
     dispatch('value', value);
 
-    if(asyncOptions){
+    if (asyncOptions) {
       loading = true;
       clearTimeout(lagTimeout);
       lagTimeout = setTimeout(async () => {
@@ -104,6 +105,69 @@
     }
   }
 
+  function handleKeydown(event: KeyboardEvent) {
+    const currentIndex = optionElements.findIndex((el) => el === document.activeElement);
+    console.log(optionElements)
+
+    if (currentIndex == -1) {
+      if(event.key == 'ArrowDown' && open && optionElements.length){
+        optionElements[0].focus()
+      } else {
+        return;
+      }
+    }
+
+    if (open) {
+      if (event.key === 'Escape') {
+        inputEl.blur();
+        return;
+      }
+
+      if(event.key === 'Enter'){
+        value = filteredOptions[currentIndex];
+        inputEl.focus();
+      }
+
+      // Check for Home (Windows/Linux) or Cmd+UpArrow (Mac)
+      const isHome = event.key === 'Home' || (event.key === 'ArrowUp' && event.metaKey);
+      // Check for End (Windows/Linux) or Cmd+DownArrow (Mac)
+      const isEnd = event.key === 'End' || (event.key === 'ArrowDown' && event.metaKey);
+
+      // Check for Home (Windows/Linux) or Cmd+UpArrow (Mac)
+      if (isHome) {
+        event.preventDefault();
+        optionElements[0].focus();
+        return;
+      }
+      // Check for End (Windows/Linux) or Cmd+DownArrow (Mac)
+      if (isEnd) {
+        event.preventDefault();
+        optionElements[optionElements.length - 1].focus();
+        return;
+      }
+
+      // Original ArrowUp and ArrowDown handling
+      if (['ArrowDown', 'ArrowUp'].includes(event.key)) {
+        let nextIndex;
+        event.preventDefault();
+        if (event.key === 'ArrowUp') {
+          if (currentIndex == 0) {
+            nextIndex = optionElements.length - 1;
+          } else {
+            nextIndex = currentIndex - 1;
+          }
+        } else {
+          if (currentIndex == optionElements.length - 1) {
+            nextIndex = 0;
+          } else {
+            nextIndex = currentIndex + 1;
+          }
+        }
+        optionElements[nextIndex].focus();
+      }
+    }
+  }
+
   onMount(() => {
     if (typeof options == 'string') {
       options = JSON.parse(options);
@@ -116,13 +180,20 @@
     {@html label}
   </div>
 {/if}
-<div>
+<!-- svelte-ignore a11y-no-static-element-interactions -->
+<div
+  on:focusout={(e) => {
+    if (!bindingElement.contains(e.relatedTarget)) open = false;
+  }}
+  bind:this={bindingElement}
+  on:keydown={handleKeydown}
+>
   <label class="field">
     {#if label && labelType == 'inside'}
       <span class="field-label" class:move={open || value}>{@html label}</span>
     {/if}
     <input
-    class={`field-input ${labelType == 'outside' || !label ? '' : 'field-input-padding'}`}
+      class={`field-input ${labelType == 'outside' || !label ? '' : 'field-input-padding'}`}
       type="text"
       class:disabled
       {id}
@@ -136,15 +207,15 @@
       bind:this={inputEl}
       bind:value
       on:focus={() => (open = true)}
-      on:blur={() => (open = false)}
     />
 
     {#if open}
       <div class="menu">
         {#if !loading}
-          {#each filteredOptions as option}
+          {#each filteredOptions as option, index}
             <button
               class="menu-button"
+              bind:this={optionElements[index]}
               on:mousedown|preventDefault={() => {
                 value = option;
                 inputEl.blur();
