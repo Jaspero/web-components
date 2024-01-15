@@ -13,6 +13,7 @@
 | name | ✓ | `string` | name of the form control |
 | placeholder | | `string` | temporary text that appears in an input field before any input is entered |
 | label | | `string` | shows at the top of an input |
+| labelType | | `'outside'` or `'inside'` | whether label is inside or outside of the field |
 | minitems | | `number` | minimum number of items allowed |
 | minitemsValidationMessage | | `string` | validation message for when component does not satisfy minitems |
 | maxitems | |  `number` |  maximum number of items allowed |

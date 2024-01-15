@@ -23,6 +23,7 @@
   export let name: string | null = null;
 
   export let label: string = 'Label';
+  export let labelType: 'inside' | 'outside' = 'inside';
   export let placeholder: string | null = null;
   export let minitems: number = 0;
   export let maxitems: number | null = null;
@@ -117,15 +118,21 @@
   }}
 />
 
+{#if label && labelType == 'outside'}
+  <div class="label">
+    {@html label}
+  </div>
+{/if}
+
 <!-- svelte-ignore a11y-click-events-have-key-events -->
 <!-- svelte-ignore a11y-no-static-element-interactions -->
 <div on:click|preventDefault={() => inputEl.focus()}>
   <label class="field" class:disabled class:required>
-    {#if label}
+    {#if label && labelType == 'inside'}
       <span class="field-label" class:move={inputFocused || value}>{@html label}</span>
     {/if}
 
-    <div class="field-container">
+    <div class={`field-container ${labelType == 'outside' ? '' : 'field-container-padding'}`}>
       {#each chips as chip}
         <div class="field-container-chip">
           <span class="field-container-chip-label">{chip}</span>
@@ -291,12 +298,16 @@
     width: 10rem;
     font-size: 1rem;
     overflow: hidden;
-    padding: 1.25rem 0 0.25rem 0;
+    padding: 0.25rem 0 0.25rem 0;
     border: none;
     outline: none;
     -webkit-border-radius: 0;
     -moz-border-radius: 0;
     border-radius: 0;
+  }
+
+  .field-container-padding {
+    padding: 1.25rem 0 0.25rem 0;
   }
 
   .field-container-chip {
