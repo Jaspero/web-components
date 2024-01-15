@@ -21,6 +21,7 @@
   export let attachedInternals: ElementInternals;
   export let value: string = '';
   export let label: string = '';
+  export let labelType: 'inside' | 'outside' = 'inside';
   export let required: boolean = false;
   export let disabled: boolean = false;
   export let readonly: boolean = false;
@@ -90,9 +91,14 @@
   }
 </script>
 
+{#if label && labelType == 'outside'}
+  <div class="label">
+    {@html label}
+  </div>
+{/if}
 <div class:has-hint={$$slots.hint}>
   <label class="field" class:disabled={disabled || readonly} class:required>
-    {#if label}
+    {#if label && labelType == 'inside'}
       <span class="field-label" class:move={inputFocused || value}>{@html label}</span>
     {/if}
     {#if $$slots.prefix && (value || inputFocused)}
@@ -104,7 +110,7 @@
       <input
         type="text"
         bind:this={inputEl}
-        class="field-input"
+        class={`field-input ${labelType == 'outside' ? '' : 'field-input-padding'}`}
         aria-hidden={disabled || readonly}
         tabindex={disabled || readonly ? -1 : 0}
         {placeholder}
@@ -124,7 +130,7 @@
       <input
         type="password"
         bind:this={inputEl}
-        class="field-input"
+        class={`field-input ${labelType == 'outside' ? '' : 'field-input-padding'}`}
         aria-hidden={disabled || readonly}
         tabindex={disabled || readonly ? -1 : 0}
         {placeholder}
@@ -144,7 +150,7 @@
       <input
         type="email"
         bind:this={inputEl}
-        class="field-input"
+        class={`field-input ${labelType == 'outside' ? '' : 'field-input-padding'}`}
         aria-hidden={disabled || readonly}
         tabindex={disabled || readonly ? -1 : 0}
         {placeholder}
@@ -164,7 +170,7 @@
       <input
         type="tel"
         bind:this={inputEl}
-        class="field-input"
+        class={`field-input ${labelType == 'outside' ? '' : 'field-input-padding'}`}
         aria-hidden={disabled || readonly}
         tabindex={disabled || readonly ? -1 : 0}
         {placeholder}
@@ -184,7 +190,7 @@
       <input
         type="url"
         bind:this={inputEl}
-        class="field-input"
+        class={`field-input ${labelType == 'outside' ? '' : 'field-input-padding'}`}
         aria-hidden={disabled || readonly}
         tabindex={disabled || readonly ? -1 : 0}
         {placeholder}
@@ -204,7 +210,7 @@
       <input
         type="number"
         bind:this={inputEl}
-        class="field-input"
+        class={`field-input ${labelType == 'outside' ? '' : 'field-input-padding'}`}
         aria-hidden={disabled || readonly}
         tabindex={disabled || readonly ? -1 : 0}
         {required}
@@ -366,12 +372,15 @@
     overflow: hidden;
     -o-text-overflow: ellipsis;
     text-overflow: ellipsis;
-    padding: 1rem 0 0 0;
     border: none;
     outline: none;
     -webkit-border-radius: 0;
     -moz-border-radius: 0;
     border-radius: 0;
+  }
+
+  .field-input-padding {
+    padding: 1rem 0 0 0;
   }
 
   .field-input:-moz-placeholder {

@@ -9,6 +9,7 @@
 | **Name** | **Required** | **Type** | **Description** |
 | :----: | :----: | :----: | :---: |
 | label | | `string` | shows at the top of an input |
+| labelType | | `'outside'` or `'inside'` | whether label is inside or outside of the field |
 | placeholder | | `string` | temporary text that appears in an <br></br> input field before any input is entered |
 | name | ✓ | `string` |  name of the form control |
 | id | | `string`| unique identifier |
