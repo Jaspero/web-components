@@ -26,7 +26,8 @@
   export let value: string = '';
   export let id: string = '';
   export let name: string = '';
-  export let label = 'Label';
+  export let label = '';
+  export let labelType: 'inside' | 'outside' = 'inside';
   export const getValue = () => value;
 
   export let requiredValidationMessage;
@@ -249,6 +250,11 @@
   });
 </script>
 
+{#if label && labelType == 'outside'}
+  <div class="label">
+    {@html label}
+  </div>
+{/if}
 <div class:has-hint={hint}>
   <input bind:value {id} {name} {required} bind:this={inputEl} hidden />
 
@@ -260,13 +266,13 @@
     on:click|preventDefault={toggleMenu}
     on:keydown={handleKeydown}
   >
-    {#if label}
+    {#if label && labelType == 'inside'}
       <span class="select-label" class:move={selected || open}>
-        {label || 'Select an option'}
+        {@html label}
       </span>
     {/if}
 
-    <span class="select-option">
+    <span class={`select-option ${labelType == 'outside' || !label ? '' : 'select-option-padding'}`}>
       {selected || ''}
     </span>
 
@@ -481,7 +487,10 @@
     overflow: hidden;
     -o-text-overflow: ellipsis;
     text-overflow: ellipsis;
-    padding-top: 1rem;
+  }
+
+  .select-option-padding {
+    padding: 1rem 0 0 0;
   }
 
   .select-arrow {

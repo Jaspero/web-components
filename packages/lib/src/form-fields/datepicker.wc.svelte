@@ -25,7 +25,7 @@
   export let required: boolean = false;
   export let requiredValidationMessage: string = '';
   export let name: string = '';
-  export let label: string = 'Pick a date';
+  export let label: string = '';
   export let labelType: 'inside' | 'outside' = 'inside';
   export let displayFormat: string = 'normal';
   export let displayFormatFunction: (date: Date) => string = (date) => date.toDateString();
@@ -232,7 +232,7 @@
   {#if label && labelType == 'inside'}
     <span class="field-label" class:move={openPicker || internalValue}>{@html label}</span>
   {/if}
-  <p class={`field-input ${labelType == 'outside' ? '' : 'field-input-padding'}`}>
+  <p class={`field-input ${labelType == 'outside' || !label ? '' : 'field-input-padding'}`}>
     {displayedDateString}
   </p>
 

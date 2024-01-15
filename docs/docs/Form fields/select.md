@@ -16,6 +16,7 @@
 | id | | `string`| unique identifier |
 | name | ✓ | `string` |  name of the form control |
 | label | | `string` | shows at the top of the field |
+| labelType | | `'outside'` or `'inside'` | whether label is inside or outside of the field |
 | hint | | `string` | shows below the field |
 
 ### Slots

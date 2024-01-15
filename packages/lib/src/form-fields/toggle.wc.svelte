@@ -22,7 +22,7 @@
 
   export let name: string = '';
   export let value: string = '';
-  export let label: string | null = null;
+  export let label: string = '';
   export let required: boolean = false;
   export let requiredValidationMessage: string = ''
   export let size: 'small' | 'large' = 'small';

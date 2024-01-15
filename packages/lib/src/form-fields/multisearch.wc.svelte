@@ -30,7 +30,8 @@
   export let internalValue: string = '';
   export let id: string = '';
   export let name: string = '';
-  export let label = 'Label';
+  export let label = '';
+  export let labelType: 'inside' | 'outside' = 'inside';
   export const getValue = () => options.filter((el) => el.selected).map((el) => el.value);
   export let service: SearchService;
   let initialLoad = true;
@@ -317,6 +318,11 @@
   });
 </script>
 
+{#if label && labelType == 'outside'}
+  <div class="label">
+    {@html label}
+  </div>
+{/if}
 <div class:has-hint={hint}>
   <input bind:value={internalValue} {id} {name} {required} hidden />
 
@@ -328,11 +334,17 @@
     on:click|preventDefault={toggleMenu}
     on:keydown={handleKeydown}
   >
-    <span class="select-label" class:move={internalValue || open}>
-      {initialLoad ? 'Loading...' : label || 'Select an option'}
-    </span>
+    {#if initialLoad}
+      <span class="select-label">
+        Loading...
+      </span>
+    {:else if label && labelType == 'inside'}
+      <span class="select-label" class:move={internalValue || open}>
+        {@html label}
+      </span>
+    {/if}
 
-    <span class="select-option">
+    <span class={`select-option ${labelType == 'outside' || !label ? '' : 'select-option-padding'}`}>
       {displayValue || ''}
     </span>
 
@@ -549,7 +561,10 @@
     overflow: hidden;
     -o-text-overflow: ellipsis;
     text-overflow: ellipsis;
-    padding-top: 1rem;
+  }
+
+  .select-option-padding {
+    padding: 1rem 0 0 0;
   }
 
   .select-arrow {

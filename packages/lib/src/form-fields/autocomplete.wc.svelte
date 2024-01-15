@@ -122,7 +122,7 @@
       <span class="field-label" class:move={open || value}>{@html label}</span>
     {/if}
     <input
-    class={`field-input ${labelType == 'outside' ? '' : 'field-input-padding'}`}
+    class={`field-input ${labelType == 'outside' || !label ? '' : 'field-input-padding'}`}
       type="text"
       class:disabled
       {id}

@@ -94,7 +94,7 @@
     {/if}
 
     <textarea
-      class={`field-input ${labelType == 'outside' ? '' : 'field-input-margin'}`}
+      class={`field-input ${labelType == 'outside' || !label ? '' : 'field-input-margin'}`}
       aria-hidden={disabled || readonly}
       tabindex={disabled || readonly ? -1 : 0}
       {disabled}

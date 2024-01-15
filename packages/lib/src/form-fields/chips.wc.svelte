@@ -22,7 +22,7 @@
   export let id: string | null = null;
   export let name: string | null = null;
 
-  export let label: string = 'Label';
+  export let label: string = '';
   export let labelType: 'inside' | 'outside' = 'inside';
   export let placeholder: string | null = null;
   export let minitems: number = 0;
@@ -132,7 +132,7 @@
       <span class="field-label" class:move={inputFocused || value}>{@html label}</span>
     {/if}
 
-    <div class={`field-container ${labelType == 'outside' ? '' : 'field-container-padding'}`}>
+    <div class={`field-container ${labelType == 'outside' || !label ? '' : 'field-container-padding'}`}>
       {#each chips as chip}
         <div class="field-container-chip">
           <span class="field-container-chip-label">{chip}</span>
