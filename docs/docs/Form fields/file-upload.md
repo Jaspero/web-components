@@ -10,6 +10,7 @@
 |:--------:|:------------:|:------------:|:------------------------:|
 |    id    |              |   `string`   |    unique identifier     |
 |    label    |              |   `string`   |    label of the input field     |
+| labelType | | `'outside'` or `'inside'` | whether label is inside or outside of the field |
 | service  |      ✓       | [`FileService`](#fileservice) |      file service       |
 |   name   |      ✓       |   `string`   | name of the form control |
 

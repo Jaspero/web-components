@@ -20,6 +20,7 @@
   import { createEventDispatcher } from 'svelte';
 
   export let label: string = 'Upload a file';
+  export let labelType: 'inside' | 'outside' = 'inside';
   export let attachedInternals: ElementInternals;
   export let value: string = '';
   export let id: string = '';
@@ -124,6 +125,11 @@
   };
 </script>
 
+{#if label && labelType == 'outside'}
+  <div class="label">
+    {@html label}
+  </div>
+{/if}
 <div>
   <!-- svelte-ignore a11y-no-static-element-interactions -->
   <div
@@ -139,7 +145,7 @@
         on:drop|preventDefault={(e) => handleDrop(e)}
       ></div>
     {:else}
-      {#if label}
+      {#if label && labelType == 'inside'}
         <span class="field-label" class:move={inputFocused || value}>{@html label}</span>
       {/if}
 
@@ -205,7 +211,7 @@
 
       <span class="field-upload-container">
         <input
-          class="field-input"
+          class={`field-input ${labelType == 'outside' ? '' : 'field-input-padding'}`}
           type="text"
           {name}
           {id}
@@ -358,12 +364,15 @@
     overflow: hidden;
     -o-text-overflow: ellipsis;
     text-overflow: ellipsis;
-    padding: 1rem 0 0 0;
     border: none;
     outline: none;
     -webkit-border-radius: 0;
     -moz-border-radius: 0;
     border-radius: 0;
+  }
+
+  .field-input-padding {
+    padding: 1rem 0 0 0;
   }
 
   .field-upload {
