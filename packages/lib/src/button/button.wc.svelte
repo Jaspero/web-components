@@ -12,15 +12,31 @@
     export let color: 'default' | 'primary' | 'accent' | 'warn' = 'default';
 
     export let type: 'button' | 'submit' = 'button';
+
+    export let tooltip: string = '';
+
+    let isTooltipVisible = false;
+
+    const handleMouseOver = () => {
+      isTooltipVisible = true;
+    };
+
+    const handleMouseOut = () => {
+      isTooltipVisible = false;
+    };
 </script>
 
-<button {disabled}
-        {type}
-        class="jp-button jp-{variant}-button {color}"
-        class:loading={loading}
-        on:click>
-    <slot />
-</button>
+<div class="custom-button" on:mouseover={handleMouseOver} on:mouseout={handleMouseOut}>
+    <button {disabled} {type} class="jp-button jp-{variant}-button {color}" class:loading={loading} on:click>
+        <slot />
+    </button>
+
+    {#if isTooltipVisible}
+        <div class="tooltip">
+            {@html tooltip}
+        </div>
+    {/if}
+</div>
 
 <style>
     @import 'packages/demo/src/app.postcss';
@@ -326,4 +342,25 @@
         background-color: var(--background-disabled);
         color: var(--disabled-color)
     }
+
+    .custom-button {
+        padding: 10px;
+        margin: 5px;
+        position: relative;
+    }
+
+    .tooltip {
+        display: block;
+        position: absolute;
+        top: 100%;
+        left: 50%;
+        transform: translateX(-50%);
+        background-color: #333;
+        color: #fff;
+        padding: 8px;
+        border-radius: 4px;
+        white-space: nowrap;
+    }
 </style>
+
+
