@@ -330,7 +330,7 @@
       </span>
     {/if}
 
-    <span class={`select-option ${labelType == 'outside' ? '' : 'select-option-padding'}`}>
+    <span class={`select-option ${labelType == 'outside' || !label ? '' : 'select-option-padding'}`}>
       {displayValue || ''}
     </span>
 

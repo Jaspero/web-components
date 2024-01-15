@@ -211,7 +211,7 @@
 
       <span class="field-upload-container">
         <input
-          class={`field-input ${labelType == 'outside' ? '' : 'field-input-padding'}`}
+          class={`field-input ${labelType == 'outside' || !label ? '' : 'field-input-padding'}`}
           type="text"
           {name}
           {id}

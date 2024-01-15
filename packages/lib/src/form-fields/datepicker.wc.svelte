@@ -232,7 +232,7 @@
   {#if label && labelType == 'inside'}
     <span class="field-label" class:move={openPicker || internalValue}>{@html label}</span>
   {/if}
-  <p class={`field-input ${labelType == 'outside' ? '' : 'field-input-padding'}`}>
+  <p class={`field-input ${labelType == 'outside' || !label ? '' : 'field-input-padding'}`}>
     {displayedDateString}
   </p>
 

@@ -110,7 +110,7 @@
       <input
         type="text"
         bind:this={inputEl}
-        class={`field-input ${labelType == 'outside' ? '' : 'field-input-padding'}`}
+        class={`field-input ${labelType == 'outside' || !label ? '' : 'field-input-padding'}`}
         aria-hidden={disabled || readonly}
         tabindex={disabled || readonly ? -1 : 0}
         {placeholder}
@@ -130,7 +130,7 @@
       <input
         type="password"
         bind:this={inputEl}
-        class={`field-input ${labelType == 'outside' ? '' : 'field-input-padding'}`}
+        class={`field-input ${labelType == 'outside' || !label ? '' : 'field-input-padding'}`}
         aria-hidden={disabled || readonly}
         tabindex={disabled || readonly ? -1 : 0}
         {placeholder}
@@ -150,7 +150,7 @@
       <input
         type="email"
         bind:this={inputEl}
-        class={`field-input ${labelType == 'outside' ? '' : 'field-input-padding'}`}
+        class={`field-input ${labelType == 'outside' || !label ? '' : 'field-input-padding'}`}
         aria-hidden={disabled || readonly}
         tabindex={disabled || readonly ? -1 : 0}
         {placeholder}
@@ -170,7 +170,7 @@
       <input
         type="tel"
         bind:this={inputEl}
-        class={`field-input ${labelType == 'outside' ? '' : 'field-input-padding'}`}
+        class={`field-input ${labelType == 'outside' || !label ? '' : 'field-input-padding'}`}
         aria-hidden={disabled || readonly}
         tabindex={disabled || readonly ? -1 : 0}
         {placeholder}
@@ -190,7 +190,7 @@
       <input
         type="url"
         bind:this={inputEl}
-        class={`field-input ${labelType == 'outside' ? '' : 'field-input-padding'}`}
+        class={`field-input ${labelType == 'outside' || !label ? '' : 'field-input-padding'}`}
         aria-hidden={disabled || readonly}
         tabindex={disabled || readonly ? -1 : 0}
         {placeholder}
@@ -210,7 +210,7 @@
       <input
         type="number"
         bind:this={inputEl}
-        class={`field-input ${labelType == 'outside' ? '' : 'field-input-padding'}`}
+        class={`field-input ${labelType == 'outside' || !label ? '' : 'field-input-padding'}`}
         aria-hidden={disabled || readonly}
         tabindex={disabled || readonly ? -1 : 0}
         {required}
