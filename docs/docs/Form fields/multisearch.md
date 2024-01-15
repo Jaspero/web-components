@@ -54,3 +54,33 @@ This component does not have any methods.
 
 - `value` 
   - triggers when selected options change
+
+```jsx live
+function multisearch(props){
+  let el = useRef(null);
+  useEffect(() => {
+    const multisearch = document.createElement('jp-multisearch')
+    multisearch.value = 'aaa, bbb'
+    multisearch.service = {
+      i: 0,
+      async search(str){
+        await new Promise(resolve => setTimeout(resolve, 1500));
+        return [{"value": "str+1"}, {"value": "str+2"}]
+      },
+      async loadMore(str){
+        await new Promise(resolve => setTimeout(resolve, 1500));
+        this.loadMore = null
+        return [{"value": str}]
+      },
+      async getSingle(value){
+        await new Promise(resolve => setTimeout(resolve, 1500));
+        return {value: value, label: this.i++}
+      }
+    }
+    el.current.appendChild(multisearch)
+  })
+  return (
+    <div ref={el}></div>
+  )
+}
+```
