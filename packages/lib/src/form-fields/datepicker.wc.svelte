@@ -26,6 +26,7 @@
   export let requiredValidationMessage: string = '';
   export let name: string = '';
   export let label: string = 'Pick a date';
+  export let labelType: 'inside' | 'outside' = 'inside';
   export let displayFormat: string = 'normal';
   export let displayFormatFunction: (date: Date) => string = (date) => date.toDateString();
   export let returnFormat: string = 'js';
@@ -214,6 +215,12 @@
   }
 </script>
 
+{#if label && labelType == 'outside'}
+  <div class="label">
+    {@html label}
+  </div>
+{/if}
+
 <button
   class="field"
   bind:this={bindingElement}
@@ -222,10 +229,12 @@
   class:borderTop
   on:click|preventDefault={toggleMenu}
 >
-  {#if label}
+  {#if label && labelType == 'inside'}
     <span class="field-label" class:move={openPicker || internalValue}>{@html label}</span>
   {/if}
-  <p class="field-input">{displayedDateString}</p>
+  <p class={`field-input ${labelType == 'outside' ? '' : 'field-input-padding'}`}>
+    {displayedDateString}
+  </p>
 
   <span class="field-icon">
     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512">
@@ -496,12 +505,15 @@
     overflow: hidden;
     -o-text-overflow: ellipsis;
     text-overflow: ellipsis;
-    padding: 1rem 0 0 0;
     border: none;
     outline: none;
     -webkit-border-radius: 0;
     -moz-border-radius: 0;
     border-radius: 0;
+  }
+
+  .field-input-padding {
+    padding: 1rem 0 0 0;
   }
 
   .field-label {

@@ -11,6 +11,7 @@
 | name | ✓ | `string` |  name of the form control |
 | value |  | `Date()` constructor param |  initial value |
 | label |  | `string` |  label displayed on date field |
+| labelType | | `'outside'` or `'inside'` | whether label is inside or outside of the field |
 | required | | `boolean` | determines if date needs to be selected |
 | requiredValidationMessage | | `string` | validation message for when component does not satisfy required |
 | returnFormat |  | `custom` \| `json` \| `unix` \| `js` \| `utc` \| `iso` \| `isoDate` |  format of exposing value (through events and methods) |
