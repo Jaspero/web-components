@@ -38,6 +38,6 @@ This component does not have any slots.
 ### Demo
 
 ```jsx live
-<jp-date-range>
+<jp-date-range label="Pick a date range">
 </jp-date-range>
 ```

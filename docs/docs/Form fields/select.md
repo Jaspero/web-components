@@ -36,6 +36,6 @@ This component does not have any slots.
 ### Demo
 
 ```jsx live
-<jp-select options='[{"value":"aaa"}, {"value":"bbb"}, {"value":"ccc"}]'>
+<jp-select options='[{"value":"aaa"}, {"value":"bbb"}, {"value":"ccc"}]' label="Select">
 </jp-select>
 ```

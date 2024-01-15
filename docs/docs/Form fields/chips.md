@@ -44,6 +44,6 @@ This component does not have any slots.
 ### Demo
 
 ```jsx live
-<jp-chips name="chips" label="label12" placeholder="placeholder">
+<jp-chips label="Chips" placeholder="Placeholder">
 </jp-chips>
 ```

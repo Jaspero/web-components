@@ -43,6 +43,6 @@ This component does not have any slots.
 ### Demo
 
 ```jsx live
-<jp-textarea value='pattern text' name='textarea'>
+<jp-textarea label='Textarea'>
 </jp-textarea>
 ```

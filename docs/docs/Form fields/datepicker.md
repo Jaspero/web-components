@@ -1,4 +1,4 @@
-# Datepicker
+# Date Picker
 
 ### Description
 
@@ -37,6 +37,6 @@ This component does not have any slots.
 ### Demo
 
 ```jsx live
-<jp-datepicker>
+<jp-datepicker label="Pick a date">
 </jp-datepicker>
 ```

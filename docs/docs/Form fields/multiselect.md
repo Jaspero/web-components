@@ -42,6 +42,6 @@ This component does not have any slots.
 ### Demo
 
 ```jsx live
-<jp-multiselect options='[{"value":"aaa"}, {"value":"bbb"}, {"value":"ccc"}]'>
+<jp-multiselect options='[{"value":"aaa"}, {"value":"bbb"}, {"value":"ccc"}]' label="Multiselect">
 </jp-multiselect>
 ```
