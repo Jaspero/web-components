@@ -26,7 +26,7 @@
   export let required: boolean = false;
   export let requiredValidationMessage: string = '';
   export let name: string = '';
-  export let label: string = 'Pick a date range';
+  export let label: string = '';
   export let labelType: 'inside' | 'outside' = 'inside';
   export let separator: string = ' to ';
   export let displayFormat: string = 'normal';

@@ -22,7 +22,7 @@
   export let id: string | null = null;
   export let name: string | null = null;
 
-  export let label: string = 'Label';
+  export let label: string = '';
   export let labelType: 'inside' | 'outside' = 'inside';
   export let placeholder: string | null = null;
   export let minitems: number = 0;

@@ -19,7 +19,7 @@
   import type FileService from '../types/file.service';
   import { createEventDispatcher } from 'svelte';
 
-  export let label: string = 'Upload a file';
+  export let label: string = '';
   export let labelType: 'inside' | 'outside' = 'inside';
   export let attachedInternals: ElementInternals;
   export let value: string = '';

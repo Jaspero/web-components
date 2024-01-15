@@ -31,7 +31,7 @@
   export let internalValue: string = '';
   export let id: string = '';
   export let name: string = '';
-  export let label = 'Label';
+  export let label = '';
   export let labelType: 'inside' | 'outside' = 'inside';
   export const getValue = () => options.filter((el) => el.selected).map((el) => el.value);
 

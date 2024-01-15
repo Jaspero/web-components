@@ -25,7 +25,7 @@
   export let required: boolean = false;
   export let requiredValidationMessage: string = '';
   export let name: string = '';
-  export let label: string = 'Pick a date';
+  export let label: string = '';
   export let labelType: 'inside' | 'outside' = 'inside';
   export let displayFormat: string = 'normal';
   export let displayFormatFunction: (date: Date) => string = (date) => date.toDateString();
