@@ -10,7 +10,7 @@
 | :----: | :----: | :----: | :---: |
 | name | ✓ | `string` |  name of the form control |
 | separator |  | `string` |  string between the dates |
-| value |  | `string˛` (`Date()` constructor params with separator inbetween) |  initial value |
+| value |  | `string˛` (`Date()` constructor params with separator inbetween) | setter |
 | label |  | `string` |  label displayed on date field |
 | labelType | | `'outside'` or `'inside'` | whether label is inside or outside of the field |
 | required | | `boolean` | determines if date needs to be selected |

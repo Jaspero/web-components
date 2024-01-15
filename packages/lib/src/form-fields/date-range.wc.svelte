@@ -191,7 +191,7 @@
     }
   }
 
-  onMount(() => {
+  $: {
     if (value) {
       const [from, to] = value.split(separator);
       const first = new Date(from);
@@ -212,8 +212,7 @@
         );
       }
     }
-    pickerRows = getPickerRows(pickerMonth, pickerYear);
-  });
+  };
 
   $: if (pickerMonth == 12) {
     pickerMonth = 0;
