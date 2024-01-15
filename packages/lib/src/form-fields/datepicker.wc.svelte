@@ -156,7 +156,7 @@
     openPicker = !openPicker;
   }
 
-  onMount(() => {
+  $: {
     if (value) {
       const tmp = new Date(value);
       yearSelected = tmp.getFullYear();
@@ -165,8 +165,7 @@
       pickerMonth = monthSelected;
       pickerYear = yearSelected;
     }
-    pickerRows = getPickerRows(pickerMonth, pickerYear);
-  });
+  };
 
   $: if (pickerMonth == 12) {
     pickerMonth = 0;

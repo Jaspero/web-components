@@ -9,7 +9,7 @@
 | **Name** | **Required** | **Type** | **Description** |
 | :----: | :----: | :----: | :---: |
 | name | ✓ | `string` |  name of the form control |
-| value |  | `Date()` constructor param |  initial value |
+| value |  | `Date()` constructor param |  setter |
 | label |  | `string` |  label displayed on date field |
 | labelType | | `'outside'` or `'inside'` | whether label is inside or outside of the field |
 | required | | `boolean` | determines if date needs to be selected |
