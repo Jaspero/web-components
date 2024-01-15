@@ -24,7 +24,8 @@
   export let lag: number = 300;
   let loading = false;
   let lagTimeout;
-  export let label = 'autocomplete';
+  export let label = '';
+  export let labelType: 'inside' | 'outside' = 'inside';
   export let id: string | null = null;
   export let name: string | null = null;
   export let disabled: boolean = false;
@@ -110,13 +111,18 @@
   });
 </script>
 
+{#if label && labelType == 'outside'}
+  <div class="label">
+    {@html label}
+  </div>
+{/if}
 <div>
   <label class="field">
-    {#if label}
+    {#if label && labelType == 'inside'}
       <span class="field-label" class:move={open || value}>{@html label}</span>
     {/if}
     <input
-      class="field-input"
+    class={`field-input ${labelType == 'outside' ? '' : 'field-input-padding'}`}
       type="text"
       class:disabled
       {id}
@@ -271,12 +277,15 @@
     overflow: hidden;
     -o-text-overflow: ellipsis;
     text-overflow: ellipsis;
-    padding: 1rem 0 0 0;
     border: none;
     outline: none;
     -webkit-border-radius: 0;
     -moz-border-radius: 0;
     border-radius: 0;
+  }
+
+  .field-input-padding {
+    padding: 1rem 0 0 0;
   }
 
   .field-input:-moz-placeholder {
