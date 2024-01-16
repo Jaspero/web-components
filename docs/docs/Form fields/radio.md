@@ -7,7 +7,7 @@
 ### Attributes
 | **Name** | **Required** | **Type** | **Description** |
 | :----: | :----: | :----: | :---: |
-| value | | `string` | initial value |
+| value | | `string` | setter and getter |
 | options | ✓ |`Array<{name?: string, value: any, disabled?: boolean;}>` | select options |
 | name | ✓ | `string` |  name of the form control |
 | inline | | `boolean` | row/columns |
