@@ -40,7 +40,8 @@ This component does not have any slots.
 This component does not have any methods.
 
 ### Events
-
+- `getValue` 
+  - returns form field value
 - `value` 
   - triggers when value (file) changes
 - `rejected`

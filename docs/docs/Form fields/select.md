@@ -24,7 +24,8 @@
 This component does not have any slots.
 
 ### Methods
-
+- `getValue` 
+  - returns form field value
 - `reportValidity` 
   - triggers reportValidity
 

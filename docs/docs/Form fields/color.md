@@ -21,7 +21,8 @@ This component does not have any slots.
 
 ### Methods
 
-This component does not have any methods.
+- `getValue` 
+  - returns form field value
 
 ### Events
 

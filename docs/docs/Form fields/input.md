@@ -40,6 +40,8 @@
   - renders after the input field
 
 ### Methods
+- `getValue` 
+  - returns form field value
 - `reportValidity` 
   - triggers reportValidity
 

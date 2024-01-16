@@ -41,6 +41,8 @@ Defines the accepted file types and provides a method to upload a file.
 This component does not have any slots.
 
 ### Methods
+- `getValue` 
+  - returns form field value
 - `reportValidity` 
   - triggers reportValidity
 - `save` 

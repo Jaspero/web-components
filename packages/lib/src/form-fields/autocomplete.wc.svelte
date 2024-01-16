@@ -53,6 +53,8 @@
 
   const dispatch = createEventDispatcher();
 
+  const getValue = () => value;
+
   $: {
     if (Array.isArray(options)) {
       filteredOptions = options.filter((el) => el.toLowerCase().includes(value.toLowerCase()));
