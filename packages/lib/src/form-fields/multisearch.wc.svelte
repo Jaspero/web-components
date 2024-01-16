@@ -22,11 +22,12 @@
   export let attachedInternals: ElementInternals;
   export let minSelects: number = 0;
   export let maxSelects: number | null = null;
-  let options: Array<{ label?: string; value: string; selected?: boolean; disabled?: boolean }> = [];
+  let options: Array<{ label?: string; value: string; selected?: boolean; disabled?: boolean }> =
+    [];
   export let disabled: boolean = false;
   export let required: boolean = false;
   export let hint: string = '';
-  export let value;
+  export let value: string = '';
   export let internalValue: string = '';
   export let id: string = '';
   export let name: string = '';
@@ -34,7 +35,7 @@
   export let labelType: 'inside' | 'outside' = 'inside';
   export const getValue = () => options.filter((el) => el.selected).map((el) => el.value);
   export let service: SearchService;
-  let initialLoad = true;
+  let valueLoad = false;
   let loadingMore = false;
   let loadingSearch = false;
   let searchValue: string = '';
@@ -104,7 +105,6 @@
     options = options.filter((el) => el.selected);
     loadingSearch = true;
     const searchResults = await service.search(searchValue);
-    console.log(searchResults);
     options = [
       ...options,
       ...searchResults.map((el) => {
@@ -297,23 +297,35 @@
 
   $: document.documentElement.style.overflowY = open ? 'hidden' : '';
 
-  onMount(async () => {
+  async function loadValues(value) {
+    valueLoad = true;
+    const values = value.split(',');
+    await Promise.all(
+      values.map(async (el) => {
+        let single;
+        if (service.getSingle) {
+          single = await service.getSingle(el);
+          single.selected = true;
+        } else {
+          single = { 'value': el, selected: true };
+        }
+        options = [...options, single];
+      })
+    );
+    valueLoad = false;
+  }
+
+  $: {
+    if (value) {
+      loadValues(value)
+    } else {
+      options = []
+    }
+  }
+
+  onMount(() => {
     if (!maxSelects) {
       maxSelects = options.length;
-    }
-    if (value) {
-      initialLoad = true;
-      await Promise.all(value.split(',').map(async (el) => {
-        let single;
-        if(service.getSingle){
-          single = await service.getSingle(el)
-          single.selected = true
-        } else {
-          single = {value: el, selected: true}
-        }
-        options = [...options, single]
-      }))
-      initialLoad = false;
     }
   });
 </script>
@@ -330,21 +342,21 @@
     class="select"
     class:toggled={open}
     bind:this={bindingElement}
-    disabled={disabled || initialLoad}
+    disabled={disabled || valueLoad}
     on:click|preventDefault={toggleMenu}
     on:keydown={handleKeydown}
   >
-    {#if initialLoad}
-      <span class="select-label">
-        Loading...
-      </span>
+    {#if valueLoad}
+      <span class="select-label"> Loading... </span>
     {:else if label && labelType == 'inside'}
       <span class="select-label" class:move={internalValue || open}>
         {@html label}
       </span>
     {/if}
 
-    <span class={`select-option ${labelType == 'outside' || !label ? '' : 'select-option-padding'}`}>
+    <span
+      class={`select-option ${labelType == 'outside' || !label ? '' : 'select-option-padding'}`}
+    >
       {displayValue || ''}
     </span>
 

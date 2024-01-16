@@ -8,7 +8,7 @@
 
 | Name | Required |   Type   |     Description      |
 |:--------:|:------------:|:------------:|:------------------------:|
-| value | | `string`| initial value |
+| value | | `string`| setter |
 | service  |      ✓       | [`SearchService`](#searchservice) |      search service       |
 |   name   |      ✓       |   `string`   | name of the form control |
 | minSelects | | `number` | minimum number of selects allowed |
