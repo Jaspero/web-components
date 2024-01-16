@@ -8,13 +8,13 @@
 
 | **Name** | **Required** | **Type** | **Description** |
 | :----: | :----: | :----: | :---: |
+| value | | `number` | setter and getter |
 | name | ✓ | `string` |  name of the form control |
 | id | | `string`| unique identifier |
 | disabled | | `boolean` | determines if slider is disabled |
 | showValue | | `boolean` | whether to show numerical value |
 | max | | `number` | maximal slider value |
 | min | | `number` | minimal slider value |
-| value | | `number` | slider value |
 | step | | `number` | size of increment/decrement when sliding |
 | discrete | | `boolean` | whether slider is smooth or in ticks <br></br> (when `false` step is `any`) |
 
