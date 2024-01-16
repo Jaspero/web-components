@@ -10,7 +10,7 @@ It's a wrapper around https://quilljs.com/.
 
 | **Name** | **Required** | **Type** | **Description** |
 | :----: | :----: | :----: | :---: |
-| value | | `string` | value of the input field (quill content) |
+| value | | `string` | setter |
 | options | |`Object` | [Quill config](https://quilljs.com/docs/configuration/)|
 | service | | [`ImageService`](#imageservice) | service that handles image adding |
 | id | | `string` | unique identifier |

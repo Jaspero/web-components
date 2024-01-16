@@ -44,8 +44,9 @@
   };
 
   let fileHolder;
+  let internalValue;
 
-  export const getValue = () => value;
+  export const getValue = () => internalValue;
 
   const dispatch = createEventDispatcher();
 
@@ -54,8 +55,8 @@
 
   $: {
     attachedInternals.checkValidity();
-    attachedInternals.setFormValue(value);
-    dispatch('value', { value });
+    attachedInternals.setFormValue(internalValue);
+    dispatch('value', { internalValue });
   }
 
   export async function save(id?: string) {
@@ -94,12 +95,14 @@
     // Am I allowed to remove fileHolder here?
   }
 
+  $: {
+    if(editor){
+      editor.setText(value)
+    }
+  }
+
   onMount(() => {
     let quill = getQull();
-
-    if (value) {
-      containerEl.innerHTML = value;
-    }
 
     editor = new quill(containerEl, options);
 
@@ -110,7 +113,7 @@
     }
 
     editor.on('text-change', () => {
-      value = editor.root.innerHTML;
+      internalValue = editor.root.innerHTML;
     });
   });
 
@@ -124,4 +127,4 @@
   <span>{label}</span>
 {/if}
 <div bind:this={containerEl}></div>
-<textarea {id} {name} {value} hidden></textarea>
+<textarea {id} {name} bind:value={internalValue} hidden></textarea>
