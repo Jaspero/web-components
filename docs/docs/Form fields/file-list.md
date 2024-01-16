@@ -8,7 +8,7 @@
 
 | Name | Required |   Type   |     Description      |
 |:--------:|:------------:|:------------:|:------------------------:|
-|    value    |              |   `string` (list of urls separated by comma)   |    initial value     |
+|    value    |              |   `string` (list of urls separated by comma)   |    setter     |
 |    label    |              |   `string` (HTML)   |    displayed above the field     |
 |    id    |              |   `string`   |    unique identifier     |
 |   name   |      ✓       |   `string`   | name of the form control |

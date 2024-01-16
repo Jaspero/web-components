@@ -35,17 +35,22 @@
   let startingY, startingX;
   let internalFiles = [];
   let browseFilesEl;
-  let loading = true;
+  let loading = false;
   let hoveringFile = false;
   let fileElements = [];
+  let internalValue = '';
 
-  export const getValue = () => value;
+  export const getValue = () => internalValue;
 
   export const reportValidity = () => attachedInternals.reportValidity();
 
   const dispatch = createEventDispatcher();
 
   $: {
+    internalValue = internalFiles
+      .filter((el) => el.saved)
+      .map((el) => el.url)
+      .join(',');
     if (minfiles && internalFiles.length < minfiles) {
       attachedInternals.setValidity(
         { customError: true },
@@ -60,8 +65,8 @@
       attachedInternals.setValidity({});
     }
     attachedInternals.checkValidity();
-    attachedInternals.setFormValue(value);
-    dispatch('value', { value });
+    attachedInternals.setFormValue(internalValue);
+    dispatch('value', { value: internalValue });
   }
 
   export async function save() {
@@ -77,10 +82,6 @@
         })
       );
       internalFiles = internalFiles;
-      value = internalFiles
-        .filter((el) => el.saved)
-        .map((el) => el.url)
-        .join(',');
     } catch (err) {
       console.log(err);
     } finally {
@@ -94,10 +95,6 @@
     }
     internalFiles.splice(index, 1);
     internalFiles = internalFiles;
-    value = internalFiles
-      .filter((el) => el.saved)
-      .map((el) => el.url)
-      .join(',');
   }
 
   function handleFileInput(e) {
@@ -152,31 +149,37 @@
     return new File([blob], filename);
   };
 
-  onMount(async () => {
-    if (value) {
-      if (Array.isArray(value)) {
-        value = value.join(',');
-      }
-      const urls = value.split(',');
-      await Promise.allSettled(
-        urls.map(async (url) => {
-          const res = await fetch(url);
-          const urlFile = blobToFile(res.blob(), url);
-          let obj = {
-            name: urlFile.name,
-            size: '',
-            file: urlFile,
-            saved: true,
-            url: url,
-            external: true
-          };
-          internalFiles.push(obj);
-        })
-      );
-      internalFiles = internalFiles;
+  const loadFiles = async (value) => {
+    if (Array.isArray(value)) {
+      value = value.join(',');
     }
-    loading = false;
-  });
+    const urls = value.split(',');
+    await Promise.allSettled(
+      urls.map(async (url) => {
+        const res = await fetch(url);
+        const urlFile = blobToFile(res.blob(), url);
+        let obj = {
+          name: urlFile.name,
+          size: '',
+          file: urlFile,
+          saved: true,
+          url: url,
+          external: true
+        };
+        internalFiles.push(obj);
+      })
+    );
+    internalFiles = internalFiles;
+  };
+
+  $: {
+    internalFiles = [];
+    if (value) {
+      loading = true;
+      loadFiles(value);
+      loading = false;
+    }
+  }
 </script>
 
 <svelte:document
@@ -317,7 +320,7 @@
   on:change={(e) => handleFileInput(e)}
   hidden
 />
-<input type="text" {id} {name} bind:value hidden />
+<input type="text" {id} {name} bind:value={internalValue} hidden />
 
 <style>
   .grab {
@@ -332,7 +335,7 @@
     max-width: 750px;
     height: 500px;
     width: 100%;
-    border-radius: .25rem;
+    border-radius: 0.25rem;
     border: 1px dashed #e6510030;
   }
 
