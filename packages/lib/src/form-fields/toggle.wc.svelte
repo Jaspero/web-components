@@ -21,17 +21,16 @@
   export let attachedInternals: ElementInternals;
 
   export let name: string = '';
-  export let value: string = '';
+  export let value: boolean = false;
   export let label: string = '';
   export let required: boolean = false;
   export let requiredValidationMessage: string = ''
   export let size: 'small' | 'large' = 'small';
-  export let checked: boolean = false;
   export let disabled = false;
 
   let checkboxEl;
 
-  export const getValue = () => checked;
+  export const getValue = () => value;
 
   export const reportValidity = () => {
     attachedInternals.reportValidity();
@@ -50,7 +49,7 @@
         }
       }
     }
-    dispatch('value', checked);
+    dispatch('value', value);
   }
 </script>
 
@@ -58,7 +57,7 @@
   <span class="label" style={`font-size: ${size == 'small' ? '12px' : '20px'}`}>{@html label}</span>
 {/if} 
 <label class={'switch ' + size}>
-  <input type="checkbox" {name} {disabled} {required} bind:checked bind:value hidden bind:this={checkboxEl} />
+  <input type="checkbox" {name} {disabled} {required} bind:checked={value} bind:value={value} hidden bind:this={checkboxEl} />
   <span class="slider round" class:pointer={!disabled}></span>
 </label>
 
