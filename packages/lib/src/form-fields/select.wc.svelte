@@ -50,6 +50,22 @@
   };
 
   $: {
+    if(Array.isArray(options)){
+      if(value){
+        const option = options.filter(el => el.value == value)
+        if(option.length){
+          selected = option[0].label ? option[0].label : option[0].value 
+        } else {
+          options.push({value: value})
+          selected = value
+        }
+      } else {
+        selected = ''
+      }
+    }
+  }
+
+  $: {
     attachedInternals.checkValidity();
     if (inputEl) {
       if (inputEl.validity.valueMissing) {
@@ -242,11 +258,6 @@
 
   onMount(() => {
     if (typeof options == 'string') options = JSON.parse(options);
-    (options as any).forEach((el) => {
-      if (el.value == value) {
-        selected = el.label ? el.label : el.value;
-      }
-    });
   });
 </script>
 
@@ -308,7 +319,6 @@
           disabled={option.disabled}
           on:click|preventDefault={() => {
             value = option.value;
-            selected = option.label ? option.label : option.value;
           }}
         >
           <span>{option.label ? option.label : option.value}</span>
