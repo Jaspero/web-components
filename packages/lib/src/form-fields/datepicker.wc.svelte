@@ -162,8 +162,8 @@
       yearSelected = tmp.getFullYear();
       monthSelected = tmp.getMonth();
       dateSelected = tmp.getDate();
-      pickerMonth = monthSelected;
-      pickerYear = yearSelected;
+      pickerMonth = tmp.getMonth();
+      pickerYear = tmp.getFullYear();
     }
   };
 
