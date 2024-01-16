@@ -9,7 +9,7 @@
 | **Name** | **Required** | **Type** | **Description** |
 | :----: | :----: | :----: | :---: |
 | id | | `string`| unique identifier |
-| value | |`string` | content within textarea field |
+| value | |`string` | setter and getter |
 | label | | `string` | shows at the top of a textarea field|
 | labelType | | `'outside'` or `'inside'` | whether label is inside or outside of the field |
 | hint | | `string` | additional information that shows below textarea|
