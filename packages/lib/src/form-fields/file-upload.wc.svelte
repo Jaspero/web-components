@@ -34,27 +34,37 @@
   let file = null;
   let preview = false;
   let hoveringFile = false;
+  let internalValue;
 
   export let service: FileService;
 
-  export const getValue = () => value;
+  export const getValue = () => internalValue;
+
+  $: {
+    internalValue = value
+    if(value){
+      checkImage()
+    } else {
+      img = ''
+    }
+  }
 
   const dispatch = createEventDispatcher();
   $: {
     attachedInternals.checkValidity();
-    attachedInternals.setFormValue(value);
-    dispatch('value', { value });
+    attachedInternals.setFormValue(internalValue);
+    dispatch('value', { internalValue });
   }
 
   export async function save(id?: string) {
     if (isLocal) {
       try {
-        value = await service.uploadFile(file, id);
+        internalValue = await service.uploadFile(file, id);
       } catch (err) {
         console.log(err);
       }
     }
-    return value;
+    return internalValue;
   }
 
   async function handleLocalChange(f) {
@@ -66,7 +76,7 @@
     }
     isLocal = true;
     file = f;
-    value = f.name;
+    internalValue = f.name;
     if (file['type'].split('/')[0] === 'image') {
       const base64 = (await convertBase64(file)) as string;
       img = base64;
@@ -88,10 +98,10 @@
 
   async function checkImage() {
     if (!isLocal) {
-      const res = await fetch(value);
+      const res = await fetch(internalValue);
       const buff = await res.blob();
       if (buff.type.startsWith('image/')) {
-        img = value;
+        img = internalValue;
       } else {
         img = '';
       }
@@ -146,7 +156,7 @@
       ></div>
     {:else}
       {#if label && labelType == 'inside'}
-        <span class="field-label" class:move={inputFocused || value}>{@html label}</span>
+        <span class="field-label" class:move={inputFocused || internalValue}>{@html label}</span>
       {/if}
 
       <div class="field-icons">
@@ -189,13 +199,13 @@
             />
           {/if}
         </div>
-        {#if value}
+        {#if internalValue}
           <div class="field-icon">
             <button
               on:click|preventDefault={() => {
                 isLocal = false;
                 img = '';
-                value = '';
+                internalValue = '';
               }}
             >
               <svg xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 512 512">
@@ -218,7 +228,7 @@
           on:focus={() => (inputFocused = true)}
           on:blur={() => (inputFocused = false)}
           on:change={() => checkImage()}
-          bind:value
+          bind:value={internalValue}
           disabled={isLocal}
         />
       </span>
