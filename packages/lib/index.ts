@@ -39,6 +39,7 @@ export default () => {
   import('./src/menu/menu.wc.svelte');
   import('./src/tooltip/tooltip.wc.svelte');
   import('./src/form-fields/slider.wc.svelte');
+  import('./src/form-fields/range.wc.svelte')
   import('./src/form-fields/file-list.wc.svelte');
   import('./src/review-stars/review-stars.wc.svelte');
 };
