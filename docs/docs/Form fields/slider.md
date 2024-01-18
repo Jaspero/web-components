@@ -12,7 +12,6 @@
 | name | ✓ | `string` |  name of the form control |
 | id | | `string`| unique identifier |
 | disabled | | `boolean` | determines if slider is disabled |
-| showValue | | `boolean` | whether to show numerical value |
 | max | | `number` | maximal slider value |
 | min | | `number` | minimal slider value |
 | step | | `number` | size of increment/decrement when sliding |

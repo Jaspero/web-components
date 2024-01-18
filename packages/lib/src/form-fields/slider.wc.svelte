@@ -20,7 +20,6 @@
 
   export let disabled: boolean = false;
   export let id: string = '';
-  export let showValue: boolean = false;
   export let max: number = 100;
   export let min: number = 0;
   export let value: number = 0;
@@ -35,44 +34,42 @@
 </script>
 
 <div class="slider-container">
-  {#if discrete == true}
-    <input type="range" class="range-input" bind:value {id} {disabled} {min} {max} {step} {name} />
-  {:else}
-    <input
-      type="range"
-      class="range-input"
-      bind:value
-      {id}
-      {disabled}
-      {min}
-      {max}
-      step="any"
-      {name}
-    />
-  {/if}
-  {#if showValue == true}
-    <p>{Math.round(value)}</p>
-  {/if}
+  <input
+    type="range"
+    class="range-input"
+    bind:value
+    {id}
+    {disabled}
+    {min}
+    {max}
+    step={discrete ? step : 'any'}
+    {name}
+  />
 </div>
 
 <style>
+  .slider-container {
+    min-width: 300px;
+    width: 1px;
+    height: 4px;
+  }
   input[type='range'] {
     -moz-appearance: none;
-    width: 300px;
-    height: 4px;
+    width: 100%;
+    height: 100%;
     padding: 0;
     border-radius: 2px;
     outline: none;
     cursor: pointer;
     border: 2px;
     background: #cccccc;
-    accent-color: rgb(248, 72, 18);
+    accent-color: var(--primary-color);
   }
 
   /*Mozilla thumb*/
   input[type='range']::-moz-range-track {
-    width: 300px;
-    height: 4px;
+    width: 100%;
+    height: 100%;
     border: none;
     border-radius: 4px;
   }
@@ -82,7 +79,7 @@
     height: 16px;
     width: 16px;
     border-radius: 50%;
-    background: #f04e08;
+    background: var(--primary-color);
     transition: 0.2s ease-in-out;
   }
 
@@ -92,8 +89,8 @@
 
   input[type='range']::-moz-range-progress {
     appearance: none;
-    background: rgb(233, 69, 19);
-    height: 4px;
+    background: var(--primary-color);
+    height: 100%;
     transition-delay: 50ms;
   }
 
@@ -122,7 +119,7 @@
     height: 16px;
     width: 16px;
     border-radius: 50%;
-    background: #f04208;
+    background: var(--primary-color);
     transition: 0.2s ease-in-out;
   }
 
