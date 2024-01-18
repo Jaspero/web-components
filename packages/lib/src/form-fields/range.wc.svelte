@@ -22,26 +22,38 @@
   export let id: string = '';
   export let max: number = 100;
   export let min: number = 0;
-  export let value: Array<number> = [0, 100];
+  export let value: Array<number> | string = '';
   export let step: number = 1;
   export let name: string = '';
   export let discrete: boolean = true; //if true -> ticks, false -> smooth
-  export const getValue = () => value;
+  let internalValue = [min, max];
+  export const getValue = () => internalValue;
 
   const dispatch = createEventDispatcher();
 
-  $: low = Math.round(100 * ((value[0] - min) / (max - min)));
-  $: high = Math.round(100 * ((value[1] - min) / (max - min)));
+  $: low = Math.round(100 * ((internalValue[0] - min) / (max - min)));
+  $: high = Math.round(100 * ((internalValue[1] - min) / (max - min)));
 
-  $: if (value[0] > value[1]) {
-    value[0] = value[1];
+  $: if (internalValue[0] > internalValue[1]) {
+    internalValue[0] = internalValue[1];
   }
 
-  $: if (value[1] < value[0]) {
-    value[1] = value[0];
+  $: if (internalValue[1] < internalValue[0]) {
+    internalValue[1] = internalValue[0];
   }
 
-  $: dispatch('value', { value });
+  $: dispatch('value', { value: internalValue });
+
+  $: {
+    if(!value){
+      internalValue = [min, max]
+    } else {
+      if(typeof value == 'string'){
+        value = JSON.parse(value)
+      }
+      internalValue = value
+    }
+  }
 </script>
 
 <div class="slider">
@@ -55,7 +67,7 @@
     {max}
     id={id + '_min'}
     name={name + '_min'}
-    bind:value={value[0]}
+    bind:value={internalValue[0]}
   />
   <input
     type="range"
@@ -66,7 +78,7 @@
     {max}
     id={id + '_max'}
     name={name + '_max'}
-    bind:value={value[1]}
+    bind:value={internalValue[1]}
   />
 </div>
 

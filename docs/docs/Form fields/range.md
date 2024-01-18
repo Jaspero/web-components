@@ -8,7 +8,7 @@
 
 | **Name** | **Required** | **Type** | **Description** |
 | :----: | :----: | :----: | :---: |
-| value | | `[number, number]` | setter and getter |
+| value | | `[number, number]` | setter |
 | name | ✓ | `string` |  name of the form control |
 | id | | `string`| unique identifier |
 | disabled | | `boolean` | determines if slider is disabled |
