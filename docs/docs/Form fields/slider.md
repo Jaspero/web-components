@@ -35,5 +35,5 @@ This component does not have any slots.
 ### Demo
 
 ```jsx live
-<jp-slider showValue="true"></jp-slider>
+<jp-slider></jp-slider>
 ```
