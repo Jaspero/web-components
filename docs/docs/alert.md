@@ -24,3 +24,19 @@ This component does not have any methods.
 
 - `close`
     - triggers when the "close" button is clicked
+
+### Demo
+
+```jsx live
+function alert(props){
+  const [show, setShow] = useState(false);
+  return (
+    <>
+      <div hidden={!show}>
+        <jp-alert title="Alert title" message="This is message" onClose={() => setShow(false)}></jp-alert>
+      </div>
+      <button onClick={() => setShow(!show)}>Click me to toggle!</button>
+    </>  
+  ) 
+} 
+```
