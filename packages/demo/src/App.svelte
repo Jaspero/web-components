@@ -3,6 +3,7 @@
   /*import '../../../dist/alert.wc.js'; */
   /*import '../../../dist/confirm.wc.js'*/
   import '../../../dist/async-table.wc.js';
+  import '../../../dist/file-list.wc.js';
   /*import '../../../dist/input.wc.js';
   /*import '../../../dist/quill.wc.js';*/
   import '../../../dist/autocomplete.wc.js';
@@ -111,3 +112,4 @@
 <jp-input name="test" label="asdf" labelType="outside"></jp-input>
 <jp-chips name="Test" label="Test" labelType="outside"></jp-chips>
 <jp-textarea name="Test" label="Test" labeltype="outside"></jp-textarea>
+<jp-file-list name="test"></jp-file-list>
