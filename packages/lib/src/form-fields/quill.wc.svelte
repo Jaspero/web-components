@@ -97,7 +97,7 @@
 
   $: {
     if(editor){
-      editor.setText(value)
+      editor.root.innerHTML = value;
     }
   }
 

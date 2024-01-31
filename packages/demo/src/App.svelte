@@ -4,8 +4,8 @@
   /*import '../../../dist/confirm.wc.js'*/
   import '../../../dist/async-table.wc.js';
   import '../../../dist/file-list.wc.js';
+  import '../../../dist/quill.wc.js';
   /*import '../../../dist/input.wc.js';
-  /*import '../../../dist/quill.wc.js';*/
   import '../../../dist/autocomplete.wc.js';
   import '../../../dist/checkbox.wc.js';
   /*import '../../../dist/progress-spinner.wc.js'*/
@@ -46,8 +46,21 @@
 
   let el: HTMLDivElement;
   let formEl: HTMLFormElement;
+  let quill: any;
+
+  async function save() {
+    await quill.save();
+    console.log(222, quill.getValue());
+  }
 
   onMount(() => {
+
+    quill = document.createElement('jp-quill');
+    quill.value = `<p>Pero</p>`;
+    quill.service = new MockImageService();
+
+    el.appendChild(quill);
+
     // const multisearch = document.createElement('jp-multisearch')
     // multisearch.value = 'aaa, bbb'
     // multisearch.service = {
@@ -113,3 +126,4 @@
 <jp-chips name="Test" label="Test" labelType="outside"></jp-chips>
 <jp-textarea name="Test" label="Test" labeltype="outside"></jp-textarea>
 <jp-file-list name="test"></jp-file-list>
+<button on:click={save}>Save</button>
