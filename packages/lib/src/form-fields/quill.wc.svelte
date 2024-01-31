@@ -67,6 +67,7 @@
         img.src = url;
       })
     );
+    value = editor.root.innerHTML;
   }
 
   const b64toBlob = (base64) => fetch(base64).then((res) => res.blob());
