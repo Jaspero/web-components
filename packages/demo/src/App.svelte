@@ -1,6 +1,6 @@
 <script lang="ts">
   import { onMount } from 'svelte';
-  /*import '../../../dist/alert.wc.js'; */
+  import '../../../dist/alert.wc.js';
   /*import '../../../dist/confirm.wc.js'*/
   import '../../../dist/async-table.wc.js';
   import '../../../dist/file-list.wc.js';
@@ -50,7 +50,6 @@
 
   async function save() {
     await quill.save();
-    console.log(222, quill.getValue());
   }
 
   onMount(() => {
@@ -117,6 +116,12 @@
     };
     asyncTable.pageSizes = [10];
     el.appendChild(asyncTable);
+
+    renderAlert({
+      title: 'Success',
+      message: 'This is a success',
+      duration: 600000
+    })
   });
 </script>
 
