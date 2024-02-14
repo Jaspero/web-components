@@ -63,6 +63,14 @@
     border-radius: 0.5rem;
   }
 
+  @media (max-width: 600px) {
+    .alert {
+      right: 1rem;
+      left: 1rem;
+      transform: unset;
+    }
+  }
+
   .alert.alert-error {
     border-left: 4px solid var(--danger-color);
   }
@@ -82,6 +90,7 @@
   .alert-container-header {
     display: flex;
     align-items: center;
+    justify-content: space-between;
     gap: 1rem;
   }
 
