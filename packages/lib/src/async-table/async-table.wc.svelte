@@ -14,6 +14,7 @@
 
   export let showArrangingColumns = true;
   export let showExport = true;
+  export let rowClickable = false;
   export let headers: TableHeader[] = [];
   export let pageSizes: number[];
   export let pageSize: number = pageSizes[0];
@@ -31,7 +32,6 @@
   let formattedPageSizes = JSON.stringify(pageSizes.map((s) => ({ label: s, value: s })));
   let loading = true;
   let hasMore = false;
-  let rowClickable = false;
   let rows: any[] = [];
   let exportLoading = false;
   let activeHeaders: TableHeader[];
