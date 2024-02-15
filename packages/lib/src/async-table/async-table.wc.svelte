@@ -253,7 +253,7 @@
 
       {#if rows}
         {#each rows as row, index}
-          <tr class:pointer={rowClickable}>
+          <tr class:highlight={rowClickable}>
             {#each activeHeaders as header}
               <td on:click={(e) => rowClick(row, index, header, e)}>
                 {#await handleColumn(header, row, index) then val}
@@ -384,8 +384,13 @@
     pointer-events: none;
   }
 
-  .pointer {
+  .highlight {
     cursor: pointer;
+    transition: 0.3s;
+  }
+
+  .highlight:hover {
+    background-color: #ddd;
   }
 
   .spinner {
