@@ -31,6 +31,7 @@
   let formattedPageSizes = JSON.stringify(pageSizes.map((s) => ({ label: s, value: s })));
   let loading = true;
   let hasMore = false;
+  let rowClickable = false;
   let rows: any[] = [];
   let exportLoading = false;
   let activeHeaders: TableHeader[];
@@ -252,7 +253,7 @@
 
       {#if rows}
         {#each rows as row, index}
-          <tr>
+          <tr class:pointer={rowClickable}>
             {#each activeHeaders as header}
               <td on:click={(e) => rowClick(row, index, header, e)}>
                 {#await handleColumn(header, row, index) then val}
@@ -381,6 +382,10 @@
 
   .load-button.loading {
     pointer-events: none;
+  }
+
+  .pointer {
+    cursor: pointer;
   }
 
   .spinner {
