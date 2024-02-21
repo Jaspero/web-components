@@ -317,6 +317,7 @@
   <input bind:value={internalValue} {id} {name} {required} hidden />
 
   <button
+    type="button"
     class="select"
     class:toggled={open}
     bind:this={bindingElement}
@@ -366,6 +367,7 @@
     <div class="menu" style={menuStyle}>
       {#each options as option, index (option)}
         <button
+          type="button"
           class="menu-button"
           class:selected={option.selected}
           bind:this={optionElements[index]}

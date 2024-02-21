@@ -270,6 +270,7 @@
   <input bind:value {id} {name} {required} bind:this={inputEl} hidden />
 
   <button
+    type="button"
     class="select"
     class:toggled={open}
     bind:this={bindingElement}
@@ -313,6 +314,7 @@
     <div class="menu" style={menuStyle}>
       {#each options as option, index (option)}
         <button
+          type="button"
           class="menu-button"
           class:selected={value == option.value}
           bind:this={optionElements[index]}

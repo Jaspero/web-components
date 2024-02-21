@@ -137,6 +137,7 @@
         <div class="field-container-chip">
           <span class="field-container-chip-label">{chip}</span>
           <button
+            type="button"
             class="field-container-chip-button"
             on:click|preventDefault={() => {
               chips.splice(chips.indexOf(chip), 1);

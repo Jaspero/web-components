@@ -216,6 +216,7 @@
         {#if !loading}
           {#each filteredOptions as option, index}
             <button
+              type="button"
               class="menu-button"
               bind:this={optionElements[index]}
               on:mousedown|preventDefault={() => {

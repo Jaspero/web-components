@@ -43,7 +43,7 @@
 </script>
 
 <div class="page-paginator">
-  <button on:click={() => prevPage()} disabled={pageIndex == 1}>
+  <button type="button" on:click={() => prevPage()} disabled={pageIndex == 1}>
     <svg xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 448 512">
       <!--! Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2023 Fonticons, Inc. -->
       <path
@@ -51,30 +51,30 @@
       />
     </svg>
   </button>
-  <button on:click={() => firstPage()} class:selected={pageIndex == 1}> 1 </button>
+  <button type="button" on:click={() => firstPage()} class:selected={pageIndex == 1}> 1 </button>
   {#if center < 5}
     <button on:click={() => toPage(2)} class:selected={pageIndex == 2}> 2 </button>
   {:else}
     <div>...</div>
   {/if}
-  <button class:selected={center - 1 == pageIndex} on:click={() => toPage(center - 1)}
+  <button type="button" class:selected={center - 1 == pageIndex} on:click={() => toPage(center - 1)}
     >{center - 1}</button
   >
-  <button class:selected={center == pageIndex} on:click={() => toPage(center)}>{center}</button>
-  <button class:selected={center + 1 == pageIndex} on:click={() => toPage(center + 1)}
+  <button type="button" class:selected={center == pageIndex} on:click={() => toPage(center)}>{center}</button>
+  <button type="button" class:selected={center + 1 == pageIndex} on:click={() => toPage(center + 1)}
     >{center + 1}</button
   >
   {#if center > length - 4}
-    <button on:click={() => toPage(length - 1)} class:selected={pageIndex == length - 1}>
+    <button type="button" on:click={() => toPage(length - 1)} class:selected={pageIndex == length - 1}>
       {length - 1}
     </button>
   {:else}
     <div>...</div>
   {/if}
-  <button on:click={() => lastPage()} class:selected={pageIndex == length}>
+  <button type="button" on:click={() => lastPage()} class:selected={pageIndex == length}>
     {length}
   </button>
-  <button on:click={() => nextPage()} disabled={pageIndex == length}>
+  <button type="button" on:click={() => nextPage()} disabled={pageIndex == length}>
     <svg xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 448 512">
       <!--! Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2023 Fonticons, Inc. -->
       <path

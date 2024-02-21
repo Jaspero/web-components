@@ -35,7 +35,7 @@
 </script>
 
 <div class="wrapper">
-  <button class="menu-button" on:click={() => toggleMenu()} bind:this={bindingEl}>
+  <button type="button" class="menu-button" on:click={() => toggleMenu()} bind:this={bindingEl}>
     {@html label}
   </button>
 

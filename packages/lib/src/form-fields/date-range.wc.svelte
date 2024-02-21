@@ -278,6 +278,7 @@
   </div>
 {/if}
 <button
+  type="button"
   class="field"
   bind:this={bindingElement}
   class:active={openPicker}
@@ -312,7 +313,7 @@
     <div class="menu" style={menuStyle}>
       <div class="menu-nav">
         <!--<button on:click|preventDefault={() => (pickerYear = pickerYear - 1)}>&lt;&lt;</button>-->
-        <button class="menu-nav-date" on:click|preventDefault={() => (yearSelector = true)}>
+        <button type="button" class="menu-nav-date" on:click|preventDefault={() => (yearSelector = true)}>
           <p>{monthMap[pickerMonth]}, {pickerYear}</p>
           <svg xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 512 512">
             <!--! Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2023 Fonticons, Inc. -->
@@ -322,7 +323,7 @@
           </svg>
         </button>
         <div class="menu-nav-buttons">
-          <button on:click|preventDefault={() => (pickerMonth = pickerMonth - 1)}>
+          <button type="button" on:click|preventDefault={() => (pickerMonth = pickerMonth - 1)}>
             <svg xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 320 512">
               <!--! Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2023 Fonticons, Inc. -->
               <path
@@ -330,7 +331,7 @@
               />
             </svg>
           </button>
-          <button on:click|preventDefault={() => (pickerMonth = pickerMonth + 1)}>
+          <button type="button" on:click|preventDefault={() => (pickerMonth = pickerMonth + 1)}>
             <svg xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 320 512">
               <!--! Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2023 Fonticons, Inc. -->
               <path
@@ -357,6 +358,7 @@
               {#each row as col}
                 <div class="table-cell">
                   <button
+                    type="button"
                     class:gray={col.gray}
                     class:active={secondYearSelected
                       ? parseInt(firstInternalValue.split('-').join(''), 10) <=
@@ -393,6 +395,7 @@
         <div class="menu-year">
           <div class="menu-year-nav">
             <button
+              type="button"
               class="menu-year-nav-date"
               on:click|stopPropagation={() => (yearSelector = false)}
             >
@@ -409,7 +412,7 @@
               </svg>
             </button>
             <div class="menu-year-nav-buttons">
-              <button on:click|preventDefault={() => yearPickerIndex--}>
+              <button type="button" on:click|preventDefault={() => yearPickerIndex--}>
                 <svg xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 320 512">
                   <!--! Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2023 Fonticons, Inc. -->
                   <path
@@ -417,7 +420,7 @@
                   />
                 </svg>
               </button>
-              <button on:click|preventDefault={() => yearPickerIndex++}>
+              <button type="button" on:click|preventDefault={() => yearPickerIndex++}>
                 <svg xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 320 512">
                   <!--! Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2023 Fonticons, Inc. -->
                   <path
@@ -431,6 +434,7 @@
             <div class="menu-year-row">
               {#each row as year}
                 <button
+                  type="button"
                   class="menu-year-row-cell"
                   class:active={secondYearSelected
                     ? firstYearSelected <= year && secondYearSelected >= year
@@ -451,6 +455,7 @@
         <div class="menu-month">
           <div class="menu-month-nav">
             <button
+              type="button"
               class="menu-month-nav-date"
               on:click|stopPropagation={() => {
                 monthSelector = false;
@@ -465,7 +470,7 @@
               </svg>
             </button>
             <div class="menu-month-nav-buttons">
-              <button on:click|preventDefault={() => (pickerYear = pickerYear - 1)}>
+              <button type="button" on:click|preventDefault={() => (pickerYear = pickerYear - 1)}>
                 <svg xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 320 512">
                   <!--! Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2023 Fonticons, Inc. -->
                   <path
@@ -473,7 +478,7 @@
                   />
                 </svg>
               </button>
-              <button on:click|preventDefault={() => (pickerYear = pickerYear + 1)}>
+              <button type="button" on:click|preventDefault={() => (pickerYear = pickerYear + 1)}>
                 <svg xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 320 512">
                   <!--! Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2023 Fonticons, Inc. -->
                   <path
@@ -488,6 +493,7 @@
             {#each monthMap as month, index}
               <div class="menu-month-grid-cell">
                 <button
+                  type="button"
                   on:click|stopPropagation={() => {
                     pickerMonth = index;
                     monthSelector = false;

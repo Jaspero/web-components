@@ -264,7 +264,7 @@
           }}
           bind:this={fileElements[index]}
         >
-          <button class="file-remove" on:mousedown|preventDefault={() => removeFile(index)}>
+          <button type="button" class="file-remove" on:mousedown|preventDefault={() => removeFile(index)}>
             <svg xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 512 512"
               ><!--! Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2023 Fonticons, Inc. --><path
                 d="M256 512A256 256 0 1 0 256 0a256 256 0 1 0 0 512zM175 175c9.4-9.4 24.6-9.4 33.9 0l47 47 47-47c9.4-9.4 24.6-9.4 33.9 0s9.4 24.6 0 33.9l-47 47 47 47c9.4 9.4 9.4 24.6 0 33.9s-24.6 9.4-33.9 0l-47-47-47 47c-9.4 9.4-24.6 9.4-33.9 0s-9.4-24.6 0-33.9l47-47-47-47c-9.4-9.4-9.4-24.6 0-33.9z"
@@ -302,7 +302,7 @@
         </div>
       {/each}
     </div>
-    <button class="add-more" on:click|preventDefault={() => browseFilesEl.click()}>
+    <button type="button" class="add-more" on:click|preventDefault={() => browseFilesEl.click()}>
       <svg xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 448 512"
         ><!--! Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2023 Fonticons, Inc. --><path
           d="M256 80c0-17.7-14.3-32-32-32s-32 14.3-32 32V224H48c-17.7 0-32 14.3-32 32s14.3 32 32 32H192V432c0 17.7 14.3 32 32 32s32-14.3 32-32V288H400c17.7 0 32-14.3 32-32s-14.3-32-32-32H256V80z"

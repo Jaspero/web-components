@@ -269,7 +269,7 @@
   </div>
 
   <div class="table-actions">
-    <button class="table-button load-button" class:loading disabled={!hasMore} on:click={loadMore}>
+    <button type="button" class="table-button load-button" class:loading disabled={!hasMore} on:click={loadMore}>
       {#if loading}
         <span class="spinner"></span>
         Loading

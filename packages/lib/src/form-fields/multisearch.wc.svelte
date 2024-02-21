@@ -339,6 +339,7 @@
   <input bind:value={internalValue} {id} {name} {required} hidden />
 
   <button
+    type="button"
     class="select"
     class:toggled={open}
     bind:this={bindingElement}
@@ -407,6 +408,7 @@
       <div class="menu-buttons">
         {#each options as option, index (option)}
           <button
+            type="button"
             class="menu-button"
             class:selected={option.selected}
             bind:this={optionElements[index]}
@@ -438,6 +440,7 @@
         <div class="loadmore">
           {#if !loadingMore}
             <button
+              type="button"
               on:click|preventDefault|stopPropagation={async () => {
                 loadingMore = true;
                 options = options.concat(await service.loadMore(searchValue));
@@ -447,7 +450,7 @@
               Load more
             </button>
           {:else}
-            <button disabled>Loading...</button>
+            <button type="button" disabled>Loading...</button>
           {/if}
         </div>
       {/if}

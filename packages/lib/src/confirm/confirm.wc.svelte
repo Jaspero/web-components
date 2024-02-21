@@ -47,10 +47,10 @@
     {/if}
 
     <div class="dialog-actions">
-      <button class="reject-button" on:click={() => dispatch('confirmation', { confirmed: false })}>
+      <button type="button" class="reject-button" on:click={() => dispatch('confirmation', { confirmed: false })}>
         {reject}
       </button>
-      <button class="accept-button" on:click={() => dispatch('confirmation', { confirmed: true })}>
+      <button type="button" class="accept-button" on:click={() => dispatch('confirmation', { confirmed: true })}>
         {accept}
       </button>
     </div>

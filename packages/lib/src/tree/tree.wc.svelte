@@ -29,6 +29,7 @@
 <div class="jp-tree">
   <div class="tree-header">
     <button
+      type="button"
       class="tree-arrow"
       on:click={() => expanded = !expanded}
       disabled={!collapsable}

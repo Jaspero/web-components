@@ -146,6 +146,7 @@
   <div class="star-rating">
     {#each stars as star}
       <button
+        type="button"
         on:mouseover={() => handleMouseOver(star.index)}
         on:click={() => handleClick(star.index)}
         on:mouseout={() => resetStars()}

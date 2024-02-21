@@ -33,6 +33,7 @@
         {/if}
       </div>
       <button
+        type="button"
         class="alert-container-header-close"
         on:click|preventDefault={() => dispatch('close')}
       >

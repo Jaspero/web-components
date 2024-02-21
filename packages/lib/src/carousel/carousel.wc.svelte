@@ -91,7 +91,7 @@
         <img class="slider-image" src={image.src} alt={image.alt} />
       {/each}
     </div>
-    <button class="prev" on:click={prevImage}>
+    <button type="button" class="prev" on:click={prevImage}>
       <svg xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 448 512">
         <!--! Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2023 Fonticons, Inc. -->
         <path
@@ -99,7 +99,7 @@
         />
       </svg>
     </button>
-    <button class="next" on:click={nextImage}>
+    <button type="button" class="next" on:click={nextImage}>
       <svg xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 448 512">
         <!--! Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2023 Fonticons, Inc. -->
         <path
@@ -122,6 +122,7 @@
     <div class="pagination">
       {#each images as item, index}
         <button
+          type="button"
           on:click={() => (currentIndex = index)}
           class="pagination-button"
           class:active={currentIndex === index}

@@ -35,7 +35,7 @@
 </script>
 
 <div class="expansion-panel" class:expanded>
-  <button class="expansion-header" on:click={toggleExpansion}>
+  <button type="button" class="expansion-header" on:click={toggleExpansion}>
     <p class="expansion-header-title">{@html title}</p>
     <svg
       xmlns="http://www.w3.org/2000/svg"
