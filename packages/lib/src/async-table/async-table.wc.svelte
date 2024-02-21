@@ -14,6 +14,7 @@
 
   export let showArrangingColumns = true;
   export let showExport = true;
+  export let rowClickable = false;
   export let headers: TableHeader[] = [];
   export let pageSizes: number[];
   export let pageSize: number = pageSizes[0];
@@ -252,7 +253,7 @@
 
       {#if rows}
         {#each rows as row, index}
-          <tr>
+          <tr class:highlight={rowClickable}>
             {#each activeHeaders as header}
               <td on:click={(e) => rowClick(row, index, header, e)}>
                 {#await handleColumn(header, row, index) then val}
@@ -381,6 +382,15 @@
 
   .load-button.loading {
     pointer-events: none;
+  }
+
+  .highlight {
+    cursor: pointer;
+    transition: 0.3s;
+  }
+
+  .highlight:hover {
+    background-color: #ddd;
   }
 
   .spinner {

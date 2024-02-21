@@ -51,16 +51,10 @@
 
   $: {
     if(Array.isArray(options)){
-      if(value){
-        const option = options.filter(el => el.value == value)
-        if(option.length){
-          selected = option[0].label ? option[0].label : option[0].value 
-        } else {
-          options.push({value: value})
-          selected = value
-        }
+      const option = options.filter(el => el.value === value)
+      if(option.length){
+        selected = option[0].label ? option[0].label : option[0].value
       } else {
-        selected = ''
       }
     }
   }
