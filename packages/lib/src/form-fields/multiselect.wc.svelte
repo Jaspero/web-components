@@ -36,14 +36,14 @@
   export const getValue = () => options.filter((el) => el.selected).map((el) => el.value);
 
   export let validationMessages = {};
-  export let requiredValidationMessage;
-  export let minselectsValidationMessage;
-  export let maxselectsValidationMessage;
+  export let requiredValidationMessage: string;
+  export let minselectsValidationMessage: string;
+  export let maxselectsValidationMessage: string;
 
   let isTabbing = false; // Variable to track if the user is tabbing
   let open = false;
-  let bindingElement;
-  let menuStyle;
+  let bindingElement: HTMLButtonElement;
+  let menuStyle: string;
   let optionElements = []; // Array to store references to option buttons
   let searchTerm = '';
   let searchTimeout;
@@ -94,7 +94,32 @@
     );
   }
 
-  function toggleMenu(event) {
+  $: if (open) {
+    document.documentElement.style.overflowY = 'hidden';
+  } else {
+    document.documentElement.style.overflowY = '';
+  }
+
+  $: {
+    if (value) {
+      populateOptions();
+    }
+  }
+
+  function populateOptions() {
+    options = options.map((o) => ({ ...o, selected: false }));
+    if (typeof value == 'string') {
+      value.split(',').forEach((el) => {
+        options[options.findIndex((o) => o.value == el)].selected = true;
+      });
+    } else {
+      value.forEach((el) => {
+        options[options.findIndex((o) => o.value == el)].selected = true;
+      });
+    }
+  }
+
+  function toggleMenu(event?: any) {
     if (event && event.target && event.target.closest('.menu')) {
       return;
     }
@@ -104,18 +129,19 @@
     const dropdownHeight = 300;
 
     let style: string = '';
+
     if (availableSpaceBelow < dropdownHeight) {
       style = `
-            min-width: ${rect.width}px;
-            bottom: ${window.innerHeight - rect.top}px;
-            left: ${rect.left}px;
-        `;
+        min-width: ${rect.width}px;
+        bottom: ${window.innerHeight - rect.top}px;
+        left: ${rect.left}px;
+      `;
     } else {
       style = `
-            min-width: ${rect.width}px;
-            top: ${rect.bottom}px;
-            left: ${rect.left}px;
-        `;
+        min-width: ${rect.width}px;
+        top: ${rect.bottom}px;
+        left: ${rect.left}px;
+      `;
     }
 
     menuStyle = style;
@@ -126,15 +152,15 @@
         // Find the first non-disabled option
         const firstEnabledOptionIndex = options.findIndex((option) => !option.disabled);
         if (firstEnabledOptionIndex !== -1) {
-          optionElements[firstEnabledOptionIndex].focus();
+          optionElements[firstEnabledOptionIndex]?.focus();
         }
       }, 10); // A short delay, 10ms
     } else {
       setTimeout(() => {
         if (isTabbing) {
-          bindingElement.nextElementSibling.focus(); // Focus the next sibling element (if any)
+          bindingElement.nextElementSibling?.focus(); // Focus the next sibling element (if any)
         } else {
-          bindingElement.focus();
+          bindingElement?.focus();
         }
       }, 10);
     }
@@ -184,7 +210,7 @@
 
         // If there's a non-disabled option, focus on it
         if (firstEnabledOptionIndex !== -1) {
-          optionElements[firstEnabledOptionIndex].focus();
+          optionElements[firstEnabledOptionIndex]?.focus();
         }
 
         return;
@@ -206,7 +232,7 @@
 
         // If there's a non-disabled option, focus on it
         if (actualIndex !== -1) {
-          optionElements[actualIndex].focus();
+          optionElements[actualIndex]?.focus();
         }
 
         return;
@@ -222,7 +248,7 @@
           nextIndex = getAdjacentFocusableIndex(currentIndex, 'next');
         }
 
-        optionElements[nextIndex].focus();
+        optionElements[nextIndex]?.focus();
       }
 
       // Handle tabbing through options
@@ -236,7 +262,7 @@
           if (currentIndex === nextIndex) {
             // Close the menu and focus the bindingElement if we're at the first non-disabled option
             toggleMenu();
-            bindingElement.focus();
+            bindingElement?.focus();
             return; // Early exit
           }
         } else {
@@ -244,12 +270,12 @@
           if (currentIndex === nextIndex) {
             // Close the menu and focus the bindingElement if we're at the last non-disabled option
             toggleMenu();
-            bindingElement.focus();
+            bindingElement?.focus();
             return; // Early exit
           }
         }
 
-        optionElements[nextIndex].focus();
+        optionElements[nextIndex]?.focus();
       }
 
       // Handle alphanumeric keys
@@ -273,12 +299,6 @@
     }
   }
 
-  $: if (open) {
-    document.documentElement.style.overflowY = 'hidden';
-  } else {
-    document.documentElement.style.overflowY = '';
-  }
-
   onMount(() => {
     if (typeof options == 'string') options = JSON.parse(options);
     if (!maxSelects) {
@@ -291,21 +311,6 @@
       return el;
     });
   });
-
-  $: {
-    if (value) {
-      options = options.map((o) => ({ ...o, selected: false }));
-      if (typeof value == 'string') {
-        value.split(',').forEach((el) => {
-          options[options.findIndex((o) => o.value == el)].selected = true;
-        });
-      } else {
-        value.forEach((el) => {
-          options[options.findIndex((o) => o.value == el)].selected = true;
-        });
-      }
-    }
-  }
 </script>
 
 {#if label && labelType == 'outside'}
@@ -331,7 +336,9 @@
       </span>
     {/if}
 
-    <span class={`select-option ${labelType == 'outside' || !label ? '' : 'select-option-padding'}`}>
+    <span
+      class={`select-option ${labelType == 'outside' || !label ? '' : 'select-option-padding'}`}
+    >
       {displayValue || ''}
     </span>
 

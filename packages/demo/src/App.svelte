@@ -56,6 +56,7 @@
 
     const multiselect = document.createElement('jp-multiselect') as any;
     multiselect.options = [{label: 'a', value: 'a'}, {label: 'b', value: 'b'}];
+    multiselect.value = ['a'];
     el.appendChild(multiselect);
 
     quill = document.createElement('jp-quill');
