@@ -308,6 +308,7 @@
                       dateSelected = col.day;
                       yearSelected = col.year;
                       monthSelected = col.month;
+                      openPicker = false;
                     }}
                   >
                     {col.day}
