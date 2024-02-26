@@ -49,7 +49,7 @@
   let fileHolder: HTMLInputElement;
   let internalValue = '';
 
-  export const getValue = () => internalValue;
+  export const getValue = () => internalValue || '';
 
   const dispatch = createEventDispatcher();
 
@@ -58,8 +58,8 @@
 
   $: {
     attachedInternals.checkValidity();
-    attachedInternals.setFormValue(internalValue);
-    dispatch('value', { internalValue });
+    attachedInternals.setFormValue(internalValue || '');
+    dispatch('value', { internalValue: internalValue || '' });
   }
 
   export async function save(id?: string) {
@@ -96,7 +96,6 @@
       editor.insertEmbed(range.index, 'image', b64);
     };
     fileHolder.click();
-    // Am I allowed to remove fileHolder here?
   }
 
   $: {
