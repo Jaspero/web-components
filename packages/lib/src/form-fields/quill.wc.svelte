@@ -30,9 +30,12 @@
   export let options: any = {
     modules: {
       toolbar: [
-        ['bold', 'italic', 'underline'], // toggled buttons
-        [{ size: ['small', false, 'large', 'huge'] }], // custom dropdown
-        [{ color: [] }, { background: [] }], // dropdown with defaults from theme
+         // toggled buttons
+        ['bold', 'italic', 'underline'],
+        // custom dropdown
+        [{ size: ['small', false, 'large', 'huge'] }],
+        // dropdown with defaults from theme
+        [{ color: [] }, { background: [] }],
         [{ list: 'ordered' }, { list: 'bullet' }],
         ['blockquote', 'code-block'],
         ['image'],
@@ -43,8 +46,8 @@
     theme: 'snow'
   };
 
-  let fileHolder;
-  let internalValue;
+  let fileHolder: HTMLInputElement;
+  let internalValue = '';
 
   export const getValue = () => internalValue;
 
@@ -114,7 +117,7 @@
     }
 
     editor.on('text-change', () => {
-      internalValue = editor.root.innerHTML;
+      internalValue = editor.root.innerHTML || '';
     });
   });
 
