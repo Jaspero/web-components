@@ -72,6 +72,8 @@
     );
     value = editor.root.innerHTML;
     internalValue = editor.root.innerHTML || '';
+
+    return internalValue;
   }
 
   const b64toBlob = (base64) => fetch(base64).then((res) => res.blob());
