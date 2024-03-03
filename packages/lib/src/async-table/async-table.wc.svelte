@@ -126,7 +126,16 @@
     const resolved = await Promise.all(
       data.map(async (row, index) => {
         const columns = await Promise.all(
-          activeHeaders.map((header) => handleColumn(header, row, index))
+          activeHeaders.map((header) => handleColumn(
+            { 
+              key: header.key,
+              fallback: header.exportFallback,
+              pipes: header.exportPipes || []
+            } as TableHeader,
+            row,
+            index
+            )
+          )
         );
 
         return columns.map((col) => `"${col || ''}"`).join(',');
