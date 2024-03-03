@@ -129,8 +129,8 @@
           activeHeaders.map((header) => handleColumn(
             { 
               key: header.key,
-              fallback: header.exportFallback,
-              pipes: header.exportPipes || []
+              fallback: header.exportFallback || header.fallback,
+              pipes: header.exportPipes || header.pipes || []
             } as TableHeader,
             row,
             index
