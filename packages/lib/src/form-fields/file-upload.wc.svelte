@@ -115,9 +115,9 @@
 
     let style: string = '';
     if (availableSpaceBelow < dropdownHeight) {
-      style = `bottom: ${window.innerHeight - rect.top}px;right: ${rect.left}px;`;
+      style = `bottom: 40px; right: 0;`;
     } else {
-      style = `top:${rect.bottom}px;right: ${rect.left}px;`;
+      style = `top: 40px; right: 0;`;
     }
 
     previewStyle = style;
@@ -497,8 +497,6 @@
   .preview {
     z-index: 1;
     position: absolute;
-    bottom: 100%;
-    right: 0;
     max-width: 300px;
     max-height: 300px;
     width: auto;
