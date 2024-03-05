@@ -575,6 +575,12 @@
         width: 100%;
         display: grid;
         grid-template-columns: repeat(7, 1fr);
+        table-layout: fixed;
+    }
+
+    th, td {
+        overflow: hidden;
+        padding: 0;
     }
 
     table,
