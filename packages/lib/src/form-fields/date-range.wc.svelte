@@ -204,10 +204,11 @@
       secondDateSelected = second.getDate();
       pickerMonth = secondMonthSelected;
       pickerYear = secondYearSelected;
+      attachedInternals.setValidity({});
     } else {
       if (required) {
         attachedInternals.setValidity(
-          { customError: true },
+          { valueMissing: true },
           requiredValidationMessage || `Date is required.`
         );
       }

@@ -2,6 +2,7 @@
   customElement={{
     tag: 'jp-input',
     shadow: 'open',
+    delegatesFocus: true,
     extend: (customElementConstructor) => {
       return class extends customElementConstructor {
         static formAssociated = true;
@@ -9,6 +10,7 @@
         constructor() {
           super();
           this.attachedInternals = this.attachInternals();
+          this.attachedInternals.role = 'textbox';
         }
       };
     }
@@ -22,9 +24,9 @@
   export let value: string = '';
   export let label: string = '';
   export let labelType: 'inside' | 'outside' = 'inside';
-  export let required: boolean = false;
-  export let disabled: boolean = false;
-  export let readonly: boolean = false;
+  export let required = false;
+  export let disabled = false;
+  export let readonly = false;
   export let type: 'text' | 'password' | 'email' | 'tel' | 'url' = 'text';
   export let id: string = '';
   export let name: string = '';
@@ -37,55 +39,61 @@
   export let min: number | null = null;
   export let max: number | null = null;
   export let step: number | null | 'any' = null;
-  export let validationMessages = {};
-  export let requiredValidationMessage;
-  export let minlengthValidationMessage;
-  export let maxlengthValidationMessage;
-  export let patternValidationMessage;
-
-  let inputEl;
+  export let validationMessages: {
+    required?: string;
+    maxlength?: string;
+    minlength?: string;
+    pattern?: string;
+  } = {};
+  export let requiredValidationMessage: string;
+  export let minlengthValidationMessage: string;
+  export let maxlengthValidationMessage: string;
+  export let patternValidationMessage: string;
 
   export const getValue = () => value;
 
-  const dispatch = createEventDispatcher();
+  export const validity = attachedInternals.validity;
+  export const validationMessage = attachedInternals.validationMessage;
+  export const reportValidity = () => attachedInternals.reportValidity();
+  export const checkValidity = () => attachedInternals.checkValidity();
 
-  export const reportValidity = () => {
-    attachedInternals.reportValidity();
-  };
+  let inputEl: HTMLInputElement;
+
+  const dispatch = createEventDispatcher();
 
   $: {
     attachedInternals.checkValidity();
+
     if (inputEl) {
       if (inputEl.validity.patternMismatch) {
-        if (patternValidationMessage || validationMessages.pattern) {
-          attachedInternals.setValidity(
-            { customError: true },
-            patternValidationMessage || validationMessages.pattern
-          );
-        }
+        attachedInternals.setValidity(
+          { patternMismatch: true },
+          patternValidationMessage || validationMessages.pattern || inputEl.validationMessage,
+          inputEl
+        );
       } else if (inputEl.validity.tooShort) {
-        if (minlengthValidationMessage || validationMessages.minlength) {
-          attachedInternals.setValidity(
-            { customError: true },
-            minlengthValidationMessage || validationMessages.minlength
-          );
-        }
+        attachedInternals.setValidity(
+          { tooShort: true },
+          minlengthValidationMessage || validationMessages.minlength || inputEl.validationMessage,
+          inputEl
+        );
       } else if (inputEl.validity.tooLong) {
-        if (maxlengthValidationMessage || validationMessages.maxlength) {
-          attachedInternals.setValidity(
-            { customError: true },
-            maxlengthValidationMessage || validationMessages.maxlength
-          );
-        }
+        attachedInternals.setValidity(
+          { tooLong: true },
+          maxlengthValidationMessage || validationMessages.maxlength || inputEl.validationMessage,
+          inputEl
+        );
       } else if (inputEl.validity.valueMissing) {
-        if (requiredValidationMessage || validationMessages.required) {
-          attachedInternals.setValidity(
-            { customError: true },
-            requiredValidationMessage || validationMessages.required
-          );
-        }
+        attachedInternals.setValidity(
+          { valueMissing: true },
+          requiredValidationMessage || validationMessages.required || inputEl.validationMessage,
+          inputEl
+        );
+      } else {
+        attachedInternals.setValidity({});
       }
     }
+
     attachedInternals.setFormValue(value);
     dispatch('value', { value });
   }
@@ -302,15 +310,15 @@
   }
 
   .label {
-    margin-top: .5rem;
-    margin-bottom: .125rem;
-    font-size: .875rem;
+    margin-top: 0.5rem;
+    margin-bottom: 0.125rem;
+    font-size: 0.875rem;
   }
 
   .field-label {
     position: absolute;
     top: 50%;
-    left: .75rem;
+    left: 0.75rem;
     -webkit-transform: translateY(-50%);
     -moz-transform: translateY(-50%);
     -ms-transform: translateY(-50%);
@@ -377,7 +385,7 @@
     overflow: hidden;
     -o-text-overflow: ellipsis;
     text-overflow: ellipsis;
-    padding: .75rem;
+    padding: 0.75rem;
     border: none;
     outline: none;
     -webkit-border-radius: 0.25rem;
@@ -386,7 +394,7 @@
   }
 
   .field-input-padding {
-    padding: 1.25rem .75rem .5rem;
+    padding: 1.25rem 0.75rem 0.5rem;
   }
 
   .field-input:-moz-placeholder {

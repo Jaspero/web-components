@@ -9,6 +9,7 @@
         constructor() {
           super();
           this.attachedInternals = this.attachInternals();
+          this.attachedInternals.role = 'textbox';
         }
       };
     }
@@ -38,43 +39,57 @@
 
   export const getValue = () => value;
 
-  export let validationMessages = {};
-  export let requiredValidationMessage;
-  export let minlengthValidationMessage;
-  export let maxlengthValidationMessage;
+  export let validationMessages: {
+    required?: string;
+    maxlength?: string;
+    minlength?: string;
+    pattern?: string;
+  } = {};
+  export let requiredValidationMessage: string;
+  export let minlengthValidationMessage: string;
+  export let maxlengthValidationMessage: string;
+  export let patternValidationMessage: string;
 
   const dispatch = createEventDispatcher();
 
   let textareaEl;
 
-  export const reportValidity = () => {
-    attachedInternals.reportValidity();
-  };
+  export const reportValidity = () => attachedInternals.reportValidity();
 
   $: {
     attachedInternals.checkValidity();
+
     if (textareaEl) {
-      if (textareaEl.validity.tooShort) {
-        if (minlengthValidationMessage || validationMessages.minlength) {
-          attachedInternals.setValidity(
-            { customError: true },
-            minlengthValidationMessage || validationMessages.minlength
-          );
-        }
+      if (textareaEl.validity.patternMismatch) {
+        attachedInternals.setValidity(
+          { patternMismatch: true },
+          patternValidationMessage || validationMessages.pattern || textareaEl.validationMessage,
+          textareaEl
+        );
+      } else if (textareaEl.validity.tooShort) {
+        attachedInternals.setValidity(
+          { tooShort: true },
+          minlengthValidationMessage ||
+            validationMessages.minlength ||
+            textareaEl.validationMessage,
+          textareaEl
+        );
       } else if (textareaEl.validity.tooLong) {
-        if (maxlengthValidationMessage || validationMessages.maxlength) {
-          attachedInternals.setValidity(
-            { customError: true },
-            maxlengthValidationMessage || validationMessages.maxlength
-          );
-        }
+        attachedInternals.setValidity(
+          { tooLong: true },
+          maxlengthValidationMessage ||
+            validationMessages.maxlength ||
+            textareaEl.validationMessage,
+          textareaEl
+        );
       } else if (textareaEl.validity.valueMissing) {
-        if (requiredValidationMessage || validationMessages.required) {
-          attachedInternals.setValidity(
-            { customError: true },
-            requiredValidationMessage || validationMessages.required
-          );
-        }
+        attachedInternals.setValidity(
+          { valueMissing: true },
+          requiredValidationMessage || validationMessages.required || textareaEl.validationMessage,
+          textareaEl
+        );
+      } else {
+        attachedInternals.setValidity({});
       }
     }
     attachedInternals.setFormValue(value);
@@ -177,15 +192,15 @@
   }
 
   .label {
-    margin-top: .5rem;
-    margin-bottom: .125rem;
-    font-size: .875rem;
+    margin-top: 0.5rem;
+    margin-bottom: 0.125rem;
+    font-size: 0.875rem;
   }
 
   .field-label {
     position: absolute;
     top: 1.25rem;
-    left: .75rem;
+    left: 0.75rem;
     font-size: 1rem;
     -webkit-transition:
       transform 0.3s,
@@ -239,7 +254,7 @@
     overflow: hidden;
     -o-text-overflow: ellipsis;
     text-overflow: ellipsis;
-    padding: .75rem;
+    padding: 0.75rem;
     line-height: 1.375rem;
     border: none;
     outline: none;
@@ -249,7 +264,7 @@
   }
 
   .field-input-margin {
-    padding: 1.25rem .75rem .5rem;
+    padding: 1.25rem 0.75rem 0.5rem;
   }
 
   .field-input:-moz-placeholder {

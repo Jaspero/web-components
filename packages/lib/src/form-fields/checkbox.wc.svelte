@@ -19,9 +19,7 @@
   import { createEventDispatcher, onMount } from 'svelte';
 
   export let attachedInternals: ElementInternals;
-
   export let value;
-
   export let options: Array<{
     label?: string;
     value: string;
@@ -30,18 +28,17 @@
   }> = [];
   export let minSelects: number = 0;
   export let maxSelects: number | null = null;
-
-  export let minselectsValidationMessage;
-  export let maxselectsValidationMessage;
-  export let validationMessages = {};
+  export let minselectsValidationMessage: string;
+  export let maxselectsValidationMessage: string;
+  export let validationMessages: {
+    minselects?: string;
+    maxselects?: string;
+  } = {};
 
   export const getValue = () => options.filter((el) => el.checked).map((el) => el.value);
+  export const reportValidity = () => attachedInternals.reportValidity();
 
   const dispatch = createEventDispatcher();
-
-  export const reportValidity = () => {
-    attachedInternals.reportValidity();
-  };
 
   $: {
     if (value && Array.isArray(options)) {

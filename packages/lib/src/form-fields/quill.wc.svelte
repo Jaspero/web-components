@@ -2,6 +2,7 @@
   customElement={{
     tag: 'jp-quill',
     shadow: 'none',
+    delegatesFocus: true,
     extend: (customElementConstructor) => {
       return class extends customElementConstructor {
         static formAssociated = true;
@@ -30,7 +31,7 @@
   export let options: any = {
     modules: {
       toolbar: [
-         // toggled buttons
+        // toggled buttons
         ['bold', 'italic', 'underline'],
         // custom dropdown
         [{ size: ['small', false, 'large', 'huge'] }],
@@ -45,6 +46,11 @@
     },
     theme: 'snow'
   };
+  export let required = false;
+  export let validationMessages: {
+    required?: string;
+  } = {};
+  export let requiredValidationMessage: string;
 
   let fileHolder: HTMLInputElement;
   let internalValue = '';
@@ -55,9 +61,23 @@
 
   let containerEl: HTMLDivElement;
   let editor: Quill;
+  let textareaEl: HTMLTextAreaElement;
 
   $: {
     attachedInternals.checkValidity();
+
+    if (textareaEl) {
+      if (!internalValue && required) {
+        attachedInternals.setValidity(
+          { valueMissing: true },
+          requiredValidationMessage || validationMessages.required || textareaEl.validationMessage,
+          textareaEl
+        );
+      } else {
+        attachedInternals.setValidity({});
+      }
+    }
+
     attachedInternals.setFormValue(internalValue || '');
     dispatch('value', { internalValue: internalValue || '' });
   }
@@ -102,7 +122,7 @@
   }
 
   $: {
-    if(editor){
+    if (editor) {
       editor.root.innerHTML = value;
     }
   }
@@ -132,5 +152,14 @@
 {#if label}
   <span>{label}</span>
 {/if}
-<div bind:this={containerEl}></div>
-<textarea {id} {name} bind:value={internalValue} hidden></textarea>
+<div bind:this={containerEl} />
+<textarea {id} {name} bind:value={internalValue} {required} tabindex="-1" bind:this={textareaEl} />
+
+<style>
+  textarea {
+    width: 100%;
+    height: 0;
+    opacity: 0;
+    position: absolute;
+  }
+</style>

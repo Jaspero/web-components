@@ -55,19 +55,19 @@
 
   onMount(() => {
 
-    const multiselect = document.createElement('jp-multiselect') as any;
-    multiselect.options = [{label: 'a', value: 'a'}, {label: 'b', value: 'b'}];
-    multiselect.value = ['a'];
-    el.appendChild(multiselect);
+    // const multiselect = document.createElement('jp-multiselect') as any;
+    // multiselect.options = [{label: 'a', value: 'a'}, {label: 'b', value: 'b'}];
+    // multiselect.value = ['a'];
+    // el.appendChild(multiselect);
 
-    quill = document.createElement('jp-quill');
-    quill.value = `<p>Pero</p>`;
-    quill.service = new MockImageService();
+    // quill = document.createElement('jp-quill');
+    // quill.value = `<p>Pero</p>`;
+    // quill.service = new MockImageService();
 
-    el.appendChild(quill);
+    // el.appendChild(quill);
 
-    const datepicker = document.createElement('jp-datepicker') as any;
-    el.appendChild(datepicker);
+    // const datepicker = document.createElement('jp-datepicker') as any;
+    // el.appendChild(datepicker);
 
     // const multisearch = document.createElement('jp-multisearch')
     // multisearch.value = 'aaa, bbb'
@@ -89,52 +89,52 @@
     // }
     // el.appendChild(multisearch)
 
-    const asyncTable = document.createElement('jp-async-table') as any;
-    asyncTable.headers = [
-      {
-        key: '/name',
-        label: 'Name'
-      },
-      {
-        key: '/age',
-        label: 'Age'
-      },
-      {
-        key: '/disabled',
-        label: 'Disabled',
-        disabled: true
-      }
-    ];
-    asyncTable.service = {
-      get: async () => {
-        return {
-          rows: [
-            { name: 'John', age: 30, disabled: true },
-            { name: 'Jane', age: 31, disabled: true }
-          ],
-          hasMore: false
-        };
-      },
-      export: async () => {
-        return [
-          { name: 'John', age: 30, disabled: true },
-          { name: 'Jane', age: 31, disabled: true }
-        ];
-      },
-      adjustPageSize: async () => {},
-    };
-    asyncTable.pageSizes = [10];
-    el.appendChild(asyncTable);
+    // const asyncTable = document.createElement('jp-async-table') as any;
+    // asyncTable.headers = [
+    //   {
+    //     key: '/name',
+    //     label: 'Name'
+    //   },
+    //   {
+    //     key: '/age',
+    //     label: 'Age'
+    //   },
+    //   {
+    //     key: '/disabled',
+    //     label: 'Disabled',
+    //     disabled: true
+    //   }
+    // ];
+    // asyncTable.service = {
+    //   get: async () => {
+    //     return {
+    //       rows: [
+    //         { name: 'John', age: 30, disabled: true },
+    //         { name: 'Jane', age: 31, disabled: true }
+    //       ],
+    //       hasMore: false
+    //     };
+    //   },
+    //   export: async () => {
+    //     return [
+    //       { name: 'John', age: 30, disabled: true },
+    //       { name: 'Jane', age: 31, disabled: true }
+    //     ];
+    //   },
+    //   adjustPageSize: async () => {},
+    // };
+    // asyncTable.pageSizes = [10];
+    // el.appendChild(asyncTable);
 
-    renderAlert({
-      title: 'Success',
-      message: 'This is a success',
-      duration: 600000
-    })
+    // renderAlert({
+    //   title: 'Success',
+    //   message: 'This is a success',
+    //   duration: 600000
+    // })
   });
 </script>
 
-<jp-file-upload service={MockImageService} name="test" acceptedFiles="image/*"></jp-file-upload>
+<!-- <jp-file-upload service={MockImageService} name="test" acceptedFiles="image/*"></jp-file-upload>
 
 <div bind:this={el}></div>
 
@@ -144,4 +144,11 @@
 <jp-textarea name="Test" label="Test" labeltype="outside"></jp-textarea>
 <jp-file-list name="test"></jp-file-list>
 <jp-file-upload service={MockImageService} name="test" acceptedFiles="image/*"></jp-file-upload>
-<button on:click={save}>Save</button>
+<button on:click={save}>Save</button> -->
+
+<form>
+  <p>Validity Test</p>
+  <jp-input name="test" label="asdf" labelType="outside" required></jp-input>
+  <jp-quill name="cool" required />
+  <button>Submit</button>
+</form>

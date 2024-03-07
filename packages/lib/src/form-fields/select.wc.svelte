@@ -50,10 +50,10 @@
   };
 
   $: {
-    if(Array.isArray(options)){
-      const option = options.filter(el => el.value === value)
-      if(option.length){
-        selected = option[0].label ? option[0].label : option[0].value
+    if (Array.isArray(options)) {
+      const option = options.filter((el) => el.value === value);
+      if (option.length) {
+        selected = option[0].label ? option[0].label : option[0].value;
       } else {
       }
     }
@@ -63,9 +63,13 @@
     attachedInternals.checkValidity();
     if (inputEl) {
       if (inputEl.validity.valueMissing) {
-        if (requiredValidationMessage) {
-          attachedInternals.setValidity({ customError: true }, requiredValidationMessage);
-        }
+        attachedInternals.setValidity(
+          { valueMissing: true },
+          requiredValidationMessage || inputEl.validationMessage,
+          inputEl
+        );
+      } else {
+        attachedInternals.setValidity({});
       }
     }
     dispatch('value', value);
@@ -79,16 +83,16 @@
     let style: string = '';
     if (availableSpaceBelow < dropdownHeight) {
       style = `
-            min-width: ${rect.width}px;
-            bottom: ${window.innerHeight - rect.top}px;
-            left: ${rect.left}px;
-        `;
+        min-width: ${rect.width}px;
+        bottom: ${window.innerHeight - rect.top}px;
+        left: ${rect.left}px;
+      `;
     } else {
       style = `
-            min-width: ${rect.width}px;
-            top: ${rect.bottom}px;
-            left: ${rect.left}px;
-        `;
+        min-width: ${rect.width}px;
+        top: ${rect.bottom}px;
+        left: ${rect.left}px;
+      `;
     }
 
     menuStyle = style;
@@ -278,7 +282,9 @@
       </span>
     {/if}
 
-    <span class={`select-option ${labelType == 'outside' || !label ? '' : 'select-option-padding'}`}>
+    <span
+      class={`select-option ${labelType == 'outside' || !label ? '' : 'select-option-padding'}`}
+    >
       {selected || ''}
     </span>
 

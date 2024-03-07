@@ -15,7 +15,7 @@
 />
 
 <script lang="ts">
-  import { createEventDispatcher } from 'svelte';
+  import {createEventDispatcher} from 'svelte';
 
   export let attachedInternals: ElementInternals;
   export let value: string = '';
@@ -35,19 +35,25 @@
   export let disabled: boolean = false;
 
   export let chips: Array<string> = [];
-    
+
   export let inputFocused: boolean = false;
   export let inputValue: string = '';
-  
-  export let validationMessages = {};
-  export let requiredValidationMessage;
-  export let minitemsValidationMessage;
-  export let maxitemsValidationMessage;
-  export let uniqueValidationMessage;
-  export let patternValidationMessage;
-  
+
+  export let validationMessages: {
+    required?: string;
+    minitems?: string;
+    maxitems?: string;
+    unique?: string;
+    pattern?: string;
+  } = {};
+  export let requiredValidationMessage: string;
+  export let minitemsValidationMessage: string;
+  export let maxitemsValidationMessage: string;
+  export let uniqueValidationMessage: string;
+  export let patternValidationMessage: string;
+
   let inputEl;
-  
+
   export const getValue = () => chips;
 
   const dispatch = createEventDispatcher();
@@ -57,38 +63,43 @@
   };
 
   $: {
-    if(value) chips = value.split(',')
+    if (value) chips = value.split(',');
   }
 
   $: {
     if (!value) {
       attachedInternals.setValidity(
-        { customError: true },
-        requiredValidationMessage || validationMessages.required || `Chips should be non-empty.`
+        { valueMissing: true },
+        requiredValidationMessage || validationMessages.required || `Chips should be non-empty.`,
+        inputEl
       );
     } else if (chips.length < minitems) {
       attachedInternals.setValidity(
         { customError: true },
         minitemsValidationMessage ||
           validationMessages.minitems ||
-          `A minimum of ${minitems} items need to be added.`
+          `A minimum of ${minitems} items need to be added.`,
+        inputEl
       );
     } else if (maxitems && chips.length > maxitems) {
       attachedInternals.setValidity(
         { customError: true },
         maxitemsValidationMessage ||
           validationMessages.maxitems ||
-          `A maximum of ${maxitems} items are allowed.`
+          `A maximum of ${maxitems} items are allowed.`,
+        inputEl
       );
     } else if (unique && new Set(chips).size !== chips.length) {
       attachedInternals.setValidity(
         { customError: true },
-        uniqueValidationMessage || validationMessages.unique || 'Chips are not unique.'
+        uniqueValidationMessage || validationMessages.unique || 'Chips are not unique.',
+        inputEl
       );
     } else if (pattern != null && chips.filter((el) => pattern.test(el)).length != chips.length) {
       attachedInternals.setValidity(
-        { customError: true },
-        patternValidationMessage || validationMessages.pattern || 'Chips dont satisfy pattern.'
+        { patternMismatch: true },
+        patternValidationMessage || validationMessages.pattern || 'Chips dont satisfy pattern.',
+        inputEl
       );
     } else {
       attachedInternals.setValidity({});
@@ -106,13 +117,13 @@
         e.preventDefault();
         if (inputValue) {
           chips = [...chips, inputValue];
-          value = chips.join(',')
+          value = chips.join(',');
           inputValue = '';
         }
       }
       if (e.key == 'Backspace' && !inputValue) {
         chips = chips.slice(0, -1);
-        value = chips.join(',')
+        value = chips.join(',');
       }
     }
   }}
@@ -132,7 +143,9 @@
       <span class="field-label" class:move={inputFocused || value}>{@html label}</span>
     {/if}
 
-    <div class={`field-container ${labelType == 'outside' || !label ? '' : 'field-container-padding'}`}>
+    <div
+      class={`field-container ${labelType == 'outside' || !label ? '' : 'field-container-padding'}`}
+    >
       {#each chips as chip}
         <div class="field-container-chip">
           <span class="field-container-chip-label">{chip}</span>
@@ -142,7 +155,7 @@
             on:click|preventDefault={() => {
               chips.splice(chips.indexOf(chip), 1);
               chips = chips;
-              value = chips.join(',')
+              value = chips.join(',');
             }}
           >
             <svg xmlns="http://www.w3.org/2000/svg" height=".875rem" viewBox="0 0 512 512">
@@ -163,7 +176,7 @@
           inputFocused = false;
           if (inputValue) {
             chips = [...chips, inputValue];
-            value = chips.join(',')
+            value = chips.join(',');
             inputValue = '';
           }
         }}
@@ -228,15 +241,15 @@
   }
 
   .label {
-    margin-top: .5rem;
-    margin-bottom: .125rem;
-    font-size: .875rem;
+    margin-top: 0.5rem;
+    margin-bottom: 0.125rem;
+    font-size: 0.875rem;
   }
 
   .field-label {
     position: absolute;
     top: 50%;
-    left: .75rem;
+    left: 0.75rem;
     -webkit-transform: translateY(-50%);
     -moz-transform: translateY(-50%);
     -ms-transform: translateY(-50%);
@@ -306,7 +319,7 @@
     width: 10rem;
     font-size: 1rem;
     overflow: hidden;
-    padding: .75rem;
+    padding: 0.75rem;
     border: none;
     outline: none;
     -webkit-border-radius: 0.25rem;
@@ -315,7 +328,7 @@
   }
 
   .field-container-padding {
-    padding: 1.25rem .75rem .5rem;
+    padding: 1.25rem 0.75rem 0.5rem;
   }
 
   .field-container-chip {

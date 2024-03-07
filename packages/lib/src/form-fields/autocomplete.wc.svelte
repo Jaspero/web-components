@@ -36,17 +36,21 @@
   export let minlength: number | null = null;
   export let maxlength: number | null = null;
   export let pattern: string | null = null;
-  export let validationMessages = {};
-  export let requiredValidationMessage;
-  export let minlengthValidationMessage;
-  export let maxlengthValidationMessage;
-  export let patternValidationMessage;
+  export let validationMessages: {
+    required?: string;
+    maxlength?: string;
+    minlength?: string;
+    pattern?: string;
+  } = {};
+  export let requiredValidationMessage: string;
+  export let minlengthValidationMessage: string;
+  export let maxlengthValidationMessage: string;
+  export let patternValidationMessage: string;
+
+  export const reportValidity = () => attachedInternals.reportValidity();
+
   let bindingElement;
   let optionElements = []; // Array to store references to option buttons
-
-  export const reportValidity = () => {
-    attachedInternals.reportValidity();
-  };
   let filteredOptions = [];
   let inputEl;
   let open = false;
@@ -74,46 +78,45 @@
     }
 
     attachedInternals.checkValidity();
+    
     if (inputEl) {
       if (inputEl.validity.patternMismatch) {
-        if (patternValidationMessage || validationMessages.pattern) {
-          attachedInternals.setValidity(
-            { customError: true },
-            patternValidationMessage || validationMessages.pattern
-          );
-        }
+        attachedInternals.setValidity(
+          { patternMismatch: true },
+          patternValidationMessage || validationMessages.pattern || inputEl.validationMessage,
+          inputEl
+        );
       } else if (inputEl.validity.tooShort) {
-        if (minlengthValidationMessage || validationMessages.minlength) {
-          attachedInternals.setValidity(
-            { customError: true },
-            minlengthValidationMessage || validationMessages.minlength
-          );
-        }
+        attachedInternals.setValidity(
+          { tooShort: true },
+          minlengthValidationMessage || validationMessages.minlength || inputEl.validationMessage,
+          inputEl
+        );
       } else if (inputEl.validity.tooLong) {
-        if (maxlengthValidationMessage || validationMessages.maxlength) {
-          attachedInternals.setValidity(
-            { customError: true },
-            maxlengthValidationMessage || validationMessages.maxlength
-          );
-        }
+        attachedInternals.setValidity(
+          { tooLong: true },
+          maxlengthValidationMessage || validationMessages.maxlength || inputEl.validationMessage,
+          inputEl
+        );
       } else if (inputEl.validity.valueMissing) {
-        if (requiredValidationMessage || validationMessages.required) {
-          attachedInternals.setValidity(
-            { customError: true },
-            requiredValidationMessage || validationMessages.required
-          );
-        }
+        attachedInternals.setValidity(
+          { valueMissing: true },
+          requiredValidationMessage || validationMessages.required || inputEl.validationMessage,
+          inputEl
+        );
+      } else {
+        attachedInternals.setValidity({});
       }
     }
   }
 
   function handleKeydown(event: KeyboardEvent) {
     const currentIndex = optionElements.findIndex((el) => el === document.activeElement);
-    console.log(optionElements)
+    console.log(optionElements);
 
     if (currentIndex == -1) {
-      if(event.key == 'ArrowDown' && open && optionElements.length){
-        optionElements[0].focus()
+      if (event.key == 'ArrowDown' && open && optionElements.length) {
+        optionElements[0].focus();
       } else {
         return;
       }
@@ -125,7 +128,7 @@
         return;
       }
 
-      if(event.key === 'Enter'){
+      if (event.key === 'Enter') {
         value = filteredOptions[currentIndex];
         inputEl.focus();
       }

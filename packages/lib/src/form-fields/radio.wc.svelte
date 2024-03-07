@@ -16,7 +16,7 @@
 />
 
 <script lang="ts">
-  import { createEventDispatcher, onMount } from 'svelte';
+  import {createEventDispatcher, onMount} from 'svelte';
 
   export let attachedInternals: ElementInternals;
 
@@ -42,9 +42,13 @@
     attachedInternals.checkValidity();
     if (inputEl) {
       if (inputEl.validity.valueMissing) {
-        if (requiredValidationMessage) {
-          attachedInternals.setValidity({ customError: true }, requiredValidationMessage);
-        }
+        attachedInternals.setValidity(
+          { valueMissing: true },
+          requiredValidationMessage || inputEl.validationMessage,
+          inputEl
+        );
+      } else {
+        attachedInternals.setValidity({});
       }
     }
     dispatch('value', value);

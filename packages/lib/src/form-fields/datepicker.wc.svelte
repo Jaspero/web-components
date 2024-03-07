@@ -198,7 +198,7 @@
     } else {
       if (required) {
         attachedInternals.setValidity(
-          { customError: true },
+          { valueMissing: true },
           requiredValidationMessage || `Date is required.`
         );
       }
