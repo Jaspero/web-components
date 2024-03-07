@@ -32,6 +32,8 @@
   let pickerMonth = new Date(Date.now()).getMonth();
   let monthSelected, yearSelected, dateSelected;
   let modalOpen = false;
+  let editModalOpen = false;
+  let modelState: 'create' | 'edit' = null;
   let inputValue = '';
   let pickerRows;
   let openPicker = false;
@@ -181,7 +183,11 @@
       description: inputValue,
       date: selectedDate
     };
-    schedules = [...schedules, newSchedule];
+    if (modelState === 'create') {
+      schedules = [...schedules, newSchedule];
+    } else if (modelState === 'edit') {
+
+    }
     modalOpen = false;
   }
 
@@ -190,7 +196,8 @@
       return (
         el.date.getDate() != dateSelected ||
         el.date.getMonth() != monthSelected ||
-        el.date.getFullYear() != yearSelected
+        el.date.getFullYear() != yearSelected ||
+        el.date.toTimeString().slice(0, 5) != selectedTime
       );
     });
     modalOpen = false;
@@ -251,16 +258,19 @@
                 monthSelected = col.month;
                 dateSelected = col.day;
                 modalOpen = true;
-              }}
+                modelState = 'create';
+                                }}
                         >
                             <div class="cell-date">
                                 {col.day}
                             </div>
                             {#each pickerSchedules[i][j] as sch}
                                 <div class="cell-content" on:click={() => {
+                                      editModalOpen = true;
                                       inputValue = sch.description;
                                       selectedTime = sch.date.toTimeString().slice(0, 5);
                                       modalOpen = true;
+                                      modelState = 'edit';
                                     }}>
                                         {sch.description} {sch.date.toTimeString().slice(0, 5)}
                                 </div>
@@ -398,38 +408,71 @@
             }
   }}
 >
-    <div class="modal-container" use:clickOutside on:click_outside={() => (modalOpen = false)}>
-        <div class="x-mark">
-            <button on:click={() => modalOpen = false}>
-                <svg xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 384 512">
-                    <!--!Font Awesome Free 6.5.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2024 Fonticons, Inc.-->
-                    <path d="M342.6 150.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L192 210.7 86.6 105.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3L146.7 256 41.4 361.4c-12.5 12.5-12.5 32.8 0 45.3s32.8 12.5 45.3 0L192 301.3 297.4 406.6c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L237.3 256 342.6 150.6z"/>
-                </svg>
-            </button>
-        </div>
-        <div class="first-block">
-            <h2>Create task or event</h2>
-            <input type="text" placeholder="Write a description" bind:value={inputValue} />
-        </div>
-        <div class="second-block">
-            <div>
-                {dateSelected}.{monthMap[monthSelected]}.{yearSelected}
+    {#if modelState === 'create'}
+        <div class="modal-container" use:clickOutside on:click_outside={() => (modalOpen = false)}>
+            <div class="x-mark">
+                <button on:click={() => modalOpen = false}>
+                    <svg xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 384 512">
+                        <!--!Font Awesome Free 6.5.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2024 Fonticons, Inc.-->
+                        <path d="M342.6 150.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L192 210.7 86.6 105.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3L146.7 256 41.4 361.4c-12.5 12.5-12.5 32.8 0 45.3s32.8 12.5 45.3 0L192 301.3 297.4 406.6c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L237.3 256 342.6 150.6z"/>
+                    </svg>
+                </button>
+            </div>
+            <div class="first-block">
+                <h2>Create task or event</h2>
+                <input type="text" placeholder="Write a description" bind:value={inputValue} />
+            </div>
+            <div class="second-block">
+                <div>
+                    {dateSelected}.{monthMap[monthSelected]}.{yearSelected}
+                </div>
+                <div>
+                    <input type="time" bind:value={selectedTime} />
+                </div>
             </div>
             <div>
-                <input type="time" bind:value={selectedTime} />
+                <button on:click={() => deleteSchedule()}>Delete</button>
+                <button
+                        on:click|preventDefault={() => updateScheduleArray()}
+                        disabled={!inputValue || !selectedTime}>Save</button
+                >
             </div>
         </div>
+        {:else}
         <div>
-            <button on:click={() => deleteSchedule()}>Delete</button>
-            <button
-                    on:click|preventDefault={() => updateScheduleArray()}
-                    disabled={!inputValue || !selectedTime}>Save</button
-            >
+            <div class="x-mark">
+                <button on:click={() => editModalOpen = false}>
+                    <svg xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 384 512">
+                        <!--!Font Awesome Free 6.5.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2024 Fonticons, Inc.-->
+                        <path d="M342.6 150.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L192 210.7 86.6 105.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3L146.7 256 41.4 361.4c-12.5 12.5-12.5 32.8 0 45.3s32.8 12.5 45.3 0L192 301.3 297.4 406.6c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L237.3 256 342.6 150.6z"/>
+                    </svg>
+                </button>
+            </div>
+            <div class="first-block">
+                <h2>Edit task or event</h2>
+                <input type="text" placeholder="Write a description" bind:value={inputValue} />
+            </div>
+            <div class="second-block">
+                <div>
+                    {dateSelected}.{monthMap[monthSelected]}.{yearSelected}
+                </div>
+                <div>
+                    <input type="time" bind:value={selectedTime} />
+                </div>
+            </div>
+            <div>
+                <button on:click={() => deleteSchedule()}>Delete</button>
+                <button
+                        on:click|preventDefault={() => updateScheduleArray()}
+                        disabled={!inputValue || !selectedTime}>Save</button
+                >
+            </div>
         </div>
-    </div>
+        {/if}
 </div>
 
-<input type="text" {id} {name} bind:value hidden />
+
+        <input type="text" {id} {name} bind:value hidden />
 
 <style>
     .calendar {
