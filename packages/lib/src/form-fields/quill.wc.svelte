@@ -128,7 +128,7 @@
   }
 
   onMount(() => {
-    let quill = getQull();
+    let quill = getQuill();
 
     editor = new quill(containerEl, options);
 
@@ -143,19 +143,25 @@
     });
   });
 
-  function getQull(): Quill {
+  function getQuill(): Quill {
     // @ts-ignore
     return window.Quill;
   }
 </script>
 
 {#if label}
-  <span>{label}</span>
+  <div class="label">{label}</div>
 {/if}
 <div bind:this={containerEl} />
 <textarea {id} {name} bind:value={internalValue} {required} tabindex="-1" bind:this={textareaEl} />
 
 <style>
+  .label {
+    margin-top: 0.5rem;
+    margin-bottom: 0.125rem;
+    font-size: 0.875rem;
+  }
+
   textarea {
     width: 100%;
     height: 0;

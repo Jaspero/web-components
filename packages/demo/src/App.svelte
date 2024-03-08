@@ -144,6 +144,9 @@
 
 <jp-textarea name="loooool">
 </jp-textarea>
+
+<jp-select options={[{"value":"aaa"}, {"value":"bbb"}, {"value":"ccc"}]} label="Select">
+</jp-select>
 <!-- <jp-file-upload service={MockImageService} name="test" acceptedFiles="image/*"></jp-file-upload>
 <jp-input name="test" label="asdf" labelType="outside"></jp-input>
 <jp-chips name="Test" label="Test" labelType="outside"></jp-chips>
