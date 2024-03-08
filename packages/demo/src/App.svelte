@@ -126,6 +126,7 @@
     };
     asyncTable.allowArrangeColumns = false;
     asyncTable.pageSizes = [10];
+    asyncTable.sort = {key: '/age', direction: 'asc'};
     el.appendChild(asyncTable);
 
     // renderAlert({
@@ -151,5 +152,6 @@
   <p>Validity Test</p>
   <jp-input name="test" label="asdf" labelType="outside" required></jp-input>
   <jp-quill name="cool" required />
+  <jp-select required />
   <button>Submit</button>
 </form>

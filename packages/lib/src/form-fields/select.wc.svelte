@@ -30,18 +30,18 @@
   export let labelType: 'inside' | 'outside' = 'inside';
   export const getValue = () => value;
 
-  export let requiredValidationMessage;
+  export let requiredValidationMessage: string;
 
-  let inputEl;
+  let inputEl: HTMLInputElement;
 
   let isTabbing = false; // Variable to track if the user is tabbing
   let open = false;
-  let bindingElement;
-  let menuStyle;
+  let bindingElement: HTMLButtonElement;
+  let menuStyle: string;
   let optionElements = []; // Array to store references to option buttons
   let searchTerm = '';
-  let searchTimeout;
-  let selected;
+  let searchTimeout: any;
+  let selected: string;
 
   const dispatch = createEventDispatcher();
 
@@ -265,8 +265,6 @@
   </div>
 {/if}
 <div class:has-hint={hint}>
-  <input bind:value {id} {name} {required} bind:this={inputEl} hidden />
-
   <button
     type="button"
     class="select"
@@ -306,6 +304,8 @@
       {@html hint}
     </span>
   {/if}
+
+  <input tabindex="-1" bind:this={inputEl} bind:value {id} {name} {required} />
 </div>
 
 {#if open}
@@ -636,5 +636,12 @@
   .menu-button:not(:disabled):hover,
   .menu-button:focus {
     background-color: var(--background-secondary);
+  }
+
+  input {
+    height: 0;
+    opacity: 0;
+    position: absolute;
+    width: 100%;
   }
 </style>
