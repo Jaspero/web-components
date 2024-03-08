@@ -52,6 +52,8 @@
 
   const dispatch = createEventDispatcher();
 
+  let height = 'auto';
+
   let textareaEl;
 
   export const reportValidity = () => attachedInternals.reportValidity();
@@ -95,6 +97,17 @@
     attachedInternals.setFormValue(value);
     dispatch('value', { value });
   }
+
+  onMount(() => {
+    updateHeight()
+  })
+
+  function updateHeight() {
+    if (textareaEl) {
+      textareaEl.style.height = 'auto';
+      textareaEl.style.height = textareaEl.scrollHeight + 'px';
+    }
+  }
 </script>
 
 {#if label && labelType == 'outside'}
@@ -110,6 +123,7 @@
 
     <textarea
       class={`field-input ${labelType == 'outside' || !label ? '' : 'field-input-margin'}`}
+      style="height: {height}"
       aria-hidden={disabled || readonly}
       tabindex={disabled || readonly ? -1 : 0}
       {disabled}
@@ -125,6 +139,10 @@
       bind:this={textareaEl}
       on:focus={() => (inputFocused = true)}
       on:blur={() => (inputFocused = false)}
+      on:input={(event) => {
+            updateHeight();
+            dispatch('input', event);
+      }}
     ></textarea>
   </label>
 
@@ -247,11 +265,12 @@
     -webkit-flex: auto;
     -moz-box-flex: 1;
     -ms-flex: auto;
+    white-space: initial;
     flex: auto;
     width: 10rem;
     font-size: 1rem;
-    white-space: nowrap;
-    overflow: hidden;
+    overflow-x: hidden;
+    -ms-overflow-x: hidden;
     -o-text-overflow: ellipsis;
     text-overflow: ellipsis;
     padding: 0.75rem;
