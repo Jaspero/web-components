@@ -17,6 +17,7 @@
 
 <script lang="ts">
   import { createEventDispatcher, onMount } from 'svelte';
+  import {wait} from '../utils/wait';
 
   export let attachedInternals: ElementInternals;
   export let options: Array<{ label?: string; value: string; disabled?: boolean }> | string = [];
@@ -45,22 +46,28 @@
 
   const dispatch = createEventDispatcher();
 
-  export const reportValidity = () => {
-    attachedInternals.reportValidity();
-  };
+  export const reportValidity = () => attachedInternals.reportValidity();
 
   $: {
     if (Array.isArray(options)) {
       const option = options.filter((el) => el.value === value);
       if (option.length) {
         selected = option[0].label ? option[0].label : option[0].value;
-      } else {
       }
     }
   }
 
   $: {
+    checkValidity();
+    dispatch('value', value);
+  }
+
+  async function checkValidity() {
+
+    await wait();
+
     attachedInternals.checkValidity();
+
     if (inputEl) {
       if (inputEl.validity.valueMissing) {
         attachedInternals.setValidity(
@@ -72,7 +79,6 @@
         attachedInternals.setValidity({});
       }
     }
-    dispatch('value', value);
   }
 
   function toggleMenu() {
@@ -101,7 +107,7 @@
     if (open) {
       setTimeout(() => {
         // Find the first non-disabled option
-        const firstEnabledOptionIndex = options.findIndex((option) => !option.disabled);
+        const firstEnabledOptionIndex = (options as any).findIndex((option) => !option.disabled);
         if (firstEnabledOptionIndex !== -1) {
           optionElements[firstEnabledOptionIndex].focus();
         }
@@ -255,7 +261,9 @@
   }
 
   onMount(() => {
-    if (typeof options == 'string') options = JSON.parse(options);
+    if (typeof options == 'string') {
+      options = JSON.parse(options);
+    };
   });
 </script>
 

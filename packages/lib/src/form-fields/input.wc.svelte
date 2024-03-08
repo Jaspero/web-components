@@ -44,11 +44,13 @@
     maxlength?: string;
     minlength?: string;
     pattern?: string;
+    type?: string;
   } = {};
   export let requiredValidationMessage: string;
   export let minlengthValidationMessage: string;
   export let maxlengthValidationMessage: string;
   export let patternValidationMessage: string;
+  export let typeValidationMessage: string;
 
   export const getValue = () => value;
 
@@ -65,7 +67,13 @@
     attachedInternals.checkValidity();
 
     if (inputEl) {
-      if (inputEl.validity.patternMismatch) {
+      if (inputEl.validity.typeMismatch) {
+        attachedInternals.setValidity(
+          { typeMismatch: true },
+          typeValidationMessage || validationMessages.type || inputEl.validationMessage,
+          inputEl
+        );
+      } else if (inputEl.validity.patternMismatch) {
         attachedInternals.setValidity(
           { patternMismatch: true },
           patternValidationMessage || validationMessages.pattern || inputEl.validationMessage,

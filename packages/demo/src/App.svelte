@@ -135,6 +135,8 @@
     //   duration: 600000
     // })
   });
+
+  const options = JSON.stringify([{"label":"A","value":"a"}, {"label":"B","value":"b"}]);
 </script>
 
 <div bind:this={el}></div>
@@ -150,8 +152,9 @@
 
 <form>
   <p>Validity Test</p>
-  <jp-input name="test" label="asdf" labelType="outside" required></jp-input>
-  <jp-quill name="cool" required />
-  <jp-select required />
+  <jp-input name="name" label="Name" labelType="outside" required></jp-input>
+  <jp-input name="email" label="Email" type="email" labelType="outside" required></jp-input>
+  <jp-quill name="Content" label="Content" required />
+  <jp-select required options={options} label="Thing" />
   <button>Submit</button>
 </form>
