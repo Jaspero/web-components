@@ -272,7 +272,7 @@
     {@html label}
   </div>
 {/if}
-<div class:has-hint={hint}>
+<div class="wrapper" class:has-hint={hint}>
   <button
     type="button"
     class="select"
@@ -353,8 +353,11 @@
 {/if}
 
 <style>
-  .has-hint {
+
+  .wrapper {
     position: relative;
+  }
+  .has-hint {
     margin-bottom: 1.25rem;
   }
 
@@ -647,9 +650,11 @@
   }
 
   input {
-    height: 0;
+    top: 0;
+    height: 100%;
     opacity: 0;
     position: absolute;
     width: 100%;
+    z-index: -1;
   }
 </style>
