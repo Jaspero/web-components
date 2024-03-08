@@ -12,7 +12,7 @@
   import type { TableSort } from '../types/table-sort.interface';
   import type { TableService } from '../types/table.service';
 
-  export let showArrangingColumns = true;
+  export let allowArrangeColumns = true;
   export let showExport = true;
   export let rowClickable = false;
   export let headers: TableHeader[] = [];
@@ -35,7 +35,6 @@
   let rows: any[] = [];
   let exportLoading = false;
   let activeHeaders: TableHeader[];
-  let arrangingColumns = false;
   let isDraging = false;
   let columnOrder: string[] = [];
 
@@ -162,15 +161,6 @@
     exportLoading = false;
   }
 
-  function arrangeColumns() {
-    arrangingColumns = true;
-    columnOrder = activeHeaders.map((header) => header.key);
-  }
-
-  function finishArrangingColumns() {
-    arrangingColumns = false;
-  }
-
   function dragstart(event: DragEvent, header: TableHeader) {
     event.dataTransfer.setData('text/plain', header.key);
     isDraging = true;
@@ -181,13 +171,13 @@
     isDraging = false;
   }
 
-  function drop(event: DragEvent) {
+  function drop(event: DragEvent, targetIndex: number) {
     event.preventDefault();
+
     const draggedColumn = event.dataTransfer.getData('text/plain');
     const currentIndex = columnOrder.indexOf(draggedColumn);
-    const targetIndex = (event.target as HTMLElement)?.dataset.index;
 
-    if (currentIndex !== -1 && targetIndex) {
+    if (currentIndex !== -1 && Number.isInteger(targetIndex)) {
       columnOrder.splice(currentIndex, 1);
       columnOrder.splice(Number(targetIndex), 0, draggedColumn);
 
@@ -202,28 +192,14 @@
   }
 
   onMount(async () => {
+    columnOrder = activeHeaders.map((header) => header.key);
     await getData();
   });
 </script>
 
 <div class="table-card">
-  {#if showArrangingColumns || showExport}
+  {#if showExport}
     <div class="table-header">
-      {#if showArrangingColumns}
-        {#if !arrangingColumns}
-          <button type="button" on:click={arrangeColumns} class="table-button settings-button">
-            Arrange Columns
-          </button>
-        {:else}
-          <button
-            type="button"
-            on:click={finishArrangingColumns}
-            class="table-button settings-button"
-          >
-            Finish Arranging
-          </button>
-        {/if}
-      {/if}
       {#if showExport}
         &nbsp;
         <button
@@ -242,13 +218,18 @@
         <tr>
           {#each activeHeaders as header, index}
             <th
-              class:sortable={header.sortable}
+              class:sortable={allowArrangeColumns && header.sortable}
               on:click={() => adjustSort(header)}
-              on:drop={drop}
+              on:drop={(e) => drop(e, index)}
               on:dragover={dragover}
-              data-index={index}
             >
-              <span draggable="true" tabindex="-1" role="button" aria-label="Drag handle" on:dragstart={(e) => dragstart(e, header)}>
+              <span
+                class="draggable-column"
+                draggable={allowArrangeColumns}
+                tabindex="-1"
+                role="button"
+                aria-label="Drag handle"
+                on:dragstart={(e) => dragstart(e, header)}>
                 {@html header.label}
               </span>
 
@@ -325,6 +306,14 @@
 
   th {
     opacity: 0.75;
+  }
+
+  .sortable {
+    cursor: pointer;
+  }
+
+  .draggable-column {
+    cursor: grab;
   }
 
   .cell {

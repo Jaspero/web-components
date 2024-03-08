@@ -89,42 +89,44 @@
     // }
     // el.appendChild(multisearch)
 
-    // const asyncTable = document.createElement('jp-async-table') as any;
-    // asyncTable.headers = [
-    //   {
-    //     key: '/name',
-    //     label: 'Name'
-    //   },
-    //   {
-    //     key: '/age',
-    //     label: 'Age'
-    //   },
-    //   {
-    //     key: '/disabled',
-    //     label: 'Disabled',
-    //     disabled: true
-    //   }
-    // ];
-    // asyncTable.service = {
-    //   get: async () => {
-    //     return {
-    //       rows: [
-    //         { name: 'John', age: 30, disabled: true },
-    //         { name: 'Jane', age: 31, disabled: true }
-    //       ],
-    //       hasMore: false
-    //     };
-    //   },
-    //   export: async () => {
-    //     return [
-    //       { name: 'John', age: 30, disabled: true },
-    //       { name: 'Jane', age: 31, disabled: true }
-    //     ];
-    //   },
-    //   adjustPageSize: async () => {},
-    // };
-    // asyncTable.pageSizes = [10];
-    // el.appendChild(asyncTable);
+    const asyncTable = document.createElement('jp-async-table') as any;
+    asyncTable.headers = [
+      {
+        key: '/name',
+        label: 'Name'
+      },
+      {
+        key: '/age',
+        label: 'Age',
+        sortable: true
+      },
+      {
+        key: '/disabled',
+        label: 'Disabled',
+        disabled: true
+      }
+    ];
+    asyncTable.service = {
+      get: async () => {
+        return {
+          rows: [
+            { name: 'John', age: 30, disabled: true },
+            { name: 'Jane', age: 31, disabled: true }
+          ],
+          hasMore: false
+        };
+      },
+      export: async () => {
+        return [
+          { name: 'John', age: 30, disabled: true },
+          { name: 'Jane', age: 31, disabled: true }
+        ];
+      },
+      adjustPageSize: async () => {},
+    };
+    asyncTable.allowArrangeColumns = false;
+    asyncTable.pageSizes = [10];
+    el.appendChild(asyncTable);
 
     // renderAlert({
     //   title: 'Success',
@@ -134,10 +136,9 @@
   });
 </script>
 
-<!-- <jp-file-upload service={MockImageService} name="test" acceptedFiles="image/*"></jp-file-upload>
-
 <div bind:this={el}></div>
 
+<!-- <jp-file-upload service={MockImageService} name="test" acceptedFiles="image/*"></jp-file-upload>
 <jp-input name="test" label="asdf" labelType="outside"></jp-input>
 <jp-chips name="Test" label="Test" labelType="outside"></jp-chips>
 <jp-file-upload service={MockImageService} name="test" acceptedFiles="image/*"></jp-file-upload>
