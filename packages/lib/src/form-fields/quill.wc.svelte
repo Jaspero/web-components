@@ -23,7 +23,6 @@
 
   export let attachedInternals: ElementInternals;
   export let service: ImageService;
-  // export let currentlyUploading: string = '';
   export let value: string = '';
   export let id: string | null = null;
   export let name: string | null = null;
@@ -46,6 +45,9 @@
     },
     theme: 'snow'
   };
+  export let toolbarStyle = `border-color:var(--border-primary)!important;border-top-left-radius:.25rem;border-top-right-radius:.25rem;`;
+  export let containerStyle = `border-color: var(--border-primary)!important;border-bottom-left-radius:.25rem;border-bottom-right-radius:.25rem;`;
+  export let editorStyle = `max-height: 500px;`;
   export let required = false;
   export let validationMessages: {
     required?: string;
@@ -59,6 +61,7 @@
 
   const dispatch = createEventDispatcher();
 
+  let wrapperEl: HTMLDivElement;
   let containerEl: HTMLDivElement;
   let editor: Quill;
   let textareaEl: HTMLTextAreaElement;
@@ -127,6 +130,12 @@
     }
   }
 
+  function applyStyles() {
+    wrapperEl.querySelector('.ql-toolbar').setAttribute('style', toolbarStyle);
+    wrapperEl.querySelector('.ql-container').setAttribute('style', containerStyle);
+    wrapperEl.querySelector('.ql-editor').setAttribute('style', editorStyle);
+  }
+
   onMount(() => {
     let quill = getQuill();
 
@@ -141,6 +150,8 @@
     editor.on('text-change', () => {
       internalValue = editor.root.innerHTML || '';
     });
+
+    applyStyles();
   });
 
   function getQuill(): Quill {
@@ -152,7 +163,9 @@
 {#if label}
   <div class="label">{label}</div>
 {/if}
-<div bind:this={containerEl} />
+<div bind:this={wrapperEl}>
+  <div bind:this={containerEl} />
+</div>
 <textarea {id} {name} bind:value={internalValue} {required} tabindex="-1" bind:this={textareaEl} />
 
 <style>

@@ -77,19 +77,3 @@ button[disabled] {
     0.16
   ); /* Color for shadows to ensure consistent depth cues across UI */
 }
-
-.ql-toolbar {
-  border-color: var(--border-primary) !important;
-  border-top-left-radius: .25rem;
-  border-top-right-radius: .25rem;
-}
-
-.ql-container {
-  border-color: var(--border-primary) !important;
-  border-bottom-left-radius: .25rem;
-  border-bottom-right-radius: .25rem;
-}
-
-.ql-editor {
-  max-height: 500px;
-}
