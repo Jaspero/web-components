@@ -20,12 +20,46 @@
   import { formatReturnDate } from '../utils/dateFormatter';
   import { clickOutside } from '../clickOutside';
 
+  /**
+   * The ElementInternals associated with the component.
+   * @type {ElementInternals}
+   */
   export let attachedInternals: ElementInternals;
+
+  /**
+   * The value of the calendar.
+   * @type {string}
+   */
   export let value: string = '';
+
+  /**
+   * The id of the calendar.
+   * @type {null|number}
+   */
   export let id = null;
+
+  /**
+   * The name of the calendar.
+   * @type {string}
+   */
   export let name: string = '';
+
+  /**
+   * The format in which dates should be returned.
+   * @type {string}
+   */
   export let returnFormat: string = 'unix';
+
+  /**
+   * The function used to format return dates.
+   * @type {(date: Date) => any}
+   */
   export let returnFormatFunction: (date: Date) => any = (date) => date.valueOf();
+
+  /**
+   * An array of schedules.
+   * @type {Array}
+   */
   export let schedules = [];
 
   let pickerYear = new Date(Date.now()).getFullYear();
