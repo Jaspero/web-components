@@ -28,7 +28,7 @@
   export let disabled = false;
   export let readonly = false;
   export let type: 'text' | 'password' | 'email' | 'tel' | 'url' = 'text';
-  export let id: string = '';
+  export let id: string | null = null;
   export let name: string = '';
   export let minlength: number | null = null;
   export let maxlength: number | null = null;
