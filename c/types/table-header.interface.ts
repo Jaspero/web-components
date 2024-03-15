@@ -8,4 +8,10 @@ export interface TableHeader {
   pipes?: TablePipe[];
   fallback?: any;
   disabled?: boolean;
+  /**
+   * @description
+   * Used when formatting values for export. If nothing is provided we use pipes and fallback.
+   */
+  exportPipes?: TablePipe[];
+  exportFallback?: any;
 }
