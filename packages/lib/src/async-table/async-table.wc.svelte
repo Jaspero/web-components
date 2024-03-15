@@ -35,7 +35,6 @@
   let rows: any[] = [];
   let exportLoading = false;
   let activeHeaders: TableHeader[];
-  let isDraging = false;
   let columnOrder: string[] = [];
 
   $: activeHeaders = headers.filter((it) => !it.disabled);
@@ -163,12 +162,10 @@
 
   function dragstart(event: DragEvent, header: TableHeader) {
     event.dataTransfer.setData('text/plain', header.key);
-    isDraging = true;
   }
 
   function dragover(event: DragEvent) {
     event.preventDefault();
-    isDraging = false;
   }
 
   function drop(event: DragEvent, targetIndex: number) {

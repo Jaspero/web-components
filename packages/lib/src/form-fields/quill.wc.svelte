@@ -27,24 +27,7 @@
   export let id: string | null = null;
   export let name: string | null = null;
   export let label = '';
-  export let options: any = {
-    modules: {
-      toolbar: [
-        // toggled buttons
-        ['bold', 'italic', 'underline'],
-        // custom dropdown
-        [{ size: ['small', false, 'large', 'huge'] }],
-        // dropdown with defaults from theme
-        [{ color: [] }, { background: [] }],
-        [{ list: 'ordered' }, { list: 'bullet' }],
-        ['blockquote', 'code-block'],
-        ['image'],
-        [{ align: [] }],
-        ['clean']
-      ]
-    },
-    theme: 'snow'
-  };
+  export let options: any;
   export let toolbarStyle = `border-color:var(--border-primary)!important;border-top-left-radius:.25rem;border-top-right-radius:.25rem;`;
   export let containerStyle = `border-color: var(--border-primary)!important;border-bottom-left-radius:.25rem;border-bottom-right-radius:.25rem;`;
   export let editorStyle = `max-height: 500px;`;
@@ -139,7 +122,64 @@
   onMount(() => {
     let quill = getQuill();
 
+    if (!options) {
+      // @ts-ignore
+      if (window.quillBetterTable) {
+        quill.register(
+          {
+            // @ts-ignore
+            'modules/better-table': window.quillBetterTable
+          },
+          true
+        );
+      }
+
+      options = {
+        modules: {
+          table: false,
+          toolbar: [
+            // toggled buttons
+            ['bold', 'italic', 'underline'],
+            // custom dropdown
+            [{ size: ['small', false, 'large', 'huge'] }],
+            // dropdown with defaults from theme
+            [{ color: [] }, { background: [] }],
+            [{ list: 'ordered' }, { list: 'bullet' }],
+            ['table', 'blockquote', 'code-block'],
+            ['image'],
+            [{ align: [] }],
+            ['clean']
+          ],
+          // @ts-ignore
+          ...(window.quillBetterTable && {
+            'better-table': {
+              operationMenu: {
+                items: {
+                  unmergeCells: {
+                    text: 'Another unmerge cells name'
+                  }
+                }
+              }
+            },
+            keyboard: {
+              // @ts-ignore
+              bindings: window.quillBetterTable.keyboardBindings
+            }
+          })
+        },
+        theme: 'snow'
+      };
+    }
+
     editor = new quill(containerEl, options);
+
+    // @ts-ignore
+    if (window.quillBetterTable) {
+      editor.getModule('toolbar').addHandler('table', () => {
+        const tableModule = editor.getModule('better-table');
+        tableModule.insertTable(3, 3);
+      });
+    }
 
     if (service) {
       editor.getModule('toolbar').addHandler('image', () => {

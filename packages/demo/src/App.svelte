@@ -52,6 +52,7 @@
 
   async function save() {
     await quill.save();
+    console.log('quill value', quill.getValue())
   }
 
   onMount(() => {
@@ -61,11 +62,11 @@
     // multiselect.value = ['a'];
     // el.appendChild(multiselect);
 
-    // quill = document.createElement('jp-quill');
-    // quill.value = `<p>Pero</p>`;
-    // quill.service = new MockImageService();
+    quill = document.createElement('jp-quill');
+    quill.value = `<p>Pero</p><div class="quill-better-table-wrapper"><table class="quill-better-table" style="width: 300px;"><colgroup><col width="100"><col width="100"><col width="100"></colgroup><tbody><tr data-row="row-6pvi"><td data-row="row-6pvi" rowspan="1" colspan="1"><p class="qlbt-cell-line" data-row="row-6pvi" data-cell="cell-seg5" data-rowspan="1" data-colspan="1"><br></p></td><td data-row="row-6pvi" rowspan="1" colspan="1"><p class="qlbt-cell-line" data-row="row-6pvi" data-cell="cell-4r2i" data-rowspan="1" data-colspan="1"><br></p></td><td data-row="row-6pvi" rowspan="1" colspan="1"><p class="qlbt-cell-line" data-row="row-6pvi" data-cell="cell-kgn6" data-rowspan="1" data-colspan="1"><br></p></td></tr><tr data-row="row-abp3"><td data-row="row-abp3" rowspan="1" colspan="1"><p class="qlbt-cell-line" data-row="row-abp3" data-cell="cell-vn5m" data-rowspan="1" data-colspan="1"><br></p></td><td data-row="row-abp3" rowspan="1" colspan="1"><p class="qlbt-cell-line" data-row="row-abp3" data-cell="cell-t209" data-rowspan="1" data-colspan="1"><br></p></td><td data-row="row-abp3" rowspan="1" colspan="1"><p class="qlbt-cell-line" data-row="row-abp3" data-cell="cell-yttb" data-rowspan="1" data-colspan="1"><br></p></td></tr><tr data-row="row-2b45"><td data-row="row-2b45" rowspan="1" colspan="1"><p class="qlbt-cell-line" data-row="row-2b45" data-cell="cell-4q1g" data-rowspan="1" data-colspan="1"><br></p></td><td data-row="row-2b45" rowspan="1" colspan="1"><p class="qlbt-cell-line" data-row="row-2b45" data-cell="cell-7hyh" data-rowspan="1" data-colspan="1"><br></p></td><td data-row="row-2b45" rowspan="1" colspan="1"><p class="qlbt-cell-line" data-row="row-2b45" data-cell="cell-z5re" data-rowspan="1" data-colspan="1"><br></p></td></tr></tbody></table></div>`;
+    quill.service = new MockImageService();
 
-    // el.appendChild(quill);
+    el.appendChild(quill);
 
     // const datepicker = document.createElement('jp-datepicker') as any;
     // el.appendChild(datepicker);
@@ -153,8 +154,8 @@
 <jp-file-upload service={MockImageService} name="test" acceptedFiles="image/*"></jp-file-upload>
 <jp-textarea name="Test" label="Test" labeltype="outside"></jp-textarea>
 <jp-file-list name="test"></jp-file-list>
-<jp-file-upload service={MockImageService} name="test" acceptedFiles="image/*"></jp-file-upload>
-<button on:click={save}>Save</button> -->
+<jp-file-upload service={MockImageService} name="test" acceptedFiles="image/*"></jp-file-upload> -->
+<button on:click={save}>Save</button>
 
 <form>
   <p>Validity Test</p>
