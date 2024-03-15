@@ -16,7 +16,7 @@
   export let showExport = true;
   export let rowClickable = false;
   export let headers: TableHeader[] = [];
-  export let pageSizes: number[];
+  export let pageSizes: number[] = [10, 25, 50, 100];
   export let pageSize: number = pageSizes[0];
   export let sort: TableSort;
   export let service: TableService;
