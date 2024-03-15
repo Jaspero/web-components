@@ -138,15 +138,14 @@
         modules: {
           table: false,
           toolbar: [
-            // toggled buttons
-            ['bold', 'italic', 'underline'],
-            // custom dropdown
-            [{ size: ['small', false, 'large', 'huge'] }],
-            // dropdown with defaults from theme
-            [{ color: [] }, { background: [] }],
+            ['bold', 'italic', 'underline', 'strike'],
+            [{ header: [1, 2, 3, 4, 5, 6, false] }],
             [{ list: 'ordered' }, { list: 'bullet' }],
+            [{'script': 'sub'}, {'script': 'super'}],
+            [{'indent': '-1'}, {'indent': '+1'}],
             ['table', 'blockquote', 'code-block'],
-            ['image'],
+            ['image', 'link'],
+            [{ color: [] }, { background: [] }],
             [{ align: [] }],
             ['clean']
           ],
