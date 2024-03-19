@@ -29,6 +29,7 @@
   export let readonly = false;
   export let type: 'text' | 'password' | 'email' | 'tel' | 'url' = 'text';
   export let id: string | null = null;
+  export let hint: string | null = null;
   export let name: string = '';
   export let minlength: number | null = null;
   export let maxlength: number | null = null;
@@ -112,7 +113,7 @@
     {@html label}
   </div>
 {/if}
-<div class:has-hint={$$slots.hint}>
+<div class:has-hint={!!hint}>
   <label class="field" class:disabled={disabled || readonly} class:required>
     {#if label && labelType == 'inside'}
       <span class="field-label" class:move={inputFocused || value}>{@html label}</span>
@@ -254,10 +255,8 @@
     {/if}
   </label>
 
-  {#if $$slots.hint}
-    <div class="field-hint">
-      <slot name="hint" />
-    </div>
+  {#if hint}
+    <div class="field-hint">{@html hint}</div>
   {/if}
 </div>
 

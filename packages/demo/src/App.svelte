@@ -159,7 +159,7 @@
 
 <form>
   <p>Validity Test</p>
-  <jp-input name="name" label="Name" labelType="outside" required></jp-input>
+  <jp-input name="name" label="Name" labelType="outside" required hint="cool"></jp-input>
   <jp-input name="email" label="Email" type="email" labelType="outside" required></jp-input>
   <jp-quill name="Content" label="Content" required />
   <jp-select required options={options} label="Thing" />
