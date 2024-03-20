@@ -179,7 +179,7 @@
   let textareaEl: HTMLTextAreaElement;
 
   export async function save(id?: string) {
-    const regex = /src="(.*?)"/g;
+    const regex = /src="data:(.*?)"/g;
     const cleanupRegex = /(^src=")|("$)/g;
     const items = [...internalValue.match(regex) || []];
 
