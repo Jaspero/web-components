@@ -184,11 +184,15 @@
     const items = [...internalValue.match(regex) || []];
 
     if (items.length) {
-      await Promise.allSettled(
+      await Promise.all(
         [...items].map(async (img) => {
-          const blob = await b64toBlob(img.replace(cleanupRegex, ''));
-          const url = await service.uploadFile(blob, id);
-          internalValue = internalValue.replace(img, `src="${url}"`);
+          try {
+            const blob = await b64toBlob(img.replace(cleanupRegex, ''));
+            const url = await service.uploadFile(blob, id);
+            internalValue = internalValue.replace(img, `src="${url}"`);
+          } catch (e: any) {
+            console.error(e);
+          }
         })
       );
 
@@ -239,7 +243,7 @@
           }
 
           attachedInternals.setFormValue(internalValue || '');
-          dispatch('value', { internalValue: internalValue || '' });
+          dispatch('value', internalValue || '');
         });
       })
       .catch(console.error);

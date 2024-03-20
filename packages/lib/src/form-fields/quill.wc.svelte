@@ -65,15 +65,19 @@
     }
 
     attachedInternals.setFormValue(internalValue || '');
-    dispatch('value', { internalValue: internalValue || '' });
+    dispatch('value', internalValue || '');
   }
 
   export async function save(id?: string) {
-    await Promise.allSettled(
+    await Promise.all(
       [...editor.root.querySelectorAll('img')].map(async (img) => {
-        const blob = await b64toBlob(img.src);
-        const url = await service.uploadFile(blob, id);
-        img.src = url;
+        try {
+          const blob = await b64toBlob(img.src);
+          const url = await service.uploadFile(blob, id);
+          img.src = url;
+        } catch (e) {
+          console.error(e);
+        }
       })
     );
     value = editor.root.innerHTML;
