@@ -181,7 +181,7 @@
   export async function save(id?: string) {
     const regex = /src="(.*?)"/g;
     const cleanupRegex = /(^src=")|("$)/g;
-    const items = [...internalValue.match(regex)];
+    const items = [...internalValue.match(regex) || []];
 
     if (items.length) {
       await Promise.allSettled(
