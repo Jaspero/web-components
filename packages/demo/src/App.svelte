@@ -7,6 +7,7 @@
   import '../../../dist/file-upload.wc.js';
   import '../../../dist/textarea.wc.js';
   import '../../../dist/quill.wc.js';
+  import '../../../dist/ckeditor.wc.js';
   /*import '../../../dist/input.wc.js';
   import '../../../dist/autocomplete.wc.js';
   import '../../../dist/checkbox.wc.js';
@@ -62,7 +63,7 @@
     // multiselect.value = ['a'];
     // el.appendChild(multiselect);
 
-    quill = document.createElement('jp-quill');
+    quill = document.createElement('jp-ckeditor');
     quill.value = `<p>Pero</p><div class="quill-better-table-wrapper"><table class="quill-better-table" style="width: 300px;"><colgroup><col width="100"><col width="100"><col width="100"></colgroup><tbody><tr data-row="row-6pvi"><td data-row="row-6pvi" rowspan="1" colspan="1"><p class="qlbt-cell-line" data-row="row-6pvi" data-cell="cell-seg5" data-rowspan="1" data-colspan="1"><br></p></td><td data-row="row-6pvi" rowspan="1" colspan="1"><p class="qlbt-cell-line" data-row="row-6pvi" data-cell="cell-4r2i" data-rowspan="1" data-colspan="1"><br></p></td><td data-row="row-6pvi" rowspan="1" colspan="1"><p class="qlbt-cell-line" data-row="row-6pvi" data-cell="cell-kgn6" data-rowspan="1" data-colspan="1"><br></p></td></tr><tr data-row="row-abp3"><td data-row="row-abp3" rowspan="1" colspan="1"><p class="qlbt-cell-line" data-row="row-abp3" data-cell="cell-vn5m" data-rowspan="1" data-colspan="1"><br></p></td><td data-row="row-abp3" rowspan="1" colspan="1"><p class="qlbt-cell-line" data-row="row-abp3" data-cell="cell-t209" data-rowspan="1" data-colspan="1"><br></p></td><td data-row="row-abp3" rowspan="1" colspan="1"><p class="qlbt-cell-line" data-row="row-abp3" data-cell="cell-yttb" data-rowspan="1" data-colspan="1"><br></p></td></tr><tr data-row="row-2b45"><td data-row="row-2b45" rowspan="1" colspan="1"><p class="qlbt-cell-line" data-row="row-2b45" data-cell="cell-4q1g" data-rowspan="1" data-colspan="1"><br></p></td><td data-row="row-2b45" rowspan="1" colspan="1"><p class="qlbt-cell-line" data-row="row-2b45" data-cell="cell-7hyh" data-rowspan="1" data-colspan="1"><br></p></td><td data-row="row-2b45" rowspan="1" colspan="1"><p class="qlbt-cell-line" data-row="row-2b45" data-cell="cell-z5re" data-rowspan="1" data-colspan="1"><br></p></td></tr></tbody></table></div>`;
     quill.service = new MockImageService();
 
@@ -161,7 +162,8 @@
   <p>Validity Test</p>
   <jp-input name="name" label="Name" labelType="outside" required hint="cool"></jp-input>
   <jp-input name="email" label="Email" type="email" labelType="outside" required></jp-input>
-  <jp-quill name="Content" label="Content" required />
+  <!-- <jp-quill name="Content" label="Content" required /> -->
+  <jp-ckeditor name="Content" label="Content" required></jp-ckeditor>
   <jp-select required options={options} label="Thing" />
   <button>Submit</button>
 </form>
