@@ -85,7 +85,7 @@
     // https://ckeditor.com/docs/ckeditor5/latest/features/headings.html#configuration
     heading: {
       options: [
-        { model: 'paragraph', title: 'Paragraph'},
+        { model: 'paragraph', title: 'Paragraph' },
         { model: 'heading2', view: 'h2', title: 'Heading 2' },
         { model: 'heading3', view: 'h3', title: 'Heading 3' },
         { model: 'heading4', view: 'h4', title: 'Heading 4' },
@@ -168,10 +168,10 @@
 
   let internalValue = '';
 
-	export const getValue = () => internalValue || '';
+  export const getValue = () => internalValue || '';
 
   const dispatch = createEventDispatcher();
-	const b64toBlob = (base64) => fetch(base64).then((res) => res.blob());
+  const b64toBlob = (base64) => fetch(base64).then((res) => res.blob());
 
   let wrapperEl: HTMLDivElement;
   let containerEl: HTMLDivElement;
@@ -179,20 +179,21 @@
   let textareaEl: HTMLTextAreaElement;
 
   export async function save(id?: string) {
+    const regex = /src="(.*?)"/g;
+    const cleanupRegex = /(^src=")|("$)/g;
+    const items = [...internalValue.match(regex)];
 
-		const regex = /src="(.*?)"/g;
-		const cleanupRegex = /(^src=")|("$)/g;
-		const items = internalValue.match(regex);
-    
-		await Promise.allSettled(
-      [...items].map(async (img) => {
-        const blob = await b64toBlob(img.replace(cleanupRegex, ''));
-        const url = await service.uploadFile(blob, id);
-        internalValue = internalValue.replace(img, `src="${url}"`);
-      })
-    );
+    if (items.length) {
+      await Promise.allSettled(
+        [...items].map(async (img) => {
+          const blob = await b64toBlob(img.replace(cleanupRegex, ''));
+          const url = await service.uploadFile(blob, id);
+          internalValue = internalValue.replace(img, `src="${url}"`);
+        })
+      );
 
-    value = internalValue;
+      value = internalValue;
+    }
 
     return internalValue;
   }
@@ -203,15 +204,14 @@
   }
 
   onMount(() => {
-		const ei = getEditor();
+    const ei = getEditor();
 
-		if (!ei) {
-			console.warn('CKEditor not found');
-			return;
-		}
+    if (!ei) {
+      console.warn('CKEditor not found');
+      return;
+    }
 
-    ei
-      .create(containerEl, options)
+    ei.create(containerEl, options)
       .then((e) => {
         editor = e;
 
