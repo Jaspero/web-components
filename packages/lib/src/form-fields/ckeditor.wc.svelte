@@ -197,6 +197,8 @@
       );
 
       value = internalValue;
+
+      dispatch('value', internalValue || '');
     }
 
     return internalValue;
