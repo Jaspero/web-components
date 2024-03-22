@@ -210,6 +210,9 @@
   }
 
   onMount(() => {
+
+    internalValue = value;
+    
     const ei = getEditor();
 
     if (!ei) {
