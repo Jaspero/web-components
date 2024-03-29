@@ -1,5 +1,5 @@
 <svelte:options
-  customElement={{
+        customElement={{
     tag: 'jp-asset-manager',
     shadow: 'none'
   }}
@@ -26,7 +26,7 @@
   let loading = false;
   let hoveringFile = false;
   let folderName = '';
-  let foloderDialog = false;
+  let folderDialog = false;
   let folderNamePattern = '[a-z_\\-]{3,}';
 
   async function removeFile(index: number, id: string) {
@@ -57,17 +57,17 @@
 
   function filesToItems(files: FileList) {
     return Promise.all(
-      Array.from(files)
-        .filter(file => { 
+            Array.from(files)
+                    .filter(file => {
 
-          // TODO: Show alert for each file violating file size
-          if (!maxSize || maxSize < file.size) {
-            return false;
-          }
+                      // TODO: Show alert for each file violating file size
+                      if (!maxSize || maxSize < file.size) {
+                        return false;
+                      }
 
-          return true;
-        })
-        .map(file => service.upload(path, file))
+                      return true;
+                    })
+                    .map(file => service.upload(path, file))
     );
   };
 
@@ -77,12 +77,12 @@
 
   function addFolder() {
     folderName = '';
-    foloderDialog = true;
+    folderDialog = true;
   }
 
   async function createFolder() {
     path += `/${folderName}`;
-    foloderDialog = false;
+    folderDialog = false;
   }
 
   function cancelUpload(id: string) {
@@ -111,103 +111,99 @@
   $: if (path) {
     loading = true;
     service
-      .fetch(path)
-      .then((data) => {
-        items = data;
-      })
-      .finally(() => {
-        loading = false;
-      });
+            .fetch(path)
+            .then((data) => {
+              items = data;
+            })
+            .finally(() => {
+              loading = false;
+            });
   }
 </script>
 
 <!-- svelte-ignore a11y-no-static-element-interactions -->
-<section
-  class:full-border={hoveringFile}
-  on:dragover|preventDefault={() => (hoveringFile = true)}
-  on:dragleave={() => (hoveringFile = false)}
-  on:dragend={() => (hoveringFile = false)}
-  on:drop|preventDefault={(e) => handleDrop(e)}
->
-  <header>
-    <div>
-      <button type="button" title="Back" disabled={path === rootPath} on:click={back}>
-        <svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 -960 960 960" width="24"
-          ><path d="m313-440 224 224-57 56-320-320 320-320 57 56-224 224h487v80H313Z" /></svg
-        >
-      </button>
-      <span>{path.replace(rootPath, '') || '/'}</span>
-    </div>
-    <div>
-      <button type="button" title="Add Folder" on:click|preventDefault={addFolder}>
-        <svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 -960 960 960" width="24"
-          ><path
-            d="M560-320h80v-80h80v-80h-80v-80h-80v80h-80v80h80v80ZM160-160q-33 0-56.5-23.5T80-240v-480q0-33 23.5-56.5T160-800h240l80 80h320q33 0 56.5 23.5T880-640v400q0 33-23.5 56.5T800-160H160Zm0-80h640v-400H447l-80-80H160v480Zm0 0v-480 480Z"
-          /></svg
-        >
-      </button>
-      <button type="button" title="Add Files" on:click|preventDefault={() => browseFilesEl.click()}>
-        <svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 -960 960 960" width="24"
-          ><path
-            d="M440-200h80v-167l64 64 56-57-160-160-160 160 57 56 63-63v167ZM240-80q-33 0-56.5-23.5T160-160v-640q0-33 23.5-56.5T240-880h320l240 240v480q0 33-23.5 56.5T720-80H240Zm280-520v-200H240v640h480v-440H520ZM240-800v200-200 640-640Z"
-          /></svg
-        >
-      </button>
-    </div>
-  </header>
+<section class="card" class:full-border={hoveringFile}
+         on:dragover|preventDefault={() => (hoveringFile = true)}
+         on:dragleave={() => (hoveringFile = false)}
+         on:dragend={() => (hoveringFile = false)}
+         on:drop|preventDefault={(e) => handleDrop(e)}>
+
 
   {#if hoveringFile}
-    <div class="info">
-      <svg xmlns="http://www.w3.org/2000/svg" height="2em" viewBox="0 0 384 512"
-        ><path
-          d="M214.6 41.4c-12.5-12.5-32.8-12.5-45.3 0l-160 160c-12.5 12.5-12.5 32.8 0 45.3s32.8 12.5 45.3 0L160 141.2V448c0 17.7 14.3 32 32 32s32-14.3 32-32V141.2L329.4 246.6c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3l-160-160z"
-        /></svg
-      >
+    <div class="drop-here">
+      <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 384 512">
+        <path d="M214.6 41.4c-12.5-12.5-32.8-12.5-45.3 0l-160 160c-12.5 12.5-12.5 32.8 0 45.3s32.8 12.5 45.3 0L160 141.2V448c0 17.7 14.3 32 32 32s32-14.3 32-32V141.2L329.4 246.6c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3l-160-160z"/>
+      </svg>
       <div>Drop your files here</div>
     </div>
-  {/if}
-
-  {#if loading}
-    <div class="loader">
-      <div class="spinner"></div>
-    </div>
-  {:else if items.length == 0}
-    <div class="info">
-      <p>Folder is empty</p>
-    </div>
   {:else}
-    <div class="files">
-      {#each items as item, index}
-        {#if item.type === 'folder'}
-          <Folder folder={item} bind:path={path} />
-        {:else}
-          <div role="button" tabindex="1" class:selected={selectedItems[item.id]} on:click={() => select(item)}>
-            <Asset asset={item} service={service} on:remove={() => removeFile(index, item.id)} on:cancel={() => cancelUpload(item.id)} />
-          </div>
-        {/if}
-      {/each}
-    </div>
-  {/if}
+    <header>
+      <nav>
+        <button type="button" title="Back" disabled={path === rootPath} on:click={back}>
+          <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 -960 960 960">
+            <path d="m313-440 224 224-57 56-320-320 320-320 57 56-224 224h487v80H313Z" />
+          </svg>
+        </button>
 
-  {#if selectable}
-    <footer>
-      <button type="button" on:click={confirmSelection}>Confirm Selection</button>
-    </footer>
+        <span class="route">{path.replace(rootPath, '') || '/'}</span>
+      </nav>
+
+      <div class="header-actions">
+        <button type="button" title="Add Folder" on:click|preventDefault={addFolder}>
+          <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 -960 960 960">
+            <path d="M560-320h80v-80h80v-80h-80v-80h-80v80h-80v80h80v80ZM160-160q-33 0-56.5-23.5T80-240v-480q0-33 23.5-56.5T160-800h240l80 80h320q33 0 56.5 23.5T880-640v400q0 33-23.5 56.5T800-160H160Zm0-80h640v-400H447l-80-80H160v480Zm0 0v-480 480Z"/>
+          </svg>
+        </button>
+
+        <button type="button" title="Add Files" on:click|preventDefault={() => browseFilesEl.click()}>
+          <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 -960 960 960">
+            <path d="M440-200h80v-167l64 64 56-57-160-160-160 160 57 56 63-63v167ZM240-80q-33 0-56.5-23.5T160-160v-640q0-33 23.5-56.5T240-880h320l240 240v480q0 33-23.5 56.5T720-80H240Zm280-520v-200H240v640h480v-440H520ZM240-800v200-200 640-640Z"/>
+          </svg>
+        </button>
+      </div>
+    </header>
+
+    {#if loading}
+      <div class="loader">
+        <div class="spinner"></div>
+      </div>
+    {:else if items.length == 0}
+      <div class="info">
+        <p>Folder is empty</p>
+      </div>
+    {:else}
+      <div class="files">
+        {#each items as item, index}
+          {#if item.type === 'folder'}
+            <Folder folder={item} bind:path={path} />
+          {:else}
+            <div class="asset-button" role="button" tabindex="1" class:selected={selectedItems[item.id]} on:click={() => select(item)}>
+              <Asset asset={item} service={service} on:remove={() => removeFile(index, item.id)} on:cancel={() => cancelUpload(item.id)} />
+            </div>
+          {/if}
+        {/each}
+      </div>
+    {/if}
+
+    {#if selectable}
+      <footer>
+        <button type="button" on:click={confirmSelection}>Confirm Selection</button>
+      </footer>
+    {/if}
   {/if}
 </section>
 
-<input
-  type="file"
-  multiple
-  accept={acceptedFiles}
-  bind:this={browseFilesEl}
-  on:change={(e) => handleFileInput(e)}
-  hidden
-/>
+<input type="file"
+       multiple
+       accept={acceptedFiles}
+       bind:this={browseFilesEl}
+       on:change={(e) => handleFileInput(e)}
+       hidden />
 
-{#if foloderDialog}
-  <button type="button" on:click={() => (foloderDialog = false)}>Close</button>
-  <form class="folder-dialog" on:submit|preventDefault={createFolder}>
+{#if folderDialog}
+  <button type="button" on:click={() => (folderDialog = false)}>Close</button>
+
+  <form on:submit|preventDefault={createFolder}>
     <label for="name">Folder Name</label>
     <input name="name" bind:value={folderName} pattern={folderNamePattern} required />
     <button type="submit">Submit</button>
@@ -215,94 +211,166 @@
 {/if}
 
 <style>
-  section {
+  * {
+    box-sizing: border-box;
+  }
+
+  .card {
     position: relative;
-    max-width: 750px;
-    height: 500px;
+    max-width: 802px;
     width: 100%;
-    border-radius: 0.25rem;
-    border: 1px dashed #e6510030;
-  }
-
-  button {
-    cursor: pointer;
-  }
-
-  .full-border {
-    border: 1px dashed var(--primary-color);
+    height: 500px;
+    overflow: auto;
+    box-shadow: 0 3px 6px rgba(0,0,0,.12);
+    font-family: sans-serif;
   }
 
   header {
+    z-index: 1;
+    position: sticky;
+    top: 0;
     display: flex;
-    padding: 0.5rem;
     justify-content: space-between;
+    background-color: white;
+    padding: 20px;
+    border-bottom: 1px solid rgba(0,0,0,.12);
   }
 
-  header > div {
+  header .route {
     display: flex;
+    align-items: center;
+    height: 100%;
+    font-size: 20px;
   }
 
-  header span {
-    padding: 0.5rem;
-    background-color: #ccc;
-    max-width: 200px;
-    min-width: 50px;
-    line-height: 24px;
-    overflow: hidden;
-    border-left: 1px dotted #efefef;
+  header nav {
+    display: flex;
+    gap: 12px;
+  }
+
+  .header-actions {
+    display: flex;
+    gap: 12px;
   }
 
   header button {
-    border: none;
-    display: flex;
-    padding: 0.5rem;
-    background-color: #ccc;
-    transition: 0.2s;
-  }
-
-  header button:hover {
-    background-color: #212121;
+    width: 40px;
+    height: 40px;
+    background-color: transparent;
+    border: 1px solid rgba(0,0,0,.12);
+    border-radius: 12px;
+    cursor: pointer;
+    transition: .25s;
   }
 
   header button:disabled {
-    user-select: none;
+    opacity: .5;
+    background-color: rgba(0,0,0,.1);
     pointer-events: none;
-    cursor: unset;
-    background-color: #efefef;
   }
 
-  header button:hover svg {
-    fill: #fff;
+  header button:hover {
+    background-color: rgba(0,0,0,.08);
+    border-color: rgba(0,0,0,.2);
   }
 
-  .info {
+  .drop-here {
+    position: absolute;
+    top: 0;
+    left: 0;
     width: 100%;
     height: 100%;
+    background-color: white;
+  }
+
+  :global(.file) {
+    position: relative;
+    height: 100%;
+    border: 1px solid rgba(0,0,0,.12);
+    border-radius: 12px;
+    background-color: white;
+    overflow: hidden;
+  }
+
+  :global(.file-name) {
+    padding: 6px 12px 0;
+  }
+
+  :global(.file-info) {
+    padding: 4px 12px 6px;
+  }
+
+  :global(.file .file-remove) {
+    position: absolute;
+    top: 4px;
+    right: 4px;
+    width: 32px;
+    height: 32px;
     display: flex;
-    flex-direction: column;
     justify-content: center;
     align-items: center;
+    background-color: white;
+    border-radius: 8px;
+    cursor: pointer;
+    border: 1px solid rgba(0,0,0,.08);
+  }
+
+  :global(.file .file-remove:hover) {
+    border-color: rgba(0,0,0,.4);
+  }
+
+  :global(.file .file-icon-image) {
+    width: 100%;
+    height: 150px;
+    object-fit: contain;
+    user-select: none;
+    pointer-events: none;
+    background-color: rgba(0,0,0,.02);
   }
 
   .files {
-    display: grid;
-    grid-template-columns: repeat(4, minmax(0, 1fr));
-    height: 100%;
-    padding: 1rem;
-    gap: 1rem;
-    overflow: auto;
+    display: flex;
+    flex-wrap: wrap;
+    padding: 12px;
   }
 
-  @media (max-width: 900px) {
-    .files {
-      grid-template-columns: repeat(3, minmax(0, 1fr));
-    }
+  .asset-button {
+    width: 25%;
+    padding: 8px;
+    transition: .25s;
+    border-radius: 12px;
+    cursor: pointer;
   }
 
-  @media (max-width: 600px) {
-    .files {
-      grid-template-columns: repeat(2, minmax(0, 1fr));
-    }
+  :global(.asset-button:hover .file) {
+    background-color: rgba(0,0,0,.08);
+    border-color: rgba(0,0,0,.2);
+  }
+
+  :global(.folder) {
+    box-sizing: border-box;
+    width: 25%;
+    padding: 8px;
+  }
+
+  :global(.folder button) {
+    width: 100%;
+    padding: 12px;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    gap: 6px;
+    background-color: transparent;
+    border: 1px solid rgba(0,0,0,.12);
+    font-size: 14px;
+    border-radius: 12px;
+    cursor: pointer;
+    transition: .25s;
+  }
+
+  :global(.folder button:hover) {
+    background-color: rgba(0,0,0,.08);
+    border-color: rgba(0,0,0,.2);
   }
 
   .loader {
@@ -319,17 +387,8 @@
     border-radius: 50%;
     border: 9px solid var(--primary-color);
     animation:
-      spinner-bulqg1 0.8s infinite linear alternate,
-      spinner-oaa3wk 1.6s infinite linear;
-  }
-
-  .folder-dialog {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    z-index: 10;
+            spinner-bulqg1 0.8s infinite linear alternate,
+            spinner-oaa3wk 1.6s infinite linear;
   }
 
   @keyframes spinner-bulqg1 {

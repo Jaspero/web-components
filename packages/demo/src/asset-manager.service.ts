@@ -81,7 +81,7 @@ export class AMService implements AssetManagerService {
     uploader.on(
       'state_changed',
       (snapshot) => {
-        const progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+       /* const progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
 
         if (progress !== currentProgress) {
           currentProgress = progress;
@@ -96,7 +96,7 @@ export class AMService implements AssetManagerService {
               curentStatus = snapshot.state;
             }
             break;
-        }
+        }*/
       },
       (error) => {
         // TODO: Error handling
