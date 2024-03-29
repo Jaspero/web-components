@@ -9,6 +9,14 @@
     const item = document.createElement('jp-asset-manager') as any;
     item.service = new AMService();
     item.rootPath = 'landing-pages';
+
+    item.selectable = 'single';
+    // item.selectable = 'multiple';
+
+    item.addEventListener('selected', event => {
+        console.log('event', event);
+    })
+
     el.appendChild(item);
   });
 </script>

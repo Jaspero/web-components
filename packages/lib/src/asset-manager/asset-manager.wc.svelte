@@ -9,14 +9,19 @@
   import type { AssetManagerService, Item } from '../types/asset-manager.service';
   import Folder from './Folder.svelte';
   import Asset from './Asset.svelte';
+  import {createEventDispatcher} from 'svelte';
 
   export let rootPath = '/';
   export let maxSize = 10 * 1048576;
   export let acceptedFiles = '*';
   export let service: AssetManagerService;
+  export let selectable: '' | 'single' | 'multiple' = '';
+
+  const dispatch = createEventDispatcher();
 
   let path = rootPath;
   let items: Item[] = [];
+  let selectedItems: {[key: string]: Asset} = {};
   let browseFilesEl: HTMLInputElement;
   let loading = false;
   let hoveringFile = false;
@@ -50,16 +55,6 @@
     hoveringFile = false;
   }
 
-  function fileSize(size: number) {
-    if (size < 1024) {
-      return `${size} bytes`;
-    } else if (size >= 1024 && size < 1048576) {
-      return `${(size / 1024).toFixed(1)} KB`;
-    } else if (size >= 1048576) {
-      return `${(size / 1048576).toFixed(1)} MB`;
-    }
-  };
-
   function filesToItems(files: FileList) {
     return Promise.all(
       Array.from(files)
@@ -92,6 +87,25 @@
 
   function cancelUpload(id: string) {
     items = items.filter((item) => item.id !== id);
+  }
+
+  function select(item: Asset) {
+    if (selectedItems[item.id]) {
+      delete selectedItems[item.id];
+    } else {
+      if (selectable === 'single') {
+        selectedItems = {
+          [item.id]: item
+        };
+      } else {
+        selectedItems[item.id] = item;
+      }
+    }
+  }
+
+  function confirmSelection() {
+    const selection = Object.values(selectedItems);
+    dispatch('selected', selectable === 'single' ? selection[0] : selection);
   }
 
   $: if (path) {
@@ -167,10 +181,18 @@
         {#if item.type === 'folder'}
           <Folder folder={item} bind:path={path} />
         {:else}
-          <Asset asset={item} service={service} on:remove={() => removeFile(index, item.id)} on:cancel={() => cancelUpload(item.id)} />
+          <div role="button" tabindex="1" class:selected={selectedItems[item.id]} on:click={() => select(item)}>
+            <Asset asset={item} service={service} on:remove={() => removeFile(index, item.id)} on:cancel={() => cancelUpload(item.id)} />
+          </div>
         {/if}
       {/each}
     </div>
+  {/if}
+
+  {#if selectable}
+    <footer>
+      <button type="button" on:click={confirmSelection}>Confirm Selection</button>
+    </footer>
   {/if}
 </section>
 
