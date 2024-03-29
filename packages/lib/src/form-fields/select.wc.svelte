@@ -353,7 +353,6 @@
 {/if}
 
 <style>
-
   .wrapper {
     position: relative;
   }
