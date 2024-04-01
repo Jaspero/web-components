@@ -14,7 +14,7 @@
   export let rootPath = '/';
   export let maxSize = 10 * 1048576;
   export let acceptedFiles = '*';
-  export let shownFiles = '*';
+  export let shownFiles: string[];
   export let service: AssetManagerService;
   export let selectable: '' | 'single' | 'multiple' = '';
 
@@ -109,9 +109,9 @@
       .then((data) => {
         items = data;
 
-        if (shownFiles && shownFiles !== '*') {
+        if (shownFiles?.length) {
           // @ts-ignore
-          items = items.filter(item => item.type === 'folder' || (item as Asset).contentType.startsWith(shownFiles));
+          items = items.filter(item => item.type === 'folder' || shownFiles.some(file => (item as Asset).contentType.startsWith(file)));
         }
       })
       .finally(() => {
