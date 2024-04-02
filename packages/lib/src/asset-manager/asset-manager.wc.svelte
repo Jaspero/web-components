@@ -246,6 +246,13 @@
 />
 
 <style>
+  /*
+* Prefixed by https://autoprefixer.github.io
+* PostCSS: v8.4.14,
+* Autoprefixer: v10.4.7
+* Browsers: last 100 version
+*/
+
   * {
     -webkit-box-sizing: border-box;
     -moz-box-sizing: border-box;
@@ -453,6 +460,29 @@
     left: 0;
     width: 100%;
     height: 100%;
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: -moz-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+    -webkit-flex-direction: column;
+    -moz-box-orient: vertical;
+    -moz-box-direction: normal;
+    -ms-flex-direction: column;
+    flex-direction: column;
+    gap: 12px;
+    -webkit-box-pack: center;
+    -webkit-justify-content: center;
+    -moz-box-pack: center;
+    -ms-flex-pack: center;
+    justify-content: center;
+    -webkit-box-align: center;
+    -webkit-align-items: center;
+    -moz-box-align: center;
+    -ms-flex-align: center;
+    align-items: center;
     background-color: white;
   }
 
@@ -497,6 +527,10 @@
 
   :global(.file-info) {
     padding: 4px 12px 6px;
+  }
+
+  :global(.file-icon .icon-only) {
+    padding: 12px;
   }
 
   :global(.file .file-remove) {
@@ -917,21 +951,5 @@
       -o-transform: scaleY(-1) rotate(-135deg);
       transform: scaleY(-1) rotate(-135deg);
     }
-  }.example {
-     display: -ms-grid;
-     display: grid;
-     -webkit-transition: all .5s;
-     -o-transition: all .5s;
-     -moz-transition: all .5s;
-     transition: all .5s;
-     -webkit-user-select: none;
-     -moz-user-select: none;
-     -ms-user-select: none;
-     user-select: none;
-     background: -webkit-gradient(linear, left top, left bottom, from(white), to(black));
-     background: -webkit-linear-gradient(top, white, black);
-     background: -moz-linear-gradient(top, white, black);
-     background: -o-linear-gradient(top, white, black);
-     background: linear-gradient(to bottom, white, black);
-   }
+  }
 </style>
