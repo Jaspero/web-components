@@ -102,7 +102,7 @@
     dispatch('selected', selectable === 'single' ? selection[0] : selection);
   }
 
-  $: if (path) {
+  function loadData() {
     loading = true;
     service
       .fetch(path)
@@ -117,6 +117,10 @@
       .finally(() => {
         loading = false;
       });
+  }
+
+  $: if (path) {
+    loadData();
   }
 </script>
 
