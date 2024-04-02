@@ -142,6 +142,24 @@
       </svg>
       <div>Drop your files here</div>
     </div>
+  {:else if folderDialog}
+    <header>
+      <div class="header-actions">
+        <button type="button" on:click={() => (folderDialog = false)}>
+          <svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 -960 960 960" width="24">
+            <path d="m256-200-56-56 224-224-224-224 56-56 224 224 224-224 56 56-224 224 224 224-56 56-224-224-224 224Z"/>
+          </svg>
+        </button>
+      </div>
+    </header>
+
+    <form class="add-folder-form" on:submit|preventDefault={createFolder}>
+      <label class="add-folder-input">
+        <span>Folder name</span>
+        <input bind:value={folderName} pattern={folderNamePattern} required />
+      </label>
+      <button class="add-folder-submit" type="submit">Submit</button>
+    </form>
   {:else}
     <header>
       <nav>
@@ -227,16 +245,6 @@
   hidden
 />
 
-{#if folderDialog}
-  <button type="button" on:click={() => (folderDialog = false)}>Close</button>
-
-  <form on:submit|preventDefault={createFolder}>
-    <label for="name">Folder Name</label>
-    <input name="name" bind:value={folderName} pattern={folderNamePattern} required />
-    <button type="submit">Submit</button>
-  </form>
-{/if}
-
 <style>
   * {
     box-sizing: border-box;
@@ -244,6 +252,8 @@
 
   .card {
     position: relative;
+    display: flex;
+    flex-direction: column;
     max-width: 802px;
     width: 100%;
     height: 500px;
@@ -301,6 +311,59 @@
     border-color: rgba(0, 0, 0, 0.2);
   }
 
+  footer {
+    z-index: 1;
+    position: sticky;
+    bottom: 0;
+    display: flex;
+    background-color: white;
+    padding: 20px;
+    border-top: 1px solid rgba(0, 0, 0, 0.12);
+  }
+
+  footer button {
+    height: 40px;
+    padding: 0 16px;
+    font-weight: bold;
+    background-color: #E66439;
+    color: white;
+    border: none;
+    border-radius: 12px;
+    cursor: pointer;
+    transition: 0.25s;
+  }
+
+  footer button:disabled {
+    opacity: .5;
+    pointer-events: none;
+  }
+
+  footer button:active {
+    transform: scale(.95);
+  }
+
+  .add-folder-submit {
+    height: 32px;
+    padding: 0 12px;
+    font-weight: bold;
+    background-color: #E66439;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    margin-top: 12px;
+    transition: 0.25s;
+  }
+
+  .add-folder-submit:disabled {
+    opacity: .5;
+    pointer-events: none;
+  }
+
+  .add-folder-submit:active {
+    transform: scale(.95);
+  }
+
   .drop-here {
     position: absolute;
     top: 0;
@@ -308,6 +371,28 @@
     width: 100%;
     height: 100%;
     background-color: white;
+  }
+
+  .add-folder-form {
+    padding: 20px
+  }
+
+  .add-folder-input {
+    display: block;
+  }
+
+  .add-folder-input span {
+    display: block;
+    font-size: 14px;
+  }
+
+  .add-folder-input input {
+    border: 1px solid rgba(0,0,0,.08);
+    height: 40px;
+    padding: 0 12px;
+    border-radius: 8px;
+    font-size: 14px;
+    margin-top: 4px;
   }
 
   :global(.file) {
@@ -357,8 +442,18 @@
 
   .files {
     display: flex;
+    flex: 1;
+    align-content: flex-start;
     flex-wrap: wrap;
     padding: 12px;
+  }
+
+  .info {
+    display: flex;
+    flex: 1;
+    align-content: flex-start;
+    flex-wrap: wrap;
+    padding: 20px;
   }
 
   .asset-button {

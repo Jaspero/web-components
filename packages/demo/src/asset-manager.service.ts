@@ -59,14 +59,14 @@ export class AMService implements AssetManagerService {
     console.log(file);
 
     let currentProgress = 0;
-    let curentStatus = 'uploading';
+    let currentStatus = 'uploading';
 
     const item = {
       id: path,
       name: file.name,
       size: file.size,
       path,
-      status: writable(curentStatus),
+      status: writable(currentStatus),
       progress: writable(currentProgress),
       uploader,
       contentType: file.type,
@@ -81,7 +81,7 @@ export class AMService implements AssetManagerService {
     uploader.on(
       'state_changed',
       (snapshot) => {
-       /* const progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+        const progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
 
         if (progress !== currentProgress) {
           currentProgress = progress;
@@ -91,12 +91,12 @@ export class AMService implements AssetManagerService {
         switch (snapshot.state) {
           case 'paused':
           case 'running':
-            if (curentStatus !== snapshot.state) {
+            if (currentStatus !== snapshot.state) {
               item.status.set(snapshot.state);
-              curentStatus = snapshot.state;
+              currentStatus = snapshot.state;
             }
             break;
-        }*/
+        }
       },
       (error) => {
         // TODO: Error handling
