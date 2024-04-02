@@ -667,9 +667,9 @@
     -moz-box-align: center;
     -ms-flex-align: center;
     align-items: center;
+    border: 1px solid rgba(0, 0, 0, 0.12);
     gap: 6px;
     background-color: transparent;
-    f
     font-size: 14px;
     -webkit-border-radius: 12px;
     -moz-border-radius: 12px;
