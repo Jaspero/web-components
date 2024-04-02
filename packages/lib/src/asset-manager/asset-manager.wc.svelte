@@ -632,6 +632,10 @@
     cursor: pointer;
   }
 
+  .asset-button.selected {
+    border: 1px solid #E66439;
+  }
+
   :global(.asset-button:hover .file) {
     background-color: rgba(0, 0, 0, 0.08);
     border-color: rgba(0, 0, 0, 0.2);
@@ -665,7 +669,7 @@
     align-items: center;
     gap: 6px;
     background-color: transparent;
-    border: 1px solid rgba(0, 0, 0, 0.12);
+    f
     font-size: 14px;
     -webkit-border-radius: 12px;
     -moz-border-radius: 12px;
