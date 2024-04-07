@@ -78,7 +78,8 @@ This component does not have any slots.
 
 ### Methods
 
-This component does not have any methods.
+- `removeRow(values: any, key = 'id')`
+  - Removes a specific row from the loaded dataset
 
 
 ### Events

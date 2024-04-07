@@ -28,11 +28,11 @@
 
     loading = false;
   };
+  export let rows: any[] = [];
 
   let formattedPageSizes = JSON.stringify(pageSizes.map((s) => ({ label: s, value: s })));
   let loading = true;
   let hasMore = false;
-  let rows: any[] = [];
   let exportLoading = false;
   let activeHeaders: TableHeader[];
   let columnOrder: string[] = [];
@@ -40,6 +40,10 @@
   $: activeHeaders = headers.filter((it) => !it.disabled);
 
   const dispatch = createEventDispatcher();
+
+  export async function removeRow(value: any, key = 'id') {
+    rows = rows.filter((it) => it[key] !== value);
+  }
 
   async function handleColumn(header: TableHeader, row: any, index: number) {
     const { key, fallback, pipes } = header;
