@@ -80,6 +80,10 @@ This component does not have any slots.
 
 - `removeRow(values: any, key = 'id')`
   - Removes a specific row from the loaded dataset
+- `addRow(value: any)`
+  - Adds a row to the end of the loaded dataset
+- `updateRow(value: any, index: number)`
+  - Update row at index
 
 
 ### Events

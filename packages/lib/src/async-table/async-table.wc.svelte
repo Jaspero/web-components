@@ -45,6 +45,14 @@
     rows = rows.filter((it) => it[key] !== value);
   }
 
+  export async function addRow(value: any) {
+    rows = [...rows, value];
+  }
+
+  export async function updateRow(value: any, index: number) {
+    rows = rows.map((it, ind) => (ind === index ? {...it, ...value} : it));
+  }
+
   async function handleColumn(header: TableHeader, row: any, index: number) {
     const { key, fallback, pipes } = header;
 
