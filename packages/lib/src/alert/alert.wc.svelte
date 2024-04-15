@@ -62,6 +62,7 @@
     background-color: white;
     box-shadow: 0 3px 15px 6px rgba(0, 0, 0, 0.2);
     border-radius: 0.5rem;
+    z-index: 100;
   }
 
   @media (max-width: 600px) {
