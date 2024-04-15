@@ -30,6 +30,10 @@
   let folderDialog = false;
   let folderNamePattern = '[a-z_\\-]{3,}';
 
+  export function clearSelection() {
+    selectedItems = {};
+  }
+
   async function removeFile(index: number, id: string) {
     items = items.filter((item) => item.id !== id);
   }
