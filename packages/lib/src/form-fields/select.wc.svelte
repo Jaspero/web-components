@@ -240,7 +240,7 @@
         searchTerm += event.key;
 
         const matchingIndex = options.findIndex((option) =>
-          option.toLowerCase().includes(searchTerm.toLowerCase())
+           option.value.toLowerCase().startsWith(searchTerm.toLowerCase())
         );
 
         if (matchingIndex !== -1) {
