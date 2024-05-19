@@ -247,6 +247,23 @@
         on:focus={() => (inputFocused = true)}
         on:blur={() => (inputFocused = false)}
       />
+    {:else if type === 'color'}
+      <input
+        type="color"
+        bind:this={inputEl}
+        class={`field-input ${labelType == 'outside' || !label ? '' : 'field-input-padding'}`}
+        aria-hidden={disabled || readonly}
+        tabindex={disabled || readonly ? -1 : 0}
+        {required}
+        {disabled}
+        {name}
+        {id}
+        {placeholder}
+        {readonly}
+        bind:value
+        on:focus={() => (inputFocused = true)}
+        on:blur={() => (inputFocused = false)}
+      />
     {/if}
     {#if $$slots.suffix}
       <div class="suffix">
