@@ -16,7 +16,7 @@
 />
 
 <script lang="ts">
-  import { createEventDispatcher, onMount } from 'svelte';
+  import { createEventDispatcher } from 'svelte';
   import { formatDisplayDate, formatReturnDate } from '../utils/dateFormatter';
 
   export let attachedInternals: ElementInternals;
@@ -38,8 +38,8 @@
     displayFormat,
     displayFormatFunction
   );
-  let borderTop: boolean = false;
-  let borderBottom: boolean = false;
+  let borderTop = false;
+  let borderBottom = false;
   let bindingElement;
   let menuStyle;
   let yearSelected = null;
@@ -142,14 +142,14 @@
     let style: string = '';
     if (availableSpaceBelow < dropdownHeight) {
       style = `
-            bottom: ${window.innerHeight - rect.top}px;
-            left: ${rect.left}px;
-        `;
+        bottom: ${window.innerHeight - rect.top}px;
+        left: ${rect.left}px;
+      `;
     } else {
       style = `
-            top: ${rect.bottom}px;
-            left: ${rect.left}px;
-        `;
+        top: ${rect.bottom}px;
+        left: ${rect.left}px;
+      `;
     }
 
     menuStyle = style;
