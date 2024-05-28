@@ -29,6 +29,7 @@
   export let name: string = '';
   export let label = '';
   export let labelType: 'inside' | 'outside' = 'inside';
+  export let showClear: boolean = false;
   export const getValue = () => value;
 
   export let requiredValidationMessage: string;
@@ -254,6 +255,11 @@
     }
   }
 
+  function clearSelection() {
+    selected = '';
+    value = '';
+  }
+
   $: if (open) {
     document.documentElement.style.overflowY = 'hidden';
   } else {
@@ -273,6 +279,13 @@
   </div>
 {/if}
 <div class="wrapper" class:has-hint={hint}>
+  {#if (showClear && value)}
+    <button class="clear" on:click={clearSelection}>
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512">
+        <path d="M342.6 150.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L192 210.7 86.6 105.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3L146.7 256 41.4 361.4c-12.5 12.5-12.5 32.8 0 45.3s32.8 12.5 45.3 0L192 301.3 297.4 406.6c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L237.3 256 342.6 150.6z"/>
+      </svg>
+    </button>
+  {/if}
   <button
     type="button"
     class="select"
@@ -288,12 +301,10 @@
       </span>
     {/if}
 
-    <span
-      class={`select-option ${labelType == 'outside' || !label ? '' : 'select-option-padding'}`}
-    >
+    <span class={`select-option ${labelType == 'outside' || !label ? '' : 'select-option-padding'} `}
+          class:has-clear={showClear}>
       {selected || ''}
     </span>
-
     <svg
       xmlns="http://www.w3.org/2000/svg"
       viewBox="0 0 320 512"
@@ -356,7 +367,7 @@
   .wrapper {
     position: relative;
   }
-  .has-hint {
+  .wrapper.has-hint {
     margin-bottom: 1.25rem;
   }
 
@@ -511,6 +522,10 @@
     text-overflow: ellipsis;
   }
 
+  .select-option.has-clear {
+    padding-right: 2rem;
+  }
+
   .select-option-padding {
     padding: 1rem 0 0 0;
   }
@@ -655,5 +670,30 @@
     position: absolute;
     width: 100%;
     z-index: -1;
+  }
+
+  .clear {
+    z-index: 1;
+    position: absolute;
+    top: 50%;
+    right: 2rem;
+    width: 24px;
+    height: 24px;
+    -webkit-transform: translateY(-50%);
+    -moz-transform: translateY(-50%);
+    -ms-transform: translateY(-50%);
+    -o-transform: translateY(-50%);
+    transform: translateY(-50%);
+    -webkit-border-radius: 50%;
+    -moz-border-radius: 50%;
+    border-radius: 50%;
+    -webkit-transition: background-color .25s;
+    -o-transition: background-color .25s;
+    -moz-transition: background-color .25s;
+    transition: background-color .25s;
+  }
+
+  .clear:hover {
+    background-color: rgba(0,0,0,.08);
   }
 </style>
