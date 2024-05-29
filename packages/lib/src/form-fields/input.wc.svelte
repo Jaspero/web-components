@@ -316,7 +316,7 @@
     -ms-user-select: none;
     user-select: none;
     gap: 0.75rem;
-    background-color: var(--background-primary);
+    background-color: transparent;
     border: 1px solid var(--border-primary);
     -webkit-border-radius: 0.25rem;
     -moz-border-radius: 0.25rem;
@@ -477,7 +477,7 @@
   }
 
   .field:has(input[type="color"]) {
-    padding: .5rem;
+    padding: 1.5rem .5rem .5rem;
     -webkit-box-pack: start;
     -webkit-justify-content: flex-start;
     -moz-box-pack: start;
@@ -494,7 +494,7 @@
   .color-picker {
     display: block;
     width: 24px;
-    height: 24px;
+    height: 12px;
     -webkit-border-radius: .25rem;
     -moz-border-radius: .25rem;
     border-radius: .25rem;
