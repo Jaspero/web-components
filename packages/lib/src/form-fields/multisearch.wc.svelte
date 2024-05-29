@@ -545,6 +545,7 @@
     -o-transition: 0.3s;
     -moz-transition: 0.3s;
     transition: 0.3s;
+    font-size: 1rem;
   }
 
   .select-label.move {

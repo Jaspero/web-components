@@ -16,6 +16,7 @@
 />
 
 <script lang="ts">
+  import { clickOutside } from '../clickOutside';
   import { createEventDispatcher, onMount } from 'svelte';
   import {wait} from '../utils/wait';
 
@@ -64,7 +65,6 @@
   }
 
   async function checkValidity() {
-
     await wait();
 
     attachedInternals.checkValidity();
@@ -91,13 +91,13 @@
     if (availableSpaceBelow < dropdownHeight) {
       style = `
         min-width: ${rect.width}px;
-        bottom: ${window.innerHeight - rect.top}px;
+        bottom: ${window.innerHeight - rect.top - window.scrollY}px;
         left: ${rect.left}px;
       `;
     } else {
       style = `
         min-width: ${rect.width}px;
-        top: ${rect.bottom}px;
+        top: ${rect.bottom + window.scrollY}px;
         left: ${rect.left}px;
       `;
     }
@@ -260,13 +260,8 @@
     value = '';
   }
 
-  $: if (open) {
-    document.documentElement.style.overflowY = 'hidden';
-  } else {
-    document.documentElement.style.overflowY = '';
-  }
-
   onMount(() => {
+
     if (typeof options == 'string') {
       options = JSON.parse(options);
     };
@@ -328,38 +323,35 @@
 </div>
 
 {#if open}
-  <!-- svelte-ignore a11y-no-noninteractive-element-interactions -->
-  <div class="overlay" on:click={toggleMenu} on:keydown={handleKeydown} tabindex="-1" role="dialog">
-    <div class="menu" style={menuStyle}>
-      {#each options as option, index (option)}
-        <button
-          type="button"
-          class="menu-button"
-          class:selected={value == option.value}
-          bind:this={optionElements[index]}
-          disabled={option.disabled}
-          on:click|preventDefault={() => {
-            value = option.value;
-          }}
-        >
-          <span>{option.label ? option.label : option.value}</span>
+  <div class="menu" use:clickOutside on:click_outside={() => (open = false)} style={menuStyle} on:keydown={handleKeydown}>
+    {#each options as option, index (option)}
+      <button
+        type="button"
+        class="menu-button"
+        class:selected={value == option.value}
+        bind:this={optionElements[index]}
+        disabled={option.disabled}
+        on:click|preventDefault={() => {
+          value = option.value;
+        }}
+      >
+        <span>{option.label ? option.label : option.value}</span>
 
-          {#if value == option.value}
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              width="1rem"
-              height="1rem"
-              viewBox="0 0 448 512"
-            >
-              <!--! Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2023 Fonticons, Inc. -->
-              <path
-                d="M438.6 105.4c12.5 12.5 12.5 32.8 0 45.3l-256 256c-12.5 12.5-32.8 12.5-45.3 0l-128-128c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0L160 338.7 393.4 105.4c12.5-12.5 32.8-12.5 45.3 0z"
-              />
-            </svg>
-          {/if}
-        </button>
-      {/each}
-    </div>
+        {#if value == option.value}
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="1rem"
+            height="1rem"
+            viewBox="0 0 448 512"
+          >
+            <!--! Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2023 Fonticons, Inc. -->
+            <path
+              d="M438.6 105.4c12.5 12.5 12.5 32.8 0 45.3l-256 256c-12.5 12.5-32.8 12.5-45.3 0l-128-128c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0L160 338.7 393.4 105.4c12.5-12.5 32.8-12.5 45.3 0z"
+            />
+          </svg>
+        {/if}
+      </button>
+    {/each}
   </div>
 {/if}
 
@@ -369,16 +361,6 @@
   }
   .wrapper.has-hint {
     margin-bottom: 1.25rem;
-  }
-
-  /* Overlay */
-  .overlay {
-    z-index: 100;
-    position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
   }
 
   /* Select */
@@ -489,6 +471,7 @@
       -webkit-transform 0.3s,
       -moz-transform 0.3s,
       -o-transform 0.3s;
+    font-size: 1rem;
   }
 
   .select-label.move {
@@ -583,6 +566,7 @@
 
   /* Menu */
   .menu {
+    z-index: 100;
     position: absolute;
     display: -webkit-box;
     display: -webkit-flex;

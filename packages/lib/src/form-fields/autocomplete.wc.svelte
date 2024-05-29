@@ -359,6 +359,7 @@
     -webkit-border-radius: 0;
     -moz-border-radius: 0;
     border-radius: 0;
+    background-color: transparent;
   }
 
   .field-input-padding {

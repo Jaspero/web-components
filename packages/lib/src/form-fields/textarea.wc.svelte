@@ -280,6 +280,7 @@
     -webkit-border-radius: 0.25rem;
     -moz-border-radius: 0.25rem;
     border-radius: 0.25rem;
+    background-color: transparent;
   }
 
   .field-input-margin {
