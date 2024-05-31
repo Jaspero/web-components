@@ -63,7 +63,9 @@
   };
 
   $: {
-    if (value) chips = value.split(',');
+    if (value) {
+      chips = Array.isArray(value) ? value : value.split(',')
+    };
   }
 
   $: {
