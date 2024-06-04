@@ -86,7 +86,7 @@
     const rect = bindingElement.getBoundingClientRect();
     const availableSpaceBelow = window.innerHeight - rect.bottom;
     const dropdownHeight = 300;
-
+    console.log(rect, availableSpaceBelow)
     let style: string = '';
     if (availableSpaceBelow < dropdownHeight) {
       style = `
@@ -103,6 +103,7 @@
     }
 
     menuStyle = style;
+    console.log(menuStyle)
     open = !open;
 
     if (open) {
