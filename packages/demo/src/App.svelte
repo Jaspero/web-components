@@ -5,5 +5,5 @@
 </script>
 
 <!-- <AssetManagerDemo /> -->
-<!-- <Demos /> -->
-<SelectDemo />
+<Demos />
+<!-- <SelectDemo /> -->

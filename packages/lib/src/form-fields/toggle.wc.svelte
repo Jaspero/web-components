@@ -16,15 +16,15 @@
 />
 
 <script lang="ts">
-  import { createEventDispatcher, onMount } from 'svelte';
+  import { createEventDispatcher } from 'svelte';
 
   export let attachedInternals: ElementInternals;
 
-  export let name: string = '';
-  export let value: boolean = false;
-  export let label: string = '';
-  export let required: boolean = false;
-  export let requiredValidationMessage: string = '';
+  export let name = '';
+  export let value = false;
+  export let label = '';
+  export let required = false;
+  export let requiredValidationMessage = '';
   export let size: 'small' | 'large' = 'small';
   export let disabled = false;
 
@@ -39,6 +39,7 @@
   const dispatch = createEventDispatcher();
   $: {
     attachedInternals.checkValidity();
+
     if (checkboxEl) {
       if (checkboxEl.validity.valueMissing) {
         attachedInternals.setValidity(
@@ -62,7 +63,7 @@
     {disabled}
     {required}
     bind:checked={value}
-    bind:value
+    value={true}
     hidden
     bind:this={checkboxEl}
   />
