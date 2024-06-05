@@ -112,7 +112,6 @@
 
   function handleKeydown(event: KeyboardEvent) {
     const currentIndex = optionElements.findIndex((el) => el === document.activeElement);
-    console.log(optionElements);
 
     if (currentIndex == -1) {
       if (event.key == 'ArrowDown' && open && optionElements.length) {
@@ -133,25 +132,20 @@
         inputEl.focus();
       }
 
-      // Check for Home (Windows/Linux) or Cmd+UpArrow (Mac)
       const isHome = event.key === 'Home' || (event.key === 'ArrowUp' && event.metaKey);
-      // Check for End (Windows/Linux) or Cmd+DownArrow (Mac)
       const isEnd = event.key === 'End' || (event.key === 'ArrowDown' && event.metaKey);
 
-      // Check for Home (Windows/Linux) or Cmd+UpArrow (Mac)
       if (isHome) {
         event.preventDefault();
         optionElements[0].focus();
         return;
       }
-      // Check for End (Windows/Linux) or Cmd+DownArrow (Mac)
       if (isEnd) {
         event.preventDefault();
         optionElements[optionElements.length - 1].focus();
         return;
       }
 
-      // Original ArrowUp and ArrowDown handling
       if (['ArrowDown', 'ArrowUp'].includes(event.key)) {
         let nextIndex;
         event.preventDefault();

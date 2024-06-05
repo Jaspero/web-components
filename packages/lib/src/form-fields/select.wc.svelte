@@ -86,24 +86,20 @@
     const rect = bindingElement.getBoundingClientRect();
     const availableSpaceBelow = window.innerHeight - rect.bottom;
     const dropdownHeight = 300;
-    console.log(rect, availableSpaceBelow)
+
     let style: string = '';
+
     if (availableSpaceBelow < dropdownHeight) {
       style = `
-        min-width: ${rect.width}px;
-        bottom: ${window.innerHeight - rect.top - window.scrollY}px;
-        left: ${rect.left}px;
+        bottom: 100%;
       `;
     } else {
       style = `
-        min-width: ${rect.width}px;
-        top: ${rect.bottom + window.scrollY}px;
-        left: ${rect.left}px;
+        top: 100%;
       `;
     }
 
     menuStyle = style;
-    console.log(menuStyle)
     open = !open;
 
     if (open) {
@@ -138,7 +134,7 @@
         }
       }
     }
-    return currentIndex; // Return current index if no focusable option is found in the desired direction
+    return currentIndex;
   }
 
   function handleKeydown(event: KeyboardEvent) {
@@ -274,7 +270,7 @@
     {@html label}
   </div>
 {/if}
-<div class="wrapper" class:has-hint={hint}>
+<div class="wrapper" use:clickOutside on:click_outside={() => (open = false)} class:has-hint={hint}>
   {#if (showClear && value)}
     <button class="clear" on:click={clearSelection}>
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512">
@@ -321,40 +317,42 @@
   {/if}
 
   <input tabindex="-1" bind:this={inputEl} bind:value {id} {name} {required} />
-</div>
 
-{#if open}
-  <div class="menu" use:clickOutside on:click_outside={() => (open = false)} style={menuStyle} on:keydown={handleKeydown}>
-    {#each options as option, index (option)}
-      <button
-        type="button"
-        class="menu-button"
-        class:selected={value == option.value}
-        bind:this={optionElements[index]}
-        disabled={option.disabled}
-        on:click|preventDefault={() => {
+  {#if open}
+    <div class="menu"
+         style={menuStyle}
+         on:keydown={handleKeydown} role="dialog">
+      {#each options as option, index (option)}
+        <button
+                type="button"
+                class="menu-button"
+                class:selected={value == option.value}
+                bind:this={optionElements[index]}
+                disabled={option.disabled}
+                on:click|preventDefault={() => {
           value = option.value;
         }}
-      >
-        <span>{option.label ? option.label : option.value}</span>
+        >
+          <span>{option.label ? option.label : option.value}</span>
 
-        {#if value == option.value}
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            width="1rem"
-            height="1rem"
-            viewBox="0 0 448 512"
-          >
-            <!--! Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2023 Fonticons, Inc. -->
-            <path
-              d="M438.6 105.4c12.5 12.5 12.5 32.8 0 45.3l-256 256c-12.5 12.5-32.8 12.5-45.3 0l-128-128c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0L160 338.7 393.4 105.4c12.5-12.5 32.8-12.5 45.3 0z"
-            />
-          </svg>
-        {/if}
-      </button>
-    {/each}
-  </div>
-{/if}
+          {#if value == option.value}
+            <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="1rem"
+                    height="1rem"
+                    viewBox="0 0 448 512"
+            >
+              <!--! Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2023 Fonticons, Inc. -->
+              <path
+                      d="M438.6 105.4c12.5 12.5 12.5 32.8 0 45.3l-256 256c-12.5 12.5-32.8 12.5-45.3 0l-128-128c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0L160 338.7 393.4 105.4c12.5-12.5 32.8-12.5 45.3 0z"
+              />
+            </svg>
+          {/if}
+        </button>
+      {/each}
+    </div>
+  {/if}
+</div>
 
 <style>
   .wrapper {
@@ -581,6 +579,7 @@
     -moz-box-direction: normal;
     -ms-flex-direction: column;
     flex-direction: column;
+    width: 100%;
     max-height: 300px;
     overflow-y: auto;
     -webkit-border-bottom-left-radius: 0.25rem;

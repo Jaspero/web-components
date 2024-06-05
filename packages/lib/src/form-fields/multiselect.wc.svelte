@@ -141,15 +141,11 @@
 
     if (availableSpaceBelow < dropdownHeight) {
       style = `
-        min-width: ${rect.width}px;
-        bottom: ${window.innerHeight - rect.top - window.scrollY}px;
-        left: ${rect.left}px;
+        bottom: 100%;
       `;
     } else {
       style = `
-        min-width: ${rect.width}px;
-        top: ${rect.bottom + window.scrollY}px;
-        left: ${rect.left}px;
+        top: 100%;
       `;
     }
 
@@ -310,7 +306,7 @@
     {@html label}
   </div>
 {/if}
-<div class="wrapper" class:has-hint={hint}>
+<div class="wrapper" use:clickOutside on:click_outside={() => (open = false)} class:has-hint={hint}>
   {#if (showClear && hasSelectedOption)}
     <button class="clear" on:click={clearSelection}>
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512">
@@ -359,38 +355,38 @@
       {@html hint}
     </span>
   {/if}
+
+  {#if open}
+    <div class="menu" style={menuStyle} on:keydown={handleKeydown}>
+      {#each options as option, index (option)}
+        <button
+                type="button"
+                class="menu-button"
+                class:selected={option.selected}
+                bind:this={optionElements[index]}
+                disabled={option.disabled}
+                on:click|preventDefault={() => (option.selected = !option.selected)}
+        >
+          <span>{option.label ? option.label : option.value}</span>
+
+          {#if option.selected}
+            <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="1rem"
+                    height="1rem"
+                    viewBox="0 0 448 512"
+            >
+              <!--! Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2023 Fonticons, Inc. -->
+              <path
+                      d="M438.6 105.4c12.5 12.5 12.5 32.8 0 45.3l-256 256c-12.5 12.5-32.8 12.5-45.3 0l-128-128c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0L160 338.7 393.4 105.4c12.5-12.5 32.8-12.5 45.3 0z"
+              />
+            </svg>
+          {/if}
+        </button>
+      {/each}
+    </div>
+  {/if}
 </div>
-
-{#if open}
-  <div class="menu" use:clickOutside on:click_outside={() => (open = false)} style={menuStyle} on:keydown={handleKeydown}>
-    {#each options as option, index (option)}
-      <button
-              type="button"
-              class="menu-button"
-              class:selected={option.selected}
-              bind:this={optionElements[index]}
-              disabled={option.disabled}
-              on:click|preventDefault={() => (option.selected = !option.selected)}
-      >
-        <span>{option.label ? option.label : option.value}</span>
-
-        {#if option.selected}
-          <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  width="1rem"
-                  height="1rem"
-                  viewBox="0 0 448 512"
-          >
-            <!--! Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2023 Fonticons, Inc. -->
-            <path
-                    d="M438.6 105.4c12.5 12.5 12.5 32.8 0 45.3l-256 256c-12.5 12.5-32.8 12.5-45.3 0l-128-128c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0L160 338.7 393.4 105.4c12.5-12.5 32.8-12.5 45.3 0z"
-            />
-          </svg>
-        {/if}
-      </button>
-    {/each}
-  </div>
-{/if}
 
 <style>
   .wrapper {
@@ -567,6 +563,7 @@
     -moz-box-direction: normal;
     -ms-flex-direction: column;
     flex-direction: column;
+    width: 100%;
     max-height: 300px;
     overflow-y: auto;
     -webkit-border-bottom-left-radius: 0.25rem;
