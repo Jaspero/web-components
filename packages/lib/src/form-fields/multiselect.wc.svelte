@@ -301,6 +301,7 @@
   });
 </script>
 
+
 {#if label && labelType == 'outside'}
   <div class="label">
     {@html label}
