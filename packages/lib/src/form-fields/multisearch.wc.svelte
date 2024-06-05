@@ -667,6 +667,7 @@
     -moz-box-align: center;
     -ms-flex-align: center;
     align-items: center;
+    border: none;
     gap: 0.75rem;
     padding: 0.75rem;
     text-align: left;
