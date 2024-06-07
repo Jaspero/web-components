@@ -1,5 +1,5 @@
 <svelte:options
-  customElement={{
+        customElement={{
     tag: 'jp-datepicker',
     shadow: 'none',
     extend: (customElementConstructor) => {
@@ -16,6 +16,7 @@
 />
 
 <script lang="ts">
+  import { clickOutside } from '../clickOutside';
   import { createEventDispatcher } from 'svelte';
   import { formatDisplayDate, formatReturnDate } from '../utils/dateFormatter';
 
@@ -34,9 +35,9 @@
 
   let selectedDateObject = new Date();
   let displayedDateString = formatDisplayDate(
-    selectedDateObject,
-    displayFormat,
-    displayFormatFunction
+          selectedDateObject,
+          displayFormat,
+          displayFormatFunction
   );
   let borderTop = false;
   let borderBottom = false;
@@ -97,12 +98,12 @@
     mData = [
       ...mData,
       Array.from(Array(startingDay).keys())
-        .map((el) => prevMonthDays - el)
-        .toReversed()
-        .map((el) => {
-          let obj = { day: el, month: month - 1, year: year, gray: true };
-          return obj;
-        })
+              .map((el) => prevMonthDays - el)
+              .toReversed()
+              .map((el) => {
+                let obj = { day: el, month: month - 1, year: year, gray: true };
+                return obj;
+              })
     ];
 
     mData = [
@@ -137,17 +138,17 @@
 
     const rect = bindingElement.getBoundingClientRect();
     const availableSpaceBelow = window.innerHeight - rect.bottom;
-    const dropdownHeight = 304;
+    const dropdownHeight = 385;
 
     let style: string = '';
     if (availableSpaceBelow < dropdownHeight) {
       style = `
-        bottom: ${window.innerHeight - rect.top}px;
+        bottom: ${window.innerHeight - rect.top - window.scrollY}px;
         left: ${rect.left}px;
       `;
     } else {
       style = `
-        top: ${rect.bottom}px;
+        top: ${rect.bottom + window.scrollY}px;
         left: ${rect.left}px;
       `;
     }
@@ -182,13 +183,13 @@
   $: {
     if (yearSelected) {
       internalValue = `${yearSelected}-${monthSelected + 1 < 10 ? '0' : ''}${monthSelected + 1}-${
-        dateSelected < 10 ? '0' : ''
+              dateSelected < 10 ? '0' : ''
       }${dateSelected}`;
       selectedDateObject = new Date(internalValue);
       displayedDateString = formatDisplayDate(
-        selectedDateObject,
-        displayFormat,
-        displayFormatFunction
+              selectedDateObject,
+              displayFormat,
+              displayFormatFunction
       );
       attachedInternals.setValidity({});
       attachedInternals.setFormValue(internalValue);
@@ -198,19 +199,13 @@
     } else {
       if (required) {
         attachedInternals.setValidity(
-          { valueMissing: true },
-          requiredValidationMessage || `Date is required.`
+                { valueMissing: true },
+                requiredValidationMessage || `Date is required.`
         );
       }
       displayedDateString = '';
       dispatch('value', { value: '' });
     }
-  }
-
-  $: if (openPicker) {
-    document.documentElement.style.overflowY = 'hidden';
-  } else {
-    document.documentElement.style.overflowY = '';
   }
 </script>
 
@@ -221,13 +216,13 @@
 {/if}
 
 <button
-  type="button"
-  class="field"
-  bind:this={bindingElement}
-  class:active={openPicker}
-  class:borderBottom
-  class:borderTop
-  on:click|preventDefault={toggleMenu}
+        type="button"
+        class="field"
+        bind:this={bindingElement}
+        class:active={openPicker}
+        class:borderBottom
+        class:borderTop
+        on:click|preventDefault={toggleMenu}
 >
   {#if label && labelType == 'inside'}
     <span class="field-label" class:move={openPicker || internalValue}>{@html label}</span>
@@ -240,7 +235,7 @@
     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512">
       <!--! Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2023 Fonticons, Inc. -->
       <path
-        d="M152 24c0-13.3-10.7-24-24-24s-24 10.7-24 24V64H64C28.7 64 0 92.7 0 128v16 48V448c0 35.3 28.7 64 64 64H384c35.3 0 64-28.7 64-64V192 144 128c0-35.3-28.7-64-64-64H344V24c0-13.3-10.7-24-24-24s-24 10.7-24 24V64H152V24zM48 192H400V448c0 8.8-7.2 16-16 16H64c-8.8 0-16-7.2-16-16V192z"
+              d="M152 24c0-13.3-10.7-24-24-24s-24 10.7-24 24V64H64C28.7 64 0 92.7 0 128v16 48V448c0 35.3 28.7 64 64 64H384c35.3 0 64-28.7 64-64V192 144 128c0-35.3-28.7-64-64-64H344V24c0-13.3-10.7-24-24-24s-24 10.7-24 24V64H152V24zM48 192H400V448c0 8.8-7.2 16-16 16H64c-8.8 0-16-7.2-16-16V192z"
       />
     </svg>
   </span>
@@ -248,193 +243,189 @@
 
 <input type="date" {name} bind:value={internalValue} hidden />
 {#if openPicker}
-  <!-- svelte-ignore a11y-no-noninteractive-element-interactions -->
-  <!-- svelte-ignore a11y-click-events-have-key-events -->
-  <div class="overlay" on:click|stopPropagation={toggleMenu} tabindex="-1" role="dialog">
-    <div class="menu" style={menuStyle}>
-      <div class="menu-nav">
-        <!--<button on:click|preventDefault={() => (pickerYear = pickerYear - 1)}>&lt;&lt;</button>-->
-        <button type="button" class="menu-nav-date" on:click|preventDefault={() => (yearSelector = true)}>
-          <p>{monthMap[pickerMonth]}, {pickerYear}</p>
-          <svg xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 512 512">
+  <div class="menu" use:clickOutside on:click_outside={() => (openPicker = false)} style={menuStyle}>
+    <div class="menu-nav">
+      <!--<button on:click|preventDefault={() => (pickerYear = pickerYear - 1)}>&lt;&lt;</button>-->
+      <button type="button" class="menu-nav-date" on:click|preventDefault={() => (yearSelector = true)}>
+        <p>{monthMap[pickerMonth]}, {pickerYear}</p>
+        <svg xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 512 512">
+          <!--! Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2023 Fonticons, Inc. -->
+          <path
+                  d="M233.4 406.6c12.5 12.5 32.8 12.5 45.3 0l192-192c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L256 338.7 86.6 169.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3l192 192z"
+          />
+        </svg>
+      </button>
+      <div class="menu-nav-buttons">
+        <button type="button" on:click|preventDefault={() => (pickerMonth = pickerMonth - 1)}>
+          <svg xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 320 512">
             <!--! Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2023 Fonticons, Inc. -->
             <path
-              d="M233.4 406.6c12.5 12.5 32.8 12.5 45.3 0l192-192c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L256 338.7 86.6 169.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3l192 192z"
+                    d="M9.4 233.4c-12.5 12.5-12.5 32.8 0 45.3l192 192c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L77.3 256 246.6 86.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0l-192 192z"
             />
           </svg>
         </button>
-        <div class="menu-nav-buttons">
-          <button type="button" on:click|preventDefault={() => (pickerMonth = pickerMonth - 1)}>
-            <svg xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 320 512">
-              <!--! Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2023 Fonticons, Inc. -->
-              <path
-                d="M9.4 233.4c-12.5 12.5-12.5 32.8 0 45.3l192 192c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L77.3 256 246.6 86.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0l-192 192z"
-              />
-            </svg>
-          </button>
-          <button type="button" on:click|preventDefault={() => (pickerMonth = pickerMonth + 1)}>
-            <svg xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 320 512">
-              <!--! Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2023 Fonticons, Inc. -->
-              <path
-                d="M310.6 233.4c12.5 12.5 12.5 32.8 0 45.3l-192 192c-12.5 12.5-32.8 12.5-45.3 0s-12.5-32.8 0-45.3L242.7 256 73.4 86.6c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0l192 192z"
-              />
-            </svg>
-          </button>
-        </div>
-        <!--<button on:click|preventDefault={() => (pickerYear = pickerYear + 1)}>&gt;&gt;</button>-->
+        <button type="button" on:click|preventDefault={() => (pickerMonth = pickerMonth + 1)}>
+          <svg xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 320 512">
+            <!--! Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2023 Fonticons, Inc. -->
+            <path
+                    d="M310.6 233.4c12.5 12.5 12.5 32.8 0 45.3l-192 192c-12.5 12.5-32.8 12.5-45.3 0s-12.5-32.8 0-45.3L242.7 256 73.4 86.6c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0l192 192z"
+            />
+          </svg>
+        </button>
+      </div>
+      <!--<button on:click|preventDefault={() => (pickerYear = pickerYear + 1)}>&gt;&gt;</button>-->
+    </div>
+
+    <div>
+      <div class="table">
+        {#each daysMap as day}
+          <div class="table-cell">
+            {day}
+          </div>
+        {/each}
       </div>
 
-      <div>
-        <div class="table">
-          {#each daysMap as day}
-            <div class="table-cell">
-              {day}
-            </div>
-          {/each}
-        </div>
-
-        <div class="table">
-          {#each pickerRows as row}
-            <div class="table-row">
-              {#each row as col}
-                <div class="table-cell">
-                  <button
-                    type="button"
-                    class:gray={col.gray}
-                    class:active={dateSelected == col.day &&
+      <div class="table">
+        {#each pickerRows as row}
+          <div class="table-row">
+            {#each row as col}
+              <div class="table-cell">
+                <button
+                        type="button"
+                        class:gray={col.gray}
+                        class:active={dateSelected == col.day &&
                       monthSelected == col.month &&
                       yearSelected == col.year}
-                    on:click|preventDefault={() => {
+                        on:click|preventDefault={() => {
                       dateSelected = col.day;
                       yearSelected = col.year;
                       monthSelected = col.month;
                       openPicker = false;
                     }}
-                  >
-                    {col.day}
-                  </button>
-                </div>
-              {/each}
-            </div>
-          {/each}
-        </div>
-      </div>
-
-      {#if yearSelector}
-        <div class="menu-year">
-          <div class="menu-year-nav">
-            <button
-              type="button"
-              class="menu-year-nav-date"
-              on:click|stopPropagation={() => (yearSelector = false)}
-            >
-              <p>
-                {pickerYearRows[0][0]} - {pickerYearRows[pickerYearRows.length - 1][
-                  pickerYearRows[pickerYearRows.length - 1].length - 1
-                ]}
-              </p>
-              <svg xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 512 512">
-                <!--! Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2023 Fonticons, Inc. -->
-                <path
-                  d="M233.4 105.4c12.5-12.5 32.8-12.5 45.3 0l192 192c12.5 12.5 12.5 32.8 0 45.3s-32.8 12.5-45.3 0L256 173.3 86.6 342.6c-12.5 12.5-32.8 12.5-45.3 0s-12.5-32.8 0-45.3l192-192z"
-                />
-              </svg>
-            </button>
-            <div class="menu-year-nav-buttons">
-              <button type="button" on:click|preventDefault={() => yearPickerIndex--}>
-                <svg xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 320 512">
-                  <!--! Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2023 Fonticons, Inc. -->
-                  <path
-                    d="M9.4 233.4c-12.5 12.5-12.5 32.8 0 45.3l192 192c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L77.3 256 246.6 86.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0l-192 192z"
-                  />
-                </svg>
-              </button>
-              <button type="button" on:click|preventDefault={() => yearPickerIndex++}>
-                <svg xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 320 512">
-                  <!--! Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2023 Fonticons, Inc. -->
-                  <path
-                    d="M310.6 233.4c12.5 12.5 12.5 32.8 0 45.3l-192 192c-12.5 12.5-32.8 12.5-45.3 0s-12.5-32.8 0-45.3L242.7 256 73.4 86.6c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0l192 192z"
-                  />
-                </svg>
-              </button>
-            </div>
-          </div>
-          {#each pickerYearRows as row}
-            <div class="menu-year-row">
-              {#each row as year}
-                <button
-                  type="button"
-                  class="menu-year-row-cell"
-                  class:active={yearSelected === year}
-                  on:click|preventDefault|stopPropagation={() => {
-                    pickerYear = year;
-                    yearSelector = false;
-                    monthSelector = true;
-                  }}>{year}</button
                 >
-              {/each}
-            </div>
-          {/each}
-        </div>
-      {/if}
-
-      {#if monthSelector}
-        <div class="menu-month">
-          <div class="menu-month-nav">
-            <button
-              type="button"
-              class="menu-month-nav-date"
-              on:click|preventDefault={() => {
-                monthSelector = false;
-              }}
-            >
-              <p>{pickerYear}</p>
-              <svg xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 512 512">
-                <!--! Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2023 Fonticons, Inc. -->
-                <path
-                  d="M233.4 406.6c12.5 12.5 32.8 12.5 45.3 0l192-192c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L256 338.7 86.6 169.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3l192 192z"
-                />
-              </svg>
-            </button>
-            <div class="menu-month-nav-buttons">
-              <button type="button" on:click|preventDefault={() => (pickerYear = pickerYear - 1)}>
-                <svg xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 320 512">
-                  <!--! Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2023 Fonticons, Inc. -->
-                  <path
-                    d="M9.4 233.4c-12.5 12.5-12.5 32.8 0 45.3l192 192c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L77.3 256 246.6 86.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0l-192 192z"
-                  />
-                </svg>
-              </button>
-              <button type="button" on:click|preventDefault={() => (pickerYear = pickerYear + 1)}>
-                <svg xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 320 512">
-                  <!--! Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2023 Fonticons, Inc. -->
-                  <path
-                    d="M310.6 233.4c12.5 12.5 12.5 32.8 0 45.3l-192 192c-12.5 12.5-32.8 12.5-45.3 0s-12.5-32.8 0-45.3L242.7 256 73.4 86.6c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0l192 192z"
-                  />
-                </svg>
-              </button>
-            </div>
-          </div>
-
-          <div class="menu-month-grid">
-            {#each monthMap as month, index}
-              <div class="menu-month-grid-cell">
-                <button
-                  type="button"
-                  on:click|preventDefault|stopPropagation={() => {
-                    pickerMonth = index;
-                    monthSelector = false;
-                  }}
-                  class:active={monthSelected === index}
-                >
-                  {month}
+                  {col.day}
                 </button>
               </div>
             {/each}
           </div>
-        </div>
-      {/if}
+        {/each}
+      </div>
     </div>
+
+    {#if yearSelector}
+      <div class="menu-year">
+        <div class="menu-year-nav">
+          <button
+                  type="button"
+                  class="menu-year-nav-date"
+                  on:click|stopPropagation={() => (yearSelector = false)}
+          >
+            <p>
+              {pickerYearRows[0][0]} - {pickerYearRows[pickerYearRows.length - 1][
+            pickerYearRows[pickerYearRows.length - 1].length - 1
+                    ]}
+            </p>
+            <svg xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 512 512">
+              <!--! Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2023 Fonticons, Inc. -->
+              <path
+                      d="M233.4 105.4c12.5-12.5 32.8-12.5 45.3 0l192 192c12.5 12.5 12.5 32.8 0 45.3s-32.8 12.5-45.3 0L256 173.3 86.6 342.6c-12.5 12.5-32.8 12.5-45.3 0s-12.5-32.8 0-45.3l192-192z"
+              />
+            </svg>
+          </button>
+          <div class="menu-year-nav-buttons">
+            <button type="button" on:click|preventDefault={() => yearPickerIndex--}>
+              <svg xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 320 512">
+                <!--! Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2023 Fonticons, Inc. -->
+                <path
+                        d="M9.4 233.4c-12.5 12.5-12.5 32.8 0 45.3l192 192c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L77.3 256 246.6 86.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0l-192 192z"
+                />
+              </svg>
+            </button>
+            <button type="button" on:click|preventDefault={() => yearPickerIndex++}>
+              <svg xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 320 512">
+                <!--! Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2023 Fonticons, Inc. -->
+                <path
+                        d="M310.6 233.4c12.5 12.5 12.5 32.8 0 45.3l-192 192c-12.5 12.5-32.8 12.5-45.3 0s-12.5-32.8 0-45.3L242.7 256 73.4 86.6c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0l192 192z"
+                />
+              </svg>
+            </button>
+          </div>
+        </div>
+        {#each pickerYearRows as row}
+          <div class="menu-year-row">
+            {#each row as year}
+              <button
+                      type="button"
+                      class="menu-year-row-cell"
+                      class:active={yearSelected === year}
+                      on:click|preventDefault|stopPropagation={() => {
+                    pickerYear = year;
+                    yearSelector = false;
+                    monthSelector = true;
+                  }}>{year}</button
+              >
+            {/each}
+          </div>
+        {/each}
+      </div>
+    {/if}
+
+    {#if monthSelector}
+      <div class="menu-month">
+        <div class="menu-month-nav">
+          <button
+                  type="button"
+                  class="menu-month-nav-date"
+                  on:click|preventDefault={() => {
+                monthSelector = false;
+              }}
+          >
+            <p>{pickerYear}</p>
+            <svg xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 512 512">
+              <!--! Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2023 Fonticons, Inc. -->
+              <path
+                      d="M233.4 406.6c12.5 12.5 32.8 12.5 45.3 0l192-192c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L256 338.7 86.6 169.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3l192 192z"
+              />
+            </svg>
+          </button>
+          <div class="menu-month-nav-buttons">
+            <button type="button" on:click|preventDefault={() => (pickerYear = pickerYear - 1)}>
+              <svg xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 320 512">
+                <!--! Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2023 Fonticons, Inc. -->
+                <path
+                        d="M9.4 233.4c-12.5 12.5-12.5 32.8 0 45.3l192 192c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L77.3 256 246.6 86.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0l-192 192z"
+                />
+              </svg>
+            </button>
+            <button type="button" on:click|preventDefault={() => (pickerYear = pickerYear + 1)}>
+              <svg xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 320 512">
+                <!--! Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2023 Fonticons, Inc. -->
+                <path
+                        d="M310.6 233.4c12.5 12.5 12.5 32.8 0 45.3l-192 192c-12.5 12.5-32.8 12.5-45.3 0s-12.5-32.8 0-45.3L242.7 256 73.4 86.6c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0l192 192z"
+                />
+              </svg>
+            </button>
+          </div>
+        </div>
+
+        <div class="menu-month-grid">
+          {#each monthMap as month, index}
+            <div class="menu-month-grid-cell">
+              <button
+                      type="button"
+                      on:click|preventDefault|stopPropagation={() => {
+                    pickerMonth = index;
+                    monthSelector = false;
+                  }}
+                      class:active={monthSelected === index}
+              >
+                {month}
+              </button>
+            </div>
+          {/each}
+        </div>
+      </div>
+    {/if}
   </div>
 {/if}
 
@@ -465,7 +456,7 @@
     user-select: none;
     padding: 0 0.75rem;
     gap: 0.75rem;
-    background-color: var(--background-primary);
+    background-color: transparent;
     border: 1px solid var(--border-primary);
     -webkit-border-radius: 0.25rem;
     -moz-border-radius: 0.25rem;
@@ -516,6 +507,7 @@
     -webkit-border-radius: 0;
     -moz-border-radius: 0;
     border-radius: 0;
+    background-color: transparent;
   }
 
   .field-input-padding {
@@ -532,21 +524,21 @@
     transform: translateY(-50%);
     font-size: 1rem;
     -webkit-transition:
-      transform 0.3s,
-      top 0.3s,
-      font-size 0.3s;
+            transform 0.3s,
+            top 0.3s,
+            font-size 0.3s;
     -o-transition:
-      transform 0.3s,
-      top 0.3s,
-      font-size 0.3s;
+            transform 0.3s,
+            top 0.3s,
+            font-size 0.3s;
     -moz-transition:
-      transform 0.3s,
-      top 0.3s,
-      font-size 0.3s;
+            transform 0.3s,
+            top 0.3s,
+            font-size 0.3s;
     transition:
-      transform 0.3s,
-      top 0.3s,
-      font-size 0.3s;
+            transform 0.3s,
+            top 0.3s,
+            font-size 0.3s;
   }
 
   .field-label.move {
@@ -566,16 +558,8 @@
     transition: 0.3s;
   }
 
-  .overlay {
-    z-index: 100;
-    position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-  }
-
   .menu {
+    z-index: 100;
     position: absolute;
     display: -webkit-box;
     display: -webkit-flex;
@@ -590,7 +574,7 @@
     -ms-flex-direction: column;
     flex-direction: column;
     max-width: 312px;
-    max-height: 700px;
+    max-height: 385px;
     width: 100%;
     padding: 1rem;
     overflow-y: auto;

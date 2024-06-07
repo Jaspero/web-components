@@ -112,7 +112,6 @@
 
   function handleKeydown(event: KeyboardEvent) {
     const currentIndex = optionElements.findIndex((el) => el === document.activeElement);
-    console.log(optionElements);
 
     if (currentIndex == -1) {
       if (event.key == 'ArrowDown' && open && optionElements.length) {
@@ -133,25 +132,20 @@
         inputEl.focus();
       }
 
-      // Check for Home (Windows/Linux) or Cmd+UpArrow (Mac)
       const isHome = event.key === 'Home' || (event.key === 'ArrowUp' && event.metaKey);
-      // Check for End (Windows/Linux) or Cmd+DownArrow (Mac)
       const isEnd = event.key === 'End' || (event.key === 'ArrowDown' && event.metaKey);
 
-      // Check for Home (Windows/Linux) or Cmd+UpArrow (Mac)
       if (isHome) {
         event.preventDefault();
         optionElements[0].focus();
         return;
       }
-      // Check for End (Windows/Linux) or Cmd+DownArrow (Mac)
       if (isEnd) {
         event.preventDefault();
         optionElements[optionElements.length - 1].focus();
         return;
       }
 
-      // Original ArrowUp and ArrowDown handling
       if (['ArrowDown', 'ArrowUp'].includes(event.key)) {
         let nextIndex;
         event.preventDefault();
@@ -179,6 +173,7 @@
     }
   });
 </script>
+
 
 {#if label && labelType == 'outside'}
   <div class="label">
@@ -266,7 +261,7 @@
     user-select: none;
     padding: 0 0.75rem;
     gap: 0.75rem;
-    background-color: var(--background-primary);
+    background-color: transparent;
     border: 1px solid var(--border-primary);
     -webkit-border-radius: 0.25rem;
     -moz-border-radius: 0.25rem;
@@ -359,6 +354,7 @@
     -webkit-border-radius: 0;
     -moz-border-radius: 0;
     border-radius: 0;
+    background-color: transparent;
   }
 
   .field-input-padding {
@@ -442,6 +438,7 @@
     -moz-box-align: center;
     -ms-flex-align: center;
     align-items: center;
+    border: none;
     gap: 0.75rem;
     padding: 0.75rem;
     text-align: left;

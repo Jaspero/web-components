@@ -27,7 +27,7 @@
   export let required = false;
   export let disabled = false;
   export let readonly = false;
-  export let type: 'text' | 'password' | 'email' | 'tel' | 'url' = 'text';
+  export let type: 'text' | 'password' | 'email' | 'tel' | 'url' | 'color' = 'text';
   export let id: string | null = null;
   export let hint: string | null = null;
   export let name: string = '';
@@ -63,6 +63,10 @@
   let inputEl: HTMLInputElement;
 
   const dispatch = createEventDispatcher();
+
+  if (type === 'color') {
+    value = "#000000"
+  }
 
   $: {
     attachedInternals.checkValidity();
@@ -248,6 +252,7 @@
         on:blur={() => (inputFocused = false)}
       />
     {:else if type === 'color'}
+      <span class="color-picker" style="background-color: {value}"></span>
       <input
         type="color"
         bind:this={inputEl}
@@ -264,6 +269,7 @@
         on:focus={() => (inputFocused = true)}
         on:blur={() => (inputFocused = false)}
       />
+      <span>{value}</span>
     {/if}
     {#if $$slots.suffix}
       <div class="suffix">
@@ -310,7 +316,7 @@
     -ms-user-select: none;
     user-select: none;
     gap: 0.75rem;
-    background-color: var(--background-primary);
+    background-color: transparent;
     border: 1px solid var(--border-primary);
     -webkit-border-radius: 0.25rem;
     -moz-border-radius: 0.25rem;
@@ -468,5 +474,30 @@
   .field-hint:hover {
     z-index: 255;
     overflow: unset;
+  }
+
+  .field:has(input[type="color"]) {
+    padding: 1.5rem .5rem .5rem;
+    -webkit-box-pack: start;
+    -webkit-justify-content: flex-start;
+    -moz-box-pack: start;
+    -ms-flex-pack: start;
+    justify-content: flex-start;
+  }
+
+  .field-input[type="color"] {
+    position: absolute;
+    visibility: hidden;
+    opacity: 0;
+  }
+
+  .color-picker {
+    display: block;
+    width: 24px;
+    height: 12px;
+    -webkit-border-radius: .25rem;
+    -moz-border-radius: .25rem;
+    border-radius: .25rem;
+    border: 1px solid rgba(0,0,0,.12);
   }
 </style>

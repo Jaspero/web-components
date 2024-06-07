@@ -63,7 +63,9 @@
   };
 
   $: {
-    if (value) chips = value.split(',');
+    if (value) {
+      chips = Array.isArray(value) ? value : value.split(',')
+    };
   }
 
   $: {
@@ -375,6 +377,7 @@
     -moz-border-radius: 0;
     border-radius: 0;
     font-size: 1rem;
+    background-color: transparent;
   }
 
   .field-container-input:-moz-placeholder {

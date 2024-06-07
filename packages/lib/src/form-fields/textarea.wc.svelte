@@ -186,7 +186,7 @@
     -ms-user-select: none;
     user-select: none;
     gap: 0.75rem;
-    background-color: var(--background-primary);
+    background-color: transparent;
     border: 1px solid var(--border-primary);
     -webkit-border-radius: 0.25rem;
     -moz-border-radius: 0.25rem;
@@ -280,6 +280,7 @@
     -webkit-border-radius: 0.25rem;
     -moz-border-radius: 0.25rem;
     border-radius: 0.25rem;
+    background-color: transparent;
   }
 
   .field-input-margin {

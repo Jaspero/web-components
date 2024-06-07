@@ -50,6 +50,7 @@
   let el: HTMLDivElement;
   let formEl: HTMLFormElement;
   let quill: any;
+  let dislexie = false;
 
   async function save() {
     await quill.save();
@@ -148,6 +149,8 @@
 </script>
 
 <div bind:this={el}></div>
+
+<jp-toggle value={dislexie} label="Disleksija" on:value={e => console.log(e)}></jp-toggle>
 
 <jp-textarea name="loooool">
 </jp-textarea>

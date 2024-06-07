@@ -1,5 +1,5 @@
 <svelte:options
-  customElement={{
+        customElement={{
     tag: 'jp-multiselect',
     shadow: 'none',
     extend: (customElementConstructor) => {
@@ -16,14 +16,15 @@
 />
 
 <script lang="ts">
+  import { clickOutside } from '../clickOutside';
   import { createEventDispatcher, onMount } from 'svelte';
 
   export let attachedInternals: ElementInternals;
   export let minSelects: number = 0;
   export let maxSelects: number | null = null;
   export let options:
-    | Array<{ label?: string; value: string; selected?: boolean; disabled?: boolean }>
-    | string = [];
+          | Array<{ label?: string; value: string; selected?: boolean; disabled?: boolean }>
+          | string = [];
   export let disabled: boolean = false;
   export let required: boolean = false;
   export let hint: string = '';
@@ -33,6 +34,7 @@
   export let name: string = '';
   export let label = '';
   export let labelType: 'inside' | 'outside' = 'inside';
+  export let showClear: boolean = false;
   export const getValue = () => options.filter((el) => el.selected).map((el) => el.value);
 
   export let validationMessages = {};
@@ -59,20 +61,20 @@
     const selects = options.filter((el) => el.selected).length;
     if (selects == 0 && required) {
       attachedInternals.setValidity(
-        { customError: true },
-        requiredValidationMessage ||
-          validationMessages.required ||
-          `At least one item needs to be checked.`
+              { customError: true },
+              requiredValidationMessage ||
+              validationMessages.required ||
+              `At least one item needs to be checked.`
       );
     } else if (selects < minSelects) {
       attachedInternals.setValidity(
-        { customError: true },
-        minselectsValidationMessage || validationMessages.minselects || 'Below limit checks.'
+              { customError: true },
+              minselectsValidationMessage || validationMessages.minselects || 'Below limit checks.'
       );
     } else if (selects > maxSelects) {
       attachedInternals.setValidity(
-        { customError: true },
-        maxselectsValidationMessage || validationMessages.maxselects || 'Above limit checks.'
+              { customError: true },
+              maxselectsValidationMessage || validationMessages.maxselects || 'Above limit checks.'
       );
     } else {
       attachedInternals.setValidity({});
@@ -80,25 +82,32 @@
     attachedInternals.checkValidity();
 
     internalValue = options
-      .filter((el) => el.selected)
-      .map((el) => el.value)
-      .join(',');
+            .filter((el) => el.selected)
+            .map((el) => el.value)
+            .join(',');
 
     displayValue = options
-      .filter((el) => el.selected)
-      .map((el) => (el.label ? el.label : el.value));
+            .filter((el) => el.selected)
+            .map((el) => (el.label ? el.label : el.value));
 
     dispatch(
-      'value',
-      options.filter((el) => el.selected).map((el) => el.value)
+            'value',
+            options.filter((el) => el.selected).map((el) => el.value)
     );
   }
 
-  $: if (open) {
-    document.documentElement.style.overflowY = 'hidden';
-  } else {
-    document.documentElement.style.overflowY = '';
+  function clearSelection() {
+    displayValue = '';
+
+    if (Array.isArray(options)) {
+      options = options.map(option => ({
+        ...option,
+        selected: false
+      }));
+    }
   }
+
+  $: hasSelectedOption = Array.isArray(options) && options.some(option => option.selected);
 
   $: {
     if (value) {
@@ -132,15 +141,11 @@
 
     if (availableSpaceBelow < dropdownHeight) {
       style = `
-        min-width: ${rect.width}px;
-        bottom: ${window.innerHeight - rect.top}px;
-        left: ${rect.left}px;
+        bottom: 100%;
       `;
     } else {
       style = `
-        min-width: ${rect.width}px;
-        top: ${rect.bottom}px;
-        left: ${rect.left}px;
+        top: 100%;
       `;
     }
 
@@ -180,35 +185,28 @@
         }
       }
     }
-    return currentIndex; // Return current index if no focusable option is found in the desired direction
+    return currentIndex;
   }
 
   function handleKeydown(event: KeyboardEvent) {
     const currentIndex = optionElements.findIndex((el) => el === document.activeElement);
     let nextIndex;
 
-    // Check if menu is open
     if (open) {
-      // Close menu on Escape
       if (event.key === 'Escape') {
         toggleMenu();
         bindingElement.focus();
         return;
       }
 
-      // Check for Home (Windows/Linux) or Cmd+UpArrow (Mac)
       const isHome = event.key === 'Home' || (event.key === 'ArrowUp' && event.metaKey);
-      // Check for End (Windows/Linux) or Cmd+DownArrow (Mac)
       const isEnd = event.key === 'End' || (event.key === 'ArrowDown' && event.metaKey);
 
-      // Check for Home (Windows/Linux) or Cmd+UpArrow (Mac)
       if (isHome) {
         event.preventDefault();
 
-        // Find the first non-disabled option's index
         const firstEnabledOptionIndex = options.findIndex((option) => !option.disabled);
 
-        // If there's a non-disabled option, focus on it
         if (firstEnabledOptionIndex !== -1) {
           optionElements[firstEnabledOptionIndex]?.focus();
         }
@@ -216,21 +214,17 @@
         return;
       }
 
-      // Check for End (Windows/Linux) or Cmd+DownArrow (Mac)
       if (isEnd) {
         event.preventDefault();
 
-        // Find the last non-disabled option's index by starting from the end of the list
         const lastEnabledOptionIndex = options
-          .slice()
-          .reverse()
-          .findIndex((option) => !option.disabled);
+                .slice()
+                .reverse()
+                .findIndex((option) => !option.disabled);
 
-        // Convert the reversed index back to the original array's indexing
         const actualIndex =
-          lastEnabledOptionIndex !== -1 ? options.length - 1 - lastEnabledOptionIndex : -1;
+                lastEnabledOptionIndex !== -1 ? options.length - 1 - lastEnabledOptionIndex : -1;
 
-        // If there's a non-disabled option, focus on it
         if (actualIndex !== -1) {
           optionElements[actualIndex]?.focus();
         }
@@ -238,9 +232,8 @@
         return;
       }
 
-      // Original ArrowUp and ArrowDown handling
       if (['ArrowDown', 'ArrowUp'].includes(event.key)) {
-        event.preventDefault(); // Prevent default scroll behavior
+        event.preventDefault();
 
         if (event.key === 'ArrowUp') {
           nextIndex = getAdjacentFocusableIndex(currentIndex, 'previous');
@@ -251,42 +244,37 @@
         optionElements[nextIndex]?.focus();
       }
 
-      // Handle tabbing through options
       if (event.key === 'Tab') {
-        event.preventDefault(); // Prevent default tabbing behavior
+        event.preventDefault();
         isTabbing = true;
 
         if (event.shiftKey) {
-          // Shift + Tab pressed
           nextIndex = getAdjacentFocusableIndex(currentIndex, 'previous');
           if (currentIndex === nextIndex) {
-            // Close the menu and focus the bindingElement if we're at the first non-disabled option
             toggleMenu();
             bindingElement?.focus();
-            return; // Early exit
+            return;
           }
         } else {
           nextIndex = getAdjacentFocusableIndex(currentIndex, 'next');
           if (currentIndex === nextIndex) {
-            // Close the menu and focus the bindingElement if we're at the last non-disabled option
             toggleMenu();
             bindingElement?.focus();
-            return; // Early exit
+            return;
           }
         }
 
         optionElements[nextIndex]?.focus();
       }
 
-      // Handle alphanumeric keys
       if (/^[a-z\d]$/i.test(event.key)) {
         clearTimeout(searchTimeout);
 
         searchTerm += event.key;
 
         const matchingIndex = options
-          .map((el) => (el.label ? el.label : el.value))
-          .findIndex((option) => option.toLowerCase().includes(searchTerm.toLowerCase()));
+                .map((el) => (el.label ? el.label : el.value))
+                .findIndex((option) => option.toLowerCase().includes(searchTerm.toLowerCase()));
 
         if (matchingIndex !== -1) {
           optionElements[matchingIndex].focus();
@@ -313,22 +301,31 @@
   });
 </script>
 
+
 {#if label && labelType == 'outside'}
   <div class="label">
     {@html label}
   </div>
 {/if}
-<div class:has-hint={hint}>
+<div class="wrapper" use:clickOutside on:click_outside={() => (open = false)} class:has-hint={hint}>
+  {#if (showClear && hasSelectedOption)}
+    <button class="clear" on:click={clearSelection}>
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512">
+        <path d="M342.6 150.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L192 210.7 86.6 105.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3L146.7 256 41.4 361.4c-12.5 12.5-12.5 32.8 0 45.3s32.8 12.5 45.3 0L192 301.3 297.4 406.6c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L237.3 256 342.6 150.6z"/>
+      </svg>
+    </button>
+  {/if}
+
   <input bind:value={internalValue} {id} {name} {required} hidden />
 
   <button
-    type="button"
-    class="select"
-    class:toggled={open}
-    bind:this={bindingElement}
-    {disabled}
-    on:click|preventDefault={toggleMenu}
-    on:keydown={handleKeydown}
+          type="button"
+          class="select"
+          class:toggled={open}
+          bind:this={bindingElement}
+          {disabled}
+          on:click|preventDefault={toggleMenu}
+          on:keydown={handleKeydown}
   >
     {#if label && labelType == 'inside'}
       <span class="select-label" class:move={internalValue || open}>
@@ -336,21 +333,20 @@
       </span>
     {/if}
 
-    <span
-      class={`select-option ${labelType == 'outside' || !label ? '' : 'select-option-padding'}`}
-    >
+    <span class={`select-option ${labelType == 'outside' || !label ? '' : 'select-option-padding'}`}
+          class:has-clear={showClear}>
       {displayValue || ''}
     </span>
 
     <svg
-      xmlns="http://www.w3.org/2000/svg"
-      viewBox="0 0 320 512"
-      class="select-arrow"
-      class:rotate={open}
+            xmlns="http://www.w3.org/2000/svg"
+            viewBox="0 0 320 512"
+            class="select-arrow"
+            class:rotate={open}
     >
       <!--! Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2023 Fonticons, Inc.-->
       <path
-        d="M137.4 374.6c12.5 12.5 32.8 12.5 45.3 0l128-128c9.2-9.2 11.9-22.9 6.9-34.9s-16.6-19.8-29.6-19.8L32 192c-12.9 0-24.6 7.8-29.6 19.8s-2.2 25.7 6.9 34.9l128 128z"
+              d="M137.4 374.6c12.5 12.5 32.8 12.5 45.3 0l128-128c9.2-9.2 11.9-22.9 6.9-34.9s-16.6-19.8-29.6-19.8L32 192c-12.9 0-24.6 7.8-29.6 19.8s-2.2 25.7 6.9 34.9l128 128z"
       />
     </svg>
   </button>
@@ -360,62 +356,47 @@
       {@html hint}
     </span>
   {/if}
-</div>
 
-{#if open}
-  <!-- svelte-ignore a11y-no-noninteractive-element-interactions -->
-  <div
-    class="overlay"
-    on:click|stopPropagation={toggleMenu}
-    on:keydown={handleKeydown}
-    tabindex="-1"
-    role="dialog"
-  >
-    <div class="menu" style={menuStyle}>
+  {#if open}
+    <div class="menu" style={menuStyle} on:keydown={handleKeydown}>
       {#each options as option, index (option)}
         <button
-          type="button"
-          class="menu-button"
-          class:selected={option.selected}
-          bind:this={optionElements[index]}
-          disabled={option.disabled}
-          on:click|preventDefault={() => (option.selected = !option.selected)}
+                type="button"
+                class="menu-button"
+                class:selected={option.selected}
+                bind:this={optionElements[index]}
+                disabled={option.disabled}
+                on:click|preventDefault={() => (option.selected = !option.selected)}
         >
           <span>{option.label ? option.label : option.value}</span>
 
           {#if option.selected}
             <svg
-              xmlns="http://www.w3.org/2000/svg"
-              width="1rem"
-              height="1rem"
-              viewBox="0 0 448 512"
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="1rem"
+                    height="1rem"
+                    viewBox="0 0 448 512"
             >
               <!--! Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2023 Fonticons, Inc. -->
               <path
-                d="M438.6 105.4c12.5 12.5 12.5 32.8 0 45.3l-256 256c-12.5 12.5-32.8 12.5-45.3 0l-128-128c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0L160 338.7 393.4 105.4c12.5-12.5 32.8-12.5 45.3 0z"
+                      d="M438.6 105.4c12.5 12.5 12.5 32.8 0 45.3l-256 256c-12.5 12.5-32.8 12.5-45.3 0l-128-128c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0L160 338.7 393.4 105.4c12.5-12.5 32.8-12.5 45.3 0z"
               />
             </svg>
           {/if}
         </button>
       {/each}
     </div>
-  </div>
-{/if}
+  {/if}
+</div>
 
 <style>
+  .wrapper {
+    position: relative;
+  }
+
   .has-hint {
     position: relative;
     margin-bottom: 1.25rem;
-  }
-
-  /* Overlay */
-  .overlay {
-    z-index: 100;
-    position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
   }
 
   /* Select */
@@ -489,6 +470,7 @@
     -o-transition: 0.3s;
     -moz-transition: 0.3s;
     transition: 0.3s;
+    font-size: 1rem;
   }
 
   .select-label.move {
@@ -568,6 +550,7 @@
 
   /* Menu */
   .menu {
+    z-index: 100;
     position: absolute;
     display: -webkit-box;
     display: -webkit-flex;
@@ -581,6 +564,7 @@
     -moz-box-direction: normal;
     -ms-flex-direction: column;
     flex-direction: column;
+    width: 100%;
     max-height: 300px;
     overflow-y: auto;
     -webkit-border-bottom-left-radius: 0.25rem;
@@ -611,6 +595,7 @@
     -moz-box-align: center;
     -ms-flex-align: center;
     align-items: center;
+    border: none;
     gap: 0.75rem;
     padding: 0.75rem;
     text-align: left;
@@ -634,5 +619,30 @@
   .menu-button:not(:disabled):hover,
   .menu-button:focus {
     background-color: var(--background-secondary);
+  }
+
+  .clear {
+    z-index: 1;
+    position: absolute;
+    top: 50%;
+    right: 2rem;
+    width: 24px;
+    height: 24px;
+    -webkit-transform: translateY(-50%);
+    -moz-transform: translateY(-50%);
+    -ms-transform: translateY(-50%);
+    -o-transform: translateY(-50%);
+    transform: translateY(-50%);
+    -webkit-border-radius: 50%;
+    -moz-border-radius: 50%;
+    border-radius: 50%;
+    -webkit-transition: background-color .25s;
+    -o-transition: background-color .25s;
+    -moz-transition: background-color .25s;
+    transition: background-color .25s;
+  }
+
+  .clear:hover {
+    background-color: rgba(0,0,0,.08);
   }
 </style>
