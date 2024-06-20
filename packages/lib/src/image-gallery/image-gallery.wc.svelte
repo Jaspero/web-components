@@ -1,3 +1,4 @@
+
 <svelte:options
   customElement={{
     tag: 'jp-image-gallery',
