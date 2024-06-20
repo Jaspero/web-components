@@ -27,10 +27,11 @@
   export let required = false;
   export let disabled = false;
   export let readonly = false;
-  export let type: 'text' | 'password' | 'email' | 'tel' | 'url' | 'color' = 'text';
+  export let type: 'text' | 'password' | 'email' | 'tel' | 'url' | 'number' | 'color' = 'text';
   export let id: string | null = null;
   export let hint: string | null = null;
   export let name: string = '';
+  export let autocomplete: string = 'off';
   export let minlength: number | null = null;
   export let maxlength: number | null = null;
   export let pattern: string | null = null;
@@ -112,14 +113,14 @@
   }
 </script>
 
-{#if label && labelType == 'outside'}
+{#if label && labelType === 'outside'}
   <div class="label">
     {@html label}
   </div>
 {/if}
 <div class:has-hint={!!hint}>
   <label class="field" class:disabled={disabled || readonly} class:required>
-    {#if label && labelType == 'inside'}
+    {#if (label && labelType === 'inside')}
       <span class="field-label" class:move={inputFocused || value}>{@html label}</span>
     {/if}
     {#if $$slots.prefix && (value || inputFocused)}
@@ -131,11 +132,12 @@
       <input
         type="text"
         bind:this={inputEl}
-        class={`field-input ${labelType == 'outside' || !label ? '' : 'field-input-padding'}`}
+        class={`field-input ${labelType === 'outside' || !label ? '' : 'field-input-padding'}`}
         aria-hidden={disabled || readonly}
         tabindex={disabled || readonly ? -1 : 0}
         {placeholder}
         {required}
+        {autocomplete}
         {disabled}
         {readonly}
         {id}
@@ -151,11 +153,12 @@
       <input
         type="password"
         bind:this={inputEl}
-        class={`field-input ${labelType == 'outside' || !label ? '' : 'field-input-padding'}`}
+        class={`field-input ${labelType === 'outside' || !label ? '' : 'field-input-padding'}`}
         aria-hidden={disabled || readonly}
         tabindex={disabled || readonly ? -1 : 0}
         {placeholder}
         {required}
+        {autocomplete}
         {disabled}
         {readonly}
         {id}
@@ -171,11 +174,12 @@
       <input
         type="email"
         bind:this={inputEl}
-        class={`field-input ${labelType == 'outside' || !label ? '' : 'field-input-padding'}`}
+        class={`field-input ${labelType === 'outside' || !label ? '' : 'field-input-padding'}`}
         aria-hidden={disabled || readonly}
         tabindex={disabled || readonly ? -1 : 0}
         {placeholder}
         {required}
+        {autocomplete}
         {disabled}
         {readonly}
         {id}
@@ -191,11 +195,12 @@
       <input
         type="tel"
         bind:this={inputEl}
-        class={`field-input ${labelType == 'outside' || !label ? '' : 'field-input-padding'}`}
+        class={`field-input ${labelType === 'outside' || !label ? '' : 'field-input-padding'}`}
         aria-hidden={disabled || readonly}
         tabindex={disabled || readonly ? -1 : 0}
         {placeholder}
         {required}
+        {autocomplete}
         {disabled}
         {readonly}
         {id}
@@ -211,11 +216,12 @@
       <input
         type="url"
         bind:this={inputEl}
-        class={`field-input ${labelType == 'outside' || !label ? '' : 'field-input-padding'}`}
+        class={`field-input ${labelType === 'outside' || !label ? '' : 'field-input-padding'}`}
         aria-hidden={disabled || readonly}
         tabindex={disabled || readonly ? -1 : 0}
         {placeholder}
         {required}
+        {autocomplete}
         {disabled}
         {readonly}
         {id}
@@ -231,10 +237,11 @@
       <input
         type="number"
         bind:this={inputEl}
-        class={`field-input ${labelType == 'outside' || !label ? '' : 'field-input-padding'}`}
+        class={`field-input ${labelType === 'outside' || !label ? '' : 'field-input-padding'}`}
         aria-hidden={disabled || readonly}
         tabindex={disabled || readonly ? -1 : 0}
         {required}
+        {autocomplete}
         {disabled}
         {minlength}
         {maxlength}
@@ -256,10 +263,11 @@
       <input
         type="color"
         bind:this={inputEl}
-        class={`field-input ${labelType == 'outside' || !label ? '' : 'field-input-padding'}`}
+        class={`field-input ${labelType === 'outside' || !label ? '' : 'field-input-padding'}`}
         aria-hidden={disabled || readonly}
         tabindex={disabled || readonly ? -1 : 0}
         {required}
+        {autocomplete}
         {disabled}
         {name}
         {id}
