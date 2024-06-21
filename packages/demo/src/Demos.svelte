@@ -146,6 +146,15 @@
   });
 
   const options = JSON.stringify([{"label":"A","value":"a"}, {"label":"B","value":"b"}]);
+  const multiOptions = [
+    {value: 1, label: 'Monday'},
+    {value: 2, label: 'Tuesday'},
+    {value: 3, label: 'Wednesday'},
+    {value: 4, label: 'Thursday'},
+    {value: 5, label: 'Friday'},
+    {value: 6, label: 'Saturday'},
+    {value: 0, label: 'Sunday'}
+  ];
 </script>
 
 <div bind:this={el}></div>
@@ -168,6 +177,7 @@
 
 <form>
   <p>Validity Test</p>
+  <jp-multiselect options={multiOptions} label="MultiSelect" maxSelects={3} />
   <jp-input name="name" label="Name" labelType="outside" required hint="cool"></jp-input>
   <jp-input name="email" label="Email" type="email" labelType="outside" required></jp-input>
   <jp-ckeditor name="Content" label="Content" required></jp-ckeditor>
