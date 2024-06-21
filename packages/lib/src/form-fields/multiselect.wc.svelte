@@ -64,17 +64,20 @@
               { customError: true },
               requiredValidationMessage ||
               validationMessages.required ||
-              `At least one item needs to be checked.`
+              `At least one item needs to be checked.`,
+              bindingElement
       );
     } else if (selects < minSelects) {
       attachedInternals.setValidity(
               { customError: true },
-              minselectsValidationMessage || validationMessages.minselects || 'Below limit checks.'
+              minselectsValidationMessage || validationMessages.minselects || 'Below limit checks.',
+              bindingElement
       );
     } else if (selects > maxSelects) {
       attachedInternals.setValidity(
               { customError: true },
-              maxselectsValidationMessage || validationMessages.maxselects || 'Above limit checks.'
+              maxselectsValidationMessage || validationMessages.maxselects || 'Above limit checks.',
+              bindingElement
       );
     } else {
       attachedInternals.setValidity({});
