@@ -87,11 +87,17 @@
   {#each options as option}
     <label>
       <input
-        type="checkbox"
-        name={option.value}
-        bind:checked={option.checked}
-        disabled={option.disabled}
+              type="checkbox"
+              name={option.value}
+              bind:checked={option.checked}
+              disabled={option.disabled}
       />
+      <span class="checkbox">
+        <span class="checkmark">
+            <span class="checkmark_stem"></span>
+            <span class="checkmark_kick"></span>
+        </span>
+      </span>
       {#if option.label}
         {@html option.label}
       {:else}
@@ -109,6 +115,7 @@
   }
 
   label {
+    position: relative;
     display: flex;
     align-items: center;
     gap: 0.5rem;
@@ -116,7 +123,51 @@
     line-height: 1rem;
   }
 
-  .opacity-50 {
-    opacity: 50%;
+  label input {
+    position: absolute;
+    top: 0;
+    left: 0;
+    opacity: 0;
+    visibility: hidden;
+  }
+
+  input:checked ~ .checkbox {
+    background-color: var(--primary-color);
+  }
+
+  .checkbox {
+    width: 20px;
+    height: 20px;
+    border: 1px solid rgba(0,0,0,.16);
+    border-radius: 4px;
+  }
+
+  .checkmark {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 20px;
+    height: 20px;
+    -ms-transform: rotate(45deg); /* IE 9 */
+    -webkit-transform: rotate(45deg); /* Chrome, Safari, Opera */
+    transform: rotate(45deg);
+  }
+
+  .checkmark_stem {
+    position: absolute;
+    width: 3px;
+    height: 11px;
+    background-color: var(--text-on-primary);
+    left: 8px;
+    top: 4px;
+  }
+
+  .checkmark_kick {
+    position: absolute;
+    width: 3px;
+    height: 3px;
+    background-color: var(--text-on-primary);
+    left: 5px;
+    top: 12px;
   }
 </style>
