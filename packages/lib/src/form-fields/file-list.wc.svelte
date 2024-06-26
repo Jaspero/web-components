@@ -168,7 +168,7 @@
           external: true
         };
 
-        if (urlFile['type'].split('/')[0] === 'image') {
+        if (/\.jpg|\.png|\.jpeg|\.webp|\.svg|\.gif/.test(url)) {
           obj['src'] = url;
         }
 
