@@ -15,7 +15,7 @@
 />
 
 <script lang="ts">
-  import { createEventDispatcher, onMount } from 'svelte';
+  import { createEventDispatcher } from 'svelte';
   import type FileService from '../types/file.service';
 
   export let attachedInternals: ElementInternals;
@@ -30,6 +30,7 @@
   export let minfilesValidationMessage;
   export let validationMessages = {};
   export let sortable = true;
+
   let grabbedEl = null;
   let grabbedIndex = -1;
   let startingY, startingX;
@@ -166,6 +167,11 @@
           url: url,
           external: true
         };
+
+        if (urlFile['type'].split('/')[0] === 'image') {
+          obj['src'] = url;
+        }
+
         internalFiles.push(obj);
       })
     );
@@ -332,7 +338,6 @@
   .dropzone {
     position: relative;
     background-color: #f4f4f4;
-    max-width: 750px;
     height: 500px;
     width: 100%;
     border-radius: 0.25rem;

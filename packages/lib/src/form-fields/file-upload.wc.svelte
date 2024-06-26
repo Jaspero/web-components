@@ -36,20 +36,21 @@
   let hoveringFile = false;
   let internalValue;
 
+  const dispatch = createEventDispatcher();
+
   export let service: FileService;
 
   export const getValue = () => internalValue;
 
   $: {
     internalValue = value
-    if(value){
-      checkImage()
+    if(value) {
+      checkImage();
     } else {
       img = ''
     }
   }
 
-  const dispatch = createEventDispatcher();
   $: {
     attachedInternals.checkValidity();
     attachedInternals.setFormValue(internalValue);
