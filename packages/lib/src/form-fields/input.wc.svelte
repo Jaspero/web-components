@@ -337,6 +337,7 @@
     text-align: left;
     box-sizing: border-box;
     width: 100%;
+    height: 3rem;
     -webkit-user-select: none;
     -moz-user-select: none;
     -ms-user-select: none;
@@ -436,6 +437,7 @@
     -ms-flex: auto;
     flex: auto;
     width: 10rem;
+    height: 1rem;
     font-size: 1rem;
     white-space: nowrap;
     overflow: hidden;
@@ -450,7 +452,7 @@
   }
 
   .field-input-padding {
-    padding: 1.25rem 0.75rem 0.5rem;
+    padding: 1.5rem 0.75rem calc(0.5rem - 2px);
   }
 
   .field-input:-moz-placeholder {
