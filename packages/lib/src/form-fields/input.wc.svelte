@@ -27,7 +27,7 @@
   export let required = false;
   export let disabled = false;
   export let readonly = false;
-  export let type: 'text' | 'password' | 'email' | 'tel' | 'url' | 'number' | 'color' = 'text';
+  export let type: 'text' | 'password' | 'email' | 'tel' | 'url' | 'number' | 'color' | 'time' = 'text';
   export let id: string | null = null;
   export let hint: string | null = null;
   export let name: string = '';
@@ -66,7 +66,7 @@
   const dispatch = createEventDispatcher();
 
   if (type === 'color') {
-    value = "#000000"
+    value = '#000000';
   }
 
   $: {
@@ -120,7 +120,7 @@
 {/if}
 <div class:has-hint={!!hint}>
   <label class="field" class:disabled={disabled || readonly} class:required>
-    {#if (label && labelType === 'inside')}
+    {#if label && labelType === 'inside'}
       <span class="field-label" class:move={inputFocused || value}>{@html label}</span>
     {/if}
     {#if $$slots.prefix && (value || inputFocused)}
@@ -254,6 +254,24 @@
         {step}
         {readonly}
         {pattern}
+        bind:value
+        on:focus={() => (inputFocused = true)}
+        on:blur={() => (inputFocused = false)}
+      />
+    {:else if type === 'time'}
+      <input
+        type="time"
+        bind:this={inputEl}
+        class={`field-input ${labelType === 'outside' || !label ? '' : 'field-input-padding'}`}
+        aria-hidden={disabled || readonly}
+        tabindex={disabled || readonly ? -1 : 0}
+        {required}
+        {autocomplete}
+        {disabled}
+        {name}
+        {id}
+        {placeholder}
+        {readonly}
         bind:value
         on:focus={() => (inputFocused = true)}
         on:blur={() => (inputFocused = false)}
@@ -484,8 +502,8 @@
     overflow: unset;
   }
 
-  .field:has(input[type="color"]) {
-    padding: 1.5rem .5rem .5rem;
+  .field:has(input[type='color']) {
+    padding: 1.5rem 0.5rem 0.5rem;
     -webkit-box-pack: start;
     -webkit-justify-content: flex-start;
     -moz-box-pack: start;
@@ -493,7 +511,7 @@
     justify-content: flex-start;
   }
 
-  .field-input[type="color"] {
+  .field-input[type='color'] {
     position: absolute;
     visibility: hidden;
     opacity: 0;
@@ -503,9 +521,9 @@
     display: block;
     width: 24px;
     height: 12px;
-    -webkit-border-radius: .25rem;
-    -moz-border-radius: .25rem;
-    border-radius: .25rem;
-    border: 1px solid rgba(0,0,0,.12);
+    -webkit-border-radius: 0.25rem;
+    -moz-border-radius: 0.25rem;
+    border-radius: 0.25rem;
+    border: 1px solid rgba(0, 0, 0, 0.12);
   }
 </style>
