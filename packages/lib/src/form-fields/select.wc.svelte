@@ -84,19 +84,20 @@
 
   function toggleMenu() {
     const rect = bindingElement.getBoundingClientRect();
-    const availableSpaceBelow = window.innerHeight - rect.bottom;
-    const dropdownHeight = 300;
+    const windowHeight = window.innerHeight;
 
-    let style: string = '';
+    const isInBottomHalf = rect.top > windowHeight / 2;
 
-    if (availableSpaceBelow < dropdownHeight) {
+    let style = '';
+
+    if (isInBottomHalf) {
       style = `
-        bottom: 100%;
-      `;
+    bottom: 100%;
+  `;
     } else {
       style = `
-        top: 100%;
-      `;
+    top: 100%;
+  `;
     }
 
     menuStyle = style;
