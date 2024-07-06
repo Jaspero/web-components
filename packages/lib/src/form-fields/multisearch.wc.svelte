@@ -381,6 +381,7 @@
       {#if service.search}
         <div class="search">
           <input
+            name="search"
             type="text"
             class="search-input"
             on:input={() => {
