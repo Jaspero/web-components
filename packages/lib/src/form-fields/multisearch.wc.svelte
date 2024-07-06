@@ -83,7 +83,7 @@
         minselectsValidationMessage || validationMessages.minselects || 'Below limit checks.',
         bindingElement
       );
-    } else if (selects > maxSelects) {
+    } else if (maxSelects !== null && selects > maxSelects) {
       attachedInternals.setValidity(
         { customError: true },
         maxselectsValidationMessage || validationMessages.maxselects || 'Above limit checks.',
