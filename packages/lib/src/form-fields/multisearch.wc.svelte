@@ -32,10 +32,10 @@
   let searchValue = '';
 
   export let attachedInternals: ElementInternals;
-  export let minSelects: number = 0;
+  export let minSelects = 0;
   export let maxSelects: number | null = null;
-  export let disabled: boolean = false;
-  export let required: boolean = false;
+  export let disabled = false;
+  export let required = false;
   export let hint = '';
   export let value = '';
   export let internalValue = '';
@@ -74,17 +74,20 @@
         { customError: true },
         requiredValidationMessage ||
           validationMessages.required ||
-          `At least one item needs to be checked.`
+          `At least one item needs to be checked.`,
+        bindingElement
       );
     } else if (selects < minSelects) {
       attachedInternals.setValidity(
         { customError: true },
-        minselectsValidationMessage || validationMessages.minselects || 'Below limit checks.'
+        minselectsValidationMessage || validationMessages.minselects || 'Below limit checks.',
+        bindingElement
       );
     } else if (selects > maxSelects) {
       attachedInternals.setValidity(
         { customError: true },
-        maxselectsValidationMessage || validationMessages.maxselects || 'Above limit checks.'
+        maxselectsValidationMessage || validationMessages.maxselects || 'Above limit checks.',
+        bindingElement
       );
     } else {
       attachedInternals.setValidity({});

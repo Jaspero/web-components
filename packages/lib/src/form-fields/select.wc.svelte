@@ -22,15 +22,15 @@
 
   export let attachedInternals: ElementInternals;
   export let options: Array<{ label?: string; value: string; disabled?: boolean }> | string = [];
-  export let disabled: boolean = false;
-  export let required: boolean = false;
-  export let hint: string = '';
-  export let value: string = '';
-  export let id: string = '';
-  export let name: string = '';
+  export let disabled = false;
+  export let required = false;
+  export let hint = '';
+  export let value = '';
+  export let id = '';
+  export let name = '';
   export let label = '';
   export let labelType: 'inside' | 'outside' = 'inside';
-  export let showClear: boolean = false;
+  export let showClear = false;
   export const getValue = () => value;
 
   export let requiredValidationMessage: string;
