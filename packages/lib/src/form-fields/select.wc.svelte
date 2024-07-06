@@ -91,13 +91,9 @@
     let style = '';
 
     if (isInBottomHalf) {
-      style = `
-    bottom: 100%;
-  `;
+      style = `bottom: 100%;`;
     } else {
-      style = `
-    top: 100%;
-  `;
+      style = `top: 100%;`;
     }
 
     menuStyle = style;

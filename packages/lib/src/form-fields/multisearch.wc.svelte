@@ -20,31 +20,35 @@
   import { createEventDispatcher, onMount } from 'svelte';
   import type SearchService from '../types/search.service';
 
+  let options: Array<{
+    label?: string;
+    value: string;
+    selected?: boolean;
+    disabled?: boolean;
+  }> = [];
+  let valueLoad = false;
+  let loadingMore = false;
+  let loadingSearch = false;
+  let searchValue = '';
+
   export let attachedInternals: ElementInternals;
   export let minSelects: number = 0;
   export let maxSelects: number | null = null;
-  let options: Array<{ label?: string; value: string; selected?: boolean; disabled?: boolean }> =
-    [];
   export let disabled: boolean = false;
   export let required: boolean = false;
-  export let hint: string = '';
-  export let value: string = '';
-  export let internalValue: string = '';
-  export let id: string = '';
-  export let name: string = '';
+  export let hint = '';
+  export let value = '';
+  export let internalValue = '';
+  export let id = '';
+  export let name = '';
   export let label = '';
   export let labelType: 'inside' | 'outside' = 'inside';
   export const getValue = () => options.filter((el) => el.selected).map((el) => el.value);
   export let service: SearchService;
-  let valueLoad = false;
-  let loadingMore = false;
-  let loadingSearch = false;
-  let searchValue: string = '';
-
   export let validationMessages = {};
-  export let requiredValidationMessage;
-  export let minselectsValidationMessage;
-  export let maxselectsValidationMessage;
+  export let requiredValidationMessage: string;
+  export let minselectsValidationMessage: string;
+  export let maxselectsValidationMessage: string;
 
   let isTabbing = false; // Variable to track if the user is tabbing
   let open = false;
@@ -127,13 +131,9 @@
 
     let style: string = '';
     if (availableSpaceBelow < dropdownHeight) {
-      style = `
-            bottom: 100%;
-        `;
+      style = `bottom:100%;`;
     } else {
-      style = `
-            top: 100%;
-        `;
+      style = `top:100%;`;
     }
 
     menuStyle = style;
@@ -302,7 +302,7 @@
           single = await service.getSingle(el);
           single.selected = true;
         } else {
-          single = { 'value': el, selected: true };
+          single = { value: el, selected: true };
         }
         options = [...options, single];
       })
@@ -312,9 +312,9 @@
 
   $: {
     if (value) {
-      loadValues(value)
+      loadValues(value);
     } else {
-      options = []
+      options = [];
     }
   }
 
@@ -331,7 +331,7 @@
   </div>
 {/if}
 <div class="wrapper" use:clickOutside on:click_outside={() => (open = false)} class:has-hint={hint}>
-  <input bind:value={internalValue} {id} {name} {required} hidden />
+  <input class="hidden-input" tabindex="-1" bind:value={internalValue} {id} {name} {required} />
 
   <button
     type="button"
@@ -377,74 +377,73 @@
 
   {#if open}
     <!-- svelte-ignore a11y-no-noninteractive-element-interactions -->
-      <div class="menu" on:keydown={handleKeydown} style={menuStyle} role="dialog">
-        {#if service.search}
-          <div class="search">
-            <input
-                    type="text"
-                    class="search-input"
-                    on:input={() => {
+    <div class="menu" on:keydown={handleKeydown} style={menuStyle} role="dialog">
+      {#if service.search}
+        <div class="search">
+          <input
+            type="text"
+            class="search-input"
+            on:input={() => {
               if (!loadingSearch) handleSearch();
             }}
-                    bind:value={searchValue}
-                    on:focus={() => (searchFocused = true)}
-                    on:blur={() => (searchFocused = false)}
-            />
-          </div>
-        {/if}
-        <div class="menu-buttons">
-          {#each options as option, index (option)}
-            <button
-                    type="button"
-                    class="menu-button"
-                    class:selected={option.selected}
-                    bind:this={optionElements[index]}
-                    disabled={option.disabled}
-                    on:click|preventDefault={() => (option.selected = !option.selected)}
-            >
-              <span>{option.label ? option.label : option.value}</span>
-
-              {#if option.selected}
-                <svg
-                        xmlns="http://www.w3.org/2000/svg"
-                        width="1rem"
-                        height="1rem"
-                        viewBox="0 0 448 512"
-                >
-                  <!--! Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2023 Fonticons, Inc. -->
-                  <path
-                          d="M438.6 105.4c12.5 12.5 12.5 32.8 0 45.3l-256 256c-12.5 12.5-32.8 12.5-45.3 0l-128-128c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0L160 338.7 393.4 105.4c12.5-12.5 32.8-12.5 45.3 0z"
-                  />
-                </svg>
-              {/if}
-            </button>
-          {/each}
-          {#if loadingSearch}
-            Loading...
-          {/if}
+            bind:value={searchValue}
+            on:focus={() => (searchFocused = true)}
+            on:blur={() => (searchFocused = false)}
+          />
         </div>
-        {#if service.loadMore && !loadingSearch}
-          <div class="loadmore">
-            {#if !loadingMore}
-              <button
-                      type="button"
-                      on:click|preventDefault|stopPropagation={async () => {
+      {/if}
+      <div class="menu-buttons">
+        {#each options as option, index (option)}
+          <button
+            type="button"
+            class="menu-button"
+            class:selected={option.selected}
+            bind:this={optionElements[index]}
+            disabled={option.disabled}
+            on:click|preventDefault={() => (option.selected = !option.selected)}
+          >
+            <span>{option.label ? option.label : option.value}</span>
+
+            {#if option.selected}
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="1rem"
+                height="1rem"
+                viewBox="0 0 448 512"
+              >
+                <!--! Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2023 Fonticons, Inc. -->
+                <path
+                  d="M438.6 105.4c12.5 12.5 12.5 32.8 0 45.3l-256 256c-12.5 12.5-32.8 12.5-45.3 0l-128-128c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0L160 338.7 393.4 105.4c12.5-12.5 32.8-12.5 45.3 0z"
+                />
+              </svg>
+            {/if}
+          </button>
+        {/each}
+        {#if loadingSearch}
+          Loading...
+        {/if}
+      </div>
+      {#if service.loadMore && !loadingSearch}
+        <div class="loadmore">
+          {#if !loadingMore}
+            <button
+              type="button"
+              on:click|preventDefault|stopPropagation={async () => {
                 loadingMore = true;
                 options = options.concat(await service.loadMore(searchValue));
                 loadingMore = false;
               }}
-              >
-                Load more
-              </button>
-            {:else}
-              <button type="button" disabled>Loading...</button>
-            {/if}
-          </div>
-        {/if}
-      </div>
+            >
+              Load more
+            </button>
+          {:else}
+            <button type="button" disabled>Loading...</button>
+          {/if}
+        </div>
+      {/if}
+    </div>
   {/if}
 </div>
-
 
 <style>
   .has-hint {
@@ -546,6 +545,15 @@
 
   input:required:invalid + .select {
     border-color: var(--danger-color);
+  }
+
+  .hidden-input {
+    top: 0;
+    height: 100%;
+    opacity: 0;
+    position: absolute;
+    width: 100%;
+    z-index: -1;
   }
 
   .select-option {
