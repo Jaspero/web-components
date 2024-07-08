@@ -382,10 +382,11 @@
     <!-- svelte-ignore a11y-no-noninteractive-element-interactions -->
     <div class="menu" on:keydown={handleKeydown} style={menuStyle} role="dialog">
       {#if service.search}
-        <div class="search">
+        <div class="search-field">
           <input
             name="search"
             type="text"
+            placeholder="Search..."
             class="search-input"
             on:input={() => {
               if (!loadingSearch) handleSearch();
@@ -424,7 +425,7 @@
           </button>
         {/each}
         {#if loadingSearch}
-          Loading...
+          <span style="display: block; padding: 0.75rem; text-align: center;">Loading...</span>
         {/if}
       </div>
       {#if service.loadMore && !loadingSearch}
@@ -680,6 +681,7 @@
     -ms-flex-align: center;
     align-items: center;
     border: none;
+    border-bottom: 1px solid var(--border-secondary);
     gap: 0.75rem;
     padding: 0.75rem;
     text-align: left;
@@ -719,12 +721,61 @@
     background-color: var(--background-secondary);
   }
 
-  .search {
-    padding: 10px;
+  .search-field {
+    font-size: 0.75rem;
+    line-height: 1rem;
+    position: relative;
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: -moz-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-pack: justify;
+    -webkit-justify-content: space-between;
+    -moz-box-pack: justify;
+    -ms-flex-pack: justify;
+    justify-content: space-between;
+    -webkit-box-align: center;
+    -webkit-align-items: center;
+    -moz-box-align: center;
+    -ms-flex-align: center;
+    align-items: center;
+    text-align: left;
+    box-sizing: border-box;
+    width: 100%;
+    height: 3rem;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    gap: 0.75rem;
+    padding: .75rem;
+    background-color: transparent;
+    border-bottom: 1px solid var(--border-secondary);
   }
 
   .search-input {
-    width: 100%;
-    padding: 5px;
+    -webkit-box-flex: 1;
+    -webkit-flex: auto;
+    -moz-box-flex: 1;
+    -ms-flex: auto;
+    flex: auto;
+    width: 10rem;
+    height: 1rem;
+    font-size: 1rem;
+    white-space: nowrap;
+    overflow: hidden;
+    -o-text-overflow: ellipsis;
+    text-overflow: ellipsis;
+    padding: 0.75rem;
+    outline: none;
+    border: 1px solid var(--border-primary);
+    -webkit-border-radius: 0.25rem;
+    -moz-border-radius: 0.25rem;
+    border-radius: 0.25rem;
+  }
+
+  .search-input::placeholder {
+    font-style: italic;
   }
 </style>
