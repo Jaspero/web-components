@@ -383,10 +383,10 @@
     <div class="menu" on:keydown={handleKeydown} style={menuStyle} role="dialog">
       {#if service.search}
         <div class="search-field">
+          <span class="search-label" class:move={searchFocused || searchValue}>Search</span>
           <input
             name="search"
             type="text"
-            placeholder="Search..."
             class="search-input"
             on:input={() => {
               if (!loadingSearch) handleSearch();
@@ -743,7 +743,6 @@
     text-align: left;
     box-sizing: border-box;
     width: 100%;
-    height: 3rem;
     -webkit-user-select: none;
     -moz-user-select: none;
     -ms-user-select: none;
@@ -761,13 +760,12 @@
     -ms-flex: auto;
     flex: auto;
     width: 10rem;
-    height: 1rem;
     font-size: 1rem;
     white-space: nowrap;
     overflow: hidden;
     -o-text-overflow: ellipsis;
     text-overflow: ellipsis;
-    padding: 0.75rem;
+    padding: 1.5rem 0.75rem calc(0.5rem - 2px);
     outline: none;
     border: 1px solid var(--border-primary);
     -webkit-border-radius: 0.25rem;
@@ -775,7 +773,41 @@
     border-radius: 0.25rem;
   }
 
-  .search-input::placeholder {
-    font-style: italic;
+  .search-label {
+    position: absolute;
+    top: 50%;
+    left: 1.5rem;
+    -webkit-transform: translateY(-50%);
+    -moz-transform: translateY(-50%);
+    -ms-transform: translateY(-50%);
+    -o-transform: translateY(-50%);
+    transform: translateY(-50%);
+    font-size: 1rem;
+    -webkit-transition:
+            transform 0.3s,
+            top 0.3s,
+            font-size 0.3s;
+    -o-transition:
+            transform 0.3s,
+            top 0.3s,
+            font-size 0.3s;
+    -moz-transition:
+            transform 0.3s,
+            top 0.3s,
+            font-size 0.3s;
+    transition:
+            transform 0.3s,
+            top 0.3s,
+            font-size 0.3s;
+  }
+
+  .search-label.move {
+    top: 1rem;
+    -webkit-transform: translateY(0);
+    -moz-transform: translateY(0);
+    -ms-transform: translateY(0);
+    -o-transform: translateY(0);
+    transform: translateY(0);
+    font-size: 0.75rem;
   }
 </style>
