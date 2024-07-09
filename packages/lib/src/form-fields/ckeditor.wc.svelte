@@ -112,7 +112,14 @@
     },
     link: {
       decorators: {
-        addTargetToExternalLinks: true,
+        openInNewTab: {
+          mode: 'manual',
+          label: 'Open in a new tab',
+          attributes: {
+            target: '_blank',
+            rel: 'noopener noreferrer'
+          }
+        },
         defaultProtocol: 'https://',
         toggleDownloadable: {
           mode: 'manual',
@@ -181,7 +188,7 @@
   export async function save(id?: string) {
     const regex = /src="data:(.*?)"/g;
     const cleanupRegex = /(^src=")|("$)/g;
-    const items = [...internalValue.match(regex) || []];
+    const items = [...(internalValue.match(regex) || [])];
 
     if (items.length) {
       await Promise.all(
@@ -210,9 +217,8 @@
   }
 
   onMount(() => {
-
     internalValue = value;
-    
+
     const ei = getEditor();
 
     if (!ei) {
