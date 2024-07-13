@@ -12,6 +12,17 @@
   import type { TableSort } from '../types/table-sort.interface';
   import type { TableService } from '../types/table.service';
 
+  export let wording: {
+    EXPORT: string;
+    LOADING: string;
+    LOAD_MORE: string;
+    PAGE_SIZE: string;
+  } = {
+    EXPORT: 'Export',
+    LOADING: 'Loading',
+    LOAD_MORE: 'Load more',
+    PAGE_SIZE: 'Page size'
+  };
   export let allowArrangeColumns = true;
   export let showExport = true;
   export let rowClickable = false;
@@ -215,7 +226,7 @@
           type="button"
           class="table-button settings-button"
           on:click={exportData}
-          class:loading={exportLoading}>Export</button
+          class:loading={exportLoading}>{wording.EXPORT}</button
         >
       {/if}
     </div>
@@ -272,13 +283,13 @@
     <button type="button" class="table-button load-button" class:loading disabled={!hasMore} on:click={loadMore}>
       {#if loading}
         <span class="spinner"></span>
-        Loading
+        {wording.LOADING}
       {:else}
-        Load More
+        {wording.LOAD_MORE}
       {/if}
     </button>
     {#if pageSizes.length > 1}
-      <jp-select label="Page Size" options={formattedPageSizes} value={pageSize} on:value={updatePageSize}></jp-select>
+      <jp-select label={wording.PAGE_SIZE} options={formattedPageSizes} value={pageSize} on:value={updatePageSize}></jp-select>
     {/if}
   </div>
 </div>

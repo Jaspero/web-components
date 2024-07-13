@@ -6,6 +6,11 @@
 
 	export let asset: Asset;
 	export let service: AssetManagerService;
+	export let wording: {
+		PAUSE: string;
+		RESUME: string;
+		CANCEL: string;
+	};
 
 	let removing = false;
 
@@ -44,7 +49,7 @@
 	</div>
 	<div class="file-name">
 		{asset.name}
-		<Progress asset={asset} status={asset.status} progress={asset.progress} on:cancel={() => dispatch('cancel')} />
+		<Progress {wording} asset={asset} status={asset.status} progress={asset.progress} on:cancel={() => dispatch('cancel')} />
 	</div>
 	<div class="file-info">
 		<span>{fileSize(asset.size)}</span>

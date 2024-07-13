@@ -31,6 +31,10 @@
   let loadingSearch = false;
   let searchValue = '';
 
+  export let wording = {
+    LOADING: '{wording.LOADING}',
+    LOAD_MORE: 'Load more'
+  };
   export let attachedInternals: ElementInternals;
   export let minSelects = 0;
   export let maxSelects: number | null = null;
@@ -346,7 +350,7 @@
     on:keydown={handleKeydown}
   >
     {#if valueLoad}
-      <span class="select-label"> Loading... </span>
+      <span class="select-label"> {wording.LOADING} </span>
     {:else if label && labelType == 'inside'}
       <span class="select-label" class:move={internalValue || open}>
         {@html label}
@@ -365,7 +369,6 @@
       class="select-arrow"
       class:rotate={open}
     >
-      <!--! Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2023 Fonticons, Inc.-->
       <path
         d="M137.4 374.6c12.5 12.5 32.8 12.5 45.3 0l128-128c9.2-9.2 11.9-22.9 6.9-34.9s-16.6-19.8-29.6-19.8L32 192c-12.9 0-24.6 7.8-29.6 19.8s-2.2 25.7 6.9 34.9l128 128z"
       />
@@ -416,7 +419,6 @@
                 height="1rem"
                 viewBox="0 0 448 512"
               >
-                <!--! Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2023 Fonticons, Inc. -->
                 <path
                   d="M438.6 105.4c12.5 12.5 12.5 32.8 0 45.3l-256 256c-12.5 12.5-32.8 12.5-45.3 0l-128-128c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0L160 338.7 393.4 105.4c12.5-12.5 32.8-12.5 45.3 0z"
                 />
@@ -425,7 +427,9 @@
           </button>
         {/each}
         {#if loadingSearch}
-          <span style="display: block; padding: 0.75rem; text-align: center;">Loading...</span>
+          <span style="display: block; padding: 0.75rem; text-align: center;"
+            >{wording.LOADING}</span
+          >
         {/if}
       </div>
       {#if service.loadMore && !loadingSearch}
@@ -439,10 +443,10 @@
                 loadingMore = false;
               }}
             >
-              Load more
+              {wording.LOAD_MORE}
             </button>
           {:else}
-            <button type="button" disabled>Loading...</button>
+            <button type="button" disabled>{wording.LOADING}</button>
           {/if}
         </div>
       {/if}
@@ -748,7 +752,7 @@
     -ms-user-select: none;
     user-select: none;
     gap: 0.75rem;
-    padding: .75rem;
+    padding: 0.75rem;
     background-color: transparent;
     border-bottom: 1px solid var(--border-secondary);
   }
@@ -784,21 +788,21 @@
     transform: translateY(-50%);
     font-size: 1rem;
     -webkit-transition:
-            transform 0.3s,
-            top 0.3s,
-            font-size 0.3s;
+      transform 0.3s,
+      top 0.3s,
+      font-size 0.3s;
     -o-transition:
-            transform 0.3s,
-            top 0.3s,
-            font-size 0.3s;
+      transform 0.3s,
+      top 0.3s,
+      font-size 0.3s;
     -moz-transition:
-            transform 0.3s,
-            top 0.3s,
-            font-size 0.3s;
+      transform 0.3s,
+      top 0.3s,
+      font-size 0.3s;
     transition:
-            transform 0.3s,
-            top 0.3s,
-            font-size 0.3s;
+      transform 0.3s,
+      top 0.3s,
+      font-size 0.3s;
   }
 
   .search-label.move {

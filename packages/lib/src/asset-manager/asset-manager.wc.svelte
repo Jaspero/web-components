@@ -11,6 +11,27 @@
   import Asset from './Asset.svelte';
   import { createEventDispatcher } from 'svelte';
 
+  export let wording: {
+    DROP_FILES_HERE: string;
+    FOLDER_NAME: string;
+    SUBMIT: string;
+    FOLDER_IS_EMPTY: string;
+    CONFIRM_SELECTION: string;
+
+    PAUSE: string;
+		RESUME: string;
+		CANCEL: string;
+  } = {
+    DROP_FILES_HERE: 'Drop your files here',
+    FOLDER_NAME: 'Folder name',
+    SUBMIT: 'Submit',
+    FOLDER_IS_EMPTY: 'Folder is empty',
+    CONFIRM_SELECTION: 'Confirm selection',
+
+    PAUSE: 'Pause',
+    RESUME: 'Resume',
+    CANCEL: 'Cancel'
+  };
   export let rootPath = '/';
   export let maxSize = 10 * 1048576;
   export let acceptedFiles = '*';
@@ -115,7 +136,11 @@
 
         if (shownFiles?.length) {
           // @ts-ignore
-          items = items.filter(item => item.type === 'folder' || shownFiles.some(file => (item as Asset).contentType.startsWith(file)));
+          items = items.filter(
+            (item) =>
+              item.type === 'folder' ||
+              shownFiles.some((file) => (item as Asset).contentType.startsWith(file))
+          );
         }
       })
       .finally(() => {
@@ -144,14 +169,16 @@
           d="M214.6 41.4c-12.5-12.5-32.8-12.5-45.3 0l-160 160c-12.5 12.5-12.5 32.8 0 45.3s32.8 12.5 45.3 0L160 141.2V448c0 17.7 14.3 32 32 32s32-14.3 32-32V141.2L329.4 246.6c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3l-160-160z"
         />
       </svg>
-      <div>Drop your files here</div>
+      <div>{wording.DROP_FILES_HERE}</div>
     </div>
   {:else if folderDialog}
     <header>
       <div class="header-actions">
         <button type="button" on:click={() => (folderDialog = false)}>
           <svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 -960 960 960" width="24">
-            <path d="m256-200-56-56 224-224-224-224 56-56 224 224 224-224 56 56-224 224 224 224-56 56-224-224-224 224Z"/>
+            <path
+              d="m256-200-56-56 224-224-224-224 56-56 224 224 224-224 56 56-224 224 224 224-56 56-224-224-224 224Z"
+            />
           </svg>
         </button>
       </div>
@@ -159,10 +186,10 @@
 
     <form class="add-folder-form" on:submit|preventDefault={createFolder}>
       <label class="add-folder-input">
-        <span>Folder name</span>
+        <span>{wording.FOLDER_NAME}</span>
         <input bind:value={folderName} pattern={folderNamePattern} required />
       </label>
-      <button class="add-folder-submit" type="submit">Submit</button>
+      <button class="add-folder-submit" type="submit">{wording.SUBMIT}</button>
     </form>
   {:else}
     <header>
@@ -205,7 +232,7 @@
       </div>
     {:else if items.length == 0}
       <div class="info">
-        <p>Folder is empty</p>
+        <p>{wording.FOLDER_IS_EMPTY}</p>
       </div>
     {:else}
       <div class="files">
@@ -223,6 +250,7 @@
               <Asset
                 asset={item}
                 {service}
+                {wording}
                 on:remove={() => removeFile(index, item.id)}
                 on:cancel={() => cancelUpload(item.id)}
               />
@@ -234,7 +262,7 @@
 
     {#if selectable}
       <footer>
-        <button type="button" on:click={confirmSelection}>Confirm Selection</button>
+        <button type="button" on:click={confirmSelection}>{wording.CONFIRM_SELECTION}</button>
       </footer>
     {/if}
   {/if}
@@ -250,13 +278,6 @@
 />
 
 <style>
-  /*
-* Prefixed by https://autoprefixer.github.io
-* PostCSS: v8.4.14,
-* Autoprefixer: v10.4.7
-* Browsers: last 100 version
-*/
-
   * {
     -webkit-box-sizing: border-box;
     -moz-box-sizing: border-box;
@@ -401,7 +422,7 @@
     height: 40px;
     padding: 0 16px;
     font-weight: bold;
-    background-color: #E66439;
+    background-color: #e66439;
     color: white;
     border: none;
     -webkit-border-radius: 12px;
@@ -415,23 +436,23 @@
   }
 
   footer button:disabled {
-    opacity: .5;
+    opacity: 0.5;
     pointer-events: none;
   }
 
   footer button:active {
-    -webkit-transform: scale(.95);
-    -moz-transform: scale(.95);
-    -ms-transform: scale(.95);
-    -o-transform: scale(.95);
-    transform: scale(.95);
+    -webkit-transform: scale(0.95);
+    -moz-transform: scale(0.95);
+    -ms-transform: scale(0.95);
+    -o-transform: scale(0.95);
+    transform: scale(0.95);
   }
 
   .add-folder-submit {
     height: 32px;
     padding: 0 12px;
     font-weight: bold;
-    background-color: #E66439;
+    background-color: #e66439;
     color: white;
     border: none;
     -webkit-border-radius: 8px;
@@ -446,16 +467,16 @@
   }
 
   .add-folder-submit:disabled {
-    opacity: .5;
+    opacity: 0.5;
     pointer-events: none;
   }
 
   .add-folder-submit:active {
-    -webkit-transform: scale(.95);
-    -moz-transform: scale(.95);
-    -ms-transform: scale(.95);
-    -o-transform: scale(.95);
-    transform: scale(.95);
+    -webkit-transform: scale(0.95);
+    -moz-transform: scale(0.95);
+    -ms-transform: scale(0.95);
+    -o-transform: scale(0.95);
+    transform: scale(0.95);
   }
 
   .drop-here {
@@ -491,7 +512,7 @@
   }
 
   .add-folder-form {
-    padding: 20px
+    padding: 20px;
   }
 
   .add-folder-input {
@@ -504,7 +525,7 @@
   }
 
   .add-folder-input input {
-    border: 1px solid rgba(0,0,0,.08);
+    border: 1px solid rgba(0, 0, 0, 0.08);
     height: 40px;
     padding: 0 12px;
     -webkit-border-radius: 8px;
@@ -637,7 +658,7 @@
   }
 
   .asset-button.selected {
-    border: 1px solid #E66439;
+    border: 1px solid #e66439;
   }
 
   :global(.asset-button:hover .file) {
@@ -718,17 +739,17 @@
     border-radius: 50%;
     border: 9px solid var(--primary-color);
     -webkit-animation:
-            spinner-bulqg1 0.8s infinite linear alternate,
-            spinner-oaa3wk 1.6s infinite linear;
+      spinner-bulqg1 0.8s infinite linear alternate,
+      spinner-oaa3wk 1.6s infinite linear;
     -moz-animation:
-            spinner-bulqg1 0.8s infinite linear alternate,
-            spinner-oaa3wk 1.6s infinite linear;
+      spinner-bulqg1 0.8s infinite linear alternate,
+      spinner-oaa3wk 1.6s infinite linear;
     -o-animation:
-            spinner-bulqg1 0.8s infinite linear alternate,
-            spinner-oaa3wk 1.6s infinite linear;
+      spinner-bulqg1 0.8s infinite linear alternate,
+      spinner-oaa3wk 1.6s infinite linear;
     animation:
-            spinner-bulqg1 0.8s infinite linear alternate,
-            spinner-oaa3wk 1.6s infinite linear;
+      spinner-bulqg1 0.8s infinite linear alternate,
+      spinner-oaa3wk 1.6s infinite linear;
   }
 
   @-webkit-keyframes spinner-bulqg1 {
@@ -758,12 +779,28 @@
     }
 
     75% {
-      -webkit-clip-path: polygon(50% 50%, 100% 100%, 100% 100%, 100% 100%, 100% 100%, 50% 100%, 0% 100%);
+      -webkit-clip-path: polygon(
+        50% 50%,
+        100% 100%,
+        100% 100%,
+        100% 100%,
+        100% 100%,
+        50% 100%,
+        0% 100%
+      );
       clip-path: polygon(50% 50%, 100% 100%, 100% 100%, 100% 100%, 100% 100%, 50% 100%, 0% 100%);
     }
 
     100% {
-      -webkit-clip-path: polygon(50% 50%, 50% 100%, 50% 100%, 50% 100%, 50% 100%, 50% 100%, 0% 100%);
+      -webkit-clip-path: polygon(
+        50% 50%,
+        50% 100%,
+        50% 100%,
+        50% 100%,
+        50% 100%,
+        50% 100%,
+        0% 100%
+      );
       clip-path: polygon(50% 50%, 50% 100%, 50% 100%, 50% 100%, 50% 100%, 50% 100%, 0% 100%);
     }
   }
@@ -855,12 +892,28 @@
     }
 
     75% {
-      -webkit-clip-path: polygon(50% 50%, 100% 100%, 100% 100%, 100% 100%, 100% 100%, 50% 100%, 0% 100%);
+      -webkit-clip-path: polygon(
+        50% 50%,
+        100% 100%,
+        100% 100%,
+        100% 100%,
+        100% 100%,
+        50% 100%,
+        0% 100%
+      );
       clip-path: polygon(50% 50%, 100% 100%, 100% 100%, 100% 100%, 100% 100%, 50% 100%, 0% 100%);
     }
 
     100% {
-      -webkit-clip-path: polygon(50% 50%, 50% 100%, 50% 100%, 50% 100%, 50% 100%, 50% 100%, 0% 100%);
+      -webkit-clip-path: polygon(
+        50% 50%,
+        50% 100%,
+        50% 100%,
+        50% 100%,
+        50% 100%,
+        50% 100%,
+        0% 100%
+      );
       clip-path: polygon(50% 50%, 50% 100%, 50% 100%, 50% 100%, 50% 100%, 50% 100%, 0% 100%);
     }
   }

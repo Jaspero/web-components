@@ -99,8 +99,8 @@
   }
 
   onMount(() => {
-    updateHeight()
-  })
+    updateHeight();
+  });
 
   function updateHeight() {
     if (textareaEl) {
@@ -140,8 +140,8 @@
       on:focus={() => (inputFocused = true)}
       on:blur={() => (inputFocused = false)}
       on:input={(event) => {
-            updateHeight();
-            dispatch('input', event);
+        updateHeight();
+        dispatch('input', event);
       }}
     ></textarea>
   </label>

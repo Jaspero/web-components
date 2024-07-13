@@ -5,10 +5,8 @@
   import '../../../dist/ckeditor.wc';
   import MultiSearchDemo from './MultiSearchDemo.svelte';
   import '../../lib/src/index.css';
+  import AssetManagerDemo from './AssetManagerDemo.svelte';
 </script>
 
-
-<jp-ckeditor></jp-ckeditor>
-<jp-input label='Input'>
-</jp-input>
-<MultiSearchDemo />
+<!-- <MultiSearchDemo /> -->
+<AssetManagerDemo />
