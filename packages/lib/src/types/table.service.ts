@@ -9,4 +9,5 @@ export interface TableService<T = any> {
   adjustPageSize?: (pageSize: number) => Promise<void>;
   adjustSort?: (sort: TableSort) => Promise<void>;
   export?: () => Promise<T[]>;
+  import?: (file: File) => Promise<T[]>;
 }

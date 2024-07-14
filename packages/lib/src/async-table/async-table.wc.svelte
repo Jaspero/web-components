@@ -52,6 +52,7 @@
   let arrangementColumns: Array<TableHeader & { enabled: boolean }> = [];
   let saveArrangementLoading = false;
   let importFileEl: HTMLInputElement;
+  let importLoading = false;
 
   const dispatch = createEventDispatcher();
 
@@ -230,6 +231,31 @@
       });
 
     arrangeColumnDialog = true;
+  }
+
+  async function importData(event) {
+    if (importLoading) {
+      return;
+    }
+
+    if (!event.target.files || !event.target.files[0]) {
+      return;
+    }
+
+    importLoading = true;
+
+    const r = await service.import(event.target.files[0]);
+
+    if (r?.length) {
+      rows = [
+        ...r,
+        ...rows
+      ];
+    }
+
+    event.target.value = '';
+
+    importLoading = false;
   }
 
   async function saveColumnArrangement() {
@@ -419,7 +445,7 @@
   </div>
 {/if}
 
-<input type="file" accept=".csv" bind:this={importFileEl} hidden />
+<input type="file" accept=".csv" bind:this={importFileEl} on:change={importData} hidden />
 
 <style>
   .table-card {

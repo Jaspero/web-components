@@ -38,6 +38,11 @@
           { name: 'Jane', age: 31, disabled: true }
         ];
       },
+			import: async () => {
+				return [
+					{ name: 'Imported John', age: 30, disabled: true },
+				]
+			},
 			arrangeColumns: async (id: string, headers) => {
 				localStorage.setItem(id, JSON.stringify(headers));
 			},
