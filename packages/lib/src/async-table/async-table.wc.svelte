@@ -12,18 +12,18 @@
   import type { TableSort } from '../types/table-sort.interface';
   import type { TableService } from '../types/table.service';
 
-  export let wording: {
-    EXPORT: string;
-    LOADING: string;
-    LOAD_MORE: string;
-    PAGE_SIZE: string;
-  } = {
+  export let wording = {
+    ARRANGE_COLUMNS: 'Arrange columns',
     EXPORT: 'Export',
+    IMPORT: 'Import',
     LOADING: 'Loading',
     LOAD_MORE: 'Load more',
-    PAGE_SIZE: 'Page size'
+    PAGE_SIZE: 'Page size',
+    SAVE: 'Save'
   };
   export let allowArrangeColumns = true;
+  export let showArrangingColumns = true;
+  export let showImport = true;
   export let showExport = true;
   export let rowClickable = false;
   export let headers: TableHeader[] = [];
@@ -31,6 +31,7 @@
   export let pageSize: number = pageSizes[0];
   export let sort: TableSort;
   export let service: TableService;
+  export let id: string;
   export let getData = async () => {
     const data = await service.get(sort, pageSize);
 
@@ -40,6 +41,7 @@
     loading = false;
   };
   export let rows: any[] = [];
+  export let arrangeColumnDialog = false;
 
   let formattedPageSizes = JSON.stringify(pageSizes.map((s) => ({ label: s, value: s })));
   let loading = true;
@@ -47,8 +49,9 @@
   let exportLoading = false;
   let activeHeaders: TableHeader[];
   let columnOrder: string[] = [];
-
-  $: activeHeaders = headers.filter((it) => !it.disabled);
+  let arrangementColumns: Array<TableHeader & { enabled: boolean }> = [];
+  let saveArrangementLoading = false;
+  let importFileEl: HTMLInputElement;
 
   const dispatch = createEventDispatcher();
 
@@ -61,7 +64,7 @@
   }
 
   export async function updateRow(value: any, index: number) {
-    rows = rows.map((it, ind) => (ind === index ? {...it, ...value} : it));
+    rows = rows.map((it, ind) => (ind === index ? { ...it, ...value } : it));
   }
 
   async function handleColumn(header: TableHeader, row: any, index: number) {
@@ -100,10 +103,7 @@
       direction: sort?.key === header.key ? (sort.direction === 'asc' ? 'desc' : 'asc') : 'asc'
     };
 
-    const [data] = await Promise.all([
-      service.get(sort, pageSize),
-      service.adjustSort(sort)
-    ]);
+    const [data] = await Promise.all([service.get(sort, pageSize), service.adjustSort(sort)]);
 
     rows = data.rows;
     hasMore = data.hasMore;
@@ -131,30 +131,32 @@
     });
   }
 
-  async function updatePageSize(event: {detail: number}) {
+  async function updatePageSize(event: { detail: number }) {
     pageSize = event.detail;
-    
-    await Promise.all([
-      getData(),
-      service.adjustPageSize(pageSize)
-    ]);
+
+    await Promise.all([getData(), service.adjustPageSize(pageSize)]);
   }
 
   async function exportData() {
+    if (exportLoading) {
+      return;
+    }
+
     exportLoading = true;
 
     const data = await service.export();
     const resolved = await Promise.all(
       data.map(async (row, index) => {
         const columns = await Promise.all(
-          activeHeaders.map((header) => handleColumn(
-            { 
-              key: header.key,
-              fallback: header.exportFallback || header.fallback,
-              pipes: header.exportPipes || header.pipes || []
-            } as TableHeader,
-            row,
-            index
+          activeHeaders.map((header) =>
+            handleColumn(
+              {
+                key: header.key,
+                fallback: header.exportFallback || header.fallback,
+                pipes: header.exportPipes || header.pipes || []
+              } as TableHeader,
+              row,
+              index
             )
           )
         );
@@ -191,7 +193,7 @@
     event.preventDefault();
   }
 
-  function drop(event: DragEvent, targetIndex: number) {
+  async function drop(event: DragEvent, targetIndex: number) {
     event.preventDefault();
 
     const draggedColumn = event.dataTransfer.getData('text/plain');
@@ -208,26 +210,101 @@
           const bIndex = columnOrder.indexOf(b.key);
           return aIndex - bIndex;
         });
+
+      if (service.arrangeColumns) {
+        await service.arrangeColumns(id, activeHeaders);
+      }
     }
   }
 
+  function arrangeColumns() {
+    arrangementColumns = [...headers]
+      .map((item: any) => {
+        item.enabled = !item.disabled;
+        return item;
+      })
+      .sort((a, b) => {
+        const aIndex = columnOrder.indexOf(a.key);
+        const bIndex = columnOrder.indexOf(b.key);
+        return aIndex - bIndex;
+      });
+
+    arrangeColumnDialog = true;
+  }
+
+  async function saveColumnArrangement() {
+    if (saveArrangementLoading) {
+      return;
+    }
+
+    saveArrangementLoading = true;
+    headers = [...arrangementColumns].map((it) => {
+      it.disabled = !it.enabled;
+      delete it.enabled;
+      return it;
+    });
+    activeHeaders = headers.filter((it) => !it.disabled);
+    columnOrder = activeHeaders.map((header) => header.key);
+
+    if (service.arrangeColumns) {
+      await service.arrangeColumns(id, activeHeaders);
+    }
+
+    saveArrangementLoading = false;
+    arrangeColumnDialog = false;
+  }
+
   onMount(async () => {
+    if (service.getColumnOrder) {
+      const pulledHeaders = await service.getColumnOrder(id);
+
+      if (pulledHeaders) {
+        headers = pulledHeaders;
+      }
+    }
+    
+    activeHeaders = headers.filter((it) => !it.disabled);
     columnOrder = activeHeaders.map((header) => header.key);
     await getData();
   });
 </script>
 
 <div class="table-card">
-  {#if showExport}
+  {#if showArrangingColumns || showImport || showExport}
     <div class="table-header">
+      {#if showArrangingColumns}
+        &nbsp;
+        <button type="button" on:click={arrangeColumns} class="table-button settings-button">
+          {wording.ARRANGE_COLUMNS}
+        </button>
+      {/if}
+
+      {#if showImport}
+        &nbsp;
+        <button
+          type="button"
+          class="table-button settings-button"
+          on:click={() => importFileEl.click()}
+        >
+          {wording.IMPORT}
+        </button>
+      {/if}
       {#if showExport}
         &nbsp;
         <button
           type="button"
           class="table-button settings-button"
           on:click={exportData}
-          class:loading={exportLoading}>{wording.EXPORT}</button
+          class:loading={exportLoading}
+          disabled={exportLoading}
         >
+          {#if exportLoading}
+            <span class="spinner"></span>
+            {wording.LOADING}
+          {:else}
+            {wording.EXPORT}
+          {/if}
+        </button>
       {/if}
     </div>
   {/if}
@@ -238,23 +315,23 @@
         <tr>
           {#each activeHeaders as header, index}
             <th
-              class:sortable={allowArrangeColumns && header.sortable}
               on:click={() => adjustSort(header)}
               on:drop={(e) => drop(e, index)}
               on:dragover={dragover}
             >
               <span
-                class="draggable-column"
+                class:draggable-column={allowArrangeColumns}
                 draggable={allowArrangeColumns}
                 tabindex="-1"
                 role="button"
                 aria-label="Drag handle"
-                on:dragstart={(e) => dragstart(e, header)}>
+                on:dragstart={(e) => dragstart(e, header)}
+              >
                 {@html header.label}
               </span>
 
               {#if sort?.key === header.key}
-                <span>{sort.direction === 'asc' ? '↑' : '↓'}</span>
+                <span class="sortable">{sort.direction === 'asc' ? '↑' : '↓'}</span>
               {/if}
             </th>
           {/each}
@@ -280,7 +357,13 @@
   </div>
 
   <div class="table-actions">
-    <button type="button" class="table-button load-button" class:loading disabled={!hasMore} on:click={loadMore}>
+    <button
+      type="button"
+      class="table-button load-button"
+      class:loading
+      disabled={!hasMore}
+      on:click={loadMore}
+    >
       {#if loading}
         <span class="spinner"></span>
         {wording.LOADING}
@@ -289,10 +372,54 @@
       {/if}
     </button>
     {#if pageSizes.length > 1}
-      <jp-select label={wording.PAGE_SIZE} options={formattedPageSizes} value={pageSize} on:value={updatePageSize}></jp-select>
+      <jp-select
+        label={wording.PAGE_SIZE}
+        options={formattedPageSizes}
+        value={pageSize}
+        on:value={updatePageSize}
+      ></jp-select>
     {/if}
   </div>
 </div>
+
+{#if arrangeColumnDialog}
+  <div class="arrange-columns-dialog">
+    <!-- svelte-ignore a11y-click-events-have-key-events -->
+    <!-- svelte-ignore a11y-no-static-element-interactions -->
+    <div
+      class="arrange-columns-dialog-backdrop"
+      on:click={() => (arrangeColumnDialog = false)}
+    ></div>
+    <form class="arrange-columns-dialog-inner" on:submit|preventDefault={saveColumnArrangement}>
+      <main>
+        {#each arrangementColumns as column}
+          <label>
+            <input type="checkbox" value={true} bind:checked={column.enabled} />
+            <span>{@html column.label}</span>
+          </label>
+        {/each}
+      </main>
+
+      <footer>
+        <button
+          type="submit"
+          class="table-button load-button"
+          class:loading={saveArrangementLoading}
+          disabled={saveArrangementLoading}
+        >
+          {#if loading}
+            <span class="spinner"></span>
+            {wording.LOADING}
+          {:else}
+            {wording.SAVE}
+          {/if}
+        </button>
+      </footer>
+    </form>
+  </div>
+{/if}
+
+<input type="file" accept=".csv" bind:this={importFileEl} hidden />
 
 <style>
   .table-card {
@@ -427,6 +554,50 @@
     -moz-animation: spin 1s linear infinite;
     -o-animation: spin 1s linear infinite;
     animation: spin 1s linear infinite;
+  }
+
+  .arrange-columns-dialog {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 1000;
+    display: flex;
+    justify-content: center;
+  }
+
+  .arrange-columns-dialog-backdrop {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: 1001;
+  }
+
+  .arrange-columns-dialog-inner {
+    width: 500px;
+    max-width: 100%;
+    z-index: 1002;
+    background-color: white;
+    border-radius: 0.25rem;
+    box-shadow: 0 3px 12px rgba(0, 0, 0, 0.16);
+    margin-top: 50px;
+    padding: 1rem;
+    display: flex;
+    flex-direction: column;
+    height: min-content;
+  }
+
+  .arrange-columns-dialog-inner main {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    padding-bottom: 1rem;
+    max-height: 400px;
+    overflow-y: auto;
   }
 
   @-webkit-keyframes spin {

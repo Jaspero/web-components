@@ -6,7 +6,9 @@
   import MultiSearchDemo from './MultiSearchDemo.svelte';
   import '../../lib/src/index.css';
   import AssetManagerDemo from './AssetManagerDemo.svelte';
+  import AsyncTableDemo from './AsyncTableDemo.svelte';
 </script>
 
 <!-- <MultiSearchDemo /> -->
-<AssetManagerDemo />
+<!-- <AssetManagerDemo /> -->
+<AsyncTableDemo />
