@@ -27,7 +27,7 @@
   export let showExport = true;
   export let rowClickable = false;
   export let headers: TableHeader[] = [];
-  export let pageSizes: number[] = [10, 25, 50, 100];
+  export let pageSizes = [10, 25, 50, 100]; 
   export let pageSize: number = pageSizes[0];
   export let sort: TableSort;
   export let service: TableService;
@@ -213,7 +213,7 @@
         });
 
       if (service.arrangeColumns) {
-        await service.arrangeColumns(id, activeHeaders);
+        await service.arrangeColumns(id, activeHeaders.map((it) => it.key));
       }
     }
   }
@@ -273,7 +273,7 @@
     columnOrder = activeHeaders.map((header) => header.key);
 
     if (service.arrangeColumns) {
-      await service.arrangeColumns(id, activeHeaders);
+      await service.arrangeColumns(id, activeHeaders.map(it => it.key));
     }
 
     saveArrangementLoading = false;
@@ -285,7 +285,16 @@
       const pulledHeaders = await service.getColumnOrder(id);
 
       if (pulledHeaders) {
-        headers = pulledHeaders;
+        headers = headers
+          .map(header => {
+            header.disabled = !pulledHeaders.includes(header.key);
+            return header;
+          })
+          .sort((a, b) => {
+            const aIndex = pulledHeaders.indexOf(a.key);
+            const bIndex = pulledHeaders.indexOf(b.key);
+            return aIndex - bIndex;
+          });
       }
     }
     
