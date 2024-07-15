@@ -17,7 +17,7 @@
 
 <script lang="ts">
   import { clickOutside } from '../clickOutside';
-  import { createEventDispatcher } from 'svelte';
+  import { createEventDispatcher } from 'svelte'; 
   import { formatDisplayDate, formatReturnDate } from '../utils/dateFormatter';
 
   export let attachedInternals: ElementInternals;
@@ -32,7 +32,8 @@
   export let displayFormatFunction: (date: Date) => string = (date) => date.toDateString();
   export let returnFormat: string = 'js';
   export let returnFormatFunction: (date: Date) => any = (date) => date.valueOf();
-
+  export let minDate: string | Date;
+  export let maxDate = new Date(8.64e15);
   let selectedDateObject = new Date();
   let displayedDateString = formatDisplayDate(
           selectedDateObject,
@@ -69,6 +70,8 @@
   ];
   let yearPickerIndex = 0;
 
+  $: internalMinDate = minDate ? minDate instanceof Date ? minDate : new Date(minDate) : null;
+  $: internalMaxDate = maxDate ? maxDate instanceof Date ? maxDate : new Date(maxDate) : null;
   export const getValue = () => {
     if (yearSelected) {
       return formatReturnDate(selectedDateObject, returnFormat, returnFormatFunction);
@@ -76,6 +79,32 @@
       return '';
     }
   };
+
+  const isOutOfMinBounds=(year,month,date)=> {
+    if(internalMinDate == null ){
+      return false;
+    }
+    
+    if(internalMinDate.getFullYear()>=year && internalMinDate.getMonth()>=month+1 && internalMinDate.getDate()>=date){
+      return true;
+    }
+    return false;
+
+  }
+
+  const isOutOfMaxBounds=(year,month,date)=> {
+    if(internalMaxDate == null ){
+      return false;
+    }
+    
+    if(internalMaxDate.getFullYear()<=year && internalMaxDate.getMonth()<=month+1 && internalMaxDate.getDate()<=date){
+      return true;
+    }
+    return false;
+    
+
+  }
+
 
   const dispatch = createEventDispatcher();
 
@@ -87,7 +116,7 @@
       return tmp.slice(el * 4, (el + 1) * 4);
     });
   };
-
+  
   const getPickerRows = (month, year) => {
     const thisMonthDays = 40 - new Date(year, month, 40).getDate();
     const prevMonthDays = 40 - new Date(year, month - 1, 40).getDate();
@@ -170,15 +199,15 @@
 
   $: if (pickerMonth == 12) {
     pickerMonth = 0;
-    pickerYear++;
+        pickerYear++;    
   } else if (pickerMonth == -1) {
     pickerMonth = 11;
     pickerYear--;
   }
-
+  
   $: pickerYearRows = getYearPickerRows(yearPickerIndex);
 
-  $: pickerRows = getPickerRows(pickerMonth, pickerYear);
+  $: pickerRows = getPickerRows(pickerMonth, pickerYear);  
 
   $: {
     if (yearSelected) {
@@ -199,13 +228,14 @@
     } else {
       if (required) {
         attachedInternals.setValidity(
-                { valueMissing: true },
-                requiredValidationMessage || `Date is required.`
-        );
+       { customError: true },
+                requiredValidationMessage || `Date is required.`,
+        bindingElement)
       }
       displayedDateString = '';
       dispatch('value', { value: '' });
     }
+   attachedInternals.checkValidity();
   }
 </script>
 
@@ -242,13 +272,13 @@
   </span>
   </button>
 
-  <input type="date" {name} bind:value={internalValue} hidden />
+  <input type="date" {name} bind:value={internalValue} hidden required={required}/>
   {#if openPicker}
     <div class="menu" use:clickOutside on:click_outside={() => (openPicker = false)} style={menuStyle}>
       <div class="menu-nav">
         <!--<button on:click|preventDefault={() => (pickerYear = pickerYear - 1)}>&lt;&lt;</button>-->
         <button type="button" class="menu-nav-date" on:click|preventDefault={() => (yearSelector = true)}>
-          <p>{monthMap[pickerMonth]}, {pickerYear}</p>
+          <p>{monthMap[pickerMonth]}, {pickerYear} </p>
           <svg xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 512 512">
             <!--! Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2023 Fonticons, Inc. -->
             <path
@@ -257,7 +287,7 @@
           </svg>
         </button>
         <div class="menu-nav-buttons">
-          <button type="button" on:click|preventDefault={() => (pickerMonth = pickerMonth - 1)}>
+          <button type="button" on:click|preventDefault={() => (pickerMonth = pickerMonth - 1)} disabled = {isOutOfMinBounds(pickerYear,pickerMonth,0)}>
             <svg xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 320 512">
               <!--! Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2023 Fonticons, Inc. -->
               <path
@@ -265,7 +295,7 @@
               />
             </svg>
           </button>
-          <button type="button" on:click|preventDefault={() => (pickerMonth = pickerMonth + 1)}>
+          <button type="button" on:click|preventDefault={() => (pickerMonth = pickerMonth + 1)}  disabled = {isOutOfMaxBounds(pickerYear,pickerMonth,32 )}> 
             <svg xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 320 512">
               <!--! Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2023 Fonticons, Inc. -->
               <path
@@ -273,7 +303,7 @@
               />
             </svg>
           </button>
-        </div>
+        </div>    
         <!--<button on:click|preventDefault={() => (pickerYear = pickerYear + 1)}>&gt;&gt;</button>-->
       </div>
 
@@ -303,8 +333,9 @@
                       monthSelected = col.month;
                       openPicker = false;
                     }}
+                    disabled = {isOutOfMinBounds(col.year,col.month,col.day+1) || isOutOfMaxBounds(col.year,col.month,col.day-1)}
                   >
-                    {col.day}
+                    {col.day} 
                   </button>
                 </div>
               {/each}
@@ -334,7 +365,7 @@
               </svg>
             </button>
             <div class="menu-year-nav-buttons">
-              <button type="button" on:click|preventDefault={() => yearPickerIndex--}>
+              <button type="button" on:click|preventDefault={() => yearPickerIndex--} disabled = {isOutOfMinBounds(2000 + (yearPickerIndex) * 4 * 6 , 1,0)}>
                 <svg xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 320 512">
                   <!--! Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2023 Fonticons, Inc. -->
                   <path
@@ -342,7 +373,7 @@
                   />
                 </svg>
               </button>
-              <button type="button" on:click|preventDefault={() => yearPickerIndex++}>
+              <button type="button" on:click|preventDefault={() => yearPickerIndex++ } disabled = {isOutOfMaxBounds(2000 + (yearPickerIndex+1) * 4 * 6 , 11, 30)}> 
                 <svg xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 320 512">
                   <!--! Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2023 Fonticons, Inc. -->
                   <path
@@ -363,7 +394,9 @@
                     pickerYear = year;
                     yearSelector = false;
                     monthSelector = true;
-                  }}>{year}</button
+                  }}
+                  disabled = {isOutOfMinBounds(year+1 , 1,0) || isOutOfMaxBounds(year-1,11,31)}
+                  >{year}</button
                 >
               {/each}
             </div>
@@ -390,7 +423,7 @@
               </svg>
             </button>
             <div class="menu-month-nav-buttons">
-              <button type="button" on:click|preventDefault={() => (pickerYear = pickerYear - 1)}>
+              <button type="button" on:click|preventDefault={() => (pickerYear = pickerYear - 1)} disabled = {isOutOfMinBounds(pickerYear , 0,0)}> 
                 <svg xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 320 512">
                   <!--! Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2023 Fonticons, Inc. -->
                   <path
@@ -398,7 +431,7 @@
                   />
                 </svg>
               </button>
-              <button type="button" on:click|preventDefault={() => (pickerYear = pickerYear + 1)}>
+              <button type="button" on:click|preventDefault={() => (pickerYear = pickerYear + 1)}  disabled = {isOutOfMaxBounds(pickerYear, 11, 31)}> 
                 <svg xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 320 512">
                   <!--! Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2023 Fonticons, Inc. -->
                   <path
@@ -419,6 +452,7 @@
                     monthSelector = false;
                   }}
                         class:active={monthSelected === index}
+                        disabled = {isOutOfMinBounds(pickerYear , index+1,0) || isOutOfMaxBounds(pickerYear,index-1,31)}
                 >
                   {month}
                 </button>
