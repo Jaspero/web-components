@@ -301,7 +301,7 @@
 
   async function loadValues(value) {
     valueLoad = true;
-    const values = value.split(',');
+    const values = Array.isArray(value) ? value : value.split(',');
     await Promise.all(
       values.map(async (el) => {
         let single;
