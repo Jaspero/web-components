@@ -20,7 +20,9 @@
       { src: 'https://picsum.photos/500/500' },
       { src: 'https://picsum.photos/300/300' }
     ];
-
+    imgEl.imageCount = true;
+    imgEl.enablePagination = true;
+    imgEl.sliderBar = true;
     el.appendChild(imgEl);
   }
 </script>

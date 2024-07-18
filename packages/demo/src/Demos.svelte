@@ -98,46 +98,6 @@
     // }
     // el.appendChild(multisearch)
 
-    const asyncTable = document.createElement('jp-async-table') as any;
-    asyncTable.headers = [
-      {
-        key: '/name',
-        label: 'Name'
-      },
-      {
-        key: '/age',
-        label: 'Age',
-        sortable: true
-      },
-      {
-        key: '/disabled',
-        label: 'Disabled',
-        disabled: true
-      }
-    ];
-    asyncTable.service = {
-      get: async () => {
-        return {
-          rows: [
-            { name: 'John', age: 30, disabled: true },
-            { name: 'Jane', age: 31, disabled: true }
-          ],
-          hasMore: false
-        };
-      },
-      export: async () => {
-        return [
-          { name: 'John', age: 30, disabled: true },
-          { name: 'Jane', age: 31, disabled: true }
-        ];
-      },
-      adjustPageSize: async () => {},
-    };
-    asyncTable.allowArrangeColumns = false;
-    asyncTable.pageSizes = [10];
-    asyncTable.sort = {key: '/age', direction: 'asc'};
-    el.appendChild(asyncTable);
-
     // renderAlert({
     //   title: 'Success',
     //   message: 'This is a success',

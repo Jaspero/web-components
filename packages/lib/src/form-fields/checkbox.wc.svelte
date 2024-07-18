@@ -87,15 +87,15 @@
   {#each options as option}
     <label>
       <input
-              type="checkbox"
-              name={option.value}
-              bind:checked={option.checked}
-              disabled={option.disabled}
+        type="checkbox"
+        name={option.value}
+        bind:checked={option.checked}
+        disabled={option.disabled}
       />
       <span class="checkbox">
         <span class="checkmark">
-            <span class="checkmark_stem"></span>
-            <span class="checkmark_kick"></span>
+          <span class="checkmark_stem"></span>
+          <span class="checkmark_kick"></span>
         </span>
       </span>
       {#if option.label}
@@ -138,7 +138,7 @@
   .checkbox {
     width: 20px;
     height: 20px;
-    border: 1px solid rgba(0,0,0,.16);
+    border: 1px solid rgba(0, 0, 0, 0.16);
     border-radius: 4px;
   }
 

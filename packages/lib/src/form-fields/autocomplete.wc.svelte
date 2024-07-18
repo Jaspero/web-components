@@ -18,6 +18,11 @@
 <script lang="ts">
   import { createEventDispatcher, onMount } from 'svelte';
 
+  export let wording: {
+    LOADING: string;
+  } = {
+    LOADING: 'Loading...'
+  }
   export let options: string[] | string = [];
 
   export let value = '';
@@ -263,7 +268,7 @@
             >
           {/each}
         {:else}
-          Loading...
+          {wording.LOADING}
         {/if}
       </div>
     </div>

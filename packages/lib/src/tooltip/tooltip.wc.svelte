@@ -58,8 +58,8 @@
     bind:this={cloud}
     use:clickOutside
     on:click_outside={() => {
-      if(!cloud.hasAttribute('hidden')){
-        cloud.setAttribute('hidden', 'true')
+      if (!cloud.hasAttribute('hidden')) {
+        cloud.setAttribute('hidden', 'true');
       }
     }}
     style={`position: ${mode == 'static' ? 'absolute' : 'fixed'};` + cloudStyle}
