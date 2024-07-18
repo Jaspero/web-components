@@ -335,16 +335,16 @@
          on:click_outside={() => (open = false)}
          style={menuStyle} on:keydown={handleKeydown}>
       {#each options as option, index (option)}
-        <button
-                type="button"
+        <button type="button"
                 class="menu-button"
                 class:selected={value == option.value}
                 bind:this={optionElements[index]}
                 disabled={option.disabled}
                 on:click|preventDefault={() => {
-            value = option.value;
-          }}
-        >
+                    value = option.value;
+                    toggleMenu();
+
+                }}>
           <span>{option.label ? option.label : option.value}</span>
 
           {#if value == option.value}
