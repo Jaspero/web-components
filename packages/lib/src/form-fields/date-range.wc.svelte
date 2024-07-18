@@ -192,7 +192,7 @@
   }
 
   $: {
-    if (open) {
+    if (openPicker) {
       document.documentElement.style.overflowY = 'hidden';
     } else {
       document.documentElement.style.overflowY = '';
