@@ -113,12 +113,20 @@
     const rect = bindingElement.getBoundingClientRect();
     const availableSpaceBelow = window.innerHeight - rect.bottom;
     const dropdownHeight = 300;
-
     let style: string = '';
+
     if (availableSpaceBelow < dropdownHeight) {
-      style = `bottom: 40px; right: 0;`;
+      style = `
+        width: ${rect.width}px;
+        bottom: ${window.innerHeight - rect.top}px;
+        left: ${rect.width - 300}px;
+      `;
     } else {
-      style = `top: 40px; right: 0;`;
+      style = `
+        width: ${rect.width}px;
+        top: ${rect.bottom}px;
+        left: ${rect.width - 300}px;
+      `;
     }
 
     previewStyle = style;
@@ -186,17 +194,6 @@
               />
             </svg>
           </button>
-
-          {#if preview}
-            <img
-              class="preview"
-              style={previewStyle}
-              src={img}
-              alt="preview"
-              use:clickOutside
-              on:click_outside={() => (preview = false)}
-            />
-          {/if}
         </div>
         {#if internalValue}
           <div class="field-icon">
@@ -234,6 +231,19 @@
     {/if}
   </div>
 </div>
+
+{#if preview}
+  <div class="overlay">
+    <img
+            class="preview"
+            style={previewStyle}
+            src={img}
+            alt="preview"
+            use:clickOutside
+            on:click_outside={() => (preview = false)}
+    />
+  </div>
+{/if}
 
 <style>
   .field {
@@ -506,5 +516,15 @@
     -webkit-box-shadow: 0 3px 12px 3px rgba(0, 0, 0, 0.16);
     -moz-box-shadow: 0 3px 12px 3px rgba(0, 0, 0, 0.16);
     box-shadow: 0 3px 12px 3px rgba(0, 0, 0, 0.16);
+  }
+
+  /* Overlay */
+  .overlay {
+    z-index: 100;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
   }
 </style>
