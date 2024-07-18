@@ -99,6 +99,14 @@
     );
   }
 
+  $: {
+    if (open) {
+      document.documentElement.style.overflowY = 'hidden';
+    } else {
+      document.documentElement.style.overflowY = '';
+    }
+  }
+
   function clearSelection() {
     displayValue = '';
 
@@ -139,13 +147,19 @@
     const rect = bindingElement.getBoundingClientRect();
     const availableSpaceBelow = window.innerHeight - rect.bottom;
     const dropdownHeight = 300;
-
     let style: string = '';
-
     if (availableSpaceBelow < dropdownHeight) {
-      style = `bottom: 100%;`;
+      style = `
+        width: ${rect.width}px;
+        bottom: ${window.innerHeight - rect.top}px;
+        left: ${rect.left}px;
+      `;
     } else {
-      style = `top: 100%;`;
+      style = `
+        width: ${rect.width}px;
+        top: ${rect.bottom}px;
+        left: ${rect.left}px;
+      `;
     }
 
     menuStyle = style;
@@ -305,7 +319,7 @@
     {@html label}
   </div>
 {/if}
-<div class="wrapper" use:clickOutside on:click_outside={() => (open = false)} class:has-hint={hint}>
+<div class="wrapper" class:has-hint={hint}>
   {#if showClear && hasSelectedOption}
     <button class="clear" on:click={clearSelection}>
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512">
@@ -360,33 +374,38 @@
   {/if}
 
   {#if open}
-    <div class="menu" style={menuStyle} on:keydown={handleKeydown}>
-      {#each options as option, index (option)}
-        <button
-          type="button"
-          class="menu-button"
-          class:selected={option.selected}
-          bind:this={optionElements[index]}
-          disabled={option.disabled}
-          on:click|preventDefault={() => (option.selected = !option.selected)}
-        >
-          <span>{option.label ? option.label : option.value}</span>
+    <div class="overlay">
+      <div class="menu"
+           use:clickOutside
+           on:click_outside={() => (open = false)}
+           style={menuStyle} on:keydown={handleKeydown}>
+        {#each options as option, index (option)}
+          <button
+                  type="button"
+                  class="menu-button"
+                  class:selected={option.selected}
+                  bind:this={optionElements[index]}
+                  disabled={option.disabled}
+                  on:click|preventDefault={() => (option.selected = !option.selected)}
+          >
+            <span>{option.label ? option.label : option.value}</span>
 
-          {#if option.selected}
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              width="1rem"
-              height="1rem"
-              viewBox="0 0 448 512"
-            >
-              <!--! Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2023 Fonticons, Inc. -->
-              <path
-                d="M438.6 105.4c12.5 12.5 12.5 32.8 0 45.3l-256 256c-12.5 12.5-32.8 12.5-45.3 0l-128-128c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0L160 338.7 393.4 105.4c12.5-12.5 32.8-12.5 45.3 0z"
-              />
-            </svg>
-          {/if}
-        </button>
-      {/each}
+            {#if option.selected}
+              <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      width="1rem"
+                      height="1rem"
+                      viewBox="0 0 448 512"
+              >
+                <!--! Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2023 Fonticons, Inc. -->
+                <path
+                        d="M438.6 105.4c12.5 12.5 12.5 32.8 0 45.3l-256 256c-12.5 12.5-32.8 12.5-45.3 0l-128-128c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0L160 338.7 393.4 105.4c12.5-12.5 32.8-12.5 45.3 0z"
+                />
+              </svg>
+            {/if}
+          </button>
+        {/each}
+      </div>
     </div>
   {/if}
 </div>
@@ -655,5 +674,15 @@
 
   .clear:hover {
     background-color: rgba(0, 0, 0, 0.08);
+  }
+
+  /* Overlay */
+  .overlay {
+    z-index: 100;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
   }
 </style>

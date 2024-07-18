@@ -51,6 +51,7 @@
 
   let bindingElement;
   let optionElements = []; // Array to store references to option buttons
+  let menuStyle: string;
   let filteredOptions = [];
   let inputEl;
   let open = false;
@@ -58,6 +59,14 @@
   const dispatch = createEventDispatcher();
 
   const getValue = () => value;
+
+  $: {
+    if (open) {
+      document.documentElement.style.overflowY = 'hidden';
+    } else {
+      document.documentElement.style.overflowY = '';
+    }
+  }
 
   $: {
     if (Array.isArray(options)) {
@@ -108,6 +117,33 @@
         attachedInternals.setValidity({});
       }
     }
+  }
+
+  function toggleMenu(event?: any) {
+    if (event && event.target && event.target.closest('.menu')) {
+      return;
+    }
+
+    const rect = bindingElement.getBoundingClientRect();
+    const availableSpaceBelow = window.innerHeight - rect.bottom;
+    const dropdownHeight = 300;
+    let style: string = '';
+    if (availableSpaceBelow < dropdownHeight) {
+      style = `
+        width: ${rect.width}px;
+        bottom: ${window.innerHeight - rect.top}px;
+        left: ${rect.left}px;
+      `;
+    } else {
+      style = `
+        width: ${rect.width}px;
+        top: ${rect.bottom}px;
+        left: ${rect.left}px;
+      `;
+    }
+
+    menuStyle = style;
+    open = !open;
   }
 
   function handleKeydown(event: KeyboardEvent) {
@@ -183,7 +219,7 @@
 <!-- svelte-ignore a11y-no-static-element-interactions -->
 <div
   on:focusout={(e) => {
-    if (!bindingElement.contains(e.relatedTarget)) open = false;
+    if (open) toggleMenu();
   }}
   bind:this={bindingElement}
   on:keydown={handleKeydown}
@@ -206,30 +242,32 @@
       {pattern}
       bind:this={inputEl}
       bind:value
-      on:focus={() => (open = true)}
+      on:focus={toggleMenu}
     />
+  </label>
 
-    {#if open}
-      <div class="menu">
+  {#if open}
+    <div class="overlay">
+      <div class="menu" style={menuStyle}>
         {#if !loading}
           {#each filteredOptions as option, index}
             <button
-              type="button"
-              class="menu-button"
-              bind:this={optionElements[index]}
-              on:mousedown|preventDefault={() => {
+                    type="button"
+                    class="menu-button"
+                    bind:this={optionElements[index]}
+                    on:mousedown|preventDefault={() => {
                 value = option;
                 inputEl.blur();
               }}
-              on:click|preventDefault>{option}</button
+                    on:click|preventDefault>{option}</button
             >
           {/each}
         {:else}
           Loading...
         {/if}
       </div>
-    {/if}
-  </label>
+    </div>
+  {/if}
 </div>
 
 <style>
@@ -344,7 +382,7 @@
     -ms-flex: auto;
     flex: auto;
     width: 10rem;
-    font-size: 1rem;
+    font-size: 0.875rem;
     white-space: nowrap;
     overflow: hidden;
     -o-text-overflow: ellipsis;
@@ -393,8 +431,6 @@
   .menu {
     z-index: 100;
     position: absolute;
-    top: calc(100% + 1px);
-    left: 0;
     display: -webkit-box;
     display: -webkit-flex;
     display: -moz-box;
@@ -474,5 +510,15 @@
   .menu-button:not(:disabled):hover,
   .menu-button:focus {
     background-color: var(--background-secondary);
+  }
+
+  /* Overlay */
+  .overlay {
+    z-index: 100;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
   }
 </style>

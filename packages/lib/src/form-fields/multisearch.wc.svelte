@@ -109,6 +109,14 @@
     );
   }
 
+  $: {
+    if (open) {
+      document.documentElement.style.overflowY = 'hidden';
+    } else {
+      document.documentElement.style.overflowY = '';
+    }
+  }
+
   async function handleSearch() {
     options = options.filter((el) => el.selected);
     loadingSearch = true;
@@ -131,12 +139,19 @@
     const rect = bindingElement.getBoundingClientRect();
     const availableSpaceBelow = window.innerHeight - rect.bottom;
     const dropdownHeight = 300;
-
     let style: string = '';
     if (availableSpaceBelow < dropdownHeight) {
-      style = `bottom:100%;`;
+      style = `
+        width: ${rect.width}px;
+        bottom: ${window.innerHeight - rect.top}px;
+        left: ${rect.left}px;
+      `;
     } else {
-      style = `top:100%;`;
+      style = `
+        width: ${rect.width}px;
+        top: ${rect.bottom}px;
+        left: ${rect.left}px;
+      `;
     }
 
     menuStyle = style;
@@ -333,7 +348,7 @@
     {@html label}
   </div>
 {/if}
-<div class="wrapper" use:clickOutside on:click_outside={() => (open = false)} class:has-hint={hint}>
+<div class="wrapper" class:has-hint={hint}>
   <input class="hidden-input" tabindex="-1" bind:value={internalValue} {id} {name} {required} />
 
   <button
@@ -379,73 +394,78 @@
   {/if}
 
   {#if open}
-    <!-- svelte-ignore a11y-no-noninteractive-element-interactions -->
-    <div class="menu" on:keydown={handleKeydown} style={menuStyle} role="dialog">
-      {#if service.search}
-        <div class="search-field">
-          <span class="search-label" class:move={searchFocused || searchValue}>Search</span>
-          <input
-            name="search"
-            type="text"
-            class="search-input"
-            on:input={() => {
+    <div class="overlay">
+      <!-- svelte-ignore a11y-no-noninteractive-element-interactions -->
+      <div class="menu"
+           use:clickOutside
+           on:click_outside={() => (open = false)}
+           on:keydown={handleKeydown} style={menuStyle} role="dialog">
+        {#if service.search}
+          <div class="search-field">
+            <span class="search-label" class:move={searchFocused || searchValue}>Search</span>
+            <input
+                    name="search"
+                    type="text"
+                    class="search-input"
+                    on:input={() => {
               if (!loadingSearch) handleSearch();
             }}
-            bind:value={searchValue}
-            on:focus={() => (searchFocused = true)}
-            on:blur={() => (searchFocused = false)}
-          />
-        </div>
-      {/if}
-      <div class="menu-buttons">
-        {#each options as option, index (option)}
-          <button
-            type="button"
-            class="menu-button"
-            class:selected={option.selected}
-            bind:this={optionElements[index]}
-            disabled={option.disabled}
-            on:click|preventDefault={() => (option.selected = !option.selected)}
-          >
-            <span>{option.label ? option.label : option.value}</span>
-
-            {#if option.selected}
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                width="1rem"
-                height="1rem"
-                viewBox="0 0 448 512"
-              >
-                <!--! Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2023 Fonticons, Inc. -->
-                <path
-                  d="M438.6 105.4c12.5 12.5 12.5 32.8 0 45.3l-256 256c-12.5 12.5-32.8 12.5-45.3 0l-128-128c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0L160 338.7 393.4 105.4c12.5-12.5 32.8-12.5 45.3 0z"
-                />
-              </svg>
-            {/if}
-          </button>
-        {/each}
-        {#if loadingSearch}
-          <span style="display: block; padding: 0.75rem; text-align: center;">Loading...</span>
+                    bind:value={searchValue}
+                    on:focus={() => (searchFocused = true)}
+                    on:blur={() => (searchFocused = false)}
+            />
+          </div>
         {/if}
-      </div>
-      {#if service.loadMore && !loadingSearch}
-        <div class="loadmore">
-          {#if !loadingMore}
+        <div class="menu-buttons">
+          {#each options as option, index (option)}
             <button
-              type="button"
-              on:click|preventDefault|stopPropagation={async () => {
+                    type="button"
+                    class="menu-button"
+                    class:selected={option.selected}
+                    bind:this={optionElements[index]}
+                    disabled={option.disabled}
+                    on:click|preventDefault={() => (option.selected = !option.selected)}
+            >
+              <span>{option.label ? option.label : option.value}</span>
+
+              {#if option.selected}
+                <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        width="1rem"
+                        height="1rem"
+                        viewBox="0 0 448 512"
+                >
+                  <!--! Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2023 Fonticons, Inc. -->
+                  <path
+                          d="M438.6 105.4c12.5 12.5 12.5 32.8 0 45.3l-256 256c-12.5 12.5-32.8 12.5-45.3 0l-128-128c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0L160 338.7 393.4 105.4c12.5-12.5 32.8-12.5 45.3 0z"
+                  />
+                </svg>
+              {/if}
+            </button>
+          {/each}
+          {#if loadingSearch}
+            <span style="display: block; padding: 0.75rem; text-align: center;">Loading...</span>
+          {/if}
+        </div>
+        {#if service.loadMore && !loadingSearch}
+          <div class="loadmore">
+            {#if !loadingMore}
+              <button
+                      type="button"
+                      on:click|preventDefault|stopPropagation={async () => {
                 loadingMore = true;
                 options = options.concat(await service.loadMore(searchValue));
                 loadingMore = false;
               }}
-            >
-              Load more
-            </button>
-          {:else}
-            <button type="button" disabled>Loading...</button>
-          {/if}
-        </div>
-      {/if}
+              >
+                Load more
+              </button>
+            {:else}
+              <button type="button" disabled>Loading...</button>
+            {/if}
+          </div>
+        {/if}
+      </div>
     </div>
   {/if}
 </div>
@@ -809,5 +829,15 @@
     -o-transform: translateY(0);
     transform: translateY(0);
     font-size: 0.75rem;
+  }
+
+  /* Overlay */
+  .overlay {
+    z-index: 100;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
   }
 </style>

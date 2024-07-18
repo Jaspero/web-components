@@ -1,5 +1,5 @@
 <svelte:options
-  customElement={{
+        customElement={{
     tag: 'jp-select',
     shadow: 'none',
     extend: (customElementConstructor) => {
@@ -18,19 +18,19 @@
 <script lang="ts">
   import { clickOutside } from '../clickOutside';
   import { createEventDispatcher, onMount } from 'svelte';
-  import { wait } from '../utils/wait';
+  import {wait} from '../utils/wait';
 
   export let attachedInternals: ElementInternals;
   export let options: Array<{ label?: string; value: string; disabled?: boolean }> | string = [];
-  export let disabled = false;
-  export let required = false;
-  export let hint = '';
-  export let value = '';
-  export let id = '';
-  export let name = '';
+  export let disabled: boolean = false;
+  export let required: boolean = false;
+  export let hint: string = '';
+  export let value: string = '';
+  export let id: string = '';
+  export let name: string = '';
   export let label = '';
   export let labelType: 'inside' | 'outside' = 'inside';
-  export let showClear = false;
+  export let showClear: boolean = false;
   export const getValue = () => value;
 
   export let requiredValidationMessage: string;
@@ -60,6 +60,14 @@
   }
 
   $: {
+    if (open) {
+      document.documentElement.style.overflowY = 'hidden';
+    } else {
+      document.documentElement.style.overflowY = '';
+    }
+  }
+
+  $: {
     checkValidity();
     dispatch('value', value);
   }
@@ -72,9 +80,9 @@
     if (inputEl) {
       if (inputEl.validity.valueMissing) {
         attachedInternals.setValidity(
-          { valueMissing: true },
-          requiredValidationMessage || inputEl.validationMessage,
-          inputEl
+                { valueMissing: true },
+                requiredValidationMessage || inputEl.validationMessage,
+                inputEl
         );
       } else {
         attachedInternals.setValidity({});
@@ -84,16 +92,21 @@
 
   function toggleMenu() {
     const rect = bindingElement.getBoundingClientRect();
-    const windowHeight = window.innerHeight;
-
-    const isInBottomHalf = rect.top > windowHeight / 2;
-
-    let style = '';
-
-    if (isInBottomHalf) {
-      style = `bottom: 100%;`;
+    const availableSpaceBelow = window.innerHeight - rect.bottom;
+    const dropdownHeight = 300;
+    let style: string = '';
+    if (availableSpaceBelow < dropdownHeight) {
+      style = `
+        width: ${rect.width}px;
+        bottom: ${window.innerHeight - rect.top}px;
+        left: ${rect.left}px;
+      `;
     } else {
-      style = `top: 100%;`;
+      style = `
+        width: ${rect.width}px;
+        top: ${rect.bottom}px;
+        left: ${rect.left}px;
+      `;
     }
 
     menuStyle = style;
@@ -131,12 +144,11 @@
         }
       }
     }
-    return currentIndex;
+    return currentIndex; // Return current index if no focusable option is found in the desired direction
   }
 
   function handleKeydown(event: KeyboardEvent) {
     const currentIndex = optionElements.findIndex((el) => el === document.activeElement);
-    
     let nextIndex;
 
     // Check if menu is open
@@ -174,13 +186,13 @@
 
         // Find the last non-disabled option's index by starting from the end of the list
         const lastEnabledOptionIndex = options
-          .slice()
-          .reverse()
-          .findIndex((option) => !option.disabled);
+                .slice()
+                .reverse()
+                .findIndex((option) => !option.disabled);
 
         // Convert the reversed index back to the original array's indexing
         const actualIndex =
-          lastEnabledOptionIndex !== -1 ? options.length - 1 - lastEnabledOptionIndex : -1;
+                lastEnabledOptionIndex !== -1 ? options.length - 1 - lastEnabledOptionIndex : -1;
 
         // If there's a non-disabled option, focus on it
         if (actualIndex !== -1) {
@@ -236,7 +248,7 @@
         searchTerm += event.key;
 
         const matchingIndex = options.findIndex((option) =>
-          option.value.toLowerCase().startsWith(searchTerm.toLowerCase())
+                option.value.toLowerCase().startsWith(searchTerm.toLowerCase())
         );
 
         if (matchingIndex !== -1) {
@@ -258,7 +270,7 @@
   onMount(() => {
     if (typeof options == 'string') {
       options = JSON.parse(options);
-    }
+    };
   });
 </script>
 
@@ -267,24 +279,22 @@
     {@html label}
   </div>
 {/if}
-<div class="wrapper" use:clickOutside on:click_outside={() => (open = false)} class:has-hint={hint}>
-  {#if showClear && value}
+<div class="wrapper" class:has-hint={hint}>
+  {#if (showClear && value)}
     <button class="clear" on:click={clearSelection}>
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512">
-        <path
-          d="M342.6 150.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L192 210.7 86.6 105.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3L146.7 256 41.4 361.4c-12.5 12.5-12.5 32.8 0 45.3s32.8 12.5 45.3 0L192 301.3 297.4 406.6c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L237.3 256 342.6 150.6z"
-        />
+        <path d="M342.6 150.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L192 210.7 86.6 105.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3L146.7 256 41.4 361.4c-12.5 12.5-12.5 32.8 0 45.3s32.8 12.5 45.3 0L192 301.3 297.4 406.6c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L237.3 256 342.6 150.6z"/>
       </svg>
     </button>
   {/if}
   <button
-    type="button"
-    class="select"
-    class:toggled={open}
-    bind:this={bindingElement}
-    {disabled}
-    on:click|preventDefault={toggleMenu}
-    on:keydown={handleKeydown}
+          type="button"
+          class="select"
+          class:toggled={open}
+          bind:this={bindingElement}
+          {disabled}
+          on:click|preventDefault={toggleMenu}
+          on:keydown={handleKeydown}
   >
     {#if label && labelType == 'inside'}
       <span class="select-label" class:move={selected || open}>
@@ -292,21 +302,19 @@
       </span>
     {/if}
 
-    <span
-      class={`select-option ${labelType == 'outside' || !label ? '' : 'select-option-padding'} `}
-      class:has-clear={showClear}
-    >
+    <span class={`select-option ${labelType == 'outside' || !label ? '' : 'select-option-padding'} `}
+          class:has-clear={showClear}>
       {selected || ''}
     </span>
     <svg
-      xmlns="http://www.w3.org/2000/svg"
-      viewBox="0 0 320 512"
-      class="select-arrow"
-      class:rotate={open}
+            xmlns="http://www.w3.org/2000/svg"
+            viewBox="0 0 320 512"
+            class="select-arrow"
+            class:rotate={open}
     >
       <!--! Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2023 Fonticons, Inc.-->
       <path
-        d="M137.4 374.6c12.5 12.5 32.8 12.5 45.3 0l128-128c9.2-9.2 11.9-22.9 6.9-34.9s-16.6-19.8-29.6-19.8L32 192c-12.9 0-24.6 7.8-29.6 19.8s-2.2 25.7 6.9 34.9l128 128z"
+              d="M137.4 374.6c12.5 12.5 32.8 12.5 45.3 0l128-128c9.2-9.2 11.9-22.9 6.9-34.9s-16.6-19.8-29.6-19.8L32 192c-12.9 0-24.6 7.8-29.6 19.8s-2.2 25.7 6.9 34.9l128 128z"
       />
     </svg>
   </button>
@@ -318,41 +326,45 @@
   {/if}
 
   <input tabindex="-1" bind:this={inputEl} bind:value {id} {name} {required} />
+</div>
 
-  {#if open}
-    <div class="menu" style={menuStyle} on:keydown={handleKeydown} role="dialog">
+{#if open}
+  <div class="overlay">
+    <div class="menu"
+         use:clickOutside
+         on:click_outside={() => (open = false)}
+         style={menuStyle} on:keydown={handleKeydown}>
       {#each options as option, index (option)}
         <button
-          type="button"
-          class="menu-button"
-          class:selected={value == option.value}
-          bind:this={optionElements[index]}
-          disabled={option.disabled}
-          on:click|preventDefault={() => {
+                type="button"
+                class="menu-button"
+                class:selected={value == option.value}
+                bind:this={optionElements[index]}
+                disabled={option.disabled}
+                on:click|preventDefault={() => {
             value = option.value;
-            toggleMenu();
           }}
         >
           <span>{option.label ? option.label : option.value}</span>
 
           {#if value == option.value}
             <svg
-              xmlns="http://www.w3.org/2000/svg"
-              width="1rem"
-              height="1rem"
-              viewBox="0 0 448 512"
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="1rem"
+                    height="1rem"
+                    viewBox="0 0 448 512"
             >
               <!--! Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2023 Fonticons, Inc. -->
               <path
-                d="M438.6 105.4c12.5 12.5 12.5 32.8 0 45.3l-256 256c-12.5 12.5-32.8 12.5-45.3 0l-128-128c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0L160 338.7 393.4 105.4c12.5-12.5 32.8-12.5 45.3 0z"
+                      d="M438.6 105.4c12.5 12.5 12.5 32.8 0 45.3l-256 256c-12.5 12.5-32.8 12.5-45.3 0l-128-128c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0L160 338.7 393.4 105.4c12.5-12.5 32.8-12.5 45.3 0z"
               />
             </svg>
           {/if}
         </button>
       {/each}
     </div>
-  {/if}
-</div>
+  </div>
+{/if}
 
 <style>
   .wrapper {
@@ -431,45 +443,45 @@
     -o-transform: translateY(-50%);
     transform: translateY(-50%);
     -webkit-transition:
-      transform 0.3s,
-      top 0.3s,
-      font-size 0.3s;
+            transform 0.3s,
+            top 0.3s,
+            font-size 0.3s;
     -o-transition:
-      transform 0.3s,
-      top 0.3s,
-      font-size 0.3s;
+            transform 0.3s,
+            top 0.3s,
+            font-size 0.3s;
     -moz-transition:
-      transform 0.3s,
-      top 0.3s,
-      font-size 0.3s;
+            transform 0.3s,
+            top 0.3s,
+            font-size 0.3s;
     -webkit-transition:
-      top 0.3s,
-      font-size 0.3s,
-      -webkit-transform 0.3s;
+            top 0.3s,
+            font-size 0.3s,
+            -webkit-transform 0.3s;
     transition:
-      top 0.3s,
-      font-size 0.3s,
-      -webkit-transform 0.3s;
+            top 0.3s,
+            font-size 0.3s,
+            -webkit-transform 0.3s;
     -o-transition:
-      top 0.3s,
-      font-size 0.3s,
-      -o-transform 0.3s;
+            top 0.3s,
+            font-size 0.3s,
+            -o-transform 0.3s;
     -moz-transition:
-      transform 0.3s,
-      top 0.3s,
-      font-size 0.3s,
-      -moz-transform 0.3s;
+            transform 0.3s,
+            top 0.3s,
+            font-size 0.3s,
+            -moz-transform 0.3s;
     transition:
-      transform 0.3s,
-      top 0.3s,
-      font-size 0.3s;
+            transform 0.3s,
+            top 0.3s,
+            font-size 0.3s;
     transition:
-      transform 0.3s,
-      top 0.3s,
-      font-size 0.3s,
-      -webkit-transform 0.3s,
-      -moz-transform 0.3s,
-      -o-transform 0.3s;
+            transform 0.3s,
+            top 0.3s,
+            font-size 0.3s,
+            -webkit-transform 0.3s,
+            -moz-transform 0.3s,
+            -o-transform 0.3s;
     font-size: 1rem;
   }
 
@@ -524,14 +536,14 @@
     transition: -webkit-transform 0.3s;
     -o-transition: -o-transform 0.3s;
     -moz-transition:
-      transform 0.3s,
-      -moz-transform 0.3s;
+            transform 0.3s,
+            -moz-transform 0.3s;
     transition: transform 0.3s;
     transition:
-      transform 0.3s,
-      -webkit-transform 0.3s,
-      -moz-transform 0.3s,
-      -o-transform 0.3s;
+            transform 0.3s,
+            -webkit-transform 0.3s,
+            -moz-transform 0.3s,
+            -o-transform 0.3s;
   }
 
   .select-arrow.rotate {
@@ -565,7 +577,6 @@
 
   /* Menu */
   .menu {
-    z-index: 100;
     position: absolute;
     display: -webkit-box;
     display: -webkit-flex;
@@ -579,7 +590,6 @@
     -moz-box-direction: normal;
     -ms-flex-direction: column;
     flex-direction: column;
-    width: 100%;
     max-height: 300px;
     overflow-y: auto;
     -webkit-border-bottom-left-radius: 0.25rem;
@@ -610,27 +620,26 @@
     -moz-box-align: center;
     -ms-flex-align: center;
     align-items: center;
-    border: none;
     gap: 0.75rem;
     padding: 0.75rem;
     text-align: left;
     outline: none;
     -webkit-transition:
-      background-color 0.3s,
-      color 0.3s,
-      fill 0.3s;
+            background-color 0.3s,
+            color 0.3s,
+            fill 0.3s;
     -o-transition:
-      background-color 0.3s,
-      color 0.3s,
-      fill 0.3s;
+            background-color 0.3s,
+            color 0.3s,
+            fill 0.3s;
     -moz-transition:
-      background-color 0.3s,
-      color 0.3s,
-      fill 0.3s;
+            background-color 0.3s,
+            color 0.3s,
+            fill 0.3s;
     transition:
-      background-color 0.3s,
-      color 0.3s,
-      fill 0.3s;
+            background-color 0.3s,
+            color 0.3s,
+            fill 0.3s;
   }
 
   .menu-button.selected {
@@ -672,13 +681,23 @@
     -webkit-border-radius: 50%;
     -moz-border-radius: 50%;
     border-radius: 50%;
-    -webkit-transition: background-color 0.25s;
-    -o-transition: background-color 0.25s;
-    -moz-transition: background-color 0.25s;
-    transition: background-color 0.25s;
+    -webkit-transition: background-color .25s;
+    -o-transition: background-color .25s;
+    -moz-transition: background-color .25s;
+    transition: background-color .25s;
   }
 
   .clear:hover {
-    background-color: rgba(0, 0, 0, 0.08);
+    background-color: rgba(0,0,0,.08);
+  }
+
+  /* Overlay */
+  .overlay {
+    z-index: 100;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
   }
 </style>
