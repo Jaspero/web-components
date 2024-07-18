@@ -20,6 +20,11 @@
   import { createEventDispatcher, onMount } from 'svelte';
   import { formatDisplayDate, formatReturnDate } from '../utils/dateFormatter';
 
+  export let wording: {
+    LOADING: string;
+  } = {
+    LOADING: 'Loading...'
+  }
   export let attachedInternals: ElementInternals;
   export let value: string = '';
   export let firstInternalValue: string = '';
