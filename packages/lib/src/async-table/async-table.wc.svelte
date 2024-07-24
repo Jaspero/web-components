@@ -474,6 +474,7 @@
   
 .sticky-first{
   position: sticky;
+    border-right: 2px solid;
     left: 0;
     opacity: 1;
     background-color: var(--background-primary); 
@@ -481,6 +482,7 @@
 }
 .sticky-last {
     position: sticky;
+    border-left: 2px solid;
     right: 0;
     opacity: 1;
     background-color: var(--background-primary); 
