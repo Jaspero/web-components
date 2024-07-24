@@ -106,7 +106,7 @@
   $: internalMinYearCheck = isOutOfMinBounds(internalMinDate,pickerYear , 0,1);
   $: internalMaxYearCheck = isOutOfMaxBounds(internalMaxDate,pickerYear, 11, 31);
   $: internalMinYearPageCheck = isOutOfMinBounds(internalMinDate,2000 + (yearPickerIndex) * 4 * 6 , 0,1);
-  $: internalMaxYearPageCheck = isOutOfMaxBounds(internalMaxDate,2000 + (yearPickerIndex) * 4 * 6 , 11,31);
+  $: internalMaxYearPageCheck = isOutOfMaxBounds(internalMaxDate,2000 + (yearPickerIndex+1) * 4 * 6 , 11,31);
 
   export const getValue = () => {
     if (yearSelected) {
