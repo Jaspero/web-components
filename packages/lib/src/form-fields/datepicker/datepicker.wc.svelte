@@ -16,9 +16,15 @@
 />
 
 <script lang="ts">
-  import { clickOutside } from '../clickOutside';
+  import { clickOutside } from '../../clickOutside';
   import { createEventDispatcher } from 'svelte';
-  import { formatDisplayDate, formatReturnDate } from '../utils/dateFormatter';
+  import { formatDisplayDate, formatReturnDate } from '../../utils/dateFormatter';
+  import Day from '../datepicker/Day.svelte';
+  import Month from '../datepicker/Month.svelte';
+  import Year from '../datepicker/Year.svelte';
+  import { isOutOfMaxBounds } from './is-out-of-max-bounds';
+  import { isOutOfMinBounds } from './is-out-of-min-bounds';
+
 
   export let attachedInternals: ElementInternals;
   export let value: string = '';
@@ -32,6 +38,8 @@
   export let displayFormatFunction: (date: Date) => string = (date) => date.toDateString();
   export let returnFormat: string = 'js';
   export let returnFormatFunction: (date: Date) => any = (date) => date.valueOf();
+  export let minDate: string | Date;
+  export let maxDate: string | Date;
 
   let selectedDateObject = new Date();
   let displayedDateString = formatDisplayDate(
@@ -68,6 +76,37 @@
     'Dec'
   ];
   let yearPickerIndex = 0;
+
+  function handleDateSelected(event) {
+    const { day, month, year } = event.detail;
+    dateSelected = day;
+    monthSelected = month;
+    yearSelected = year;
+    openPicker = false;
+  }
+
+  function handleMonthSelected(event) {
+    const {month} = event.detail;
+    pickerMonth = month;
+    monthSelector = false;
+  }
+
+  function handleYearSelected(event){
+    const {year} = event.detail;
+    pickerYear = year;
+    yearSelector = false;
+    monthSelector = true;
+  }
+
+  $: internalMinDate = minDate ? minDate instanceof Date ? minDate : new Date(minDate) : null;
+  $: internalMaxDate = maxDate ? maxDate instanceof Date ? maxDate : new Date(maxDate) : null;
+
+  $: internalMinMonthCheck = isOutOfMinBounds(internalMinDate, pickerYear,pickerMonth, 0);
+  $: internalMaxMonthCheck = isOutOfMaxBounds(internalMaxDate, pickerYear, pickerMonth, 31);
+  $: internalMinYearCheck = isOutOfMinBounds(internalMinDate,pickerYear , 0,1);
+  $: internalMaxYearCheck = isOutOfMaxBounds(internalMaxDate,pickerYear, 11, 31);
+  $: internalMinYearPageCheck = isOutOfMinBounds(internalMinDate,2000 + (yearPickerIndex) * 4 * 6 , 0,1);
+  $: internalMaxYearPageCheck = isOutOfMaxBounds(internalMaxDate,2000 + (yearPickerIndex) * 4 * 6 , 11,31);
 
   export const getValue = () => {
     if (yearSelected) {
@@ -135,7 +174,6 @@
     if (event && event.target && event.target.closest('.menu')) {
       return;
     }
-
     const rect = bindingElement.getBoundingClientRect();
     const availableSpaceBelow = window.innerHeight - rect.bottom;
     const dropdownHeight = 385;
@@ -151,7 +189,6 @@
         left: ${rect.left}px;
       `;
     }
-
     menuStyle = style;
     openPicker = !openPicker;
   }
@@ -206,13 +243,14 @@
     } else {
       if (required) {
         attachedInternals.setValidity(
-                { valueMissing: true },
-                requiredValidationMessage || `Date is required.`
-        );
+       { customError: true },
+                requiredValidationMessage || `Date is required.`,
+        bindingElement)
       }
       displayedDateString = '';
       dispatch('value', { value: '' });
     }
+   attachedInternals.checkValidity();
   }
 </script>
 
@@ -249,7 +287,7 @@
   </span>
   </button>
 
-  <input type="date" {name} bind:value={internalValue} hidden />
+  <input type="date" {name} bind:value={internalValue} hidden required/>
   {#if openPicker}
     <div class="overlay">
       <div class="menu" use:clickOutside on:click_outside={() => (openPicker = false)} style={menuStyle}>
@@ -265,7 +303,7 @@
             </svg>
           </button>
           <div class="menu-nav-buttons">
-            <button type="button" on:click|preventDefault={() => (pickerMonth = pickerMonth - 1)}>
+            <button type="button" on:click|preventDefault={() => (pickerMonth = pickerMonth - 1)}  disabled = {internalMinMonthCheck}>
               <svg xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 320 512">
                 <!--! Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2023 Fonticons, Inc. -->
                 <path
@@ -273,7 +311,7 @@
                 />
               </svg>
             </button>
-            <button type="button" on:click|preventDefault={() => (pickerMonth = pickerMonth + 1)}>
+            <button type="button" on:click|preventDefault={() => (pickerMonth = pickerMonth + 1)} disabled = {internalMaxMonthCheck}>
               <svg xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 320 512">
                 <!--! Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2023 Fonticons, Inc. -->
                 <path
@@ -299,21 +337,9 @@
               <div class="table-row">
                 {#each row as col}
                   <div class="table-cell">
-                    <button
-                            type="button"
-                            class:gray={col.gray}
-                            class:active={dateSelected == col.day &&
-                      monthSelected == col.month &&
-                      yearSelected == col.year}
-                            on:click|preventDefault={() => {
-                      dateSelected = col.day;
-                      yearSelected = col.year;
-                      monthSelected = col.month;
-                      openPicker = false;
-                    }}
-                    >
-                      {col.day}
-                    </button>
+                    <Day {col} {internalMinDate} {internalMaxDate} {monthSelected} 
+                    {yearSelected} {dateSelected}   
+                    on:dateSelected={handleDateSelected}></Day>
                   </div>
                 {/each}
               </div>
@@ -342,7 +368,7 @@
                 </svg>
               </button>
               <div class="menu-year-nav-buttons">
-                <button type="button" on:click|preventDefault={() => yearPickerIndex--}>
+                <button type="button" on:click|preventDefault={() => yearPickerIndex--} disabled = {internalMinYearPageCheck}>
                   <svg xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 320 512">
                     <!--! Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2023 Fonticons, Inc. -->
                     <path
@@ -350,7 +376,7 @@
                     />
                   </svg>
                 </button>
-                <button type="button" on:click|preventDefault={() => yearPickerIndex++}>
+                <button type="button" on:click|preventDefault={() => yearPickerIndex++} disabled = {internalMaxYearPageCheck}>
                   <svg xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 320 512">
                     <!--! Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2023 Fonticons, Inc. -->
                     <path
@@ -361,18 +387,12 @@
               </div>
             </div>
             {#each pickerYearRows as row}
-              <div class="menu-year-row">
-                {#each row as year}
-                  <button
-                          type="button"
-                          class="menu-year-row-cell"
-                          class:active={yearSelected === year}
-                          on:click|preventDefault|stopPropagation={() => {
-                    pickerYear = year;
-                    yearSelector = false;
-                    monthSelector = true;
-                  }}>{year}</button
-                  >
+            <div class="menu-year-row">
+              {#each row as year}
+              <div class="menu-year-row-cell">
+                <Year {internalMaxDate} {internalMinDate} {yearSelected} {year} 
+                 on:yearSelected={handleYearSelected}></Year>
+              </div>
                 {/each}
               </div>
             {/each}
@@ -398,7 +418,7 @@
                 </svg>
               </button>
               <div class="menu-month-nav-buttons">
-                <button type="button" on:click|preventDefault={() => (pickerYear = pickerYear - 1)}>
+                <button type="button" on:click|preventDefault={() => (pickerYear = pickerYear - 1)} disabled = {internalMinYearCheck}>
                   <svg xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 320 512">
                     <!--! Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2023 Fonticons, Inc. -->
                     <path
@@ -406,7 +426,7 @@
                     />
                   </svg>
                 </button>
-                <button type="button" on:click|preventDefault={() => (pickerYear = pickerYear + 1)}>
+                <button type="button" on:click|preventDefault={() => (pickerYear = pickerYear + 1)} disabled = {internalMaxYearCheck}>
                   <svg xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 320 512">
                     <!--! Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2023 Fonticons, Inc. -->
                     <path
@@ -420,16 +440,10 @@
             <div class="menu-month-grid">
               {#each monthMap as month, index}
                 <div class="menu-month-grid-cell">
-                  <button
-                          type="button"
-                          on:click|preventDefault|stopPropagation={() => {
-                    pickerMonth = index;
-                    monthSelector = false;
-                  }}
-                          class:active={monthSelected === index}
-                  >
-                    {month}
-                  </button>
+                  <Month {index} {month} {pickerYear} 
+              {internalMaxDate} {internalMinDate} {monthSelected}
+              on:monthSelected={handleMonthSelected}
+              />
                 </div>
               {/each}
             </div>
@@ -586,7 +600,7 @@
     -ms-flex-direction: column;
     flex-direction: column;
     max-width: 312px;
-    max-height: 385px;
+    max-height: 390px;
     width: 100%;
     padding: 1rem;
     overflow-y: auto;
@@ -618,19 +632,19 @@
     grid-template-columns: repeat(3, minmax(0, 1fr));
   }
 
-  .menu-month-grid-cell button {
+  :global(.menu-month-grid-cell button) {
     width: 100%;
     border-radius: 999px;
     padding: 0.25rem 0.75rem;
   }
 
-  .menu-month-grid-cell button.active,
-  .menu-month-grid-cell button:hover {
+  :global(.menu-month-grid-cell button.active,
+  .menu-month-grid-cell button:hover) {
     background-color: var(--primary-color);
     color: var(--text-on-primary);
   }
 
-  .menu-year {
+  .menu-year{
     position: absolute;
     top: 0;
     left: 0;
@@ -684,18 +698,27 @@
     gap: 0.25rem;
   }
 
-  .menu-year-row-cell {
+  :global(.menu-year-row-cell button) {
     flex: 1 1 0;
-    padding: 0.25rem;
+    padding: 0.25rem 1rem;
     border-radius: 999px;
   }
 
-  .menu-year-row-cell:hover,
-  .menu-year-row-cell.active {
+  :global(.menu-year-row-cell button:hover,
+  .menu-year-row-cell button.active) {
     background-color: var(--primary-color);
     color: var(--text-on-primary);
   }
 
+:global(.table-cell button:disabled:hover,
+.menu-month-grid-cell button:disabled:hover,
+.menu-year-row-cell button:disabled:hover),
+.menu-nav-buttons button:disabled:hover,
+.menu-year-nav-buttons button:disabled:hover,
+.menu-month-nav-buttons button:disabled:hover{
+  background-color: transparent;
+  color:var( --text-secondary);
+}
   .menu-nav-date,
   .menu-month-nav-date,
   .menu-year-nav-date {
@@ -718,7 +741,13 @@
     width: max-content;
   }
 
-  .table-cell {
+  .table-row{
+    display: flex;
+    width: max-content;
+    flex-direction: row;
+  }
+
+  :global(.table-cell) {
     display: table-cell;
     width: 40px;
     height: 40px;
@@ -728,21 +757,33 @@
     padding: 0;
   }
 
-  .table-cell button {
+  :global(.table-cell button) {
     width: 100%;
     height: 100%;
     border-radius: 50%;
   }
 
-  .table-cell button:hover {
+  :global(.table-cell button:hover) {
+    width: 40px;
+    height: 40px;
+    max-width: 40px;
+    line-height: 40px;
+    text-align: center;
+    padding: 0;
     background-color: var(--background-secondary);
   }
 
-  .table-cell button.gray {
+  :global(.table-cell button.gray) {
     opacity: 0.5;
   }
 
-  .table-cell button.active {
+  :global(.table-cell button.active) {
+    width: 40px;
+    height: 40px;
+    max-width: 40px;
+    line-height: 40px;
+    text-align: center;
+    padding: 0;
     background-color: var(--primary-color);
     color: var(--text-on-primary);
     opacity: 1;

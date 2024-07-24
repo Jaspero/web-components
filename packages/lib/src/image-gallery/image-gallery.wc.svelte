@@ -12,7 +12,6 @@
     export let images = [];
     export let enablePagination = false;
     export let sliderBar = false;
-    export let imageCount = false;
     export let autoSlide = false;
     export let interval = 3000;
 
@@ -36,7 +35,6 @@
         if (autoSlide) {
             intervalFunction = setInterval(nextImage, interval);
         }
-        window.addEventListener('keydown', keydownFunction);
     });
 
     onDestroy(() => {
@@ -129,72 +127,7 @@
         await tick();
         layout();
     }
-
-    async function keydownFunction(e){
-        if(e.key === "Escape"){
-            closeCarousel();
-        }
-        else if(e.key === "ArrowLeft"){
-            prevImage();
-        }
-        else if(e.key === "ArrowRight"){
-            nextImage();
-        }
-    }
 </script>
-
-
-{#if !focused}
-    <div class="gallery" bind:this={container}>
-        {#each images as image, index}
-            <div class="image-container">
-                <img class="image" src={image.src} alt={image.alt} on:click={() => openCarousel(index)} />
-            </div>
-        {/each}
-    </div>
-{:else}
-    <div class="slider" on:keydown={(e) => keydownFunction(e)}>
-        <div class="slider-container" on:click|stopPropagation>
-            <div class="slider-images" style="transform: translateX(-{currentIndex * 100}%);">
-                {#each images as image}
-                    <img class="slider-image" src={image.src} alt={image.alt} />
-                {/each}
-            </div>
-            <button type="button" class="prev" on:click={prevImage}>
-                &larr;
-            </button>
-            <button type="button" class="next" on:click={nextImage}>
-                &rarr;
-            </button>
-            <button type="button" class="close" on:click={closeCarousel}>
-                &times;
-            </button>
-        </div>
-        {#if sliderBar}
-            <div class="slider-bar">
-                <div class="slider-bar-bg" style="width: {(currentIndex + 1) / images.length * 100}%;"></div>
-            </div>
-        {/if}
-        {#if enablePagination}
-            <div class="pagination">
-                {#each images as _, index}
-                    <button
-                        type="button"
-                        on:click={() => currentIndex = index}
-                        class="pagination-button"
-                        class:active={currentIndex === index}
-                    ></button>
-                {/each}
-            </div>
-        {/if}
-        {#if imageCount}
-        <div class="imageCount">
-            <p>{currentIndex + 1} / {images.length}</p>
-        </div>
-    {/if}
-    </div>
-{/if}
-
 
 <style>
     .gallery {
@@ -226,7 +159,6 @@
         height: 100%;
         background: rgba(0, 0, 0, 0.9);
         display: flex;
-        flex-flow: column;
         justify-content: center;
         align-items: center;
         z-index: 1000;
@@ -235,8 +167,8 @@
 
     .slider-container {
         position: relative;
-        width: 100%;
-        max-height: 100%;
+        width: 90%;
+        max-height: 90%;
         overflow: hidden;
     }
 
@@ -312,34 +244,65 @@
     }
 
     .pagination {
-    display: flex;
-    justify-content: center;
-    gap: 0.75rem;
-    margin-top: 2rem;
-  }
+        display: flex;
+        justify-content: center;
+        gap: 0.5rem;
+        margin-top: 1rem;
+    }
 
-  .pagination-button {
-    position: relative;
-    width: 0.875rem;
-    height: 0.875rem;
-    border: 2px solid var(--border-primary);
-    border-radius: 50%;
-    transition: 0.3s;
-  }
-
-  .pagination-button:hover {
-    background-color: var(--background-secondary);
-  }
-
-  .pagination-button.active {
-    border-color: var(--primary-color);
-    background-color: var(--primary-color);
-  }
-
-  .imageCount p{
-    color: rgba(227, 214, 214, 0.887);
-    margin-top: 100%;
-    margin-bottom: 100%;
-}
+    .pagination-button {
+        width: 10px;
+        height: 10px;
+        border-radius: 50%;
+        background: gray;
+        border: none;
+        cursor: pointer;
+    }
 
 </style>
+
+{#if !focused}
+    <div class="gallery" bind:this={container}>
+        {#each images as image, index}
+            <div class="image-container">
+                <img class="image" src={image.src} alt={image.alt} on:click={() => openCarousel(index)} />
+            </div>
+        {/each}
+    </div>
+{:else}
+    <div class="slider" on:click={closeCarousel}>
+        <div class="slider-container" on:click|stopPropagation>
+            <div class="slider-images" style="transform: translateX(-{currentIndex * 100}%);">
+                {#each images as image}
+                    <img class="slider-image" src={image.src} alt={image.alt} />
+                {/each}
+            </div>
+            <button type="button" class="prev" on:click={prevImage}>
+                &larr;
+            </button>
+            <button type="button" class="next" on:click={nextImage}>
+                &rarr;
+            </button>
+            <button type="button" class="close" on:click={closeCarousel}>
+                &times;
+            </button>
+        </div>
+        {#if sliderBar}
+            <div class="slider-bar">
+                <div class="slider-bar-bg" style="width: {(currentIndex + 1) / images.length * 100}%;"></div>
+            </div>
+        {/if}
+        {#if enablePagination}
+            <div class="pagination">
+                {#each images as _, index}
+                    <button
+                        type="button"
+                        on:click={() => currentIndex = index}
+                        class="pagination-button"
+                        class:active={currentIndex === index}
+                    ></button>
+                {/each}
+            </div>
+        {/if}
+    </div>
+{/if}

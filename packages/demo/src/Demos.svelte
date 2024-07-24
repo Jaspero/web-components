@@ -46,6 +46,7 @@
   import { FirebaseTableService } from './firebase-table.service';
   import { MockImageService } from './mock-image.service..js';
   import { jpTreeStructure } from '../../../dist/structure.js';
+ 
 
   let el: HTMLDivElement;
   let formEl: HTMLFormElement;
@@ -75,8 +76,12 @@
 
     el.appendChild(quill);
 
-    // const datepicker = document.createElement('jp-datepicker') as any;
-    // el.appendChild(datepicker);
+     const datepicker = document.createElement('jp-datepicker') as any;
+     
+    // datepicker.minDate=new Date(1999,5,6);
+     datepicker.maxDate= new Date(2050,4,3);
+     datepicker.minDate = new Date(1999,2,3);
+     el.appendChild(datepicker);  
 
     // const multisearch = document.createElement('jp-multisearch')
     // multisearch.value = 'aaa, bbb'
@@ -97,6 +102,45 @@
     //   }
     // }
     // el.appendChild(multisearch)
+        const asyncTable = document.createElement('jp-async-table') as any;
+    asyncTable.headers = [
+      {
+        key: '/name',
+        label: 'Name'
+      },
+      {
+        key: '/age',
+        label: 'Age',
+        sortable: true
+      },
+      {
+        key: '/disabled',
+        label: 'Disabled',
+        disabled: true
+      }
+    ];
+    asyncTable.service = {
+      get: async () => {
+        return {
+          rows: [
+            { name: 'John', age: 30, disabled: true },
+            { name: 'Jane', age: 31, disabled: true }
+          ],
+          hasMore: false
+        };
+      },
+      export: async () => {
+        return [
+          { name: 'John', age: 30, disabled: true },
+          { name: 'Jane', age: 31, disabled: true }
+        ];
+      },
+      adjustPageSize: async () => {},
+    };
+    asyncTable.allowArrangeColumns = false;
+    asyncTable.pageSizes = [10];
+    asyncTable.sort = {key: '/age', direction: 'asc'};
+    el.appendChild(asyncTable);
 
     // renderAlert({
     //   title: 'Success',
@@ -115,6 +159,7 @@
     {value: 6, label: 'Saturday'},
     {value: 0, label: 'Sunday'}
   ];
+ 
 </script>
 
 <div bind:this={el}></div>
@@ -137,10 +182,12 @@
 
 <form>
   <p>Validity Test</p>
+  <jp-datepicker label = 'Date' required maxDate = '2050,5,6' minDate = '1999,5,5'></jp-datepicker>
   <jp-multiselect options={multiOptions} label="MultiSelect" maxSelects={3} />
   <jp-input name="name" label="Name" labelType="outside" required hint="cool"></jp-input>
   <jp-input name="email" label="Email" type="email" labelType="outside" required></jp-input>
   <jp-ckeditor name="Content" label="Content" required></jp-ckeditor>
   <jp-select required options={options} label="Thing" />
+
   <button>Submit</button>
 </form>

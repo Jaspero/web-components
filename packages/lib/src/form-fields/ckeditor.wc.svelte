@@ -75,9 +75,6 @@
       ],
       shouldNotGroupWhenFull: true
     },
-    mediaEmbed: {
-      previewsInData: true
-    },
     list: {
       properties: {
         styles: true,
