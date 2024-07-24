@@ -13,8 +13,8 @@
   import type { TableService } from '../types/table.service';
 
   export let allowArrangeColumns = true;
-  export let allowStickyFirst = true;
-  export let allowStickyLast = true;
+  export let allowStickyFirst = false;
+  export let allowStickyLast = false;
   export let showExport = true;
   export let rowClickable = false;
   export let headers: TableHeader[] = [];
@@ -230,7 +230,7 @@
           {#each activeHeaders as header, index}
             <th
               class:sortable={allowArrangeColumns && header.sortable}
-              class:sticky-first={allowStickyFirst && index === 0}
+              class:sticky-first={index === 0 && allowStickyFirst}
               class:sticky-last={index === activeHeaders.length -1 && allowStickyLast}
               on:click={() => adjustSort(header)}
               on:drop={(e) => drop(e, index)}
@@ -378,6 +378,20 @@
     -ms-user-select: none;
     user-select: none;
   }
+  .sticky-first{
+  position: sticky;
+    left: 0;
+    opacity: 1;
+    background-color: var(--background-primary); 
+    z-index: 1; 
+  }
+  .sticky-last {
+    position: sticky;
+    right: 0;
+    opacity: 1;
+    background-color: var(--background-primary); 
+    z-index: 1; 
+}
 
   .settings-button {
     background-color: var(--background-secondary);
@@ -471,19 +485,4 @@
       transform: rotate(360deg);
     }
   }
-  
-.sticky-first{
-  position: sticky;
-    left: 0;
-    opacity: 1;
-    background-color: var(--background-primary); 
-    z-index: 1; 
-}
-.sticky-last {
-    position: sticky;
-    right: 0;
-    opacity: 1;
-    background-color: var(--background-primary); 
-    z-index: 1; 
-}
 </style>
