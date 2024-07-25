@@ -211,7 +211,14 @@
       pickerYear = tmp.getFullYear();
     }
   };
-
+  $: if (monthSelected == 12) {
+    monthSelected = 0;
+    yearSelected++;
+  }
+  $: if (monthSelected == -1) {
+    monthSelected = 11;
+    yearSelected--;
+  }
   $: if (pickerMonth == 12) {
     pickerMonth = 0;
     pickerYear++;
