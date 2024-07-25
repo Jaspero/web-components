@@ -13,8 +13,8 @@
   import type { TableService } from '../types/table.service';
 
   export let allowArrangeColumns = true;
-  export let freezeFirstColumn = true;
-  export let freezeLastColumn = true;
+  export let freezeFirstColumn = false;
+  export let freezeLastColumn = false;
   export let showExport = true;
   export let rowClickable = false;
   export let headers: TableHeader[] = [];
@@ -52,7 +52,7 @@
   }
 
   export async function updateRow(value: any, index: number) {
-    rows = rows.map((it, ind) => (ind === index ? {...it, ...value} : it));
+    rows = rows.map((it, ind) => (ind === index ? { ...it, ...value } : it));
   }
 
   async function handleColumn(header: TableHeader, row: any, index: number) {
@@ -91,10 +91,7 @@
       direction: sort?.key === header.key ? (sort.direction === 'asc' ? 'desc' : 'asc') : 'asc'
     };
 
-    const [data] = await Promise.all([
-      service.get(sort, pageSize),
-      service.adjustSort(sort)
-    ]);
+    const [data] = await Promise.all([service.get(sort, pageSize), service.adjustSort(sort)]);
 
     rows = data.rows;
     hasMore = data.hasMore;
@@ -122,13 +119,10 @@
     });
   }
 
-  async function updatePageSize(event: {detail: number}) {
+  async function updatePageSize(event: { detail: number }) {
     pageSize = event.detail;
-    
-    await Promise.all([
-      getData(),
-      service.adjustPageSize(pageSize)
-    ]);
+
+    await Promise.all([getData(), service.adjustPageSize(pageSize)]);
   }
 
   async function exportData() {
@@ -138,14 +132,15 @@
     const resolved = await Promise.all(
       data.map(async (row, index) => {
         const columns = await Promise.all(
-          activeHeaders.map((header) => handleColumn(
-            { 
-              key: header.key,
-              fallback: header.exportFallback || header.fallback,
-              pipes: header.exportPipes || header.pipes || []
-            } as TableHeader,
-            row,
-            index
+          activeHeaders.map((header) =>
+            handleColumn(
+              {
+                key: header.key,
+                fallback: header.exportFallback || header.fallback,
+                pipes: header.exportPipes || header.pipes || []
+              } as TableHeader,
+              row,
+              index
             )
           )
         );
@@ -231,7 +226,7 @@
             <th
               class:sortable={allowArrangeColumns && header.sortable}
               class:sticky-first={freezeFirstColumn && index === 0}
-              class:sticky-last={index === activeHeaders.length -1 && freezeLastColumn}
+              class:sticky-last={index === activeHeaders.length - 1 && freezeLastColumn}
               on:click={() => adjustSort(header)}
               on:drop={(e) => drop(e, index)}
               on:dragover={dragover}
@@ -242,7 +237,8 @@
                 tabindex="-1"
                 role="button"
                 aria-label="Drag handle"
-                on:dragstart={(e) => dragstart(e, header)}>
+                on:dragstart={(e) => dragstart(e, header)}
+              >
                 {@html header.label}
               </span>
 
@@ -258,9 +254,11 @@
         {#each rows as row, index}
           <tr class:highlight={rowClickable}>
             {#each activeHeaders as header, index}
-              <td on:click={(e) => rowClick(row, index, header, e)}
+              <td
+                on:click={(e) => rowClick(row, index, header, e)}
                 class:sticky-first={freezeFirstColumn && index === 0}
-                class:sticky-last={index === activeHeaders.length -1 && freezeLastColumn}>
+                class:sticky-last={index === activeHeaders.length - 1 && freezeLastColumn}
+              >
                 {#await handleColumn(header, row, index) then val}
                   <span class="cell">
                     {@html val}
@@ -275,7 +273,13 @@
   </div>
 
   <div class="table-actions">
-    <button type="button" class="table-button load-button" class:loading disabled={!hasMore} on:click={loadMore}>
+    <button
+      type="button"
+      class="table-button load-button"
+      class:loading
+      disabled={!hasMore}
+      on:click={loadMore}
+    >
       {#if loading}
         <span class="spinner"></span>
         Loading
@@ -284,7 +288,12 @@
       {/if}
     </button>
     {#if pageSizes.length > 1}
-      <jp-select label="Page Size" options={formattedPageSizes} value={pageSize} on:value={updatePageSize}></jp-select>
+      <jp-select
+        label="Page Size"
+        options={formattedPageSizes}
+        value={pageSize}
+        on:value={updatePageSize}
+      ></jp-select>
     {/if}
   </div>
 </div>
@@ -471,21 +480,42 @@
       transform: rotate(360deg);
     }
   }
-  
-.sticky-first{
-  position: sticky;
-    border-right: 2px solid;
+
+  .sticky-first {
+    position: sticky;
     left: 0;
     opacity: 1;
-    background-color: var(--background-primary); 
-    z-index: 1; 
-}
-.sticky-last {
+    background-color: var(--background-primary);
+    z-index: 1;
+  }
+
+  .sticky-first:after {
+    content: '';
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    width: .5px;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.16);
+  }
+
+  .sticky-last {
     position: sticky;
-    border-left: 2px solid;
     right: 0;
     opacity: 1;
-    background-color: var(--background-primary); 
-    z-index: 1; 
-}
+    background-color: var(--background-primary);
+    z-index: 1;
+  }
+
+  .sticky-last:before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    width: .5px;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.16);
+  }
 </style>
