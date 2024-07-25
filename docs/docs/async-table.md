@@ -29,12 +29,12 @@ Defines the structure of a table header.
 | label | ✓ | `string` | title for the table header |
 | key | ✓ |`string` | used for identifying the corresponding data field |
 | sortable | | `boolean`| determines if the table column is sortable |
-|freezeFirstColumn| |`boolean`|determines if the first table column is frozen|
-|freezeLastColumn| |`boolean`|determines if the last table column is frozen|
 | sortMethod | | `function` | used for custom sorting with ascending ( *'asc'* ) or descending ( *'desc'* ) direction |
 | pipes | |  [`TablePipe`](#tablepipe) | used for transforming table data |
 | fallback | | `any` | optional value used as a replacement if the specific value isn't available |
 | disabled | | `boolean` | disabled headers aren't shown by default but are available when arranging columns |  
+| freezeFirstColumn  | | `boolean` | enables a "sticky" attribute for the first column of a table |
+| freezeLastColumn  | | `boolean` | enables a "sticky" attribute for the last column of a table |
 
 <br></br>
 
