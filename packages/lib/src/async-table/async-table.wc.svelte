@@ -13,6 +13,8 @@
   import type { TableService } from '../types/table.service';
 
   export let allowArrangeColumns = true;
+  export let freezeFirstColumn = true;
+  export let freezeLastColumn = true;
   export let showExport = true;
   export let rowClickable = false;
   export let headers: TableHeader[] = [];
@@ -228,6 +230,8 @@
           {#each activeHeaders as header, index}
             <th
               class:sortable={allowArrangeColumns && header.sortable}
+              class:sticky-first={freezeFirstColumn && index === 0}
+              class:sticky-last={index === activeHeaders.length -1 && freezeLastColumn}
               on:click={() => adjustSort(header)}
               on:drop={(e) => drop(e, index)}
               on:dragover={dragover}
@@ -253,8 +257,10 @@
       {#if rows}
         {#each rows as row, index}
           <tr class:highlight={rowClickable}>
-            {#each activeHeaders as header}
-              <td on:click={(e) => rowClick(row, index, header, e)}>
+            {#each activeHeaders as header, index}
+              <td on:click={(e) => rowClick(row, index, header, e)}
+                class:sticky-first={freezeFirstColumn && index === 0}
+                class:sticky-last={index === activeHeaders.length -1 && freezeLastColumn}>
                 {#await handleColumn(header, row, index) then val}
                   <span class="cell">
                     {@html val}
@@ -465,4 +471,21 @@
       transform: rotate(360deg);
     }
   }
+  
+.sticky-first{
+  position: sticky;
+    border-right: 2px solid;
+    left: 0;
+    opacity: 1;
+    background-color: var(--background-primary); 
+    z-index: 1; 
+}
+.sticky-last {
+    position: sticky;
+    border-left: 2px solid;
+    right: 0;
+    opacity: 1;
+    background-color: var(--background-primary); 
+    z-index: 1; 
+}
 </style>
