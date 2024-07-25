@@ -21,6 +21,8 @@
   let columnOrder: string[] = [];
 
   export let showArrangingColumns = true;
+  export let freezeFirstColumn = false;
+  export let freezeLastColumn = false;
   let arrangingColumns = false;
   let isDraging = false;
 
@@ -221,12 +223,15 @@
           {#each activeHeaders as header, index}
             <th
                     class:sortable={header.sortable}
+                    class:sticky-first={index === 0 && freezeFirstColumn}
+                    class:sticky-last={index === activeHeaders.length - 1 && freezeLastColumn}
                     on:click={() => adjustSort(header)}
                     on:drop={drop}
                     on:dragover={dragover}
                     data-index={index}
             >
-              <span draggable="true"  on:dragstart={(e) => dragstart(e, header)}>
+              <span draggable="true"  on:dragstart={(e) => dragstart(e, header)}
+                >
                 {@html header.label}
               </span>
 
@@ -241,8 +246,11 @@
       {#if rows}
         {#each rows as row, index}
           <tr>
-            {#each activeHeaders as header}
-              <td on:click={(e) => rowClick(row, index, header, e)}>
+            {#each activeHeaders as header,index}
+              <td on:click={(e) => rowClick(row, index, header, e)}
+                class:sticky-first={index === 0 && freezeFirstColumn}
+                class:sticky-last={index === activeHeaders.length - 1 && freezeLastColumn}
+                >
                 {#await handleColumn(header, row, index) then val}
                   <span class="cell">
                     {@html val}
@@ -272,7 +280,7 @@
     overflow-x: auto;
     width: 100%;
   }
-
+  
   table {
     width: 100%;
   }
@@ -419,5 +427,42 @@
       -o-transform: rotate(360deg);
       transform: rotate(360deg);
     }
+  }
+  .sticky-first {
+    position: sticky;
+    left: 0;
+    opacity: 1;
+    background-color: var(--background-primary);
+    z-index: 1;
+  }
+
+  .sticky-first:after {
+    content: '';
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    width: .5px;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.16);
+  }
+
+  .sticky-last {
+    position: sticky;
+    right: 0;
+    opacity: 1;
+    background-color: var(--background-primary);
+    z-index: 1;
+  }
+
+  .sticky-last:before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    width: .5px;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.16);
   }
 </style>
