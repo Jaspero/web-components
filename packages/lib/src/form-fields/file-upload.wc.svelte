@@ -129,6 +129,7 @@
         left: ${rect.width - 300}px;
       `;
     }
+  }
 
   function convertBase64(file) {
     return new Promise((resolve, reject) => {
