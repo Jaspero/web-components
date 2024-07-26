@@ -26,9 +26,7 @@ You can type this command into Command Prompt, Powershell, Terminal, or any othe
 For components to display properly, you'll need to import default styles and css variables at the top level of your project;
 
 ```js
-<style>
-  @import '@jaspero/web-components/dist/index.css';
-</style>
+<style>@import '@jaspero/web-components/dist/index.css';</style>
 ```
 
 Some components require additional imports to function properly.
@@ -36,25 +34,38 @@ Some components require additional imports to function properly.
 Simplest way to do this is to load the following scripts and stylesheets;
 
 ### Quill
+
 ```html
-<link href="https://cdn.quilljs.com/1.3.6/quill.snow.css" rel="stylesheet">
+<link href="https://cdn.quilljs.com/1.3.6/quill.snow.css" rel="stylesheet" />
 ```
+
 ```html
 <script src="https://cdn.quilljs.com/1.3.6/quill.js"></script>
 ```
 
 ### Code editor
+
 ```html
-<link href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.14/codemirror.min.css" rel="stylesheet">
+<link
+  href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.14/codemirror.min.css"
+  rel="stylesheet"
+/>
 ```
+
 ```html
 <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.14/codemirror.min.js"></script>
 ```
 
 ### Json editor
+
 ```html
-<link href="https://cdnjs.cloudflare.com/ajax/libs/jsoneditor/9.10.2/jsoneditor.min.css" rel="stylesheet" type="text/css">
+<link
+  href="https://cdnjs.cloudflare.com/ajax/libs/jsoneditor/9.10.2/jsoneditor.min.css"
+  rel="stylesheet"
+  type="text/css"
+/>
 ```
+
 ```html
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jsoneditor/9.10.2/jsoneditor.min.js"></script>
 ```

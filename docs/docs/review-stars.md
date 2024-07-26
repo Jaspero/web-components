@@ -6,25 +6,23 @@
 
 ### Attributes
 
-| **Name** | **Required** | **Type** | **Description** |
-| :----: | :----: | :----: | :---: |
-| value | | `number` | value setter |
-| starsInput | | `boolean` | whether stars are clickable or not |
-| indicator  | | `boolean` | whether indicator is displayed or not |
-  
+|  **Name**  | **Required** | **Type**  |            **Description**            |
+| :--------: | :----------: | :-------: | :-----------------------------------: |
+|   value    |              | `number`  |             value setter              |
+| starsInput |              | `boolean` |  whether stars are clickable or not   |
+| indicator  |              | `boolean` | whether indicator is displayed or not |
+
 ### Slots
 
 Used for customization of link's content.
-
 
 ### Methods
 
 This component does not have any methods.
 
-
 ### Events
 
-- `rating` 
+- `rating`
   - triggers when star is clicked
 
 ### Demo

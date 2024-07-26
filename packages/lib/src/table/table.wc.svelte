@@ -1,5 +1,5 @@
 <svelte:options
-        customElement={{
+  customElement={{
     tag: 'jp-table',
     shadow: 'none'
   }}
@@ -12,6 +12,11 @@
   import type { TableSort } from '../types/table-sort.interface';
   import type { TableService } from '../types/table.service';
 
+  export let wording = {
+    EXPORT: 'Export',
+    ARRANGE_COLUMNS: 'Arrange columns',
+    FINISH_ARRANGING: 'Finish Arranging'
+  };
   export let headers: TableHeader[] = [];
   export let rows: any[] = [];
   export let sort: TableSort;
@@ -58,7 +63,7 @@
     }
 
     const direction =
-            sort?.key === header.key ? (sort.direction === 'asc' ? 'desc' : 'asc') : 'asc';
+      sort?.key === header.key ? (sort.direction === 'asc' ? 'desc' : 'asc') : 'asc';
 
     if (sortMethod) {
       rows = [...rows.sort((a, b) => sortMethod(direction, a, b))];
@@ -90,7 +95,9 @@
           case 'number':
             return direction === 'asc' ? aValue - bValue : bValue - aValue;
           case 'string':
-            return direction === 'asc' ? aValue.localeCompare(bValue) : bValue.localeCompare(aValue);
+            return direction === 'asc'
+              ? aValue.localeCompare(bValue)
+              : bValue.localeCompare(aValue);
           default:
             return 0;
         }
@@ -117,25 +124,25 @@
 
     const data = await service.export();
     const resolved = await Promise.all(
-            data.map(async (row, index) => {
-              const columns = await Promise.all(
-                      activeHeaders.map((header) => handleColumn(header, row, index))
-              );
+      data.map(async (row, index) => {
+        const columns = await Promise.all(
+          activeHeaders.map((header) => handleColumn(header, row, index))
+        );
 
-              return columns.map((col) => `"${col || ''}"`).join(',');
-            })
+        return columns.map((col) => `"${col || ''}"`).join(',');
+      })
     );
     const blob = new Blob(
-            [
-              [
-                activeHeaders
-                        .map((h) => h.label)
-                        .map((label) => `"${label}"`)
-                        .join(','),
-                ...resolved,
-              ].join('\n'),
-            ],
-            { type: 'text/csv' }
+      [
+        [
+          activeHeaders
+            .map((h) => h.label)
+            .map((label) => `"${label}"`)
+            .join(','),
+          ...resolved
+        ].join('\n')
+      ],
+      { type: 'text/csv' }
     );
     const link = document.createElement('a');
 
@@ -177,17 +184,18 @@
       columnOrder.splice(currentIndex, 1);
       columnOrder.splice(Number(targetIndex), 0, draggedColumn);
 
-      activeHeaders = headers.filter((it) => !it.disabled).sort((a, b) => {
-        const aIndex = columnOrder.indexOf(a.key);
-        const bIndex = columnOrder.indexOf(b.key);
-        return aIndex - bIndex;
-      });
+      activeHeaders = headers
+        .filter((it) => !it.disabled)
+        .sort((a, b) => {
+          const aIndex = columnOrder.indexOf(a.key);
+          const bIndex = columnOrder.indexOf(b.key);
+          return aIndex - bIndex;
+        });
     }
   }
 
   $: activeHeaders = headers.filter((it) => !it.disabled);
 </script>
-
 
 <div class="table-card">
   {#if showArrangingColumns || showExport}
@@ -195,23 +203,27 @@
       {#if showArrangingColumns}
         {#if !arrangingColumns}
           <button type="button" on:click={arrangeColumns} class="table-button settings-button">
-            Arrange Columns
+            {wording.ARRANGE_COLUMNS}
           </button>
         {:else}
-          <button type="button" on:click={finishArrangingColumns} class="table-button settings-button">
-            Finish Arranging
+          <button
+            type="button"
+            on:click={finishArrangingColumns}
+            class="table-button settings-button"
+          >
+          {wording.FINISH_ARRANGING}
           </button>
         {/if}
       {/if}
       {#if showExport}
         &nbsp;
         <button
-                type="button"
-                class="table-button settings-button"
-                on:click={exportData}
-                class:loading={exportLoading}
+          type="button"
+          class="table-button settings-button"
+          on:click={exportData}
+          class:loading={exportLoading}
         >
-          Export
+          {wording.EXPORT}
         </button>
       {/if}
     </div>
@@ -222,16 +234,15 @@
         <tr>
           {#each activeHeaders as header, index}
             <th
-                    class:sortable={header.sortable}
-                    class:sticky-first={index === 0 && freezeFirstColumn}
-                    class:sticky-last={index === activeHeaders.length - 1 && freezeLastColumn}
-                    on:click={() => adjustSort(header)}
-                    on:drop={drop}
-                    on:dragover={dragover}
-                    data-index={index}
+              class:sortable={header.sortable}
+              class:sticky-first={index === 0 && freezeFirstColumn}
+              class:sticky-last={index === activeHeaders.length - 1 && freezeLastColumn}
+              on:click={() => adjustSort(header)}
+              on:drop={drop}
+              on:dragover={dragover}
+              data-index={index}
             >
-              <span draggable="true"  on:dragstart={(e) => dragstart(e, header)}
-                >
+              <span draggable="true" on:dragstart={(e) => dragstart(e, header)}>
                 {@html header.label}
               </span>
 
@@ -246,11 +257,12 @@
       {#if rows}
         {#each rows as row, index}
           <tr>
-            {#each activeHeaders as header,index}
-              <td on:click={(e) => rowClick(row, index, header, e)}
+            {#each activeHeaders as header, index}
+              <td
+                on:click={(e) => rowClick(row, index, header, e)}
                 class:sticky-first={index === 0 && freezeFirstColumn}
                 class:sticky-last={index === activeHeaders.length - 1 && freezeLastColumn}
-                >
+              >
                 {#await handleColumn(header, row, index) then val}
                   <span class="cell">
                     {@html val}
@@ -280,7 +292,7 @@
     overflow-x: auto;
     width: 100%;
   }
-  
+
   table {
     width: 100%;
   }
@@ -442,7 +454,7 @@
     top: 0;
     right: 0;
     bottom: 0;
-    width: .5px;
+    width: 0.5px;
     height: 100%;
     background-color: rgba(0, 0, 0, 0.16);
   }
@@ -461,7 +473,7 @@
     top: 0;
     left: 0;
     bottom: 0;
-    width: .5px;
+    width: 0.5px;
     height: 100%;
     background-color: rgba(0, 0, 0, 0.16);
   }
