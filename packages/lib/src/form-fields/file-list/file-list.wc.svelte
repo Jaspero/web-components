@@ -47,7 +47,7 @@
   let fileElements = [];
   let internalValue = '';
 
-  export const getValue = () => internalValue.split(',');
+  export const getValue = () => internalValue.split(',').filter(Boolean);
 
   export const reportValidity = () => attachedInternals.reportValidity();
 
@@ -381,6 +381,7 @@
     position: relative;
     background-color: #f4f4f4;
     height: var(--file-list-height, auto);
+    min-height: var(--file-list-min-height, 500px);
     width: 100%;
     border-radius: 0.25rem;
     border: 1px dashed #e6510030;
