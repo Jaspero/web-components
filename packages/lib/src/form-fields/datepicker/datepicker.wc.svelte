@@ -26,18 +26,18 @@
   import { isOutOfMinBounds } from './is-out-of-min-bounds';
 
   export let attachedInternals: ElementInternals;
-  export let value: string = '';
-  export let internalValue: string = '';
-  export let required: boolean = false;
-  export let requiredValidationMessage: string = '';
-  export let enableMultiple: boolean = true;
-  export let separator: string = ', ';
-  export let name: string = '';
-  export let label: string = '';
+  export let value = '';
+  export let internalValue = '';
+  export let required = false;
+  export let requiredValidationMessage = '';
+  export let enableMultiple = false;
+  export let separator = ', ';
+  export let name = '';
+  export let label = '';
   export let labelType: 'inside' | 'outside' = 'inside';
-  export let displayFormat: string = 'normal';
+  export let displayFormat = 'normal';
   export let displayFormatFunction: (date: Date) => string = (date) => date.toDateString();
-  export let returnFormat: string = 'js';
+  export let returnFormat = 'js';
   export let returnFormatFunction: (date: Date) => any = (date) => date.valueOf();
   export let minDate: string | Date;
   export let maxDate: string | Date;
