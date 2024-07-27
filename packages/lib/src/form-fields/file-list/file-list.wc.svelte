@@ -398,6 +398,7 @@
     flex-direction: column;
     justify-content: center;
     align-items: center;
+    min-height: inherit;
   }
 
   .info a {
