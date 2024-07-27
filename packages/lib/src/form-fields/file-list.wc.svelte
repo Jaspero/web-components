@@ -33,7 +33,7 @@
   export let minfiles = null;
   export let maxfilesValidationMessage: string;
   export let minfilesValidationMessage: string;
-  export let validationMessages: {[key: string]: string} = {};
+  export let validationMessages: { [key: string]: string } = {};
   export let sortable = true;
 
   let grabbedEl = null;
@@ -47,7 +47,7 @@
   let fileElements = [];
   let internalValue = '';
 
-  export const getValue = () => internalValue;
+  export const getValue = () => internalValue.split(',');
 
   export const reportValidity = () => attachedInternals.reportValidity();
 
@@ -88,9 +88,9 @@
           }
         })
       );
-      internalFiles = internalFiles;
+      internalFiles = [...internalFiles];
     } catch (err) {
-      console.log(err);
+      console.error(err);
     } finally {
       loading = false;
     }
@@ -100,8 +100,7 @@
     if (internalFiles[index].saved) {
       dispatch('removed', { url: internalFiles[index].url });
     }
-    internalFiles.splice(index, 1);
-    internalFiles = internalFiles;
+    internalFiles = internalFiles.filter((i, ind) => index !== ind);
   }
 
   function handleFileInput(e) {
@@ -160,7 +159,9 @@
     if (Array.isArray(value)) {
       value = value.join(',');
     }
+
     const urls = value.split(',');
+    
     await Promise.allSettled(
       urls.map(async (url) => {
         const res = await fetch(url);
@@ -181,7 +182,8 @@
         internalFiles.push(obj);
       })
     );
-    internalFiles = internalFiles;
+
+    internalFiles = [...internalFiles];
   };
 
   function mousemove(e) {
@@ -205,6 +207,19 @@
       grabbedEl.style = '';
       grabbedEl = null;
     }
+  }
+
+  function mousedown(index: number, e: MouseEvent) {
+    if (!sortable) {
+      return;
+    }
+
+    grabbedEl = fileElements[index];
+    grabbedIndex = index;
+    grabbedEl.style.zIndex = '2';
+    grabbedEl.style.pointerEvents = 'none';
+    startingX = e.clientX;
+    startingY = e.clientY;
   }
 
   $: {
@@ -250,9 +265,9 @@
       </svg>
       <div>{wording.DROP_YOUR_FILES_HERE}</div>
     </div>
-  {:else if internalFiles.length == 0}
+  {:else if internalFiles.length === 0}
     <!-- svelte-ignore a11y-no-static-element-interactions -->
-    <div class="info" hidden={internalFiles.length != 0}>
+    <div class="info" hidden={internalFiles.length !== 0}>
       <!-- svelte-ignore a11y-missing-attribute -->
       <!-- svelte-ignore a11y-click-events-have-key-events -->
       <div>
@@ -267,15 +282,7 @@
         <div
           class="file"
           class:grab={sortable}
-          on:mousedown={(e) => {
-            if (sortable) {
-              grabbedEl = fileElements[index];
-              grabbedIndex = index;
-              grabbedEl.style.pointerEvents = 'none';
-              startingX = e.clientX;
-              startingY = e.clientY;
-            }
-          }}
+          on:mousedown={(e) => mousedown(index, e)}
           bind:this={fileElements[index]}
         >
           <button
@@ -395,8 +402,8 @@
     cursor: pointer;
     width: 40px;
     height: 40px;
-    right: 10px;
-    bottom: 10px;
+    right: 20px;
+    bottom: 20px;
     border-radius: 50%;
     background-color: var(--primary-color);
     fill: var(--text-on-primary);
