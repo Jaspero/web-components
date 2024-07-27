@@ -279,8 +279,8 @@
     {@html label}
   </div>
 {/if}
-<div class="wrapper" use:clickOutside on:click_outside={() => (open = false)} class:has-hint={hint}>
-  {#if showClear && value}
+<div class="wrapper" class:has-hint={hint}>
+  {#if (showClear && value)}
     <button class="clear" on:click={clearSelection}>
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512">
         <path
@@ -334,7 +334,13 @@
 {#if open}
   <div class="overlay">
     <!-- svelte-ignore a11y-no-noninteractive-element-interactions -->
-    <div class="menu" style={menuStyle} on:keydown={handleKeydown} role="dialog">
+    <div
+      class="menu"
+      style={menuStyle}
+      use:clickOutside
+      on:click_outside={() => (open = false)}
+      on:keydown={handleKeydown}
+      role="dialog">
       {#each options as option, index (option)}
         <button
           type="button"
