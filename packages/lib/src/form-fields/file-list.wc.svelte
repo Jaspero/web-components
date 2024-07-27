@@ -24,23 +24,24 @@
     DROP_FILES_HERE_OR: 'Drop files here or'
   };
   export let attachedInternals: ElementInternals;
-  export let value: string = '';
-  export let label: string = '';
-  export let id: string = '';
-  export let name: string = '';
+  export let value = '';
+  export let label = '';
+  export let id = '';
+  export let name = '';
   export let service: FileService;
   export let maxfiles = null;
   export let minfiles = null;
-  export let maxfilesValidationMessage;
-  export let minfilesValidationMessage;
-  export let validationMessages = {};
+  export let maxfilesValidationMessage: string;
+  export let minfilesValidationMessage: string;
+  export let validationMessages: {[key: string]: string} = {};
   export let sortable = true;
 
   let grabbedEl = null;
   let grabbedIndex = -1;
-  let startingY, startingX;
+  let startingY: number;
+  let startingX: number;
   let internalFiles = [];
-  let browseFilesEl;
+  let browseFilesEl: HTMLInputElement;
   let loading = false;
   let hoveringFile = false;
   let fileElements = [];
@@ -183,25 +184,15 @@
     internalFiles = internalFiles;
   };
 
-  $: {
-    internalFiles = [];
-    if (value) {
-      loading = true;
-      loadFiles(value);
-      loading = false;
-    }
-  }
-</script>
-
-<svelte:document
-  on:mousemove={(e) => {
+  function mousemove(e) {
     if (grabbedEl) {
       e.preventDefault();
       grabbedEl.style.transform = 'translateY(' + (e.clientY - startingY) + 'px)';
       grabbedEl.style.transform += 'translateX(' + (e.clientX - startingX) + 'px)';
     }
-  }}
-  on:mouseup={(e) => {
+  }
+
+  function mouseup(e: any) {
     if (grabbedEl) {
       e.preventDefault();
       const fileEl = e.target.closest('.file');
@@ -214,8 +205,19 @@
       grabbedEl.style = '';
       grabbedEl = null;
     }
-  }}
-/>
+  }
+
+  $: {
+    internalFiles = [];
+    if (value) {
+      loading = true;
+      loadFiles(value);
+      loading = false;
+    }
+  }
+</script>
+
+<svelte:document on:mousemove={mousemove} on:mouseup={mouseup} />
 
 {#if label}
   <!-- svelte-ignore a11y-label-has-associated-control -->
@@ -385,18 +387,6 @@
     overflow: auto;
   }
 
-  @media (max-width: 900px) {
-    .files {
-      grid-template-columns: repeat(3, minmax(0, 1fr));
-    }
-  }
-
-  @media (max-width: 600px) {
-    .files {
-      grid-template-columns: repeat(2, minmax(0, 1fr));
-    }
-  }
-
   .add-more {
     position: absolute;
     display: flex;
@@ -405,8 +395,8 @@
     cursor: pointer;
     width: 40px;
     height: 40px;
-    right: -20px;
-    bottom: -20px;
+    right: 10px;
+    bottom: 10px;
     border-radius: 50%;
     background-color: var(--primary-color);
     fill: var(--text-on-primary);
@@ -460,14 +450,13 @@
     justify-content: center;
     align-items: center;
     overflow: hidden;
-    background-color: var(--primary-color);
+    background-color: var(--file-list-background-color, #e5e5e5);
     fill: var(--text-on-primary);
   }
 
   .file-icon img {
     aspect-ratio: 1 / 1;
-    object-fit: cover;
-    user-drag: none;
+    object-fit: contain;
     width: 100%;
     height: 100%;
     -webkit-user-drag: none;
@@ -497,6 +486,18 @@
     animation:
       spinner-bulqg1 0.8s infinite linear alternate,
       spinner-oaa3wk 1.6s infinite linear;
+  }
+
+  @media (max-width: 900px) {
+    .files {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+  }
+
+  @media (max-width: 600px) {
+    .files {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
   }
 
   @keyframes spinner-bulqg1 {
