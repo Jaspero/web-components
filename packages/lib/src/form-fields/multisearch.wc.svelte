@@ -31,6 +31,9 @@
   let loadingSearch = false;
   let searchValue = '';
 
+  export let wording = {
+    LOADING: 'Loading...'
+  };
   export let attachedInternals: ElementInternals;
   export let minSelects = 0;
   export let maxSelects: number | null = null;
@@ -65,6 +68,14 @@
   export const reportValidity = () => {
     attachedInternals.reportValidity();
   };
+
+  $: {
+    if (open) {
+      document.documentElement.style.overflowY = 'hidden';
+    } else {
+      document.documentElement.style.overflowY = '';
+    }
+  }
 
   $: {
     options = options.filter((el) => el.selected).concat(options.filter((el) => !el.selected));
@@ -133,12 +144,20 @@
     const dropdownHeight = 300;
 
     let style: string = '';
-    if (availableSpaceBelow < dropdownHeight) {
-      style = `bottom:100%;`;
-    } else {
-      style = `top:100%;`;
-    }
 
+    if (availableSpaceBelow < dropdownHeight) {
+      style = `
+        width: ${rect.width}px;
+        bottom: ${window.innerHeight - rect.top}px;
+        left: ${rect.left}px;
+      `;
+    } else {
+      style = `
+        width: ${rect.width}px;
+        top: ${rect.bottom}px;
+        left: ${rect.left}px;
+      `;
+    }
     menuStyle = style;
     open = !open;
 
@@ -297,7 +316,7 @@
 
   async function loadValues(value) {
     valueLoad = true;
-    const values = value.split(',');
+    const values = Array.isArray(value) ? value : value.split(',');
     await Promise.all(
       values.map(async (el) => {
         let single;
@@ -333,7 +352,7 @@
     {@html label}
   </div>
 {/if}
-<div class="wrapper" use:clickOutside on:click_outside={() => (open = false)} class:has-hint={hint}>
+<div class="wrapper" class:has-hint={hint}>
   <input class="hidden-input" tabindex="-1" bind:value={internalValue} {id} {name} {required} />
 
   <button
@@ -365,7 +384,6 @@
       class="select-arrow"
       class:rotate={open}
     >
-      <!--! Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2023 Fonticons, Inc.-->
       <path
         d="M137.4 374.6c12.5 12.5 32.8 12.5 45.3 0l128-128c9.2-9.2 11.9-22.9 6.9-34.9s-16.6-19.8-29.6-19.8L32 192c-12.9 0-24.6 7.8-29.6 19.8s-2.2 25.7 6.9 34.9l128 128z"
       />
@@ -379,73 +397,82 @@
   {/if}
 
   {#if open}
-    <!-- svelte-ignore a11y-no-noninteractive-element-interactions -->
-    <div class="menu" on:keydown={handleKeydown} style={menuStyle} role="dialog">
-      {#if service.search}
-        <div class="search-field">
-          <span class="search-label" class:move={searchFocused || searchValue}>Search</span>
-          <input
-            name="search"
-            type="text"
-            class="search-input"
-            on:input={() => {
-              if (!loadingSearch) handleSearch();
-            }}
-            bind:value={searchValue}
-            on:focus={() => (searchFocused = true)}
-            on:blur={() => (searchFocused = false)}
-          />
-        </div>
-      {/if}
-      <div class="menu-buttons">
-        {#each options as option, index (option)}
-          <button
-            type="button"
-            class="menu-button"
-            class:selected={option.selected}
-            bind:this={optionElements[index]}
-            disabled={option.disabled}
-            on:click|preventDefault={() => (option.selected = !option.selected)}
-          >
-            <span>{option.label ? option.label : option.value}</span>
-
-            {#if option.selected}
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                width="1rem"
-                height="1rem"
-                viewBox="0 0 448 512"
-              >
-                <!--! Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2023 Fonticons, Inc. -->
-                <path
-                  d="M438.6 105.4c12.5 12.5 12.5 32.8 0 45.3l-256 256c-12.5 12.5-32.8 12.5-45.3 0l-128-128c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0L160 338.7 393.4 105.4c12.5-12.5 32.8-12.5 45.3 0z"
-                />
-              </svg>
-            {/if}
-          </button>
-        {/each}
-        {#if loadingSearch}
-          <span style="display: block; padding: 0.75rem; text-align: center;">Loading...</span>
+    <div class="overlay">
+      <!-- svelte-ignore a11y-no-noninteractive-element-interactions -->
+      <div
+        class="menu"
+        use:clickOutside
+        on:click_outside={() => (open = false)}
+        on:keydown={handleKeydown}
+        style={menuStyle}
+        role="dialog"
+      >
+        {#if service.search}
+          <div class="search-field">
+            <span class="search-label" class:move={searchFocused || searchValue}>Search</span>
+            <input
+              name="search"
+              type="text"
+              class="search-input"
+              on:input={() => {
+                if (!loadingSearch) handleSearch();
+              }}
+              bind:value={searchValue}
+              on:focus={() => (searchFocused = true)}
+              on:blur={() => (searchFocused = false)}
+            />
+          </div>
         {/if}
-      </div>
-      {#if service.loadMore && !loadingSearch}
-        <div class="loadmore">
-          {#if !loadingMore}
+        <div class="menu-buttons">
+          {#each options as option, index (option)}
             <button
               type="button"
-              on:click|preventDefault|stopPropagation={async () => {
-                loadingMore = true;
-                options = options.concat(await service.loadMore(searchValue));
-                loadingMore = false;
-              }}
+              class="menu-button"
+              class:selected={option.selected}
+              bind:this={optionElements[index]}
+              disabled={option.disabled}
+              on:click|preventDefault={() => (option.selected = !option.selected)}
             >
-              Load more
+              <span>{option.label ? option.label : option.value}</span>
+
+              {#if option.selected}
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="1rem"
+                  height="1rem"
+                  viewBox="0 0 448 512"
+                >
+                  <!--! Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2023 Fonticons, Inc. -->
+                  <path
+                    d="M438.6 105.4c12.5 12.5 12.5 32.8 0 45.3l-256 256c-12.5 12.5-32.8 12.5-45.3 0l-128-128c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0L160 338.7 393.4 105.4c12.5-12.5 32.8-12.5 45.3 0z"
+                  />
+                </svg>
+              {/if}
             </button>
-          {:else}
-            <button type="button" disabled>Loading...</button>
+          {/each}
+          {#if loadingSearch}
+            <span style="display: block; padding: 0.75rem; text-align: center;">Loading...</span>
           {/if}
         </div>
-      {/if}
+        {#if service.loadMore && !loadingSearch}
+          <div class="loadmore">
+            {#if !loadingMore}
+              <button
+                type="button"
+                on:click|preventDefault|stopPropagation={async () => {
+                  loadingMore = true;
+                  options = options.concat(await service.loadMore(searchValue));
+                  loadingMore = false;
+                }}
+              >
+                Load more
+              </button>
+            {:else}
+              <button type="button" disabled>Loading...</button>
+            {/if}
+          </div>
+        {/if}
+      </div>
     </div>
   {/if}
 </div>
@@ -748,7 +775,7 @@
     -ms-user-select: none;
     user-select: none;
     gap: 0.75rem;
-    padding: .75rem;
+    padding: 0.75rem;
     background-color: transparent;
     border-bottom: 1px solid var(--border-secondary);
   }
@@ -784,21 +811,21 @@
     transform: translateY(-50%);
     font-size: 1rem;
     -webkit-transition:
-            transform 0.3s,
-            top 0.3s,
-            font-size 0.3s;
+      transform 0.3s,
+      top 0.3s,
+      font-size 0.3s;
     -o-transition:
-            transform 0.3s,
-            top 0.3s,
-            font-size 0.3s;
+      transform 0.3s,
+      top 0.3s,
+      font-size 0.3s;
     -moz-transition:
-            transform 0.3s,
-            top 0.3s,
-            font-size 0.3s;
+      transform 0.3s,
+      top 0.3s,
+      font-size 0.3s;
     transition:
-            transform 0.3s,
-            top 0.3s,
-            font-size 0.3s;
+      transform 0.3s,
+      top 0.3s,
+      font-size 0.3s;
   }
 
   .search-label.move {
@@ -809,5 +836,14 @@
     -o-transform: translateY(0);
     transform: translateY(0);
     font-size: 0.75rem;
+  }
+
+  .overlay {
+    z-index: 100;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
   }
 </style>

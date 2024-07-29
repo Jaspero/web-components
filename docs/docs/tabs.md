@@ -6,13 +6,14 @@
 
 ### Attributes
 
-| **Name** | **Required** | **Type** | **Description** |
-| :----: | :----: | :----: | :---: |
-| tab | | `number` | Currently shown tab (starting from 1) |
+| **Name** | **Required** | **Type** |            **Description**            |
+| :------: | :----------: | :------: | :-----------------------------------: |
+|   tab    |              | `number` | Currently shown tab (starting from 1) |
 
 ### Slots
 
 `<jp-tab>` is `<jp-tabs>` child and contains content of that tab
+
 - it needs to have an attribute `title` because it is used as a tab name
 
 ### Methods
@@ -22,7 +23,7 @@
 
 ### Events
 
-- `change` 
+- `change`
   - triggers when the tab changes
 
 ### Demo

@@ -6,45 +6,44 @@
 
 ### Attributes
 
-| **Name** | **Required** | **Type** | **Description** |
-| :----: | :----: | :----: | :---: |
-| id | | `string` | unique identifier |
-| value | | `string`| value of the input field |
-| name | ✓ | `string` | name of the form control |
-| placeholder | | `string` | temporary text that appears in an input field before any input is entered |
-| label | | `string` | shows at the top of an input |
-| labelType | | `'outside'` or `'inside'` | whether label is inside or outside of the field |
-| minitems | | `number` | minimum number of items allowed |
-| minitemsValidationMessage | | `string` | validation message for when component does not satisfy minitems |
-| maxitems | |  `number` |  maximum number of items allowed |
-| maxitemsValidationMessage | | `string` | validation message for when component does not satisfy maxitems |
-| pattern | | `RegExp` | each chip has to satisfy pattern |
-| patternValidationMessage | | `string` | validation message for when component does not satisfy pattern |
-| required | | `boolean` | determines if a chip is required |
-| requiredValidationMessage | | `string` | validation message for when component does not satisfy required |
-| unique | | `boolean` | determines if each chip has to be different | 
-| uniqueValidationMessage | | `string` | validation message for when component does not satisfy unique |
-| validationMessages | | `{[type]: string}` where `type` is `string` | compact way of writing validation messages in a single attribute |
-
+|         **Name**          | **Required** |                  **Type**                   |                              **Description**                              |
+| :-----------------------: | :----------: | :-----------------------------------------: | :-----------------------------------------------------------------------: |
+|            id             |              |                  `string`                   |                             unique identifier                             |
+|           value           |              |                  `string`                   |                         value of the input field                          |
+|           name            |      ✓       |                  `string`                   |                         name of the form control                          |
+|        placeholder        |              |                  `string`                   | temporary text that appears in an input field before any input is entered |
+|           label           |              |                  `string`                   |                       shows at the top of an input                        |
+|         labelType         |              |          `'outside'` or `'inside'`          |              whether label is inside or outside of the field              |
+|         minitems          |              |                  `number`                   |                      minimum number of items allowed                      |
+| minitemsValidationMessage |              |                  `string`                   |      validation message for when component does not satisfy minitems      |
+|         maxitems          |              |                  `number`                   |                      maximum number of items allowed                      |
+| maxitemsValidationMessage |              |                  `string`                   |      validation message for when component does not satisfy maxitems      |
+|          pattern          |              |                  `RegExp`                   |                     each chip has to satisfy pattern                      |
+| patternValidationMessage  |              |                  `string`                   |      validation message for when component does not satisfy pattern       |
+|         required          |              |                  `boolean`                  |                     determines if a chip is required                      |
+| requiredValidationMessage |              |                  `string`                   |      validation message for when component does not satisfy required      |
+|          unique           |              |                  `boolean`                  |                determines if each chip has to be different                |
+|  uniqueValidationMessage  |              |                  `string`                   |       validation message for when component does not satisfy unique       |
+|    validationMessages     |              | `{[type]: string}` where `type` is `string` |     compact way of writing validation messages in a single attribute      |
 
 ### Slots
 
 This component does not have any slots.
 
 ### Methods
-- `getValue` 
+
+- `getValue`
   - returns form field value
-- `reportValidity` 
+- `reportValidity`
   - triggers reportValidity
 
 ### Events
 
-- `value` 
+- `value`
   - triggers when chips/input changes
 
 ### Demo
 
 ```jsx live
-<jp-chips label="Chips" placeholder="Placeholder">
-</jp-chips>
+<jp-chips label="Chips" placeholder="Placeholder"></jp-chips>
 ```

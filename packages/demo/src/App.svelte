@@ -1,12 +1,10 @@
 <script lang="ts">
-  import '../../../dist/checkbox.wc';
-  import '../../../dist/input.wc';
-  import '../../../dist/select.wc';
-  import MultiSearchDemo from './MultiSearchDemo.svelte';
   import '../../lib/src/index.css';
+  import MultiSearchDemo from './MultiSearchDemo.svelte';
+  import AsyncTableDemo from './AsyncTableDemo.svelte';
+  import FileListDemo from './FileListDemo.svelte';
 </script>
 
-
-<jp-input label='Input'>
-</jp-input>
-<MultiSearchDemo />
+<!-- <AsyncTableDemo /> -->
+<FileListDemo />
+<!-- <MultiSearchDemo /> -->

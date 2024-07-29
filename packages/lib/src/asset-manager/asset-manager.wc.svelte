@@ -11,6 +11,16 @@
   import Asset from './Asset.svelte';
   import { createEventDispatcher } from 'svelte';
 
+  export let wording = {
+    DROP_FILES_HERE: 'Drop your files here',
+    FOLDER_NAME: 'Folder name',
+    SUBMIT: 'Submit',
+    FOLDER_IS_EMPTY: 'Folder is empty',
+    CONFIRM_SELECTION: 'Confirm selection',
+    PAUSE: 'Pause',
+    RESUME: 'Resume',
+    CANCEL: 'Cancel'
+  };
   export let rootPath = '/';
   export let maxSize = 10 * 1048576;
   export let acceptedFiles = '*';
@@ -144,7 +154,7 @@
           d="M214.6 41.4c-12.5-12.5-32.8-12.5-45.3 0l-160 160c-12.5 12.5-12.5 32.8 0 45.3s32.8 12.5 45.3 0L160 141.2V448c0 17.7 14.3 32 32 32s32-14.3 32-32V141.2L329.4 246.6c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3l-160-160z"
         />
       </svg>
-      <div>Drop your files here</div>
+      <div>{wording.DROP_FILES_HERE}</div>
     </div>
   {:else if folderDialog}
     <header>
@@ -159,10 +169,10 @@
 
     <form class="add-folder-form" on:submit|preventDefault={createFolder}>
       <label class="add-folder-input">
-        <span>Folder name</span>
+        <span>{wording.FOLDER_NAME}</span>
         <input bind:value={folderName} pattern={folderNamePattern} required />
       </label>
-      <button class="add-folder-submit" type="submit">Submit</button>
+      <button class="add-folder-submit" type="submit">{wording.SUBMIT}</button>
     </form>
   {:else}
     <header>
@@ -205,7 +215,7 @@
       </div>
     {:else if items.length == 0}
       <div class="info">
-        <p>Folder is empty</p>
+        <p>{wording.FOLDER_IS_EMPTY}</p>
       </div>
     {:else}
       <div class="files">
@@ -234,7 +244,7 @@
 
     {#if selectable}
       <footer>
-        <button type="button" on:click={confirmSelection}>Confirm Selection</button>
+        <button type="button" on:click={confirmSelection}>{wording.CONFIRM_SELECTION}</button>
       </footer>
     {/if}
   {/if}
@@ -250,12 +260,6 @@
 />
 
 <style>
-  /*
-* Prefixed by https://autoprefixer.github.io
-* PostCSS: v8.4.14,
-* Autoprefixer: v10.4.7
-* Browsers: last 100 version
-*/
 
   * {
     -webkit-box-sizing: border-box;
