@@ -28,8 +28,6 @@ Defines the structure of a table header.
 | sortMethod | | `function` | used for custom sorting with ascending ( *'asc'* ) or descending ( *'desc'* ) direction |
 | pipes | |  [`TablePipe`](#tablepipe) | used for transforming table data |
 | fallback | | `any` | optional value used as a replacement if the specific value isn't available |
-| freezeFirstColumn  | | `boolean` | enables a "sticky" attribute for the first column of a table |
-| freezeLastColumn  | | `boolean` | enables a "sticky" attribute for the last column of a table |
 
 <br></br>
 
