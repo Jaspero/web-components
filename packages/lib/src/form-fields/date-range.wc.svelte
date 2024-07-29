@@ -175,13 +175,13 @@
       selectingFirst = false;
     } else {
       const lessThanFirst =
-        parseInt(firstInternalValue.split('-').join(''), 10) >
-        parseInt(`${year}${month + 1 < 10 ? '0' : ''}${month + 1}${day < 10 ? '0' : ''}${day}`, 10);
+              parseInt(firstInternalValue.split('-').join(''), 10) >
+              parseInt(`${year + (month < 0 ? -1 : month > 11 ? 1 : 0)}${month < 0 ? '12' : month > 11 ? '01' : (month + 1 < 10 ? '0' : '') + (month + 1)}${day < 10 ? '0' : ''}${day}`,10) 
       if (lessThanFirst) {
         secondDateSelected = firstDateSelected;
         secondYearSelected = firstYearSelected;
         secondMonthSelected = firstMonthSelected;
-        firstDateSelected = day;
+        firstDateSelected = day; 
         firstYearSelected = year;
         firstMonthSelected = month;
       } else {
@@ -223,6 +223,24 @@
         );
       }
     }
+  }
+
+  $: if (firstMonthSelected == 12) {
+    firstMonthSelected = 0;
+    firstYearSelected++;
+  }
+  $: if (firstMonthSelected == -1) {
+    firstMonthSelected = 11;
+    firstYearSelected--;
+  }
+
+  $: if (secondMonthSelected == 12) {
+    secondMonthSelected = 0;
+    secondYearSelected++;
+  }
+  $: if (secondMonthSelected == -1) {
+    secondMonthSelected = 11;
+    secondYearSelected--;
   }
 
   $: if (pickerMonth == 12) {
@@ -360,33 +378,29 @@
           {/each}
         </div>
 
-        <div class="table">
-          {#each pickerRows as row}
-            <div class="table-row">
-              {#each row as col}
-                <div class="table-cell">
-                  <button
-                    type="button"
-                    class:gray={col.gray}
-                    class:active={secondYearSelected
-                      ? parseInt(firstInternalValue.split('-').join(''), 10) <=
-                          parseInt(
-                            `${col.year}${col.month + 1 < 10 ? '0' : ''}${col.month + 1}${
-                              col.day < 10 ? '0' : ''
-                            }${col.day}`,
-                            10
-                          ) &&
-                        parseInt(secondInternalValue.split('-').join(''), 10) >=
-                          parseInt(
-                            `${col.year}${col.month + 1 < 10 ? '0' : ''}${col.month + 1}${
-                              col.day < 10 ? '0' : ''
-                            }${col.day}`,
-                            10
-                          )
-                      : firstDateSelected == col.day &&
-                        firstMonthSelected == col.month &&
-                        firstYearSelected == col.year}
-                    on:click|preventDefault={() => {
+      <div class="table">
+        {#each pickerRows as row}
+          <div class="table-row">
+            {#each row as col}
+              <div class="table-cell">
+                <button
+                        type="button"
+                        class:gray={col.gray}
+                        class:active={secondYearSelected
+                          ? parseInt(firstInternalValue.split('-').join(''), 10) <=
+                              parseInt(
+                                `${col.year + (col.month < 0 ? -1 : col.month > 11 ? 1 : 0)}${col.month < 0 ? '12' : col.month > 11 ? '01' : (col.month + 1 < 10 ? '0' : '') + (col.month + 1)}${col.day < 10 ? '0' : ''}${col.day}`,
+                                10
+                              ) &&
+                            parseInt(secondInternalValue.split('-').join(''), 10) >=
+                              parseInt(
+                                `${col.year + (col.month < 0 ? -1 : col.month > 11 ? 1 : 0)}${col.month < 0 ? '12' : col.month > 11 ? '01' : (col.month + 1 < 10 ? '0' : '') + (col.month + 1)}${col.day < 10 ? '0' : ''}${col.day}`,
+                                10
+                              )
+                          : firstDateSelected == col.day &&
+                            firstMonthSelected == (col.month < 0 ? '11' : col.month > 11 ? '00' : (col.month < 10 ? '0' : '') + col.month) &&
+                            firstYearSelected == (col.year + (col.month < 0 ? -1 : col.month > 11 ? 1 : 0))}
+                        on:click|preventDefault={() => {
                       handleSelect(col);
                     }}
                   >
@@ -680,7 +694,7 @@
     -ms-flex-direction: column;
     flex-direction: column;
     max-width: 312px;
-    max-height: 385px;
+    max-height: 390px;
     width: 100%;
     padding: 1rem;
     overflow-y: auto;
@@ -817,7 +831,7 @@
     width: 40px;
     height: 40px;
     max-width: 40px;
-    line-height: 40px;
+    line-height: 35px;
     text-align: center;
     padding: 0;
   }
