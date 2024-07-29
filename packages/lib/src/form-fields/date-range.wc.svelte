@@ -389,16 +389,12 @@
                         class:active={secondYearSelected
                           ? parseInt(firstInternalValue.split('-').join(''), 10) <=
                               parseInt(
-                                `${col.year + (col.month < 0 ? -1 : col.month > 11 ? 1 : 0)}
-                                 ${col.month < 0 ? '12' : col.month > 11 ? '01' : (col.month + 1 < 10 ? '0' : '') + (col.month + 1)}
-                                 ${col.day < 10 ? '0' : ''}${col.day}`,
+                                `${col.year + (col.month < 0 ? -1 : col.month > 11 ? 1 : 0)}${col.month < 0 ? '12' : col.month > 11 ? '01' : (col.month + 1 < 10 ? '0' : '') + (col.month + 1)}${col.day < 10 ? '0' : ''}${col.day}`,
                                 10
                               ) &&
                             parseInt(secondInternalValue.split('-').join(''), 10) >=
                               parseInt(
-                                `${col.year + (col.month < 0 ? -1 : col.month > 11 ? 1 : 0)}
-                                 ${col.month < 0 ? '12' : col.month > 11 ? '01' : (col.month + 1 < 10 ? '0' : '') + (col.month + 1)}
-                                 ${col.day < 10 ? '0' : ''}${col.day}`,
+                                `${col.year + (col.month < 0 ? -1 : col.month > 11 ? 1 : 0)}${col.month < 0 ? '12' : col.month > 11 ? '01' : (col.month + 1 < 10 ? '0' : '') + (col.month + 1)}${col.day < 10 ? '0' : ''}${col.day}`,
                                 10
                               )
                           : firstDateSelected == col.day &&
@@ -408,7 +404,7 @@
                       handleSelect(col);
                     }}
                   >
-                    {col.day}
+                  {col.day}
                   </button>
                 </div>
               {/each}
@@ -698,7 +694,7 @@
     -ms-flex-direction: column;
     flex-direction: column;
     max-width: 312px;
-    max-height: 385px;
+    max-height: 390px;
     width: 100%;
     padding: 1rem;
     overflow-y: auto;
@@ -835,7 +831,7 @@
     width: 40px;
     height: 40px;
     max-width: 40px;
-    line-height: 40px;
+    line-height: 30px;
     text-align: center;
     padding: 0;
   }
