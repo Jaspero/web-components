@@ -394,7 +394,7 @@
                     }}
                 >
                   {col.day}
-              </button>
+                </button>
               </div>
             {/each}
           </div>
