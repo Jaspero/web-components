@@ -16,9 +16,14 @@
 />
 
 <script lang="ts">
-  import { clickOutside } from '../clickOutside';
+  import { clickOutside } from '../../clickOutside';
   import { createEventDispatcher, onMount } from 'svelte';
-  import { formatDisplayDate, formatReturnDate } from '../utils/dateFormatter';
+  import { formatDisplayDate, formatReturnDate } from '../../utils/dateFormatter';
+  import Month from './Month.svelte';
+  import Year from './Year.svelte';
+  import Day from './Day.svelte';
+  import { isOutOfMaxBounds } from '../datepicker/is-out-of-max-bounds';
+  import { isOutOfMinBounds } from '../datepicker/is-out-of-min-bounds';
 
   export let attachedInternals: ElementInternals;
   export let value: string = '';
@@ -34,6 +39,8 @@
   export let displayFormatFunction: (date: Date) => string = (date) => date.toDateString();
   export let returnFormat: string = 'js';
   export let returnFormatFunction: (date: Date) => any = (date) => date.valueOf();
+  export let minDate: string | Date;
+  export let maxDate: string | Date;
 
   let selectingFirst = true;
   let firstSelectedDateObject = new Date();
@@ -72,6 +79,18 @@
   ];
   let yearPickerIndex = 0;
 
+  function handleMonthSelected(event) {
+    const { month } = event.detail;
+    pickerMonth = month;
+    monthSelector = false;
+  }
+  function handleYearSelected(event) {
+    const { year } = event.detail;
+    pickerYear = year;
+    yearSelector = false;
+    monthSelector = true;
+  }
+
   export const getValue = () => {
     if (firstYearSelected && secondYearSelected) {
       return (
@@ -89,7 +108,7 @@
   export const reportValidity = () => attachedInternals.reportValidity();
 
   const getYearPickerRows = (yearPickerIndex) => {
-    const tmp = Array.from(Array(4 * 6).keys()).map((el) => el + 2000 + yearPickerIndex * 4 * 6);
+    const tmp = Array.from(Array(4 * 6).keys()).map((el) => el + 2024 + yearPickerIndex * 4 * 6);
     return Array.from(Array(6).keys()).map((el) => {
       return tmp.slice(el * 4, (el + 1) * 4);
     });
@@ -164,14 +183,34 @@
     menuStyle = style;
     openPicker = !openPicker;
   }
+  $: internalMinDate = minDate ? (minDate instanceof Date ? minDate : new Date(minDate)) : null;
+  $: internalMaxDate = maxDate ? (maxDate instanceof Date ? maxDate : new Date(maxDate)) : null;
 
-  function handleSelect(col) {
-    const { day, month, year } = col;
+  $: internalMinMonthCheck = isOutOfMinBounds(internalMinDate, pickerYear, pickerMonth, 0);
+  $: internalMaxMonthCheck = isOutOfMaxBounds(internalMaxDate, pickerYear, pickerMonth, 31);
+  $: internalMinYearCheck = isOutOfMinBounds(internalMinDate, pickerYear, 0, 1);
+  $: internalMaxYearCheck = isOutOfMaxBounds(internalMaxDate, pickerYear, 11, 31);
+  $: internalMinYearPageCheck = isOutOfMinBounds(
+    internalMinDate,
+    2024 + yearPickerIndex * 4 * 6,
+    0,
+    1
+  );
+  $: internalMaxYearPageCheck = isOutOfMaxBounds(
+    internalMaxDate,
+    2024 + (yearPickerIndex + 1) * 4 * 6,
+    11,
+    31
+  );
+
+  function handleSelect(event) {
+    const { day, month, year } = event.detail;
     if (selectingFirst) {
       firstDateSelected = day;
       firstYearSelected = year;
       firstMonthSelected = month;
       secondYearSelected = null;
+      secondMonthSelected = null;
       selectingFirst = false;
     } else {
       const lessThanFirst =
@@ -192,6 +231,8 @@
       selectingFirst = true;
     }
   }
+
+ 
 
   $: {
     if (openPicker) {
@@ -222,6 +263,8 @@
           requiredValidationMessage || `Date is required.`
         );
       }
+      displayedDateString = '';
+      dispatch('value', { value: '' });
     }
   }
 
@@ -264,14 +307,16 @@
       displayedDateString =
         formatDisplayDate(firstSelectedDateObject, displayFormat, displayFormatFunction) +
         separator;
-      if (required) {
+      
+    }
+    if (required) {
         attachedInternals.setValidity(
           { customError: true },
-          requiredValidationMessage || `Date is required.`
+          requiredValidationMessage || `Date is required.`, bindingElement
         );
       }
       dispatch('value', { value: '' });
-    }
+    attachedInternals.checkValidity();
   }
 
   $: {
@@ -325,8 +370,8 @@
   </span>
 </button>
 
-<input type="date" name={`${name}-from`} bind:value={firstInternalValue} hidden />
-<input type="date" name={`${name}-to`} bind:value={secondInternalValue} hidden />
+<input type="date" name={`${name}-from`} bind:value={firstInternalValue} hidden required />
+<input type="date" name={`${name}-to`} bind:value={secondInternalValue} hidden required />
 
 {#if openPicker}
   <div class="overlay">
@@ -337,7 +382,6 @@
       style={menuStyle}
     >
       <div class="menu-nav">
-        <!--<button on:click|preventDefault={() => (pickerYear = pickerYear - 1)}>&lt;&lt;</button>-->
         <button
           type="button"
           class="menu-nav-date"
@@ -351,14 +395,18 @@
           </svg>
         </button>
         <div class="menu-nav-buttons">
-          <button type="button" on:click|preventDefault={() => (pickerMonth = pickerMonth - 1)}>
+          <button type="button" on:click|preventDefault={() => (pickerMonth = pickerMonth - 1)}
+            disabled={internalMinMonthCheck}
+            >
             <svg xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 320 512">
               <path
                 d="M9.4 233.4c-12.5 12.5-12.5 32.8 0 45.3l192 192c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L77.3 256 246.6 86.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0l-192 192z"
               />
             </svg>
           </button>
-          <button type="button" on:click|preventDefault={() => (pickerMonth = pickerMonth + 1)}>
+          <button type="button" on:click|preventDefault={() => (pickerMonth = pickerMonth + 1)}
+            disabled={internalMaxMonthCheck}
+            >
             <svg xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 320 512">
               <path
                 d="M310.6 233.4c12.5 12.5 12.5 32.8 0 45.3l-192 192c-12.5 12.5-32.8 12.5-45.3 0s-12.5-32.8 0-45.3L242.7 256 73.4 86.6c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0l192 192z"
@@ -366,8 +414,7 @@
             </svg>
           </button>
         </div>
-        <!--<button on:click|preventDefault={() => (pickerYear = pickerYear + 1)}>&gt;&gt;</button>-->
-      </div>
+       </div>
 
       <div>
         <div class="table">
@@ -383,29 +430,18 @@
           <div class="table-row">
             {#each row as col}
               <div class="table-cell">
-                <button
-                        type="button"
-                        class:gray={col.gray}
-                        class:active={secondYearSelected
-                          ? parseInt(firstInternalValue.split('-').join(''), 10) <=
-                              parseInt(
-                                `${col.year + (col.month < 0 ? -1 : col.month > 11 ? 1 : 0)}${col.month < 0 ? '12' : col.month > 11 ? '01' : (col.month + 1 < 10 ? '0' : '') + (col.month + 1)}${col.day < 10 ? '0' : ''}${col.day}`,
-                                10
-                              ) &&
-                            parseInt(secondInternalValue.split('-').join(''), 10) >=
-                              parseInt(
-                                `${col.year + (col.month < 0 ? -1 : col.month > 11 ? 1 : 0)}${col.month < 0 ? '12' : col.month > 11 ? '01' : (col.month + 1 < 10 ? '0' : '') + (col.month + 1)}${col.day < 10 ? '0' : ''}${col.day}`,
-                                10
-                              )
-                          : firstDateSelected == col.day &&
-                            firstMonthSelected == (col.month < 0 ? '11' : col.month > 11 ? '00' : (col.month < 10 ? '0' : '') + col.month) &&
-                            firstYearSelected == (col.year + (col.month < 0 ? -1 : col.month > 11 ? 1 : 0))}
-                        on:click|preventDefault={() => {
-                      handleSelect(col);
-                    }}
-                  >
-                    {col.day}
-                  </button>
+                <Day 
+                {firstDateSelected} 
+                {internalMaxDate} 
+                {internalMinDate} 
+                {col}
+                {firstInternalValue}
+                {secondInternalValue}
+                {firstMonthSelected}
+                {firstYearSelected}
+                {secondYearSelected}
+                on:dateSelected={handleSelect}
+                 ></Day>
                 </div>
               {/each}
             </div>
@@ -433,14 +469,18 @@
               </svg>
             </button>
             <div class="menu-year-nav-buttons">
-              <button type="button" on:click|preventDefault={() => yearPickerIndex--}>
+              <button type="button" on:click|preventDefault={() => yearPickerIndex--}
+                disabled={internalMinYearPageCheck}
+                >
                 <svg xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 320 512">
                   <path
                     d="M9.4 233.4c-12.5 12.5-12.5 32.8 0 45.3l192 192c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L77.3 256 246.6 86.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0l-192 192z"
                   />
                 </svg>
               </button>
-              <button type="button" on:click|preventDefault={() => yearPickerIndex++}>
+              <button type="button" on:click|preventDefault={() => yearPickerIndex++}
+                disabled={internalMaxYearPageCheck}
+                >
                 <svg xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 320 512">
                   <path
                     d="M310.6 233.4c12.5 12.5 12.5 32.8 0 45.3l-192 192c-12.5 12.5-32.8 12.5-45.3 0s-12.5-32.8 0-45.3L242.7 256 73.4 86.6c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0l192 192z"
@@ -452,18 +492,14 @@
           {#each pickerYearRows as row}
             <div class="menu-year-row">
               {#each row as year}
-                <button
-                  type="button"
-                  class="menu-year-row-cell"
-                  class:active={secondYearSelected
-                    ? firstYearSelected <= year && secondYearSelected >= year
-                    : firstYearSelected == year}
-                  on:click|preventDefault|stopPropagation={() => {
-                    pickerYear = year;
-                    yearSelector = false;
-                    monthSelector = true;
-                  }}>{year}</button
-                >
+                <Year 
+                    {internalMaxDate}
+                    {internalMinDate}
+                    {firstYearSelected}
+                    {secondYearSelected}
+                    {year}
+                    on:yearSelected={handleYearSelected}
+                />
               {/each}
             </div>
           {/each}
@@ -488,14 +524,18 @@
               </svg>
             </button>
             <div class="menu-month-nav-buttons">
-              <button type="button" on:click|preventDefault={() => (pickerYear = pickerYear - 1)}>
+              <button type="button" on:click|preventDefault={() => (pickerYear = pickerYear - 1)}
+                disabled={internalMinYearCheck}
+                >
                 <svg xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 320 512">
                   <path
                     d="M9.4 233.4c-12.5 12.5-12.5 32.8 0 45.3l192 192c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L77.3 256 246.6 86.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0l-192 192z"
                   />
                 </svg>
               </button>
-              <button type="button" on:click|preventDefault={() => (pickerYear = pickerYear + 1)}>
+              <button type="button" on:click|preventDefault={() => (pickerYear = pickerYear + 1)}
+                disabled={internalMaxYearCheck}
+                >
                 <svg xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 320 512">
                   <path
                     d="M310.6 233.4c12.5 12.5 12.5 32.8 0 45.3l-192 192c-12.5 12.5-32.8 12.5-45.3 0s-12.5-32.8 0-45.3L242.7 256 73.4 86.6c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0l192 192z"
@@ -508,29 +548,18 @@
           <div class="menu-month-grid">
             {#each monthMap as month, index}
               <div class="menu-month-grid-cell">
-                <button
-                  type="button"
-                  on:click|stopPropagation={() => {
-                    pickerMonth = index;
-                    monthSelector = false;
-                  }}
-                  class:active={secondMonthSelected
-                    ? parseInt(
-                        `${firstYearSelected}${firstMonthSelected + 1 < 10 ? '0' : ''}${
-                          firstMonthSelected + 1
-                        }`,
-                        10
-                      ) <= parseInt(`${pickerYear}${index + 1 < 10 ? '0' : ''}${index + 1}`, 10) &&
-                      parseInt(
-                        `${secondYearSelected}${secondMonthSelected + 1 < 10 ? '0' : ''}${
-                          secondMonthSelected + 1
-                        }`,
-                        10
-                      ) >= parseInt(`${pickerYear}${index + 1 < 10 ? '0' : ''}${index + 1}`, 10)
-                    : firstMonthSelected == index && pickerYear == firstYearSelected}
-                >
-                  {month}
-                </button>
+                <Month
+                    {index}
+                    {month}
+                    {pickerYear}
+                    {internalMaxDate}
+                    {internalMinDate}
+                    {firstMonthSelected}
+                    {secondMonthSelected}
+                    {firstYearSelected}
+                    {secondYearSelected}
+                    on:monthSelected={handleMonthSelected}
+                  />
               </div>
             {/each}
           </div>
@@ -726,14 +755,14 @@
     grid-template-columns: repeat(3, minmax(0, 1fr));
   }
 
-  .menu-month-grid-cell button {
+  :global(.menu-month-grid-cell button) {
     width: 100%;
     border-radius: 999px;
     padding: 0.25rem 0.75rem;
   }
 
-  .menu-month-grid-cell button.active,
-  .menu-month-grid-cell button:hover {
+  :global(.menu-month-grid-cell button.active,
+  .menu-month-grid-cell button:hover) {
     background-color: var(--primary-color);
     color: var(--text-on-primary);
   }
@@ -792,14 +821,14 @@
     gap: 0.25rem;
   }
 
-  .menu-year-row-cell {
+  :global(.menu-year-row-cell) {
     flex: 1 1 0;
     padding: 0.25rem;
     border-radius: 999px;
   }
 
-  .menu-year-row-cell:hover,
-  .menu-year-row-cell.active {
+  :global(.menu-year-row-cell:hover,
+  .menu-year-row-cell.active) {
     background-color: var(--primary-color);
     color: var(--text-on-primary);
   }
@@ -821,6 +850,13 @@
     background-color: var(--background-secondary);
   }
 
+  .menu-nav-buttons button:disabled:hover,
+  .menu-year-nav-buttons button:disabled:hover,
+  .menu-month-nav-buttons button:disabled:hover {
+    background-color: transparent;
+    color: var(--text-secondary);
+  }
+
   .table {
     display: table;
     width: max-content;
@@ -836,21 +872,21 @@
     padding: 0;
   }
 
-  .table-cell button {
+  :global(.table-cell button) {
     width: 100%;
     height: 100%;
     border-radius: 50%;
   }
 
-  .table-cell button:hover {
+  :global(.table-cell button:hover) {
     background-color: var(--background-secondary);
   }
 
-  .table-cell button.gray {
+  :global(.table-cell button.gray) {
     opacity: 0.5;
   }
 
-  .table-cell button.active {
+  :global(.table-cell button.active) {
     background-color: var(--primary-color);
     color: var(--text-on-primary);
     opacity: 1;

@@ -17,7 +17,7 @@ export default () => {
   import('./src/form-fields/chips.wc.svelte');
   import('./src/form-fields/ckeditor.wc.svelte');
   import('./src/form-fields/color.wc.svelte');
-  import('./src/form-fields/date-range.wc.svelte');
+  import('./src/form-fields/date-range/date-range.wc.svelte');
   import('./src/form-fields/datepicker/datepicker.wc.svelte');
   import('./src/form-fields/file-list/file-list.wc.svelte');
   import('./src/form-fields/file-upload.wc.svelte');
