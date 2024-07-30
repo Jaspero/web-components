@@ -22,7 +22,6 @@
 
 <button
     type="button"
-    class="menu-year-row-cell"
     class:active={secondYearSelected
         ? firstYearSelected <= year && secondYearSelected >= year
         : firstYearSelected == year}

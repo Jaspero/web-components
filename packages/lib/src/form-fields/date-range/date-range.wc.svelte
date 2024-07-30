@@ -259,12 +259,12 @@
     } else {
       if (required) {
         attachedInternals.setValidity(
-          { valueMissing: true },
-          requiredValidationMessage || `Date is required.`
+          { customError: true },
+          requiredValidationMessage || `Date is required.`, bindingElement
         );
       }
-      displayedDateString = '';
       dispatch('value', { value: '' });
+      attachedInternals.checkValidity();
     }
   }
 
@@ -309,14 +309,7 @@
         separator;
       
     }
-    if (required) {
-        attachedInternals.setValidity(
-          { customError: true },
-          requiredValidationMessage || `Date is required.`, bindingElement
-        );
-      }
-      dispatch('value', { value: '' });
-    attachedInternals.checkValidity();
+    
   }
 
   $: {
@@ -492,14 +485,16 @@
           {#each pickerYearRows as row}
             <div class="menu-year-row">
               {#each row as year}
-                <Year 
-                    {internalMaxDate}
-                    {internalMinDate}
-                    {firstYearSelected}
-                    {secondYearSelected}
-                    {year}
-                    on:yearSelected={handleYearSelected}
-                />
+                <div class="menu-year-row-cell">
+                  <Year 
+                      {internalMaxDate}
+                      {internalMinDate}
+                      {firstYearSelected}
+                      {secondYearSelected}
+                      {year}
+                      on:yearSelected={handleYearSelected}
+                  />
+                </div>
               {/each}
             </div>
           {/each}
@@ -821,14 +816,14 @@
     gap: 0.25rem;
   }
 
-  :global(.menu-year-row-cell) {
+  :global(.menu-year-row-cell button) {
     flex: 1 1 0;
-    padding: 0.25rem;
+    padding: 0.25rem  1rem;
     border-radius: 999px;
   }
 
-  :global(.menu-year-row-cell:hover,
-  .menu-year-row-cell.active) {
+  :global(.menu-year-row-cell button:hover,
+  .menu-year-row-cell button.active) {
     background-color: var(--primary-color);
     color: var(--text-on-primary);
   }
@@ -849,7 +844,11 @@
   .menu-year-nav-date:hover {
     background-color: var(--background-secondary);
   }
-
+  :global(
+      .table-cell button:disabled:hover,
+      .menu-month-grid-cell button:disabled:hover,
+      .menu-year-row-cell button:disabled:hover
+    ),
   .menu-nav-buttons button:disabled:hover,
   .menu-year-nav-buttons button:disabled:hover,
   .menu-month-nav-buttons button:disabled:hover {
@@ -862,7 +861,7 @@
     width: max-content;
   }
 
-  .table-cell {
+  :global(.table-cell) {
     display: table-cell;
     width: 40px;
     height: 40px;
