@@ -1,33 +1,65 @@
 <script lang="ts">
-    import { isOutOfMaxBounds } from '../datepicker/is-out-of-max-bounds.js';
-    import { isOutOfMinBounds } from '../datepicker/is-out-of-min-bounds.js';
-    import { createEventDispatcher } from 'svelte';
-    
-    export let col: { year: number; month: number; day: number; gray: boolean };
-    export let internalMinDate: Date;
-    export let internalMaxDate: Date;
-    export let firstDateSelected: number;
-    export let firstMonthSelected
-    export let firstYearSelected: number;
-    export let secondYearSelected: number;
-    export let firstInternalValue: string = '';
-    export let secondInternalValue: string = '';
-    let maxDateSelectible = new Date();
-
-  $: maxDateSelectible = new Date(firstInternalValue);
-
+  import { isOutOfMaxBounds } from '../datepicker/is-out-of-max-bounds.js';
+  import { isOutOfMinBounds } from '../datepicker/is-out-of-min-bounds.js';
+  import { createEventDispatcher } from 'svelte';
+  import { calculateMaxDate, calculateMinDate, calculateRequiredAfter, calculateRequiredBefore } from './calculate-max/min-date.js';
   
-    $: isOutOfMax = isOutOfMaxBounds(internalMaxDate, col.year, col.month, col.day);
-    $: isOutOfMin = isOutOfMinBounds(internalMinDate, col.year, col.month, col.day);
-    const dispatch = createEventDispatcher();
-  
-    function handleClick() {
-      dispatch('dateSelected', {
-        day: col.day,
-        month: col.month,
-        year: col.year
-      });
+  export let col: { year: number; month: number; day: number; gray: boolean };
+  export let internalMinDate: Date;
+  export let internalMaxDate: Date;
+  export let firstDateSelected: number;
+  export let firstMonthSelected;
+  export let firstYearSelected: number;
+  export let secondYearSelected: number;
+  export let firstInternalValue: string = '';
+  export let secondInternalValue: string = '';
+  export let selectingFirst: boolean;
+  export let maxSelectibleDays: number;
+  export let minSelectibleDays: number;
+  let maxDateSelectible: Date;
+  let minDateSelectible: Date;
+  let isOutOfBonuds: boolean;
+
+  const dispatch = createEventDispatcher();
+
+  function handleClick() {
+    dispatch('dateSelected', {
+      day: col.day,
+      month: col.month,
+      year: col.year
+    });
+  }  
+
+  function isDateOutOfSelectableBounds(year : number, month : number, day : number, selectingFirst : boolean): boolean{
+    if(!selectingFirst){
+      const selectedDate = new Date(year, month , day);
+    if((selectedDate > maxDateSelectible  || selectedDate < minDateSelectible) && maxSelectibleDays){
+        return true;
     }
+  }
+    return false;
+  }
+
+  function isDateOutOfMinRequiredBounds(year : number, month : number, day : number, selectingFirst : boolean): boolean{
+    if(!selectingFirst){
+      const selectedDate = new Date(year, month , day);
+      const datePicked = new Date(firstInternalValue)
+    if(((selectedDate > minDateAfter && selectedDate < datePicked) || (selectedDate < minDateBefore && selectedDate > datePicked) ) && minSelectibleDays){
+        return true;
+    }
+  }
+    return false;
+  }
+
+  $: maxDateSelectible = calculateMaxDate(firstInternalValue, maxSelectibleDays);
+  $: minDateSelectible = calculateMinDate(firstInternalValue, maxSelectibleDays);
+
+  $: minDateAfter = calculateRequiredAfter(firstInternalValue, minSelectibleDays);
+  $: minDateBefore = calculateRequiredBefore(firstInternalValue, minSelectibleDays);
+
+  $: isOutOfBonuds = isDateOutOfSelectableBounds(col.year, col.month, col.day, selectingFirst) || isDateOutOfMinRequiredBounds(col.year, col.month, col.day, selectingFirst);
+  $: isOutOfMax = isOutOfMaxBounds(internalMaxDate, col.year, col.month, col.day);
+  $: isOutOfMin = isOutOfMinBounds(internalMinDate, col.year, col.month, col.day);
 </script>
   
 <button
@@ -48,8 +80,9 @@
       firstMonthSelected == (col.month < 0 ? '11' : col.month > 11 ? '00' : (col.month < 10 ? '0' : '') + col.month) &&
       firstYearSelected == (col.year + (col.month < 0 ? -1 : col.month > 11 ? 1 : 0))}
   on:click|preventDefault={handleClick}
-  disabled={isOutOfMax || isOutOfMin}
+  disabled={isOutOfMax || isOutOfMin || isOutOfBonuds}
 >
-    {col.day}</button>
+    {col.day}
+</button>
 
   

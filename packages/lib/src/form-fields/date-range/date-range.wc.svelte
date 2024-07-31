@@ -24,6 +24,8 @@
   import Day from './Day.svelte';
   import { isOutOfMaxBounds } from '../datepicker/is-out-of-max-bounds';
   import { isOutOfMinBounds } from '../datepicker/is-out-of-min-bounds';
+  import { calculateMaxDate, calculateMinDate } from './calculate-max/min-date.js';
+  
 
   export let attachedInternals: ElementInternals;
   export let value: string = '';
@@ -41,8 +43,11 @@
   export let returnFormatFunction: (date: Date) => any = (date) => date.valueOf();
   export let minDate: string | Date;
   export let maxDate: string | Date;
-
-  let selectingFirst = true;
+  export let selectingFirst = true;
+  export let maxSelectibleDays = null;
+  export let minSelectibleDays = null;
+  export let maxDateSelectible: Date;
+  export let minDateSelectible: Date;
   let firstSelectedDateObject = new Date();
   let secondSelectedDateObject = new Date();
   let displayedDateString = '';
@@ -79,16 +84,46 @@
   ];
   let yearPickerIndex = 0;
 
-  function handleMonthSelected(event) {
-    const { month } = event.detail;
-    pickerMonth = month;
-    monthSelector = false;
-  }
   function handleYearSelected(event) {
     const { year } = event.detail;
     pickerYear = year;
     yearSelector = false;
     monthSelector = true;
+  }
+
+  function handleMonthSelected(event) {
+    const { month } = event.detail;
+    pickerMonth = month;
+    monthSelector = false;
+  }
+  
+  function handleSelect(event) {
+    const { day, month, year } = event.detail;
+    if (selectingFirst) {
+      firstDateSelected = day;
+      firstYearSelected = year;
+      firstMonthSelected = month;
+      secondYearSelected = null;
+      secondMonthSelected = null;
+      selectingFirst = false;
+    } else {
+      const lessThanFirst =
+              parseInt(firstInternalValue.split('-').join(''), 10) >
+              parseInt(`${year + (month < 0 ? -1 : month > 11 ? 1 : 0)}${month < 0 ? '12' : month > 11 ? '01' : (month + 1 < 10 ? '0' : '') + (month + 1)}${day < 10 ? '0' : ''}${day}`,10) 
+      if (lessThanFirst) {
+        secondDateSelected = firstDateSelected;
+        secondYearSelected = firstYearSelected;
+        secondMonthSelected = firstMonthSelected;
+        firstDateSelected = day; 
+        firstYearSelected = year;
+        firstMonthSelected = month;
+      } else {
+        secondDateSelected = day;
+        secondYearSelected = year;
+        secondMonthSelected = month;
+      }
+      selectingFirst = true;
+    }
   }
 
   export const getValue = () => {
@@ -183,13 +218,18 @@
     menuStyle = style;
     openPicker = !openPicker;
   }
+  $: {
+      maxDateSelectible = calculateMaxDate(firstInternalValue, maxSelectibleDays);
+      minDateSelectible = calculateMinDate(firstInternalValue, maxSelectibleDays);
+  }
   $: internalMinDate = minDate ? (minDate instanceof Date ? minDate : new Date(minDate)) : null;
   $: internalMaxDate = maxDate ? (maxDate instanceof Date ? maxDate : new Date(maxDate)) : null;
-
-  $: internalMinMonthCheck = isOutOfMinBounds(internalMinDate, pickerYear, pickerMonth, 0);
-  $: internalMaxMonthCheck = isOutOfMaxBounds(internalMaxDate, pickerYear, pickerMonth, 31);
-  $: internalMinYearCheck = isOutOfMinBounds(internalMinDate, pickerYear, 0, 1);
-  $: internalMaxYearCheck = isOutOfMaxBounds(internalMaxDate, pickerYear, 11, 31);
+  $: console.log(calculateMinDate(firstInternalValue, maxSelectibleDays), new Date(pickerYear, pickerMonth - 1, 1 ));
+  
+  $: internalMinMonthCheck = isOutOfMinBounds(internalMinDate, pickerYear, pickerMonth, 0) || (calculateMinDate(firstInternalValue, maxSelectibleDays) > new Date(pickerYear, pickerMonth, 1) && !selectingFirst);
+  $: internalMaxMonthCheck = isOutOfMaxBounds(internalMaxDate, pickerYear, pickerMonth, 31) || (calculateMaxDate(firstInternalValue, maxSelectibleDays) < new Date(pickerYear, pickerMonth, 31) && !selectingFirst);
+  $: internalMinYearCheck = isOutOfMinBounds(internalMinDate, pickerYear, 0, 1) || (calculateMinDate(firstInternalValue, maxSelectibleDays) >= new Date(pickerYear, 0, 1) && !selectingFirst);;
+  $: internalMaxYearCheck = isOutOfMaxBounds(internalMaxDate, pickerYear, 11, 31) || (calculateMaxDate(firstInternalValue, maxSelectibleDays) < new Date(pickerYear, 11, 31) && !selectingFirst);
   $: internalMinYearPageCheck = isOutOfMinBounds(
     internalMinDate,
     2024 + yearPickerIndex * 4 * 6,
@@ -202,37 +242,6 @@
     11,
     31
   );
-
-  function handleSelect(event) {
-    const { day, month, year } = event.detail;
-    if (selectingFirst) {
-      firstDateSelected = day;
-      firstYearSelected = year;
-      firstMonthSelected = month;
-      secondYearSelected = null;
-      secondMonthSelected = null;
-      selectingFirst = false;
-    } else {
-      const lessThanFirst =
-              parseInt(firstInternalValue.split('-').join(''), 10) >
-              parseInt(`${year + (month < 0 ? -1 : month > 11 ? 1 : 0)}${month < 0 ? '12' : month > 11 ? '01' : (month + 1 < 10 ? '0' : '') + (month + 1)}${day < 10 ? '0' : ''}${day}`,10) 
-      if (lessThanFirst) {
-        secondDateSelected = firstDateSelected;
-        secondYearSelected = firstYearSelected;
-        secondMonthSelected = firstMonthSelected;
-        firstDateSelected = day; 
-        firstYearSelected = year;
-        firstMonthSelected = month;
-      } else {
-        secondDateSelected = day;
-        secondYearSelected = year;
-        secondMonthSelected = month;
-      }
-      selectingFirst = true;
-    }
-  }
-
- 
 
   $: {
     if (openPicker) {
@@ -423,11 +432,14 @@
           <div class="table-row">
             {#each row as col}
               <div class="table-cell">
-                <Day 
+                <Day  
+                {col}
+                {minSelectibleDays}
+                {maxSelectibleDays}
+                {selectingFirst}
                 {firstDateSelected} 
                 {internalMaxDate} 
-                {internalMinDate} 
-                {col}
+                {internalMinDate}
                 {firstInternalValue}
                 {secondInternalValue}
                 {firstMonthSelected}
@@ -492,6 +504,9 @@
                       {firstYearSelected}
                       {secondYearSelected}
                       {year}
+                      {selectingFirst}
+                      {maxSelectibleDays}
+                      {firstInternalValue}
                       on:yearSelected={handleYearSelected}
                   />
                 </div>
@@ -553,6 +568,9 @@
                     {secondMonthSelected}
                     {firstYearSelected}
                     {secondYearSelected}
+                    {selectingFirst}
+                    {maxSelectibleDays}
+                    {firstInternalValue}
                     on:monthSelected={handleMonthSelected}
                   />
               </div>
