@@ -520,6 +520,7 @@
   }
 
   .loader {
+    margin-top: 50px;
     width: 100%;
     height: 100%;
     display: flex;
@@ -528,10 +529,10 @@
   }
 
   .spinner {
-    width: 150px;
-    height: 150px;
+    width: 70px;
+    height: 70px;
     border-radius: 50%;
-    border: 9px solid var(--primary-color);
+    border: 5px solid var(--primary-color);
     animation:
       spinner-bulqg1 0.8s infinite linear alternate,
       spinner-oaa3wk 1.6s infinite linear;
