@@ -29,7 +29,7 @@
   export let value = '';
   export let internalValue = '';
   export let required = false;
-  export let requiredValidationMessage = '';
+  export let requiredValidationMessage: string = '';
   export let enableMultiple = false;
   export let separator = ', ';
   export let name = '';
@@ -49,6 +49,8 @@
     displayFormatFunction
   );
   let returnDate = formatDisplayDate(selectedDateObject, displayFormat, returnFormatFunction);
+  let selectedDates = [];
+  let date;
   let dates = [];
   let datePicked;
   let borderTop = false;
@@ -109,6 +111,13 @@
     yearSelected = year;
     openPicker = true;
     datePicked = isDatePicked;
+    date = { year: yearSelected, month: monthSelected, day: dateSelected };
+    if (selectedDates.some((e) => e.year === yearSelected && e.month === monthSelected && e.day === dateSelected)) {
+      const index = selectedDates.findIndex((e) => e.year === yearSelected && e.month === monthSelected && e.day === dateSelected);
+      selectedDates.splice(index, 1);
+    } else {
+      selectedDates.push(date);
+    }
   }
 
   $: internalMinDate = minDate ? (minDate instanceof Date ? minDate : new Date(minDate)) : null;
@@ -341,12 +350,14 @@
         if (required) {
           attachedInternals.setValidity(
             { valueMissing: true },
-            requiredValidationMessage || `Date is required.`
+            requiredValidationMessage || `Date is required.`,
+            bindingElement
           );
         }
         displayedDateString = '';
         dispatch('value', { value: '' });
       }
+      attachedInternals.checkValidity();
     }
   }
 </script>
@@ -453,6 +464,7 @@
                       {yearSelected}
                       {dateSelected}
                       {enableMultiple}
+                      {selectedDates}
                       on:dateSelected={handleDateSelected}
                       on:multipleDatesSelected={handleMultipleSelects}
                     ></Day>
