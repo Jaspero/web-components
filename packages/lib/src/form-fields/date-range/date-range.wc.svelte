@@ -225,31 +225,21 @@
     menuStyle = style;
     openPicker = !openPicker;
   }
-  $: {
-      maxDateSelectible = calculateMaxDate(firstInternalValue, maxSelectibleDays);
-      minDateSelectible = calculateMinDate(firstInternalValue, maxSelectibleDays);
-  }
+  
+  $: maxDateSelectible = calculateMaxDate(firstInternalValue, maxSelectibleDays);
+  $: minDateSelectible = calculateMinDate(firstInternalValue, maxSelectibleDays);
+
   $: internalMinDate = minDate ? (minDate instanceof Date ? minDate : new Date(minDate)) : null;
   $: internalMaxDate = maxDate ? (maxDate instanceof Date ? maxDate : new Date(maxDate)) : null;
 
   $: internalMinMonthCheck = checkMinBounds(internalMinDate, pickerYear, pickerMonth, 1, minDateSelectible, selectingFirst);
   $: internalMaxMonthCheck = checkMaxBounds(internalMaxDate, pickerYear, pickerMonth, 31, maxDateSelectible, selectingFirst);
-  
+
   $: internalMinYearCheck = checkMinBounds(internalMinDate, pickerYear, 0, 1, minDateSelectible, selectingFirst);
   $: internalMaxYearCheck = checkMaxBounds(internalMaxDate, pickerYear, 11, 31, maxDateSelectible, selectingFirst);
 
-  $: internalMinYearPageCheck = isOutOfMinBounds(
-    internalMinDate,
-    2024 + yearPickerIndex * 4 * 6,
-    0,
-    1
-  );
-  $: internalMaxYearPageCheck = isOutOfMaxBounds(
-    internalMaxDate,
-    2024 + (yearPickerIndex + 1) * 4 * 6,
-    11,
-    31
-  );
+  $: internalMinYearPageCheck = checkMinBounds(internalMinDate, 2024 + yearPickerIndex * 4 * 6, 0, 1, minDateSelectible, selectingFirst);
+  $: internalMaxYearPageCheck = checkMaxBounds(internalMaxDate, 2024 + (yearPickerIndex + 1) * 4 * 6, 11, 31, maxDateSelectible, selectingFirst);
 
   $: {
     if (openPicker) {
