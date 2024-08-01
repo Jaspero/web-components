@@ -2,7 +2,6 @@
     import { isOutOfMaxBounds } from '../datepicker/is-out-of-max-bounds.js';
     import { isOutOfMinBounds } from '../datepicker/is-out-of-min-bounds.js';
     import { createEventDispatcher } from 'svelte';
-    import { calculateMaxDate,calculateMinDate } from './calculate-max/min-date.js';
 
     export let internalMinDate: Date;
     export let internalMaxDate: Date;
@@ -11,9 +10,8 @@
     export let secondYearSelected: number;
     export let selectingFirst;
     export let maxSelectibleDays;
-    export let firstInternalValue;
-    let maxDateSelectible;
-    let minDateSelectible;
+    export let maxDateSelectible;
+    export let minDateSelectible;
 
     const dispatch = createEventDispatcher();
     function handleClick() {
@@ -23,22 +21,15 @@
     }
 
     function isYearOutOfSelectableBounds(year : number, selectingFirst : boolean): boolean{
-      if(!selectingFirst){
-        const selectedDate = new Date(year);
-      if((selectedDate > maxDateSelectible  || selectedDate < minDateSelectible) && maxSelectibleDays){
+      if(!selectingFirst && maxSelectibleDays){
+      if((year > maxDateSelectible.getFullYear()  || year < minDateSelectible.getFullYear())){
           return true;
       }
     }
       return false;
     }
 
-    $: {
-        maxDateSelectible = calculateMaxDate(firstInternalValue, maxSelectibleDays).getFullYear();
-        minDateSelectible = calculateMinDate(firstInternalValue, maxSelectibleDays).getFullYear();
-    }
-
     $: isOutOfBonuds = isYearOutOfSelectableBounds(year, selectingFirst);
-
     $: isOutOfMax = isOutOfMaxBounds(internalMaxDate, year, 0, 1)
     $: isOutOfMin = isOutOfMinBounds(internalMinDate, year, 11, 31)
 </script>

@@ -2,7 +2,7 @@
   import { isOutOfMaxBounds } from '../datepicker/is-out-of-max-bounds.js';
   import { isOutOfMinBounds } from '../datepicker/is-out-of-min-bounds.js';
   import { createEventDispatcher } from 'svelte';
-  import { calculateMaxDate, calculateMinDate, calculateRequiredAfter, calculateRequiredBefore } from './calculate-max/min-date.js';
+  import { calculateRequiredAfter, calculateRequiredBefore } from './calculate-max/min-date.js';
   
   export let col: { year: number; month: number; day: number; gray: boolean };
   export let internalMinDate: Date;
@@ -16,8 +16,8 @@
   export let selectingFirst: boolean;
   export let maxSelectibleDays: number;
   export let minSelectibleDays: number;
-  let maxDateSelectible: Date;
-  let minDateSelectible: Date;
+  export let maxDateSelectible: Date;
+  export let minDateSelectible: Date;
   let isOutOfBonuds: boolean;
 
   const dispatch = createEventDispatcher();
@@ -31,9 +31,9 @@
   }  
 
   function isDateOutOfSelectableBounds(year : number, month : number, day : number, selectingFirst : boolean): boolean{
-    if(!selectingFirst){
-      const selectedDate = new Date(year, month , day);
-    if((selectedDate > maxDateSelectible  || selectedDate < minDateSelectible) && maxSelectibleDays){
+    if(!selectingFirst && maxSelectibleDays){
+      const potentialDate = new Date(year, month , day);
+    if((potentialDate > maxDateSelectible  || potentialDate < minDateSelectible)){
         return true;
     }
   }
@@ -42,20 +42,17 @@
 
   function isDateOutOfMinRequiredBounds(year : number, month : number, day : number, selectingFirst : boolean): boolean{
     if(!selectingFirst){
-      const selectedDate = new Date(year, month , day);
-      const datePicked = new Date(firstInternalValue)
-    if(((selectedDate > minDateAfter && selectedDate < datePicked) || (selectedDate < minDateBefore && selectedDate > datePicked) ) && minSelectibleDays){
+      const potentialDate = new Date(year, month , day);
+      const datePicked = new Date(firstInternalValue);
+    if(((potentialDate < minDateAfter && potentialDate > datePicked) || (potentialDate > minDateBefore && potentialDate < datePicked) ) && minSelectibleDays){
         return true;
     }
   }
     return false;
   }
 
-  $: maxDateSelectible = calculateMaxDate(firstInternalValue, maxSelectibleDays);
-  $: minDateSelectible = calculateMinDate(firstInternalValue, maxSelectibleDays);
-
-  $: minDateAfter = calculateRequiredAfter(firstInternalValue, minSelectibleDays);
   $: minDateBefore = calculateRequiredBefore(firstInternalValue, minSelectibleDays);
+  $: minDateAfter = calculateRequiredAfter(firstInternalValue, minSelectibleDays);
 
   $: isOutOfBonuds = isDateOutOfSelectableBounds(col.year, col.month, col.day, selectingFirst) || isDateOutOfMinRequiredBounds(col.year, col.month, col.day, selectingFirst);
   $: isOutOfMax = isOutOfMaxBounds(internalMaxDate, col.year, col.month, col.day);
