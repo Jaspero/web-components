@@ -264,7 +264,7 @@
 
 {#if label && labelType == 'outside'}
   <div class="label">
-    {@html label}
+    {@html `${label}${required ? ' *' : ''}`}
   </div>
 {/if}
 <div class="wrapper" use:clickOutside on:click_outside={() => (open = false)} class:has-hint={hint}>
@@ -288,7 +288,7 @@
   >
     {#if label && labelType == 'inside'}
       <span class="select-label" class:move={selected || open}>
-        {@html label}
+        {@html `${label}${required ? ' *' : ''}`}
       </span>
     {/if}
 
@@ -353,6 +353,7 @@
     </div>
   {/if}
 </div>
+
 
 <style>
   .wrapper {

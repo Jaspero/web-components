@@ -34,6 +34,8 @@
     minselects?: string;
     maxselects?: string;
   } = {};
+  export let label: string = '';
+  export let required: boolean = false;
 
   export const getValue = () => options.filter((el) => el.checked).map((el) => el.value);
   export const reportValidity = () => attachedInternals.reportValidity();
@@ -84,6 +86,11 @@
 </script>
 
 <div>
+  {#if label}
+    <div class="label">
+      {label} {#if required}*{/if}
+    </div>
+  {/if}
   {#each options as option}
     <label>
       <input
@@ -114,6 +121,12 @@
     gap: 0.5rem;
   }
 
+  .label {
+    font-size: 1rem;
+    line-height: 1rem;
+    margin-bottom: 0.5rem;
+  }
+
   label {
     position: relative;
     display: flex;
@@ -122,6 +135,7 @@
     font-size: 0.75rem;
     line-height: 1rem;
   }
+  
 
   label input {
     position: absolute;

@@ -26,6 +26,8 @@
   export let step: number = 1;
   export let name: string = '';
   export let discrete: boolean = true; //if true -> ticks, false -> smooth
+  export let required: boolean = false;
+  export let label: string = ''; 
   let internalValue = [min, max];
   export const getValue = () => internalValue;
 
@@ -56,33 +58,58 @@
   }
 </script>
 
-<div class="slider">
-  <div class="progress" style={`left: ${low}%; right: ${100 - high}%`}></div>
-  <input
-    type="range"
-    class="range-input"
-    {disabled}
-    step={discrete ? 'any' : step}
-    {min}
-    {max}
-    id={id + '_min'}
-    name={name + '_min'}
-    bind:value={internalValue[0]}
-  />
-  <input
-    type="range"
-    class="range-input"
-    {disabled}
-    step={discrete ? 'any' : step}
-    {min}
-    {max}
-    id={id + '_max'}
-    name={name + '_max'}
-    bind:value={internalValue[1]}
-  />
+<div class="slider-container">
+  <div class="slider-label-container">
+    {#if label}
+      <label class="slider-label">{label}{required ? ' *' : ''}</label>
+    {/if}
+  </div>
+  <div class="slider">
+    <div class="progress" style={`left: ${low}%; right: ${100 - high}%`}></div>
+    <input
+      type="range"
+      class="range-input"
+      {disabled}
+      step={discrete ? 'any' : step}
+      {min}
+      {max}
+      id={id + '_min'}
+      name={name + '_min'}
+      bind:value={internalValue[0]}
+    />
+    <input
+      type="range"
+      class="range-input"
+      {disabled}
+      step={discrete ? 'any' : step}
+      {min}
+      {max}
+      id={id + '_max'}
+      name={name + '_max'}
+      bind:value={internalValue[1]}
+    />
+  </div>
 </div>
 
 <style>
+  .slider-container {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start; 
+    min-width: 300px;
+    height: auto; 
+  }
+
+  .slider-label-container {
+    width: 100%;
+    text-align: left; 
+    margin-bottom: 15px; 
+  }
+
+  .slider-label {
+    font-size: 16px; 
+  }
+
   .slider {
     position: relative;
     min-width: 300px;
@@ -102,6 +129,7 @@
   .range-input {
     position: absolute;
     top: 0;
+    width: 100%;
   }
 
   input[type='range'] {

@@ -50,13 +50,13 @@
   export let minselectsValidationMessage: string;
   export let maxselectsValidationMessage: string;
 
-  let isTabbing = false; // Variable to track if the user is tabbing
+  let isTabbing = false;
   let open = false;
   let bindingElement;
   let menuStyle;
-  let optionElements = []; // Array to store references to option buttons
-  let searchTerm = ''; // focus search term
-  let searchTimeout; // focus search timeout
+  let optionElements = [];
+  let searchTerm = '';
+  let searchTimeout;
   let displayValue;
   let searchFocused = false;
 
@@ -256,18 +256,17 @@
           // Shift + Tab pressed
           nextIndex = getAdjacentFocusableIndex(currentIndex, 'previous');
           if (currentIndex === nextIndex) {
-            // Close the menu and focus the bindingElement if we're at the first non-disabled option
-            toggleMenu();
+            // If no previous focusable option, move focus to the next element
             bindingElement.focus();
-            return; // Early exit
+            return;
           }
         } else {
+          // Tab pressed
           nextIndex = getAdjacentFocusableIndex(currentIndex, 'next');
           if (currentIndex === nextIndex) {
-            // Close the menu and focus the bindingElement if we're at the last non-disabled option
-            toggleMenu();
+            // If no next focusable option, move focus to the next element
             bindingElement.focus();
-            return; // Early exit
+            return;
           }
         }
 
@@ -365,7 +364,6 @@
       class="select-arrow"
       class:rotate={open}
     >
-      <!--! Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2023 Fonticons, Inc.-->
       <path
         d="M137.4 374.6c12.5 12.5 32.8 12.5 45.3 0l128-128c9.2-9.2 11.9-22.9 6.9-34.9s-16.6-19.8-29.6-19.8L32 192c-12.9 0-24.6 7.8-29.6 19.8s-2.2 25.7 6.9 34.9l128 128z"
       />
@@ -379,7 +377,6 @@
   {/if}
 
   {#if open}
-    <!-- svelte-ignore a11y-no-noninteractive-element-interactions -->
     <div class="menu" on:keydown={handleKeydown} style={menuStyle} role="dialog">
       {#if service.search}
         <div class="search-field">
@@ -397,6 +394,7 @@
           />
         </div>
       {/if}
+
       <div class="menu-buttons">
         {#each options as option, index (option)}
           <button
@@ -416,7 +414,6 @@
                 height="1rem"
                 viewBox="0 0 448 512"
               >
-                <!--! Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2023 Fonticons, Inc. -->
                 <path
                   d="M438.6 105.4c12.5 12.5 12.5 32.8 0 45.3l-256 256c-12.5 12.5-32.8 12.5-45.3 0l-128-128c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0L160 338.7 393.4 105.4c12.5-12.5 32.8-12.5 45.3 0z"
                 />
@@ -428,6 +425,7 @@
           <span style="display: block; padding: 0.75rem; text-align: center;">Loading...</span>
         {/if}
       </div>
+
       {#if service.loadMore && !loadingSearch}
         <div class="loadmore">
           {#if !loadingMore}
@@ -449,6 +447,7 @@
     </div>
   {/if}
 </div>
+
 
 <style>
   .has-hint {
@@ -810,4 +809,5 @@
     transform: translateY(0);
     font-size: 0.75rem;
   }
+
 </style>

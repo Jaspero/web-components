@@ -53,107 +53,129 @@
   }
 </script>
 
-{#if label}
-  <span class="label" style={`font-size: ${size == 'small' ? '12px' : '20px'}`}>{@html label}</span>
-{/if}
-<label class={'switch ' + size}>
-  <input
-    type="checkbox"
-    {name}
-    {disabled}
-    {required}
-    bind:checked={value}
-    value={true}
-    hidden
-    bind:this={checkboxEl}
-  />
-  <span class="slider round" class:pointer={!disabled}></span>
-</label>
+<div class="toggle-container">
+  {#if label}
+    <span class="label" style={`font-size: ${size == 'small' ? '16px' : '20px'}`}>
+      {@html label}
+      {#if required}
+        <span class="required-indicator">*</span>
+      {/if}
+    </span>
+  {/if}
+  <label class={'switch ' + size}>
+    <input
+      type="checkbox"
+      {name}
+      {disabled}
+      {required}
+      bind:checked={value}
+      value={true}
+      hidden
+      bind:this={checkboxEl}
+    />
+    <span class="slider round" class:pointer={!disabled}></span>
+  </label>
+</div>
 
 <style>
-  .switch {
-    position: relative;
-    display: inline-block;
-  }
+.pointer {
+  cursor: pointer;
+}
 
-  .pointer {
-    cursor: pointer;
-  }
+.label {
+  display: block;
+  align-items: center;
+  gap: 4px;
+  margin-bottom: 8px; /* Dodajte razmak između labela i switch-a */
+  font-size: 15px; 
+}
 
-  .label {
-    display: block;
-    margin-bottom: 4px;
-  }
+.label.small {
+  font-size: 15px;
+}
 
-  .large {
-    width: 60px;
-    height: 34px;
-  }
+.label.large {
+  font-size: 17px;
+}
 
-  .small {
-    width: 40px;
-    height: 22px;
-  }
+.required-indicator {
+  font-size: 16px;
+}
 
-  .switch input {
-    opacity: 0;
-    width: 0;
-    height: 0;
-  }
+.large {
+  width: 60px;
+  height: 34px;
+}
 
-  .large .slider {
-    border-radius: 34px;
-  }
+.small {
+  width: 40px;
+  height: 22px;
+}
 
-  .small .slider {
-    border-radius: 22px;
-  }
+.switch {
+  position: relative;
+  display: inline-block;
+}
 
-  .slider {
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background-color: #ccc;
-    -webkit-transition: 0.4s;
-    transition: 0.4s;
-  }
+.switch input {
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
 
-  .large .slider:before {
-    height: 26px;
-    width: 26px;
-    left: 4px;
-    bottom: 4px;
-  }
+.large .slider {
+  border-radius: 34px;
+}
 
-  .small .slider:before {
-    height: 18px;
-    width: 18px;
-    left: 2px;
-    bottom: 2px;
-  }
+.small .slider {
+  border-radius: 22px;
+}
 
-  .slider:before {
-    position: absolute;
-    content: '';
-    background-color: white;
-    -webkit-transition: 0.4s;
-    transition: 0.4s;
-    border-radius: 50%;
-  }
+.slider {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: #ccc;
+  -webkit-transition: 0.4s;
+  transition: 0.4s;
+}
 
-  input:checked + .slider {
-    background-color: var(--primary-color);
-  }
+.large .slider:before {
+  height: 26px;
+  width: 26px;
+  left: 4px;
+  bottom: 4px;
+}
 
-  input:focus + .slider {
-    box-shadow: 0 0 1px var(--primary-color);
-  }
+.small .slider:before {
+  height: 18px;
+  width: 18px;
+  left: 2px;
+  bottom: 2px;
+}
 
-  input:checked + .slider:before {
-    -webkit-transform: translateX(100%);
-    -ms-transform: translateX(100%);
-    transform: translateX(100%);
-  }
+.slider:before {
+  position: absolute;
+  content: '';
+  background-color: white;
+  -webkit-transition: 0.4s;
+  transition: 0.4s;
+  border-radius: 50%;
+}
+
+input:checked + .slider {
+  background-color: var(--primary-color);
+}
+
+input:focus + .slider {
+  box-shadow: 0 0 1px var(--primary-color);
+}
+
+input:checked + .slider:before {
+  -webkit-transform: translateX(100%);
+  -ms-transform: translateX(100%);
+  transform: translateX(100%);
+}
 </style>

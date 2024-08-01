@@ -24,7 +24,7 @@
   import Year from '../datepicker/Year.svelte';
   import { isOutOfMaxBounds } from './is-out-of-max-bounds';
   import { isOutOfMinBounds } from './is-out-of-min-bounds';
-
+  $: displayedLabel = required ? `${label} *` : label;
 
   export let attachedInternals: ElementInternals;
   export let value: string = '';
@@ -257,202 +257,202 @@
 <div style="position: relative;">
   {#if label && labelType == 'outside'}
     <div class="label">
-      {@html label}
+      {@html displayedLabel}
     </div>
   {/if}
 
   <button
-          type="button"
-          class="field"
-          bind:this={bindingElement}
-          class:active={openPicker}
-          class:borderBottom
-          class:borderTop
-          on:click|preventDefault={toggleMenu}
+    type="button"
+    class="field"
+    bind:this={bindingElement}
+    class:active={openPicker}
+    class:borderBottom
+    class:borderTop
+    on:click|preventDefault={toggleMenu}
   >
     {#if label && labelType == 'inside'}
-      <span class="field-label" class:move={openPicker || internalValue}>{@html label}</span>
-    {/if}
-    <p class={`field-input ${labelType == 'outside' || !label ? '' : 'field-input-padding'}`}>
-      {displayedDateString}
-    </p>
-
-    <span class="field-icon">
-    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512">
-      <!--! Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2023 Fonticons, Inc. -->
-      <path
-              d="M152 24c0-13.3-10.7-24-24-24s-24 10.7-24 24V64H64C28.7 64 0 92.7 0 128v16 48V448c0 35.3 28.7 64 64 64H384c35.3 0 64-28.7 64-64V192 144 128c0-35.3-28.7-64-64-64H344V24c0-13.3-10.7-24-24-24s-24 10.7-24 24V64H152V24zM48 192H400V448c0 8.8-7.2 16-16 16H64c-8.8 0-16-7.2-16-16V192z"
-      />
-    </svg>
-  </span>
-  </button>
-
-  <input type="date" {name} bind:value={internalValue} hidden required/>
-  {#if openPicker}
-    <div class="overlay">
-      <div class="menu" use:clickOutside on:click_outside={() => (openPicker = false)} style={menuStyle}>
-        <div class="menu-nav">
-          <!--<button on:click|preventDefault={() => (pickerYear = pickerYear - 1)}>&lt;&lt;</button>-->
-          <button type="button" class="menu-nav-date" on:click|preventDefault={() => (yearSelector = true)}>
-            <p>{monthMap[pickerMonth]}, {pickerYear}</p>
-            <svg xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 512 512">
-              <!--! Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2023 Fonticons, Inc. -->
-              <path
-                      d="M233.4 406.6c12.5 12.5 32.8 12.5 45.3 0l192-192c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L256 338.7 86.6 169.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3l192 192z"
-              />
-            </svg>
-          </button>
-          <div class="menu-nav-buttons">
-            <button type="button" on:click|preventDefault={() => (pickerMonth = pickerMonth - 1)}  disabled = {internalMinMonthCheck}>
-              <svg xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 320 512">
+      <span class="field-label" class:move={openPicker || internalValue}>{@html displayedLabel}</span>
+      {/if}
+      <p class={`field-input ${labelType == 'outside' || !label ? '' : 'field-input-padding'}`}>
+        {displayedDateString}
+      </p>
+  
+      <span class="field-icon">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512">
+        <!--! Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2023 Fonticons, Inc. -->
+        <path
+                d="M152 24c0-13.3-10.7-24-24-24s-24 10.7-24 24V64H64C28.7 64 0 92.7 0 128v16 48V448c0 35.3 28.7 64 64 64H384c35.3 0 64-28.7 64-64V192 144 128c0-35.3-28.7-64-64-64H344V24c0-13.3-10.7-24-24-24s-24 10.7-24 24V64H152V24zM48 192H400V448c0 8.8-7.2 16-16 16H64c-8.8 0-16-7.2-16-16V192z"
+        />
+      </svg>
+    </span>
+    </button>
+  
+    <input type="date" {name} bind:value={internalValue} hidden required/>
+    {#if openPicker}
+      <div class="overlay">
+        <div class="menu" use:clickOutside on:click_outside={() => (openPicker = false)} style={menuStyle}>
+          <div class="menu-nav">
+            <!--<button on:click|preventDefault={() => (pickerYear = pickerYear - 1)}>&lt;&lt;</button>-->
+            <button type="button" class="menu-nav-date" on:click|preventDefault={() => (yearSelector = true)}>
+              <p>{monthMap[pickerMonth]}, {pickerYear}</p>
+              <svg xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 512 512">
                 <!--! Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2023 Fonticons, Inc. -->
                 <path
-                        d="M9.4 233.4c-12.5 12.5-12.5 32.8 0 45.3l192 192c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L77.3 256 246.6 86.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0l-192 192z"
+                        d="M233.4 406.6c12.5 12.5 32.8 12.5 45.3 0l192-192c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L256 338.7 86.6 169.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3l192 192z"
                 />
               </svg>
             </button>
-            <button type="button" on:click|preventDefault={() => (pickerMonth = pickerMonth + 1)} disabled = {internalMaxMonthCheck}>
-              <svg xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 320 512">
-                <!--! Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2023 Fonticons, Inc. -->
-                <path
-                        d="M310.6 233.4c12.5 12.5 12.5 32.8 0 45.3l-192 192c-12.5 12.5-32.8 12.5-45.3 0s-12.5-32.8 0-45.3L242.7 256 73.4 86.6c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0l192 192z"
-                />
-              </svg>
-            </button>
-          </div>
-          <!--<button on:click|preventDefault={() => (pickerYear = pickerYear + 1)}>&gt;&gt;</button>-->
-        </div>
-
-        <div>
-          <div class="table">
-            {#each daysMap as day}
-              <div class="table-cell">
-                {day}
-              </div>
-            {/each}
-          </div>
-
-          <div class="table">
-            {#each pickerRows as row}
-              <div class="table-row">
-                {#each row as col}
-                  <div class="table-cell">
-                    <Day {col} {internalMinDate} {internalMaxDate} {monthSelected} 
-                    {yearSelected} {dateSelected}   
-                    on:dateSelected={handleDateSelected}></Day>
-                  </div>
-                {/each}
-              </div>
-            {/each}
-          </div>
-        </div>
-
-        {#if yearSelector}
-          <div class="menu-year">
-            <div class="menu-year-nav">
-              <button
-                      type="button"
-                      class="menu-year-nav-date"
-                      on:click|stopPropagation={() => (yearSelector = false)}
-              >
-                <p>
-                  {pickerYearRows[0][0]} - {pickerYearRows[pickerYearRows.length - 1][
-                pickerYearRows[pickerYearRows.length - 1].length - 1
-                        ]}
-                </p>
-                <svg xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 512 512">
+            <div class="menu-nav-buttons">
+              <button type="button" on:click|preventDefault={() => (pickerMonth = pickerMonth - 1)}  disabled = {internalMinMonthCheck}>
+                <svg xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 320 512">
                   <!--! Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2023 Fonticons, Inc. -->
                   <path
-                          d="M233.4 105.4c12.5-12.5 32.8-12.5 45.3 0l192 192c12.5 12.5 12.5 32.8 0 45.3s-32.8 12.5-45.3 0L256 173.3 86.6 342.6c-12.5 12.5-32.8 12.5-45.3 0s-12.5-32.8 0-45.3l192-192z"
+                          d="M9.4 233.4c-12.5 12.5-12.5 32.8 0 45.3l192 192c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L77.3 256 246.6 86.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0l-192 192z"
                   />
                 </svg>
               </button>
-              <div class="menu-year-nav-buttons">
-                <button type="button" on:click|preventDefault={() => yearPickerIndex--} disabled = {internalMinYearPageCheck}>
-                  <svg xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 320 512">
-                    <!--! Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2023 Fonticons, Inc. -->
-                    <path
-                            d="M9.4 233.4c-12.5 12.5-12.5 32.8 0 45.3l192 192c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L77.3 256 246.6 86.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0l-192 192z"
-                    />
-                  </svg>
-                </button>
-                <button type="button" on:click|preventDefault={() => yearPickerIndex++} disabled = {internalMaxYearPageCheck}>
-                  <svg xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 320 512">
-                    <!--! Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2023 Fonticons, Inc. -->
-                    <path
-                            d="M310.6 233.4c12.5 12.5 12.5 32.8 0 45.3l-192 192c-12.5 12.5-32.8 12.5-45.3 0s-12.5-32.8 0-45.3L242.7 256 73.4 86.6c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0l192 192z"
-                    />
-                  </svg>
-                </button>
-              </div>
-            </div>
-            {#each pickerYearRows as row}
-            <div class="menu-year-row">
-              {#each row as year}
-              <div class="menu-year-row-cell">
-                <Year {internalMaxDate} {internalMinDate} {yearSelected} {year} 
-                 on:yearSelected={handleYearSelected}></Year>
-              </div>
-                {/each}
-              </div>
-            {/each}
-          </div>
-        {/if}
-
-        {#if monthSelector}
-          <div class="menu-month">
-            <div class="menu-month-nav">
-              <button
-                      type="button"
-                      class="menu-month-nav-date"
-                      on:click|preventDefault={() => {
-                monthSelector = false;
-              }}
-              >
-                <p>{pickerYear}</p>
-                <svg xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 512 512">
+              <button type="button" on:click|preventDefault={() => (pickerMonth = pickerMonth + 1)} disabled = {internalMaxMonthCheck}>
+                <svg xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 320 512">
                   <!--! Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2023 Fonticons, Inc. -->
                   <path
-                          d="M233.4 406.6c12.5 12.5 32.8 12.5 45.3 0l192-192c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L256 338.7 86.6 169.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3l192 192z"
+                          d="M310.6 233.4c12.5 12.5 12.5 32.8 0 45.3l-192 192c-12.5 12.5-32.8 12.5-45.3 0s-12.5-32.8 0-45.3L242.7 256 73.4 86.6c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0l192 192z"
                   />
                 </svg>
               </button>
-              <div class="menu-month-nav-buttons">
-                <button type="button" on:click|preventDefault={() => (pickerYear = pickerYear - 1)} disabled = {internalMinYearCheck}>
-                  <svg xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 320 512">
-                    <!--! Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2023 Fonticons, Inc. -->
-                    <path
-                            d="M9.4 233.4c-12.5 12.5-12.5 32.8 0 45.3l192 192c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L77.3 256 246.6 86.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0l-192 192z"
-                    />
-                  </svg>
-                </button>
-                <button type="button" on:click|preventDefault={() => (pickerYear = pickerYear + 1)} disabled = {internalMaxYearCheck}>
-                  <svg xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 320 512">
-                    <!--! Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2023 Fonticons, Inc. -->
-                    <path
-                            d="M310.6 233.4c12.5 12.5 12.5 32.8 0 45.3l-192 192c-12.5 12.5-32.8 12.5-45.3 0s-12.5-32.8 0-45.3L242.7 256 73.4 86.6c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0l192 192z"
-                    />
-                  </svg>
-                </button>
-              </div>
             </div>
-
-            <div class="menu-month-grid">
-              {#each monthMap as month, index}
-                <div class="menu-month-grid-cell">
-                  <Month {index} {month} {pickerYear} 
-              {internalMaxDate} {internalMinDate} {monthSelected}
-              on:monthSelected={handleMonthSelected}
-              />
+            <!--<button on:click|preventDefault={() => (pickerYear = pickerYear + 1)}>&gt;&gt;</button>-->
+          </div>
+  
+          <div>
+            <div class="table">
+              {#each daysMap as day}
+                <div class="table-cell">
+                  {day}
+                </div>
+              {/each}
+            </div>
+  
+            <div class="table">
+              {#each pickerRows as row}
+                <div class="table-row">
+                  {#each row as col}
+                    <div class="table-cell">
+                      <Day {col} {internalMinDate} {internalMaxDate} {monthSelected} 
+                      {yearSelected} {dateSelected}   
+                      on:dateSelected={handleDateSelected}></Day>
+                    </div>
+                  {/each}
                 </div>
               {/each}
             </div>
           </div>
-        {/if}
+  
+          {#if yearSelector}
+            <div class="menu-year">
+              <div class="menu-year-nav">
+                <button
+                        type="button"
+                        class="menu-year-nav-date"
+                        on:click|stopPropagation={() => (yearSelector = false)}
+                >
+                  <p>
+                    {pickerYearRows[0][0]} - {pickerYearRows[pickerYearRows.length - 1][
+                  pickerYearRows[pickerYearRows.length - 1].length - 1
+                          ]}
+                  </p>
+                  <svg xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 512 512">
+                    <!--! Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2023 Fonticons, Inc. -->
+                    <path
+                            d="M233.4 105.4c12.5-12.5 32.8-12.5 45.3 0l192 192c12.5 12.5 12.5 32.8 0 45.3s-32.8 12.5-45.3 0L256 173.3 86.6 342.6c-12.5 12.5-32.8 12.5-45.3 0s-12.5-32.8 0-45.3l192-192z"
+                    />
+                  </svg>
+                </button>
+                <div class="menu-year-nav-buttons">
+                  <button type="button" on:click|preventDefault={() => yearPickerIndex--} disabled = {internalMinYearPageCheck}>
+                    <svg xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 320 512">
+                      <!--! Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2023 Fonticons, Inc. -->
+                      <path
+                              d="M9.4 233.4c-12.5 12.5-12.5 32.8 0 45.3l192 192c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L77.3 256 246.6 86.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0l-192 192z"
+                      />
+                    </svg>
+                  </button>
+                  <button type="button" on:click|preventDefault={() => yearPickerIndex++} disabled = {internalMaxYearPageCheck}>
+                    <svg xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 320 512">
+                      <!--! Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2023 Fonticons, Inc. -->
+                      <path
+                              d="M310.6 233.4c12.5 12.5 12.5 32.8 0 45.3l-192 192c-12.5 12.5-32.8 12.5-45.3 0s-12.5-32.8 0-45.3L242.7 256 73.4 86.6c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0l192 192z"
+                      />
+                    </svg>
+                  </button>
+                </div>
+              </div>
+              {#each pickerYearRows as row}
+              <div class="menu-year-row">
+                {#each row as year}
+                <div class="menu-year-row-cell">
+                  <Year {internalMaxDate} {internalMinDate} {yearSelected} {year} 
+                   on:yearSelected={handleYearSelected}></Year>
+                </div>
+                  {/each}
+                </div>
+              {/each}
+            </div>
+          {/if}
+  
+          {#if monthSelector}
+            <div class="menu-month">
+              <div class="menu-month-nav">
+                <button
+                        type="button"
+                        class="menu-month-nav-date"
+                        on:click|preventDefault={() => {
+                  monthSelector = false;
+                }}
+                >
+                  <p>{pickerYear}</p>
+                  <svg xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 512 512">
+                    <!--! Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2023 Fonticons, Inc. -->
+                    <path
+                            d="M233.4 406.6c12.5 12.5 32.8 12.5 45.3 0l192-192c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L256 338.7 86.6 169.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3l192 192z"
+                    />
+                  </svg>
+                </button>
+                <div class="menu-month-nav-buttons">
+                  <button type="button" on:click|preventDefault={() => (pickerYear = pickerYear - 1)} disabled = {internalMinYearCheck}>
+                    <svg xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 320 512">
+                      <!--! Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2023 Fonticons, Inc. -->
+                      <path
+                              d="M9.4 233.4c-12.5 12.5-12.5 32.8 0 45.3l192 192c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L77.3 256 246.6 86.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0l-192 192z"
+                      />
+                    </svg>
+                  </button>
+                  <button type="button" on:click|preventDefault={() => (pickerYear = pickerYear + 1)} disabled = {internalMaxYearCheck}>
+                    <svg xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 320 512">
+                      <!--! Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2023 Fonticons, Inc. -->
+                      <path
+                              d="M310.6 233.4c12.5 12.5 12.5 32.8 0 45.3l-192 192c-12.5 12.5-32.8 12.5-45.3 0s-12.5-32.8 0-45.3L242.7 256 73.4 86.6c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0l192 192z"
+                      />
+                    </svg>
+                  </button>
+                </div>
+              </div>
+  
+              <div class="menu-month-grid">
+                {#each monthMap as month, index}
+                  <div class="menu-month-grid-cell">
+                    <Month {index} {month} {pickerYear} 
+                {internalMaxDate} {internalMinDate} {monthSelected}
+                on:monthSelected={handleMonthSelected}
+                />
+                  </div>
+                {/each}
+              </div>
+            </div>
+          {/if}
+        </div>
       </div>
-    </div>
-  {/if}
-</div>
+    {/if}
+  </div>
 
 <style>
   .field {

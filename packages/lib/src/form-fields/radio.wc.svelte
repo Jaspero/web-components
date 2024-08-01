@@ -59,48 +59,70 @@
   });
 </script>
 
-<div style={`display: flex; flex-direction: ${inline ? 'row' : 'column'}`}>
-  {#each options as option}
-    <label class:disabled={option.disabled}>
-      <input
-        type="radio"
-        bind:this={inputEl}
-        {name}
-        value={option.value}
-        {required}
-        disabled={option.disabled}
-        bind:group={value}
-      />
-      <span class="fake-button">
-        <span>
-          <span></span>
+<div class="radio-group">
+  <label class="group-label">
+    Options
+    {#if required}
+      <span class="required-indicator">*</span>
+    {/if}
+  </label>
+  <div class="options-container" style={`display: flex; flex-direction: ${inline ? 'row' : 'column'}`}>
+    {#each options as option}
+      <label class:disabled={option.disabled}>
+        <input
+          type="radio"
+          bind:this={inputEl}
+          {name}
+          value={option.value}
+          {required}
+          disabled={option.disabled}
+          bind:group={value}
+        />
+        <span class="fake-button">
+          <span>
+            <span></span>
+          </span>
         </span>
-      </span>
-      <span>
-        {#if option.name}
-          {option.name}
-        {:else}
-          {option.value}
-        {/if}
-      </span>
-    </label>
-  {/each}
+        <span>
+          {#if option.name}
+            {option.name}
+          {:else}
+            {option.value}
+          {/if}
+        </span>
+      </label>
+    {/each}
+  </div>
 </div>
 
 <style>
-  label {
-    display: -webkit-box;
-    display: -webkit-flex;
-    display: -moz-box;
-    display: -ms-flexbox;
+  .radio-group {
     display: flex;
-    -webkit-box-align: center;
-    -webkit-align-items: center;
-    -moz-box-align: center;
-    -ms-flex-align: center;
+    flex-direction: column;
+    gap: 2px;
+  }
+
+  .group-label {
+    display: flex;
     align-items: center;
     font-size: 1rem;
-    line-height: 1rem;
+  }
+
+  .required-indicator {
+    margin-left: 8px;
+    font-size: 1rem;
+  }
+
+  .options-container {
+    display: flex;
+    flex-direction: column;
+  }
+
+  label {
+    display: flex;
+    align-items: center;
+    font-size: 1rem;
+    margin-bottom: 8px;
   }
 
   label.disabled {
@@ -125,13 +147,8 @@
     width: 1rem;
     height: 1rem;
     border: 1px solid var(--border-primary);
-    -webkit-border-radius: 50%;
-    -moz-border-radius: 50%;
     border-radius: 50%;
     padding: 0.125rem;
-    -webkit-transition: 0.2s;
-    -o-transition: 0.2s;
-    -moz-transition: 0.2s;
     transition: 0.2s;
   }
 
@@ -139,12 +156,7 @@
     display: block;
     width: 100%;
     height: 100%;
-    -webkit-border-radius: 50%;
-    -moz-border-radius: 50%;
     border-radius: 50%;
-    -webkit-transition: 0.2s;
-    -o-transition: 0.2s;
-    -moz-transition: 0.2s;
     transition: 0.2s;
   }
 
@@ -156,18 +168,9 @@
     left: 50%;
     width: 0;
     height: 0;
-    -webkit-transform: translate(-50%, -50%);
-    -moz-transform: translate(-50%, -50%);
-    -ms-transform: translate(-50%, -50%);
-    -o-transform: translate(-50%, -50%);
     transform: translate(-50%, -50%);
     background-color: var(--background-tertiary);
-    -webkit-border-radius: 50%;
-    -moz-border-radius: 50%;
     border-radius: 50%;
-    -webkit-transition: 0.2s;
-    -o-transition: 0.2s;
-    -moz-transition: 0.2s;
     transition: 0.2s;
   }
 

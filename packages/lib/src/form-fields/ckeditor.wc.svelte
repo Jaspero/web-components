@@ -23,8 +23,6 @@
   export let attachedInternals: ElementInternals;
   export let service: ImageService;
   export let value: string = '';
-  export let id: string | null = null;
-  export let name: string | null = null;
   export let label = '';
   export let options: any = {
     toolbar: {
@@ -104,7 +102,7 @@
           attributes: true,
           classes: true,
           styles: true
-        }
+        }      
       ]
     },
     htmlEmbed: {
@@ -131,7 +129,7 @@
       }
     },
     removePlugins: [
-      // These two are commercial, but you can try them out without registering to a trial.
+       // These two are commercial, but you can try them out without registering to a trial.
       // 'ExportPdf',
       // 'ExportWord',
       'AIAssistant',
@@ -168,13 +166,7 @@
     ]
   };
   export let required = false;
-  export let validationMessages: {
-    required?: string;
-  } = {};
-  export let requiredValidationMessage: string;
-
   let internalValue = '';
-
   export const getValue = () => internalValue || '';
 
   const dispatch = createEventDispatcher();
@@ -183,7 +175,6 @@
   let wrapperEl: HTMLDivElement;
   let containerEl: HTMLDivElement;
   let editor: any;
-  let textareaEl: HTMLTextAreaElement;
 
   export async function save(id?: string) {
     const regex = /src="data:(.*?)"/g;
@@ -239,20 +230,6 @@
 
           attachedInternals.checkValidity();
 
-          if (textareaEl) {
-            if (!internalValue && required) {
-              attachedInternals.setValidity(
-                { valueMissing: true },
-                requiredValidationMessage ||
-                  validationMessages.required ||
-                  textareaEl.validationMessage,
-                textareaEl
-              );
-            } else {
-              attachedInternals.setValidity({});
-            }
-          }
-
           attachedInternals.setFormValue(internalValue || '');
           dispatch('value', internalValue || '');
         });
@@ -267,25 +244,39 @@
   });
 </script>
 
-{#if label}
-  <div class="label">{label}</div>
-{/if}
-<div bind:this={wrapperEl}>
-  <div bind:this={containerEl} />
+<div class="field-container">
+  <div class="label-container">
+    <div class="label-text">{label}</div>
+    {#if required}
+      <span class="required-indicator">*</span>
+    {/if}
+  </div>
+  <div bind:this={wrapperEl} class="editor-wrapper">
+    <div bind:this={containerEl} />
+  </div>
 </div>
-<textarea {id} {name} bind:value={internalValue} {required} tabindex="-1" bind:this={textareaEl} />
 
 <style>
-  .label {
-    margin-top: 0.5rem;
-    margin-bottom: 0.125rem;
-    font-size: 0.875rem;
+  .field-container {
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 10px; 
   }
 
-  textarea {
-    width: 100%;
-    height: 0;
-    opacity: 0;
-    position: absolute;
+  .label-container {
+    display: flex;
+    align-items: center;
   }
+
+  .label-text {
+    font-size: 16px; 
+    margin-right: 5px;
+  }
+
+  .required-indicator {
+    font-size: 16px;
+  }
+
+
 </style>

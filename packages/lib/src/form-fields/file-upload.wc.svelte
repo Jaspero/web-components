@@ -25,6 +25,7 @@
   export let value: string = '';
   export let id: string = '';
   export let name: string = '';
+  export let required: boolean = false; // New prop for required field
 
   let previewStyle;
   let bindingElement;
@@ -44,10 +45,10 @@
 
   $: {
     internalValue = value
-    if(value) {
+    if (value) {
       checkImage();
     } else {
-      img = ''
+      img = '';
     }
   }
 
@@ -134,11 +135,13 @@
       fileReader.onerror = (err) => reject(err);
     });
   };
+
+  $: displayLabel = required ? `${label} *` : label;
 </script>
 
-{#if label && labelType == 'outside'}
+{#if label && labelType === 'outside'}
   <div class="label">
-    {@html label}
+    {@html displayLabel}
   </div>
 {/if}
 <div>
@@ -156,8 +159,8 @@
         on:drop|preventDefault={(e) => handleDrop(e)}
       ></div>
     {:else}
-      {#if label && labelType == 'inside'}
-        <span class="field-label" class:move={inputFocused || internalValue}>{@html label}</span>
+      {#if label && labelType === 'inside'}
+        <span class="field-label" class:move={inputFocused || internalValue}>{@html displayLabel}</span>
       {/if}
 
       <div class="field-icons">
@@ -223,7 +226,7 @@
 
       <span class="field-upload-container">
         <input
-          class={`field-input ${labelType == 'outside' || !label ? '' : 'field-input-padding'}`}
+          class={`field-input ${labelType === 'outside' || !label ? '' : 'field-input-padding'}`}
           type="text"
           {name}
           {id}
@@ -237,6 +240,7 @@
     {/if}
   </div>
 </div>
+
 
 <style>
   .field {
@@ -510,4 +514,5 @@
     -moz-box-shadow: 0 3px 12px 3px rgba(0, 0, 0, 0.16);
     box-shadow: 0 3px 12px 3px rgba(0, 0, 0, 0.16);
   }
+  
 </style>
