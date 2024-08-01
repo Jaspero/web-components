@@ -12,6 +12,7 @@
 |           service           |    ✓     |      [`SearchService`](#searchservice)      |                          search service                           |
 |            name             |    ✓     |                  `string`                   |                     name of the form control                      |
 |         minSelects          |          |                  `number`                   |                 minimum number of selects allowed                 |
+|        singleSelect         |          |                  `boolean`                  |         is it possible to select only one option or more          |
 | minselectsValidationMessage |          |                  `string`                   | validation message for when component does not satisfy minselects |
 |         maxSelects          |          |                  `number`                   |                 maximum number of selects allowed                 |
 | maxselectsValidationMessage |          |                  `string`                   | validation message for when component does not satisfy maxselects |

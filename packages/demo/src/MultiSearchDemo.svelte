@@ -6,8 +6,9 @@
 
 	onMount(() => {
 		const multisearch = document.createElement('jp-multisearch') as any
-    multisearch.value = 'aaa, bbb'
+    multisearch.value = ''
 		multisearch.label = 'Cool';
+    multisearch.singleSelect = true;
     multisearch.service = {
       i: 0,
       async search(str){

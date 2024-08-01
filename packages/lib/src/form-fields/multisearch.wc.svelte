@@ -52,6 +52,7 @@
   export let requiredValidationMessage: string;
   export let minselectsValidationMessage: string;
   export let maxselectsValidationMessage: string;
+  export let singleSelect = false;
 
   let isTabbing = false; // Variable to track if the user is tabbing
   let open = false;
@@ -134,8 +135,8 @@
     loadingSearch = false;
   }
 
-  function toggleMenu(event) {
-    if (event && event.target && event.target.closest('.menu')) {
+  function toggleMenu(event?: MouseEvent) {
+    if (event?.target?.closest('.menu')) {
       return;
     }
 
@@ -198,9 +199,13 @@
   }
 
   function handleKeydown(event: KeyboardEvent) {
-    if (searchFocused) return;
+    if (searchFocused) {
+      return
+    };
+    
     const currentIndex = optionElements.findIndex((el) => el === document.activeElement);
-    let nextIndex;
+    
+    let nextIndex: number;
 
     // Check if menu is open
     if (open) {
@@ -312,6 +317,10 @@
         }, 500);
       }
     }
+  }
+
+  function toggleOption(option) {
+    option.selected = !option.selected;
   }
 
   async function loadValues(value) {
@@ -431,9 +440,20 @@
               class:selected={option.selected}
               bind:this={optionElements[index]}
               disabled={option.disabled}
-              on:click|preventDefault={() => (option.selected = !option.selected)}
+              on:click|preventDefault={() => {
+
+                if (singleSelect) {
+                  options = options.map(opt => {
+                    opt.selected = opt === option;
+                    return opt;
+                  });
+                  open = false;
+                } else {
+                  option.selected = !option.selected;
+                }
+              }}
             >
-              <span>{option.label ? option.label : option.value}</span>
+              <span>{option.label || option.value}</span>
 
               {#if option.selected}
                 <svg
@@ -442,7 +462,6 @@
                   height="1rem"
                   viewBox="0 0 448 512"
                 >
-                  <!--! Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2023 Fonticons, Inc. -->
                   <path
                     d="M438.6 105.4c12.5 12.5 12.5 32.8 0 45.3l-256 256c-12.5 12.5-32.8 12.5-45.3 0l-128-128c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0L160 338.7 393.4 105.4c12.5-12.5 32.8-12.5 45.3 0z"
                   />
