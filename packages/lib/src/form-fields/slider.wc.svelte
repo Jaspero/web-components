@@ -26,6 +26,8 @@
   export let step: number = 1;
   export let name: string = '';
   export let discrete: boolean = true; //if true -> ticks, false -> smooth
+  export let required: boolean = false;
+  export let label: string = '';
   export const getValue = () => value;
 
   const dispatch = createEventDispatcher();
@@ -33,19 +35,22 @@
   $: dispatch('value', { value });
 </script>
 
-<div class="slider-container">
-  <input
-    type="range"
-    class="range-input"
-    bind:value
-    {id}
-    {disabled}
-    {min}
-    {max}
-    step={discrete ? step : 'any'}
-    {name}
-  />
-</div>
+  {#if label}
+    {@html `${label}${required ? ' *' : ''}`}
+  {/if}
+  <div class="slider-container">
+    <input
+      type="range"
+      class="range-input"
+      bind:value
+      {id}
+      {disabled}
+      {min}
+      {max}
+      step={discrete ? step : 'any'}
+      {name}
+    />
+  </div>
 
 <style>
   .slider-container {
@@ -77,7 +82,7 @@
   input[type='range']::-moz-range-thumb {
     border: none;
     height: 16px;
-    width: 16px;
+    width: 16px; 
     border-radius: 50%;
     background: var(--primary-color);
     transition: 0.2s ease-in-out;
@@ -109,7 +114,7 @@
     box-shadow: 0 0 0 10px rgba(131, 128, 127, 0.267);
   }
   .range-input:disabled:active::-moz-range-thumb {
-    box-shadow: 0 0 0 10px rgba(131, 128, 127, 0.267);
+    box-shadow: 0 0 0 10px rgba(131, 128, 127, 0.267); 
   }
 
   /* Chrome, safari, opera edge */

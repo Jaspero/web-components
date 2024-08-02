@@ -53,107 +53,114 @@
   }
 </script>
 
-{#if label}
-  <span class="label" style={`font-size: ${size == 'small' ? '12px' : '20px'}`}>{@html label}</span>
-{/if}
-<label class={'switch ' + size}>
-  <input
-    type="checkbox"
-    {name}
-    {disabled}
-    {required}
-    bind:checked={value}
-    value={true}
-    hidden
-    bind:this={checkboxEl}
-  />
-  <span class="slider round" class:pointer={!disabled}></span>
-</label>
+  {#if label}
+    <span class="label" style={`font-size: ${size == 'small' ? '16px' : '20px'}`}>
+      {@html `${label}${required ? ' *' : ''}`}
+    </span>
+    {/if}
+  <label class={'switch ' + size}>
+    <input
+      type="checkbox"
+      {name}
+      {disabled}
+      {required}
+      bind:checked={value}
+      value={true}
+      hidden
+      bind:this={checkboxEl}
+    />
+    <span class="slider round" class:pointer={!disabled}></span>
+  </label>
 
 <style>
-  .switch {
+   .switch {
     position: relative;
     display: inline-block;
   }
 
-  .pointer {
-    cursor: pointer;
-  }
+.pointer {
+  cursor: pointer;
+}
 
-  .label {
-    display: block;
-    margin-bottom: 4px;
-  }
+.label {
+  display: block;
+  margin-bottom: 4px;
+}
 
-  .large {
-    width: 60px;
-    height: 34px;
-  }
+.large {
+  width: 60px;
+  height: 34px;
+}
 
-  .small {
-    width: 40px;
-    height: 22px;
-  }
+.small {
+  width: 40px;
+  height: 22px;
+}
 
-  .switch input {
-    opacity: 0;
-    width: 0;
-    height: 0;
-  }
+.switch {
+  position: relative;
+  display: inline-block;
+}
 
-  .large .slider {
-    border-radius: 34px;
-  }
+.switch input {
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
 
-  .small .slider {
-    border-radius: 22px;
-  }
+.large .slider {
+  border-radius: 34px;
+}
 
-  .slider {
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background-color: #ccc;
-    -webkit-transition: 0.4s;
-    transition: 0.4s;
-  }
+.small .slider {
+  border-radius: 22px;
+}
 
-  .large .slider:before {
-    height: 26px;
-    width: 26px;
-    left: 4px;
-    bottom: 4px;
-  }
+.slider {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: #ccc;
+  -webkit-transition: 0.4s;
+  transition: 0.4s;
+}
 
-  .small .slider:before {
-    height: 18px;
-    width: 18px;
-    left: 2px;
-    bottom: 2px;
-  }
+.large .slider:before {
+  height: 26px;
+  width: 26px;
+  left: 4px;
+  bottom: 4px;
+}
 
-  .slider:before {
-    position: absolute;
-    content: '';
-    background-color: white;
-    -webkit-transition: 0.4s;
-    transition: 0.4s;
-    border-radius: 50%;
-  }
+.small .slider:before {
+  height: 18px;
+  width: 18px;
+  left: 2px;
+  bottom: 2px;
+}
 
-  input:checked + .slider {
-    background-color: var(--primary-color);
-  }
+.slider:before {
+  position: absolute;
+  content: '';
+  background-color: white;
+  -webkit-transition: 0.4s;
+  transition: 0.4s;
+  border-radius: 50%;
+}
 
-  input:focus + .slider {
-    box-shadow: 0 0 1px var(--primary-color);
-  }
+input:checked + .slider {
+  background-color: var(--primary-color);
+}
 
-  input:checked + .slider:before {
-    -webkit-transform: translateX(100%);
-    -ms-transform: translateX(100%);
-    transform: translateX(100%);
-  }
+input:focus + .slider {
+  box-shadow: 0 0 1px var(--primary-color);
+}
+
+input:checked + .slider:before {
+  -webkit-transform: translateX(100%);
+  -ms-transform: translateX(100%);
+  transform: translateX(100%);
+}
 </style>

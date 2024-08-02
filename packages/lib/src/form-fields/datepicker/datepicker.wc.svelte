@@ -365,7 +365,7 @@
 <div style="position: relative;">
   {#if label && labelType == 'outside'}
     <div class="label">
-      {@html label}
+      {@html `${label}${required ? ' *' : ''}`}
     </div>
   {/if}
 
@@ -379,7 +379,7 @@
     on:click|preventDefault={toggleMenu}
   >
     {#if label && labelType == 'inside'}
-      <span class="field-label" class:move={openPicker || internalValue}>{@html label}</span>
+      <span class="field-label" class:move={openPicker || internalValue}>{@html `${label}${required ? ' *' : ''}`}</span>
     {/if}
     <p class={`field-input ${labelType == 'outside' || !label ? '' : 'field-input-padding'}`}>
       {displayedDateString}

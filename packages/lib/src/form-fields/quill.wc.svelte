@@ -203,15 +203,28 @@
   }
 </script>
 
-{#if label}
-  <div class="label">{label}</div>
-{/if}
-<div bind:this={wrapperEl}>
-  <div bind:this={containerEl} />
-</div>
-<textarea {id} {name} bind:value={internalValue} {required} tabindex="-1" bind:this={textareaEl} />
+  <div class="label-container">
+    <div class="label">{label}</div>
+    {#if required}
+      <span class="required-indicator">*</span>
+    {/if}
+  </div>
+  <div bind:this={wrapperEl}>
+    <div bind:this={containerEl} />
+  </div>
+  <textarea {id} {name} bind:value={internalValue} {required} tabindex="-1" bind:this={textareaEl} />
 
-<style>
+  <style>
+  .label-container {
+    display: flex;
+    align-items: center;
+    margin-top: 1rem; 
+    margin-bottom: 0.5rem; 
+  }
+  .required-indicator {
+    font-size: 1rem; 
+    margin-left: 0.5rem; 
+  }
   .label {
     margin-top: 0.5rem;
     margin-bottom: 0.125rem;

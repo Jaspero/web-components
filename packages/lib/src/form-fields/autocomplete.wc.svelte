@@ -17,12 +17,10 @@
 
 <script lang="ts">
   import { createEventDispatcher, onMount } from 'svelte';
-
   export let wording = {
     LOADING: 'Loading...'
   };
   export let options: string[] | string = [];
-
   export let value = '';
   export let asyncOptions = null;
   export let lag: number = 300;
@@ -62,7 +60,7 @@
   const dispatch = createEventDispatcher();
 
   const getValue = () => value;
-
+  
   $: {
     if (open) {
       document.documentElement.style.overflowY = 'hidden';
@@ -121,7 +119,6 @@
       }
     }
   }
-
   function toggleMenu(event?: any) {
     if (event && event.target && event.target.closest('.menu')) {
       return;
@@ -213,11 +210,12 @@
       options = JSON.parse(options);
     }
   });
+  $: displayLabel = required ? `${label} *` : label;
 </script>
 
-{#if label && labelType == 'outside'}
+{#if label && labelType === 'outside'}
   <div class="label">
-    {@html label}
+    {@html displayLabel}
   </div>
 {/if}
 <!-- svelte-ignore a11y-no-static-element-interactions -->
@@ -229,13 +227,14 @@
   on:keydown={handleKeydown}
 >
   <label class="field">
-    {#if label && labelType == 'inside'}
-      <span class="field-label" class:move={open || value}>{@html label}</span>
+    {#if label && labelType === 'inside'}
+      <span class="field-label" class:move={open || value}>
+        {@html displayLabel}
+      </span>
     {/if}
     <input
-      class={`field-input ${labelType == 'outside' || !label ? '' : 'field-input-padding'}`}
+      class={`field-input ${labelType === 'outside' || !label ? '' : 'field-input-padding'}`}
       type="text"
-      class:disabled
       {id}
       {name}
       {disabled}
@@ -246,29 +245,32 @@
       {pattern}
       bind:this={inputEl}
       bind:value
-      on:focus={toggleMenu}
+      on:focus={() => (open = true)}
+      on:input={() => {
+        if (value === '' && open) {
+          open = false;
+        }
+      }}
     />
 
     {#if open}
-      <div class="overlay">
-        <div class="menu" style={menuStyle}>
-          {#if !loading}
-            {#each filteredOptions as option, index}
-              <button
-                type="button"
-                class="menu-button"
-                bind:this={optionElements[index]}
-                on:mousedown|preventDefault={() => {
-                  value = option;
-                  inputEl.blur();
-                }}
-                on:click|preventDefault>{option}</button
-              >
-            {/each}
-          {:else}
-            {wording.LOADING}
-          {/if}
-        </div>
+      <div class="menu">
+        {#if !loading}
+          {#each filteredOptions as option, index}
+            <button
+              type="button"
+              class="menu-button"
+              bind:this={optionElements[index]}
+              on:mousedown|preventDefault={() => {
+                value = option;
+                inputEl.blur();
+              }}
+              on:click|preventDefault>{option}</button
+            >
+          {/each}
+        {:else}
+        {wording.LOADING}
+        {/if}
       </div>
     {/if}
   </label>
