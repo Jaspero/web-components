@@ -14,7 +14,7 @@
     "preview": "vite preview --config vite.demo.config.ts",
     "check": "svelte-check --tsconfig ./tsconfig.json",
     "prepublishOnly": "npm run build -s",
-    "format": "prettier --plugin-search-dir . --write .",
+    "format": "prettier --write .",
     "semantic-release": "semantic-release"
   },
   "devDependencies": {
