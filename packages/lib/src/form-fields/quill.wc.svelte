@@ -201,20 +201,18 @@
     // @ts-ignore
     return window.Quill;
   }
+  $: displayLabel = `${label}${required ? ' *' : ''}`;
 </script>
 
-  <div class="label-container">
-    <div class="label">{label}</div>
-    {#if required}
-      <span class="required-indicator">*</span>
-    {/if}
-  </div>
-  <div bind:this={wrapperEl}>
-    <div bind:this={containerEl} />
-  </div>
-  <textarea {id} {name} bind:value={internalValue} {required} tabindex="-1" bind:this={textareaEl} />
+<div class="label-container">
+  <div>{@html displayLabel}</div>
+</div>
+<div bind:this={wrapperEl}>
+  <div bind:this={containerEl} />
+</div>
+<textarea {id} {name} bind:value={internalValue} {required} tabindex="-1" bind:this={textareaEl} />
 
-  <style>
+<style>
   .label-container {
     display: flex;
     align-items: center;

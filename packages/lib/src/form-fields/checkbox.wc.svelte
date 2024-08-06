@@ -35,7 +35,7 @@
     maxselects?: string;
   } = {};
   export let label: string = '';
-  export let required: boolean = false;
+  export let required = false;
 
   export const getValue = () => options.filter((el) => el.checked).map((el) => el.value);
   export const reportValidity = () => attachedInternals.reportValidity();

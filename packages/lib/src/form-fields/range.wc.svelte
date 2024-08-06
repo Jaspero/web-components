@@ -26,7 +26,7 @@
   export let step: number = 1;
   export let name: string = '';
   export let discrete: boolean = true; //if true -> ticks, false -> smooth
-  export let required: boolean = false;
+  export let required = false;
   export let label: string = ''; 
   let internalValue = [min, max];
   export const getValue = () => internalValue;

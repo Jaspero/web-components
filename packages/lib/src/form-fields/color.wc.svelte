@@ -16,15 +16,15 @@
 />
 
 <script lang="ts">
-  import { createEventDispatcher, onMount } from 'svelte';
+ import { createEventDispatcher, onMount } from 'svelte';
 
-  export let attachedInternals: ElementInternals;
-  export let id;
-  export let name;
-  export let value = 'e65100';
-  export let label = ''
-  export let disabled = false;
-  export let required = false;
+export let attachedInternals: ElementInternals;
+export let id;
+export let name;
+export let value = 'e65100';
+export let label = ''
+export let disabled = false;
+export let required = false;
 
   export const getValue = () => value;
 
@@ -32,15 +32,16 @@
     attachedInternals.setFormValue(value)
     dispatch('value', {value})
   }
-
+  
   const dispatch = createEventDispatcher();
+  $: displayLabel = label ? `${label}${required ? ' <span class="required">*</span>' : ''}` : '';
 </script>
 
 <div class="color-picker-container">
   {#if label}
     <!-- svelte-ignore a11y-label-has-associated-control -->
     <label class="color-picker-label">
-      {label} {#if required}<span class="required">*</span>{/if}
+      {@html displayLabel}
     </label>
   {/if}
   <input type="color" {id} {name} {disabled} bind:value />
@@ -58,7 +59,7 @@
     font-size: 16px;
   }
   .required {
-    font-size: 15px; 
+    font-size: 15px;
   }
-
+  
 </style>

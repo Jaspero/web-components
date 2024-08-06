@@ -34,7 +34,7 @@
   export let minfilesValidationMessage: string;
   export let validationMessages: { [key: string]: string } = {};
   export let sortable = true;
-  export let required: boolean = false; 
+  export let required = false;
   let grabbedEl = null;
   let grabbedIndex = -1;
   let startingY: number;

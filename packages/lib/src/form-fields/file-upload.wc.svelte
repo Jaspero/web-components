@@ -25,8 +25,8 @@
   export let value: string = '';
   export let id: string = '';
   export let name: string = '';
-  export let required: boolean = false;
-
+  export let required = false;
+  
   let previewStyle;
   let bindingElement;
   let inputFocused: boolean = false;

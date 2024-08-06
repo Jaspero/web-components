@@ -27,6 +27,7 @@
   export let inline: boolean = false;
 
   export let requiredValidationMessage;
+  export let label: string = '';
 
   let inputEl;
 
@@ -57,41 +58,37 @@
   onMount(() => {
     if (typeof options == 'string') options = JSON.parse(options);
   });
+  $: displayLabel = required ? `${label} *` : label;
 </script>
 
-  <label class="group-label">
-    Options
-    {#if required}
-      <span class="required-indicator">*</span>
-    {/if}
-  </label>
-  <div style={`display: flex; flex-direction: ${inline ? 'row' : 'column'}`}>
-    {#each options as option}
-      <label class:disabled={option.disabled}>
-        <input
-          type="radio"
-          bind:this={inputEl}
-          {name}
-          value={option.value}
-          {required}
-          disabled={option.disabled}
-          bind:group={value}
-        />
-        <span class="fake-button">
-          <span>
-            <span></span>
-          </span>
-        </span>
+<label>{@html displayLabel}</label>
+<div style={`display: flex; flex-direction: ${inline ? 'row' : 'column'}`}>
+  {#each options as option}
+    <label class:disabled={option.disabled}>
+      <input
+        type="radio"
+        bind:this={inputEl}
+        {name}
+        value={option.value}
+        {required}
+        disabled={option.disabled}
+        bind:group={value}
+      />
+      <span class="fake-button">
         <span>
-          {#if option.name}
-            {option.name}
-          {:else}
-            {option.value}
-          {/if}
+          <span></span>
         </span>
-      </label>
-    {/each}
-  </div>
+      </span>
+      <span>
+        {#if option.name}
+          {option.name}
+        {:else}
+          {option.value}
+        {/if}
+      </span>
+    </label>
+  {/each}
+</div>
 
 <style>
   .required-indicator {
