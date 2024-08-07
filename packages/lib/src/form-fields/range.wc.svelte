@@ -27,7 +27,7 @@
   export let name: string = '';
   export let discrete: boolean = true; //if true -> ticks, false -> smooth
   export let required = false;
-  export let label: string = ''; 
+  export let label = '';
   let internalValue = [min, max];
   export const getValue = () => internalValue;
 
@@ -56,12 +56,12 @@
       internalValue = value
     }
   }
+  $: displayLabel = required ? `${label} *` : label;
 </script>
 
-<div class="slider-container">
-  <div class="slider-label-container">
+  <div class="slider-container">
     {#if label}
-    {@html `${label}${required ? ' *' : ''}`}
+    {@html displayLabel}
     {/if}
   </div>
   <div class="slider">
@@ -89,12 +89,11 @@
       bind:value={internalValue[1]}
     />
   </div>
-</div>
 
 <style>
 
 
-  .slider-label-container {
+  .slider-container {
     width: 100%;
     text-align: left; 
     margin-bottom: 15px; 

@@ -85,7 +85,7 @@
         reversed: true
       }
     },
-     // https://ckeditor.com/docs/ckeditor5/latest/features/headings.html#configuration
+    // https://ckeditor.com/docs/ckeditor5/latest/features/headings.html#configuration
     heading: {
       options: [
         { model: 'paragraph', title: 'Paragraph' },
@@ -107,7 +107,7 @@
           attributes: true,
           classes: true,
           styles: true
-        }      
+        }
       ]
     },
     htmlEmbed: {
@@ -141,7 +141,7 @@
       'CKBox',
       'CKFinder',
       'EasyImage',
-       // This sample uses the Base64UploadAdapter to handle image uploads as it requires no configuration.
+      // This sample uses the Base64UploadAdapter to handle image uploads as it requires no configuration.
       // https://ckeditor.com/docs/ckeditor5/latest/features/images/image-upload/base64-upload-adapter.html
       // Storing images as Base64 is usually a very bad idea.
       // Replace it on production website with other solutions:
@@ -157,9 +157,9 @@
       'RevisionHistory',
       'Pagination',
       'WProofreader',
-       // Careful, with the Mathtype plugin CKEditor will not load when loading this sample
+      // Careful, with the Mathtype plugin CKEditor will not load when loading this sample
       // from a local file system (file://) - load this site via HTTP server if you enable MathType.
-      'MathType', 
+      'MathType',
       // The following features are part of the Productivity Pack and require additional license.
       'SlashCommand',
       'Template',
@@ -175,7 +175,9 @@
     required?: string;
   } = {};
   export let requiredValidationMessage: string;
+
   let internalValue = '';
+
   export const getValue = () => internalValue || '';
 
   const dispatch = createEventDispatcher();
@@ -239,6 +241,7 @@
           internalValue = editor.getData();
 
           attachedInternals.checkValidity();
+
           if (textareaEl) {
             if (!internalValue && required) {
               attachedInternals.setValidity(
@@ -265,34 +268,25 @@
       editor.destroy().catch(console.error);
     }
   });
+  $: displayLabel = required ? `${label} *` : label;
 </script>
 
-<div class="label-container">
-  {#if label}
-      {@html `${label}${required ? ' *' : ''}`}
-  {/if}
-</div>
+{#if label}
+  <div class="label">
+    {@html displayLabel}
+  </div>
+{/if}
 <div bind:this={wrapperEl}>
   <div bind:this={containerEl} />
 </div>
 <textarea {id} {name} bind:value={internalValue} {required} tabindex="-1" bind:this={textareaEl} />
 
 <style>
-  .label-container {
-    display: flex;
-    align-items: center;
-  }
-
   .label {
     margin-top: 0.5rem;
     margin-bottom: 0.125rem;
     font-size: 0.875rem;
   }
-
-  .required {
-    margin-left: 4px;
-  }
-
   textarea {
     width: 100%;
     height: 0;

@@ -17,10 +17,12 @@
 
 <script lang="ts">
   import { createEventDispatcher, onMount } from 'svelte';
+
   export let wording = {
     LOADING: 'Loading...'
   };
   export let options: string[] | string = [];
+
   export let value = '';
   export let asyncOptions = null;
   export let lag: number = 300;
@@ -119,6 +121,7 @@
       }
     }
   }
+
   function toggleMenu(event?: any) {
     if (event && event.target && event.target.closest('.menu')) {
       return;
@@ -213,7 +216,7 @@
   $: displayLabel = required ? `${label} *` : label;
 </script>
 
-{#if label && labelType === 'outside'}
+{#if label && labelType == 'outside'}
   <div class="label">
     {@html displayLabel}
   </div>
@@ -233,8 +236,9 @@
       </span>
     {/if}
     <input
-      class={`field-input ${labelType === 'outside' || !label ? '' : 'field-input-padding'}`}
+    class={`field-input ${labelType == 'outside' || !label ? '' : 'field-input-padding'}`}  
       type="text"
+      class:disabled
       {id}
       {name}
       {disabled}
@@ -245,32 +249,29 @@
       {pattern}
       bind:this={inputEl}
       bind:value
-      on:focus={() => (open = true)}
-      on:input={() => {
-        if (value === '' && open) {
-          open = false;
-        }
-      }}
-    />
+      on:focus={toggleMenu}
+      />
 
-    {#if open}
-      <div class="menu">
-        {#if !loading}
-          {#each filteredOptions as option, index}
-            <button
-              type="button"
-              class="menu-button"
-              bind:this={optionElements[index]}
-              on:mousedown|preventDefault={() => {
-                value = option;
-                inputEl.blur();
-              }}
-              on:click|preventDefault>{option}</button
-            >
-          {/each}
-        {:else}
-        {wording.LOADING}
-        {/if}
+      {#if open}
+      <div class="overlay">
+        <div class="menu" style={menuStyle}>
+          {#if !loading}
+            {#each filteredOptions as option, index}
+              <button
+                type="button"
+                class="menu-button"
+                bind:this={optionElements[index]}
+                on:mousedown|preventDefault={() => {
+                  value = option;
+                  inputEl.blur();
+                }}
+                on:click|preventDefault>{option}</button
+              >
+            {/each}
+          {:else}
+            {wording.LOADING}
+          {/if}
+        </div>
       </div>
     {/if}
   </label>

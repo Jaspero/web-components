@@ -27,16 +27,17 @@
   export let name: string = '';
   export let discrete: boolean = true; //if true -> ticks, false -> smooth
   export let required = false;
-  export let label: string = '';
+  export let label = '';
   export const getValue = () => value;
 
   const dispatch = createEventDispatcher();
 
   $: dispatch('value', { value });
+  $: displayLabel = required ? `${label} *` : label;
 </script>
 
   {#if label}
-    {@html `${label}${required ? ' *' : ''}`}
+    {@html displayLabel}
   {/if}
   <div class="slider-container">
     <input
@@ -82,7 +83,7 @@
   input[type='range']::-moz-range-thumb {
     border: none;
     height: 16px;
-    width: 16px; 
+    width: 16px;
     border-radius: 50%;
     background: var(--primary-color);
     transition: 0.2s ease-in-out;
@@ -114,7 +115,7 @@
     box-shadow: 0 0 0 10px rgba(131, 128, 127, 0.267);
   }
   .range-input:disabled:active::-moz-range-thumb {
-    box-shadow: 0 0 0 10px rgba(131, 128, 127, 0.267); 
+    box-shadow: 0 0 0 10px rgba(131, 128, 127, 0.267);
   }
 
   /* Chrome, safari, opera edge */

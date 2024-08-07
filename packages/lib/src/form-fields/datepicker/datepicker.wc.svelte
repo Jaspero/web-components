@@ -360,12 +360,13 @@
       attachedInternals.checkValidity();
     }
   }
+  $: displayLabel = required ? `${label} *` : label;
 </script>
 
 <div style="position: relative;">
   {#if label && labelType == 'outside'}
     <div class="label">
-      {@html `${label}${required ? ' *' : ''}`}
+      {@html displayLabel}
     </div>
   {/if}
 
@@ -379,7 +380,7 @@
     on:click|preventDefault={toggleMenu}
   >
     {#if label && labelType == 'inside'}
-      <span class="field-label" class:move={openPicker || internalValue}>{@html `${label}${required ? ' *' : ''}`}</span>
+      <span class="field-label" class:move={openPicker || internalValue}>{@html displayLabel}</span>
     {/if}
     <p class={`field-input ${labelType == 'outside' || !label ? '' : 'field-input-padding'}`}>
       {displayedDateString}

@@ -51,72 +51,71 @@
     }
     dispatch('value', value);
   }
+  $: displayLabel = required ? `${label} *` : label;
 </script>
 
   {#if label}
-    <span class="label" style={`font-size: ${size == 'small' ? '16px' : '20px'}`}>
-      {@html `${label}${required ? ' *' : ''}`}
-    </span>
+    <span class="label" style={`font-size: ${size == 'small' ? '16px' : '20px'}`}>{@html displayLabel}</span>
     {/if}
-  <label class={'switch ' + size}>
-    <input
-      type="checkbox"
-      {name}
-      {disabled}
-      {required}
-      bind:checked={value}
-      value={true}
-      hidden
-      bind:this={checkboxEl}
-    />
-    <span class="slider round" class:pointer={!disabled}></span>
-  </label>
+    <label class={'switch ' + size}>
+      <input
+        type="checkbox"
+        {name}
+        {disabled}
+        {required}
+        bind:checked={value}
+        value={true}
+        hidden
+        bind:this={checkboxEl}
+      />
+      <span class="slider round" class:pointer={!disabled}></span>
+    </label>
 
 <style>
-   .switch {
+  .switch {
     position: relative;
     display: inline-block;
   }
 
-.pointer {
+  .pointer {
   cursor: pointer;
-}
+  }
 
-.label {
+  .label {
   display: block;
   margin-bottom: 4px;
-}
+  }
 
-.large {
+  .large {
   width: 60px;
   height: 34px;
-}
+  }
 
-.small {
+  .small {
   width: 40px;
   height: 22px;
-}
+  }
 
-.switch {
+  .switch {
   position: relative;
   display: inline-block;
-}
+  }
 
-.switch input {
+  .switch input {
   opacity: 0;
   width: 0;
   height: 0;
-}
+  }
 
-.large .slider {
+  .large .slider {
   border-radius: 34px;
-}
+  }
 
-.small .slider {
+  .small .slider {
   border-radius: 22px;
-}
+  }
 
-.slider {
+  .slider {
   position: absolute;
   top: 0;
   left: 0;
@@ -125,42 +124,42 @@
   background-color: #ccc;
   -webkit-transition: 0.4s;
   transition: 0.4s;
-}
+  }
 
-.large .slider:before {
+  .large .slider:before {
   height: 26px;
   width: 26px;
   left: 4px;
   bottom: 4px;
-}
+  }
 
-.small .slider:before {
+  .small .slider:before {
   height: 18px;
   width: 18px;
   left: 2px;
   bottom: 2px;
-}
+  }
 
-.slider:before {
+  .slider:before {
   position: absolute;
   content: '';
   background-color: white;
   -webkit-transition: 0.4s;
   transition: 0.4s;
   border-radius: 50%;
-}
+  }
 
-input:checked + .slider {
+  input:checked + .slider {
   background-color: var(--primary-color);
-}
+  }
 
-input:focus + .slider {
+  input:focus + .slider {
   box-shadow: 0 0 1px var(--primary-color);
-}
+  }
 
-input:checked + .slider:before {
+  input:checked + .slider:before {
   -webkit-transform: translateX(100%);
   -ms-transform: translateX(100%);
   transform: translateX(100%);
-}
+  }
 </style>

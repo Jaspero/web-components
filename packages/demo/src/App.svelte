@@ -83,7 +83,7 @@
   <jp-quill label="Quill" value="<p>Blup</p>" required="true"></jp-quill>
   <div bind:this={el} class="container">
     <div class="label">
-      Multisearch {#if isRequired} *{/if}
+      Multisearch {#if isRequired} *{/if} 
     </div>
   </div>
   <jp-multiselect {options} label="Multiselect" required="true"> </jp-multiselect>

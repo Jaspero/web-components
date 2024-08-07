@@ -27,7 +27,7 @@
   export let inline: boolean = false;
 
   export let requiredValidationMessage;
-  export let label: string = '';
+  export let label = '';
 
   let inputEl;
 
@@ -61,7 +61,11 @@
   $: displayLabel = required ? `${label} *` : label;
 </script>
 
-<label>{@html displayLabel}</label>
+{#if label}
+    <div class="label">
+      {@html displayLabel}
+    </div>
+  {/if}
 <div style={`display: flex; flex-direction: ${inline ? 'row' : 'column'}`}>
   {#each options as option}
     <label class:disabled={option.disabled}>
@@ -91,10 +95,6 @@
 </div>
 
 <style>
-  .required-indicator {
-    margin-left: 8px;
-    font-size: 1rem;
-  }
   label { 
     display: -webkit-box;
     display: -webkit-flex;
@@ -132,7 +132,7 @@
     width: 1rem;
     height: 1rem;
     border: 1px solid var(--border-primary);
-     -webkit-border-radius: 50%;
+    -webkit-border-radius: 50%;
     -moz-border-radius: 50%;
     border-radius: 50%;
     padding: 0.125rem;

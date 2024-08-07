@@ -49,6 +49,7 @@
   const dispatch = createEventDispatcher();
 
   export const reportValidity = () => attachedInternals.reportValidity();
+
   $: {
     if (open) {
       document.documentElement.style.overflowY = 'hidden';
@@ -147,7 +148,7 @@
 
   function handleKeydown(event: KeyboardEvent) {
     const currentIndex = optionElements.findIndex((el) => el === document.activeElement);
-    
+
     let nextIndex;
 
     // Check if menu is open
@@ -271,11 +272,12 @@
       options = JSON.parse(options);
     }
   });
+  $: displayLabel = required ? `${label} *` : label;
 </script>
 
 {#if label && labelType == 'outside'}
   <div class="label">
-    {@html `${label}${required ? ' *' : ''}`}
+    {@html displayLabel}
   </div>
 {/if}
 <div class="wrapper" class:has-hint={hint}>
@@ -299,7 +301,7 @@
   >
     {#if label && labelType == 'inside'}
       <span class="select-label" class:move={selected || open}>
-        {@html `${label}${required ? ' *' : ''}`}
+        {@html displayLabel}
       </span>
     {/if}
 
@@ -330,7 +332,7 @@
   <input tabindex="-1" bind:this={inputEl} bind:value {id} {name} {required} />
 </div>
 
-  {#if open}
+{#if open}
   <div class="overlay">
     <!-- svelte-ignore a11y-no-noninteractive-element-interactions -->
     <div
@@ -369,7 +371,7 @@
         </button>
       {/each}
     </div>
-</div>
+ </div>
 {/if}
 
 <style>
@@ -697,6 +699,7 @@
   .clear:hover {
     background-color: rgba(0, 0, 0, 0.08);
   }
+
     .overlay {
     z-index: 100;
     position: fixed;
@@ -704,5 +707,5 @@
     left: 0;
     width: 100vw;
     height: 100vh;
-  }  
-  </style>
+  }
+</style>

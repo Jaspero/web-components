@@ -201,34 +201,26 @@
     // @ts-ignore
     return window.Quill;
   }
-  $: displayLabel = `${label}${required ? ' *' : ''}`;
+  $: displayLabel = required ? `${label} *` : label;
 </script>
 
-<div class="label-container">
-  <div>{@html displayLabel}</div>
-</div>
+{#if label}
+    <div class="label">
+      {@html displayLabel}
+    </div>
+  {/if}
 <div bind:this={wrapperEl}>
   <div bind:this={containerEl} />
 </div>
 <textarea {id} {name} bind:value={internalValue} {required} tabindex="-1" bind:this={textareaEl} />
 
 <style>
-  .label-container {
-    display: flex;
-    align-items: center;
-    margin-top: 1rem; 
-    margin-bottom: 0.5rem; 
-  }
-  .required-indicator {
-    font-size: 1rem; 
-    margin-left: 0.5rem; 
-  }
   .label {
     margin-top: 0.5rem;
     margin-bottom: 0.125rem;
     font-size: 0.875rem;
   }
-
+  
   textarea {
     width: 100%;
     height: 0;

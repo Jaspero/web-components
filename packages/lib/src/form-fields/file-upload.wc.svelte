@@ -26,7 +26,6 @@
   export let id: string = '';
   export let name: string = '';
   export let required = false;
-  
   let previewStyle;
   let bindingElement;
   let inputFocused: boolean = false;
@@ -144,7 +143,7 @@
   $: displayLabel = required ? `${label} *` : label;
 </script>
 
-{#if label && labelType === 'outside'}
+{#if label && labelType == 'outside'}
   <div class="label">
     {@html displayLabel}
   </div>
@@ -229,8 +228,9 @@
       />
     </span>
   {/if}
+ </div>
 </div>
-</div>
+
 {#if preview}
   <div class="overlay">
     <img
@@ -243,6 +243,7 @@
     />
   </div>
 {/if}
+
 <style>
   .field {
     position: relative;
@@ -515,6 +516,7 @@
     -moz-box-shadow: 0 3px 12px 3px rgba(0, 0, 0, 0.16);
     box-shadow: 0 3px 12px 3px rgba(0, 0, 0, 0.16);
   }
+
   .overlay {
     z-index: 100;
     position: fixed;
@@ -523,4 +525,4 @@
     width: 100vw;
     height: 100vh;
   }
-  </style>  
+</style>

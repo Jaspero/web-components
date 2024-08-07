@@ -289,11 +289,12 @@
       dispatch('value', { value: returnDate });
     }
   }
+  $: displayLabel = required ? `${label} *` : label;
 </script>
 
 {#if label && labelType == 'outside'}
   <div class="label">
-    {@html `${label}${required ? ' *' : ''}`}
+    {@html displayLabel}
   </div>
 {/if}
 <button
@@ -307,7 +308,7 @@
 >
   {#if label && labelType == 'inside'}
     <span class="field-label" class:move={openPicker || displayedDateString}>
-      {@html `${label}${required ? ' *' : ''}`}
+      {@html displayLabel}
     </span>
     {/if}
     <p class={`field-input ${labelType == 'outside' || !label ? '' : 'field-input-padding'}`}>
