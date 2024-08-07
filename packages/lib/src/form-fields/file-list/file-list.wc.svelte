@@ -35,7 +35,7 @@
   export let minfilesValidationMessage: string;
   export let validationMessages: { [key: string]: string } = {};
   export let sortable = true;
-
+  export let required = false;
   let grabbedEl = null;
   let grabbedIndex = -1;
   let startingY: number;
@@ -241,6 +241,7 @@
       loading = false;
     }
   }
+  $: displayLabel = required ? `${label} *` : label;
 </script>
 
 <svelte:document on:mousemove={mousemove} on:mouseup={mouseup} />
@@ -248,7 +249,7 @@
 {#if label}
   <!-- svelte-ignore a11y-label-has-associated-control -->
   <label>
-    {@html label}
+    {@html displayLabel}
   </label>
 {/if}
 
@@ -258,7 +259,7 @@
   class:fullBorder={hoveringFile}
   on:dragover|preventDefault={() => (hoveringFile = true)}
 >
-  {#if loading}
+{#if loading}
     <div class="loader">
       <div class="spinner"></div>
     </div>
@@ -549,7 +550,7 @@
       grid-template-columns: repeat(2, minmax(0, 1fr));
     }
   }
-
+  
   @keyframes spinner-bulqg1 {
     0% {
       clip-path: polygon(50% 50%, 0 0, 50% 0%, 50% 0%, 50% 0%, 50% 0%, 50% 0%);

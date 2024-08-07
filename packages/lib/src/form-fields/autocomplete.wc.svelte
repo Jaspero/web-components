@@ -62,7 +62,7 @@
   const dispatch = createEventDispatcher();
 
   const getValue = () => value;
-
+  
   $: {
     if (open) {
       document.documentElement.style.overflowY = 'hidden';
@@ -213,11 +213,12 @@
       options = JSON.parse(options);
     }
   });
+  $: displayLabel = required ? `${label} *` : label;
 </script>
 
 {#if label && labelType == 'outside'}
   <div class="label">
-    {@html label}
+    {@html displayLabel}
   </div>
 {/if}
 <!-- svelte-ignore a11y-no-static-element-interactions -->
@@ -229,11 +230,13 @@
   on:keydown={handleKeydown}
 >
   <label class="field">
-    {#if label && labelType == 'inside'}
-      <span class="field-label" class:move={open || value}>{@html label}</span>
+    {#if label && labelType === 'inside'}
+      <span class="field-label" class:move={open || value}>
+        {@html displayLabel}
+      </span>
     {/if}
     <input
-      class={`field-input ${labelType == 'outside' || !label ? '' : 'field-input-padding'}`}
+    class={`field-input ${labelType == 'outside' || !label ? '' : 'field-input-padding'}`}  
       type="text"
       class:disabled
       {id}
@@ -247,9 +250,9 @@
       bind:this={inputEl}
       bind:value
       on:focus={toggleMenu}
-    />
+      />
 
-    {#if open}
+      {#if open}
       <div class="overlay">
         <div class="menu" style={menuStyle}>
           {#if !loading}

@@ -201,11 +201,14 @@
     // @ts-ignore
     return window.Quill;
   }
+  $: displayLabel = required ? `${label} *` : label;
 </script>
 
 {#if label}
-  <div class="label">{label}</div>
-{/if}
+    <div class="label">
+      {@html displayLabel}
+    </div>
+  {/if}
 <div bind:this={wrapperEl}>
   <div bind:this={containerEl} />
 </div>
@@ -217,7 +220,7 @@
     margin-bottom: 0.125rem;
     font-size: 0.875rem;
   }
-
+  
   textarea {
     width: 100%;
     height: 0;

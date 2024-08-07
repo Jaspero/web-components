@@ -17,14 +17,14 @@
 
 <script lang="ts">
   import { createEventDispatcher, onMount } from 'svelte';
-
+  
   export let attachedInternals: ElementInternals;
   export let id;
   export let name;
   export let value = 'e65100';
   export let label = ''
   export let disabled = false;
-
+  export let required = false;
 
   export const getValue = () => value;
 
@@ -34,14 +34,20 @@
   }
 
   const dispatch = createEventDispatcher();
+  $: displayLabel = required ? `${label} *` : label;
 </script>
-
-<div>
-  <input type="color" {id} {name} {disabled} bind:value />
   {#if label}
     <!-- svelte-ignore a11y-label-has-associated-control -->
-    <label>{label}</label>
+    <div class="label">
+      {@html displayLabel}
+    </div>
   {/if}
-</div>
-
-
+  <input type="color" {id} {name} {disabled} bind:value />
+<style>
+  .label{
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 8px;
+  }
+  </style>

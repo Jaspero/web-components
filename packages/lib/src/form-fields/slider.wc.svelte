@@ -26,26 +26,32 @@
   export let step: number = 1;
   export let name: string = '';
   export let discrete: boolean = true; //if true -> ticks, false -> smooth
+  export let required = false;
+  export let label = '';
   export const getValue = () => value;
 
   const dispatch = createEventDispatcher();
 
   $: dispatch('value', { value });
+  $: displayLabel = required ? `${label} *` : label;
 </script>
 
-<div class="slider-container">
-  <input
-    type="range"
-    class="range-input"
-    bind:value
-    {id}
-    {disabled}
-    {min}
-    {max}
-    step={discrete ? step : 'any'}
-    {name}
-  />
-</div>
+  {#if label}
+    {@html displayLabel}
+  {/if}
+  <div class="slider-container">
+    <input
+      type="range"
+      class="range-input"
+      bind:value
+      {id}
+      {disabled}
+      {min}
+      {max}
+      step={discrete ? step : 'any'}
+      {name}
+    />
+  </div>
 
 <style>
   .slider-container {
