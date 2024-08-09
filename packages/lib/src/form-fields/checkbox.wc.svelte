@@ -34,6 +34,8 @@
     minselects?: string;
     maxselects?: string;
   } = {};
+  export let label = '';
+  export let required = false;
 
   export const getValue = () => options.filter((el) => el.checked).map((el) => el.value);
   export const reportValidity = () => attachedInternals.reportValidity();
@@ -81,9 +83,15 @@
     if (typeof options == 'string') options = JSON.parse(options);
     maxSelects = options.length;
   });
+  $: displayLabel = required ? `${label} *` : label;
 </script>
 
 <div>
+  {#if label}
+    <div class="label">
+      {@html displayLabel}
+    </div>
+  {/if}
   {#each options as option}
     <label>
       <input

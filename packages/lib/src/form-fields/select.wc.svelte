@@ -272,11 +272,12 @@
       options = JSON.parse(options);
     }
   });
+  $: displayLabel = required ? `${label} *` : label;
 </script>
 
 {#if label && labelType == 'outside'}
   <div class="label">
-    {@html label}
+    {@html displayLabel}
   </div>
 {/if}
 <div class="wrapper" class:has-hint={hint}>
@@ -300,7 +301,7 @@
   >
     {#if label && labelType == 'inside'}
       <span class="select-label" class:move={selected || open}>
-        {@html label}
+        {@html displayLabel}
       </span>
     {/if}
 
@@ -370,7 +371,7 @@
         </button>
       {/each}
     </div>
-  </div>
+ </div>
 {/if}
 
 <style>
@@ -699,7 +700,7 @@
     background-color: rgba(0, 0, 0, 0.08);
   }
 
-  .overlay {
+    .overlay {
     z-index: 100;
     position: fixed;
     top: 0;
