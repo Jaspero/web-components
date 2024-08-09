@@ -26,21 +26,28 @@
   export let startingLongitude: number = -122.41942;
   export let mapType: 'roadmap' | 'satellite' | 'hybrid' | 'terrain' = 'roadmap';
   export let zoom: number = 8;
-  export let placeholder: string = 'Search for a place';
+  export let placeholder: string = '';
   export let mapId: String;
   export let returnedValue: 'simple' | 'extended' = 'extended';
   export let enableMap = true;
   export let gestureHandling: 'cooperative' | 'greedy' | 'auto' = 'auto';
-  export let searchType: object = []; 
-  export let autocompleteComponentRestrictions: object; 
-  export let countryRestriction: object; 
-  export let restrictionAlertMessage: string;
+  export let types: object = []; 
+  export let componentRestrictions: object; 
   export let required = true;
   export let requiredValidationMessage: string;
   export let validationMessages: {
     required?: string;
+    maxlength?: string;
+    minlength?: string;
+    pattern?: string;
+    type?: string;
   } = {};
   export const getValue = () => value;
+
+  export const validity = attachedInternals.validity;
+  export const validationMessage = attachedInternals.validationMessage;
+  export const reportValidity = () => attachedInternals.reportValidity();
+  export const checkValidity = () => attachedInternals.checkValidity();
 
   let openMap = false;
   let marker;
@@ -93,8 +100,8 @@
       bounds: defaultBounds,
       fields: ['address_components', 'formatted_address', 'geometry', 'icon', 'name'],
       strictBounds: false,
-      types: searchType,
-      componentRestrictions: autocompleteComponentRestrictions
+      types: types,
+      componentRestrictions: componentRestrictions
     };
 
     const autocomplete = new google.maps.places.Autocomplete(input, options);
@@ -118,9 +125,9 @@
       };
 
       if (returnedValue == 'simple') {
-        dispatch('address', { address: place.formatted_address });
+        dispatch('value', { value: place.formatted_address });
       } else if (returnedValue == 'extended') {
-        dispatch('address', { address: place.formatted_address });
+        dispatch('value', { value: place.formatted_address });
         dispatch('latitude', { lat: latlng.lat });
         dispatch('longitude', { lng: latlng.lng });
       }
@@ -162,46 +169,7 @@
       lng: parseFloat(latlngStr[1])
     };
 
-    if (countryRestriction) {
-      geocoder
-        .geocode({
-          location: latlng,
-          componentRestrictions: countryRestriction
-        })
-        .then((response) => {
-          if (response.results[0]) {
-            result = response.results[0].formatted_address;
-          } else {
-            window.alert('No results found');
-            dispatch('addressNotFound');
-          }
-        });
-      geocoder
-        .geocode({
-          location: latlng
-        })
-        .then((response) => {
-          if (response.results[0]) {
-            let searchResult = response.results[response.results.length - 1].formatted_address;
-            if (searchResult === result) {
-              input.value = response.results[0].formatted_address;
-              if (returnedValue == 'simple') {
-                dispatch('address', { address: response.results[0].formatted_address });
-              } else if (returnedValue == 'extended') {
-                dispatch('address', { address: response.results[0].formatted_address });
-                dispatch('latitude', { lat: latlng.lat });
-                dispatch('longitude', { lng: latlng.lng });
-              }
-            } else {
-              window.alert(restrictionAlertMessage);
-              dispatch('restrictedArea');
-            }
-          } else {
-            window.alert('No results found');
-            dispatch('addressNotFound');
-          }
-        });
-    } else {
+    
       geocoder
         .geocode({
           location: latlng
@@ -210,19 +178,18 @@
           if (response.results[0]) {
             input.value = response.results[0].formatted_address;
             if (returnedValue == 'simple') {
-              dispatch('address', { address: response.results[0].formatted_address });
+              dispatch('value', { value: response.results[0].formatted_address });
             } else if (returnedValue == 'extended') {
-              dispatch('address', { address: response.results[0].formatted_address });
+              dispatch('value', { value: response.results[0].formatted_address });
               dispatch('latitude', { lat: latlng.lat });
               dispatch('longitude', { lng: latlng.lng });
             }
           } else {
             window.alert('No results found');
-            dispatch('address not found');
+            dispatch('addressNotFound');
           }
         });
     }
-  }
 
   function toggleMap() {
     const rect = searchInput.getBoundingClientRect();
