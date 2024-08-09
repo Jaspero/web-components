@@ -31,8 +31,8 @@
   export let returnedValue: 'simple' | 'extended' = 'extended';
   export let enableMap = true;
   export let gestureHandling: 'cooperative' | 'greedy' | 'auto' = 'auto';
-  export let types: object = []; 
-  export let componentRestrictions: object; 
+  export let types: object = [];
+  export let componentRestrictions: object;
   export let required = true;
   export let requiredValidationMessage: string;
   export let validationMessages: {
@@ -69,11 +69,7 @@
     });
   }
 
-  async function initMap() {
-    await loadScript(
-      `https://maps.googleapis.com/maps/api/js?&key=${apiKey}&libraries=places`
-    );
-
+  window.initMap = async function () {
     const { Map } = (await google.maps.importLibrary('maps')) as google.maps.MapsLibrary;
     const { AdvancedMarkerElement } = await google.maps.importLibrary('marker');
 
@@ -85,7 +81,7 @@
       mapId: mapId,
       gestureHandling: gestureHandling
     });
-    
+
     const defaultBounds = {
       north: center.lat + 0.1,
       south: center.lat - 0.1,
@@ -141,7 +137,7 @@
       placeMarker(event.latLng);
       geocodeLatLng(geocoder, map, infoWindow);
     });
-  }
+  };
 
   function placeMarker(location) {
     if (marker != null) {
@@ -169,27 +165,26 @@
       lng: parseFloat(latlngStr[1])
     };
 
-    
-      geocoder
-        .geocode({
-          location: latlng
-        })
-        .then((response) => {
-          if (response.results[0]) {
-            input.value = response.results[0].formatted_address;
-            if (returnedValue == 'simple') {
-              dispatch('value', { value: response.results[0].formatted_address });
-            } else if (returnedValue == 'extended') {
-              dispatch('value', { value: response.results[0].formatted_address });
-              dispatch('latitude', { lat: latlng.lat });
-              dispatch('longitude', { lng: latlng.lng });
-            }
-          } else {
-            window.alert('No results found');
-            dispatch('addressNotFound');
+    geocoder
+      .geocode({
+        location: latlng
+      })
+      .then((response) => {
+        if (response.results[0]) {
+          input.value = response.results[0].formatted_address;
+          if (returnedValue == 'simple') {
+            dispatch('value', { value: response.results[0].formatted_address });
+          } else if (returnedValue == 'extended') {
+            dispatch('value', { value: response.results[0].formatted_address });
+            dispatch('latitude', { lat: latlng.lat });
+            dispatch('longitude', { lng: latlng.lng });
           }
-        });
-    }
+        } else {
+          window.alert('No results found');
+          dispatch('addressNotFound');
+        }
+      });
+  }
 
   function toggleMap() {
     const rect = searchInput.getBoundingClientRect();
@@ -211,10 +206,6 @@
     openMap = !openMap;
   }
 
-  onMount(() => {
-    initMap();
-  });
-
   $: {
     attachedInternals.checkValidity();
     if (searchInput) {
@@ -232,6 +223,16 @@
     attachedInternals.setFormValue(value);
     dispatch('value', { value });
   }
+
+  onMount(async () => {
+    try {
+      await loadScript(
+        `https://maps.googleapis.com/maps/api/js?key=${apiKey}&loading=async&libraries=places&callback=initMap`
+      );
+    } catch (error) {
+      console.error('Failed to load the Google Maps script', error);
+    }
+  });
 </script>
 
 {#if enableMap}
