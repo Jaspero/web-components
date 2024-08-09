@@ -121,7 +121,7 @@
 <div class:has-hint={!!hint}>
   <label class="field" class:disabled={disabled || readonly} class:required>
     {#if label && labelType === 'inside'}
-      <span class="field-label" class:move={inputFocused || value || type === 'time'}>{@html label}</span>
+      <span class="field-label" class:move={inputFocused || value || type === 'time' || value === 0}>{@html label}</span>
     {/if}
     {#if $$slots.prefix && (value || inputFocused)}
       <div class="prefix">

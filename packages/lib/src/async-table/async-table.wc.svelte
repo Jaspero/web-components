@@ -383,7 +383,7 @@
       {/if}
 
       {#if rows}
-        {#each rows as row, index}
+        {#each rows as row, ind}
           <tr class:highlight={rowClickable}>
             {#each activeHeaders as header, index}
               <td
@@ -391,7 +391,7 @@
                 class:sticky-first={freezeFirstColumn && index === 0}
                 class:sticky-last={index === activeHeaders.length - 1 && freezeLastColumn}
               >
-                {#await handleColumn(header, row, index) then val}
+                {#await handleColumn(header, row, ind) then val}
                   <span class="cell">
                     {@html val}
                   </span>
