@@ -34,6 +34,7 @@
   export let sort: TableSort;
   export let service: TableService;
   export let id: string;
+  export let height: string | null = null;
   export let getData = async () => {
     const data = await service.get(sort, pageSize);
 
@@ -350,7 +351,7 @@
     </div>
   {/if}
 
-  <div class="table-container">
+  <div class="table-container" style:height={height}>
     <table>
       {#if activeHeaders}
         <tr>
@@ -500,7 +501,11 @@
   }
 
   th {
-    opacity: 0.75;
+    position: sticky;
+    z-index: 2;
+    top: 0;
+    background-color: var(--background-primary);
+    font-weight: bold;
   }
 
   .sortable {
@@ -696,8 +701,11 @@
   .sticky-first {
     position: sticky;
     left: 0;
-    opacity: 1;
     background-color: var(--background-primary);
+  }
+
+  td.sticky-first,
+  td.sticky-last {
     z-index: 1;
   }
 
@@ -715,9 +723,7 @@
   .sticky-last {
     position: sticky;
     right: 0;
-    opacity: 1;
     background-color: var(--background-primary);
-    z-index: 1;
   }
 
   .sticky-last:before {
