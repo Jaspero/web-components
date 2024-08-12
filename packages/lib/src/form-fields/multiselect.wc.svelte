@@ -20,24 +20,29 @@
   import { createEventDispatcher, onMount } from 'svelte';
 
   export let attachedInternals: ElementInternals;
-  export let minSelects: number = 0;
+  export let minSelects = 0;
   export let maxSelects: number | null = null;
-  export let options:
-    | Array<{ label?: string; value: string; selected?: boolean; disabled?: boolean }>
-    | string = [];
-  export let disabled: boolean = false;
-  export let required: boolean = false;
-  export let hint: string = '';
-  export let value;
+  export let options: Array<{ label?: string; value: string; selected?: boolean; selectedOrder?: number; disabled?: boolean }> = [];
+  export let disabled = false;
+  export let required = false;
+  export let hint = '';
+  export let value: string | string[];
   export let internalValue: string = '';
-  export let id: string = '';
-  export let name: string = '';
+  export let id = '';
+  export let name = '';
   export let label = '';
   export let labelType: 'inside' | 'outside' = 'inside';
-  export let showClear: boolean = false;
-  export const getValue = () => options.filter((el) => el.selected).map((el) => el.value);
+  export let showClear = false;
+  export const getValue = () => options
+    .filter((el) => el.selected)
+    .sort((a, b) => a.selectedOrder - b.selectedOrder)
+    .map((el) => el.value);
 
-  export let validationMessages = {};
+  export let validationMessages: {
+    required?: string;
+    minselects?: string;
+    maxselects?: string;
+  } = {};
   export let requiredValidationMessage: string;
   export let minselectsValidationMessage: string;
   export let maxselectsValidationMessage: string;
@@ -48,8 +53,9 @@
   let menuStyle: string;
   let optionElements = []; // Array to store references to option buttons
   let searchTerm = '';
-  let searchTimeout;
-  let displayValue;
+  let searchTimeout: any;
+  let displayValue: string[] | null;
+  let selectedItems = 0;
 
   const dispatch = createEventDispatcher();
 
@@ -67,6 +73,7 @@
 
   $: if (Array.isArray(options)) {
     const selects = options.filter((el) => el.selected).length;
+    
     if (selects == 0 && required) {
       attachedInternals.setValidity(
         { customError: true },
@@ -90,6 +97,7 @@
     } else {
       attachedInternals.setValidity({});
     }
+
     attachedInternals.checkValidity();
 
     internalValue = options
@@ -99,6 +107,7 @@
 
     displayValue = options
       .filter((el) => el.selected)
+      .sort((a, b) => a.selectedOrder - b.selectedOrder)
       .map((el) => (el.label ? el.label : el.value));
 
     dispatch(
@@ -108,12 +117,13 @@
   }
 
   function clearSelection() {
-    displayValue = '';
+    displayValue = null;
 
     if (Array.isArray(options)) {
       options = options.map((option) => ({
         ...option,
-        selected: false
+        selected: false,
+        selectedOrder: null
       }));
     }
   }
@@ -127,15 +137,28 @@
   }
 
   function populateOptions() {
-    options = options.map((o) => ({ ...o, selected: false }));
+    options = options.map((o) => ({ ...o, selected: false, selectedOrder: null }));
+
     if (typeof value == 'string') {
-      value.split(',').forEach((el) => {
-        options[options.findIndex((o) => o.value == el)].selected = true;
+      const values = value.split(',');
+      
+      values.forEach((el, index) => {
+        const ref = options[options.findIndex((o) => o.value == el)];
+
+        ref.selected = true;
+        ref.selectedOrder = index;
       });
+
+      selectedItems = values.length;
     } else {
-      value.forEach((el) => {
-        options[options.findIndex((o) => o.value == el)].selected = true;
+      value.forEach((el, index) => {
+        const ref = options[options.findIndex((o) => o.value == el)];
+        
+        ref.selected = true;
+        ref.selectedOrder = index;
       });
+
+      selectedItems = value.length;
     }
   }
 
@@ -148,7 +171,7 @@
     const availableSpaceBelow = window.innerHeight - rect.bottom;
     const dropdownHeight = 300;
 
-    let style: string = '';
+    let style = '';
 
     if (availableSpaceBelow < dropdownHeight) {
       style = `
@@ -178,7 +201,7 @@
     } else {
       setTimeout(() => {
         if (isTabbing) {
-          bindingElement.nextElementSibling?.focus(); // Focus the next sibling element (if any)
+          (bindingElement.nextElementSibling as HTMLButtonElement)?.focus();
         } else {
           bindingElement?.focus();
         }
@@ -205,7 +228,8 @@
 
   function handleKeydown(event: KeyboardEvent) {
     const currentIndex = optionElements.findIndex((el) => el === document.activeElement);
-    let nextIndex;
+    
+    let nextIndex: number;
 
     if (open) {
       if (event.key === 'Escape') {
@@ -303,14 +327,21 @@
   }
 
   onMount(() => {
-    if (typeof options == 'string') options = JSON.parse(options);
+    if (typeof options == 'string') {
+      options = JSON.parse(options);
+    };
+
     if (!maxSelects) {
       maxSelects = options.length;
     }
+
     options = options.map((el) => {
       if (el.selected == undefined) {
         el.selected = false;
       }
+
+      el.selectedOrder = null;
+
       return el;
     });
   });
@@ -391,7 +422,15 @@
             class:selected={option.selected}
             bind:this={optionElements[index]}
             disabled={option.disabled}
-            on:click|preventDefault={() => (option.selected = !option.selected)}
+            on:click|preventDefault={() => {
+              option.selected = !option.selected;
+
+              if (option.selected) {
+                option.selectedOrder = selectedItems++;
+              } else {
+                option.selectedOrder = null;
+              }
+            }}
           >
             <span>{option.label ? option.label : option.value}</span>
 
