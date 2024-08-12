@@ -11,13 +11,20 @@
 |           label            |              |                                           `string`                                            |                            shows at the top of an input                             |
 |         labelType          |              |                                   `'outside'` or `'inside'`                                   |                   whether label is inside or outside of the field                   |
 |        placeholder         |              |                                           `string`                                            | temporary text that appears in an <br></br> input field before any input is entered |
+|           value            |              |                 
+`string`                                            |                            setter                 |
 |            name            |      ✓       |                                           `string`                                            |                              name of the form control                               |
+|             hint           |                      |                                         `string`                                   | helps users establish what information they should enter into the field|
+|        autocomplete        |                      |                                         `string`                                            |               predicts the value of an input field                        |
 |             id             |              |                                           `string`                                            |                                  unique identifier                                  |
+|           autocomplete           |              |                 
+`string`                                            |                            setter                 |
+|          inputFocused         |              |                                           `boolean`                                           |                         determines if an input is focused on page load 
 |          disabled          |              |                                           `boolean`                                           |                         determines if an input is disabled                          |
 |            list            |              |                                           `string`                                            |                     id of datalist (list of predefined values)                      |
 |            min             |              |                                           `number`                                            |                           minimal value on numeric input                            |
 |            max             |              |                                           `number`                                            |                           maximal value on numeric input                            |
-|            step            |              |                                           `number`                                            |                                       `'any'`                                       | number that specifies step on numeric input |
+|            step            |              |                                           `number`       \|                                       `'any'`                                       | number that specifies step on numeric input |
 |          required          |              |                                           `boolean`                                           |                         determines if an input is required                          |
 | requiredValidationMessage  |              |                                           `string`                                            |           validation message for when component does not satisfy required           |
 |          readonly          |              |                                           `boolean`                                           |                         determines if an input is read-only                         |
