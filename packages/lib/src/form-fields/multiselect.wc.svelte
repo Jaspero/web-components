@@ -27,7 +27,7 @@
   export let required = false;
   export let hint = '';
   export let value: string | string[];
-  export let internalValue: string = '';
+  export let internalValue = '';
   export let id = '';
   export let name = '';
   export let label = '';
@@ -100,20 +100,18 @@
 
     attachedInternals.checkValidity();
 
-    internalValue = options
+    const sortedValue = options
       .filter((el) => el.selected)
+      .sort((a, b) => a.selectedOrder - b.selectedOrder);
+
+    internalValue = sortedValue
       .map((el) => el.value)
       .join(',');
 
-    displayValue = options
-      .filter((el) => el.selected)
-      .sort((a, b) => a.selectedOrder - b.selectedOrder)
+    displayValue = sortedValue
       .map((el) => (el.label ? el.label : el.value));
 
-    dispatch(
-      'value',
-      options.filter((el) => el.selected).map((el) => el.value)
-    );
+    dispatch('value', sortedValue.map((el) => el.value));
   }
 
   function clearSelection() {
