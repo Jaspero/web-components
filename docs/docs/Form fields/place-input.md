@@ -14,15 +14,23 @@
 | startingLongitude | | `number` |  longitude to center the map on |
 | mapType |  |  One of the following: <br></br> `'roadmap'`, `'satellite'`, <br></br> `'hybrid'`, `'terrain'` | an interface that defines the display and usage of map tiles |
 | zoom | | `number` | determines the zoom level on the map |
+| label | | `string` | shows at the top of an input |
+| labelType | | `'outside'` or `'inside'` | whether label is inside or outside of the field |
+| name | ✓ | `string` |  name of the form control |
+| id | | `string`| unique identifier |
+| inputFocused | | `boolean` | determines if an input is focused on page load|
+| disabled | | `boolean` | determines if an input is disabled |
+| readonly | | `boolean` | determines if an input is read-only |
 | placeholder | | `string` | temporary text that appears in an <br></br> input field before any input is entered |
 | returnedValue | | `'simple'` or `'extended'` | determines if the returned value is dispatched only in a form of address or if it returns coordinates as well as the address |
 | enableMap | | `boolean` | determines if a map is visible |
 | gestureHandling | | One of the following: <br></br> `'cooperative'`, `'greedy'`, `'auto'` | determines whether the panning and scrolling behavior on the map is controlled by clicking the zoom controls or by all touch gestures and scroll events |
-| types | | `Array` | determines type of search results |
+| types | | `string[]` | determines type of search results |
 | componentRestriction | | `object` | used for restricting predictions |
 |    value    |              |   `string`   |    setter     |
 | required | | `boolean` | determines if an input is required |
 | requiredValidationMessage | | `string` | validation message for when component does not satisfy required |
+| resultValidationMessage | | `string` | validation message for when component cannot find results |
 | validationMessages | | `{[type]: string}` where `type` is `string` | compact way of writing validation messages in a single attribute |
 
 ## Dependencies
@@ -94,6 +102,7 @@ function placeInput(props){
     placeInput.mapId = 'DEMO-MAP-ID';
     placeInput.componentRestrictions = {country: 'us'};
     placeInput.types = ['hospital'];
+    placeInput.label = 'Place Input'
     el.current.appendChild(placeInput)
   })
   return (

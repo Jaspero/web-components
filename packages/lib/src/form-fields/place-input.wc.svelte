@@ -9,6 +9,7 @@
         constructor() {
           super();
           this.attachedInternals = this.attachInternals();
+          this.attachedInternals.role = 'textbox';
         }
       };
     }
@@ -18,29 +19,35 @@
 <script lang="ts">
   import { onMount, createEventDispatcher } from 'svelte';
   import { clickOutside } from '../clickOutside';
+  import { loadScript } from '../utils/scriptLoader';
 
-  export let apiKey: String;
-  export let value: string = '';
+  export let apiKey: string;
+  export let value = '';
   export let attachedInternals: ElementInternals;
-  export let startingLatitude: number = 37.77493;
-  export let startingLongitude: number = -122.41942;
+  export let startingLatitude = 37.77493;
+  export let startingLongitude = -122.41942;
   export let mapType: 'roadmap' | 'satellite' | 'hybrid' | 'terrain' = 'roadmap';
-  export let zoom: number = 8;
-  export let placeholder: string = '';
-  export let mapId: String;
+  export let zoom = 8;
+  export let label = '';
+  export let labelType: 'inside' | 'outside' = 'inside';
+  export let name = '';
+  export let id: string | null = null;
+  export let inputFocused = false;
+  export let disabled = false;
+  export let readonly = false;
+  export let placeholder = '';
+  export let mapId: string;
   export let returnedValue: 'simple' | 'extended' = 'extended';
   export let enableMap = true;
   export let gestureHandling: 'cooperative' | 'greedy' | 'auto' = 'auto';
-  export let types: object = [];
+  export let types: string[] = [];
   export let componentRestrictions: object;
-  export let required = true;
+  export let required = false;
   export let requiredValidationMessage: string;
+  export let resultValidationMessage: string;
   export let validationMessages: {
     required?: string;
-    maxlength?: string;
-    minlength?: string;
-    pattern?: string;
-    type?: string;
+    results?: string;
   } = {};
   export const getValue = () => value;
 
@@ -57,17 +64,6 @@
   let mapStyle;
 
   const dispatch = createEventDispatcher();
-
-  function loadScript(src) {
-    return new Promise((resolve, reject) => {
-      const script = document.createElement('script');
-      script.src = src;
-      script.async = true;
-      script.onload = () => resolve(script);
-      script.onerror = () => reject(new Error(`Script load error for ${src}`));
-      document.head.append(script);
-    });
-  }
 
   window.initMap = async function () {
     const { Map } = (await google.maps.importLibrary('maps')) as google.maps.MapsLibrary;
@@ -91,7 +87,7 @@
 
     const geocoder = new google.maps.Geocoder();
 
-    const input = document.getElementById('searchInput');
+    const input = searchInput;
     const options = {
       bounds: defaultBounds,
       fields: ['address_components', 'formatted_address', 'geometry', 'icon', 'name'],
@@ -120,9 +116,9 @@
         lng: parseFloat(latlngStr[1])
       };
 
-      if (returnedValue == 'simple') {
+      if (returnedValue === 'simple') {
         dispatch('value', { value: place.formatted_address });
-      } else if (returnedValue == 'extended') {
+      } else if (returnedValue === 'extended') {
         dispatch('value', { value: place.formatted_address });
         dispatch('latitude', { lat: latlng.lat });
         dispatch('longitude', { lng: latlng.lng });
@@ -158,7 +154,7 @@
     infowindow: google.maps.InfoWindow
   ) {
     let result;
-    const input = document.getElementById('searchInput');
+    const input = searchInput;
     const latlngStr = coordinates.split(',', 2);
     const latlng = {
       lat: parseFloat(latlngStr[0]),
@@ -171,16 +167,19 @@
       })
       .then((response) => {
         if (response.results[0]) {
-          input.value = response.results[0].formatted_address;
-          if (returnedValue == 'simple') {
+          value = response.results[0].formatted_address;
+          if (returnedValue === 'simple') {
             dispatch('value', { value: response.results[0].formatted_address });
-          } else if (returnedValue == 'extended') {
+          } else if (returnedValue === 'extended') {
             dispatch('value', { value: response.results[0].formatted_address });
             dispatch('latitude', { lat: latlng.lat });
             dispatch('longitude', { lng: latlng.lng });
           }
         } else {
-          window.alert('No results found');
+          attachedInternals.setValidity(
+            { customError: true },
+            resultValidationMessage || validationMessages.results || 'No results found'
+          );
           dispatch('addressNotFound');
         }
       });
@@ -204,6 +203,9 @@
     }
     mapStyle = style;
     openMap = !openMap;
+    if(openMap){
+      searchInput.focus();
+    }
   }
 
   $: {
@@ -232,22 +234,40 @@
     } catch (error) {
       console.error('Failed to load the Google Maps script', error);
     }
+    if(inputFocused){
+      searchInput.focus();
+    }
   });
 </script>
 
 {#if enableMap}
+  {#if label && labelType === 'outside'}
+    <div class="label">
+      {@html label}
+    </div>
+  {/if}
   <div class="lookup-box" use:clickOutside on:click_outside={() => (openMap = false)}>
     <div class="nav">
       <label class="field">
+        {#if label && labelType === 'inside'}
+          <span class="field-label" class:move={inputFocused || value || openMap}>{@html label}</span>
+        {/if}
         <input
-          class="searchInput"
-          id="searchInput"
+          class={`searchInput ${labelType === 'outside' || !label ? '' : 'searchInput-padding'}`}
+          type="text"
+          aria-hidden={disabled || readonly}
+          tabindex={disabled || readonly ? -1 : 0}
+          class:active={openMap}
+          {id}
+          {disabled}
+          {readonly}
+          {required}
+          {name}
+          {placeholder}
           bind:this={searchInput}
           bind:value
-          {required}
-          type="text"
-          class:active={openMap}
-          {placeholder}
+          on:focus={() => (inputFocused = true)}
+          on:blur={() => (inputFocused = false)}
         />
         <button class="button" class:active={openMap} on:click|preventDefault={toggleMap}>
           <svg
@@ -272,16 +292,33 @@
     </div>
   </div>
 {:else}
+  {#if label && labelType === 'outside'}
+    <div class="label">
+      {@html label}
+    </div>
+  {/if}
   <div class="lookup-box">
     <div class="nav">
       <label class="field">
+        {#if label && labelType === 'inside'}
+          <span class="field-label" class:move={inputFocused || value}>{@html label}</span>
+        {/if}
         <input
-          class="searchInput"
-          id="searchInput"
-          bind:this={searchInput}
-          {required}
+          class={`searchInput ${labelType === 'outside' || !label ? '' : 'searchInput-padding'}`}
           type="text"
+          aria-hidden={disabled || readonly}
+          tabindex={disabled || readonly ? -1 : 0}
+          class:active={openMap}
+          {id}
+          {disabled}
+          {readonly}
+          {required}
+          {name}
           {placeholder}
+          bind:this={searchInput}
+          bind:value
+          on:focus={() => (inputFocused = true)}
+          on:blur={() => (inputFocused = false)}
         />
       </label>
       <div id="map" class="map-field" style="display:none"></div>
@@ -290,6 +327,50 @@
 {/if}
 
 <style>
+  .label {
+    margin-top: 0.5rem;
+    margin-bottom: 0.125rem;
+    font-size: 0.875rem;
+  }
+
+  .field-label {
+    position: absolute;
+    top: 50%;
+    left: 0.75rem;
+    -webkit-transform: translateY(-50%);
+    -moz-transform: translateY(-50%);
+    -ms-transform: translateY(-50%);
+    -o-transform: translateY(-50%);
+    transform: translateY(-50%);
+    font-size: 1rem;
+    -webkit-transition:
+      transform 0.3s,
+      top 0.3s,
+      font-size 0.3s;
+    -o-transition:
+      transform 0.3s,
+      top 0.3s,
+      font-size 0.3s;
+    -moz-transition:
+      transform 0.3s,
+      top 0.3s,
+      font-size 0.3s;
+    transition:
+      transform 0.3s,
+      top 0.3s,
+      font-size 0.3s;
+  }
+
+  .field-label.move {
+    top: 0.25rem;
+    -webkit-transform: translateY(0);
+    -moz-transform: translateY(0);
+    -ms-transform: translateY(0);
+    -o-transform: translateY(0);
+    transform: translateY(0);
+    font-size: 0.75rem;
+  }
+
   .nav {
     position: relative;
     display: inline-block;
@@ -309,7 +390,7 @@
 
   .searchInput {
     width: 100%;
-    height: 2.5rem;
+    height: 3rem;
     font-size: 1rem;
     padding: 10px;
     border-radius: 0.25rem;
@@ -323,6 +404,7 @@
   }
 
   .searchInput::placeholder {
+    opacity: 0;
     -webkit-transition: opacity 0.3s;
     -o-transition: opacity 0.3s;
     -moz-transition: opacity 0.3s;
@@ -338,6 +420,26 @@
   .searchInput:after {
     background-image: none !important;
     height: 0px;
+  }
+
+  .searchInput-padding {
+    padding: 1.5rem 0.75rem calc(0.5rem - 2px);
+  }
+
+  .field-label.move + .searchInput:-moz-placeholder {
+    opacity: 1;
+  }
+  .field-label.move + .searchInput::-moz-placeholder {
+    opacity: 1;
+  }
+  .field-label.move + .searchInput:-ms-input-placeholder {
+    opacity: 1;
+  }
+  .field-label.move + .searchInput::-ms-input-placeholder {
+    opacity: 1;
+  }
+  .field-label.move + .searchInput::placeholder {
+    opacity: 1;
   }
 
   .field {
