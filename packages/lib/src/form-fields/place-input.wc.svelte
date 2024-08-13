@@ -248,7 +248,7 @@
   {/if}
   <div class="lookup-box" use:clickOutside on:click_outside={() => (openMap = false)}>
     <div class="nav">
-      <label class="field">
+      <label class="field" class:required>
         {#if label && labelType === 'inside'}
           <span class="field-label" class:move={inputFocused || value || openMap}>{@html label}</span>
         {/if}
@@ -299,7 +299,7 @@
   {/if}
   <div class="lookup-box">
     <div class="nav">
-      <label class="field">
+      <label class="field" class:required>
         {#if label && labelType === 'inside'}
           <span class="field-label" class:move={inputFocused || value}>{@html label}</span>
         {/if}
@@ -369,6 +369,9 @@
     -o-transform: translateY(0);
     transform: translateY(0);
     font-size: 0.75rem;
+  }
+  .field.required .field-label::after {
+    content: ' *';
   }
 
   .nav {
@@ -500,4 +503,5 @@
   .map-field {
     border-radius: 0.25rem;
   }
+
 </style>
