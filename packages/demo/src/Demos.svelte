@@ -37,6 +37,7 @@
     multisearch.options = options;
     // Set the required property
     multisearch.required = isRequired;
+    multisearch.label = "Multisearch"
     multisearch.service = {
       i: 0,
       async search(str: string) {
@@ -82,9 +83,7 @@
   <jp-radio label="Options" {options} required="true"/>
   <jp-quill label="Quill" value="<p>Blup</p>" required="true"></jp-quill>
   <div bind:this={el} class="container">
-    <div class="label">
-      Multisearch {#if isRequired} *{/if} 
-    </div>
+    
   </div>
   <jp-multiselect {options} label="Multiselect" required="true"> </jp-multiselect>
   <jp-file-upload label="Upload a file" required="true" />
