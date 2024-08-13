@@ -129,6 +129,7 @@
         left: ${rect.width - 300}px;
       `;
     }
+    preview = !preview;
   }
 
   function convertBase64(file) {
@@ -189,6 +190,7 @@
         </label>
 
         <div class="field-icon preview-button" class:hidden={!img}>
+
           <button type="button" on:click|preventDefault={() => showPreview()}>
             <svg xmlns="http://www.w3.org/2000/svg" height="1rem" viewBox="0 0 576 512">
               <path
