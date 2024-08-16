@@ -395,7 +395,7 @@
     </span>
   </button>
 
-  <input type="date" {name} bind:value={internalValue} hidden required />
+  <input type="date" tabindex="-1" class="hidden-input" {name} bind:value={internalValue} {required} />
   {#if openPicker}
     <div class="overlay">
       <div
@@ -945,5 +945,14 @@
     left: 0;
     width: 100vw;
     height: 100vh;
+  }
+
+  .hidden-input {
+    top: 0;
+    height: 100%;
+    opacity: 0;
+    position: absolute;
+    width: 100%;
+    z-index: -1;
   }
 </style>
