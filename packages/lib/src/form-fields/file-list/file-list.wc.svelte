@@ -17,6 +17,7 @@
 <script lang="ts">
   import { createEventDispatcher } from 'svelte';
   import type FileService from '../../types/file.service';
+  import { formatDisplayFileName } from '../../utils/fileNameFormatter';
 
   export let wording = {
     DROP_YOUR_FILES_HERE: 'Drop your files here',
@@ -36,6 +37,10 @@
   export let validationMessages: { [key: string]: string } = {};
   export let sortable = true;
   export let required = false;
+  export let displayFormat = 'snake';
+  export let displayFormatFunction;
+
+  let displayedFileNameString = '';
   let grabbedEl = null;
   let grabbedIndex = -1;
   let startingY: number;
@@ -58,6 +63,7 @@
       .filter((el) => el.saved)
       .map((el) => el.url)
       .join(',');
+    
     if (minfiles && internalFiles.length < minfiles) {
       attachedInternals.setValidity(
         { customError: true },
@@ -138,11 +144,13 @@
         } else return true;
       })
       .map((el) => {
+        displayedFileNameString = formatDisplayFileName(el.name, displayFormat, displayFormatFunction);
         let obj: any = {
           name: el.name,
           size: returnFileSize(el.size),
           file: el,
-          saved: false
+          saved: false,
+          displayedName: displayedFileNameString
         };
 
         const type = el['type'].split('/')[0];
@@ -193,7 +201,6 @@
         internalFiles.push(obj);
       })
     );
-
     internalFiles = [...internalFiles];
   };
 
@@ -338,7 +345,7 @@
             {/if}
           </div>
           <div class="file-name">
-            {file.name}
+            {file.displayedName}
           </div>
           <div class="file-info">
             <span>

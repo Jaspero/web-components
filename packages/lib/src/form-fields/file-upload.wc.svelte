@@ -18,6 +18,7 @@
   import { clickOutside } from '../clickOutside';
   import type FileService from '../types/file.service';
   import { createEventDispatcher } from 'svelte';
+  import { formatDisplayFileName } from '../utils/fileNameFormatter';
 
   export let label = '';
   export let labelType: 'inside' | 'outside' = 'inside';
@@ -26,6 +27,9 @@
   export let id = '';
   export let name = '';
   export let required = false;
+  export let displayFormat = 'snake';
+  export let displayFormatFunction;
+
 
   let previewStyle: string;
   let bindingElement: HTMLDivElement;
@@ -37,6 +41,7 @@
   let hoveringFile = false;
   let internalValue: string;
   let fileEl: HTMLInputElement;
+  let displayedFileNameString = '';
 
   const dispatch = createEventDispatcher();
 
@@ -80,6 +85,7 @@
     isLocal = true;
     file = f;
     internalValue = f.name;
+    displayedFileNameString = formatDisplayFileName(internalValue,displayFormat, displayFormatFunction);
     if (file['type'].split('/')[0] === 'image') {
       const base64 = (await convertBase64(file)) as string;
       img = base64;
@@ -229,7 +235,7 @@
           on:focus={() => (inputFocused = true)}
           on:blur={() => (inputFocused = false)}
           on:change={() => checkImage()}
-          bind:value={internalValue}
+          bind:value={displayedFileNameString}
           disabled={isLocal}
         />
       </span>
