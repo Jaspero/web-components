@@ -26,8 +26,6 @@
   export let value = '';
   export let asyncOptions = null;
   export let lag: number = 300;
-  let loading = false;
-  let lagTimeout;
   export let label = '';
   export let labelType: 'inside' | 'outside' = 'inside';
   export let id: string | null = null;
@@ -52,11 +50,13 @@
 
   export const reportValidity = () => attachedInternals.reportValidity();
 
-  let bindingElement;
+  let loading = false;
+  let lagTimeout: any;
+  let bindingElement: HTMLDivElement;
   let optionElements = []; // Array to store references to option buttons
   let menuStyle: string;
   let filteredOptions = [];
-  let inputEl;
+  let inputEl: HTMLInputElement;
   let open = false;
 
   const dispatch = createEventDispatcher();

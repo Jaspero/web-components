@@ -17,7 +17,7 @@
 
 <script lang="ts">
   import { clickOutside } from '../clickOutside';
-  import { createEventDispatcher, onMount } from 'svelte';
+  import { createEventDispatcher } from 'svelte';
   import type SearchService from '../types/search.service';
 
   let options: Array<{
@@ -48,7 +48,12 @@
   export let labelType: 'inside' | 'outside' = 'inside';
   export const getValue = () => options.filter((el) => el.selected).map((el) => el.value);
   export let service: SearchService;
-  export let validationMessages = {};
+  export let validationMessages: {
+    required?: string;
+    minselects?: string;
+    maxselects?: string;
+  } = {
+  };
   export let requiredValidationMessage: string;
   export let minselectsValidationMessage: string;
   export let maxselectsValidationMessage: string;
@@ -56,12 +61,12 @@
 
   let isTabbing = false; // Variable to track if the user is tabbing
   let open = false;
-  let bindingElement;
-  let menuStyle;
+  let bindingElement: HTMLButtonElement;
+  let menuStyle: string;
   let optionElements = []; // Array to store references to option buttons
   let searchTerm = ''; // focus search term
-  let searchTimeout; // focus search timeout
-  let displayValue;
+  let searchTimeout: any; // focus search timeout
+  let displayValue: string[];
   let searchFocused = false;
 
   const dispatch = createEventDispatcher();
@@ -104,6 +109,7 @@
     } else {
       attachedInternals.setValidity({});
     }
+
     attachedInternals.checkValidity();
 
     internalValue = options
@@ -348,12 +354,6 @@
       options = [];
     }
   }
-
-  onMount(() => {
-    if (!maxSelects) {
-      maxSelects = options.length;
-    }
-  });
 </script>
 
 {#if label && labelType == 'outside'}
