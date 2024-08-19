@@ -75,6 +75,7 @@
   $: isOutOfMin = isOutOfMinBounds(internalMinDate, col.year, col.month, col.day);
 </script>
 
+<div class="table-cell">
 <button
   type="button"
   class:gray={col.gray}
@@ -110,3 +111,35 @@
 >
   {col.day}
 </button>
+</div>
+
+<style>
+  .table-cell button {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+  }
+
+  .table-cell button:hover {
+    background-color: var(--background-secondary);
+  }
+
+  .table-cell button.gray {
+    opacity: 0.5;
+  }
+
+  .table-cell button.active,
+  .table-cell button.active:hover
+   {
+    background-color: var(--primary-color);
+    color: var(--text-on-primary);
+    opacity: 1;
+  }
+  
+  .table-cell button:disabled:hover {
+    background-color: pink;
+    color: var(--text-on-primary);
+    opacity: 1;
+  }
+</style>

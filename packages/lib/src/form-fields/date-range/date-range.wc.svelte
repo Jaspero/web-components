@@ -488,7 +488,6 @@
           {#each pickerRows as row}
             <div class="table-row">
               {#each row as col}
-                <div class="table-cell">
                   <Day
                     {minDateSelectible}
                     {maxDateSelectible}
@@ -506,7 +505,6 @@
                     {secondYearSelected}
                     on:dateSelected={handleSelect}
                   ></Day>
-                </div>
               {/each}
             </div>
           {/each}
@@ -652,6 +650,9 @@
 {/if}
 
 <style>
+  .table-row {
+    max-height: 40px;
+  }
   .field {
     position: relative;
     display: -webkit-box;
@@ -930,7 +931,6 @@
     background-color: var(--background-secondary);
   }
   :global(
-      .table-cell button:disabled:hover,
       .menu-month-grid-cell button:disabled:hover,
       .menu-year-row-cell button:disabled:hover
     ),
@@ -951,30 +951,13 @@
     width: 40px;
     height: 40px;
     max-width: 40px;
+    max-height: 40px;
     line-height: 35px;
     text-align: center;
     padding: 0;
   }
 
-  :global(.table-cell button) {
-    width: 100%;
-    height: 100%;
-    border-radius: 50%;
-  }
-
-  :global(.table-cell button:hover) {
-    background-color: var(--background-secondary);
-  }
-
-  :global(.table-cell button.gray) {
-    opacity: 0.5;
-  }
-
-  :global(.table-cell button.active) {
-    background-color: var(--primary-color);
-    color: var(--text-on-primary);
-    opacity: 1;
-  }
+  
 
   .overlay {
     z-index: 100;
