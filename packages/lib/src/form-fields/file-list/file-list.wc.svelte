@@ -17,6 +17,7 @@
 <script lang="ts">
   import { createEventDispatcher } from 'svelte';
   import type FileService from '../../types/file.service';
+  import Cropper from '../../editors/Cropper.wc.svelte';
 
   export let wording = {
     DROP_YOUR_FILES_HERE: 'Drop your files here',
@@ -46,6 +47,16 @@
   let hoveringFile = false;
   let fileElements = [];
   let internalValue = '';
+  let showCropper = false;
+  let beingCropped: number = null;
+  let mandatoryCroped: number = 0;
+  enum cropOptions {
+    disabled = 0,
+    optional = 1,
+    mandatory = 2
+  }
+  export let cropperEnable: cropOptions.disabled | cropOptions.mandatory | cropOptions.optional =
+    cropOptions.disabled;
 
   export const getValue = () => internalValue.split(',').filter(Boolean);
 
@@ -117,6 +128,22 @@
       dispatch('change', { unsaved: internalFiles.filter((el) => !el.saved).length });
     }
     hoveringFile = false;
+  }
+
+  function setShowCropper(index) {
+    beingCropped = index;
+    showCropper = true ? false : true;
+  }
+
+  function handleCrop(e) {
+    internalFiles = internalFiles.toSpliced(beingCropped, 1, e.detail.objs);
+    showCropper = false;
+    beingCropped = null;
+  }
+
+  function handleMandatoryCrop(e) {
+    internalFiles = internalFiles.toSpliced(mandatoryCroped, 1, e.detail.objs);
+    mandatoryCroped++;
   }
 
   const returnFileSize = (size) => {
@@ -287,77 +314,138 @@
         <a on:click={() => browseFilesEl.click()}>{wording.BROWSE_FILES}</a>
       </div>
     </div>
-  {:else}
+  {:else if cropperEnable != cropOptions.mandatory || mandatoryCroped > internalFiles.length - 1}
     <div class="files">
       {#each internalFiles as file, index}
-        <!-- svelte-ignore a11y-mouse-events-have-key-events -->
-        <div
-          class="file"
-          class:grab={sortable}
-          on:mousedown={(e) => mousedown(index, e)}
-          bind:this={fileElements[index]}
-        >
-          <button
-            type="button"
-            class="file-remove"
-            on:mousedown|preventDefault={() => removeFile(index)}
+        {#if index != beingCropped}
+          <div
+            class="file"
+            class:grab={sortable}
+            on:mousedown={(e) => mousedown(index, e)}
+            bind:this={fileElements[index]}
           >
-            <svg xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 512 512"
-              ><path
-                d="M256 512A256 256 0 1 0 256 0a256 256 0 1 0 0 512zM175 175c9.4-9.4 24.6-9.4 33.9 0l47 47 47-47c9.4-9.4 24.6-9.4 33.9 0s9.4 24.6 0 33.9l-47 47 47 47c9.4 9.4 9.4 24.6 0 33.9s-24.6 9.4-33.9 0l-47-47-47 47c-9.4 9.4-24.6 9.4-33.9 0s-9.4-24.6 0-33.9l47-47-47-47c-9.4-9.4-9.4-24.6 0-33.9z"
-              /></svg
-            >
-          </button>
-          <div class="file-icon">
-            {#if file.src}
-              {#if file.type === 'image'}
-                <img src={file.src} alt={file.name} />
-              {:else if file.type === 'video'}
-                <video controls>
-                  <source src={file.src} />
-                </video>
-              {:else if file.type === 'audio'}
-                <div class="audio-wrapper">
-                  <audio controls>
-                    <source src={file.src} />
-                  </audio>
-                </div>
-              {/if}
-            {:else if file.external}
-              <svg xmlns="http://www.w3.org/2000/svg" height="100px" viewBox="0 0 640 512"
-                ><path
-                  d="M579.8 267.7c56.5-56.5 56.5-148 0-204.5c-50-50-128.8-56.5-186.3-15.4l-1.6 1.1c-14.4 10.3-17.7 30.3-7.4 44.6s30.3 17.7 44.6 7.4l1.6-1.1c32.1-22.9 76-19.3 103.8 8.6c31.5 31.5 31.5 82.5 0 114L422.3 334.8c-31.5 31.5-82.5 31.5-114 0c-27.9-27.9-31.5-71.8-8.6-103.8l1.1-1.6c10.3-14.4 6.9-34.4-7.4-44.6s-34.4-6.9-44.6 7.4l-1.1 1.6C206.5 251.2 213 330 263 380c56.5 56.5 148 56.5 204.5 0L579.8 267.7zM60.2 244.3c-56.5 56.5-56.5 148 0 204.5c50 50 128.8 56.5 186.3 15.4l1.6-1.1c14.4-10.3 17.7-30.3 7.4-44.6s-30.3-17.7-44.6-7.4l-1.6 1.1c-32.1 22.9-76 19.3-103.8-8.6C74 372 74 321 105.5 289.5L217.7 177.2c31.5-31.5 82.5-31.5 114 0c27.9 27.9 31.5 71.8 8.6 103.9l-1.1 1.6c-10.3 14.4-6.9 34.4 7.4 44.6s34.4 6.9 44.6-7.4l1.1-1.6C433.5 260.8 427 182 377 132c-56.5-56.5-148-56.5-204.5 0L60.2 244.3z"
-                /></svg
+            {#if beingCropped === null}
+              <button
+                type="button"
+                class="file-remove"
+                on:mousedown|preventDefault={() => removeFile(index)}
               >
-            {:else}
-              <svg xmlns="http://www.w3.org/2000/svg" height="100px" viewBox="0 0 384 512"
-                ><path
-                  d="M0 64C0 28.7 28.7 0 64 0H224V128c0 17.7 14.3 32 32 32H384V448c0 35.3-28.7 64-64 64H64c-35.3 0-64-28.7-64-64V64zm384 64H256V0L384 128z"
-                /></svg
-              >
+                <svg xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 512 512"
+                  ><path
+                    d="M256 512A256 256 0 1 0 256 0a256 256 0 1 0 0 512zM175 175c9.4-9.4 24.6-9.4 33.9 0l47 47 47-47c9.4-9.4 24.6-9.4 33.9 0s9.4 24.6 0 33.9l-47 47 47 47c9.4 9.4 9.4 24.6 0 33.9s-24.6 9.4-33.9 0l-47-47-47 47c-9.4 9.4-24.6 9.4-33.9 0s-9.4-24.6 0-33.9l47-47-47-47c-9.4-9.4-9.4-24.6 0-33.9z"
+                  /></svg
+                >
+              </button>
             {/if}
+            <div class="file-icon">
+              {#if file.src}
+                {#if file.type === 'image'}
+                  <img src={file.src} alt={file.name} />
+                  {#if cropperEnable != cropOptions.disabled}
+                    <button
+                      type="button"
+                      class="cropButton"
+                      on:mousedown={() => setShowCropper(index)}
+                    >
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        width="2em"
+                        height="2em"
+                        fill="currentColor"
+                        class="bi bi-crop"
+                        viewBox="0 0 16 16"
+                      >
+                        <path
+                          d="M3.5.5A.5.5 0 0 1 4 1v13h13a.5.5 0 0 1 0 1h-2v2a.5.5 0 0 1-1 0v-2H3.5a.5.5 0 0 1-.5-.5V4H1a.5.5 0 0 1 0-1h2V1a.5.5 0 0 1 .5-.5m2.5 3a.5.5 0 0 1 .5-.5h8a.5.5 0 0 1 .5.5v8a.5.5 0 0 1-1 0V4H6.5a.5.5 0 0 1-.5-.5"
+                        />
+                      </svg>
+                    </button>
+                  {/if}
+                {:else if file.type === 'video'}
+                  <video controls>
+                    <source src={file.src} />
+                  </video>
+                {:else if file.type === 'audio'}
+                  <div class="audio-wrapper">
+                    <audio controls>
+                      <source src={file.src} />
+                    </audio>
+                  </div>
+                {/if}
+              {:else if file.external}
+                <svg xmlns="http://www.w3.org/2000/svg" height="100px" viewBox="0 0 640 512"
+                  ><path
+                    d="M579.8 267.7c56.5-56.5 56.5-148 0-204.5c-50-50-128.8-56.5-186.3-15.4l-1.6 1.1c-14.4 10.3-17.7 30.3-7.4 44.6s30.3 17.7 44.6 7.4l1.6-1.1c32.1-22.9 76-19.3 103.8 8.6c31.5 31.5 31.5 82.5 0 114L422.3 334.8c-31.5 31.5-82.5 31.5-114 0c-27.9-27.9-31.5-71.8-8.6-103.8l1.1-1.6c10.3-14.4 6.9-34.4-7.4-44.6s-34.4-6.9-44.6 7.4l-1.1 1.6C206.5 251.2 213 330 263 380c56.5 56.5 148 56.5 204.5 0L579.8 267.7zM60.2 244.3c-56.5 56.5-56.5 148 0 204.5c50 50 128.8 56.5 186.3 15.4l1.6-1.1c14.4-10.3 17.7-30.3 7.4-44.6s-30.3-17.7-44.6-7.4l-1.6 1.1c-32.1 22.9-76 19.3-103.8-8.6C74 372 74 321 105.5 289.5L217.7 177.2c31.5-31.5 82.5-31.5 114 0c27.9 27.9 31.5 71.8 8.6 103.9l-1.1 1.6c-10.3 14.4-6.9 34.4 7.4 44.6s34.4 6.9 44.6-7.4l1.1-1.6C433.5 260.8 427 182 377 132c-56.5-56.5-148-56.5-204.5 0L60.2 244.3z"
+                  /></svg
+                >
+              {:else}
+                <svg xmlns="http://www.w3.org/2000/svg" height="100px" viewBox="0 0 384 512"
+                  ><path
+                    d="M0 64C0 28.7 28.7 0 64 0H224V128c0 17.7 14.3 32 32 32H384V448c0 35.3-28.7 64-64 64H64c-35.3 0-64-28.7-64-64V64zm384 64H256V0L384 128z"
+                  /></svg
+                >
+              {/if}
+            </div>
+            <div class="file-name">
+              {file.name}
+            </div>
+            <div class="file-info">
+              <span>
+                {file.size || ''}
+              </span>
+              <span style="color: rgb(26 151 26)">
+                {file.saved ? 'saved' : ''}
+              </span>
+            </div>
           </div>
-          <div class="file-name">
-            {file.name}
-          </div>
-          <div class="file-info">
-            <span>
-              {file.size || ''}
-            </span>
-            <span style="color: rgb(26 151 26)">
-              {file.saved ? 'saved' : ''}
-            </span>
-          </div>
-        </div>
+        {:else}
+          <Cropper
+            maxImgHeight="85%"
+            maxImgWidth="85%"
+            maxContainerHeight="300px"
+            maxContainerWidth="85%"
+            src={file.src}
+            alt={file.name}
+            on:croppedImage={(e) => handleCrop(e)}
+            on:exitCropper={() => (beingCropped = null)}
+          />
+        {/if}
       {/each}
     </div>
-    <button type="button" class="add-more" on:click|preventDefault={() => browseFilesEl.click()}>
-      <svg xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 448 512"
-        ><path
-          d="M256 80c0-17.7-14.3-32-32-32s-32 14.3-32 32V224H48c-17.7 0-32 14.3-32 32s14.3 32 32 32H192V432c0 17.7 14.3 32 32 32s32-14.3 32-32V288H400c17.7 0 32-14.3 32-32s-14.3-32-32-32H256V80z"
-        /></svg
-      >
-    </button>
+    {#if beingCropped == null}
+      <button type="button" class="add-more" on:click|preventDefault={() => browseFilesEl.click()}>
+        <svg xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 448 512"
+          ><path
+            d="M256 80c0-17.7-14.3-32-32-32s-32 14.3-32 32V224H48c-17.7 0-32 14.3-32 32s14.3 32 32 32H192V432c0 17.7 14.3 32 32 32s32-14.3 32-32V288H400c17.7 0 32-14.3 32-32s-14.3-32-32-32H256V80z"
+          /></svg
+        >
+      </button>
+    {/if}
+  {:else}
+    {#each internalFiles as file, index}
+      {#if index === mandatoryCroped}
+        {#if file.type === 'image'}
+          <div class="cropperContainer">
+            {#if file.src}
+              {#if file.type === 'image'}
+                <Cropper
+                  src={file.src}
+                  alt={file.name}
+                  mandatory={true}
+                  on:croppedImage={(e) => handleMandatoryCrop(e)}
+                />
+              {/if}
+            {/if}
+          </div>
+        {:else}
+          <img
+            on:load={() => mandatoryCroped++}
+            src={'https://upload.wikimedia.org/wikipedia/commons/thumb/0/0f/Blank_Square.svg/525px-Blank_Square.svg.png'}
+            alt=" "
+          />
+        {/if}
+      {/if}
+    {/each}
   {/if}
 </div>
 
@@ -445,6 +533,23 @@
     display: flex;
     flex-direction: column;
     align-items: center;
+  }
+
+  .cropButton {
+    cursor: pointer;
+    position: absolute;
+    top: 0;
+    left: 0;
+    padding: 0;
+  }
+
+  .cropperContainer {
+    position: relative;
+    max-width: 50%;
+    min-height: 50%;
+    display: flex;
+    margin-inline: auto;
+    padding-bottom: 3em;
   }
 
   .file-name {
