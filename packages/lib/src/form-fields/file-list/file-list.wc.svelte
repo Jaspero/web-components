@@ -49,7 +49,7 @@
   let internalValue = '';
   let showCropper = false;
   let beingCropped: number = null;
-  let mandatoryCroped: number = 0;
+  let mandatoryCroped = 0;
   enum cropOptions {
     disabled = 0,
     optional = 1,
