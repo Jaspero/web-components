@@ -394,7 +394,7 @@
       dispatch('value', { value: returnDate });
     }
   }
-  $: displayLabel = required ? `${label} *` : label;
+  $: displayLabel = required ? `${label} *` : label; 
 </script>
 
 {#if label && labelType == 'outside'}
