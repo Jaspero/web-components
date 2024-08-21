@@ -235,7 +235,7 @@
 
   $: {
     internalFiles = [];
-    if (value) {
+    if (value && (!Array.isArray(value) || value.length)) {
       loading = true;
       loadFiles(value);
       loading = false;
