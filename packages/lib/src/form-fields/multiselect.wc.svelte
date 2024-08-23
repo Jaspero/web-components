@@ -20,24 +20,29 @@
   import { createEventDispatcher, onMount } from 'svelte';
 
   export let attachedInternals: ElementInternals;
-  export let minSelects: number = 0;
+  export let minSelects = 0;
   export let maxSelects: number | null = null;
-  export let options:
-    | Array<{ label?: string; value: string; selected?: boolean; disabled?: boolean }>
-    | string = [];
-  export let disabled: boolean = false;
-  export let required: boolean = false;
-  export let hint: string = '';
-  export let value;
-  export let internalValue: string = '';
-  export let id: string = '';
-  export let name: string = '';
+  export let options: Array<{ label?: string; value: string; selected?: boolean; selectedOrder?: number; disabled?: boolean }> = [];
+  export let disabled = false;
+  export let required = false;
+  export let hint = '';
+  export let value: string | string[];
+  export let internalValue = '';
+  export let id = '';
+  export let name = '';
   export let label = '';
   export let labelType: 'inside' | 'outside' = 'inside';
-  export let showClear: boolean = false;
-  export const getValue = () => options.filter((el) => el.selected).map((el) => el.value);
+  export let showClear = false;
+  export const getValue = () => options
+    .filter((el) => el.selected)
+    .sort((a, b) => a.selectedOrder - b.selectedOrder)
+    .map((el) => el.value);
 
-  export let validationMessages = {};
+  export let validationMessages: {
+    required?: string;
+    minselects?: string;
+    maxselects?: string;
+  } = {};
   export let requiredValidationMessage: string;
   export let minselectsValidationMessage: string;
   export let maxselectsValidationMessage: string;
@@ -48,8 +53,9 @@
   let menuStyle: string;
   let optionElements = []; // Array to store references to option buttons
   let searchTerm = '';
-  let searchTimeout;
-  let displayValue;
+  let searchTimeout: any;
+  let displayValue: string[] | null;
+  let selectedItems = 0;
 
   const dispatch = createEventDispatcher();
 
@@ -57,8 +63,17 @@
     attachedInternals.reportValidity();
   };
 
+  $: {
+    if (open) {
+      document.documentElement.style.overflowY = 'hidden';
+    } else {
+      document.documentElement.style.overflowY = '';
+    }
+  }
+
   $: if (Array.isArray(options)) {
     const selects = options.filter((el) => el.selected).length;
+    
     if (selects == 0 && required) {
       attachedInternals.setValidity(
         { customError: true },
@@ -82,30 +97,31 @@
     } else {
       attachedInternals.setValidity({});
     }
+
     attachedInternals.checkValidity();
 
-    internalValue = options
+    const sortedValue = options
       .filter((el) => el.selected)
+      .sort((a, b) => a.selectedOrder - b.selectedOrder);
+
+    internalValue = sortedValue
       .map((el) => el.value)
       .join(',');
 
-    displayValue = options
-      .filter((el) => el.selected)
+    displayValue = sortedValue
       .map((el) => (el.label ? el.label : el.value));
 
-    dispatch(
-      'value',
-      options.filter((el) => el.selected).map((el) => el.value)
-    );
+    dispatch('value', sortedValue.map((el) => el.value));
   }
 
   function clearSelection() {
-    displayValue = '';
+    displayValue = null;
 
     if (Array.isArray(options)) {
       options = options.map((option) => ({
         ...option,
-        selected: false
+        selected: false,
+        selectedOrder: null
       }));
     }
   }
@@ -119,15 +135,28 @@
   }
 
   function populateOptions() {
-    options = options.map((o) => ({ ...o, selected: false }));
+    options = options.map((o) => ({ ...o, selected: false, selectedOrder: null }));
+
     if (typeof value == 'string') {
-      value.split(',').forEach((el) => {
-        options[options.findIndex((o) => o.value == el)].selected = true;
+      const values = value.split(',');
+      
+      values.forEach((el, index) => {
+        const ref = options[options.findIndex((o) => o.value == el)];
+
+        ref.selected = true;
+        ref.selectedOrder = index;
       });
+
+      selectedItems = values.length;
     } else {
-      value.forEach((el) => {
-        options[options.findIndex((o) => o.value == el)].selected = true;
+      value.forEach((el, index) => {
+        const ref = options[options.findIndex((o) => o.value == el)];
+        
+        ref.selected = true;
+        ref.selectedOrder = index;
       });
+
+      selectedItems = value.length;
     }
   }
 
@@ -140,12 +169,20 @@
     const availableSpaceBelow = window.innerHeight - rect.bottom;
     const dropdownHeight = 300;
 
-    let style: string = '';
+    let style = '';
 
     if (availableSpaceBelow < dropdownHeight) {
-      style = `bottom: 100%;`;
+      style = `
+        width: ${rect.width}px;
+        bottom: ${window.innerHeight - rect.top}px;
+        left: ${rect.left}px;
+      `;
     } else {
-      style = `top: 100%;`;
+      style = `
+        width: ${rect.width}px;
+        top: ${rect.bottom}px;
+        left: ${rect.left}px;
+      `;
     }
 
     menuStyle = style;
@@ -162,7 +199,7 @@
     } else {
       setTimeout(() => {
         if (isTabbing) {
-          bindingElement.nextElementSibling?.focus(); // Focus the next sibling element (if any)
+          (bindingElement.nextElementSibling as HTMLButtonElement)?.focus();
         } else {
           bindingElement?.focus();
         }
@@ -189,7 +226,8 @@
 
   function handleKeydown(event: KeyboardEvent) {
     const currentIndex = optionElements.findIndex((el) => el === document.activeElement);
-    let nextIndex;
+    
+    let nextIndex: number;
 
     if (open) {
       if (event.key === 'Escape') {
@@ -287,14 +325,21 @@
   }
 
   onMount(() => {
-    if (typeof options == 'string') options = JSON.parse(options);
+    if (typeof options == 'string') {
+      options = JSON.parse(options);
+    };
+
     if (!maxSelects) {
       maxSelects = options.length;
     }
+
     options = options.map((el) => {
       if (el.selected == undefined) {
         el.selected = false;
       }
+
+      el.selectedOrder = null;
+
       return el;
     });
   });
@@ -305,7 +350,7 @@
     {@html label}
   </div>
 {/if}
-<div class="wrapper" use:clickOutside on:click_outside={() => (open = false)} class:has-hint={hint}>
+<div class="wrapper" class:has-hint={hint}>
   {#if showClear && hasSelectedOption}
     <button class="clear" on:click={clearSelection}>
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512">
@@ -346,7 +391,6 @@
       class="select-arrow"
       class:rotate={open}
     >
-      <!--! Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2023 Fonticons, Inc.-->
       <path
         d="M137.4 374.6c12.5 12.5 32.8 12.5 45.3 0l128-128c9.2-9.2 11.9-22.9 6.9-34.9s-16.6-19.8-29.6-19.8L32 192c-12.9 0-24.6 7.8-29.6 19.8s-2.2 25.7 6.9 34.9l128 128z"
       />
@@ -360,33 +404,49 @@
   {/if}
 
   {#if open}
-    <div class="menu" style={menuStyle} on:keydown={handleKeydown}>
-      {#each options as option, index (option)}
-        <button
-          type="button"
-          class="menu-button"
-          class:selected={option.selected}
-          bind:this={optionElements[index]}
-          disabled={option.disabled}
-          on:click|preventDefault={() => (option.selected = !option.selected)}
-        >
-          <span>{option.label ? option.label : option.value}</span>
+    <div class="overlay">
+      <!-- svelte-ignore a11y-no-static-element-interactions -->
+      <div
+        class="menu"
+        use:clickOutside
+        on:click_outside={() => (open = false)}
+        style={menuStyle}
+        on:keydown={handleKeydown}
+      >
+        {#each options as option, index (option)}
+          <button
+            type="button"
+            class="menu-button"
+            class:selected={option.selected}
+            bind:this={optionElements[index]}
+            disabled={option.disabled}
+            on:click|preventDefault={() => {
+              option.selected = !option.selected;
 
-          {#if option.selected}
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              width="1rem"
-              height="1rem"
-              viewBox="0 0 448 512"
-            >
-              <!--! Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2023 Fonticons, Inc. -->
-              <path
-                d="M438.6 105.4c12.5 12.5 12.5 32.8 0 45.3l-256 256c-12.5 12.5-32.8 12.5-45.3 0l-128-128c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0L160 338.7 393.4 105.4c12.5-12.5 32.8-12.5 45.3 0z"
-              />
-            </svg>
-          {/if}
-        </button>
-      {/each}
+              if (option.selected) {
+                option.selectedOrder = selectedItems++;
+              } else {
+                option.selectedOrder = null;
+              }
+            }}
+          >
+            <span>{option.label ? option.label : option.value}</span>
+
+            {#if option.selected}
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="1rem"
+                height="1rem"
+                viewBox="0 0 448 512"
+              >
+                <path
+                  d="M438.6 105.4c12.5 12.5 12.5 32.8 0 45.3l-256 256c-12.5 12.5-32.8 12.5-45.3 0l-128-128c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0L160 338.7 393.4 105.4c12.5-12.5 32.8-12.5 45.3 0z"
+                />
+              </svg>
+            {/if}
+          </button>
+        {/each}
+      </div>
     </div>
   {/if}
 </div>
@@ -655,5 +715,14 @@
 
   .clear:hover {
     background-color: rgba(0, 0, 0, 0.08);
+  }
+
+  .overlay {
+    z-index: 100;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
   }
 </style>

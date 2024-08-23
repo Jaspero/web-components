@@ -1,5 +1,5 @@
 <svelte:options
-        customElement={{
+  customElement={{
     tag: 'jp-datepicker',
     shadow: 'none',
     extend: (customElementConstructor) => {
@@ -25,28 +25,34 @@
   import { isOutOfMaxBounds } from './is-out-of-max-bounds';
   import { isOutOfMinBounds } from './is-out-of-min-bounds';
 
-
   export let attachedInternals: ElementInternals;
-  export let value: string = '';
-  export let internalValue: string = '';
-  export let required: boolean = false;
+  export let value = '';
+  export let internalValue = '';
+  export let required = false;
   export let requiredValidationMessage: string = '';
-  export let name: string = '';
-  export let label: string = '';
+  export let enableMultiple = false;
+  export let separator = ', ';
+  export let name = '';
+  export let label = '';
   export let labelType: 'inside' | 'outside' = 'inside';
-  export let displayFormat: string = 'normal';
+  export let displayFormat = 'normal';
   export let displayFormatFunction: (date: Date) => string = (date) => date.toDateString();
-  export let returnFormat: string = 'js';
+  export let returnFormat = 'js';
   export let returnFormatFunction: (date: Date) => any = (date) => date.valueOf();
   export let minDate: string | Date;
   export let maxDate: string | Date;
 
   let selectedDateObject = new Date();
   let displayedDateString = formatDisplayDate(
-          selectedDateObject,
-          displayFormat,
-          displayFormatFunction
+    selectedDateObject,
+    displayFormat,
+    displayFormatFunction
   );
+  let returnDate = formatDisplayDate(selectedDateObject, displayFormat, returnFormatFunction);
+  let selectedDates = [];
+  let date;
+  let dates = [];
+  let datePicked;
   let borderTop = false;
   let borderBottom = false;
   let bindingElement;
@@ -86,27 +92,53 @@
   }
 
   function handleMonthSelected(event) {
-    const {month} = event.detail;
+    const { month } = event.detail;
     pickerMonth = month;
     monthSelector = false;
   }
 
-  function handleYearSelected(event){
-    const {year} = event.detail;
+  function handleYearSelected(event) {
+    const { year } = event.detail;
     pickerYear = year;
     yearSelector = false;
     monthSelector = true;
   }
 
-  $: internalMinDate = minDate ? minDate instanceof Date ? minDate : new Date(minDate) : null;
-  $: internalMaxDate = maxDate ? maxDate instanceof Date ? maxDate : new Date(maxDate) : null;
+  function handleMultipleSelects(event) {
+    const { day, month, year, isDatePicked } = event.detail;
+    dateSelected = day;
+    monthSelected = month;
+    yearSelected = year;
+    openPicker = true;
+    datePicked = isDatePicked;
+    date = { year: yearSelected, month: monthSelected, day: dateSelected };
+    if (selectedDates.some((e) => e.year === yearSelected && e.month === monthSelected && e.day === dateSelected)) {
+      const index = selectedDates.findIndex((e) => e.year === yearSelected && e.month === monthSelected && e.day === dateSelected);
+      selectedDates.splice(index, 1);
+    } else {
+      selectedDates.push(date);
+    }
+  }
 
-  $: internalMinMonthCheck = isOutOfMinBounds(internalMinDate, pickerYear,pickerMonth, 0);
+  $: internalMinDate = minDate ? (minDate instanceof Date ? minDate : new Date(minDate)) : null;
+  $: internalMaxDate = maxDate ? (maxDate instanceof Date ? maxDate : new Date(maxDate)) : null;
+
+  $: internalMinMonthCheck = isOutOfMinBounds(internalMinDate, pickerYear, pickerMonth, 0);
   $: internalMaxMonthCheck = isOutOfMaxBounds(internalMaxDate, pickerYear, pickerMonth, 31);
-  $: internalMinYearCheck = isOutOfMinBounds(internalMinDate,pickerYear , 0,1);
-  $: internalMaxYearCheck = isOutOfMaxBounds(internalMaxDate,pickerYear, 11, 31);
-  $: internalMinYearPageCheck = isOutOfMinBounds(internalMinDate,2000 + (yearPickerIndex) * 4 * 6 , 0,1);
-  $: internalMaxYearPageCheck = isOutOfMaxBounds(internalMaxDate,2000 + (yearPickerIndex+1) * 4 * 6 , 11,31);
+  $: internalMinYearCheck = isOutOfMinBounds(internalMinDate, pickerYear, 0, 1);
+  $: internalMaxYearCheck = isOutOfMaxBounds(internalMaxDate, pickerYear, 11, 31);
+  $: internalMinYearPageCheck = isOutOfMinBounds(
+    internalMinDate,
+    2000 + yearPickerIndex * 4 * 6,
+    0,
+    1
+  );
+  $: internalMaxYearPageCheck = isOutOfMaxBounds(
+    internalMaxDate,
+    2000 + (yearPickerIndex + 1) * 4 * 6,
+    11,
+    31
+  );
 
   export const getValue = () => {
     if (yearSelected) {
@@ -137,12 +169,12 @@
     mData = [
       ...mData,
       Array.from(Array(startingDay).keys())
-              .map((el) => prevMonthDays - el)
-              .toReversed()
-              .map((el) => {
-                let obj = { day: el, month: month - 1, year: year, gray: true };
-                return obj;
-              })
+        .map((el) => prevMonthDays - el)
+        .toReversed()
+        .map((el) => {
+          let obj = { day: el, month: month - 1, year: year, gray: true };
+          return obj;
+        })
     ];
 
     mData = [
@@ -210,7 +242,7 @@
       pickerMonth = tmp.getMonth();
       pickerYear = tmp.getFullYear();
     }
-  };
+  }
   $: if (monthSelected == 12) {
     monthSelected = 0;
     yearSelected++;
@@ -232,102 +264,183 @@
   $: pickerRows = getPickerRows(pickerMonth, pickerYear);
 
   $: {
-    if (yearSelected) {
-      internalValue = `${yearSelected}-${monthSelected + 1 < 10 ? '0' : ''}${monthSelected + 1}-${
-              dateSelected < 10 ? '0' : ''
-      }${dateSelected}`;
-      selectedDateObject = new Date(internalValue);
-      displayedDateString = formatDisplayDate(
+    if (enableMultiple) {
+      if (datePicked) {
+        internalValue = `${yearSelected}-${monthSelected + 1 < 10 ? '0' : ''}${monthSelected + 1}-${
+          dateSelected < 10 ? '0' : ''
+        }${dateSelected}`;
+        dates.push(internalValue);
+
+        for (let i = dates.length - 1; i > 0; --i) {
+          let currTime = new Date(dates[i]).getTime();
+          let prevTime = new Date(dates[i - 1]).getTime();
+          if (currTime < prevTime) {
+            const temp = dates[i];
+            dates[i] = dates[i - 1];
+            dates[i - 1] = temp;
+          }
+        }
+        let tempList = [];
+        dates.forEach((elem) => {
+          selectedDateObject = new Date(elem);
+          let selectedDateObjectString = formatDisplayDate(
+            selectedDateObject,
+            displayFormat,
+            displayFormatFunction
+          );
+          tempList.push(selectedDateObjectString);
+        });
+
+        displayedDateString = tempList.join(separator);
+        attachedInternals.setValidity({});
+        attachedInternals.setFormValue(internalValue);
+        returnDate = displayedDateString;
+        dispatch('value', { value: returnDate });
+      } else {
+        if (dates.length > 0) {
+          internalValue = `${yearSelected}-${monthSelected + 1 < 10 ? '0' : ''}${
+            monthSelected + 1
+          }-${dateSelected < 10 ? '0' : ''}${dateSelected}`;
+          let toDelete = new Date(internalValue).getTime();
+
+          for (let i = 0; i < dates.length; i++) {
+            let currTime = new Date(dates[i]).getTime();
+            if (currTime == toDelete) {
+              dates.splice(i, 1);
+            }
+          }
+          let tempList = [];
+          dates.forEach((elem) => {
+            selectedDateObject = new Date(elem);
+            let selectedDateObjectString = formatDisplayDate(
               selectedDateObject,
               displayFormat,
               displayFormatFunction
-      );
-      attachedInternals.setValidity({});
-      attachedInternals.setFormValue(internalValue);
-      dispatch('value', {
-        value: formatReturnDate(selectedDateObject, returnFormat, returnFormatFunction)
-      });
-    } else {
-      if (required) {
-        attachedInternals.setValidity(
-       { customError: true },
-                requiredValidationMessage || `Date is required.`,
-        bindingElement)
+            );
+            tempList.push(selectedDateObjectString);
+          });
+
+          displayedDateString = tempList.join(separator);
+          attachedInternals.setValidity({});
+          attachedInternals.setFormValue(internalValue);
+          returnDate = displayedDateString;
+          dispatch('value', { value: returnDate });
+        } else {
+          displayedDateString = '';
+          dispatch('value', { value: '' });
+        }
       }
-      displayedDateString = '';
-      dispatch('value', { value: '' });
+    } else {
+      if (yearSelected) {
+        internalValue = `${yearSelected}-${monthSelected + 1 < 10 ? '0' : ''}${monthSelected + 1}-${
+          dateSelected < 10 ? '0' : ''
+        }${dateSelected}`;
+        selectedDateObject = new Date(internalValue);
+        displayedDateString = formatDisplayDate(
+          selectedDateObject,
+          displayFormat,
+          displayFormatFunction
+        );
+        attachedInternals.setValidity({});
+        attachedInternals.setFormValue(internalValue);
+        dispatch('value', {
+          value: formatReturnDate(selectedDateObject, returnFormat, returnFormatFunction)
+        });
+      } else {
+        if (required) {
+          attachedInternals.setValidity(
+            { valueMissing: true },
+            requiredValidationMessage || `Date is required.`,
+            bindingElement
+          );
+        }
+        displayedDateString = '';
+        dispatch('value', { value: '' });
+      }
+      attachedInternals.checkValidity();
     }
-   attachedInternals.checkValidity();
   }
+  $: displayLabel = required ? `${label} *` : label;
 </script>
 
 <div style="position: relative;">
   {#if label && labelType == 'outside'}
     <div class="label">
-      {@html label}
+      {@html displayLabel}
     </div>
   {/if}
 
   <button
-          type="button"
-          class="field"
-          bind:this={bindingElement}
-          class:active={openPicker}
-          class:borderBottom
-          class:borderTop
-          on:click|preventDefault={toggleMenu}
+    type="button"
+    class="field"
+    bind:this={bindingElement}
+    class:active={openPicker}
+    class:borderBottom
+    class:borderTop
+    on:click|preventDefault={toggleMenu}
   >
     {#if label && labelType == 'inside'}
-      <span class="field-label" class:move={openPicker || internalValue}>{@html label}</span>
+      <span class="field-label" class:move={openPicker || internalValue}>{@html displayLabel}</span>
     {/if}
     <p class={`field-input ${labelType == 'outside' || !label ? '' : 'field-input-padding'}`}>
       {displayedDateString}
     </p>
 
     <span class="field-icon">
-    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512">
-      <!--! Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2023 Fonticons, Inc. -->
-      <path
-              d="M152 24c0-13.3-10.7-24-24-24s-24 10.7-24 24V64H64C28.7 64 0 92.7 0 128v16 48V448c0 35.3 28.7 64 64 64H384c35.3 0 64-28.7 64-64V192 144 128c0-35.3-28.7-64-64-64H344V24c0-13.3-10.7-24-24-24s-24 10.7-24 24V64H152V24zM48 192H400V448c0 8.8-7.2 16-16 16H64c-8.8 0-16-7.2-16-16V192z"
-      />
-    </svg>
-  </span>
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512">
+        <path
+          d="M152 24c0-13.3-10.7-24-24-24s-24 10.7-24 24V64H64C28.7 64 0 92.7 0 128v16 48V448c0 35.3 28.7 64 64 64H384c35.3 0 64-28.7 64-64V192 144 128c0-35.3-28.7-64-64-64H344V24c0-13.3-10.7-24-24-24s-24 10.7-24 24V64H152V24zM48 192H400V448c0 8.8-7.2 16-16 16H64c-8.8 0-16-7.2-16-16V192z"
+        />
+      </svg>
+    </span>
   </button>
 
-  <input type="date" {name} bind:value={internalValue} hidden required/>
+  <input type="date" tabindex="-1" class="hidden-input" {name} bind:value={internalValue} {required} />
   {#if openPicker}
     <div class="overlay">
-      <div class="menu" use:clickOutside on:click_outside={() => (openPicker = false)} style={menuStyle}>
+      <div
+        class="menu"
+        use:clickOutside
+        on:click_outside={() => (openPicker = false)}
+        style={menuStyle}
+      >
         <div class="menu-nav">
-          <!--<button on:click|preventDefault={() => (pickerYear = pickerYear - 1)}>&lt;&lt;</button>-->
-          <button type="button" class="menu-nav-date" on:click|preventDefault={() => (yearSelector = true)}>
+          <button
+            type="button"
+            class="menu-nav-date"
+            on:click|preventDefault={() => (yearSelector = true)}
+          >
             <p>{monthMap[pickerMonth]}, {pickerYear}</p>
             <svg xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 512 512">
-              <!--! Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2023 Fonticons, Inc. -->
               <path
-                      d="M233.4 406.6c12.5 12.5 32.8 12.5 45.3 0l192-192c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L256 338.7 86.6 169.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3l192 192z"
+                d="M233.4 406.6c12.5 12.5 32.8 12.5 45.3 0l192-192c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L256 338.7 86.6 169.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3l192 192z"
               />
             </svg>
           </button>
           <div class="menu-nav-buttons">
-            <button type="button" on:click|preventDefault={() => (pickerMonth = pickerMonth - 1)}  disabled = {internalMinMonthCheck}>
+            <button
+              type="button"
+              on:click|preventDefault={() => (pickerMonth = pickerMonth - 1)}
+              disabled={internalMinMonthCheck}
+            >
               <svg xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 320 512">
-                <!--! Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2023 Fonticons, Inc. -->
                 <path
-                        d="M9.4 233.4c-12.5 12.5-12.5 32.8 0 45.3l192 192c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L77.3 256 246.6 86.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0l-192 192z"
+                  d="M9.4 233.4c-12.5 12.5-12.5 32.8 0 45.3l192 192c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L77.3 256 246.6 86.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0l-192 192z"
                 />
               </svg>
             </button>
-            <button type="button" on:click|preventDefault={() => (pickerMonth = pickerMonth + 1)} disabled = {internalMaxMonthCheck}>
+            <button
+              type="button"
+              on:click|preventDefault={() => (pickerMonth = pickerMonth + 1)}
+              disabled={internalMaxMonthCheck}
+            >
               <svg xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 320 512">
-                <!--! Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2023 Fonticons, Inc. -->
                 <path
-                        d="M310.6 233.4c12.5 12.5 12.5 32.8 0 45.3l-192 192c-12.5 12.5-32.8 12.5-45.3 0s-12.5-32.8 0-45.3L242.7 256 73.4 86.6c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0l192 192z"
+                  d="M310.6 233.4c12.5 12.5 12.5 32.8 0 45.3l-192 192c-12.5 12.5-32.8 12.5-45.3 0s-12.5-32.8 0-45.3L242.7 256 73.4 86.6c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0l192 192z"
                 />
               </svg>
             </button>
           </div>
-          <!--<button on:click|preventDefault={() => (pickerYear = pickerYear + 1)}>&gt;&gt;</button>-->
         </div>
 
         <div>
@@ -344,9 +457,18 @@
               <div class="table-row">
                 {#each row as col}
                   <div class="table-cell">
-                    <Day {col} {internalMinDate} {internalMaxDate} {monthSelected} 
-                    {yearSelected} {dateSelected}   
-                    on:dateSelected={handleDateSelected}></Day>
+                    <Day
+                      {col}
+                      {internalMinDate}
+                      {internalMaxDate}
+                      {monthSelected}
+                      {yearSelected}
+                      {dateSelected}
+                      {enableMultiple}
+                      {selectedDates}
+                      on:dateSelected={handleDateSelected}
+                      on:multipleDatesSelected={handleMultipleSelects}
+                    ></Day>
                   </div>
                 {/each}
               </div>
@@ -358,48 +480,58 @@
           <div class="menu-year">
             <div class="menu-year-nav">
               <button
-                      type="button"
-                      class="menu-year-nav-date"
-                      on:click|stopPropagation={() => (yearSelector = false)}
+                type="button"
+                class="menu-year-nav-date"
+                on:click|stopPropagation={() => (yearSelector = false)}
               >
                 <p>
                   {pickerYearRows[0][0]} - {pickerYearRows[pickerYearRows.length - 1][
-                pickerYearRows[pickerYearRows.length - 1].length - 1
-                        ]}
+                    pickerYearRows[pickerYearRows.length - 1].length - 1
+                  ]}
                 </p>
                 <svg xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 512 512">
-                  <!--! Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2023 Fonticons, Inc. -->
                   <path
-                          d="M233.4 105.4c12.5-12.5 32.8-12.5 45.3 0l192 192c12.5 12.5 12.5 32.8 0 45.3s-32.8 12.5-45.3 0L256 173.3 86.6 342.6c-12.5 12.5-32.8 12.5-45.3 0s-12.5-32.8 0-45.3l192-192z"
+                    d="M233.4 105.4c12.5-12.5 32.8-12.5 45.3 0l192 192c12.5 12.5 12.5 32.8 0 45.3s-32.8 12.5-45.3 0L256 173.3 86.6 342.6c-12.5 12.5-32.8 12.5-45.3 0s-12.5-32.8 0-45.3l192-192z"
                   />
                 </svg>
               </button>
               <div class="menu-year-nav-buttons">
-                <button type="button" on:click|preventDefault={() => yearPickerIndex--} disabled = {internalMinYearPageCheck}>
+                <button
+                  type="button"
+                  on:click|preventDefault={() => yearPickerIndex--}
+                  disabled={internalMinYearPageCheck}
+                >
                   <svg xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 320 512">
-                    <!--! Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2023 Fonticons, Inc. -->
                     <path
-                            d="M9.4 233.4c-12.5 12.5-12.5 32.8 0 45.3l192 192c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L77.3 256 246.6 86.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0l-192 192z"
+                      d="M9.4 233.4c-12.5 12.5-12.5 32.8 0 45.3l192 192c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L77.3 256 246.6 86.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0l-192 192z"
                     />
                   </svg>
                 </button>
-                <button type="button" on:click|preventDefault={() => yearPickerIndex++} disabled = {internalMaxYearPageCheck}>
+                <button
+                  type="button"
+                  on:click|preventDefault={() => yearPickerIndex++}
+                  disabled={internalMaxYearPageCheck}
+                >
                   <svg xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 320 512">
-                    <!--! Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2023 Fonticons, Inc. -->
                     <path
-                            d="M310.6 233.4c12.5 12.5 12.5 32.8 0 45.3l-192 192c-12.5 12.5-32.8 12.5-45.3 0s-12.5-32.8 0-45.3L242.7 256 73.4 86.6c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0l192 192z"
+                      d="M310.6 233.4c12.5 12.5 12.5 32.8 0 45.3l-192 192c-12.5 12.5-32.8 12.5-45.3 0s-12.5-32.8 0-45.3L242.7 256 73.4 86.6c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0l192 192z"
                     />
                   </svg>
                 </button>
               </div>
             </div>
             {#each pickerYearRows as row}
-            <div class="menu-year-row">
-              {#each row as year}
-              <div class="menu-year-row-cell">
-                <Year {internalMaxDate} {internalMinDate} {yearSelected} {year} 
-                 on:yearSelected={handleYearSelected}></Year>
-              </div>
+              <div class="menu-year-row">
+                {#each row as year}
+                  <div class="menu-year-row-cell">
+                    <Year
+                      {internalMaxDate}
+                      {internalMinDate}
+                      {yearSelected}
+                      {year}
+                      on:yearSelected={handleYearSelected}
+                    ></Year>
+                  </div>
                 {/each}
               </div>
             {/each}
@@ -410,34 +542,39 @@
           <div class="menu-month">
             <div class="menu-month-nav">
               <button
-                      type="button"
-                      class="menu-month-nav-date"
-                      on:click|preventDefault={() => {
-                monthSelector = false;
-              }}
+                type="button"
+                class="menu-month-nav-date"
+                on:click|preventDefault={() => {
+                  monthSelector = false;
+                }}
               >
                 <p>{pickerYear}</p>
                 <svg xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 512 512">
-                  <!--! Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2023 Fonticons, Inc. -->
                   <path
-                          d="M233.4 406.6c12.5 12.5 32.8 12.5 45.3 0l192-192c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L256 338.7 86.6 169.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3l192 192z"
+                    d="M233.4 406.6c12.5 12.5 32.8 12.5 45.3 0l192-192c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L256 338.7 86.6 169.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3l192 192z"
                   />
                 </svg>
               </button>
               <div class="menu-month-nav-buttons">
-                <button type="button" on:click|preventDefault={() => (pickerYear = pickerYear - 1)} disabled = {internalMinYearCheck}>
+                <button
+                  type="button"
+                  on:click|preventDefault={() => (pickerYear = pickerYear - 1)}
+                  disabled={internalMinYearCheck}
+                >
                   <svg xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 320 512">
-                    <!--! Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2023 Fonticons, Inc. -->
                     <path
-                            d="M9.4 233.4c-12.5 12.5-12.5 32.8 0 45.3l192 192c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L77.3 256 246.6 86.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0l-192 192z"
+                      d="M9.4 233.4c-12.5 12.5-12.5 32.8 0 45.3l192 192c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L77.3 256 246.6 86.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0l-192 192z"
                     />
                   </svg>
                 </button>
-                <button type="button" on:click|preventDefault={() => (pickerYear = pickerYear + 1)} disabled = {internalMaxYearCheck}>
+                <button
+                  type="button"
+                  on:click|preventDefault={() => (pickerYear = pickerYear + 1)}
+                  disabled={internalMaxYearCheck}
+                >
                   <svg xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 320 512">
-                    <!--! Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2023 Fonticons, Inc. -->
                     <path
-                            d="M310.6 233.4c12.5 12.5 12.5 32.8 0 45.3l-192 192c-12.5 12.5-32.8 12.5-45.3 0s-12.5-32.8 0-45.3L242.7 256 73.4 86.6c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0l192 192z"
+                      d="M310.6 233.4c12.5 12.5 12.5 32.8 0 45.3l-192 192c-12.5 12.5-32.8 12.5-45.3 0s-12.5-32.8 0-45.3L242.7 256 73.4 86.6c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0l192 192z"
                     />
                   </svg>
                 </button>
@@ -447,10 +584,15 @@
             <div class="menu-month-grid">
               {#each monthMap as month, index}
                 <div class="menu-month-grid-cell">
-                  <Month {index} {month} {pickerYear} 
-              {internalMaxDate} {internalMinDate} {monthSelected}
-              on:monthSelected={handleMonthSelected}
-              />
+                  <Month
+                    {index}
+                    {month}
+                    {pickerYear}
+                    {internalMaxDate}
+                    {internalMinDate}
+                    {monthSelected}
+                    on:monthSelected={handleMonthSelected}
+                  />
                 </div>
               {/each}
             </div>
@@ -556,21 +698,21 @@
     transform: translateY(-50%);
     font-size: 1rem;
     -webkit-transition:
-            transform 0.3s,
-            top 0.3s,
-            font-size 0.3s;
+      transform 0.3s,
+      top 0.3s,
+      font-size 0.3s;
     -o-transition:
-            transform 0.3s,
-            top 0.3s,
-            font-size 0.3s;
+      transform 0.3s,
+      top 0.3s,
+      font-size 0.3s;
     -moz-transition:
-            transform 0.3s,
-            top 0.3s,
-            font-size 0.3s;
+      transform 0.3s,
+      top 0.3s,
+      font-size 0.3s;
     transition:
-            transform 0.3s,
-            top 0.3s,
-            font-size 0.3s;
+      transform 0.3s,
+      top 0.3s,
+      font-size 0.3s;
   }
 
   .field-label.move {
@@ -645,13 +787,12 @@
     padding: 0.25rem 0.75rem;
   }
 
-  :global(.menu-month-grid-cell button.active,
-  .menu-month-grid-cell button:hover) {
+  :global(.menu-month-grid-cell button.active, .menu-month-grid-cell button:hover) {
     background-color: var(--primary-color);
     color: var(--text-on-primary);
   }
 
-  .menu-year{
+  .menu-year {
     position: absolute;
     top: 0;
     left: 0;
@@ -711,21 +852,22 @@
     border-radius: 999px;
   }
 
-  :global(.menu-year-row-cell button:hover,
-  .menu-year-row-cell button.active) {
+  :global(.menu-year-row-cell button:hover, .menu-year-row-cell button.active) {
     background-color: var(--primary-color);
     color: var(--text-on-primary);
   }
 
-:global(.table-cell button:disabled:hover,
-.menu-month-grid-cell button:disabled:hover,
-.menu-year-row-cell button:disabled:hover),
-.menu-nav-buttons button:disabled:hover,
-.menu-year-nav-buttons button:disabled:hover,
-.menu-month-nav-buttons button:disabled:hover{
-  background-color: transparent;
-  color:var( --text-secondary);
-}
+  :global(
+      .table-cell button:disabled:hover,
+      .menu-month-grid-cell button:disabled:hover,
+      .menu-year-row-cell button:disabled:hover
+    ),
+  .menu-nav-buttons button:disabled:hover,
+  .menu-year-nav-buttons button:disabled:hover,
+  .menu-month-nav-buttons button:disabled:hover {
+    background-color: transparent;
+    color: var(--text-secondary);
+  }
   .menu-nav-date,
   .menu-month-nav-date,
   .menu-year-nav-date {
@@ -748,7 +890,7 @@
     width: max-content;
   }
 
-  .table-row{
+  .table-row {
     display: flex;
     width: max-content;
     flex-direction: row;
@@ -796,7 +938,6 @@
     opacity: 1;
   }
 
-  /* Overlay */
   .overlay {
     z-index: 100;
     position: fixed;
@@ -804,5 +945,14 @@
     left: 0;
     width: 100vw;
     height: 100vh;
+  }
+
+  .hidden-input {
+    top: 0;
+    height: 100%;
+    opacity: 0;
+    position: absolute;
+    width: 100%;
+    z-index: -1;
   }
 </style>

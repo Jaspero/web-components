@@ -51,6 +51,14 @@
   export const reportValidity = () => attachedInternals.reportValidity();
 
   $: {
+    if (open) {
+      document.documentElement.style.overflowY = 'hidden';
+    } else {
+      document.documentElement.style.overflowY = '';
+    }
+  }
+
+  $: {
     if (Array.isArray(options)) {
       const option = options.filter((el) => el.value === value);
       if (option.length) {
@@ -84,18 +92,24 @@
 
   function toggleMenu() {
     const rect = bindingElement.getBoundingClientRect();
-    const windowHeight = window.innerHeight;
+    const availableSpaceBelow = window.innerHeight - rect.bottom;
+    const dropdownHeight = 300;
 
-    const isInBottomHalf = rect.top > windowHeight / 2;
+    let style: string = '';
 
-    let style = '';
-
-    if (isInBottomHalf) {
-      style = `bottom: 100%;`;
+    if (availableSpaceBelow < dropdownHeight) {
+      style = `
+        width: ${rect.width}px;
+        bottom: ${window.innerHeight - rect.top}px;
+        left: ${rect.left}px;
+      `;
     } else {
-      style = `top: 100%;`;
+      style = `
+        width: ${rect.width}px;
+        top: ${rect.bottom}px;
+        left: ${rect.left}px;
+      `;
     }
-
     menuStyle = style;
     open = !open;
 
@@ -107,9 +121,7 @@
           optionElements[firstEnabledOptionIndex].focus();
         }
       }, 10); // A short delay, 10ms
-    }
-
-    if (!open) {
+    } else {
       // If the menu is being closed
       setTimeout(() => {
         bindingElement.focus();
@@ -136,7 +148,7 @@
 
   function handleKeydown(event: KeyboardEvent) {
     const currentIndex = optionElements.findIndex((el) => el === document.activeElement);
-    
+
     let nextIndex;
 
     // Check if menu is open
@@ -260,15 +272,16 @@
       options = JSON.parse(options);
     }
   });
+  $: displayLabel = required ? `${label} *` : label;
 </script>
 
 {#if label && labelType == 'outside'}
   <div class="label">
-    {@html label}
+    {@html displayLabel}
   </div>
 {/if}
-<div class="wrapper" use:clickOutside on:click_outside={() => (open = false)} class:has-hint={hint}>
-  {#if showClear && value}
+<div class="wrapper" class:has-hint={hint}>
+  {#if (showClear && value)}
     <button class="clear" on:click={clearSelection}>
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512">
         <path
@@ -288,7 +301,7 @@
   >
     {#if label && labelType == 'inside'}
       <span class="select-label" class:move={selected || open}>
-        {@html label}
+        {@html displayLabel}
       </span>
     {/if}
 
@@ -304,7 +317,6 @@
       class="select-arrow"
       class:rotate={open}
     >
-      <!--! Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2023 Fonticons, Inc.-->
       <path
         d="M137.4 374.6c12.5 12.5 32.8 12.5 45.3 0l128-128c9.2-9.2 11.9-22.9 6.9-34.9s-16.6-19.8-29.6-19.8L32 192c-12.9 0-24.6 7.8-29.6 19.8s-2.2 25.7 6.9 34.9l128 128z"
       />
@@ -318,9 +330,18 @@
   {/if}
 
   <input tabindex="-1" bind:this={inputEl} bind:value {id} {name} {required} />
+</div>
 
-  {#if open}
-    <div class="menu" style={menuStyle} on:keydown={handleKeydown} role="dialog">
+{#if open}
+  <div class="overlay">
+    <!-- svelte-ignore a11y-no-noninteractive-element-interactions -->
+    <div
+      class="menu"
+      style={menuStyle}
+      use:clickOutside
+      on:click_outside={() => (open = false)}
+      on:keydown={handleKeydown}
+      role="dialog">
       {#each options as option, index (option)}
         <button
           type="button"
@@ -342,7 +363,6 @@
               height="1rem"
               viewBox="0 0 448 512"
             >
-              <!--! Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2023 Fonticons, Inc. -->
               <path
                 d="M438.6 105.4c12.5 12.5 12.5 32.8 0 45.3l-256 256c-12.5 12.5-32.8 12.5-45.3 0l-128-128c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0L160 338.7 393.4 105.4c12.5-12.5 32.8-12.5 45.3 0z"
               />
@@ -351,8 +371,8 @@
         </button>
       {/each}
     </div>
-  {/if}
-</div>
+ </div>
+{/if}
 
 <style>
   .wrapper {
@@ -565,7 +585,6 @@
 
   /* Menu */
   .menu {
-    z-index: 100;
     position: absolute;
     display: -webkit-box;
     display: -webkit-flex;
@@ -579,7 +598,6 @@
     -moz-box-direction: normal;
     -ms-flex-direction: column;
     flex-direction: column;
-    width: 100%;
     max-height: 300px;
     overflow-y: auto;
     -webkit-border-bottom-left-radius: 0.25rem;
@@ -680,5 +698,14 @@
 
   .clear:hover {
     background-color: rgba(0, 0, 0, 0.08);
+  }
+
+    .overlay {
+    z-index: 100;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
   }
 </style>

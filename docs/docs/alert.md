@@ -6,11 +6,11 @@
 
 ### Attributes
 
-| **Name** | **Required** | **Type** | **Description** |
-| :----: | :----: | :----: | :----: |
-| title | | `string` | title of the alert |
-| message | | `string` | information within an alert |
-| state | ✓ | `'error'` or `'success'` | type of alert | 
+| **Name** | **Required** |         **Type**         |       **Description**       |
+| :------: | :----------: | :----------------------: | :-------------------------: |
+|  title   |              |         `string`         |     title of the alert      |
+| message  |              |         `string`         | information within an alert |
+|  state   |      ✓       | `'error'` or `'success'` |        type of alert        |
 
 ### Slots
 
@@ -23,20 +23,24 @@ This component does not have any methods.
 ### Events
 
 - `close`
-    - triggers when the "close" button is clicked
+  - triggers when the "close" button is clicked
 
 ### Demo
 
 ```jsx live
-function alert(props){
+function alert(props) {
   const [show, setShow] = useState(false);
   return (
     <>
       <div hidden={!show}>
-        <jp-alert title="Alert title" message="This is message" onClose={() => setShow(false)}></jp-alert>
+        <jp-alert
+          title="Alert title"
+          message="This is message"
+          onClose={() => setShow(false)}
+        ></jp-alert>
       </div>
       <button onClick={() => setShow(!show)}>Click me to toggle!</button>
-    </>  
-  ) 
-} 
+    </>
+  );
+}
 ```

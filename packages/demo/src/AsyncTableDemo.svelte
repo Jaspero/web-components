@@ -42,8 +42,10 @@
       get: async () => {
         return {
           rows: [
-            { name: 'John', firstName: 'John', lastName: 'Johnson', gender: 'M', height: 180, age: 30, disabled: true },
-            { name: 'Jane', age: 31, disabled: true }
+            ...[...Array(100).keys()]
+              .map(() => (
+                { name: 'John', firstName: 'John', lastName: 'Johnson', gender: 'M', height: 180, age: 30, disabled: true }
+              ))
           ],
           hasMore: false
         };
@@ -71,6 +73,7 @@
     asyncTable.allowArrangeColumns = true;
     asyncTable.pageSizes = [10];
     asyncTable.sort = {key: '/age', direction: 'asc'};
+    asyncTable.height = '500px';
 		asyncTable.freezeFirstColumn = true;
 		asyncTable.freezeLastColumn = true;
     el.appendChild(asyncTable);

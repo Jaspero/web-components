@@ -26,6 +26,8 @@
   export let step: number = 1;
   export let name: string = '';
   export let discrete: boolean = true; //if true -> ticks, false -> smooth
+  export let required = false;
+  export let label = '';
   let internalValue = [min, max];
   export const getValue = () => internalValue;
 
@@ -54,35 +56,50 @@
       internalValue = value
     }
   }
+  $: displayLabel = required ? `${label} *` : label;
 </script>
 
-<div class="slider">
-  <div class="progress" style={`left: ${low}%; right: ${100 - high}%`}></div>
-  <input
-    type="range"
-    class="range-input"
-    {disabled}
-    step={discrete ? 'any' : step}
-    {min}
-    {max}
-    id={id + '_min'}
-    name={name + '_min'}
-    bind:value={internalValue[0]}
-  />
-  <input
-    type="range"
-    class="range-input"
-    {disabled}
-    step={discrete ? 'any' : step}
-    {min}
-    {max}
-    id={id + '_max'}
-    name={name + '_max'}
-    bind:value={internalValue[1]}
-  />
-</div>
+  <div class="slider-container">
+    {#if label}
+    {@html displayLabel}
+    {/if}
+  </div>
+  <div class="slider">
+    <div class="progress" style={`left: ${low}%; right: ${100 - high}%`}></div>
+    <input
+      type="range"
+      class="range-input"
+      {disabled}
+      step={discrete ? 'any' : step}
+      {min}
+      {max}
+      id={id + '_min'}
+      name={name + '_min'}
+      bind:value={internalValue[0]}
+    />
+    <input
+      type="range"
+      class="range-input"
+      {disabled}
+      step={discrete ? 'any' : step}
+      {min}
+      {max}
+      id={id + '_max'}
+      name={name + '_max'}
+      bind:value={internalValue[1]}
+    />
+  </div>
 
 <style>
+
+
+  .slider-container {
+    width: 100%;
+    text-align: left; 
+    margin-bottom: 15px; 
+  }
+
+  
   .slider {
     position: relative;
     min-width: 300px;

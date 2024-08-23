@@ -6,17 +6,16 @@
 
 ### Attributes
 
-| **Name** | **Required** | **Type** | **Description** |
-| :----: | :----: | :----: | :---: |
-| value | | `number` | setter and getter |
-| name | ✓ | `string` |  name of the form control |
-| id | | `string`| unique identifier |
-| disabled | | `boolean` | determines if slider is disabled |
-| max | | `number` | maximal slider value |
-| min | | `number` | minimal slider value |
-| step | | `number` | size of increment/decrement when sliding |
-| discrete | | `boolean` | whether slider is smooth or in ticks <br></br> (when `false` step is `any`) |
-
+| **Name** | **Required** | **Type**  |                               **Description**                               |
+| :------: | :----------: | :-------: | :-------------------------------------------------------------------------: |
+|  value   |              | `number`  |                              setter and getter                              |
+|   name   |      ✓       | `string`  |                          name of the form control                           |
+|    id    |              | `string`  |                              unique identifier                              |
+| disabled |              | `boolean` |                      determines if slider is disabled                       |
+|   max    |              | `number`  |                            maximal slider value                             |
+|   min    |              | `number`  |                            minimal slider value                             |
+|   step   |              | `number`  |                  size of increment/decrement when sliding                   |
+| discrete |              | `boolean` | whether slider is smooth or in ticks <br></br> (when `false` step is `any`) |
 
 ### Slots
 
@@ -24,12 +23,12 @@ This component does not have any slots.
 
 ### Methods
 
-- `getValue` 
+- `getValue`
   - returns form field value
 
 ### Events
 
-- `value` 
+- `value`
   - triggers when slider value changes
 
 ### Demo

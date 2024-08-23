@@ -6,9 +6,9 @@
 
 ### Attributes
 
-| **Name** | **Required** | **Type** | **Description**|
-| :----: | :----: | :----: | :----: |
-| steps | ✓ | `string[]` | name of each step |
+| **Name** | **Required** |  **Type**  |  **Description**  |
+| :------: | :----------: | :--------: | :---------------: |
+|  steps   |      ✓       | `string[]` | name of each step |
 
 ### Slots
 
@@ -25,11 +25,11 @@ This component does not have any slots.
 
 ### Events
 
-- `change` 
+- `change`
   - triggers when step changes
 
-
 ### Demo
+
 ```jsx live
 <jp-stepper steps='["one", "two", "three"]'></jp-stepper>
 ```

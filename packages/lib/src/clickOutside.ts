@@ -1,10 +1,17 @@
-export function clickOutside(node: any) {
+import type { ActionReturn } from 'svelte/action';
+
+interface Return {
+  'on:click_outside': () => void;
+}
+
+export function clickOutside(node: HTMLElement): ActionReturn<{}, Return> {
   function dispatch() {
+    // @ts-ignore
     node.dispatchEvent(new CustomEvent('click_outside', node));
   }
 
   function handleClick(event: MouseEvent) {
-    if (node && !node.contains(event.target) && !event.defaultPrevented) {
+    if (node && !node.contains(event.target as HTMLElement) && !event.defaultPrevented) {
       dispatch();
     }
   }

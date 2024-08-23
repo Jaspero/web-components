@@ -4,6 +4,11 @@
 	import Progress from './Progress.svelte';
 	import {fileSize} from './file-size';
 
+	export let wording: {
+		PAUSE: string;
+		RESUME: string;
+		CANCEL: string;
+	};
 	export let asset: Asset;
 	export let service: AssetManagerService;
 
@@ -44,7 +49,7 @@
 	</div>
 	<div class="file-name">
 		{asset.name}
-		<Progress asset={asset} status={asset.status} progress={asset.progress} on:cancel={() => dispatch('cancel')} />
+		<Progress {wording} asset={asset} status={asset.status} progress={asset.progress} on:cancel={() => dispatch('cancel')} />
 	</div>
 	<div class="file-info">
 		<span>{fileSize(asset.size)}</span>

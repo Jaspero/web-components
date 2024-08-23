@@ -27,6 +27,7 @@
   export let inline: boolean = false;
 
   export let requiredValidationMessage;
+  export let label = '';
 
   let inputEl;
 
@@ -57,8 +58,14 @@
   onMount(() => {
     if (typeof options == 'string') options = JSON.parse(options);
   });
+  $: displayLabel = required ? `${label} *` : label;
 </script>
 
+{#if label}
+    <div class="label">
+      {@html displayLabel}
+    </div>
+  {/if}
 <div style={`display: flex; flex-direction: ${inline ? 'row' : 'column'}`}>
   {#each options as option}
     <label class:disabled={option.disabled}>
@@ -88,7 +95,7 @@
 </div>
 
 <style>
-  label {
+  label { 
     display: -webkit-box;
     display: -webkit-flex;
     display: -moz-box;

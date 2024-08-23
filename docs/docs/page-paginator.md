@@ -6,10 +6,10 @@
 
 ### Attributes
 
-| **Name** | **Required** | **Type** | **Description** |
-| :----: | :----: | :----: | :---: |
-| length | ✓ | `number`| total number of pages |
-| pageIndex | | `number` | current page number starting from 1 |
+| **Name**  | **Required** | **Type** |           **Description**           |
+| :-------: | :----------: | :------: | :---------------------------------: |
+|  length   |      ✓       | `number` |        total number of pages        |
+| pageIndex |              | `number` | current page number starting from 1 |
 
 ### Slots
 
@@ -17,21 +17,20 @@ This component does not have any slots.
 
 ### Methods
 
-- `nextPage` 
-- `prevPage` 
-- `lastPage` 
-- `firstPage` 
+- `nextPage`
+- `prevPage`
+- `lastPage`
+- `firstPage`
 - `toPage`
   - takes page number as argument
 
 ### Events
 
-- `change` 
+- `change`
   - triggers when the page changes
 
 ### Demo
 
 ```jsx live
-<jp-page-paginator>
-</jp-page-paginator>
+<jp-page-paginator></jp-page-paginator>
 ```

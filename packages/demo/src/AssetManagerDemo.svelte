@@ -1,7 +1,7 @@
 <script lang="ts">
   import { onMount } from 'svelte';
   import '../../../dist/asset-manager.wc.js';
-  import {AMService} from './asset-manager.service.js';
+  import { AMService } from './asset-manager.service.js';
 
   let el: HTMLDivElement;
 
@@ -13,9 +13,9 @@
     item.selectable = 'single';
     // item.selectable = 'multiple';
 
-    item.addEventListener('selected', event => {
-        console.log('event', event);
-    })
+    item.addEventListener('selected', (event) => {
+      console.log('event', event);
+    });
 
     el.appendChild(item);
   });

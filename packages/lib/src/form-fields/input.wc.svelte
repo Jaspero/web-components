@@ -18,7 +18,7 @@
 />
 
 <script lang="ts">
-  import { createEventDispatcher } from 'svelte';
+  import { createEventDispatcher, onMount } from 'svelte';
 
   export let attachedInternals: ElementInternals;
   export let value: string = '';
@@ -62,6 +62,7 @@
   export const checkValidity = () => attachedInternals.checkValidity();
 
   let inputEl: HTMLInputElement;
+  let focused = inputFocused;
 
   const dispatch = createEventDispatcher();
 
@@ -111,6 +112,12 @@
     attachedInternals.setFormValue(value);
     dispatch('value', { value });
   }
+
+  onMount(()=>{
+    if(inputFocused){
+      inputEl.focus();
+    }
+  })
 </script>
 
 {#if label && labelType === 'outside'}
@@ -121,9 +128,9 @@
 <div class:has-hint={!!hint}>
   <label class="field" class:disabled={disabled || readonly} class:required>
     {#if label && labelType === 'inside'}
-      <span class="field-label" class:move={inputFocused || value || type === 'time'}>{@html label}</span>
+      <span class="field-label" class:move={focused || value || type === 'time' || value === 0}>{@html label}</span>
     {/if}
-    {#if $$slots.prefix && (value || inputFocused)}
+    {#if $$slots.prefix && (value || focused)}
       <div class="prefix">
         <slot name="prefix" />
       </div>
@@ -146,8 +153,8 @@
         {maxlength}
         {pattern}
         bind:value
-        on:focus={() => (inputFocused = true)}
-        on:blur={() => (inputFocused = false)}
+        on:focus={() => (focused = true)}
+        on:blur={() => (focused = false)}
       />
     {:else if type === 'password'}
       <input
@@ -167,8 +174,8 @@
         {maxlength}
         {pattern}
         bind:value
-        on:focus={() => (inputFocused = true)}
-        on:blur={() => (inputFocused = false)}
+        on:focus={() => (focused = true)}
+        on:blur={() => (focused = false)}
       />
     {:else if type === 'email'}
       <input
@@ -188,8 +195,8 @@
         {maxlength}
         {pattern}
         bind:value
-        on:focus={() => (inputFocused = true)}
-        on:blur={() => (inputFocused = false)}
+        on:focus={() => (focused = true)}
+        on:blur={() => (focused = false)}
       />
     {:else if type === 'tel'}
       <input
@@ -209,8 +216,8 @@
         {maxlength}
         {pattern}
         bind:value
-        on:focus={() => (inputFocused = true)}
-        on:blur={() => (inputFocused = false)}
+        on:focus={() => (focused = true)}
+        on:blur={() => (focused = false)}
       />
     {:else if type === 'url'}
       <input
@@ -230,8 +237,8 @@
         {maxlength}
         {pattern}
         bind:value
-        on:focus={() => (inputFocused = true)}
-        on:blur={() => (inputFocused = false)}
+        on:focus={() => (focused = true)}
+        on:blur={() => (focused = false)}
       />
     {:else if type === 'number'}
       <input
@@ -255,8 +262,8 @@
         {readonly}
         {pattern}
         bind:value
-        on:focus={() => (inputFocused = true)}
-        on:blur={() => (inputFocused = false)}
+        on:focus={() => (focused = true)}
+        on:blur={() => (focused = false)}
       />
     {:else if type === 'time'}
       <input
@@ -273,8 +280,8 @@
         {placeholder}
         {readonly}
         bind:value
-        on:focus={() => (inputFocused = true)}
-        on:blur={() => (inputFocused = false)}
+        on:focus={() => (focused = true)}
+        on:blur={() => (focused = false)}
       />
     {:else if type === 'color'}
       <span class="color-picker" style="background-color: {value}"></span>
@@ -292,8 +299,8 @@
         {placeholder}
         {readonly}
         bind:value
-        on:focus={() => (inputFocused = true)}
-        on:blur={() => (inputFocused = false)}
+        on:focus={() => (focused = true)}
+        on:blur={() => (focused = false)}
       />
       <span>{value}</span>
     {/if}

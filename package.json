@@ -14,7 +14,7 @@
     "preview": "vite preview --config vite.demo.config.ts",
     "check": "svelte-check --tsconfig ./tsconfig.json",
     "prepublishOnly": "npm run build -s",
-    "format": "prettier --plugin-search-dir . --write .",
+    "format": "prettier --write .",
     "semantic-release": "semantic-release"
   },
   "devDependencies": {
@@ -22,7 +22,7 @@
     "@tsconfig/svelte": "5.0.0",
     "concurrently": "8.2.0",
     "firebase": "10.1.0",
-    "prettier": "3.0.0",
+    "prettier": "3.0.0",  
     "prettier-plugin-svelte": "3.0.0",
     "semantic-release": "^21.0.7",
     "svelte": "4.1.1",
