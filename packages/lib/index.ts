@@ -32,6 +32,7 @@ export default () => {
   import('./src/form-fields/textarea.wc.svelte');
   import('./src/form-fields/toggle.wc.svelte');
   import('./src/image-gallery/image-gallery.wc.svelte');
+  import('./src/form-fields/place-input.wc.svelte');
   import('./src/link/link.wc.svelte');
   import('./src/menu/menu.wc.svelte');
   import('./src/page-paginator/page-paginator.wc.svelte');
