@@ -117,9 +117,9 @@
       };
 
       if (returnedValue === 'simple') {
-        dispatch('value', { value: place.formatted_address });
+        dispatch('address', { address: place.formatted_address });
       } else if (returnedValue === 'extended') {
-        dispatch('value', { value: place.formatted_address });
+        dispatch('address', { address: place.formatted_address });
         dispatch('latitude', { lat: latlng.lat });
         dispatch('longitude', { lng: latlng.lng });
       }
@@ -169,9 +169,9 @@
         if (response.results[0]) {
           value = response.results[0].formatted_address;
           if (returnedValue === 'simple') {
-            dispatch('value', { value: response.results[0].formatted_address });
+            dispatch('address', { address: response.results[0].formatted_address });
           } else if (returnedValue === 'extended') {
-            dispatch('value', { value: response.results[0].formatted_address });
+            dispatch('address', { address: response.results[0].formatted_address });
             dispatch('latitude', { lat: latlng.lat });
             dispatch('longitude', { lng: latlng.lng });
           }
