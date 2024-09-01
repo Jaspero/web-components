@@ -46,7 +46,7 @@
   export let name = '';
   export let label = '';
   export let labelType: 'inside' | 'outside' = 'inside';
-  export const getValue = () => options.filter((el) => el.selected).map((el) => el.value);
+  export const getValue = () => singleSelect ? options.find((el) => el.selected)?.value : options.filter((el) => el.selected).map((el) => el.value);
   export let service: SearchService;
   export let validationMessages: {
     required?: string;
