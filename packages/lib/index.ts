@@ -12,7 +12,6 @@ export default () => {
   import('./src/data-paginator/data-paginator.wc.svelte');
   import('./src/editors/code-editor.wc.svelte');
   import('./src/editors/json-editor.wc.svelte');
-  import('./src/editors/Cropper.wc.svelte');
   import('./src/form-fields/autocomplete.wc.svelte');
   import('./src/form-fields/checkbox.wc.svelte');
   import('./src/form-fields/chips.wc.svelte');

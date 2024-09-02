@@ -230,6 +230,7 @@
             </svg>
           </button>
         </div>
+        {#if cropperEnable != cropOptions.disabled}
         <div class="field-icon preview-button" class:hidden={!img}>
           <button type="button" on:click|preventDefault={() => (showCropper = true)}>
             <svg
@@ -246,6 +247,7 @@
                       </svg>
           </button>
         </div>
+        {/if}
         {#if internalValue}
           <div class="field-icon">
             <button
