@@ -17,6 +17,11 @@
   export let zoomable = true;
   export let cropBoxMovable = true;
   export let cropBoxResizable = true;
+  export let maxContainerHeight = '';
+  export let maxContainerWidth = '';
+  export let maxImgHeight = '';
+  export let maxImgWidth = '';
+  export let position = '';
 
   let croppedCanvas;
   let img, cropper;
@@ -85,11 +90,6 @@
   function handleExit() {
     dispatch('exitCropper', {});
   }
-  export let maxContainerHeight = '',
-    maxContainerWidth = '',
-    maxImgHeight = '',
-    maxImgWidth = '',
-    position = '';
 </script>
 
 <div

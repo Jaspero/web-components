@@ -28,12 +28,12 @@
   export let name = '';
   export let required = false;
   enum cropOptions {
-    disabled = 0,
-    optional = 1,
-    mandatory = 2
-  }
-  export let cropperEnable: cropOptions.disabled | cropOptions.mandatory | cropOptions.optional =
-    cropOptions.disabled;
+  disabled = "disabled",
+  optional = "optional",
+  mandatory = "mandatory"
+}
+
+  export let cropperEnable: cropOptions.disabled | cropOptions.mandatory | cropOptions.optional = cropOptions.disabled;
   let showCropper = false;
 
   let previewStyle: string;

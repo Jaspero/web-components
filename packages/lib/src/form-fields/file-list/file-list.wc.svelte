@@ -51,12 +51,11 @@
   let beingCropped: number = null;
   let mandatoryCroped = 0;
   enum cropOptions {
-    disabled = 0,
-    optional = 1,
-    mandatory = 2
-  }
-  export let cropperEnable: cropOptions.disabled | cropOptions.mandatory | cropOptions.optional =
-    cropOptions.disabled;
+  disabled = "disabled",
+  optional = "optional",
+  mandatory = "mandatory"
+}
+  export let cropperEnable: cropOptions.disabled | cropOptions.mandatory | cropOptions.optional = cropOptions.disabled;
 
   export const getValue = () => internalValue.split(',').filter(Boolean);
 
