@@ -22,7 +22,8 @@
   export let wording = {
     DROP_YOUR_FILES_HERE: 'Drop your files here',
     BROWSE_FILES: 'Browse files',
-    DROP_FILES_HERE_OR: 'Drop files here or'
+    DROP_FILES_HERE_OR: 'Drop files here or',
+    SAVED: 'saved'
   };
   export let attachedInternals: ElementInternals;
   export let value = '';
@@ -180,6 +181,7 @@
         const urlFile = blobToFile(res.blob(), url);
         let obj: any = {
           name: urlFile.name,
+          displayedName: urlFile.name,
           size: '',
           file: urlFile,
           saved: true,
@@ -352,7 +354,7 @@
               {file.size || ''}
             </span>
             <span style="color: rgb(26 151 26)">
-              {file.saved ? 'saved' : ''}
+              {file.saved ? wording.SAVED : ''}
             </span>
           </div>
         </div>
