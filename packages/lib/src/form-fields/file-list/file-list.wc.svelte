@@ -64,7 +64,7 @@
       .filter((el) => el.saved)
       .map((el) => el.url)
       .join(',');
-    
+
     if (minfiles && internalFiles.length < minfiles) {
       attachedInternals.setValidity(
         { customError: true },
@@ -145,7 +145,11 @@
         } else return true;
       })
       .map((el) => {
-        displayedFileNameString = formatDisplayFileName(el.name, displayFormat, displayFormatFunction);
+        displayedFileNameString = formatDisplayFileName(
+          el.name,
+          displayFormat,
+          displayFormatFunction
+        );
         let obj: any = {
           name: el.name,
           size: returnFileSize(el.size),
@@ -175,35 +179,40 @@
 
     const urls = value.split(',');
 
-    await Promise.allSettled(
-      urls.map(async (url) => {
-        const res = await fetch(url);
-        const urlFile = blobToFile(res.blob(), url);
-        let obj: any = {
-          name: urlFile.name,
-          displayedName: urlFile.name,
-          size: '',
-          file: urlFile,
-          saved: true,
-          url: url,
-          external: true
-        };
+    internalFiles = (
+      await Promise.all(
+        urls.map(async (url) => {
+          try {
+            const res = await fetch(url);
+            const urlFile = blobToFile(res.blob(), url);
+            let obj: any = {
+              name: urlFile.name,
+              displayedName: urlFile.name,
+              size: '',
+              file: urlFile,
+              saved: true,
+              url: url,
+              external: true
+            };
 
-        if (/\.jpg|\.png|\.jpeg|\.webp|\.svg|\.gif/.test(url)) {
-          obj.src = url;
-          obj.type = 'image';
-        } else if (/\.mp4|\.mov/.test(url)) {
-          obj.src = url;
-          obj.type = 'video';
-        } else if (/\.mp3|\.wav/.test(url)) {
-          obj.src = url;
-          obj.type = 'audio';
-        }
+            if (/\.jpg|\.png|\.jpeg|\.webp|\.svg|\.gif/.test(url)) {
+              obj.src = url;
+              obj.type = 'image';
+            } else if (/\.mp4|\.mov/.test(url)) {
+              obj.src = url;
+              obj.type = 'video';
+            } else if (/\.mp3|\.wav/.test(url)) {
+              obj.src = url;
+              obj.type = 'audio';
+            }
 
-        internalFiles.push(obj);
-      })
-    );
-    internalFiles = [...internalFiles];
+            return obj;
+          } catch (err) {
+            console.error(err);
+          }
+        })
+      )
+    ).filter(Boolean);
   };
 
   function mousemove(e) {
@@ -268,7 +277,7 @@
   class:fullBorder={hoveringFile}
   on:dragover|preventDefault={() => (hoveringFile = true)}
 >
-{#if loading}
+  {#if loading}
     <div class="loader">
       <div class="spinner"></div>
     </div>
@@ -559,7 +568,7 @@
       grid-template-columns: repeat(2, minmax(0, 1fr));
     }
   }
-  
+
   @keyframes spinner-bulqg1 {
     0% {
       clip-path: polygon(50% 50%, 0 0, 50% 0%, 50% 0%, 50% 0%, 50% 0%, 50% 0%);
