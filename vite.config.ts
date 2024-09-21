@@ -3,8 +3,6 @@ import { svelte } from '@sveltejs/vite-plugin-svelte';
 import { transform } from 'esbuild';
 import { viteStaticCopy } from 'vite-plugin-static-copy';
 
-const bundleComponents = false;
-
 // https://vitejs.dev/config/
 export default defineConfig({
   root: './packages/lib/',
@@ -25,6 +23,7 @@ export default defineConfig({
         inlineDynamicImports: false,
         chunkFileNames: '[name].js',
         manualChunks: { svelte: ['svelte'] }
+
       }
     }
   },

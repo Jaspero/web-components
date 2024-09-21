@@ -313,10 +313,6 @@
     border-radius: 0.25rem;
   }
 
-  .field.required .field-label::after {
-    content: ' *';
-  }
-
   .field.disabled {
     pointer-events: none;
     opacity: 0.5;

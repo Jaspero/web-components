@@ -242,6 +242,7 @@
               on:dragover={dragover}
               data-index={index}
             >
+              <!-- svelte-ignore a11y-no-static-element-interactions -->
               <span draggable="true" on:dragstart={(e) => dragstart(e, header)}>
                 {@html header.label}
               </span>
@@ -318,10 +319,6 @@
     text-overflow: ellipsis;
   }
 
-  .table-actions {
-    padding: 1rem;
-  }
-
   .table-header {
     padding: 1rem;
     min-height: 68px;
@@ -362,84 +359,6 @@
     color: var(--text-on-secondary);
   }
 
-  .load-button {
-    background-color: var(--primary-color);
-    color: var(--text-on-primary);
-  }
-
-  .load-button:disabled {
-    opacity: 0.5;
-  }
-
-  .load-button.loading {
-    pointer-events: none;
-  }
-
-  .spinner {
-    display: block;
-    border-top: 2px solid var(--text-on-primary);
-    border-bottom: 2px solid var(--text-on-primary);
-    border-left: 2px solid transparent;
-    border-right: 2px solid transparent;
-    -webkit-border-radius: 50%;
-    -moz-border-radius: 50%;
-    border-radius: 50%;
-    width: 1rem;
-    height: 1rem;
-    margin-right: 0.5rem;
-    -webkit-animation: spin 1s linear infinite;
-    -moz-animation: spin 1s linear infinite;
-    -o-animation: spin 1s linear infinite;
-    animation: spin 1s linear infinite;
-  }
-
-  @-webkit-keyframes spin {
-    0% {
-      -webkit-transform: rotate(0deg);
-      transform: rotate(0deg);
-    }
-    100% {
-      -webkit-transform: rotate(360deg);
-      transform: rotate(360deg);
-    }
-  }
-
-  @-moz-keyframes spin {
-    0% {
-      -moz-transform: rotate(0deg);
-      transform: rotate(0deg);
-    }
-    100% {
-      -moz-transform: rotate(360deg);
-      transform: rotate(360deg);
-    }
-  }
-
-  @-o-keyframes spin {
-    0% {
-      -o-transform: rotate(0deg);
-      transform: rotate(0deg);
-    }
-    100% {
-      -o-transform: rotate(360deg);
-      transform: rotate(360deg);
-    }
-  }
-
-  @keyframes spin {
-    0% {
-      -webkit-transform: rotate(0deg);
-      -moz-transform: rotate(0deg);
-      -o-transform: rotate(0deg);
-      transform: rotate(0deg);
-    }
-    100% {
-      -webkit-transform: rotate(360deg);
-      -moz-transform: rotate(360deg);
-      -o-transform: rotate(360deg);
-      transform: rotate(360deg);
-    }
-  }
   .sticky-first {
     position: sticky;
     left: 0;

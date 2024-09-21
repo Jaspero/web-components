@@ -331,6 +331,7 @@
               {#if file.type === 'image'}
                 <img src={file.src} alt={file.name} />
               {:else if file.type === 'video'}
+                <!-- svelte-ignore a11y-media-has-caption -->
                 <video controls>
                   <source src={file.src} />
                 </video>

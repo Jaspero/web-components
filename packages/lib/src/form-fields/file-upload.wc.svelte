@@ -301,16 +301,6 @@
     border: 2px dashed var(--primary-color);
   }
 
-  .field.required .field-label::after {
-    content: ' *';
-  }
-
-  .field.disabled .field-label,
-  .field.disabled .field-input {
-    opacity: 0.33;
-    background: none;
-  }
-
   .field:focus-within {
     border-color: var(--primary-color);
     -webkit-box-shadow: inset 0 0 0 1px var(--primary-color);

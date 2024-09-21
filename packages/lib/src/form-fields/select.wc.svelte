@@ -507,10 +507,6 @@
     content: ' *';
   }
 
-  input:required:invalid + .select {
-    border-color: var(--danger-color);
-  }
-
   .select-option {
     -webkit-box-flex: 1;
     -webkit-flex: auto;

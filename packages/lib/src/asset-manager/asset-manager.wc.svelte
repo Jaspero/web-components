@@ -223,6 +223,8 @@
           {#if item.type === 'folder'}
             <Folder folder={item} bind:path />
           {:else}
+            <!-- svelte-ignore a11y-positive-tabindex -->
+            <!-- svelte-ignore a11y-click-events-have-key-events -->
             <div
               class="asset-button"
               role="button"
