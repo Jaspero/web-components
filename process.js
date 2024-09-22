@@ -1,5 +1,4 @@
 import { readFile, readdir, writeFile } from 'fs/promises';
-import { sveld } from 'sveld';
 
 (async () => {
   const files = await readdir('dist');
@@ -21,10 +20,4 @@ import { sveld } from 'sveld';
       );
     })
   );
-
-  // sveld({
-  //   input: './packages/lib/index.ts',
-  //   markdown: false,
-  //   json: false,
-  // });
 })();
