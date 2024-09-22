@@ -3,7 +3,7 @@
   "description": "A collection of web-components",
   "version": "0.0.0-development",
   "type": "module",
-  "main": "dist/lib/@jaspero/web-components.js",
+  "main": "dist/index.js",
   "scripts": {
     "start": "npm run dev -s",
     "dev": "concurrently \"npm run dev:demo\" \"npm run dev:lib\"",
