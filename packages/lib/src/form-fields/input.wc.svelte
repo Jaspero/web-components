@@ -1,7 +1,7 @@
 <svelte:options
   customElement={{
     tag: 'jp-input',
-    shadow: 'open',
+    shadow: 'none',
     delegatesFocus: true,
     extend: (customElementConstructor) => {
       return class extends customElementConstructor {
