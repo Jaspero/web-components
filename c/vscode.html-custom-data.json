@@ -1,0 +1,840 @@
+{
+  "$schema": "https://raw.githubusercontent.com/microsoft/vscode-html-languageservice/main/docs/customData.schema.json",
+  "version": 1.1,
+  "tags": [
+    {
+      "name": "jp-accordion",
+      "description": "\n---\n",
+      "attributes": [{ "name": "multiple", "values": [] }],
+      "references": []
+    },
+    {
+      "name": "jp-alert",
+      "description": "\n---\n",
+      "attributes": [
+        { "name": "title", "values": [] },
+        { "name": "message", "values": [] },
+        { "name": "state", "values": [] }
+      ],
+      "references": []
+    },
+    {
+      "name": "jp-asset-manager",
+      "description": "\n---\n",
+      "attributes": [
+        { "name": "wording", "values": [] },
+        { "name": "rootPath", "values": [] },
+        { "name": "maxSize", "values": [] },
+        { "name": "acceptedFiles", "values": [] },
+        { "name": "shownFiles", "values": [] },
+        { "name": "service", "values": [] },
+        { "name": "selectable", "values": [] },
+        { "name": "clearSelection", "values": [] }
+      ],
+      "references": []
+    },
+    {
+      "name": "jp-async-table",
+      "description": "\n---\n",
+      "attributes": [
+        { "name": "wording", "values": [] },
+        { "name": "allowArrangeColumns", "values": [] },
+        { "name": "showArrangingColumns", "values": [] },
+        { "name": "freezeFirstColumn", "values": [] },
+        { "name": "freezeLastColumn", "values": [] },
+        { "name": "showExport", "values": [] },
+        { "name": "showImport", "values": [] },
+        { "name": "rowClickable", "values": [] },
+        { "name": "headers", "values": [] },
+        { "name": "pageSizes", "values": [] },
+        { "name": "pageSize", "values": [] },
+        { "name": "sort", "values": [] },
+        { "name": "service", "values": [] },
+        { "name": "id", "values": [] },
+        { "name": "height", "values": [] },
+        { "name": "getData", "values": [] },
+        { "name": "rows", "values": [] },
+        { "name": "arrangeColumnDialog", "values": [] },
+        { "name": "removeRow", "values": [] },
+        { "name": "addRow", "values": [] },
+        { "name": "updateRow", "values": [] }
+      ],
+      "references": []
+    },
+    {
+      "name": "jp-autocomplete",
+      "description": "\n---\n",
+      "attributes": [
+        { "name": "wording", "values": [] },
+        { "name": "options", "values": [] },
+        { "name": "value", "values": [] },
+        { "name": "asyncOptions", "values": [] },
+        { "name": "lag", "values": [] },
+        { "name": "label", "values": [] },
+        { "name": "labelType", "values": [] },
+        { "name": "id", "values": [] },
+        { "name": "name", "values": [] },
+        { "name": "disabled", "values": [] },
+        { "name": "attachedInternals", "values": [] },
+        { "name": "required", "values": [] },
+        { "name": "placeholder", "values": [] },
+        { "name": "minlength", "values": [] },
+        { "name": "maxlength", "values": [] },
+        { "name": "pattern", "values": [] },
+        { "name": "validationMessages", "values": [] },
+        { "name": "requiredValidationMessage", "values": [] },
+        { "name": "minlengthValidationMessage", "values": [] },
+        { "name": "maxlengthValidationMessage", "values": [] },
+        { "name": "patternValidationMessage", "values": [] },
+        { "name": "reportValidity", "values": [] },
+        { "name": "headers", "values": [] },
+        { "name": "rows", "values": [] },
+        { "name": "sort", "values": [] },
+        { "name": "service", "values": [] },
+        { "name": "showExport", "values": [] },
+        { "name": "showArrangingColumns", "values": [] },
+        { "name": "freezeFirstColumn", "values": [] },
+        { "name": "freezeLastColumn", "values": [] }
+      ],
+      "references": []
+    },
+    {
+      "name": "jp-bellow",
+      "description": "\n---\n",
+      "attributes": [
+        { "name": "title", "values": [] },
+        { "name": "value", "values": [] },
+        { "name": "starsInput", "values": [] },
+        { "name": "indicator", "values": [] },
+        { "name": "style", "values": [] }
+      ],
+      "references": []
+    },
+    {
+      "name": "jp-button",
+      "description": "\n---\n",
+      "attributes": [
+        { "name": "disabled", "values": [] },
+        { "name": "loading", "values": [] },
+        { "name": "variant", "values": [] },
+        { "name": "color", "values": [] },
+        { "name": "type", "values": [] },
+        { "name": "determinate", "values": [] },
+        { "name": "progress", "values": [] },
+        { "name": "radius", "values": [] },
+        { "name": "stroke", "values": [] }
+      ],
+      "references": []
+    },
+    {
+      "name": "jp-carousel",
+      "description": "\n---\n",
+      "attributes": [
+        { "name": "images", "values": [] },
+        { "name": "imagesPerSlide", "values": [] },
+        { "name": "enablePagination", "values": [] },
+        { "name": "sliderBar", "values": [] },
+        { "name": "autoSlide", "values": [] },
+        { "name": "interval", "values": [] }
+      ],
+      "references": []
+    },
+    {
+      "name": "jp-checkbox",
+      "description": "\n---\n",
+      "attributes": [
+        { "name": "attachedInternals", "values": [] },
+        { "name": "value", "values": [] },
+        { "name": "options", "values": [] },
+        { "name": "minSelects", "values": [] },
+        { "name": "maxSelects", "values": [] },
+        { "name": "minselectsValidationMessage", "values": [] },
+        { "name": "maxselectsValidationMessage", "values": [] },
+        { "name": "validationMessages", "values": [] },
+        { "name": "label", "values": [] },
+        { "name": "required", "values": [] },
+        { "name": "getValue", "values": [] },
+        { "name": "reportValidity", "values": [] },
+        { "name": "name", "values": [] },
+        { "name": "inline", "values": [] },
+        { "name": "requiredValidationMessage", "values": [] }
+      ],
+      "references": []
+    },
+    {
+      "name": "jp-chips",
+      "description": "\n---\n",
+      "attributes": [
+        { "name": "attachedInternals", "values": [] },
+        { "name": "value", "values": [] },
+        { "name": "id", "values": [] },
+        { "name": "name", "values": [] },
+        { "name": "label", "values": [] },
+        { "name": "labelType", "values": [] },
+        { "name": "placeholder", "values": [] },
+        { "name": "minitems", "values": [] },
+        { "name": "maxitems", "values": [] },
+        { "name": "pattern", "values": [] },
+        { "name": "required", "values": [] },
+        { "name": "unique", "values": [] },
+        { "name": "disabled", "values": [] },
+        { "name": "chips", "values": [] },
+        { "name": "inputFocused", "values": [] },
+        { "name": "inputValue", "values": [] },
+        { "name": "validationMessages", "values": [] },
+        { "name": "requiredValidationMessage", "values": [] },
+        { "name": "minitemsValidationMessage", "values": [] },
+        { "name": "maxitemsValidationMessage", "values": [] },
+        { "name": "uniqueValidationMessage", "values": [] },
+        { "name": "patternValidationMessage", "values": [] },
+        { "name": "getValue", "values": [] },
+        { "name": "reportValidity", "values": [] }
+      ],
+      "references": []
+    },
+    {
+      "name": "jp-ckeditor",
+      "description": "\n---\n",
+      "attributes": [
+        { "name": "attachedInternals", "values": [] },
+        { "name": "service", "values": [] },
+        { "name": "value", "values": [] },
+        { "name": "id", "values": [] },
+        { "name": "name", "values": [] },
+        { "name": "label", "values": [] },
+        { "name": "options", "values": [] },
+        { "name": "required", "values": [] },
+        { "name": "validationMessages", "values": [] },
+        { "name": "requiredValidationMessage", "values": [] },
+        { "name": "getValue", "values": [] },
+        { "name": "save", "values": [] }
+      ],
+      "references": []
+    },
+    {
+      "name": "jp-code-editor",
+      "description": "\n---\n",
+      "attributes": [
+        { "name": "attachedInternals", "values": [] },
+        { "name": "label", "values": [] },
+        { "name": "name", "values": [] },
+        { "name": "id", "values": [] },
+        { "name": "value", "values": [] },
+        { "name": "options", "values": [] },
+        { "name": "getValue", "values": [] },
+        { "name": "required", "values": [] },
+        { "name": "inline", "values": [] },
+        { "name": "requiredValidationMessage", "values": [] },
+        { "name": "reportValidity", "values": [] }
+      ],
+      "references": []
+    },
+    {
+      "name": "jp-color",
+      "description": "\n---\n",
+      "attributes": [
+        { "name": "attachedInternals", "values": [] },
+        { "name": "id", "values": [] },
+        { "name": "name", "values": [] },
+        { "name": "value", "values": [] },
+        { "name": "label", "values": [] },
+        { "name": "disabled", "values": [] },
+        { "name": "required", "values": [] },
+        { "name": "getValue", "values": [] }
+      ],
+      "references": []
+    },
+    {
+      "name": "jp-confirm",
+      "description": "\n---\n",
+      "attributes": [
+        { "name": "title", "values": [] },
+        { "name": "message", "values": [] },
+        { "name": "reject", "values": [] },
+        { "name": "accept", "values": [] },
+        { "name": "closable", "values": [] },
+        { "name": "steps", "values": [] },
+        { "name": "step", "values": [] },
+        { "name": "next", "values": [] },
+        { "name": "previous", "values": [] },
+        { "name": "reset", "values": [] }
+      ],
+      "references": []
+    },
+    {
+      "name": "jp-data-paginator",
+      "description": "\n---\n",
+      "attributes": [
+        { "name": "length", "values": [] },
+        { "name": "pageIndex", "values": [] },
+        { "name": "pageSize", "values": [] },
+        { "name": "pageSizeOptions", "values": [] },
+        { "name": "getRangeLabel", "values": [] },
+        { "name": "itemsPerPageLabel", "values": [] },
+        { "name": "nextPage", "values": [] },
+        { "name": "prevPage", "values": [] },
+        { "name": "lastPage", "values": [] },
+        { "name": "firstPage", "values": [] },
+        { "name": "wording", "values": [] },
+        { "name": "headers", "values": [] },
+        { "name": "rows", "values": [] },
+        { "name": "sort", "values": [] },
+        { "name": "service", "values": [] },
+        { "name": "showExport", "values": [] },
+        { "name": "showArrangingColumns", "values": [] },
+        { "name": "freezeFirstColumn", "values": [] },
+        { "name": "freezeLastColumn", "values": [] }
+      ],
+      "references": []
+    },
+    {
+      "name": "jp-date-range",
+      "description": "\n---\n",
+      "attributes": [
+        { "name": "attachedInternals", "values": [] },
+        { "name": "value", "values": [] },
+        { "name": "firstInternalValue", "values": [] },
+        { "name": "secondInternalValue", "values": [] },
+        { "name": "required", "values": [] },
+        { "name": "requiredValidationMessage", "values": [] },
+        { "name": "name", "values": [] },
+        { "name": "label", "values": [] },
+        { "name": "labelType", "values": [] },
+        { "name": "separator", "values": [] },
+        { "name": "displayFormat", "values": [] },
+        { "name": "displayFormatFunction", "values": [] },
+        { "name": "returnFormat", "values": [] },
+        { "name": "returnFormatFunction", "values": [] },
+        { "name": "getValue", "values": [] },
+        { "name": "reportValidity", "values": [] }
+      ],
+      "references": []
+    },
+    {
+      "name": "jp-datepicker",
+      "description": "\n---\n",
+      "attributes": [
+        { "name": "attachedInternals", "values": [] },
+        { "name": "value", "values": [] },
+        { "name": "internalValue", "values": [] },
+        { "name": "required", "values": [] },
+        { "name": "requiredValidationMessage", "values": [] },
+        { "name": "enableMultiple", "values": [] },
+        { "name": "separator", "values": [] },
+        { "name": "name", "values": [] },
+        { "name": "label", "values": [] },
+        { "name": "labelType", "values": [] },
+        { "name": "displayFormat", "values": [] },
+        { "name": "displayFormatFunction", "values": [] },
+        { "name": "returnFormat", "values": [] },
+        { "name": "returnFormatFunction", "values": [] },
+        { "name": "minDate", "values": [] },
+        { "name": "maxDate", "values": [] },
+        { "name": "getValue", "values": [] },
+        { "name": "reportValidity", "values": [] },
+        { "name": "wording", "values": [] },
+        { "name": "minSelects", "values": [] },
+        { "name": "maxSelects", "values": [] },
+        { "name": "disabled", "values": [] },
+        { "name": "hint", "values": [] },
+        { "name": "id", "values": [] },
+        { "name": "service", "values": [] },
+        { "name": "validationMessages", "values": [] },
+        { "name": "minselectsValidationMessage", "values": [] },
+        { "name": "maxselectsValidationMessage", "values": [] },
+        { "name": "singleSelect", "values": [] }
+      ],
+      "references": []
+    },
+    {
+      "name": "jp-file-list",
+      "description": "\n---\n",
+      "attributes": [
+        { "name": "wording", "values": [] },
+        { "name": "attachedInternals", "values": [] },
+        { "name": "value", "values": [] },
+        { "name": "label", "values": [] },
+        { "name": "id", "values": [] },
+        { "name": "name", "values": [] },
+        { "name": "service", "values": [] },
+        { "name": "maxfiles", "values": [] },
+        { "name": "minfiles", "values": [] },
+        { "name": "maxfilesValidationMessage", "values": [] },
+        { "name": "minfilesValidationMessage", "values": [] },
+        { "name": "validationMessages", "values": [] },
+        { "name": "sortable", "values": [] },
+        { "name": "required", "values": [] },
+        { "name": "displayFormat", "values": [] },
+        { "name": "displayFormatFunction", "values": [] },
+        { "name": "getValue", "values": [] },
+        { "name": "reportValidity", "values": [] },
+        { "name": "save", "values": [] }
+      ],
+      "references": []
+    },
+    {
+      "name": "jp-file-upload",
+      "description": "\n---\n",
+      "attributes": [
+        { "name": "label", "values": [] },
+        { "name": "labelType", "values": [] },
+        { "name": "attachedInternals", "values": [] },
+        { "name": "value", "values": [] },
+        { "name": "id", "values": [] },
+        { "name": "name", "values": [] },
+        { "name": "required", "values": [] },
+        { "name": "displayFormat", "values": [] },
+        { "name": "displayFormatFunction", "values": [] },
+        { "name": "service", "values": [] },
+        { "name": "getValue", "values": [] },
+        { "name": "save", "values": [] }
+      ],
+      "references": []
+    },
+    {
+      "name": "jp-image-gallery",
+      "description": "\n---\n",
+      "attributes": [
+        { "name": "images", "values": [] },
+        { "name": "enablePagination", "values": [] },
+        { "name": "sliderBar", "values": [] },
+        { "name": "autoSlide", "values": [] },
+        { "name": "interval", "values": [] }
+      ],
+      "references": []
+    },
+    {
+      "name": "jp-input",
+      "description": "\n---\n",
+      "attributes": [
+        { "name": "attachedInternals", "values": [] },
+        { "name": "value", "values": [] },
+        { "name": "label", "values": [] },
+        { "name": "name", "values": [] },
+        { "name": "placeholder", "values": [] },
+        { "name": "autocomplete", "values": [] },
+        { "name": "labelType", "values": [] },
+        { "name": "required", "values": [] },
+        { "name": "disabled", "values": [] },
+        { "name": "readonly", "values": [] },
+        { "name": "type", "values": [] },
+        { "name": "id", "values": [] },
+        { "name": "hint", "values": [] },
+        { "name": "minlength", "values": [] },
+        { "name": "maxlength", "values": [] },
+        { "name": "pattern", "values": [] },
+        { "name": "inputFocused", "values": [] },
+        { "name": "list", "values": [] },
+        { "name": "min", "values": [] },
+        { "name": "max", "values": [] },
+        { "name": "step", "values": [] },
+        { "name": "validationMessages", "values": [] },
+        { "name": "requiredValidationMessage", "values": [] },
+        { "name": "minlengthValidationMessage", "values": [] },
+        { "name": "maxlengthValidationMessage", "values": [] },
+        { "name": "patternValidationMessage", "values": [] },
+        { "name": "typeValidationMessage", "values": [] },
+        { "name": "getValue", "values": [] },
+        { "name": "validity", "values": [] },
+        { "name": "validationMessage", "values": [] },
+        { "name": "reportValidity", "values": [] },
+        { "name": "checkValidity", "values": [] }
+      ],
+      "references": []
+    },
+    {
+      "name": "jp-json-editor",
+      "description": "\n---\n",
+      "attributes": [
+        { "name": "label", "values": [] },
+        { "name": "name", "values": [] },
+        { "name": "id", "values": [] },
+        { "name": "value", "values": [] },
+        { "name": "options", "values": [] },
+        { "name": "getValue", "values": [] }
+      ],
+      "references": []
+    },
+    {
+      "name": "jp-link",
+      "description": "\n---\n",
+      "attributes": [
+        { "name": "disabled", "values": [] },
+        { "name": "variant", "values": [] },
+        { "name": "color", "values": [] },
+        { "name": "href", "values": [] },
+        { "name": "target", "values": [] }
+      ],
+      "references": []
+    },
+    {
+      "name": "jp-menu",
+      "description": "\n---\n",
+      "attributes": [
+        { "name": "label", "values": [] },
+        { "name": "attachedInternals", "values": [] },
+        { "name": "value", "values": [] },
+        { "name": "options", "values": [] },
+        { "name": "minSelects", "values": [] },
+        { "name": "maxSelects", "values": [] },
+        { "name": "minselectsValidationMessage", "values": [] },
+        { "name": "maxselectsValidationMessage", "values": [] },
+        { "name": "validationMessages", "values": [] },
+        { "name": "required", "values": [] },
+        { "name": "getValue", "values": [] },
+        { "name": "reportValidity", "values": [] },
+        { "name": "name", "values": [] },
+        { "name": "inline", "values": [] },
+        { "name": "requiredValidationMessage", "values": [] }
+      ],
+      "references": []
+    },
+    {
+      "name": "jp-multisearch",
+      "description": "\n---\n",
+      "attributes": [
+        { "name": "wording", "values": [] },
+        { "name": "attachedInternals", "values": [] },
+        { "name": "minSelects", "values": [] },
+        { "name": "maxSelects", "values": [] },
+        { "name": "disabled", "values": [] },
+        { "name": "required", "values": [] },
+        { "name": "hint", "values": [] },
+        { "name": "value", "values": [] },
+        { "name": "internalValue", "values": [] },
+        { "name": "id", "values": [] },
+        { "name": "name", "values": [] },
+        { "name": "label", "values": [] },
+        { "name": "labelType", "values": [] },
+        { "name": "getValue", "values": [] },
+        { "name": "service", "values": [] },
+        { "name": "validationMessages", "values": [] },
+        { "name": "requiredValidationMessage", "values": [] },
+        { "name": "minselectsValidationMessage", "values": [] },
+        { "name": "maxselectsValidationMessage", "values": [] },
+        { "name": "singleSelect", "values": [] },
+        { "name": "reportValidity", "values": [] }
+      ],
+      "references": []
+    },
+    {
+      "name": "jp-multiselect",
+      "description": "\n---\n",
+      "attributes": [
+        { "name": "attachedInternals", "values": [] },
+        { "name": "minSelects", "values": [] },
+        { "name": "maxSelects", "values": [] },
+        { "name": "options", "values": [] },
+        { "name": "disabled", "values": [] },
+        { "name": "required", "values": [] },
+        { "name": "hint", "values": [] },
+        { "name": "value", "values": [] },
+        { "name": "internalValue", "values": [] },
+        { "name": "id", "values": [] },
+        { "name": "name", "values": [] },
+        { "name": "label", "values": [] },
+        { "name": "labelType", "values": [] },
+        { "name": "showClear", "values": [] },
+        { "name": "getValue", "values": [] },
+        { "name": "validationMessages", "values": [] },
+        { "name": "requiredValidationMessage", "values": [] },
+        { "name": "minselectsValidationMessage", "values": [] },
+        { "name": "maxselectsValidationMessage", "values": [] },
+        { "name": "reportValidity", "values": [] }
+      ],
+      "references": []
+    },
+    {
+      "name": "jp-node-draggable",
+      "description": "\n---\n",
+      "attributes": [],
+      "references": []
+    },
+    {
+      "name": "jp-node",
+      "description": "\n---\n",
+      "attributes": [],
+      "references": []
+    },
+    {
+      "name": "jp-page-paginator",
+      "description": "\n---\n",
+      "attributes": [
+        { "name": "length", "values": [] },
+        { "name": "pageIndex", "values": [] },
+        { "name": "nextPage", "values": [] },
+        { "name": "prevPage", "values": [] },
+        { "name": "lastPage", "values": [] },
+        { "name": "firstPage", "values": [] },
+        { "name": "toPage", "values": [] }
+      ],
+      "references": []
+    },
+    {
+      "name": "jp-place-input",
+      "description": "\n---\n",
+      "attributes": [
+        { "name": "apiKey", "values": [] },
+        { "name": "value", "values": [] },
+        { "name": "attachedInternals", "values": [] },
+        { "name": "startingLatitude", "values": [] },
+        { "name": "startingLongitude", "values": [] },
+        { "name": "mapType", "values": [] },
+        { "name": "zoom", "values": [] },
+        { "name": "label", "values": [] },
+        { "name": "labelType", "values": [] },
+        { "name": "name", "values": [] },
+        { "name": "id", "values": [] },
+        { "name": "inputFocused", "values": [] },
+        { "name": "disabled", "values": [] },
+        { "name": "readonly", "values": [] },
+        { "name": "placeholder", "values": [] },
+        { "name": "mapId", "values": [] },
+        { "name": "returnedValue", "values": [] },
+        { "name": "enableMap", "values": [] },
+        { "name": "gestureHandling", "values": [] },
+        { "name": "types", "values": [] },
+        { "name": "componentRestrictions", "values": [] },
+        { "name": "required", "values": [] },
+        { "name": "requiredValidationMessage", "values": [] },
+        { "name": "resultValidationMessage", "values": [] },
+        { "name": "validationMessages", "values": [] },
+        { "name": "getValue", "values": [] },
+        { "name": "validity", "values": [] },
+        { "name": "validationMessage", "values": [] },
+        { "name": "reportValidity", "values": [] },
+        { "name": "checkValidity", "values": [] }
+      ],
+      "references": []
+    },
+    {
+      "name": "jp-progress-spinner",
+      "description": "\n---\n",
+      "attributes": [
+        { "name": "determinate", "values": [] },
+        { "name": "progress", "values": [] },
+        { "name": "radius", "values": [] },
+        { "name": "stroke", "values": [] },
+        { "name": "color", "values": [] }
+      ],
+      "references": []
+    },
+    {
+      "name": "jp-quill",
+      "description": "\n---\n",
+      "attributes": [
+        { "name": "attachedInternals", "values": [] },
+        { "name": "service", "values": [] },
+        { "name": "value", "values": [] },
+        { "name": "id", "values": [] },
+        { "name": "name", "values": [] },
+        { "name": "label", "values": [] },
+        { "name": "options", "values": [] },
+        { "name": "toolbarStyle", "values": [] },
+        { "name": "containerStyle", "values": [] },
+        { "name": "editorStyle", "values": [] },
+        { "name": "required", "values": [] },
+        { "name": "validationMessages", "values": [] },
+        { "name": "requiredValidationMessage", "values": [] },
+        { "name": "getValue", "values": [] },
+        { "name": "save", "values": [] }
+      ],
+      "references": []
+    },
+    {
+      "name": "jp-radio",
+      "description": "\n---\n",
+      "attributes": [
+        { "name": "attachedInternals", "values": [] },
+        { "name": "options", "values": [] },
+        { "name": "required", "values": [] },
+        { "name": "value", "values": [] },
+        { "name": "name", "values": [] },
+        { "name": "inline", "values": [] },
+        { "name": "requiredValidationMessage", "values": [] },
+        { "name": "label", "values": [] },
+        { "name": "getValue", "values": [] },
+        { "name": "reportValidity", "values": [] }
+      ],
+      "references": []
+    },
+    {
+      "name": "jp-range",
+      "description": "\n---\n",
+      "attributes": [
+        { "name": "disabled", "values": [] },
+        { "name": "id", "values": [] },
+        { "name": "max", "values": [] },
+        { "name": "min", "values": [] },
+        { "name": "value", "values": [] },
+        { "name": "step", "values": [] },
+        { "name": "name", "values": [] },
+        { "name": "discrete", "values": [] },
+        { "name": "required", "values": [] },
+        { "name": "label", "values": [] },
+        { "name": "getValue", "values": [] }
+      ],
+      "references": []
+    },
+    {
+      "name": "jp-review-stars",
+      "description": "\n---\n",
+      "attributes": [
+        { "name": "value", "values": [] },
+        { "name": "starsInput", "values": [] },
+        { "name": "indicator", "values": [] },
+        { "name": "style", "values": [] }
+      ],
+      "references": []
+    },
+    {
+      "name": "jp-select",
+      "description": "\n---\n",
+      "attributes": [
+        { "name": "attachedInternals", "values": [] },
+        { "name": "options", "values": [] },
+        { "name": "disabled", "values": [] },
+        { "name": "required", "values": [] },
+        { "name": "hint", "values": [] },
+        { "name": "value", "values": [] },
+        { "name": "id", "values": [] },
+        { "name": "name", "values": [] },
+        { "name": "label", "values": [] },
+        { "name": "labelType", "values": [] },
+        { "name": "showClear", "values": [] },
+        { "name": "getValue", "values": [] },
+        { "name": "requiredValidationMessage", "values": [] },
+        { "name": "reportValidity", "values": [] }
+      ],
+      "references": []
+    },
+    {
+      "name": "jp-slider",
+      "description": "\n---\n",
+      "attributes": [
+        { "name": "disabled", "values": [] },
+        { "name": "id", "values": [] },
+        { "name": "max", "values": [] },
+        { "name": "min", "values": [] },
+        { "name": "value", "values": [] },
+        { "name": "step", "values": [] },
+        { "name": "name", "values": [] },
+        { "name": "discrete", "values": [] },
+        { "name": "required", "values": [] },
+        { "name": "label", "values": [] },
+        { "name": "getValue", "values": [] }
+      ],
+      "references": []
+    },
+    {
+      "name": "jp-stepper",
+      "description": "\n---\n",
+      "attributes": [
+        { "name": "steps", "values": [] },
+        { "name": "step", "values": [] },
+        { "name": "next", "values": [] },
+        { "name": "previous", "values": [] },
+        { "name": "reset", "values": [] }
+      ],
+      "references": []
+    },
+    {
+      "name": "jp-table",
+      "description": "\n---\n",
+      "attributes": [
+        { "name": "wording", "values": [] },
+        { "name": "headers", "values": [] },
+        { "name": "rows", "values": [] },
+        { "name": "sort", "values": [] },
+        { "name": "service", "values": [] },
+        { "name": "showExport", "values": [] },
+        { "name": "showArrangingColumns", "values": [] },
+        { "name": "freezeFirstColumn", "values": [] },
+        { "name": "freezeLastColumn", "values": [] }
+      ],
+      "references": []
+    },
+    {
+      "name": "jp-tabs",
+      "description": "\n---\n",
+      "attributes": [
+        { "name": "tab", "values": [] },
+        { "name": "next", "values": [] },
+        { "name": "previous", "values": [] }
+      ],
+      "references": []
+    },
+    {
+      "name": "jp-textarea",
+      "description": "\n---\n",
+      "attributes": [
+        { "name": "attachedInternals", "values": [] },
+        { "name": "id", "values": [] },
+        { "name": "value", "values": [] },
+        { "name": "label", "values": [] },
+        { "name": "labelType", "values": [] },
+        { "name": "hint", "values": [] },
+        { "name": "disabled", "values": [] },
+        { "name": "name", "values": [] },
+        { "name": "placeholder", "values": [] },
+        { "name": "inputFocused", "values": [] },
+        { "name": "rows", "values": [] },
+        { "name": "required", "values": [] },
+        { "name": "readonly", "values": [] },
+        { "name": "minlength", "values": [] },
+        { "name": "maxlength", "values": [] },
+        { "name": "getValue", "values": [] },
+        { "name": "validationMessages", "values": [] },
+        { "name": "requiredValidationMessage", "values": [] },
+        { "name": "minlengthValidationMessage", "values": [] },
+        { "name": "maxlengthValidationMessage", "values": [] },
+        { "name": "patternValidationMessage", "values": [] },
+        { "name": "reportValidity", "values": [] }
+      ],
+      "references": []
+    },
+    {
+      "name": "jp-toggle",
+      "description": "\n---\n",
+      "attributes": [
+        { "name": "attachedInternals", "values": [] },
+        { "name": "name", "values": [] },
+        { "name": "value", "values": [] },
+        { "name": "label", "values": [] },
+        { "name": "required", "values": [] },
+        { "name": "requiredValidationMessage", "values": [] },
+        { "name": "size", "values": [] },
+        { "name": "disabled", "values": [] },
+        { "name": "getValue", "values": [] },
+        { "name": "reportValidity", "values": [] },
+        { "name": "starsInput", "values": [] },
+        { "name": "indicator", "values": [] },
+        { "name": "style", "values": [] }
+      ],
+      "references": []
+    },
+    {
+      "name": "jp-tooltip",
+      "description": "\n---\n",
+      "attributes": [
+        { "name": "label", "values": [] },
+        { "name": "mode", "values": [] }
+      ],
+      "references": []
+    },
+    {
+      "name": "jp-tree",
+      "description": "\n---\n",
+      "attributes": [
+        { "name": "title", "values": [] },
+        { "name": "collapsable", "values": [] },
+        { "name": "steps", "values": [] },
+        { "name": "step", "values": [] },
+        { "name": "next", "values": [] },
+        { "name": "previous", "values": [] },
+        { "name": "reset", "values": [] }
+      ],
+      "references": []
+    }
+  ]
+}

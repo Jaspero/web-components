@@ -1,1 +1,2 @@
-function c(n){return n.replace(/~1/g,"/").replace(/~0/g,"~")}function a(n){return n===""?[]:(n.charAt(0)!=="/"&&(n="/"+n),n.substring(1).split(/\//).map(c))}function i(n,t){const o=Array.isArray(t)?t:a(t);for(let e=0;e<o.length;++e){const r=o[e];if(!(typeof n=="object"&&r in n))throw new Error("Invalid reference token: "+r);n=n[r]}return n}export{i as g};
+function c(t){return t.replace(/~1/g,"/").replace(/~0/g,"~")}function i(t){return t===""?[]:(t.charAt(0)!=="/"&&(t="/"+t),t.substring(1).split(/\//).map(c))}function a(t,n){const o=Array.isArray(n)?n:i(n);for(let e=0;e<o.length;++e){const r=o[e];if(!(typeof t=="object"&&r in t))throw new Error("Invalid reference token: "+r);t=t[r]}return t}export{a as get};
+//# sourceMappingURL=json-pointer.js.map
