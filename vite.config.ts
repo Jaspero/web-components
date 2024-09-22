@@ -12,8 +12,8 @@ export default defineConfig({
     emptyOutDir: true,
     lib: {
       entry: [
-        ...sync('packages/lib/**/*.ts').map(i => i.replace(`packages\\lib\\`, '')),
-        ...sync('packages/lib/**/*.wc.svelte').map(i => i.replace(`packages\\lib\\`, '')),
+        ...sync('packages/lib/**/*.ts').map(i => i.replace(`packages/lib/`, '').replace(`packages\\lib\\`, '')),
+        ...sync('packages/lib/**/*.wc.svelte').map(i => i.replace(`packages/lib/`, '').replace(`packages\\lib\\`, '')),
       ],
       formats: ['es']
     },
