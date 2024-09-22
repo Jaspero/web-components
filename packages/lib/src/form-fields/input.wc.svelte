@@ -2,7 +2,6 @@
   customElement={{
     tag: 'jp-input',
     shadow: 'none',
-    delegatesFocus: true,
     extend: (customElementConstructor) => {
       return class extends customElementConstructor {
         static formAssociated = true;
@@ -21,8 +20,11 @@
   import { createEventDispatcher, onMount } from 'svelte';
 
   export let attachedInternals: ElementInternals;
-  export let value: string = '';
-  export let label: string = '';
+  export let value = '';
+  export let label = '';
+  export let name = '';
+  export let placeholder = '';
+  export let autocomplete: 'on' | 'off' = 'off';
   export let labelType: 'inside' | 'outside' = 'inside';
   export let required = false;
   export let disabled = false;
@@ -30,13 +32,10 @@
   export let type: 'text' | 'password' | 'email' | 'tel' | 'url' | 'number' | 'color' | 'time' = 'text';
   export let id: string | null = null;
   export let hint: string | null = null;
-  export let name: string = '';
-  export let autocomplete: string = 'off';
   export let minlength: number | null = null;
   export let maxlength: number | null = null;
   export let pattern: string | null = null;
-  export let placeholder: string = '';
-  export let inputFocused: boolean = false;
+  export let inputFocused = false;
   export let list: string | null = null;
   export let min: number | null = null;
   export let max: number | null = null;
@@ -66,7 +65,7 @@
 
   const dispatch = createEventDispatcher();
 
-  if (type === 'color') {
+  if (type === 'color' && !value) {
     value = '#000000';
   }
 
@@ -113,11 +112,11 @@
     dispatch('value', { value });
   }
 
-  onMount(()=>{
+  onMount(()=> {
     if(inputFocused){
       inputEl.focus();
     }
-  })
+  });
 </script>
 
 {#if label && labelType === 'outside'}
@@ -350,7 +349,6 @@
     -ms-user-select: none;
     user-select: none;
     gap: 0.75rem;
-    background-color: transparent;
     border: 1px solid var(--border-primary);
     -webkit-border-radius: 0.25rem;
     -moz-border-radius: 0.25rem;

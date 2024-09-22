@@ -1,4 +1,4 @@
-export function loadScript(src, isAsync: {async:boolean}, defer: {defer:boolean}) {
+export function loadScript(src: string, isAsync: {async:boolean}, defer: {defer:boolean}) {
     return new Promise((resolve, reject) => {
         if(typeof isAsync === "undefined") {
             isAsync = {async: true};

@@ -1,18 +1,21 @@
 export function jpTreeStructure(tree: Element): Object {
   if (tree.tagName !== 'JP-TREE' || !tree.hasAttribute('value')) return '';
 
-  let structure = {};
+  const structure: {
+    [key: string]: string[]
+  } = {};
+  const ind = tree.getAttribute('value') as string;
 
-  structure[tree.getAttribute('value')] = [];
+  structure[ind] = [];
 
   for (const child of tree.children) {
     if (!child.hasAttribute('value')) continue;
 
     if (child.tagName == 'JP-NODE') {
-      structure[tree.getAttribute('value')].push(child.getAttribute('value'));
+      structure[ind].push(child.getAttribute('value') as string);
     }
     if (child.tagName == 'JP-TREE') {
-      structure[tree.getAttribute('value')].push(jpTreeStructure(child));
+      structure[ind].push(jpTreeStructure(child) as string);
     }
   }
   return structure;

@@ -20,17 +20,17 @@ export async function renderConfirm(
   confirmEl.accept = options.accept;
   confirmEl.closable = options.closable;
 
-  options.host.appendChild(confirmEl);
+  options.host!.appendChild(confirmEl);
 
   function clear(action: string) {
-    options.host.removeChild(confirmEl);
+    options!.host!.removeChild(confirmEl);
 
     if (callback) {
       callback(action);
     }
   }
 
-  confirmEl.addEventListener('confirmation', (e) => clear(e.detail));
+  confirmEl.addEventListener('confirmation', (e: {detail: string}) => clear(e.detail));
 
   if (options.closable) {
     confirmEl.addEventListener('close', () => clear('close'));
