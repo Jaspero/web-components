@@ -191,7 +191,7 @@
   </div>
 {/if}
 
-<style>
+<style lang="postcss">
   .gallery {
     position: relative;
   }

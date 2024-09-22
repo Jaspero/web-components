@@ -281,7 +281,7 @@
 </div>
 <textarea {id} {name} bind:value={internalValue} {required} tabindex="-1" bind:this={textareaEl} />
 
-<style>
+<style lang="postcss">
   .label {
     margin-top: 0.5rem;
     margin-bottom: 0.125rem;

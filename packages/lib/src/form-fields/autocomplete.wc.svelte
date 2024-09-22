@@ -277,7 +277,7 @@
   </label>
 </div>
 
-<style>
+<style lang="postcss">
   .field {
     font-size: 0.75rem;
     line-height: 1rem;
@@ -360,19 +360,6 @@
     -o-transform: translateY(0);
     transform: translateY(0);
     font-size: 0.75rem;
-  }
-
-  .field-label.move + .field-input:-moz-placeholder {
-    opacity: 1;
-  }
-  .field-label.move + .field-input::-moz-placeholder {
-    opacity: 1;
-  }
-  .field-label.move + .field-input:-ms-input-placeholder {
-    opacity: 1;
-  }
-  .field-label.move + .field-input::-ms-input-placeholder {
-    opacity: 1;
   }
   .field-label.move + .field-input::placeholder {
     opacity: 1;

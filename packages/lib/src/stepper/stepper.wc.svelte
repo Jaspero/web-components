@@ -57,7 +57,7 @@
   {/each}
 </div>
 
-<style>
+<style lang="postcss">
   .stepper {
     display: flex;
     justify-content: space-between;

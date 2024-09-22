@@ -18,7 +18,7 @@
 
 <script lang="ts">
   import { onMount, createEventDispatcher } from 'svelte';
-  import { clickOutside } from '../clickOutside';
+  import { clickOutside } from '../click-outside';
   import { loadScript } from '../utils/scriptLoader';
 
   export let apiKey: string;
@@ -326,7 +326,7 @@
   </div>
 {/if}
 
-<style>
+<style lang="postcss">
   .label {
     margin-top: 0.5rem;
     margin-bottom: 0.125rem;

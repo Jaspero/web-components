@@ -30,7 +30,7 @@
   <slot />
 </div>
 
-<style>
+<style lang="postcss">
   .accordion {
     width: 100%;
     margin: 1rem 0;

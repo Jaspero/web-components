@@ -131,7 +131,7 @@
   {/if}
 </div>
 
-<style>
+<style lang="postcss">
   .slider {
     --slider-max-width: 600px;
   }

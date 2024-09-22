@@ -6,8 +6,8 @@
 />
 
 <script>
-  import { clickOutside } from '../clickOutside';
   import { createEventDispatcher } from 'svelte';
+  import { clickOutside } from '../click-outside';
 
   export let title = '';
   export let message = '';
@@ -47,17 +47,25 @@
     {/if}
 
     <div class="dialog-actions">
-      <button type="button" class="reject-button" on:click={() => dispatch('confirmation', { confirmed: false })}>
+      <button
+        type="button"
+        class="reject-button"
+        on:click={() => dispatch('confirmation', { confirmed: false })}
+      >
         {reject}
       </button>
-      <button type="button" class="accept-button" on:click={() => dispatch('confirmation', { confirmed: true })}>
+      <button
+        type="button"
+        class="accept-button"
+        on:click={() => dispatch('confirmation', { confirmed: true })}
+      >
         {accept}
       </button>
     </div>
   </div>
 </div>
 
-<style>
+<style lang="postcss">
   .overlay {
     z-index: 10;
     position: fixed;
@@ -65,28 +73,18 @@
     left: 0;
     width: 100%;
     height: 100%;
-    display: -webkit-box;
-    display: -webkit-flex;
-    display: -moz-box;
-    display: -ms-flexbox;
+
     display: flex;
-    -webkit-box-pack: center;
-    -webkit-justify-content: center;
-    -moz-box-pack: center;
-    -ms-flex-pack: center;
+
     justify-content: center;
-    -webkit-box-align: center;
-    -webkit-align-items: center;
-    -moz-box-align: center;
-    -ms-flex-align: center;
+
     align-items: center;
     background-color: rgba(0, 0, 0, 0.2);
   }
 
   .dialog {
     background-color: var(--background-primary);
-    -webkit-border-radius: 0.25rem;
-    -moz-border-radius: 0.25rem;
+
     border-radius: 0.25rem;
     max-width: 20rem;
   }
@@ -108,15 +106,8 @@
   }
 
   .dialog-actions {
-    display: -webkit-box;
-    display: -webkit-flex;
-    display: -moz-box;
-    display: -ms-flexbox;
     display: flex;
-    -webkit-box-pack: justify;
-    -webkit-justify-content: space-between;
-    -moz-box-pack: justify;
-    -ms-flex-pack: justify;
+
     justify-content: space-between;
     border-top: 1px solid var(--border-primary);
     padding: 1rem;
@@ -125,33 +116,21 @@
   .reject-button,
   .accept-button {
     position: relative;
-    display: -webkit-inline-box;
-    display: -webkit-inline-flex;
-    display: -moz-inline-box;
-    display: -ms-inline-flexbox;
+
     display: inline-flex;
-    -webkit-box-align: center;
-    -webkit-align-items: center;
-    -moz-box-align: center;
-    -ms-flex-align: center;
+
     align-items: center;
-    -webkit-box-pack: center;
-    -webkit-justify-content: center;
-    -moz-box-pack: center;
-    -ms-flex-pack: center;
+
     justify-content: center;
     min-width: 4rem;
     padding: 0 1rem;
-    -webkit-border-radius: 0.25rem;
-    -moz-border-radius: 0.25rem;
+
     border-radius: 0.25rem;
     height: 36px;
     border: none;
     outline: none;
     cursor: pointer;
-    -webkit-user-select: none;
-    -moz-user-select: none;
-    -ms-user-select: none;
+
     user-select: none;
     vertical-align: middle;
     text-decoration: none;

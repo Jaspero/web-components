@@ -390,7 +390,7 @@
 />
 <input type="text" {id} {name} bind:value={internalValue} hidden />
 
-<style>
+<style lang="postcss">
   .grab {
     cursor: grab;
   }

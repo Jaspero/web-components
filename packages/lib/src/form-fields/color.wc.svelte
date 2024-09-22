@@ -43,7 +43,7 @@
     </div>
   {/if}
   <input type="color" {id} {name} {disabled} bind:value />
-<style>
+<style lang="postcss">
   .label{
     display: flex;
     flex-direction: column;

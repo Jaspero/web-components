@@ -6,7 +6,7 @@
 />
 
 <script lang="ts">
-  import { clickOutside } from '../clickOutside';
+  import { clickOutside } from '../click-outside';
 
   export let label = 'Menu';
   // Default needs to be invisible rather than unrendered because of .offsetHeight
@@ -52,7 +52,7 @@
   </div>
 </div>
 
-<style>
+<style lang="postcss">
   .wrapper {
     display: inline-block;
     position: relative;

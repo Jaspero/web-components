@@ -278,7 +278,7 @@
   </div>
 </div>
 
-<style>
+<style lang="postcss">
   .table-card {
     background-color: var(--background-primary);
     -webkit-border-radius: 0.25rem;

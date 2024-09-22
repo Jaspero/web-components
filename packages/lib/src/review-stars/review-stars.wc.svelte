@@ -198,7 +198,7 @@
   </div>
 </div>
 
-<style>
+<style lang="postcss">
   .star-rating {
     display: flex;
     align-items: center;

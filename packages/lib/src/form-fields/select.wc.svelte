@@ -16,7 +16,7 @@
 />
 
 <script lang="ts">
-  import { clickOutside } from '../clickOutside';
+  import { clickOutside } from '../click-outside';
   import { createEventDispatcher, onMount } from 'svelte';
   import { wait } from '../utils/wait';
 
@@ -374,7 +374,7 @@
  </div>
 {/if}
 
-<style>
+<style lang="postcss">
   .wrapper {
     position: relative;
   }

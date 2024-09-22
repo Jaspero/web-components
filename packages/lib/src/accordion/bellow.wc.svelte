@@ -58,7 +58,7 @@
   </div>
 </div>
 
-<style>
+<style lang="postcss">
   .expansion-panel {
     background-color: var(--background-primary);
     box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16);
@@ -112,17 +112,10 @@
     height: 1rem;
     min-width: 1rem;
     min-height: 1rem;
-    -webkit-transition: transform 0.3s;
-    -o-transition: transform 0.3s;
-    -moz-transition: transform 0.3s;
     transition: transform 0.3s;
   }
 
   .toggle-arrow.rotate {
-    -webkit-transform: rotate(-180deg);
-    -moz-transform: rotate(-180deg);
-    -ms-transform: rotate(-180deg);
-    -o-transform: rotate(-180deg);
     transform: rotate(-180deg);
   }
 </style>

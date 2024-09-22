@@ -73,7 +73,7 @@
   <span class="slider round" class:pointer={!disabled}></span>
 </label>
 
-<style>
+<style lang="postcss">
   .switch {
     position: relative;
     display: inline-block;

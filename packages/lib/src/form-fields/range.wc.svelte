@@ -90,7 +90,7 @@
     />
   </div>
 
-<style>
+<style lang="postcss">
 
 
   .slider-container {

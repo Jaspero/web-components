@@ -52,7 +52,7 @@
   </div>
 </div>
 
-<style>
+<style lang="postcss">
   .alert {
     position: fixed;
     bottom: 10px;

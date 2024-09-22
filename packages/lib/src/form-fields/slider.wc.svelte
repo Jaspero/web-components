@@ -53,7 +53,7 @@
     />
   </div>
 
-<style>
+<style lang="postcss">
   .slider-container {
     min-width: 300px;
     width: 1px;

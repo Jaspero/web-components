@@ -19,7 +19,7 @@
   <slot />
 </a>
 
-<style>
+<style lang="postcss">
   :host {
     display: inline-flex;
   }

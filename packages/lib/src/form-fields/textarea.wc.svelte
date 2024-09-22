@@ -153,7 +153,7 @@
   {/if}
 </div>
 
-<style>
+<style lang="postcss">
   .has-hint {
     position: relative;
     margin-bottom: 1.25rem;

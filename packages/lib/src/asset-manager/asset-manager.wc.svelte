@@ -261,35 +261,21 @@
   hidden
 />
 
-<style>
+<style lang="postcss">
 
   * {
-    -webkit-box-sizing: border-box;
-    -moz-box-sizing: border-box;
     box-sizing: border-box;
   }
 
   .card {
     position: relative;
-    display: -webkit-box;
-    display: -webkit-flex;
-    display: -moz-box;
-    display: -ms-flexbox;
     display: flex;
-    -webkit-box-orient: vertical;
-    -webkit-box-direction: normal;
-    -webkit-flex-direction: column;
-    -moz-box-orient: vertical;
-    -moz-box-direction: normal;
-    -ms-flex-direction: column;
     flex-direction: column;
     max-width: 802px;
     width: 100%;
     height: 500px;
     overflow: auto;
     background-color: white;
-    -webkit-box-shadow: 0 3px 6px rgba(0, 0, 0, 0.12);
-    -moz-box-shadow: 0 3px 6px rgba(0, 0, 0, 0.12);
     box-shadow: 0 3px 6px rgba(0, 0, 0, 0.12);
     font-family: sans-serif;
   }
@@ -299,15 +285,7 @@
     position: -webkit-sticky;
     position: sticky;
     top: 0;
-    display: -webkit-box;
-    display: -webkit-flex;
-    display: -moz-box;
-    display: -ms-flexbox;
     display: flex;
-    -webkit-box-pack: justify;
-    -webkit-justify-content: space-between;
-    -moz-box-pack: justify;
-    -ms-flex-pack: justify;
     justify-content: space-between;
     background-color: white;
     padding: 20px;
@@ -315,34 +293,18 @@
   }
 
   header .route {
-    display: -webkit-box;
-    display: -webkit-flex;
-    display: -moz-box;
-    display: -ms-flexbox;
     display: flex;
-    -webkit-box-align: center;
-    -webkit-align-items: center;
-    -moz-box-align: center;
-    -ms-flex-align: center;
     align-items: center;
     height: 100%;
     font-size: 20px;
   }
 
   header nav {
-    display: -webkit-box;
-    display: -webkit-flex;
-    display: -moz-box;
-    display: -ms-flexbox;
     display: flex;
     gap: 12px;
   }
 
   .header-actions {
-    display: -webkit-box;
-    display: -webkit-flex;
-    display: -moz-box;
-    display: -ms-flexbox;
     display: flex;
     gap: 12px;
   }
@@ -350,30 +312,13 @@
   header button {
     width: 40px;
     height: 40px;
-    display: -webkit-box;
-    display: -webkit-flex;
-    display: -moz-box;
-    display: -ms-flexbox;
     display: flex;
-    -webkit-box-pack: center;
-    -webkit-justify-content: center;
-    -moz-box-pack: center;
-    -ms-flex-pack: center;
     justify-content: center;
-    -webkit-box-align: center;
-    -webkit-align-items: center;
-    -moz-box-align: center;
-    -ms-flex-align: center;
     align-items: center;
     background-color: transparent;
     border: 1px solid rgba(0, 0, 0, 0.12);
-    -webkit-border-radius: 12px;
-    -moz-border-radius: 12px;
     border-radius: 12px;
     cursor: pointer;
-    -webkit-transition: 0.25s;
-    -o-transition: 0.25s;
-    -moz-transition: 0.25s;
     transition: 0.25s;
   }
 
@@ -390,13 +335,8 @@
 
   footer {
     z-index: 1;
-    position: -webkit-sticky;
     position: sticky;
     bottom: 0;
-    display: -webkit-box;
-    display: -webkit-flex;
-    display: -moz-box;
-    display: -ms-flexbox;
     display: flex;
     background-color: white;
     padding: 20px;
@@ -410,13 +350,8 @@
     background-color: #E66439;
     color: white;
     border: none;
-    -webkit-border-radius: 12px;
-    -moz-border-radius: 12px;
     border-radius: 12px;
     cursor: pointer;
-    -webkit-transition: 0.25s;
-    -o-transition: 0.25s;
-    -moz-transition: 0.25s;
     transition: 0.25s;
   }
 
@@ -426,10 +361,6 @@
   }
 
   footer button:active {
-    -webkit-transform: scale(.95);
-    -moz-transform: scale(.95);
-    -ms-transform: scale(.95);
-    -o-transform: scale(.95);
     transform: scale(.95);
   }
 
@@ -440,14 +371,9 @@
     background-color: #E66439;
     color: white;
     border: none;
-    -webkit-border-radius: 8px;
-    -moz-border-radius: 8px;
     border-radius: 8px;
     cursor: pointer;
     margin-top: 12px;
-    -webkit-transition: 0.25s;
-    -o-transition: 0.25s;
-    -moz-transition: 0.25s;
     transition: 0.25s;
   }
 
@@ -457,10 +383,6 @@
   }
 
   .add-folder-submit:active {
-    -webkit-transform: scale(.95);
-    -moz-transform: scale(.95);
-    -ms-transform: scale(.95);
-    -o-transform: scale(.95);
     transform: scale(.95);
   }
 
@@ -470,28 +392,11 @@
     left: 0;
     width: 100%;
     height: 100%;
-    display: -webkit-box;
-    display: -webkit-flex;
-    display: -moz-box;
-    display: -ms-flexbox;
     display: flex;
-    -webkit-box-orient: vertical;
-    -webkit-box-direction: normal;
-    -webkit-flex-direction: column;
-    -moz-box-orient: vertical;
-    -moz-box-direction: normal;
-    -ms-flex-direction: column;
+
     flex-direction: column;
     gap: 12px;
-    -webkit-box-pack: center;
-    -webkit-justify-content: center;
-    -moz-box-pack: center;
-    -ms-flex-pack: center;
     justify-content: center;
-    -webkit-box-align: center;
-    -webkit-align-items: center;
-    -moz-box-align: center;
-    -ms-flex-align: center;
     align-items: center;
     background-color: white;
   }
@@ -513,8 +418,6 @@
     border: 1px solid rgba(0,0,0,.08);
     height: 40px;
     padding: 0 12px;
-    -webkit-border-radius: 8px;
-    -moz-border-radius: 8px;
     border-radius: 8px;
     font-size: 14px;
     margin-top: 4px;
@@ -524,8 +427,6 @@
     position: relative;
     height: 100%;
     border: 1px solid rgba(0, 0, 0, 0.12);
-    -webkit-border-radius: 12px;
-    -moz-border-radius: 12px;
     border-radius: 12px;
     background-color: white;
     overflow: hidden;
@@ -549,24 +450,10 @@
     right: 4px;
     width: 32px;
     height: 32px;
-    display: -webkit-box;
-    display: -webkit-flex;
-    display: -moz-box;
-    display: -ms-flexbox;
     display: flex;
-    -webkit-box-pack: center;
-    -webkit-justify-content: center;
-    -moz-box-pack: center;
-    -ms-flex-pack: center;
     justify-content: center;
-    -webkit-box-align: center;
-    -webkit-align-items: center;
-    -moz-box-align: center;
-    -ms-flex-align: center;
     align-items: center;
     background-color: white;
-    -webkit-border-radius: 8px;
-    -moz-border-radius: 8px;
     border-radius: 8px;
     cursor: pointer;
     border: 1px solid rgba(0, 0, 0, 0.08);
@@ -579,52 +466,24 @@
   :global(.file .file-icon-image) {
     width: 100%;
     height: 150px;
-    -o-object-fit: contain;
     object-fit: contain;
-    -webkit-user-select: none;
-    -moz-user-select: none;
-    -ms-user-select: none;
     user-select: none;
     pointer-events: none;
     background-color: rgba(0, 0, 0, 0.02);
   }
 
   .files {
-    display: -webkit-box;
-    display: -webkit-flex;
-    display: -moz-box;
-    display: -ms-flexbox;
     display: flex;
-    -webkit-box-flex: 1;
-    -webkit-flex: 1;
-    -moz-box-flex: 1;
-    -ms-flex: 1;
     flex: 1;
-    -webkit-align-content: flex-start;
-    -ms-flex-line-pack: start;
     align-content: flex-start;
-    -webkit-flex-wrap: wrap;
-    -ms-flex-wrap: wrap;
     flex-wrap: wrap;
     padding: 12px;
   }
 
   .info {
-    display: -webkit-box;
-    display: -webkit-flex;
-    display: -moz-box;
-    display: -ms-flexbox;
     display: flex;
-    -webkit-box-flex: 1;
-    -webkit-flex: 1;
-    -moz-box-flex: 1;
-    -ms-flex: 1;
     flex: 1;
-    -webkit-align-content: flex-start;
-    -ms-flex-line-pack: start;
     align-content: flex-start;
-    -webkit-flex-wrap: wrap;
-    -ms-flex-wrap: wrap;
     flex-wrap: wrap;
     padding: 20px;
   }
@@ -632,12 +491,7 @@
   .asset-button {
     width: 25%;
     padding: 8px;
-    -webkit-transition: 0.25s;
-    -o-transition: 0.25s;
-    -moz-transition: 0.25s;
     transition: 0.25s;
-    -webkit-border-radius: 12px;
-    -moz-border-radius: 12px;
     border-radius: 12px;
     cursor: pointer;
   }
@@ -652,8 +506,6 @@
   }
 
   :global(.folder) {
-    -webkit-box-sizing: border-box;
-    -moz-box-sizing: border-box;
     box-sizing: border-box;
     width: 25%;
     padding: 8px;
@@ -662,32 +514,15 @@
   :global(.folder button) {
     width: 100%;
     padding: 12px;
-    display: -webkit-box;
-    display: -webkit-flex;
-    display: -moz-box;
-    display: -ms-flexbox;
     display: flex;
-    -webkit-box-pack: start;
-    -webkit-justify-content: flex-start;
-    -moz-box-pack: start;
-    -ms-flex-pack: start;
     justify-content: flex-start;
-    -webkit-box-align: center;
-    -webkit-align-items: center;
-    -moz-box-align: center;
-    -ms-flex-align: center;
     align-items: center;
     border: 1px solid rgba(0, 0, 0, 0.12);
     gap: 6px;
     background-color: transparent;
     font-size: 14px;
-    -webkit-border-radius: 12px;
-    -moz-border-radius: 12px;
     border-radius: 12px;
     cursor: pointer;
-    -webkit-transition: 0.25s;
-    -o-transition: 0.25s;
-    -moz-transition: 0.25s;
     transition: 0.25s;
   }
 
@@ -699,270 +534,65 @@
   .loader {
     width: 100%;
     height: 100%;
-    display: -webkit-box;
-    display: -webkit-flex;
-    display: -moz-box;
-    display: -ms-flexbox;
     display: flex;
-    -webkit-box-pack: center;
-    -webkit-justify-content: center;
-    -moz-box-pack: center;
-    -ms-flex-pack: center;
     justify-content: center;
-    -webkit-box-align: center;
-    -webkit-align-items: center;
-    -moz-box-align: center;
-    -ms-flex-align: center;
     align-items: center;
   }
 
   .spinner {
     width: 150px;
     height: 150px;
-    -webkit-border-radius: 50%;
-    -moz-border-radius: 50%;
     border-radius: 50%;
     border: 9px solid var(--primary-color);
-    -webkit-animation:
-            spinner-bulqg1 0.8s infinite linear alternate,
-            spinner-oaa3wk 1.6s infinite linear;
-    -moz-animation:
-            spinner-bulqg1 0.8s infinite linear alternate,
-            spinner-oaa3wk 1.6s infinite linear;
-    -o-animation:
-            spinner-bulqg1 0.8s infinite linear alternate,
-            spinner-oaa3wk 1.6s infinite linear;
     animation:
             spinner-bulqg1 0.8s infinite linear alternate,
             spinner-oaa3wk 1.6s infinite linear;
   }
 
-  @-webkit-keyframes spinner-bulqg1 {
-    0% {
-      -webkit-clip-path: polygon(50% 50%, 0 0, 50% 0%, 50% 0%, 50% 0%, 50% 0%, 50% 0%);
-      clip-path: polygon(50% 50%, 0 0, 50% 0%, 50% 0%, 50% 0%, 50% 0%, 50% 0%);
-    }
-
-    12.5% {
-      -webkit-clip-path: polygon(50% 50%, 0 0, 50% 0%, 100% 0%, 100% 0%, 100% 0%, 100% 0%);
-      clip-path: polygon(50% 50%, 0 0, 50% 0%, 100% 0%, 100% 0%, 100% 0%, 100% 0%);
-    }
-
-    25% {
-      -webkit-clip-path: polygon(50% 50%, 0 0, 50% 0%, 100% 0%, 100% 100%, 100% 100%, 100% 100%);
-      clip-path: polygon(50% 50%, 0 0, 50% 0%, 100% 0%, 100% 100%, 100% 100%, 100% 100%);
-    }
-
-    50% {
-      -webkit-clip-path: polygon(50% 50%, 0 0, 50% 0%, 100% 0%, 100% 100%, 50% 100%, 0% 100%);
-      clip-path: polygon(50% 50%, 0 0, 50% 0%, 100% 0%, 100% 100%, 50% 100%, 0% 100%);
-    }
-
-    62.5% {
-      -webkit-clip-path: polygon(50% 50%, 100% 0, 100% 0%, 100% 0%, 100% 100%, 50% 100%, 0% 100%);
-      clip-path: polygon(50% 50%, 100% 0, 100% 0%, 100% 0%, 100% 100%, 50% 100%, 0% 100%);
-    }
-
-    75% {
-      -webkit-clip-path: polygon(50% 50%, 100% 100%, 100% 100%, 100% 100%, 100% 100%, 50% 100%, 0% 100%);
-      clip-path: polygon(50% 50%, 100% 100%, 100% 100%, 100% 100%, 100% 100%, 50% 100%, 0% 100%);
-    }
-
-    100% {
-      -webkit-clip-path: polygon(50% 50%, 50% 100%, 50% 100%, 50% 100%, 50% 100%, 50% 100%, 0% 100%);
-      clip-path: polygon(50% 50%, 50% 100%, 50% 100%, 50% 100%, 50% 100%, 50% 100%, 0% 100%);
-    }
-  }
-
-  @-moz-keyframes spinner-bulqg1 {
-    0% {
-      clip-path: polygon(50% 50%, 0 0, 50% 0%, 50% 0%, 50% 0%, 50% 0%, 50% 0%);
-    }
-
-    12.5% {
-      clip-path: polygon(50% 50%, 0 0, 50% 0%, 100% 0%, 100% 0%, 100% 0%, 100% 0%);
-    }
-
-    25% {
-      clip-path: polygon(50% 50%, 0 0, 50% 0%, 100% 0%, 100% 100%, 100% 100%, 100% 100%);
-    }
-
-    50% {
-      clip-path: polygon(50% 50%, 0 0, 50% 0%, 100% 0%, 100% 100%, 50% 100%, 0% 100%);
-    }
-
-    62.5% {
-      clip-path: polygon(50% 50%, 100% 0, 100% 0%, 100% 0%, 100% 100%, 50% 100%, 0% 100%);
-    }
-
-    75% {
-      clip-path: polygon(50% 50%, 100% 100%, 100% 100%, 100% 100%, 100% 100%, 50% 100%, 0% 100%);
-    }
-
-    100% {
-      clip-path: polygon(50% 50%, 50% 100%, 50% 100%, 50% 100%, 50% 100%, 50% 100%, 0% 100%);
-    }
-  }
-
-  @-o-keyframes spinner-bulqg1 {
-    0% {
-      clip-path: polygon(50% 50%, 0 0, 50% 0%, 50% 0%, 50% 0%, 50% 0%, 50% 0%);
-    }
-
-    12.5% {
-      clip-path: polygon(50% 50%, 0 0, 50% 0%, 100% 0%, 100% 0%, 100% 0%, 100% 0%);
-    }
-
-    25% {
-      clip-path: polygon(50% 50%, 0 0, 50% 0%, 100% 0%, 100% 100%, 100% 100%, 100% 100%);
-    }
-
-    50% {
-      clip-path: polygon(50% 50%, 0 0, 50% 0%, 100% 0%, 100% 100%, 50% 100%, 0% 100%);
-    }
-
-    62.5% {
-      clip-path: polygon(50% 50%, 100% 0, 100% 0%, 100% 0%, 100% 100%, 50% 100%, 0% 100%);
-    }
-
-    75% {
-      clip-path: polygon(50% 50%, 100% 100%, 100% 100%, 100% 100%, 100% 100%, 50% 100%, 0% 100%);
-    }
-
-    100% {
-      clip-path: polygon(50% 50%, 50% 100%, 50% 100%, 50% 100%, 50% 100%, 50% 100%, 0% 100%);
-    }
-  }
-
   @keyframes spinner-bulqg1 {
     0% {
-      -webkit-clip-path: polygon(50% 50%, 0 0, 50% 0%, 50% 0%, 50% 0%, 50% 0%, 50% 0%);
       clip-path: polygon(50% 50%, 0 0, 50% 0%, 50% 0%, 50% 0%, 50% 0%, 50% 0%);
     }
 
     12.5% {
-      -webkit-clip-path: polygon(50% 50%, 0 0, 50% 0%, 100% 0%, 100% 0%, 100% 0%, 100% 0%);
       clip-path: polygon(50% 50%, 0 0, 50% 0%, 100% 0%, 100% 0%, 100% 0%, 100% 0%);
     }
 
     25% {
-      -webkit-clip-path: polygon(50% 50%, 0 0, 50% 0%, 100% 0%, 100% 100%, 100% 100%, 100% 100%);
       clip-path: polygon(50% 50%, 0 0, 50% 0%, 100% 0%, 100% 100%, 100% 100%, 100% 100%);
     }
 
     50% {
-      -webkit-clip-path: polygon(50% 50%, 0 0, 50% 0%, 100% 0%, 100% 100%, 50% 100%, 0% 100%);
       clip-path: polygon(50% 50%, 0 0, 50% 0%, 100% 0%, 100% 100%, 50% 100%, 0% 100%);
     }
 
     62.5% {
-      -webkit-clip-path: polygon(50% 50%, 100% 0, 100% 0%, 100% 0%, 100% 100%, 50% 100%, 0% 100%);
       clip-path: polygon(50% 50%, 100% 0, 100% 0%, 100% 0%, 100% 100%, 50% 100%, 0% 100%);
     }
 
     75% {
-      -webkit-clip-path: polygon(50% 50%, 100% 100%, 100% 100%, 100% 100%, 100% 100%, 50% 100%, 0% 100%);
       clip-path: polygon(50% 50%, 100% 100%, 100% 100%, 100% 100%, 100% 100%, 50% 100%, 0% 100%);
     }
 
     100% {
-      -webkit-clip-path: polygon(50% 50%, 50% 100%, 50% 100%, 50% 100%, 50% 100%, 50% 100%, 0% 100%);
       clip-path: polygon(50% 50%, 50% 100%, 50% 100%, 50% 100%, 50% 100%, 50% 100%, 0% 100%);
-    }
-  }
-
-  @-webkit-keyframes spinner-oaa3wk {
-    0% {
-      -webkit-transform: scaleY(1) rotate(0deg);
-      transform: scaleY(1) rotate(0deg);
-    }
-
-    49.99% {
-      -webkit-transform: scaleY(1) rotate(135deg);
-      transform: scaleY(1) rotate(135deg);
-    }
-
-    50% {
-      -webkit-transform: scaleY(-1) rotate(0deg);
-      transform: scaleY(-1) rotate(0deg);
-    }
-
-    100% {
-      -webkit-transform: scaleY(-1) rotate(-135deg);
-      transform: scaleY(-1) rotate(-135deg);
-    }
-  }
-
-  @-moz-keyframes spinner-oaa3wk {
-    0% {
-      -moz-transform: scaleY(1) rotate(0deg);
-      transform: scaleY(1) rotate(0deg);
-    }
-
-    49.99% {
-      -moz-transform: scaleY(1) rotate(135deg);
-      transform: scaleY(1) rotate(135deg);
-    }
-
-    50% {
-      -moz-transform: scaleY(-1) rotate(0deg);
-      transform: scaleY(-1) rotate(0deg);
-    }
-
-    100% {
-      -moz-transform: scaleY(-1) rotate(-135deg);
-      transform: scaleY(-1) rotate(-135deg);
-    }
-  }
-
-  @-o-keyframes spinner-oaa3wk {
-    0% {
-      -o-transform: scaleY(1) rotate(0deg);
-      transform: scaleY(1) rotate(0deg);
-    }
-
-    49.99% {
-      -o-transform: scaleY(1) rotate(135deg);
-      transform: scaleY(1) rotate(135deg);
-    }
-
-    50% {
-      -o-transform: scaleY(-1) rotate(0deg);
-      transform: scaleY(-1) rotate(0deg);
-    }
-
-    100% {
-      -o-transform: scaleY(-1) rotate(-135deg);
-      transform: scaleY(-1) rotate(-135deg);
     }
   }
 
   @keyframes spinner-oaa3wk {
     0% {
-      -webkit-transform: scaleY(1) rotate(0deg);
-      -moz-transform: scaleY(1) rotate(0deg);
-      -o-transform: scaleY(1) rotate(0deg);
       transform: scaleY(1) rotate(0deg);
     }
 
     49.99% {
-      -webkit-transform: scaleY(1) rotate(135deg);
-      -moz-transform: scaleY(1) rotate(135deg);
-      -o-transform: scaleY(1) rotate(135deg);
       transform: scaleY(1) rotate(135deg);
     }
 
     50% {
-      -webkit-transform: scaleY(-1) rotate(0deg);
-      -moz-transform: scaleY(-1) rotate(0deg);
-      -o-transform: scaleY(-1) rotate(0deg);
       transform: scaleY(-1) rotate(0deg);
     }
 
     100% {
-      -webkit-transform: scaleY(-1) rotate(-135deg);
-      -moz-transform: scaleY(-1) rotate(-135deg);
-      -o-transform: scaleY(-1) rotate(-135deg);
       transform: scaleY(-1) rotate(-135deg);
     }
   }

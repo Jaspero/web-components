@@ -190,7 +190,7 @@
 
 <textarea {id} {name} {value} hidden></textarea>
 
-<style>
+<style lang="postcss">
   .field {
     font-size: 0.75rem;
     line-height: 1rem;

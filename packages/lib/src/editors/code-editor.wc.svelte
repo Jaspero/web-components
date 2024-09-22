@@ -59,7 +59,7 @@
 
 <textarea {name} {id} {value} hidden></textarea>
 
-<style>
+<style lang="postcss">
   .code-editor {
     border: 1px solid var(--border-primary);
     border-radius: 0.25rem;
