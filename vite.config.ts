@@ -2,6 +2,7 @@ import { defineConfig } from 'vite';
 import { svelte } from '@sveltejs/vite-plugin-svelte';
 import { transform } from 'esbuild';
 import { viteStaticCopy } from 'vite-plugin-static-copy';
+import { sync } from 'glob';
 
 // https://vitejs.dev/config/
 export default defineConfig({
@@ -11,10 +12,8 @@ export default defineConfig({
     emptyOutDir: true,
     lib: {
       entry: [
-        './index.ts',
-        './src/alert/render-alert.ts',
-        './src/confirm/render-confirm.ts',
-        './src/tree/structure.ts'
+        ...sync('packages/lib/**/*.ts').map(i => i.replace(`packages/lib/`, '').replace(`packages\\lib\\`, '')),
+        ...sync('packages/lib/**/*.wc.svelte').map(i => i.replace(`packages/lib/`, '').replace(`packages\\lib\\`, '')),
       ],
       formats: ['es']
     },
