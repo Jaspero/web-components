@@ -1,6 +1,5 @@
 <script lang="ts">
   import { onMount } from 'svelte';
-  import 'cropperjs/dist/cropper.css';
   import { createEventDispatcher } from 'svelte';
   import { clickOutside } from '../clickOutside';
 
