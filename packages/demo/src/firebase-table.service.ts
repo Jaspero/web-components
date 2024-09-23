@@ -3,7 +3,7 @@ import { db } from './firebase';
 
 export class FirebaseTableService {
   collection = 'science-magazine-articles';
-  ref = null;
+  ref: any = null;
   pageSize = 10;
 
   async get(sort?: any) {

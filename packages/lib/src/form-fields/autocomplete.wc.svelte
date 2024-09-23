@@ -277,7 +277,7 @@
   </label>
 </div>
 
-<style>
+<style lang="postcss">
   .field {
     font-size: 0.75rem;
     line-height: 1rem;
@@ -311,10 +311,6 @@
     -webkit-border-radius: 0.25rem;
     -moz-border-radius: 0.25rem;
     border-radius: 0.25rem;
-  }
-
-  .field.required .field-label::after {
-    content: ' *';
   }
 
   .field.disabled {
@@ -364,19 +360,6 @@
     -o-transform: translateY(0);
     transform: translateY(0);
     font-size: 0.75rem;
-  }
-
-  .field-label.move + .field-input:-moz-placeholder {
-    opacity: 1;
-  }
-  .field-label.move + .field-input::-moz-placeholder {
-    opacity: 1;
-  }
-  .field-label.move + .field-input:-ms-input-placeholder {
-    opacity: 1;
-  }
-  .field-label.move + .field-input::-ms-input-placeholder {
-    opacity: 1;
   }
   .field-label.move + .field-input::placeholder {
     opacity: 1;

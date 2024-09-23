@@ -94,7 +94,7 @@
   {/each}
 </div>
 
-<style>
+<style lang="postcss">
   label { 
     display: -webkit-box;
     display: -webkit-flex;

@@ -16,7 +16,7 @@
 />
 
 <script lang="ts">
-  import { clickOutside } from '../clickOutside';
+  import { clickOutside } from '../click-outside';
   import { createEventDispatcher } from 'svelte';
   import type SearchService from '../types/search.service';
 
@@ -46,14 +46,13 @@
   export let name = '';
   export let label = '';
   export let labelType: 'inside' | 'outside' = 'inside';
-  export const getValue = () => options.filter((el) => el.selected).map((el) => el.value);
+  export const getValue = () => singleSelect ? options.find((el) => el.selected)?.value : options.filter((el) => el.selected).map((el) => el.value);
   export let service: SearchService;
   export let validationMessages: {
     required?: string;
     minselects?: string;
     maxselects?: string;
-  } = {
-  };
+  } = {};
   export let requiredValidationMessage: string;
   export let minselectsValidationMessage: string;
   export let maxselectsValidationMessage: string;
@@ -123,7 +122,9 @@
 
     dispatch(
       'value',
-      options.filter((el) => el.selected).map((el) => el.value)
+      singleSelect
+        ? options.find((el) => el.selected)?.value
+        : options.filter((el) => el.selected).map((el) => el.value)
     );
   }
 
@@ -206,11 +207,11 @@
 
   function handleKeydown(event: KeyboardEvent) {
     if (searchFocused) {
-      return
-    };
-    
+      return;
+    }
+
     const currentIndex = optionElements.findIndex((el) => el === document.activeElement);
-    
+
     let nextIndex: number;
 
     // Check if menu is open
@@ -325,22 +326,26 @@
     }
   }
 
-  function toggleOption(option) {
-    option.selected = !option.selected;
-  }
-
   async function loadValues(value) {
     valueLoad = true;
     const values = Array.isArray(value) ? value : value.split(',');
     await Promise.all(
       values.map(async (el) => {
         let single;
+
         if (service.getSingle) {
-          single = await service.getSingle(el);
-          single.selected = true;
+          const res = await service.getSingle(el);
+
+          if (res) {
+            single = await service.getSingle(el);
+            single.selected = true;
+          } else {
+            single = { value: el, selected: true };
+          }
         } else {
           single = { value: el, selected: true };
         }
+
         options = [...options, single];
       })
     );
@@ -374,7 +379,7 @@
     on:keydown={handleKeydown}
   >
     {#if valueLoad}
-      <span class="select-label"> Loading... </span>
+      <span class="select-label"> {wording.LOADING} </span>
     {:else if label && labelType == 'inside'}
       <span class="select-label" class:move={internalValue || open}>
         {@html label}
@@ -441,9 +446,8 @@
               bind:this={optionElements[index]}
               disabled={option.disabled}
               on:click|preventDefault={() => {
-
                 if (singleSelect) {
-                  options = options.map(opt => {
+                  options = options.map((opt) => {
                     opt.selected = opt === option;
                     return opt;
                   });
@@ -487,7 +491,7 @@
                 Load more
               </button>
             {:else}
-              <button type="button" disabled>Loading...</button>
+              <button type="button" disabled>{wording.LOADING}</button>
             {/if}
           </div>
         {/if}
@@ -496,7 +500,7 @@
   {/if}
 </div>
 
-<style>
+<style lang="postcss">
   .has-hint {
     position: relative;
     margin-bottom: 1.25rem;

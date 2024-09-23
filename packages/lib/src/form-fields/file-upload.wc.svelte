@@ -15,10 +15,11 @@
 />
 
 <script lang="ts">
-  import { clickOutside } from '../clickOutside';
+  import { clickOutside } from '../click-outside';
   import type FileService from '../types/file.service';
   import { createEventDispatcher } from 'svelte';
   import Cropper from '../editors/Cropper.wc.svelte';
+  import { formatDisplayFileName } from '../utils/fileNameFormatter';
 
   export let label = '';
   export let labelType: 'inside' | 'outside' = 'inside';
@@ -35,6 +36,8 @@
 
   export let cropperEnable: cropOptions.disabled | cropOptions.mandatory | cropOptions.optional = cropOptions.disabled;
   let showCropper = false;
+  export let displayFormat = 'snake';
+  export let displayFormatFunction;
 
   let previewStyle: string;
   let bindingElement: HTMLDivElement;
@@ -46,6 +49,7 @@
   let hoveringFile = false;
   let internalValue: string;
   let fileEl: HTMLInputElement;
+  let displayedFileNameString = '';
 
   const dispatch = createEventDispatcher();
 
@@ -89,6 +93,8 @@
     isLocal = true;
     file = f;
     internalValue = f.name;
+    
+    displayedFileNameString = formatDisplayFileName(internalValue,displayFormat, displayFormatFunction);
     if (file['type'].split('/')[0] === 'image' || file.type === 'image') {
       const base64 = (await convertBase64(file)) as string;
       img = base64;
@@ -278,7 +284,7 @@
           on:focus={() => (inputFocused = true)}
           on:blur={() => (inputFocused = false)}
           on:change={() => checkImage()}
-          bind:value={internalValue}
+          bind:value={displayedFileNameString}
           disabled={isLocal}
         />
       </span>
@@ -299,7 +305,7 @@
   </div>
 {/if}
 
-<style>
+<style lang="postcss">
   .field {
     position: relative;
     display: -webkit-box;
@@ -342,16 +348,6 @@
     top: 0;
     bottom: 0;
     border: 2px dashed var(--primary-color);
-  }
-
-  .field.required .field-label::after {
-    content: ' *';
-  }
-
-  .field.disabled .field-label,
-  .field.disabled .field-input {
-    opacity: 0.33;
-    background: none;
   }
 
   .field:focus-within {

@@ -18,12 +18,13 @@ export function get<T = any, V = any>(obj: T, pointer: string): V {
   const refTokens = Array.isArray(pointer) ? pointer : parse(pointer);
 
   for (let i = 0; i < refTokens.length; ++i) {
-    const tok = refTokens[i];
+    const tok = refTokens[i] as string;
 
-    if (!(typeof obj == 'object' && tok in obj)) {
+    if (!(typeof obj == 'object' && tok in obj!)) {
       throw new Error('Invalid reference token: ' + tok);
     }
 
+    // @ts-ignore
     obj = obj[tok];
   }
 

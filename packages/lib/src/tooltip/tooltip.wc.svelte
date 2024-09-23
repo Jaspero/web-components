@@ -6,7 +6,7 @@
 />
 
 <script lang="ts">
-  import { clickOutside } from '../clickOutside';
+  import { clickOutside } from '../click-outside';
   export let label: string = 'label';
   export let mode: 'static' | 'dynamic' = 'static';
   let cloud;
@@ -69,7 +69,7 @@
   </div>
 </div>
 
-<style>
+<style lang="postcss">
   .tooltip {
     position: relative;
   }

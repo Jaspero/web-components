@@ -1,4 +1,4 @@
-function getLastDayOfMonth(year, month) {
+function getLastDayOfMonth(year: number, month: number) {
   let nextMonth = new Date(year, month + 1, 1);
   nextMonth.setDate(nextMonth.getDate() - 1);
   return nextMonth.getDate();

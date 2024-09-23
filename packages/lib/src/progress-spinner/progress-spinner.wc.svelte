@@ -46,7 +46,7 @@
   >
 {/if}
 
-<style>
+<style lang="postcss">
   .progress {
     transition: stroke-dashoffset 0.35s;
     transform: rotate(-90deg);

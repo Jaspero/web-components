@@ -1,4 +1,4 @@
-import type AssetManagerService from '../../../dist/types/asset-manager.service';
+import type { AssetManagerService } from '../../../dist/types/asset-manager.service';
 import {
   ref,
   listAll,
@@ -50,6 +50,7 @@ export class AMService implements AssetManagerService {
     ];
   }
 
+  // @ts-ignore
   async upload(p: string, file: File) {
     const path = `${p}/${file.name}`;
     const r = ref(storage, path);

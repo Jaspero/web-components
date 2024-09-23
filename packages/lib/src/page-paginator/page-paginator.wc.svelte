@@ -88,7 +88,7 @@
   </button>
 </div>
 
-<style>
+<style lang="postcss">
   .page-paginator {
     display: flex;
     gap: 0.25rem;

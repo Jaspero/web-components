@@ -55,7 +55,7 @@
   {/if}
 </div>
 
-<style>
+<style lang="postcss">
   .jp-tree {
     display: flex;
     flex-direction: column;

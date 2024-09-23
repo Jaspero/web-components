@@ -79,7 +79,7 @@
   {/each}
 </div>
 
-<style>
+<style lang="postcss">
   .container {
     display: flex;
     justify-content: center;

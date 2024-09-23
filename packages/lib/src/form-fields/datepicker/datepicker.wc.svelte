@@ -16,7 +16,7 @@
 />
 
 <script lang="ts">
-  import { clickOutside } from '../../clickOutside';
+  import { clickOutside } from '../../click-outside';
   import { createEventDispatcher } from 'svelte';
   import { formatDisplayDate, formatReturnDate } from '../../utils/dateFormatter';
   import Day from '../datepicker/Day.svelte';
@@ -603,7 +603,7 @@
   {/if}
 </div>
 
-<style>
+<style lang="postcss">
   .field {
     position: relative;
     display: -webkit-box;

@@ -18,7 +18,7 @@ const shortMonthNames = monthNames.map((el) => el.substring(0, 3));
 export function formatDisplayDate(date: Date, format: string, formatter?: (date: Date) => string) {
   switch (format) {
     case 'custom':
-      return formatter(date);
+      return formatter && formatter(date);
     case 'normal':
       return `${date.getFullYear()}/${date.getMonth() + 1}/${date.getDate()}`;
     case 'short':
@@ -37,7 +37,7 @@ export function formatDisplayDate(date: Date, format: string, formatter?: (date:
 export function formatReturnDate(date: Date, format: string, formatter?: (date: Date) => any) {
   switch (format) {
     case 'custom':
-      return formatter(date);
+      return formatter && formatter(date);
     case 'js':
       return date;
     case 'unix':

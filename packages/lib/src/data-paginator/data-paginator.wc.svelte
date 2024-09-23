@@ -88,7 +88,7 @@
   </button>
 </div>
 
-<style>
+<style lang="postcss">
   .paginator {
     font-size: 1rem;
   }

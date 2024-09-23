@@ -1,8 +1,7 @@
 <svelte:options
   customElement={{
     tag: 'jp-input',
-    shadow: 'open',
-    delegatesFocus: true,
+    shadow: 'none',
     extend: (customElementConstructor) => {
       return class extends customElementConstructor {
         static formAssociated = true;
@@ -21,8 +20,11 @@
   import { createEventDispatcher, onMount } from 'svelte';
 
   export let attachedInternals: ElementInternals;
-  export let value: string = '';
-  export let label: string = '';
+  export let value: string | number = '';
+  export let label = '';
+  export let name = '';
+  export let placeholder = '';
+  export let autocomplete: 'on' | 'off' = 'off';
   export let labelType: 'inside' | 'outside' = 'inside';
   export let required = false;
   export let disabled = false;
@@ -30,13 +32,10 @@
   export let type: 'text' | 'password' | 'email' | 'tel' | 'url' | 'number' | 'color' | 'time' = 'text';
   export let id: string | null = null;
   export let hint: string | null = null;
-  export let name: string = '';
-  export let autocomplete: string = 'off';
   export let minlength: number | null = null;
   export let maxlength: number | null = null;
   export let pattern: string | null = null;
-  export let placeholder: string = '';
-  export let inputFocused: boolean = false;
+  export let inputFocused = false;
   export let list: string | null = null;
   export let min: number | null = null;
   export let max: number | null = null;
@@ -66,7 +65,7 @@
 
   const dispatch = createEventDispatcher();
 
-  if (type === 'color') {
+  if (type === 'color' && !value) {
     value = '#000000';
   }
 
@@ -113,11 +112,11 @@
     dispatch('value', { value });
   }
 
-  onMount(()=>{
+  onMount(()=> {
     if(inputFocused){
       inputEl.focus();
     }
-  })
+  });
 </script>
 
 {#if label && labelType === 'outside'}
@@ -316,7 +315,7 @@
   {/if}
 </div>
 
-<style>
+<style lang="postcss">
   .has-hint {
     position: relative;
     margin-bottom: 1.25rem;
@@ -331,29 +330,17 @@
     display: -moz-box;
     display: -ms-flexbox;
     display: flex;
-    -webkit-box-pack: justify;
-    -webkit-justify-content: space-between;
-    -moz-box-pack: justify;
-    -ms-flex-pack: justify;
     justify-content: space-between;
-    -webkit-box-align: center;
-    -webkit-align-items: center;
-    -moz-box-align: center;
-    -ms-flex-align: center;
     align-items: center;
     text-align: left;
     box-sizing: border-box;
     width: 100%;
     height: 3rem;
-    -webkit-user-select: none;
-    -moz-user-select: none;
-    -ms-user-select: none;
     user-select: none;
     gap: 0.75rem;
-    background-color: transparent;
+    color: var(--text-primary);
+    background-color: var(--background-primary);
     border: 1px solid var(--border-primary);
-    -webkit-border-radius: 0.25rem;
-    -moz-border-radius: 0.25rem;
     border-radius: 0.25rem;
   }
 
@@ -368,8 +355,6 @@
 
   .field:focus-within {
     border-color: var(--primary-color);
-    -webkit-box-shadow: inset 0 0 0 1px var(--primary-color);
-    -moz-box-shadow: inset 0 0 0 1px var(--primary-color);
     box-shadow: inset 0 0 0 1px var(--primary-color);
   }
 
@@ -383,24 +368,8 @@
     position: absolute;
     top: 50%;
     left: 0.75rem;
-    -webkit-transform: translateY(-50%);
-    -moz-transform: translateY(-50%);
-    -ms-transform: translateY(-50%);
-    -o-transform: translateY(-50%);
     transform: translateY(-50%);
     font-size: 1rem;
-    -webkit-transition:
-      transform 0.3s,
-      top 0.3s,
-      font-size 0.3s;
-    -o-transition:
-      transform 0.3s,
-      top 0.3s,
-      font-size 0.3s;
-    -moz-transition:
-      transform 0.3s,
-      top 0.3s,
-      font-size 0.3s;
     transition:
       transform 0.3s,
       top 0.3s,
@@ -409,10 +378,6 @@
 
   .field-label.move {
     top: 0.25rem;
-    -webkit-transform: translateY(0);
-    -moz-transform: translateY(0);
-    -ms-transform: translateY(0);
-    -o-transform: translateY(0);
     transform: translateY(0);
     font-size: 0.75rem;
   }
@@ -438,10 +403,6 @@
   }
 
   .field-input {
-    -webkit-box-flex: 1;
-    -webkit-flex: auto;
-    -moz-box-flex: 1;
-    -ms-flex: auto;
     flex: auto;
     width: 10rem;
     height: 1rem;
@@ -453,9 +414,8 @@
     padding: 0.75rem;
     border: none;
     outline: none;
-    -webkit-border-radius: 0.25rem;
-    -moz-border-radius: 0.25rem;
     border-radius: 0.25rem;
+    background-color: transparent;
   }
 
   .field-input-padding {
@@ -464,29 +424,22 @@
 
   .field-input:-moz-placeholder {
     opacity: 0;
-    -moz-transition: opacity 0.3s;
     transition: opacity 0.3s;
   }
   .field-input::-moz-placeholder {
     opacity: 0;
-    -moz-transition: opacity 0.3s;
     transition: opacity 0.3s;
   }
   .field-input:-ms-input-placeholder {
     opacity: 0;
-    -ms-transition: opacity 0.3s;
     transition: opacity 0.3s;
   }
   .field-input::-ms-input-placeholder {
     opacity: 0;
-    -ms-transition: opacity 0.3s;
     transition: opacity 0.3s;
   }
   .field-input::placeholder {
     opacity: 0;
-    -webkit-transition: opacity 0.3s;
-    -o-transition: opacity 0.3s;
-    -moz-transition: opacity 0.3s;
     transition: opacity 0.3s;
   }
 
@@ -501,7 +454,6 @@
     padding: 0 0.75rem;
     white-space: nowrap;
     overflow: hidden;
-    -o-text-overflow: ellipsis;
     text-overflow: ellipsis;
     color: var(--text-secondary);
   }
@@ -513,10 +465,6 @@
 
   .field:has(input[type='color']) {
     padding: 1.5rem 0.5rem 0.5rem;
-    -webkit-box-pack: start;
-    -webkit-justify-content: flex-start;
-    -moz-box-pack: start;
-    -ms-flex-pack: start;
     justify-content: flex-start;
   }
 
@@ -530,8 +478,6 @@
     display: block;
     width: 24px;
     height: 12px;
-    -webkit-border-radius: 0.25rem;
-    -moz-border-radius: 0.25rem;
     border-radius: 0.25rem;
     border: 1px solid rgba(0, 0, 0, 0.12);
   }

@@ -14,10 +14,10 @@ export async function renderAlert(options?: AlertOptions, callback?: (action?: s
   alertEl.message = options.message || '';
   alertEl.state = options.state;
 
-  options.host.appendChild(alertEl);
+  options.host!.appendChild(alertEl);
 
   function clear(action: string) {
-    options.host.removeChild(alertEl);
+    options!.host!.removeChild(alertEl);
 
     if (callback) {
       callback(action);

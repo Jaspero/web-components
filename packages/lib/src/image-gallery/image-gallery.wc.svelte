@@ -11,18 +11,17 @@
   export let images = [];
   export let enablePagination = false;
   export let sliderBar = false;
-  export let imageCount = false;
   export let autoSlide = false;
   export let interval = 3000;
 
-  let container;
+  let container: HTMLDivElement;
   let columns = [];
   let sizes = [];
   let focused = false;
   let currentIndex = 0;
   let canNavigate = true;
-  let intervalFunction;
-  let scrollPosition;
+  let intervalFunction: any;
+  let scrollPosition: number;
 
   let gapX = 10;
   let gapY = 10;
@@ -31,10 +30,13 @@
     if (typeof images === 'string') {
       images = JSON.parse(images);
     }
+
     checkImagesLoaded();
+    
     if (autoSlide) {
       intervalFunction = setInterval(nextImage, interval);
     }
+
     window.addEventListener('keydown', keydownFunction);
   });
 
@@ -54,7 +56,8 @@
 
   async function checkImagesLoaded() {
     const imageElements = Array.from(container.getElementsByTagName('img'));
-    const imageLoadPromises = imageElements.map((img) => {
+
+    await Promise.all(imageElements.map((img) => {
       if (img.complete) {
         return Promise.resolve();
       } else {
@@ -63,9 +66,8 @@
           img.onerror = resolve;
         });
       }
-    });
+    }));
 
-    await Promise.all(imageLoadPromises);
     layout();
   }
 
@@ -83,7 +85,7 @@
       columns[i] = 0;
     }
 
-    Array.from(container.children).forEach((child, index) => {
+    Array.from(container.children).forEach((child: HTMLElement, index) => {
       child.style.width = `${colWidth}px`;
       sizes[index] = child.clientHeight;
 
@@ -140,16 +142,22 @@
   }
 </script>
 
-{#if !focused}
-  <div class="gallery" bind:this={container}>
-    {#each images as image, index}
-      <div class="image-container">
-        <img class="image" src={image.src} alt={image.alt} on:click={() => openCarousel(index)} />
-      </div>
-    {/each}
-  </div>
-{:else}
+<div class="gallery" bind:this={container}>
+  {#each images as image, index}
+    <div class="image-container">
+      <!-- svelte-ignore a11y-click-events-have-key-events -->
+      <!-- svelte-ignore a11y-no-noninteractive-element-interactions -->
+      <img class="image" src={image.src} alt={image.alt} on:click={() => openCarousel(index)} />
+    </div>
+  {/each}
+</div>
+
+{#if focused}
+  <!-- svelte-ignore a11y-click-events-have-key-events -->
+  <!-- svelte-ignore a11y-no-static-element-interactions -->
   <div class="slider" on:click={closeCarousel}>
+    <!-- svelte-ignore a11y-click-events-have-key-events -->
+    <!-- svelte-ignore a11y-no-static-element-interactions -->
     <div class="slider-container" on:click|stopPropagation>
       <div class="slider-images" style="transform: translateX(-{currentIndex * 100}%);">
         {#each images as image}
@@ -183,10 +191,8 @@
   </div>
 {/if}
 
-<style>
+<style lang="postcss">
   .gallery {
-    max-width: 80%;
-    margin: 0 auto;
     position: relative;
   }
 
