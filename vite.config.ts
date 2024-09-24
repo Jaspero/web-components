@@ -9,6 +9,7 @@ export default defineConfig({
   root: './packages/lib/',
   build: {
     sourcemap: true,
+    cssCodeSplit: false,
     outDir: '../../dist',
     emptyOutDir: true,
     lib: {
@@ -46,7 +47,7 @@ export default defineConfig({
     viteStaticCopy({
       targets: [
         {
-          src: './src/index.css',
+          src: './src/**/*.css',
           dest: './'
         }
       ]

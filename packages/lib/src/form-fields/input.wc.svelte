@@ -1,7 +1,6 @@
 <svelte:options
   customElement={{
     tag: 'jp-input',
-    shadow: 'none',
     extend: (customElementConstructor) => {
       return class extends customElementConstructor {
         static formAssociated = true;
