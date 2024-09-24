@@ -5,6 +5,7 @@
   import FileListDemo from './FileListDemo.svelte';
   import InputDemo from './InputDemo.svelte';
   import MultiSelectDemo from './MultiSelectDemo.svelte';
+  import ImageGalleryDemo from './ImageGalleryDemo.svelte';
 
 </script>
 
@@ -12,4 +13,5 @@
 <!-- <MultiSelectDemo /> -->
 <!-- <FileListDemo /> -->
 <!-- <Demos /> -->
-<InputDemo />
+<!-- <InputDemo /> -->
+<ImageGalleryDemo />

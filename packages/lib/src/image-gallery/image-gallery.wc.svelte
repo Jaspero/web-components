@@ -8,23 +8,36 @@
 <script lang="ts">
   import { onDestroy, onMount, tick } from 'svelte';
 
-  export let images = [];
+  export let images: Array<{src: string; alt: string;}> = [];
   export let enablePagination = false;
   export let sliderBar = false;
   export let autoSlide = false;
   export let interval = 3000;
+  export let columnCount = 3;
+  export let columnCountTable = 2;
+  export let columnCountMobile = 1;
+  export let gapX = 10;
+  export let gapY = 10;
 
   let container: HTMLDivElement;
-  let columns = [];
-  let sizes = [];
+  let columns: number[] = [];
+  let sizes: number[] = [];
   let focused = false;
   let currentIndex = 0;
   let canNavigate = true;
   let intervalFunction: any;
   let scrollPosition: number;
 
-  let gapX = 10;
-  let gapY = 10;
+  $: if (focused) {
+    if (autoSlide) {
+      intervalFunction = setInterval(nextImage, interval);
+    }
+  } else {
+    if (intervalFunction) {
+      clearInterval(intervalFunction);
+      intervalFunction = null;
+    }
+  }
 
   onMount(() => {
     if (typeof images === 'string') {
@@ -32,19 +45,15 @@
     }
 
     checkImagesLoaded();
-    
-    if (autoSlide) {
-      intervalFunction = setInterval(nextImage, interval);
-    }
-
-    window.addEventListener('keydown', keydownFunction);
   });
 
   onDestroy(() => {
-    clearInterval(intervalFunction);
+    if (intervalFunction) {
+      clearInterval(intervalFunction);
+    }
   });
 
-  async function keydownFunction(e) {
+  async function keydownFunction(e: KeyboardEvent) {
     if (e.key === 'Escape') {
       closeCarousel();
     } else if (e.key === 'ArrowLeft') {
@@ -72,28 +81,30 @@
   }
 
   function layout() {
-    if (!container || !container.offsetParent) return;
+    if (!container || !container.offsetParent) {
+      return;
+    };
 
     sizes = [];
     columns = [];
     const containerWidth = container.clientWidth;
 
-    const colCount = 3;
+    const colCount = window.innerWidth < 600 ? columnCountMobile : window.innerWidth < 1024 ? columnCountTable : columnCount;
     const colWidth = (containerWidth - (colCount - 1) * gapX) / colCount;
 
     for (let i = 0; i < colCount; i++) {
       columns[i] = 0;
     }
 
-    Array.from(container.children).forEach((child: HTMLElement, index) => {
-      child.style.width = `${colWidth}px`;
+    Array.from(container.children).forEach((child: Element, index: number) => {
+      (child as HTMLElement).style.width = `${colWidth}px`;
       sizes[index] = child.clientHeight;
 
       const col = columns.indexOf(Math.min(...columns));
       const x = col * (colWidth + gapX);
       const y = columns[col];
 
-      child.style.transform = `translate3d(${x}px, ${y}px, 0)`;
+      (child as HTMLElement).style.transform = `translate3d(${x}px, ${y}px, 0)`;
       columns[col] += sizes[index] + gapY;
     });
 
@@ -122,7 +133,7 @@
     }, 300);
   }
 
-  async function openCarousel(index) {
+  async function openCarousel(index: number) {
     scrollPosition = window.scrollY;
     currentIndex = index;
     focused = true;
@@ -190,6 +201,8 @@
     {/if}
   </div>
 {/if}
+
+<svelte:window on:keydown={keydownFunction} on:resize={layout} />
 
 <style lang="postcss">
   .gallery {
