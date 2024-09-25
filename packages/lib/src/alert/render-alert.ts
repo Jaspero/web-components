@@ -17,7 +17,9 @@ export async function renderAlert(options?: AlertOptions, callback?: (action?: s
   options.host!.appendChild(alertEl);
 
   function clear(action: string) {
-    options!.host!.removeChild(alertEl);
+    try {
+      options!.host!.removeChild(alertEl);
+    } catch {}
 
     if (callback) {
       callback(action);
