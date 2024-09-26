@@ -2,6 +2,8 @@
 	import '../../../dist/input.wc.js';
 	import {bind} from '../../../dist/bind.js';
 	import '../../../dist/input.css';
+	import '../../../dist/select.wc.js';
+	import '../../../dist/select.css';
 
 	let v = '123';
 	let show = true;
@@ -15,3 +17,5 @@
 {#if show}
 	<jp-input label="Cool" use:bind={v} on:bind={e => v = e.detail}></jp-input>
 {/if}
+
+<jp-select label="Test"></jp-select>
