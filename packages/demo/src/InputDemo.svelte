@@ -1,6 +1,7 @@
 <script lang="ts">
-	import '../../../dist/asset-manager.wc.js';
+	import '../../../dist/input.wc.js';
 	import {bind} from '../../../dist/bind.js';
+	import '../../../dist/input.css';
 
 	let v = '123';
 	let show = true;

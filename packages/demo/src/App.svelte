@@ -13,5 +13,5 @@
 <!-- <MultiSelectDemo /> -->
 <!-- <FileListDemo /> -->
 <!-- <Demos /> -->
-<!-- <InputDemo /> -->
-<ImageGalleryDemo />
+<InputDemo />
+<!-- <ImageGalleryDemo /> -->

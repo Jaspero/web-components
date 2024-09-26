@@ -9,10 +9,12 @@ export default defineConfig({
   root: './packages/lib/',
   build: {
     sourcemap: true,
+    cssCodeSplit: true,
     outDir: '../../dist',
     emptyOutDir: true,
     lib: {
       entry: [
+        // ...sync('packages/lib/**/*.css').map(i => i.replace(`packages/lib/`, '').replace(`packages\\lib\\`, '')),
         ...sync('packages/lib/**/*.ts').map(i => i.replace(`packages/lib/`, '').replace(`packages\\lib\\`, '')),
         ...sync('packages/lib/**/*.wc.svelte').map(i => i.replace(`packages/lib/`, '').replace(`packages\\lib\\`, '')),
       ],
@@ -43,14 +45,6 @@ export default defineConfig({
         include: sync('packages/lib/**/*.ts').map(i => i.replace(`packages/lib/`, '').replace(`packages\\lib\\`, ''))
       })
     },
-    viteStaticCopy({
-      targets: [
-        {
-          src: './src/index.css',
-          dest: './'
-        }
-      ]
-    }),
     minifyEs()
   ]
 });

@@ -18,6 +18,7 @@
 
 <script lang="ts">
   import { createEventDispatcher, onMount } from 'svelte';
+  import './input.wc.pcss';
 
   export let attachedInternals: ElementInternals;
   export let value: string | number = '';
@@ -40,6 +41,8 @@
   export let min: number | null = null;
   export let max: number | null = null;
   export let step: number | null | 'any' = null;
+  export let suffix: string | null = null;
+  export let prefix: string | null = null;
   export let validationMessages: {
     required?: string;
     maxlength?: string;
@@ -129,10 +132,8 @@
     {#if label && labelType === 'inside'}
       <span class="field-label" class:move={focused || value || type === 'time' || value === 0}>{@html label}</span>
     {/if}
-    {#if $$slots.prefix && (value || focused)}
-      <div class="prefix">
-        <slot name="prefix" />
-      </div>
+    {#if prefix && (value || focused)}
+      <div class="prefix">{@html prefix}</div>
     {/if}
     {#if type === 'text'}
       <input
@@ -303,10 +304,8 @@
       />
       <span>{value}</span>
     {/if}
-    {#if $$slots.suffix}
-      <div class="suffix">
-        <slot name="suffix" />
-      </div>
+    {#if suffix}
+      <div class="suffix">{@html suffix}</div>
     {/if}
   </label>
 
@@ -314,171 +313,3 @@
     <div class="field-hint">{@html hint}</div>
   {/if}
 </div>
-
-<style lang="postcss">
-  .has-hint {
-    position: relative;
-    margin-bottom: 1.25rem;
-  }
-
-  .field {
-    font-size: 0.75rem;
-    line-height: 1rem;
-    position: relative;
-    display: -webkit-box;
-    display: -webkit-flex;
-    display: -moz-box;
-    display: -ms-flexbox;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    text-align: left;
-    box-sizing: border-box;
-    width: 100%;
-    height: 3rem;
-    user-select: none;
-    gap: 0.75rem;
-    color: var(--text-primary);
-    background-color: var(--background-primary);
-    border: 1px solid var(--border-primary);
-    border-radius: 0.25rem;
-  }
-
-  .field.required .field-label::after {
-    content: ' *';
-  }
-
-  .field.disabled {
-    pointer-events: none;
-    opacity: 0.5;
-  }
-
-  .field:focus-within {
-    border-color: var(--primary-color);
-    box-shadow: inset 0 0 0 1px var(--primary-color);
-  }
-
-  .label {
-    margin-top: 0.5rem;
-    margin-bottom: 0.125rem;
-    font-size: 0.875rem;
-  }
-
-  .field-label {
-    position: absolute;
-    top: 50%;
-    left: 0.75rem;
-    transform: translateY(-50%);
-    font-size: 1rem;
-    transition:
-      transform 0.3s,
-      top 0.3s,
-      font-size 0.3s;
-  }
-
-  .field-label.move {
-    top: 0.25rem;
-    transform: translateY(0);
-    font-size: 0.75rem;
-  }
-
-  .prefix {
-    padding: 1rem 0 0 0;
-  }
-
-  .field-label.move + .field-input:-moz-placeholder {
-    opacity: 1;
-  }
-  .field-label.move + .field-input::-moz-placeholder {
-    opacity: 1;
-  }
-  .field-label.move + .field-input:-ms-input-placeholder {
-    opacity: 1;
-  }
-  .field-label.move + .field-input::-ms-input-placeholder {
-    opacity: 1;
-  }
-  .field-label.move + .field-input::placeholder {
-    opacity: 1;
-  }
-
-  .field-input {
-    flex: auto;
-    width: 10rem;
-    height: 1rem;
-    font-size: 1rem;
-    white-space: nowrap;
-    overflow: hidden;
-    -o-text-overflow: ellipsis;
-    text-overflow: ellipsis;
-    padding: 0.75rem;
-    border: none;
-    outline: none;
-    border-radius: 0.25rem;
-    background-color: transparent;
-  }
-
-  .field-input-padding {
-    padding: 1.5rem 0.75rem calc(0.5rem - 2px);
-  }
-
-  .field-input:-moz-placeholder {
-    opacity: 0;
-    transition: opacity 0.3s;
-  }
-  .field-input::-moz-placeholder {
-    opacity: 0;
-    transition: opacity 0.3s;
-  }
-  .field-input:-ms-input-placeholder {
-    opacity: 0;
-    transition: opacity 0.3s;
-  }
-  .field-input::-ms-input-placeholder {
-    opacity: 0;
-    transition: opacity 0.3s;
-  }
-  .field-input::placeholder {
-    opacity: 0;
-    transition: opacity 0.3s;
-  }
-
-  .field-hint {
-    position: absolute;
-    top: 100%;
-    left: 0;
-    width: 100%;
-    height: 1.25rem;
-    line-height: 1.25rem;
-    font-size: 0.75rem;
-    padding: 0 0.75rem;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    color: var(--text-secondary);
-  }
-
-  .field-hint:hover {
-    z-index: 255;
-    overflow: unset;
-  }
-
-  .field:has(input[type='color']) {
-    padding: 1.5rem 0.5rem 0.5rem;
-    justify-content: flex-start;
-  }
-
-  .field-input[type='color'] {
-    position: absolute;
-    visibility: hidden;
-    opacity: 0;
-  }
-
-  .color-picker {
-    display: block;
-    width: 24px;
-    height: 12px;
-    border-radius: 0.25rem;
-    border: 1px solid rgba(0, 0, 0, 0.12);
-  }
-</style>
