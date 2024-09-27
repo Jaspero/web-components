@@ -87,25 +87,25 @@
   $: displayLabel = required ? `${label} *` : label;
 </script>
 
-<div class="checkbox-container">
+
+<div class="jp-checkbox">
   {#if label}
-    <div class="checkbox-label">
+    <div class="jp-checkbox-label">
       {@html displayLabel}
     </div>
   {/if}
   {#each options as option}
-    <label class="checkbox-label">
+    <label class="jp-checkbox-label">
       <input
-              class="checkbox-label"
               type="checkbox"
               name={option.value}
               bind:checked={option.checked}
               disabled={option.disabled}
       />
-      <span class="checkbox-checkbox">
-        <span class="checkbox-checkmark">
-            <span class="checkbox-checkmark_stem"></span>
-            <span class="checkbox-checkmark_kick"></span>
+      <span class="jp-checkbox-checkbox">
+        <span class="jp-checkbox-checkmark">
+            <span class="jp-checkbox-checkmark_stem"></span>
+            <span class="jp-checkbox-checkmark_kick"></span>
         </span>
       </span>
       {#if option.label}
