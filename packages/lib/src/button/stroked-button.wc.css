@@ -1,0 +1,31 @@
+jp-button::part(stroked) {
+    border: 1px solid var(--border-primary);
+    border-radius: 0.25rem;
+		min-width: 4rem;
+		height: 2.25rem;
+		padding: 0 1rem;
+  }
+  jp-button::part(stroked):hover {
+    border: 1px solid var(--border-primary);
+    background-color: var(--background-secondary);
+  }
+
+  jp-button::part(stroked default){
+    color: var(--text-primary);
+  }
+
+  jp-button::part(stroked primary) {
+    color: var(--primary-color);
+  }
+
+  jp-button::part(stroked accent) {
+    color: var(--secondary-color);
+  }
+
+  jp-button::part(stroked warn) {
+    color: var(--danger-color);
+  }
+
+  jp-button::part(stroked):disabled {
+    color: var(--disabled-color);
+  }

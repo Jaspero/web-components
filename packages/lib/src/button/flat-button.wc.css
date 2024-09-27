@@ -1,0 +1,46 @@
+jp-button::part(flat) {
+  border-radius: 0.25rem;
+  min-width: 4rem;
+  height: 2.25rem;
+  padding: 0 1rem;
+}
+
+jp-button::part(flat primary):active::after,
+jp-button::part(flat accent):active::after,
+jp-button::part(flat warn):active::after {
+  background-color: var(--background-primary);
+}
+
+jp-button::part(flat default) {
+  background-color: var(--background-primary);
+  color: var(--text-primary);
+}
+
+jp-button::part(flat primary) {
+  background-color: var(--primary-color);
+  color: var(--text-on-primary);
+}
+
+jp-button::part(flat accent){
+  background-color: var(--secondary-color);
+  color: var(--text-on-secondary);
+}
+
+jp-button::part(flat warn) {
+  background-color: var(--danger-color);
+  color: var(--text-on-danger);
+}
+
+
+jp-button::part(flat warn):hover,
+jp-button::part(flat accent):hover,
+jp-button::part(flat primary):hover,
+jp-button::part(flat default):hover{
+  filter: brightness(0.97);
+}
+
+jp-button::part(flat disabled):hover{
+  filter: brightness(1);
+}
+
+

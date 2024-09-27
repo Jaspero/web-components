@@ -1,0 +1,31 @@
+jp-button::part(icon) {
+    width: 3rem;
+    height: 3rem;
+    overflow: hidden;
+		border-radius: 50%;
+  }
+
+  jp-button::part(icon default) {
+    color: var(--text-primary);
+    fill: var(--text-primary);
+  }
+
+  jp-button::part(icon primary){
+    color: var(--primary-color);
+    fill: var(--primary-color);
+  }
+
+  jp-button::part(icon accent) {
+    color: var(--secondary-color);
+    fill: var(--secondary-color);
+  }
+
+  jp-button::part(icon warn){
+    color: var(--danger-color);
+    fill: var(--danger-color);
+  }
+
+  jp-button::part(icon):disabled {
+    color: var(--disabled-color);
+    fill: var(--disabled-color);
+  }

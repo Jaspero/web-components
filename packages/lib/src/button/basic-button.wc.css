@@ -1,0 +1,32 @@
+jp-button::part(basic) {
+	border-radius: 0.25rem;
+	min-width: 4rem;
+	height: 2.25rem;
+	padding: 0 1rem;
+}
+
+jp-button::part(basic default) {
+	color: var(--text-primary);
+}
+
+jp-button::part(basic primary) {
+	color: var(--primary-color);
+}
+
+jp-button::part(basic accent) {
+	color: var(--secondary-color);
+}
+
+jp-button::part(basic warn) {
+	color: var(--danger-color);
+}
+
+jp-button::part(basic):hover {
+	background-color: var(--background-secondary);
+}
+
+
+jp-button::part(basic):active {
+	background-color: #bebebe;
+}
+
