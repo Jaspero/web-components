@@ -11,6 +11,7 @@
   import type { TableHeader } from '../types/table-header.interface';
   import type { TableSort } from '../types/table-sort.interface';
   import type { TableService } from '../types/table.service';
+  import './async-table.wc.pcss';
 
   export let wording = {
     ARRANGE_COLUMNS: 'Arrange columns',
@@ -311,12 +312,12 @@
   });
 </script>
 
-<div class="table-card">
+<div class="jp-table">
   {#if showArrangingColumns || showImport || showExport}
-    <div class="table-header">
+    <div class="jp-table-header">
       {#if showArrangingColumns}
         &nbsp;
-        <button type="button" on:click={arrangeColumns} class="table-button settings-button">
+        <button type="button" on:click={arrangeColumns} class="jp-table-button">
           {wording.ARRANGE_COLUMNS}
         </button>
       {/if}
@@ -325,7 +326,7 @@
         &nbsp;
         <button
           type="button"
-          class="table-button settings-button"
+          class="jp-table-button"
           on:click={() => importFileEl.click()}
         >
           {wording.IMPORT}
@@ -335,13 +336,13 @@
         &nbsp;
         <button
           type="button"
-          class="table-button settings-button"
+          class="jp-table-button"
           on:click={exportData}
-          class:loading={exportLoading}
+          class:jp-table-loading={exportLoading}
           disabled={exportLoading}
         >
           {#if exportLoading}
-            <span class="spinner"></span>
+            <span class="jp-table-spinner"></span>
             {wording.LOADING}
           {:else}
             {wording.EXPORT}
@@ -351,21 +352,21 @@
     </div>
   {/if}
 
-  <div class="table-container" style:height={height}>
+  <div class="jp-table-container" style:height={height}>
     <table>
       {#if activeHeaders}
         <tr>
           {#each activeHeaders as header, index}
             <th
-              class:sortable={allowArrangeColumns && header.sortable}
-              class:sticky-first={freezeFirstColumn && index === 0}
-              class:sticky-last={index === activeHeaders.length - 1 && freezeLastColumn}
+              class:jp-table-sortable={allowArrangeColumns && header.sortable}
+              class:jp-table-sticky-first={freezeFirstColumn && index === 0}
+              class:jp-table-sticky-last={index === activeHeaders.length - 1 && freezeLastColumn}
               on:click={() => adjustSort(header)}
               on:drop={(e) => drop(e, index)}
               on:dragover={dragover}
             >
               <span
-                class:draggable-column={allowArrangeColumns}
+                class:jp-table-draggable-column={allowArrangeColumns}
                 draggable={allowArrangeColumns}
                 tabindex="-1"
                 role="button"
@@ -376,7 +377,7 @@
               </span>
 
               {#if sort?.key === header.key}
-                <span class="sortable">{sort.direction === 'asc' ? '↑' : '↓'}</span>
+                <span class="jp-table-sortable">{sort.direction === 'asc' ? '↑' : '↓'}</span>
               {/if}
             </th>
           {/each}
@@ -385,15 +386,15 @@
 
       {#if rows}
         {#each rows as row, ind}
-          <tr class:highlight={rowClickable}>
+          <tr class:jp-table-highlight={rowClickable}>
             {#each activeHeaders as header, index}
               <td
                 on:click={(e) => rowClick(row, index, header, e)}
-                class:sticky-first={freezeFirstColumn && index === 0}
-                class:sticky-last={index === activeHeaders.length - 1 && freezeLastColumn}
+                class:jp-table-sticky-first={freezeFirstColumn && index === 0}
+                class:jp-table-sticky-last={index === activeHeaders.length - 1 && freezeLastColumn}
               >
                 {#await handleColumn(header, row, ind) then val}
-                  <span class="cell">
+                  <span class="jp-table-cell">
                     {@html val}
                   </span>
                 {/await}
@@ -405,16 +406,16 @@
     </table>
   </div>
 
-  <div class="table-actions">
+  <div class="jp-table-actions">
     <button
       type="button"
-      class="table-button load-button"
-      class:loading
+      class="jp-table-button"
+      class:jp-table-loading={loading}
       disabled={!hasMore}
       on:click={loadMore}
     >
       {#if loading}
-        <span class="spinner"></span>
+        <span class="jp-table-spinner"></span>
         {wording.LOADING}
       {:else}
         {wording.LOAD_MORE}
@@ -432,14 +433,14 @@
 </div>
 
 {#if arrangeColumnDialog}
-  <div class="arrange-columns-dialog">
+  <div class="jp-table-arrange-columns-dialog">
     <!-- svelte-ignore a11y-click-events-have-key-events -->
     <!-- svelte-ignore a11y-no-static-element-interactions -->
     <div
-      class="arrange-columns-dialog-backdrop"
+      class="jp-table-arrange-columns-dialog-backdrop"
       on:click={() => (arrangeColumnDialog = false)}
     ></div>
-    <form class="arrange-columns-dialog-inner" on:submit|preventDefault={saveColumnArrangement}>
+    <form class="jp-table-arrange-columns-dialog-inner" on:submit|preventDefault={saveColumnArrangement}>
       <main>
         {#each arrangementColumns as column}
           <label>
@@ -452,8 +453,8 @@
       <footer>
         <button
           type="submit"
-          class="table-button load-button"
-          class:loading={saveArrangementLoading}
+          class="jp-table-button"
+          class:jp-table-loading={saveArrangementLoading}
           disabled={saveArrangementLoading}
         >
           {#if loading}
@@ -469,205 +470,3 @@
 {/if}
 
 <input type="file" accept=".csv" bind:this={importFileEl} on:change={importData} hidden />
-
-<style lang="postcss">
-  .table-card {
-    background-color: var(--background-primary);
-    border-radius: 0.25rem;
-    box-shadow: 0 3px 12px rgba(0, 0, 0, 0.16);
-  }
-
-  .table-container {
-    overflow-x: auto;
-    width: 100%;
-  }
-
-  table {
-    width: 100%;
-  }
-
-  th,
-  td {
-    text-align: left;
-    white-space: nowrap;
-    font-size: 0.75rem;
-    font-weight: normal;
-    padding: 0.5rem;
-    border-bottom: 1px solid rgba(0, 0, 0, 0.16);
-  }
-
-  th {
-    position: sticky;
-    z-index: 2;
-    top: 0;
-    background-color: var(--background-primary);
-    font-weight: bold;
-  }
-
-  .sortable {
-    cursor: pointer;
-  }
-
-  .draggable-column {
-    cursor: grab;
-  }
-
-  .cell {
-    display: block;
-    max-width: 64ch;
-    overflow: hidden;
-    text-overflow: ellipsis;
-  }
-
-  .table-actions {
-    padding: 1rem;
-    display: flex;
-    justify-content: space-between;
-  }
-
-  .table-header {
-    padding: 1rem;
-    min-height: 68px;
-    display: flex;
-    justify-content: flex-end;
-  }
-
-  .table-button {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    border-radius: 0.25rem;
-    min-width: 4rem;
-    height: 2.25rem;
-    padding: 0 1rem;
-    user-select: none;
-  }
-
-  .settings-button {
-    background-color: var(--background-secondary);
-    color: var(--text-on-secondary);
-  }
-
-  .load-button {
-    background-color: var(--primary-color);
-    color: var(--text-on-primary);
-  }
-
-  .load-button:disabled {
-    opacity: 0.5;
-  }
-
-  .load-button.loading {
-    pointer-events: none;
-  }
-
-  .highlight {
-    cursor: pointer;
-    transition: 0.3s;
-  }
-
-  .highlight:hover {
-    background-color: #ddd;
-  }
-
-  .spinner {
-    display: block;
-    border-top: 2px solid var(--text-on-primary);
-    border-bottom: 2px solid var(--text-on-primary);
-    border-left: 2px solid transparent;
-    border-right: 2px solid transparent;
-    border-radius: 50%;
-    width: 1rem;
-    height: 1rem;
-    margin-right: 0.5rem;
-    animation: spin 1s linear infinite;
-  }
-
-  .arrange-columns-dialog {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    z-index: 1000;
-    display: flex;
-    justify-content: center;
-  }
-  .arrange-columns-dialog-backdrop {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-color: rgba(0, 0, 0, 0.5);
-    z-index: 1001;
-  }
-  .arrange-columns-dialog-inner {
-    width: 500px;
-    max-width: 100%;
-    z-index: 1002;
-    background-color: white;
-    border-radius: 0.25rem;
-    box-shadow: 0 3px 12px rgba(0, 0, 0, 0.16);
-    margin-top: 50px;
-    padding: 1rem;
-    display: flex;
-    flex-direction: column;
-    height: min-content;
-  }
-  .arrange-columns-dialog-inner main {
-    display: flex;
-    flex-direction: column;
-    flex: 1;
-    padding-bottom: 1rem;
-    max-height: 400px;
-    overflow-y: auto;
-  }
-  @keyframes spin {
-    0% {
-      transform: rotate(0deg);
-    }
-    100% {
-      transform: rotate(360deg);
-    }
-  }
-
-  .sticky-first {
-    position: sticky;
-    left: 0;
-    background-color: var(--background-primary);
-  }
-
-  td.sticky-first,
-  td.sticky-last {
-    z-index: 1;
-  }
-
-  .sticky-first:after {
-    content: '';
-    position: absolute;
-    top: 0;
-    right: 0;
-    bottom: 0;
-    width: 0.5px;
-    height: 100%;
-    background-color: rgba(0, 0, 0, 0.16);
-  }
-
-  .sticky-last {
-    position: sticky;
-    right: 0;
-    background-color: var(--background-primary);
-  }
-
-  .sticky-last:before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    bottom: 0;
-    width: 0.5px;
-    height: 100%;
-    background-color: rgba(0, 0, 0, 0.16);
-  }
-</style>

@@ -1,5 +1,6 @@
 <script lang="ts">
 	import '../../../dist/async-table.wc';
+  import '../../../dist/async-table.css';
   import {onMount} from 'svelte';
 
 	let el: HTMLElement;
