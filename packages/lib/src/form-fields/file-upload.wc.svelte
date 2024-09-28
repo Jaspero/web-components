@@ -28,7 +28,7 @@
   export let name = '';
   export let required = false;
   export let displayFormat = 'snake';
-  export let displayFormatFunction;
+  export let displayFormatFunction: (name: string) => string;
 
 
   let previewStyle: string;
@@ -36,12 +36,12 @@
   let inputFocused: boolean = false;
   let isLocal = false;
   let img = '';
-  let file = null;
+  let file: any = null;
   let preview = false;
   let hoveringFile = false;
   let internalValue: string;
   let fileEl: HTMLInputElement;
-  let displayedFileNameString = '';
+  let displayedFileNameString = (value && formatDisplayFileName(value, displayFormat, displayFormatFunction)) || '';
 
   const dispatch = createEventDispatcher();
 
@@ -85,7 +85,8 @@
     isLocal = true;
     file = f;
     internalValue = f.name;
-    displayedFileNameString = formatDisplayFileName(internalValue,displayFormat, displayFormatFunction);
+    displayedFileNameString = formatDisplayFileName(internalValue,displayFormat, displayFormatFunction) as string;
+    
     if (file['type'].split('/')[0] === 'image') {
       const base64 = (await convertBase64(file)) as string;
       img = base64;
@@ -94,14 +95,14 @@
     }
   }
 
-  async function handleDrop(e) {
+  async function handleDrop(e: any) {
     if (e.dataTransfer.files.length) {
       handleLocalChange(e.dataTransfer.files[0]);
     }
     hoveringFile = false;
   }
 
-  async function filePicked(event) {
+  async function filePicked(event: any) {
     handleLocalChange(event.target.files[0]);
   }
 
@@ -138,7 +139,7 @@
     preview = !preview;
   }
 
-  function convertBase64(file) {
+  function convertBase64(file: File) {
     return new Promise((resolve, reject) => {
       const fileReader = new FileReader();
       fileReader.readAsDataURL(file);
