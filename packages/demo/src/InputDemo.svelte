@@ -15,7 +15,7 @@
 <button type="button" on:click={() => v = Math.random().toString()}>Toggle Value</button>
 
 {#if show}
-	<jp-input label="Cool" use:bind={v} on:bind={e => v = e.detail}></jp-input>
+	<jp-input label="Cool" required use:bind={v} on:bind={e => v = e.detail}></jp-input>
 {/if}
 
-<jp-select label="Test"></jp-select>
+<jp-select label="Test" required disabled></jp-select>

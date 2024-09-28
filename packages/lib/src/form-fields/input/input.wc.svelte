@@ -114,6 +114,8 @@
     attachedInternals.setFormValue(value);
     dispatch('value', { value });
   }
+  $: fieldPadding = labelType !== 'outside' && !label;
+  $: displayLabel = required ? `${label} *` : label;
 
   onMount(()=> {
     if(inputFocused){
@@ -123,23 +125,23 @@
 </script>
 
 {#if label && labelType === 'outside'}
-  <div class="label">
-    {@html label}
+  <div class="jp-input-label">
+    {@html displayLabel}
   </div>
 {/if}
-<div class:has-hint={!!hint}>
-  <label class="field" class:disabled={disabled || readonly} class:required>
+<div class="jp-input" class:jp-input-has-hint={!!hint}>
+  <label class="jp-input-field" class:jp-input-field-disabled={disabled || readonly}>
     {#if label && labelType === 'inside'}
-      <span class="field-label" class:move={focused || value || type === 'time' || value === 0}>{@html label}</span>
+      <span class="jp-input-field-label" class:jp-input-field-move={focused || value || type === 'time' || value === 0}>{@html displayLabel}</span>
     {/if}
     {#if prefix && (value || focused)}
-      <div class="prefix">{@html prefix}</div>
+      <div class="jp-input-field-prefix">{@html prefix}</div>
     {/if}
     {#if type === 'text'}
       <input
         type="text"
         bind:this={inputEl}
-        class={`field-input ${labelType === 'outside' || !label ? '' : 'field-input-padding'}`}
+        class:jp-input-field-padding={fieldPadding}
         aria-hidden={disabled || readonly}
         tabindex={disabled || readonly ? -1 : 0}
         {placeholder}
@@ -160,7 +162,7 @@
       <input
         type="password"
         bind:this={inputEl}
-        class={`field-input ${labelType === 'outside' || !label ? '' : 'field-input-padding'}`}
+        class:jp-input-field-padding={fieldPadding}
         aria-hidden={disabled || readonly}
         tabindex={disabled || readonly ? -1 : 0}
         {placeholder}
@@ -181,7 +183,7 @@
       <input
         type="email"
         bind:this={inputEl}
-        class={`field-input ${labelType === 'outside' || !label ? '' : 'field-input-padding'}`}
+        class:jp-input-field-padding={fieldPadding}
         aria-hidden={disabled || readonly}
         tabindex={disabled || readonly ? -1 : 0}
         {placeholder}
@@ -202,7 +204,7 @@
       <input
         type="tel"
         bind:this={inputEl}
-        class={`field-input ${labelType === 'outside' || !label ? '' : 'field-input-padding'}`}
+        class:jp-input-field-padding={fieldPadding}
         aria-hidden={disabled || readonly}
         tabindex={disabled || readonly ? -1 : 0}
         {placeholder}
@@ -223,7 +225,7 @@
       <input
         type="url"
         bind:this={inputEl}
-        class={`field-input ${labelType === 'outside' || !label ? '' : 'field-input-padding'}`}
+        class:jp-input-field-padding={fieldPadding}
         aria-hidden={disabled || readonly}
         tabindex={disabled || readonly ? -1 : 0}
         {placeholder}
@@ -244,7 +246,7 @@
       <input
         type="number"
         bind:this={inputEl}
-        class={`field-input ${labelType === 'outside' || !label ? '' : 'field-input-padding'}`}
+        class:jp-input-field-padding={fieldPadding}
         aria-hidden={disabled || readonly}
         tabindex={disabled || readonly ? -1 : 0}
         {required}
@@ -269,7 +271,7 @@
       <input
         type="time"
         bind:this={inputEl}
-        class={`field-input ${labelType === 'outside' || !label ? '' : 'field-input-padding'}`}
+        class:jp-input-field-padding={fieldPadding}
         aria-hidden={disabled || readonly}
         tabindex={disabled || readonly ? -1 : 0}
         {required}
@@ -284,11 +286,11 @@
         on:blur={() => (focused = false)}
       />
     {:else if type === 'color'}
-      <span class="color-picker" style="background-color: {value}"></span>
+      <span class="jp-input-field-color-picker" style="background-color: {value}"></span>
       <input
         type="color"
         bind:this={inputEl}
-        class={`field-input ${labelType === 'outside' || !label ? '' : 'field-input-padding'}`}
+        class:jp-input-field-padding={fieldPadding}
         aria-hidden={disabled || readonly}
         tabindex={disabled || readonly ? -1 : 0}
         {required}
@@ -305,11 +307,11 @@
       <span>{value}</span>
     {/if}
     {#if suffix}
-      <div class="suffix">{@html suffix}</div>
+      <div class="jp-input-field-suffix">{@html suffix}</div>
     {/if}
   </label>
 
   {#if hint}
-    <div class="field-hint">{@html hint}</div>
+    <div class="jp-input-field-hint">{@html hint}</div>
   {/if}
 </div>

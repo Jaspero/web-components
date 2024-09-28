@@ -13,6 +13,6 @@
 <!-- <MultiSelectDemo /> -->
 <!-- <FileListDemo /> -->
 <!-- <Demos /> -->
-<!-- <InputDemo /> -->
-<AsyncTableDemo />
+<InputDemo />
+<!-- <AsyncTableDemo /> -->
 <!-- <ImageGalleryDemo /> -->
