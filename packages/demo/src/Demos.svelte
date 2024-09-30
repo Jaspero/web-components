@@ -22,6 +22,7 @@
   import '../../../dist/chips.wc';
   import '../../../dist/checkbox.wc';
   import '../../../dist/autocomplete.wc';
+  import '../../../dist/checkbox.css';
   import { onMount } from 'svelte';
   
   const options = [
