@@ -20,6 +20,8 @@
   import { clickOutside } from '../../click-outside';
   import clearIcon from '../../icons/clear.svg?raw';
   import { wait } from '../../utils/wait';
+  import arrowIcon from './arrow.svg?raw';
+  import checkIcon from '../../icons/check.svg?raw';
   import './select.wc.pcss';
 
   export let attachedInternals: ElementInternals;
@@ -278,51 +280,42 @@
 </script>
 
 {#if label && labelType == 'outside'}
-  <div class="label">
+  <div class="jp-select-label-outside">
     {@html displayLabel}
   </div>
 {/if}
-<div class="wrapper" class:has-hint={hint}>
+<div class="jp-select" class:jp-select-has-hint={hint}>
   {#if showClear && value}
-    <button class="clear" on:click={clearSelection}>
+    <button class="jp-select-clear" on:click={clearSelection}>
       {@html clearIcon}
     </button>
   {/if}
   <button
     type="button"
-    class="select"
-    class:toggled={open}
+    class="jp-select-toggle"
+    class:jp-select-toggled={open}
     bind:this={bindingElement}
     {disabled}
     on:click|preventDefault={toggleMenu}
     on:keydown={handleKeydown}
   >
     {#if label && labelType == 'inside'}
-      <span class="select-label" class:move={selected || open}>
+      <span class="jp-select-label" class:jp-select-label-move={selected || open}>
         {@html displayLabel}
       </span>
     {/if}
 
     <span
-      class={`select-option ${labelType == 'outside' || !label ? '' : 'select-option-padding'} `}
-      class:has-clear={showClear}
+      class={`jp-select-option ${labelType == 'outside' || !label ? '' : 'jp-select-option-padding'} `}
+      class:jp-select-option-has-clear={showClear}
     >
       {selected || ''}
     </span>
-    <svg
-      xmlns="http://www.w3.org/2000/svg"
-      viewBox="0 0 320 512"
-      class="select-arrow"
-      class:rotate={open}
-    >
-      <path
-        d="M137.4 374.6c12.5 12.5 32.8 12.5 45.3 0l128-128c9.2-9.2 11.9-22.9 6.9-34.9s-16.6-19.8-29.6-19.8L32 192c-12.9 0-24.6 7.8-29.6 19.8s-2.2 25.7 6.9 34.9l128 128z"
-      />
-    </svg>
+    {@html arrowIcon}
   </button>
 
   {#if hint}
-    <span class="select-hint">
+    <span class="jp-select-hint">
       {@html hint}
     </span>
   {/if}
@@ -331,10 +324,10 @@
 </div>
 
 {#if open}
-  <div class="overlay">
+  <div class="jp-select-overlay">
     <!-- svelte-ignore a11y-no-noninteractive-element-interactions -->
     <div
-      class="menu"
+      class="jp-select-menu"
       style={menuStyle}
       use:clickOutside
       on:click_outside={() => (open = false)}
@@ -344,8 +337,7 @@
       {#each options as option, index (option)}
         <button
           type="button"
-          class="menu-button"
-          class:selected={value == option.value}
+          class:jp-select-menu-selected={value == option.value}
           bind:this={optionElements[index]}
           disabled={option.disabled}
           on:click|preventDefault={() => {
@@ -356,16 +348,7 @@
           <span>{option.label ? option.label : option.value}</span>
 
           {#if value == option.value}
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              width="1rem"
-              height="1rem"
-              viewBox="0 0 448 512"
-            >
-              <path
-                d="M438.6 105.4c12.5 12.5 12.5 32.8 0 45.3l-256 256c-12.5 12.5-32.8 12.5-45.3 0l-128-128c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0L160 338.7 393.4 105.4c12.5-12.5 32.8-12.5 45.3 0z"
-              />
-            </svg>
+            {@html checkIcon}
           {/if}
         </button>
       {/each}
