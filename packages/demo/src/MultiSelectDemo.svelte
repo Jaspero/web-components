@@ -1,5 +1,6 @@
 <script lang="ts">
   import '../../../dist/multiselect.wc.js';
+  import '../../../dist/multiselect.css';
 
   const options = [
 		{value: 1, label: 'Monday'},
@@ -13,6 +14,37 @@
 
   console.log(JSON.stringify(options));
 </script>
-
-<jp-multiselect value={'1,2'} options={options} label="Select">
+<div>
+<jp-multiselect  options={options}>
 </jp-multiselect>
+</div>
+
+<div>
+<jp-multiselect  options={options}  hint="hint">
+</jp-multiselect>
+</div>
+<div>
+<jp-multiselect  options={options}>
+</jp-multiselect>
+</div>
+<div>
+<jp-multiselect  options={options} required=true>
+</jp-multiselect>
+</div>
+<div>
+<jp-multiselect  options={options} disabled=true>
+</jp-multiselect>
+</div>
+<div>
+<jp-multiselect  options={options} label="label" labelType='outside'>
+</jp-multiselect>
+</div>
+<div>
+<jp-multiselect  options={options} label="label" labelType='inside'>
+</jp-multiselect></div>
+
+<style>
+	div{
+		padding-top: 10px;
+	}
+</style>

@@ -16,8 +16,9 @@
 />
 
 <script lang="ts">
-  import { clickOutside } from '../click-outside';
+  import { clickOutside } from '../../click-outside';
   import { createEventDispatcher, onMount } from 'svelte';
+  import './multiselect.wc.pcss';
 
   export let attachedInternals: ElementInternals;
   export let minSelects = 0;
@@ -350,9 +351,9 @@
     {@html label}
   </div>
 {/if}
-<div class="wrapper" class:has-hint={hint}>
+<div class="jp-multiselect-wrapper" class:jp-multiselect-has-hint={hint}>
   {#if showClear && hasSelectedOption}
-    <button class="clear" on:click={clearSelection}>
+    <button class="jp-multiselect-clear" on:click={clearSelection}>
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512">
         <path
           d="M342.6 150.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L192 210.7 86.6 105.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3L146.7 256 41.4 361.4c-12.5 12.5-12.5 32.8 0 45.3s32.8 12.5 45.3 0L192 301.3 297.4 406.6c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L237.3 256 342.6 150.6z"
@@ -365,21 +366,21 @@
 
   <button
     type="button"
-    class="select"
-    class:toggled={open}
+    class="jp-multiselect-select"
+    class:jp-multiselect-toggled={open}
     bind:this={bindingElement}
     {disabled}
     on:click|preventDefault={toggleMenu}
     on:keydown={handleKeydown}
   >
     {#if label && labelType == 'inside'}
-      <span class="select-label" class:move={internalValue || open}>
+      <span class="jp-multiselect-select-label" class:jp-multiselect-select-label-move={internalValue || open}>
         {@html label}
       </span>
     {/if}
 
     <span
-      class={`select-option ${labelType == 'outside' || !label ? '' : 'select-option-padding'}`}
+      class={`jp-multiselect-select-option ${labelType == 'outside' || !label ? '' : 'jp-multiselect-select-option-padding'}`}
       class:has-clear={showClear}
     >
       {displayValue || ''}
@@ -388,8 +389,8 @@
     <svg
       xmlns="http://www.w3.org/2000/svg"
       viewBox="0 0 320 512"
-      class="select-arrow"
-      class:rotate={open}
+      class="jp-multiselect-select-arrow"
+      class:jp-multiselect-rotate={open}
     >
       <path
         d="M137.4 374.6c12.5 12.5 32.8 12.5 45.3 0l128-128c9.2-9.2 11.9-22.9 6.9-34.9s-16.6-19.8-29.6-19.8L32 192c-12.9 0-24.6 7.8-29.6 19.8s-2.2 25.7 6.9 34.9l128 128z"
@@ -398,16 +399,16 @@
   </button>
 
   {#if hint}
-    <span class="select-hint">
+    <span class="jp-multiselect-select-hint">
       {@html hint}
     </span>
   {/if}
 
   {#if open}
-    <div class="overlay">
+    <div class="jp-multiselect-overlay">
       <!-- svelte-ignore a11y-no-static-element-interactions -->
       <div
-        class="menu"
+        class="jp-multiselect-menu"
         use:clickOutside
         on:click_outside={() => (open = false)}
         style={menuStyle}
@@ -416,8 +417,8 @@
         {#each options as option, index (option)}
           <button
             type="button"
-            class="menu-button"
-            class:selected={option.selected}
+            class="jp-multiselect-menu-button"
+            class:jp-multiselect-selected={option.selected}
             bind:this={optionElements[index]}
             disabled={option.disabled}
             on:click|preventDefault={() => {
@@ -450,279 +451,3 @@
     </div>
   {/if}
 </div>
-
-<style lang="postcss">
-  .wrapper {
-    position: relative;
-  }
-
-  .has-hint {
-    position: relative;
-    margin-bottom: 1.25rem;
-  }
-
-  /* Select */
-  .select {
-    position: relative;
-    display: -webkit-box;
-    display: -webkit-flex;
-    display: -moz-box;
-    display: -ms-flexbox;
-    display: flex;
-    -webkit-box-pack: justify;
-    -webkit-justify-content: space-between;
-    -moz-box-pack: justify;
-    -ms-flex-pack: justify;
-    justify-content: space-between;
-    -webkit-box-align: center;
-    -webkit-align-items: center;
-    -moz-box-align: center;
-    -ms-flex-align: center;
-    align-items: center;
-    text-align: left;
-    width: 100%;
-    height: 3rem;
-    -webkit-user-select: none;
-    -moz-user-select: none;
-    -ms-user-select: none;
-    user-select: none;
-    padding: 0 0.75rem;
-    gap: 0.75rem;
-    background-color: transparent;
-    border: 1px solid var(--border-primary);
-    -webkit-border-radius: 0.25rem;
-    -moz-border-radius: 0.25rem;
-    border-radius: 0.25rem;
-  }
-
-  .select:focus {
-    outline: none;
-    border-color: var(--primary-color);
-    -webkit-box-shadow: inset 0 0 0 1px var(--primary-color);
-    -moz-box-shadow: inset 0 0 0 1px var(--primary-color);
-    box-shadow: inset 0 0 0 1px var(--primary-color);
-  }
-
-  .select.toggled {
-    -webkit-border-bottom-left-radius: 0;
-    -moz-border-radius-bottomleft: 0;
-    border-bottom-left-radius: 0;
-    -webkit-border-bottom-right-radius: 0;
-    -moz-border-radius-bottomright: 0;
-    border-bottom-right-radius: 0;
-    border-bottom-color: var(--primary-color);
-    -webkit-box-shadow: inset 0 -2px 1px -1px var(--primary-color);
-    -moz-box-shadow: inset 0 -2px 1px -1px var(--primary-color);
-    box-shadow: inset 0 -2px 1px -1px var(--primary-color);
-  }
-
-  .select:disabled {
-    opacity: 0.5;
-  }
-
-  .select-label {
-    position: absolute;
-    top: 50%;
-    -webkit-transform: translateY(-50%);
-    -moz-transform: translateY(-50%);
-    -ms-transform: translateY(-50%);
-    -o-transform: translateY(-50%);
-    transform: translateY(-50%);
-    -webkit-transition: 0.3s;
-    -o-transition: 0.3s;
-    -moz-transition: 0.3s;
-    transition: 0.3s;
-    font-size: 1rem;
-  }
-
-  .select-label.move {
-    top: 0.25rem;
-    -webkit-transform: translateY(0);
-    -moz-transform: translateY(0);
-    -ms-transform: translateY(0);
-    -o-transform: translateY(0);
-    transform: translateY(0);
-    font-size: 0.75rem;
-  }
-
-  input:required + .select .select-label::after {
-    content: ' *';
-  }
-
-  input:required:invalid + .select {
-    border-color: var(--danger-color);
-  }
-
-  input {
-    top: 0;
-    height: 100%;
-    opacity: 0;
-    position: absolute;
-    width: 100%;
-    z-index: -1;
-  }
-
-  .select-option {
-    -webkit-box-flex: 1;
-    -webkit-flex: auto;
-    -moz-box-flex: 1;
-    -ms-flex: auto;
-    flex: auto;
-    width: 10rem;
-    white-space: nowrap;
-    overflow: hidden;
-    -o-text-overflow: ellipsis;
-    text-overflow: ellipsis;
-  }
-
-  .select-option-padding {
-    padding: 1rem 0 0 0;
-  }
-
-  .select-arrow {
-    width: 1rem;
-    height: 1rem;
-    min-width: 1rem;
-    min-height: 1rem;
-    -webkit-transition: 0.3s;
-    -o-transition: 0.3s;
-    -moz-transition: 0.3s;
-    transition: 0.3s;
-  }
-
-  .select-arrow.rotate {
-    -webkit-transform: rotate(-180deg);
-    -moz-transform: rotate(-180deg);
-    -ms-transform: rotate(-180deg);
-    -o-transform: rotate(-180deg);
-    transform: rotate(-180deg);
-  }
-
-  .select-hint {
-    position: absolute;
-    top: 100%;
-    left: 0;
-    width: 100%;
-    height: 1.25rem;
-    line-height: 1.25rem;
-    font-size: 0.75rem;
-    padding: 0 0.75rem;
-    white-space: nowrap;
-    overflow: hidden;
-    -o-text-overflow: ellipsis;
-    text-overflow: ellipsis;
-    color: var(--text-secondary);
-  }
-
-  .select-hint:hover {
-    z-index: 255;
-    overflow: unset;
-  }
-
-  /* Menu */
-  .menu {
-    z-index: 100;
-    position: absolute;
-    display: -webkit-box;
-    display: -webkit-flex;
-    display: -moz-box;
-    display: -ms-flexbox;
-    display: flex;
-    -webkit-box-orient: vertical;
-    -webkit-box-direction: normal;
-    -webkit-flex-direction: column;
-    -moz-box-orient: vertical;
-    -moz-box-direction: normal;
-    -ms-flex-direction: column;
-    flex-direction: column;
-    width: 100%;
-    max-height: 300px;
-    overflow-y: auto;
-    -webkit-border-bottom-left-radius: 0.25rem;
-    -moz-border-radius-bottomleft: 0.25rem;
-    border-bottom-left-radius: 0.25rem;
-    -webkit-border-bottom-right-radius: 0.25rem;
-    -moz-border-radius-bottomright: 0.25rem;
-    border-bottom-right-radius: 0.25rem;
-    -webkit-box-shadow: 0 6px 9px rgba(0, 0, 0, 0.16);
-    -moz-box-shadow: 0 6px 9px rgba(0, 0, 0, 0.16);
-    box-shadow: 0 6px 9px rgba(0, 0, 0, 0.16);
-    background-color: var(--background-primary);
-  }
-
-  .menu-button {
-    display: -webkit-box;
-    display: -webkit-flex;
-    display: -moz-box;
-    display: -ms-flexbox;
-    display: flex;
-    -webkit-box-pack: justify;
-    -webkit-justify-content: space-between;
-    -moz-box-pack: justify;
-    -ms-flex-pack: justify;
-    justify-content: space-between;
-    -webkit-box-align: center;
-    -webkit-align-items: center;
-    -moz-box-align: center;
-    -ms-flex-align: center;
-    align-items: center;
-    border: none;
-    gap: 0.75rem;
-    padding: 0.75rem;
-    text-align: left;
-    outline: none;
-    -webkit-transition: 0.3s;
-    -o-transition: 0.3s;
-    -moz-transition: 0.3s;
-    transition: 0.3s;
-  }
-
-  .menu-button.selected {
-    background-color: var(--background-tertiary);
-    color: var(--primary-color);
-    fill: var(--primary-color);
-  }
-
-  .menu-button:disabled {
-    opacity: 0.33;
-  }
-
-  .menu-button:not(:disabled):hover,
-  .menu-button:focus {
-    background-color: var(--background-secondary);
-  }
-
-  .clear {
-    z-index: 1;
-    position: absolute;
-    top: 50%;
-    right: 2rem;
-    width: 24px;
-    height: 24px;
-    -webkit-transform: translateY(-50%);
-    -moz-transform: translateY(-50%);
-    -ms-transform: translateY(-50%);
-    -o-transform: translateY(-50%);
-    transform: translateY(-50%);
-    -webkit-border-radius: 50%;
-    -moz-border-radius: 50%;
-    border-radius: 50%;
-    -webkit-transition: background-color 0.25s;
-    -o-transition: background-color 0.25s;
-    -moz-transition: background-color 0.25s;
-    transition: background-color 0.25s;
-  }
-
-  .clear:hover {
-    background-color: rgba(0, 0, 0, 0.08);
-  }
-
-  .overlay {
-    z-index: 100;
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100vw;
-    height: 100vh;
-  }
-</style>
