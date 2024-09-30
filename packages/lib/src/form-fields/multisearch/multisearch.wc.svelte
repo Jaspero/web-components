@@ -15,10 +15,11 @@
   }}
 />
 
-<script lang="ts">
-  import { clickOutside } from '../click-outside';
+<script lang="ts"> 
+  import { clickOutside } from '../../click-outside';
   import { createEventDispatcher } from 'svelte';
-  import type SearchService from '../types/search.service';
+  import type SearchService from '../../types/search.service';
+  import './multisearch.wc.pcss';
 
   let options: Array<{
     label?: string;
@@ -362,32 +363,32 @@
 </script>
 
 {#if label && labelType == 'outside'}
-  <div class="label">
+  <div class="jp-multisearch-label">
     {@html label}
   </div>
 {/if}
-<div class="wrapper" class:has-hint={hint}>
-  <input class="hidden-input" tabindex="-1" bind:value={internalValue} {id} {name} {required} />
+<div class="jp-multisearch-wrapper" class:jp-multisearch-has-hint={hint}>
+  <input class="jp-multisearch-hidden-input" tabindex="-1" bind:value={internalValue} {id} {name} {required} />
 
   <button
     type="button"
-    class="select"
-    class:toggled={open}
+    class="jp-multisearch-select"
+    class:jp-multisearch-select-toggled={open}
     bind:this={bindingElement}
     disabled={disabled || valueLoad}
     on:click|preventDefault={toggleMenu}
     on:keydown={handleKeydown}
   >
     {#if valueLoad}
-      <span class="select-label"> {wording.LOADING} </span>
+      <span class="jp-multisearch-select-label"> {wording.LOADING} </span>
     {:else if label && labelType == 'inside'}
-      <span class="select-label" class:move={internalValue || open}>
+      <span class="jp-multisearch-select-label" class:jp-multisearch-select-label-move={internalValue || open}>
         {@html label}
       </span>
     {/if}
 
     <span
-      class={`select-option ${labelType == 'outside' || !label ? '' : 'select-option-padding'}`}
+      class={`jp-multisearch-select-option ${labelType == 'outside' || !label ? '' : 'jp-multisearch-select-option-padding'}`}
     >
       {displayValue || ''}
     </span>
@@ -395,8 +396,8 @@
     <svg
       xmlns="http://www.w3.org/2000/svg"
       viewBox="0 0 320 512"
-      class="select-arrow"
-      class:rotate={open}
+      class="jp-multisearch-select-arrow"
+      class:jp-multisearch-select-arrow-rotate={open}
     >
       <path
         d="M137.4 374.6c12.5 12.5 32.8 12.5 45.3 0l128-128c9.2-9.2 11.9-22.9 6.9-34.9s-16.6-19.8-29.6-19.8L32 192c-12.9 0-24.6 7.8-29.6 19.8s-2.2 25.7 6.9 34.9l128 128z"
@@ -405,16 +406,16 @@
   </button>
 
   {#if hint}
-    <span class="select-hint">
+    <span class="jp-multisearch-select-hint">
       {@html hint}
     </span>
   {/if}
 
   {#if open}
-    <div class="overlay">
+    <div class="jp-multisearch-overlay">
       <!-- svelte-ignore a11y-no-noninteractive-element-interactions -->
       <div
-        class="menu"
+        class="jp-multisearch-menu"
         use:clickOutside
         on:click_outside={() => (open = false)}
         on:keydown={handleKeydown}
@@ -422,12 +423,12 @@
         role="dialog"
       >
         {#if service.search}
-          <div class="search-field">
-            <span class="search-label" class:move={searchFocused || searchValue}>Search</span>
+          <div class="jp-multisearch-search-field">
+            <span class="jp-multisearch-search-label" class:jp-multisearch-search-label-move={searchFocused || searchValue}>Search</span>
             <input
               name="search"
               type="text"
-              class="search-input"
+              class="jp-multisearch-search-input"
               on:input={() => {
                 if (!loadingSearch) handleSearch();
               }}
@@ -437,12 +438,12 @@
             />
           </div>
         {/if}
-        <div class="menu-buttons">
+        <div class="jp-multisearch-menu-buttons">
           {#each options as option, index (option)}
             <button
               type="button"
-              class="menu-button"
-              class:selected={option.selected}
+              class="jp-multisearch-menu-button"
+              class:jp-multisearch-menu-button-selected={option.selected}
               bind:this={optionElements[index]}
               disabled={option.disabled}
               on:click|preventDefault={() => {
@@ -478,7 +479,7 @@
           {/if}
         </div>
         {#if service.loadMore && !loadingSearch}
-          <div class="loadmore">
+          <div class="jp-multisearch-loadmore">
             {#if !loadingMore}
               <button
                 type="button"
@@ -499,374 +500,3 @@
     </div>
   {/if}
 </div>
-
-<style lang="postcss">
-  .has-hint {
-    position: relative;
-    margin-bottom: 1.25rem;
-  }
-
-  .wrapper {
-    position: relative;
-  }
-
-  /* Select */
-  .select {
-    position: relative;
-    display: -webkit-box;
-    display: -webkit-flex;
-    display: -moz-box;
-    display: -ms-flexbox;
-    display: flex;
-    -webkit-box-pack: justify;
-    -webkit-justify-content: space-between;
-    -moz-box-pack: justify;
-    -ms-flex-pack: justify;
-    justify-content: space-between;
-    -webkit-box-align: center;
-    -webkit-align-items: center;
-    -moz-box-align: center;
-    -ms-flex-align: center;
-    align-items: center;
-    text-align: left;
-    width: 100%;
-    height: 3rem;
-    -webkit-user-select: none;
-    -moz-user-select: none;
-    -ms-user-select: none;
-    user-select: none;
-    padding: 0 0.75rem;
-    gap: 0.75rem;
-    background-color: transparent;
-    border: 1px solid var(--border-primary);
-    -webkit-border-radius: 0.25rem;
-    -moz-border-radius: 0.25rem;
-    border-radius: 0.25rem;
-  }
-
-  .select:focus {
-    outline: none;
-    border-color: var(--primary-color);
-    -webkit-box-shadow: inset 0 0 0 1px var(--primary-color);
-    -moz-box-shadow: inset 0 0 0 1px var(--primary-color);
-    box-shadow: inset 0 0 0 1px var(--primary-color);
-  }
-
-  .select.toggled {
-    -webkit-border-bottom-left-radius: 0;
-    -moz-border-radius-bottomleft: 0;
-    border-bottom-left-radius: 0;
-    -webkit-border-bottom-right-radius: 0;
-    -moz-border-radius-bottomright: 0;
-    border-bottom-right-radius: 0;
-    border-bottom-color: var(--primary-color);
-    -webkit-box-shadow: inset 0 -2px 1px -1px var(--primary-color);
-    -moz-box-shadow: inset 0 -2px 1px -1px var(--primary-color);
-    box-shadow: inset 0 -2px 1px -1px var(--primary-color);
-  }
-
-  .select:disabled {
-    opacity: 0.5;
-  }
-
-  .select-label {
-    position: absolute;
-    top: 50%;
-    -webkit-transform: translateY(-50%);
-    -moz-transform: translateY(-50%);
-    -ms-transform: translateY(-50%);
-    -o-transform: translateY(-50%);
-    transform: translateY(-50%);
-    -webkit-transition: 0.3s;
-    -o-transition: 0.3s;
-    -moz-transition: 0.3s;
-    transition: 0.3s;
-    font-size: 1rem;
-  }
-
-  .select-label.move {
-    top: 0.25rem;
-    -webkit-transform: translateY(0);
-    -moz-transform: translateY(0);
-    -ms-transform: translateY(0);
-    -o-transform: translateY(0);
-    transform: translateY(0);
-    font-size: 0.75rem;
-  }
-
-  input:required + .select .select-label::after {
-    content: ' *';
-  }
-
-  input:required:invalid + .select {
-    border-color: var(--danger-color);
-  }
-
-  .hidden-input {
-    top: 0;
-    height: 100%;
-    opacity: 0;
-    position: absolute;
-    width: 100%;
-    z-index: -1;
-  }
-
-  .select-option {
-    -webkit-box-flex: 1;
-    -webkit-flex: auto;
-    -moz-box-flex: 1;
-    -ms-flex: auto;
-    flex: auto;
-    width: 10rem;
-    white-space: nowrap;
-    overflow: hidden;
-    -o-text-overflow: ellipsis;
-    text-overflow: ellipsis;
-  }
-
-  .select-option-padding {
-    padding: 1rem 0 0 0;
-  }
-
-  .select-arrow {
-    width: 1rem;
-    height: 1rem;
-    min-width: 1rem;
-    min-height: 1rem;
-    -webkit-transition: 0.3s;
-    -o-transition: 0.3s;
-    -moz-transition: 0.3s;
-    transition: 0.3s;
-  }
-
-  .select-arrow.rotate {
-    -webkit-transform: rotate(-180deg);
-    -moz-transform: rotate(-180deg);
-    -ms-transform: rotate(-180deg);
-    -o-transform: rotate(-180deg);
-    transform: rotate(-180deg);
-  }
-
-  .select-hint {
-    position: absolute;
-    top: 100%;
-    left: 0;
-    width: 100%;
-    height: 1.25rem;
-    line-height: 1.25rem;
-    font-size: 0.75rem;
-    padding: 0 0.75rem;
-    white-space: nowrap;
-    overflow: hidden;
-    -o-text-overflow: ellipsis;
-    text-overflow: ellipsis;
-    color: var(--text-secondary);
-  }
-
-  .select-hint:hover {
-    z-index: 255;
-    overflow: unset;
-  }
-
-  /* Menu */
-  .menu {
-    z-index: 100;
-    position: absolute;
-    display: -webkit-box;
-    display: -webkit-flex;
-    display: -moz-box;
-    display: -ms-flexbox;
-    display: flex;
-    width: 100%;
-    -webkit-box-orient: vertical;
-    -webkit-box-direction: normal;
-    -webkit-flex-direction: column;
-    -moz-box-orient: vertical;
-    -moz-box-direction: normal;
-    -ms-flex-direction: column;
-    flex-direction: column;
-    -webkit-border-bottom-left-radius: 0.25rem;
-    -moz-border-radius-bottomleft: 0.25rem;
-    border-bottom-left-radius: 0.25rem;
-    -webkit-border-bottom-right-radius: 0.25rem;
-    -moz-border-radius-bottomright: 0.25rem;
-    border-bottom-right-radius: 0.25rem;
-    -webkit-box-shadow: 0 6px 9px rgba(0, 0, 0, 0.16);
-    -moz-box-shadow: 0 6px 9px rgba(0, 0, 0, 0.16);
-    box-shadow: 0 6px 9px rgba(0, 0, 0, 0.16);
-    background-color: var(--background-primary);
-  }
-
-  .menu-buttons {
-    display: -webkit-box;
-    display: -webkit-flex;
-    display: -moz-box;
-    display: -ms-flexbox;
-    display: flex;
-    -webkit-box-orient: vertical;
-    -webkit-box-direction: normal;
-    -webkit-flex-direction: column;
-    -moz-box-orient: vertical;
-    -moz-box-direction: normal;
-    -ms-flex-direction: column;
-    flex-direction: column;
-    max-height: 300px;
-    overflow-y: auto;
-  }
-
-  .menu-button {
-    display: -webkit-box;
-    display: -webkit-flex;
-    display: -moz-box;
-    display: -ms-flexbox;
-    display: flex;
-    -webkit-box-pack: justify;
-    -webkit-justify-content: space-between;
-    -moz-box-pack: justify;
-    -ms-flex-pack: justify;
-    justify-content: space-between;
-    -webkit-box-align: center;
-    -webkit-align-items: center;
-    -moz-box-align: center;
-    -ms-flex-align: center;
-    align-items: center;
-    border: none;
-    border-bottom: 1px solid var(--border-secondary);
-    gap: 0.75rem;
-    padding: 0.75rem;
-    text-align: left;
-    outline: none;
-    -webkit-transition: 0.3s;
-    -o-transition: 0.3s;
-    -moz-transition: 0.3s;
-    transition: 0.3s;
-  }
-
-  .loadmore {
-    width: 100%;
-    display: flex;
-    justify-content: center;
-    padding: 10px;
-  }
-
-  .loadmore button {
-    padding: 5px;
-    border-radius: 4px;
-    background: var(--primary-color);
-    color: var(--text-on-primary);
-  }
-
-  .menu-button.selected {
-    background-color: var(--background-tertiary);
-    color: var(--primary-color);
-    fill: var(--primary-color);
-  }
-
-  .menu-button:disabled {
-    opacity: 0.33;
-  }
-
-  .menu-button:not(:disabled):hover,
-  .menu-button:focus {
-    background-color: var(--background-secondary);
-  }
-
-  .search-field {
-    font-size: 0.75rem;
-    line-height: 1rem;
-    position: relative;
-    display: -webkit-box;
-    display: -webkit-flex;
-    display: -moz-box;
-    display: -ms-flexbox;
-    display: flex;
-    -webkit-box-pack: justify;
-    -webkit-justify-content: space-between;
-    -moz-box-pack: justify;
-    -ms-flex-pack: justify;
-    justify-content: space-between;
-    -webkit-box-align: center;
-    -webkit-align-items: center;
-    -moz-box-align: center;
-    -ms-flex-align: center;
-    align-items: center;
-    text-align: left;
-    box-sizing: border-box;
-    width: 100%;
-    -webkit-user-select: none;
-    -moz-user-select: none;
-    -ms-user-select: none;
-    user-select: none;
-    gap: 0.75rem;
-    padding: 0.75rem;
-    background-color: transparent;
-    border-bottom: 1px solid var(--border-secondary);
-  }
-
-  .search-input {
-    -webkit-box-flex: 1;
-    -webkit-flex: auto;
-    -moz-box-flex: 1;
-    -ms-flex: auto;
-    flex: auto;
-    width: 10rem;
-    font-size: 1rem;
-    white-space: nowrap;
-    overflow: hidden;
-    -o-text-overflow: ellipsis;
-    text-overflow: ellipsis;
-    padding: 1.5rem 0.75rem calc(0.5rem - 2px);
-    outline: none;
-    border: 1px solid var(--border-primary);
-    -webkit-border-radius: 0.25rem;
-    -moz-border-radius: 0.25rem;
-    border-radius: 0.25rem;
-  }
-
-  .search-label {
-    position: absolute;
-    top: 50%;
-    left: 1.5rem;
-    -webkit-transform: translateY(-50%);
-    -moz-transform: translateY(-50%);
-    -ms-transform: translateY(-50%);
-    -o-transform: translateY(-50%);
-    transform: translateY(-50%);
-    font-size: 1rem;
-    -webkit-transition:
-      transform 0.3s,
-      top 0.3s,
-      font-size 0.3s;
-    -o-transition:
-      transform 0.3s,
-      top 0.3s,
-      font-size 0.3s;
-    -moz-transition:
-      transform 0.3s,
-      top 0.3s,
-      font-size 0.3s;
-    transition:
-      transform 0.3s,
-      top 0.3s,
-      font-size 0.3s;
-  }
-
-  .search-label.move {
-    top: 1rem;
-    -webkit-transform: translateY(0);
-    -moz-transform: translateY(0);
-    -ms-transform: translateY(0);
-    -o-transform: translateY(0);
-    transform: translateY(0);
-    font-size: 0.75rem;
-  }
-
-  .overlay {
-    z-index: 100;
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100vw;
-    height: 100vh;
-  }
-</style>
