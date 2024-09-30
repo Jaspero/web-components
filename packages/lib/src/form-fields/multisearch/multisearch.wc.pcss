@@ -227,3 +227,11 @@
         height: 100vh;
       }
 }
+
+input:required + .jp-multisearch-select .jp-multisearch-select-label::after {
+    content: ' *';
+  }
+
+  input:required:invalid + .jp-multisearch-select {
+    border-color: var(--danger-color);
+  }
