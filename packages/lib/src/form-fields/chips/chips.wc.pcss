@@ -1,0 +1,121 @@
+.jp-chips{
+    &-label {
+        margin-top: 0.5rem;
+        margin-bottom: 0.125rem;
+        font-size: 0.875rem;
+      }
+
+    &-field {
+        font-size: 0.75rem;
+        line-height: 1rem;
+        position: relative;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        text-align: left;
+        width: 100%;
+        min-height: 3rem;
+        user-select: none;
+        gap: 0.75rem;
+        background-color: transparent;
+        border: 1px solid var(--border-primary);
+        border-radius: 0.25rem;
+
+        &.required .jp-chips-field-label::after {
+            content: ' *';
+          }
+        
+        &:focus-within {
+            border-color: var(--primary-color);
+            box-shadow: inset 0 0 0 1px var(--primary-color);
+          }
+        
+        &.disabled {
+            pointer-events: none;
+            opacity: 0.33;
+          }
+        
+        &-label {
+        position: absolute;
+        top: 50%;
+        left: 0.75rem;
+        transform: translateY(-50%);
+        font-size: 1rem;
+        transition:
+            transform 0.3s,
+            top 0.3s,
+            font-size 0.3s;
+
+        &.move {
+            top: 0.125rem;
+            transform: translateY(0);
+            font-size: 0.75rem;
+            }
+
+        &-label.move + .jp-chips-field-container .jp-chips-field-container-input::placeholder {
+            opacity: 1;
+            }
+          }
+
+        &-container {
+            font-family: inherit;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            flex: auto;
+            width: 10rem;
+            font-size: 1rem;
+            overflow: hidden;
+            padding: 0.75rem;
+            border: none;
+            outline: none;
+            border-radius: 0.25rem;
+            align-items: center;
+
+            &-padding {
+                padding: 1.25rem 0.75rem 0.5rem;
+              }
+
+            &-chip {
+                display: flex;
+                align-items: center;
+                gap: 0.25rem;
+                background-color: var(--background-secondary);
+                border-radius: 0.25rem;
+                padding: 0.25rem;
+
+                &-button {
+                    display: flex;
+                    align-items: center;
+                  }
+                
+                &-label {
+                    font-size: 0.875rem;
+                    word-break: break-all;
+                    white-space: normal;
+                  }
+              }
+
+            &-input {
+                border: none;
+                outline: none;
+                flex: auto;
+                width: 10rem;
+                padding: 0;
+                border-radius: 0;
+                font-size: 1rem;
+                background-color: transparent;
+
+                &::placeholder {
+                    opacity: 0;
+                    transition: opacity 0.3s;
+                  }
+                
+                &-value{
+                    display: flex;
+                    height: 1rem;
+                  }
+              }
+          }
+      }
+}

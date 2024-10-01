@@ -20,6 +20,7 @@
   import '../../../dist/color.wc';
   import '../../../dist/ckeditor.wc';
   import '../../../dist/chips.wc';
+  import '../../../dist/chips.css';
   import '../../../dist/checkbox.wc';
   import '../../../dist/autocomplete.wc';
   import '../../../dist/autocomplete.css';
@@ -77,6 +78,8 @@
 </script>
 
 <div class="form-container">
+  <jp-chips label="Chips" placeholder="Placeholder" required="true"></jp-chips>
+  <jp-chips placeholder="Placeholder" required="true"></jp-chips>
   <jp-input label="Input" required="true" />
   <jp-select label="Select" required="true"></jp-select>  
   <jp-toggle label="Toggle" required="true"></jp-toggle>
