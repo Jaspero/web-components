@@ -11,6 +11,7 @@
   import '../../../dist/quill.wc';
   import '../../../dist/input.wc';
   import '../../../dist/multiselect.wc';
+  import '../../../dist/multiselect.css';
   import '../../../dist/multisearch.wc';
   import '../../../dist/file-upload.wc';
   import '../../../dist/file-list.wc';
@@ -21,6 +22,7 @@
   import '../../../dist/chips.wc';
   import '../../../dist/checkbox.wc';
   import '../../../dist/autocomplete.wc';
+  import '../../../dist/checkbox.css';
   import { onMount } from 'svelte';
   
   const options = [
