@@ -22,6 +22,7 @@
   import '../../../dist/chips.wc';
   import '../../../dist/checkbox.wc';
   import '../../../dist/autocomplete.wc';
+  import '../../../dist/autocomplete.css';
   import '../../../dist/checkbox.css';
   import { onMount } from 'svelte';
   
@@ -106,7 +107,7 @@
     gap: 30px;
     width: 100%;
   }
-  .container {
+  .container {  
     position: relative;
     margin: 1rem 0;
   }
