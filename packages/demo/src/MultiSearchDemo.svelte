@@ -9,6 +9,7 @@
 		const multisearch = document.createElement('jp-multisearch') as any
     multisearch.value = ''
 		multisearch.label = 'Cool';
+    multisearch.required=true;
     multisearch.singleSelect = true;
     multisearch.service = {
       i: 0,
