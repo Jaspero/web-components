@@ -20,12 +20,12 @@
       border: 1px solid var(--border-primary);
       border-radius: 0.25rem;
   
-      &-disabled {
+      &.disabled {
         pointer-events: none;
         opacity: 0.5;
       }
   
-      &-required {
+      &.required {
         .jp-textarea-field-label::after {
           content: ' *';
         }
@@ -43,7 +43,7 @@
         font-size: 1rem;
         transition: transform 0.3s, top 0.3s, font-size 0.3s;
   
-        &-move {
+        &.move {
           top: 0.25rem;
           font-size: 0.75rem;
         }
