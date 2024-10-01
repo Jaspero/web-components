@@ -158,6 +158,7 @@
         on:focus={() => (focused = true)}
         on:blur={() => (focused = false)}
       />
+      <span class="jp-input-field-input">{value}</span>
     {:else if type === 'password'}
       <input
         type="password"
@@ -179,6 +180,7 @@
         on:focus={() => (focused = true)}
         on:blur={() => (focused = false)}
       />
+      <span class="jp-input-field-input">{value}</span>
     {:else if type === 'email'}
       <input
         type="email"
@@ -200,6 +202,7 @@
         on:focus={() => (focused = true)}
         on:blur={() => (focused = false)}
       />
+      <span class="jp-input-field-input">{value}</span>
     {:else if type === 'tel'}
       <input
         type="tel"
@@ -221,6 +224,7 @@
         on:focus={() => (focused = true)}
         on:blur={() => (focused = false)}
       />
+      <span class="jp-input-field-input">{value}</span>
     {:else if type === 'url'}
       <input
         type="url"
@@ -242,6 +246,7 @@
         on:focus={() => (focused = true)}
         on:blur={() => (focused = false)}
       />
+      <span class="jp-input-field-input">{value}</span>
     {:else if type === 'number'}
       <input
         type="number"
@@ -267,6 +272,7 @@
         on:focus={() => (focused = true)}
         on:blur={() => (focused = false)}
       />
+      <span class="jp-input-field-input">{value}</span>
     {:else if type === 'time'}
       <input
         type="time"
@@ -285,6 +291,7 @@
         on:focus={() => (focused = true)}
         on:blur={() => (focused = false)}
       />
+      <span class="jp-input-field-input">{value}</span>
     {:else if type === 'color'}
       <span class="jp-input-field-color-picker" style="background-color: {value}"></span>
       <input
@@ -304,7 +311,7 @@
         on:focus={() => (focused = true)}
         on:blur={() => (focused = false)}
       />
-      <span>{value}</span>
+      <span class="jp-input-field-input">{value}</span>
     {/if}
     {#if suffix}
       <div class="jp-input-field-suffix">{@html suffix}</div>

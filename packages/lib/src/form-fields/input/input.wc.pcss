@@ -98,18 +98,6 @@
 		}
 
 		input {
-			flex: auto;
-			height: 1rem;
-			font-size: 1rem;
-			white-space: nowrap;
-			overflow: hidden;
-			text-overflow: ellipsis;
-			padding: 0.75rem;
-			border: none;
-			outline: none;
-			border-radius: 0.25rem;
-			background: transparent;
-
 			&[type='color'] {
 				position: absolute;
 				visibility: hidden;
@@ -124,6 +112,20 @@
 				opacity: 0;
 				transition: opacity 0.3s;
 			}
+		}
+
+		&-input{
+			flex: auto;
+			height: 1rem;
+			font-size: 1rem;
+			white-space: nowrap;
+			overflow: hidden;
+			text-overflow: ellipsis;
+			padding: 0.75rem;
+			border: none;
+			outline: none;
+			border-radius: 0.25rem;
+			background: transparent;
 		}
 	}
 
