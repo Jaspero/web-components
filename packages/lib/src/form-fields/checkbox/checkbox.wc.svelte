@@ -17,6 +17,7 @@
 
 <script lang="ts">
   import { createEventDispatcher, onMount } from 'svelte';
+  import './checkbox.wc.pcss';
 
   export let attachedInternals: ElementInternals;
   export let value;
@@ -86,24 +87,25 @@
   $: displayLabel = required ? `${label} *` : label;
 </script>
 
-<div>
+
+<div class="jp-checkbox">
   {#if label}
-    <div class="label">
+    <div class="jp-checkbox-label">
       {@html displayLabel}
     </div>
   {/if}
   {#each options as option}
-    <label>
+    <label class="jp-checkbox-label">
       <input
               type="checkbox"
               name={option.value}
               bind:checked={option.checked}
               disabled={option.disabled}
       />
-      <span class="checkbox">
-        <span class="checkmark">
-            <span class="checkmark_stem"></span>
-            <span class="checkmark_kick"></span>
+      <span class="jp-checkbox-checkbox">
+        <span class="jp-checkbox-checkmark">
+            <span class="jp-checkbox-checkmark_stem"></span>
+            <span class="jp-checkbox-checkmark_kick"></span>
         </span>
       </span>
       {#if option.label}
@@ -114,68 +116,3 @@
     </label>
   {/each}
 </div>
-
-<style lang="postcss">
-  div {
-    display: flex;
-    flex-direction: column;
-    gap: 0.5rem;
-  }
-
-  label {
-    position: relative;
-    display: flex;
-    align-items: center;
-    gap: 0.5rem;
-    font-size: 0.75rem;
-    line-height: 1rem;
-  }
-
-  label input {
-    position: absolute;
-    top: 0;
-    left: 0;
-    opacity: 0;
-    visibility: hidden;
-  }
-
-  input:checked ~ .checkbox {
-    background-color: var(--primary-color);
-  }
-
-  .checkbox {
-    width: 20px;
-    height: 20px;
-    border: 1px solid rgba(0,0,0,.16);
-    border-radius: 4px;
-  }
-
-  .checkmark {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    width: 20px;
-    height: 20px;
-    -ms-transform: rotate(45deg); /* IE 9 */
-    -webkit-transform: rotate(45deg); /* Chrome, Safari, Opera */
-    transform: rotate(45deg);
-  }
-
-  .checkmark_stem {
-    position: absolute;
-    width: 3px;
-    height: 11px;
-    background-color: var(--text-on-primary);
-    left: 8px;
-    top: 4px;
-  }
-
-  .checkmark_kick {
-    position: absolute;
-    width: 3px;
-    height: 3px;
-    background-color: var(--text-on-primary);
-    left: 5px;
-    top: 12px;
-  }
-</style>
