@@ -117,9 +117,9 @@
   </div>
 {/if}
 <div class:jp-textarea-has-hint={hint}>
-  <label class="jp-textarea-field" class:disabled={disabled || readonly} class:required={required}>
+  <label class="jp-textarea-field" class:jp-textarea-field-disabled={disabled || readonly} class:jp-textarea-field-required={required}>
     {#if label && labelType == 'inside'}
-      <span class="jp-textarea-field-label" class:move={inputFocused || value}>{@html label}</span>
+      <span class="jp-textarea-field-label" class:jp-textarea-field-label-move={inputFocused || value}>{@html label}</span>
     {/if}
 
     <textarea
