@@ -11,7 +11,8 @@
 	&-field {
 		font-size: 0.75rem;
 		line-height: 1rem;
-		display: flex;
+		font-family: sans-serif;
+		display:flex;
 		justify-content: space-between;
 		align-items: end;
 		text-align: left;
@@ -55,7 +56,26 @@
 		}
 
 		&-prefix {
-			padding: 1rem 0 0 0;
+			flex: 0 0 auto;
+			positon: absolute;
+			height: 1rem;
+			font-size: 1rem;
+			padding: 0.75rem 0 0.75rem 0.75rem;
+			left: 0.75rem;
+			border: none;
+			outline: none;
+			background: transparent;
+		}
+
+		&-suffix {
+			flex: 0 0 auto;
+			height: 1rem;	
+			width: fit-content;
+			font-size: 1rem;
+			padding: 0.75rem 0.75rem 0.75rem 0;
+			border: none;
+			outline: none;
+			background: transparent;
 		}
 
 		&-move {
@@ -101,6 +121,7 @@
 			flex: auto;
 			height: 1rem;
 			font-size: 1rem;
+			width:100%;
 			white-space: nowrap;
 			overflow: hidden;
 			text-overflow: ellipsis;
@@ -114,6 +135,11 @@
 				position: absolute;
 				visibility: hidden;
 				opacity: 0;
+			}
+
+			&[class="jp-input-field-move-left"]{
+				padding-left:0;
+				padding-right:0;
 			}
 
 			&.jp-input-field-padding {

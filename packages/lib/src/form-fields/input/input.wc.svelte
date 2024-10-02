@@ -142,6 +142,7 @@
         type="text"
         bind:this={inputEl}
         class:jp-input-field-padding={fieldPadding}
+        class:jp-input-field-move-left={prefix}
         aria-hidden={disabled || readonly}
         tabindex={disabled || readonly ? -1 : 0}
         {placeholder}
@@ -163,6 +164,7 @@
         type="password"
         bind:this={inputEl}
         class:jp-input-field-padding={fieldPadding}
+        class:jp-input-field-move-left={prefix}
         aria-hidden={disabled || readonly}
         tabindex={disabled || readonly ? -1 : 0}
         {placeholder}
@@ -184,6 +186,7 @@
         type="email"
         bind:this={inputEl}
         class:jp-input-field-padding={fieldPadding}
+        class:jp-input-field-move-left={prefix}
         aria-hidden={disabled || readonly}
         tabindex={disabled || readonly ? -1 : 0}
         {placeholder}
@@ -205,6 +208,7 @@
         type="tel"
         bind:this={inputEl}
         class:jp-input-field-padding={fieldPadding}
+        class:jp-input-field-move-left={prefix}
         aria-hidden={disabled || readonly}
         tabindex={disabled || readonly ? -1 : 0}
         {placeholder}
@@ -226,6 +230,7 @@
         type="url"
         bind:this={inputEl}
         class:jp-input-field-padding={fieldPadding}
+        class:jp-input-field-move-left={prefix}
         aria-hidden={disabled || readonly}
         tabindex={disabled || readonly ? -1 : 0}
         {placeholder}
@@ -247,6 +252,7 @@
         type="number"
         bind:this={inputEl}
         class:jp-input-field-padding={fieldPadding}
+        class:jp-input-field-move-left={prefix}
         aria-hidden={disabled || readonly}
         tabindex={disabled || readonly ? -1 : 0}
         {required}
@@ -272,6 +278,7 @@
         type="time"
         bind:this={inputEl}
         class:jp-input-field-padding={fieldPadding}
+        class:jp-input-field-move-left={prefix}
         aria-hidden={disabled || readonly}
         tabindex={disabled || readonly ? -1 : 0}
         {required}
@@ -291,6 +298,7 @@
         type="color"
         bind:this={inputEl}
         class:jp-input-field-padding={fieldPadding}
+        class:jp-input-field-move-left={prefix}
         aria-hidden={disabled || readonly}
         tabindex={disabled || readonly ? -1 : 0}
         {required}
@@ -306,7 +314,7 @@
       />
       <span>{value}</span>
     {/if}
-    {#if suffix}
+    {#if suffix  && (value || focused)}
       <div class="jp-input-field-suffix">{@html suffix}</div>
     {/if}
   </label>
