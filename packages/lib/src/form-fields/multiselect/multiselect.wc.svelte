@@ -362,14 +362,15 @@
     </button>
   {/if}
 
-  <input tabindex="-1" bind:value={internalValue} {id} {name} {required} />
+  <input class="jp-multiselect-input" class:jp-multiselect-input-required={required} tabindex="-1" bind:value={internalValue} {required} {id} {name}/>
 
   <button
     type="button"
     class="jp-multiselect-select"
-    class:jp-multiselect-toggled={open}
-    bind:this={bindingElement}
+    class:jp-multiselect-select-toggled={open}
+    class:jp-multiselect-select-disabled={disabled}
     {disabled}
+    bind:this={bindingElement}
     on:click|preventDefault={toggleMenu}
     on:keydown={handleKeydown}
   >
@@ -418,9 +419,10 @@
           <button
             type="button"
             class="jp-multiselect-menu-button"
-            class:jp-multiselect-selected={option.selected}
-            bind:this={optionElements[index]}
+            class:jp-multiselect-menu-button-selected={option.selected}
+            class:jp-multiselect-menu-button-disabled={option.disabled}
             disabled={option.disabled}
+            bind:this={optionElements[index]}
             on:click|preventDefault={() => {
               option.selected = !option.selected;
 

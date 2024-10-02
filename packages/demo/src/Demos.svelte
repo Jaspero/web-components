@@ -9,7 +9,7 @@
   import '../../../dist/range.wc';
   import '../../../dist/radio.wc';
   import '../../../dist/quill.wc';
-  import '../../../dist/input.wc';
+  import '../../../dist/input.css';
   import '../../../dist/multiselect.wc';
   import '../../../dist/multiselect.css';
   import '../../../dist/multisearch.wc';
