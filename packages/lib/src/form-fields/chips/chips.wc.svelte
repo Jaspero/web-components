@@ -186,11 +186,7 @@
         bind:value={inputValue}
         bind:this={inputEl}
       />
-      <div class="jp-chips-field-container-input-value">
-        {inputValue}
-    </div>
     </div>
   </label>
 </div>
-
 <textarea {id} {name} {value} hidden></textarea>
