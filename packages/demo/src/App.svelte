@@ -6,6 +6,7 @@
   import InputDemo from './InputDemo.svelte';
   import MultiSelectDemo from './MultiSelectDemo.svelte';
   import ImageGalleryDemo from './ImageGalleryDemo.svelte';
+  import CkEditorDemo from './CkEditorDemo.svelte';
 
 </script>
 
@@ -13,6 +14,7 @@
 <!-- <MultiSelectDemo /> -->
 <!-- <FileListDemo /> -->
 <!-- <Demos /> -->
-<InputDemo />
+<!-- <InputDemo /> -->
 <!-- <AsyncTableDemo /> -->
 <!-- <ImageGalleryDemo /> -->
+ <CkEditorDemo />

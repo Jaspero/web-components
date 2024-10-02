@@ -16,6 +16,7 @@ It's a wrapper around https://ckeditor.com/.
 |    id    |              |            `string`             |                         unique identifier                          |
 |   name   |      ✓       |            `string`             |                      name of the form control                      |
 |  label   |              |            `string`             |                          shows at the top                          |
+| height   |              |            `string`             |               defines the height of the editable area              |
 
 ### Interfaces
 

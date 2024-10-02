@@ -25,6 +25,7 @@
   export let value: string = '';
   export let id: string | null = null;
   export let name: string | null = null;
+  export let height: string | null = null;
   export let label = '';
   export let options: any = {
     toolbar: {
@@ -181,7 +182,7 @@
   export const getValue = () => internalValue || '';
 
   const dispatch = createEventDispatcher();
-  const b64toBlob = (base64) => fetch(base64).then((res) => res.blob());
+  const b64toBlob = (base64: string) => fetch(base64).then((res) => res.blob());
 
   let wrapperEl: HTMLDivElement;
   let containerEl: HTMLDivElement;
@@ -214,6 +215,12 @@
     return internalValue;
   }
 
+  $: if (height && editor) {
+    editor.editing.view.change((writer: any) => {
+      writer.setStyle('height', height, editor.editing.view.document.getRoot());
+    });
+  }
+
   function getEditor() {
     // @ts-ignore
     return window.CKEDITOR?.ClassicEditor;
@@ -244,13 +251,14 @@
 
           if (textareaEl) {
             if (!internalValue && required) {
-              attachedInternals.setValidity(
-                { valueMissing: true },
+              const message =
                 requiredValidationMessage ||
-                  validationMessages.required ||
-                  textareaEl.validationMessage,
-                textareaEl
-              );
+                validationMessages.required ||
+                textareaEl.validationMessage;
+
+              if (message) {
+                attachedInternals.setValidity({ valueMissing: true }, message, textareaEl);
+              }
             } else {
               attachedInternals.setValidity({});
             }
@@ -279,7 +287,7 @@
 <div bind:this={wrapperEl}>
   <div bind:this={containerEl} />
 </div>
-<textarea {id} {name} bind:value={internalValue} {required} tabindex="-1" bind:this={textareaEl} />
+<textarea {id} {name} bind:value={internalValue} {required} bind:this={textareaEl} />
 
 <style lang="postcss">
   .label {
@@ -289,7 +297,7 @@
   }
   textarea {
     width: 100%;
-    height: 0;
+    height: 500px;
     opacity: 0;
     position: absolute;
   }
