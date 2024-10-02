@@ -10,7 +10,11 @@
   import Folder from './Folder.svelte';
   import Asset from './Asset.svelte';
   import { createEventDispatcher } from 'svelte';
-
+  import uploadIcon from '../../../lib/src/icons/upload.svg?raw';
+  import closeCrossIcon from '../../../lib/src/icons/close-cross.svg?raw';
+  import backArrowIcon from '../../../lib/src/icons/back-arrow.svg?raw';
+  import addFolderIcon from '../../../lib/src/icons/add-folder.svg?raw';
+  import addFilesIcon from '../../../lib/src/icons/add-files.svg?raw';
   export let wording = {
     DROP_FILES_HERE: 'Drop your files here',
     FOLDER_NAME: 'Folder name',
@@ -149,20 +153,14 @@
 >
   {#if hoveringFile}
     <div class="drop-here">
-      <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 384 512">
-        <path
-          d="M214.6 41.4c-12.5-12.5-32.8-12.5-45.3 0l-160 160c-12.5 12.5-12.5 32.8 0 45.3s32.8 12.5 45.3 0L160 141.2V448c0 17.7 14.3 32 32 32s32-14.3 32-32V141.2L329.4 246.6c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3l-160-160z"
-        />
-      </svg>
+      {@html uploadIcon}
       <div>{wording.DROP_FILES_HERE}</div>
     </div>
   {:else if folderDialog}
     <header>
       <div class="header-actions">
         <button type="button" on:click={() => (folderDialog = false)}>
-          <svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 -960 960 960" width="24">
-            <path d="m256-200-56-56 224-224-224-224 56-56 224 224 224-224 56 56-224 224 224 224-56 56-224-224-224 224Z"/>
-          </svg>
+          {@html closeCrossIcon}
         </button>
       </div>
     </header>
@@ -178,9 +176,7 @@
     <header>
       <nav>
         <button type="button" title="Back" disabled={path === rootPath} on:click={back}>
-          <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 -960 960 960">
-            <path d="m313-440 224 224-57 56-320-320 320-320 57 56-224 224h487v80H313Z" />
-          </svg>
+          {@html backArrowIcon}
         </button>
 
         <span class="route">{path.replace(rootPath, '') || '/'}</span>
@@ -188,11 +184,7 @@
 
       <div class="header-actions">
         <button type="button" title="Add Folder" on:click|preventDefault={addFolder}>
-          <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 -960 960 960">
-            <path
-              d="M560-320h80v-80h80v-80h-80v-80h-80v80h-80v80h80v80ZM160-160q-33 0-56.5-23.5T80-240v-480q0-33 23.5-56.5T160-800h240l80 80h320q33 0 56.5 23.5T880-640v400q0 33-23.5 56.5T800-160H160Zm0-80h640v-400H447l-80-80H160v480Zm0 0v-480 480Z"
-            />
-          </svg>
+          {@html addFolderIcon}
         </button>
 
         <button
@@ -200,11 +192,7 @@
           title="Add Files"
           on:click|preventDefault={() => browseFilesEl.click()}
         >
-          <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 -960 960 960">
-            <path
-              d="M440-200h80v-167l64 64 56-57-160-160-160 160 57 56 63-63v167ZM240-80q-33 0-56.5-23.5T160-160v-640q0-33 23.5-56.5T240-880h320l240 240v480q0 33-23.5 56.5T720-80H240Zm280-520v-200H240v640h480v-440H520ZM240-800v200-200 640-640Z"
-            />
-          </svg>
+          {@html addFilesIcon}
         </button>
       </div>
     </header>

@@ -19,6 +19,8 @@
   import { clickOutside } from '../click-outside';
   import { createEventDispatcher } from 'svelte';
   import type SearchService from '../types/search.service';
+  import ArrowRotate from '../icons/arrow-rotate.svelte';
+  import checkmarkIcon from '../../../lib/src/icons/checkmark.svg?raw';
 
   let options: Array<{
     label?: string;
@@ -392,16 +394,7 @@
       {displayValue || ''}
     </span>
 
-    <svg
-      xmlns="http://www.w3.org/2000/svg"
-      viewBox="0 0 320 512"
-      class="select-arrow"
-      class:rotate={open}
-    >
-      <path
-        d="M137.4 374.6c12.5 12.5 32.8 12.5 45.3 0l128-128c9.2-9.2 11.9-22.9 6.9-34.9s-16.6-19.8-29.6-19.8L32 192c-12.9 0-24.6 7.8-29.6 19.8s-2.2 25.7 6.9 34.9l128 128z"
-      />
-    </svg>
+    <ArrowRotate {open} />
   </button>
 
   {#if hint}
@@ -460,16 +453,7 @@
               <span>{option.label || option.value}</span>
 
               {#if option.selected}
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  width="1rem"
-                  height="1rem"
-                  viewBox="0 0 448 512"
-                >
-                  <path
-                    d="M438.6 105.4c12.5 12.5 12.5 32.8 0 45.3l-256 256c-12.5 12.5-32.8 12.5-45.3 0l-128-128c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0L160 338.7 393.4 105.4c12.5-12.5 32.8-12.5 45.3 0z"
-                  />
-                </svg>
+                {@html checkmarkIcon}
               {/if}
             </button>
           {/each}

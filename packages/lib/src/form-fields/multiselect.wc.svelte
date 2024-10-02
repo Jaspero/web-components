@@ -18,6 +18,9 @@
 <script lang="ts">
   import { clickOutside } from '../click-outside';
   import { createEventDispatcher, onMount } from 'svelte';
+  import clearIcon from '../../../lib/src/icons/clear.svg?raw';
+  import ArrowRotate from '../icons/arrow-rotate.svelte';
+  import checkmarkIcon from '../../../lib/src/icons/checkmark.svg?raw';
 
   export let attachedInternals: ElementInternals;
   export let minSelects = 0;
@@ -353,49 +356,37 @@
 <div class="wrapper" class:has-hint={hint}>
   {#if showClear && hasSelectedOption}
     <button class="clear" on:click={clearSelection}>
-      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512">
-        <path
-          d="M342.6 150.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L192 210.7 86.6 105.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3L146.7 256 41.4 361.4c-12.5 12.5-12.5 32.8 0 45.3s32.8 12.5 45.3 0L192 301.3 297.4 406.6c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L237.3 256 342.6 150.6z"
-        />
-      </svg>
+      {@html clearIcon}
     </button>
   {/if}
 
   <input tabindex="-1" bind:value={internalValue} {id} {name} {required} />
 
   <button
-    type="button"
-    class="select"
-    class:toggled={open}
-    bind:this={bindingElement}
-    {disabled}
-    on:click|preventDefault={toggleMenu}
-    on:keydown={handleKeydown}
-  >
-    {#if label && labelType == 'inside'}
-      <span class="select-label" class:move={internalValue || open}>
-        {@html label}
-      </span>
-    {/if}
+  type="button"
+  class="select"
+  class:toggled={open}
+  bind:this={bindingElement}
+  {disabled}
+  on:click|preventDefault={toggleMenu}
+  on:keydown={handleKeydown}
+>
+{#if label && labelType == 'inside'}
+  <span class="select-label" class:move={internalValue || open}>
+    {@html label}
+  </span>
+{/if}
 
-    <span
-      class={`select-option ${labelType == 'outside' || !label ? '' : 'select-option-padding'}`}
-      class:has-clear={showClear}
-    >
-      {displayValue || ''}
-    </span>
+<span
+  class={`select-option ${labelType == 'outside' || !label ? '' : 'select-option-padding'}`}
+  class:has-clear={showClear}
+>
+  {displayValue || ''}
+</span>
 
-    <svg
-      xmlns="http://www.w3.org/2000/svg"
-      viewBox="0 0 320 512"
-      class="select-arrow"
-      class:rotate={open}
-    >
-      <path
-        d="M137.4 374.6c12.5 12.5 32.8 12.5 45.3 0l128-128c9.2-9.2 11.9-22.9 6.9-34.9s-16.6-19.8-29.6-19.8L32 192c-12.9 0-24.6 7.8-29.6 19.8s-2.2 25.7 6.9 34.9l128 128z"
-      />
-    </svg>
-  </button>
+<ArrowRotate {open} />
+
+</button>
 
   {#if hint}
     <span class="select-hint">
@@ -433,16 +424,7 @@
             <span>{option.label ? option.label : option.value}</span>
 
             {#if option.selected}
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                width="1rem"
-                height="1rem"
-                viewBox="0 0 448 512"
-              >
-                <path
-                  d="M438.6 105.4c12.5 12.5 12.5 32.8 0 45.3l-256 256c-12.5 12.5-32.8 12.5-45.3 0l-128-128c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0L160 338.7 393.4 105.4c12.5-12.5 32.8-12.5 45.3 0z"
-                />
-              </svg>
+              {@html checkmarkIcon}
             {/if}
           </button>
         {/each}
