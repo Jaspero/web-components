@@ -230,7 +230,7 @@
   bind:this={bindingElement}
   on:keydown={handleKeydown}
 >
-  <label class="jp-autocomplete-field">
+  <label class="jp-autocomplete-field" class:jp-autocomplete-field-disabled={disabled}>
     {#if label && labelType === 'inside'}
       <span class="jp-autocomplete-field-label" class:jp-autocomplete-field-label-move={open || value}>
         {@html displayLabel}
@@ -239,7 +239,6 @@
     <input
     class={`jp-autocomplete-field-input ${labelType == 'outside' || !label ? '' : 'jp-autocomplete-field-input-padding'}`}  
       type="text"
-      class:disabled
       {id}
       {name}
       {disabled}
@@ -252,10 +251,6 @@
       bind:value
       on:focus={toggleMenu}
       >
-
-    <span class={`jp-autocomplete-field-input ${labelType == 'outside' || !label ? '' : 'jp-autocomplete-field-input-padding'}`}>
-      {value}
-    </span>
     
       {#if open}
       <div class="jp-autocomplete-overlay">
