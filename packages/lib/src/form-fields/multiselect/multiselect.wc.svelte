@@ -362,7 +362,7 @@
     </button>
   {/if}
 
-  <input class="jp-multiselect-input" class:jp-multiselect-input-required={required} tabindex="-1" bind:value={internalValue} {id} {name}/>
+  <input class="jp-multiselect-input" class:jp-multiselect-input-required={required} tabindex="-1" bind:value={internalValue} {required} {id} {name}/>
 
   <button
     type="button"
