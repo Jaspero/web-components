@@ -1,2 +1,2 @@
 function d(e){function t(){e.dispatchEvent(new CustomEvent("click_outside",e))}function i(n){e&&!e.contains(n.target)&&!n.defaultPrevented&&t()}function c(n){n.key==="Escape"&&t()}return window.addEventListener("keydown",c,!0),document.addEventListener("click",i,!0),{destroy(){document.removeEventListener("click",i,!0),window.removeEventListener("keydown",c,!0)}}}export{d as clickOutside};
-//# sourceMappingURL=clickOutside.js.map
+//# sourceMappingURL=click-outside.js.map

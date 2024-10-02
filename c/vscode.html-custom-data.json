@@ -86,15 +86,7 @@
         { "name": "minlengthValidationMessage", "values": [] },
         { "name": "maxlengthValidationMessage", "values": [] },
         { "name": "patternValidationMessage", "values": [] },
-        { "name": "reportValidity", "values": [] },
-        { "name": "headers", "values": [] },
-        { "name": "rows", "values": [] },
-        { "name": "sort", "values": [] },
-        { "name": "service", "values": [] },
-        { "name": "showExport", "values": [] },
-        { "name": "showArrangingColumns", "values": [] },
-        { "name": "freezeFirstColumn", "values": [] },
-        { "name": "freezeLastColumn", "values": [] }
+        { "name": "reportValidity", "values": [] }
       ],
       "references": []
     },
@@ -118,11 +110,7 @@
         { "name": "loading", "values": [] },
         { "name": "variant", "values": [] },
         { "name": "color", "values": [] },
-        { "name": "type", "values": [] },
-        { "name": "determinate", "values": [] },
-        { "name": "progress", "values": [] },
-        { "name": "radius", "values": [] },
-        { "name": "stroke", "values": [] }
+        { "name": "type", "values": [] }
       ],
       "references": []
     },
@@ -154,10 +142,7 @@
         { "name": "label", "values": [] },
         { "name": "required", "values": [] },
         { "name": "getValue", "values": [] },
-        { "name": "reportValidity", "values": [] },
-        { "name": "name", "values": [] },
-        { "name": "inline", "values": [] },
-        { "name": "requiredValidationMessage", "values": [] }
+        { "name": "reportValidity", "values": [] }
       ],
       "references": []
     },
@@ -188,7 +173,18 @@
         { "name": "uniqueValidationMessage", "values": [] },
         { "name": "patternValidationMessage", "values": [] },
         { "name": "getValue", "values": [] },
-        { "name": "reportValidity", "values": [] }
+        { "name": "reportValidity", "values": [] },
+        { "name": "length", "values": [] },
+        { "name": "pageIndex", "values": [] },
+        { "name": "nextPage", "values": [] },
+        { "name": "prevPage", "values": [] },
+        { "name": "lastPage", "values": [] },
+        { "name": "firstPage", "values": [] },
+        { "name": "toPage", "values": [] },
+        { "name": "displayFormat", "values": [] },
+        { "name": "displayFormatFunction", "values": [] },
+        { "name": "service", "values": [] },
+        { "name": "save", "values": [] }
       ],
       "references": []
     },
@@ -240,7 +236,11 @@
         { "name": "label", "values": [] },
         { "name": "disabled", "values": [] },
         { "name": "required", "values": [] },
-        { "name": "getValue", "values": [] }
+        { "name": "getValue", "values": [] },
+        { "name": "max", "values": [] },
+        { "name": "min", "values": [] },
+        { "name": "step", "values": [] },
+        { "name": "discrete", "values": [] }
       ],
       "references": []
     },
@@ -274,16 +274,7 @@
         { "name": "nextPage", "values": [] },
         { "name": "prevPage", "values": [] },
         { "name": "lastPage", "values": [] },
-        { "name": "firstPage", "values": [] },
-        { "name": "wording", "values": [] },
-        { "name": "headers", "values": [] },
-        { "name": "rows", "values": [] },
-        { "name": "sort", "values": [] },
-        { "name": "service", "values": [] },
-        { "name": "showExport", "values": [] },
-        { "name": "showArrangingColumns", "values": [] },
-        { "name": "freezeFirstColumn", "values": [] },
-        { "name": "freezeLastColumn", "values": [] }
+        { "name": "firstPage", "values": [] }
       ],
       "references": []
     },
@@ -331,18 +322,7 @@
         { "name": "minDate", "values": [] },
         { "name": "maxDate", "values": [] },
         { "name": "getValue", "values": [] },
-        { "name": "reportValidity", "values": [] },
-        { "name": "wording", "values": [] },
-        { "name": "minSelects", "values": [] },
-        { "name": "maxSelects", "values": [] },
-        { "name": "disabled", "values": [] },
-        { "name": "hint", "values": [] },
-        { "name": "id", "values": [] },
-        { "name": "service", "values": [] },
-        { "name": "validationMessages", "values": [] },
-        { "name": "minselectsValidationMessage", "values": [] },
-        { "name": "maxselectsValidationMessage", "values": [] },
-        { "name": "singleSelect", "values": [] }
+        { "name": "reportValidity", "values": [] }
       ],
       "references": []
     },
@@ -368,7 +348,25 @@
         { "name": "displayFormatFunction", "values": [] },
         { "name": "getValue", "values": [] },
         { "name": "reportValidity", "values": [] },
-        { "name": "save", "values": [] }
+        { "name": "save", "values": [] },
+        { "name": "allowArrangeColumns", "values": [] },
+        { "name": "showArrangingColumns", "values": [] },
+        { "name": "freezeFirstColumn", "values": [] },
+        { "name": "freezeLastColumn", "values": [] },
+        { "name": "showExport", "values": [] },
+        { "name": "showImport", "values": [] },
+        { "name": "rowClickable", "values": [] },
+        { "name": "headers", "values": [] },
+        { "name": "pageSizes", "values": [] },
+        { "name": "pageSize", "values": [] },
+        { "name": "sort", "values": [] },
+        { "name": "height", "values": [] },
+        { "name": "getData", "values": [] },
+        { "name": "rows", "values": [] },
+        { "name": "arrangeColumnDialog", "values": [] },
+        { "name": "removeRow", "values": [] },
+        { "name": "addRow", "values": [] },
+        { "name": "updateRow", "values": [] }
       ],
       "references": []
     },
@@ -399,7 +397,12 @@
         { "name": "enablePagination", "values": [] },
         { "name": "sliderBar", "values": [] },
         { "name": "autoSlide", "values": [] },
-        { "name": "interval", "values": [] }
+        { "name": "interval", "values": [] },
+        { "name": "columnCount", "values": [] },
+        { "name": "columnCountTable", "values": [] },
+        { "name": "columnCountMobile", "values": [] },
+        { "name": "gapX", "values": [] },
+        { "name": "gapY", "values": [] }
       ],
       "references": []
     },
@@ -428,6 +431,8 @@
         { "name": "min", "values": [] },
         { "name": "max", "values": [] },
         { "name": "step", "values": [] },
+        { "name": "suffix", "values": [] },
+        { "name": "prefix", "values": [] },
         { "name": "validationMessages", "values": [] },
         { "name": "requiredValidationMessage", "values": [] },
         { "name": "minlengthValidationMessage", "values": [] },
@@ -451,7 +456,13 @@
         { "name": "id", "values": [] },
         { "name": "value", "values": [] },
         { "name": "options", "values": [] },
-        { "name": "getValue", "values": [] }
+        { "name": "getValue", "values": [] },
+        { "name": "disabled", "values": [] },
+        { "name": "max", "values": [] },
+        { "name": "min", "values": [] },
+        { "name": "step", "values": [] },
+        { "name": "discrete", "values": [] },
+        { "name": "required", "values": [] }
       ],
       "references": []
     },
@@ -470,23 +481,7 @@
     {
       "name": "jp-menu",
       "description": "\n---\n",
-      "attributes": [
-        { "name": "label", "values": [] },
-        { "name": "attachedInternals", "values": [] },
-        { "name": "value", "values": [] },
-        { "name": "options", "values": [] },
-        { "name": "minSelects", "values": [] },
-        { "name": "maxSelects", "values": [] },
-        { "name": "minselectsValidationMessage", "values": [] },
-        { "name": "maxselectsValidationMessage", "values": [] },
-        { "name": "validationMessages", "values": [] },
-        { "name": "required", "values": [] },
-        { "name": "getValue", "values": [] },
-        { "name": "reportValidity", "values": [] },
-        { "name": "name", "values": [] },
-        { "name": "inline", "values": [] },
-        { "name": "requiredValidationMessage", "values": [] }
-      ],
+      "attributes": [{ "name": "label", "values": [] }],
       "references": []
     },
     {
@@ -566,7 +561,19 @@
         { "name": "prevPage", "values": [] },
         { "name": "lastPage", "values": [] },
         { "name": "firstPage", "values": [] },
-        { "name": "toPage", "values": [] }
+        { "name": "toPage", "values": [] },
+        { "name": "label", "values": [] },
+        { "name": "labelType", "values": [] },
+        { "name": "attachedInternals", "values": [] },
+        { "name": "value", "values": [] },
+        { "name": "id", "values": [] },
+        { "name": "name", "values": [] },
+        { "name": "required", "values": [] },
+        { "name": "displayFormat", "values": [] },
+        { "name": "displayFormatFunction", "values": [] },
+        { "name": "service", "values": [] },
+        { "name": "getValue", "values": [] },
+        { "name": "save", "values": [] }
       ],
       "references": []
     },
@@ -615,7 +622,18 @@
         { "name": "progress", "values": [] },
         { "name": "radius", "values": [] },
         { "name": "stroke", "values": [] },
-        { "name": "color", "values": [] }
+        { "name": "color", "values": [] },
+        { "name": "disabled", "values": [] },
+        { "name": "id", "values": [] },
+        { "name": "max", "values": [] },
+        { "name": "min", "values": [] },
+        { "name": "value", "values": [] },
+        { "name": "step", "values": [] },
+        { "name": "name", "values": [] },
+        { "name": "discrete", "values": [] },
+        { "name": "required", "values": [] },
+        { "name": "label", "values": [] },
+        { "name": "getValue", "values": [] }
       ],
       "references": []
     },
@@ -637,7 +655,17 @@
         { "name": "validationMessages", "values": [] },
         { "name": "requiredValidationMessage", "values": [] },
         { "name": "getValue", "values": [] },
-        { "name": "save", "values": [] }
+        { "name": "save", "values": [] },
+        { "name": "length", "values": [] },
+        { "name": "pageIndex", "values": [] },
+        { "name": "nextPage", "values": [] },
+        { "name": "prevPage", "values": [] },
+        { "name": "lastPage", "values": [] },
+        { "name": "firstPage", "values": [] },
+        { "name": "toPage", "values": [] },
+        { "name": "labelType", "values": [] },
+        { "name": "displayFormat", "values": [] },
+        { "name": "displayFormatFunction", "values": [] }
       ],
       "references": []
     },
@@ -789,7 +817,18 @@
         { "name": "minlengthValidationMessage", "values": [] },
         { "name": "maxlengthValidationMessage", "values": [] },
         { "name": "patternValidationMessage", "values": [] },
-        { "name": "reportValidity", "values": [] }
+        { "name": "reportValidity", "values": [] },
+        { "name": "length", "values": [] },
+        { "name": "pageIndex", "values": [] },
+        { "name": "nextPage", "values": [] },
+        { "name": "prevPage", "values": [] },
+        { "name": "lastPage", "values": [] },
+        { "name": "firstPage", "values": [] },
+        { "name": "toPage", "values": [] },
+        { "name": "displayFormat", "values": [] },
+        { "name": "displayFormatFunction", "values": [] },
+        { "name": "service", "values": [] },
+        { "name": "save", "values": [] }
       ],
       "references": []
     },
@@ -806,10 +845,7 @@
         { "name": "size", "values": [] },
         { "name": "disabled", "values": [] },
         { "name": "getValue", "values": [] },
-        { "name": "reportValidity", "values": [] },
-        { "name": "starsInput", "values": [] },
-        { "name": "indicator", "values": [] },
-        { "name": "style", "values": [] }
+        { "name": "reportValidity", "values": [] }
       ],
       "references": []
     },
