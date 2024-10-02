@@ -142,6 +142,7 @@
         type="text"
         bind:this={inputEl}
         class:jp-input-field-padding={fieldPadding}
+        class:jp-input-field-move-left={prefix}
         aria-hidden={disabled || readonly}
         tabindex={disabled || readonly ? -1 : 0}
         {placeholder}
@@ -306,7 +307,7 @@
       />
       <span>{value}</span>
     {/if}
-    {#if suffix}
+    {#if suffix  && (value || focused)}
       <div class="jp-input-field-suffix">{@html suffix}</div>
     {/if}
   </label>
