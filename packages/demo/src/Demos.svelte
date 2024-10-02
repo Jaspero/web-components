@@ -5,11 +5,12 @@
   import '../../lib/src/index.css';
   import '../../../dist/toggle.wc';
   import '../../../dist/textarea.wc';
+  import '../../../dist/textarea.css';
   import '../../../dist/slider.wc';
   import '../../../dist/range.wc';
   import '../../../dist/radio.wc';
   import '../../../dist/quill.wc';
-  import '../../../dist/input.wc';
+  import '../../../dist/input.css';
   import '../../../dist/multiselect.wc';
   import '../../../dist/multiselect.css';
   import '../../../dist/multisearch.wc';
@@ -83,7 +84,7 @@
   <jp-input label="Input" required="true" />
   <jp-select label="Select" required="true"></jp-select>  
   <jp-toggle label="Toggle" required="true"></jp-toggle>
-  <jp-textarea label="Textarea" required="true"></jp-textarea>
+  <jp-textarea label="Textarea" required="true" hint=true></jp-textarea>
   <jp-slider label="Slider" required="true"></jp-slider>
   <jp-range label="Range" required="true"></jp-range>
   <jp-radio label="Options" {options} required="true"/>
