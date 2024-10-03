@@ -11,7 +11,7 @@
 	&-field {
 		font-size: 0.75rem;
 		line-height: 1rem;
-		font-family: sans-serif;
+		font-family: serif;
 		display:flex;
 		justify-content: space-between;
 		align-items: end;
@@ -57,14 +57,17 @@
 
 		&-prefix {
 			flex: 0 0 auto;
-			positon: absolute;
 			height: 1rem;
 			font-size: 1rem;
-			padding: 0.75rem 0 0.75rem 0.75rem;
+			padding: 0 0 0.5rem 0.75rem;
 			left: 0.75rem;
 			border: none;
 			outline: none;
 			background: transparent;
+
+			&-move{
+				transform: translateY(-0.5rem);
+			}
 		}
 
 		&-suffix {
@@ -72,10 +75,14 @@
 			height: 1rem;	
 			width: fit-content;
 			font-size: 1rem;
-			padding: 0.75rem 0.75rem 0.75rem 0;
+			padding: 0 0.75rem 0.5rem 0	;
 			border: none;
 			outline: none;
 			background: transparent;
+
+			&-move{
+				transform: translateY(-0.5rem);
+			}
 		}
 
 		&-move {
@@ -124,8 +131,9 @@
 			width:100%;
 			white-space: nowrap;
 			overflow: hidden;
+			font-family: serif;
 			text-overflow: ellipsis;
-			padding: 0.75rem;
+			padding: 0 0.75rem 0.5rem 0.75rem;
 			border: none;
 			outline: none;
 			border-radius: 0.25rem;
@@ -143,7 +151,8 @@
 			}
 
 			&.jp-input-field-padding {
-				padding: 1.5rem 0.75rem calc(0.5rem - 2px);
+				padding: 0 0.75rem 0.5rem 0;
+				transform: translateY(-0.5rem);
 			}
 
 			&::placeholder {

@@ -135,7 +135,7 @@
       <span class="jp-input-field-label" class:jp-input-field-move={focused || value || type === 'time' || value === 0}>{@html displayLabel}</span>
     {/if}
     {#if prefix && (value || focused)}
-      <div class="jp-input-field-prefix">{@html prefix}</div>
+      <div class="jp-input-field-prefix" class:jp-input-field-prefix-move={fieldPadding}>{@html prefix}</div>
     {/if}
     {#if type === 'text'}
       <input
@@ -315,7 +315,7 @@
       <span>{value}</span>
     {/if}
     {#if suffix  && (value || focused)}
-      <div class="jp-input-field-suffix">{@html suffix}</div>
+      <div class="jp-input-field-suffix" class:jp-input-field-suffix-move={fieldPadding}>{@html suffix}</div>
     {/if}
   </label>
 
