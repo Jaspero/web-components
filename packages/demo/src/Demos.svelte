@@ -14,12 +14,14 @@
   import '../../../dist/multiselect.wc';
   import '../../../dist/multiselect.css';
   import '../../../dist/multisearch.wc';
+  import '../../../dist/multisearch.css';
   import '../../../dist/file-upload.wc';
   import '../../../dist/file-list.wc';
   import '../../../dist/datepicker.wc';
   import '../../../dist/date-range.wc';
   import '../../../dist/color.wc';
   import '../../../dist/ckeditor.wc';
+  import '../../../dist/ckeditor.css';
   import '../../../dist/chips.wc';
   import '../../../dist/chips.css';
   import '../../../dist/checkbox.wc';
