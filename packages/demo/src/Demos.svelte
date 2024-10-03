@@ -19,6 +19,7 @@
   import '../../../dist/datepicker.wc';
   import '../../../dist/date-range.wc';
   import '../../../dist/color.wc';
+  import '../../../dist/color.css';
   import '../../../dist/ckeditor.wc';
   import '../../../dist/chips.wc';
   import '../../../dist/chips.css';

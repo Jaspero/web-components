@@ -17,6 +17,7 @@
 
 <script lang="ts">
   import { createEventDispatcher, onMount } from 'svelte';
+  import './color.wc.pcss';
   
   export let attachedInternals: ElementInternals;
   export let id;
@@ -38,16 +39,9 @@
 </script>
   {#if label}
     <!-- svelte-ignore a11y-label-has-associated-control -->
-    <div class="label">
+    <div class="jp-color-label">
       {@html displayLabel}
     </div>
   {/if}
   <input type="color" {id} {name} {disabled} bind:value />
-<style lang="postcss">
-  .label{
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 8px;
-  }
-  </style>
+
