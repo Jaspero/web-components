@@ -10,6 +10,7 @@
   import '../../../dist/range.wc';
   import '../../../dist/radio.wc';
   import '../../../dist/quill.wc';
+  import '../../../dist/quill.css';
   import '../../../dist/input.css';
   import '../../../dist/multiselect.wc';
   import '../../../dist/multiselect.css';
