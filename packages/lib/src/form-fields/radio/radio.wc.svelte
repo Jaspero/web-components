@@ -67,7 +67,7 @@
       {@html displayLabel}
     </div>
   {/if}
-<div style={`display: flex; flex-direction: ${inline ? 'row' : 'column'}`}>
+  <div class={`jp-radio-box ${inline ? 'jp-radio-box-inline' : ''}`} >
   {#each options as option}
     <label class="jp-radio-label" class:jp-radio-label-disabled={option.disabled}>
       <input

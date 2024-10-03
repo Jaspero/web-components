@@ -1,77 +1,78 @@
-.jp-radio{
-    &-label { 
-        display: flex;
-        align-items: center;
-        font-size: 1rem;
-        line-height: 1rem;
+.jp-radio {
+  &-box {
+    display: flex;
+    flex-direction: column;
 
-        &-disabled {
-            pointer-events: none;
-            opacity: 0.33;
-          }
-      }
+    &-inline {
+      flex-direction: row;
+    }
+  }
+  &-label {
+    display: flex;
+    align-items: center;
+    font-size: 1rem;
+    line-height: 1rem;
 
-    &-input {
-        position: absolute;
-        opacity: 0;
-        visibility: hidden;
+    &-disabled {
+      pointer-events: none;
+      opacity: 0.33;
+    }
+  }
 
-        
-      &:checked + .jp-radio-fake-button > span {
-        border-color: var(--active-color);
-      }
+  &-input {
+    position: absolute;
+    opacity: 0;
+    visibility: hidden;
 
-      &:checked + .jp-radio-fake-button > span > span {
-        background-color: var(--active-color);
-      }
-      }
+    &:checked + .jp-radio-fake-button > span {
+      border-color: var(--active-color);
+    }
 
-    &-fake-button {
-        position: relative;
+    &:checked + .jp-radio-fake-button > span > span {
+      background-color: var(--active-color);
+    }
+  }
+
+  &-fake-button {
+    position: relative;
+    display: block;
+    padding: 0.5rem;
+
+    & > span {
+      display: block;
+      width: 1rem;
+      height: 1rem;
+      border: 1px solid var(--border-primary);
+      border-radius: 50%;
+      padding: 0.125rem;
+      transition: 0.2s;
+
+      & > span {
         display: block;
-        padding: 0.5rem;
-
-        & > span {
-            display: block;
-            width: 1rem;
-            height: 1rem;
-            border: 1px solid var(--border-primary);
-            border-radius: 50%;
-            padding: 0.125rem;
-            transition: 0.2s;
-
-            & > span {
-                display: block;
-                width: 100%;
-                height: 100%;
-                border-radius: 50%;
-                transition: 0.2s;
-              }
-          }
-
-        &::before {
-            z-index: -1;
-            content: '';
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            width: 0;
-            height: 0;
-            transform: translate(-50%, -50%);
-            background-color: var(--background-tertiary);
-            border-radius: 50%;
-            transition: 0.2s;
-          }
-
-          &:hover::before {
-            width: 100%;
-            height: 100%;
-          }
-        
+        width: 100%;
+        height: 100%;
+        border-radius: 50%;
+        transition: 0.2s;
       }
+    }
 
+    &::before {
+      z-index: -1;
+      content: '';
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      width: 0;
+      height: 0;
+      transform: translate(-50%, -50%);
+      background-color: var(--background-tertiary);
+      border-radius: 50%;
+      transition: 0.2s;
+    }
 
-    
-
-    
+    &:hover::before {
+      width: 100%;
+      height: 100%;
+    }
+  }
 }
