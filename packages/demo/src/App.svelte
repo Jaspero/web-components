@@ -7,14 +7,17 @@
   import MultiSelectDemo from './MultiSelectDemo.svelte';
   import ImageGalleryDemo from './ImageGalleryDemo.svelte';
   import CkEditorDemo from './CkEditorDemo.svelte';
+  import DateRangeDemo from './DateRangeDemo.svelte';
 
 </script>
 
 <!-- <AsyncTableDemo /> -->
 <!-- <MultiSelectDemo /> -->
 <!-- <FileListDemo /> -->
-<!-- <Demos /> -->
+ <!--<Demos />-->
 <!-- <InputDemo /> -->
 <!-- <AsyncTableDemo /> -->
 <!-- <ImageGalleryDemo /> -->
- <CkEditorDemo />
+ <!-- <CkEditorDemo /> -->
+
+ <DateRangeDemo/>

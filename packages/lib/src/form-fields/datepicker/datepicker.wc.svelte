@@ -52,14 +52,14 @@
   let selectedDates = [];
   let date;
   let dates = [];
-  let datePicked;
+  let datePicked:boolean;
   let borderTop = false;
   let borderBottom = false;
   let bindingElement;
   let menuStyle;
-  let yearSelected = null;
-  let monthSelected;
-  let dateSelected;
+  let yearSelected:number;
+  let monthSelected:number;
+  let dateSelected:number;
   let pickerYear = new Date(Date.now()).getFullYear();
   let pickerMonth = new Date(Date.now()).getMonth();
   let pickerRows;
