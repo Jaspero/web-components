@@ -287,6 +287,10 @@
     opacity: 0.5;
   }
 
+  .table-cell button.firstValue {
+    background-color:green;
+  }
+
   .table-cell button.active,
   .table-cell button.active:hover
    {

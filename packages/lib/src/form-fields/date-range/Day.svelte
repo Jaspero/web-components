@@ -101,6 +101,10 @@
     : firstDateSelected == col.day &&
       firstMonthSelected == formatMonth(col.month -1) &&
       firstYearSelected == formatYear(col);
+
+  $: isFirstValue = firstDateSelected == col.day &&
+      firstMonthSelected == formatMonth(col.month -1) &&
+      firstYearSelected == formatYear(col);
 </script>
 
 <div class="table-cell">
@@ -108,6 +112,8 @@
     type="button"
     class:gray={col.gray}
     class:active={isActive}
+    class:firstValue={isFirstValue}
+    class:lastValue={false}
     on:click|preventDefault={handleClick}
     disabled={isOutOfMax || isOutOfMin || isOutOfBonuds}
   >
