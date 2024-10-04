@@ -30,7 +30,6 @@
   export let displayFormat = 'snake';
   export let displayFormatFunction: (name: string) => string;
 
-
   let previewStyle: string;
   let bindingElement: HTMLDivElement;
   let inputFocused: boolean = false;
@@ -132,13 +131,11 @@
       previewStyle = `
         width: ${rect.width}px;
         bottom: ${window.innerHeight - rect.top}px;
-        left: ${rect.width - 300}px;
       `;
     } else {
       previewStyle = `
         width: ${rect.width}px;
         top: ${rect.bottom}px;
-        left: ${rect.width - 300}px;
       `;
     }
     preview = !preview;
@@ -400,6 +397,7 @@
     position: absolute;
     max-width: 300px;
     max-height: 300px;
+    left: calc(100vw - 320px);
     width: auto;
     height: auto;
     background-color: var(--background-primary);
