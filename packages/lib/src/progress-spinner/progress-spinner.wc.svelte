@@ -6,6 +6,7 @@
 />
 
 <script lang="ts">
+  import ProgressSpinnerIcon from '../icons/progress-spinner.svelte';
   export let determinate: boolean = false;
   export let progress: number = 0;
   export let radius: number = 60;
@@ -23,29 +24,15 @@
   }
 </script>
 
-{#if determinate}
-  <svg height={radius * 2} width={radius * 2}>
-    <circle
-      class="progress"
-      stroke={color}
-      fill="transparent"
-      stroke-dasharray="{circumference} {circumference}"
-      stroke-dashoffset={strokeDashoffset}
-      stroke-width={stroke}
-      r={normalizedRadius}
-      cx={radius}
-      cy={radius}
-    />
-  </svg>
-{:else}
-  <svg width={radius * 2} height={radius * 2} stroke={color} viewBox="0 0 24 24"
-    ><g class="spinner"
-      ><circle cx="12" cy="12" r="9.5" fill="none" stroke-width={(12 / radius) * stroke}
-      ></circle></g
-    ></svg
-  >
-{/if}
-
+<ProgressSpinnerIcon
+  {determinate}
+  {radius}
+  {stroke}
+  {color}
+  {strokeDashoffset}
+  {normalizedRadius}
+  {circumference}
+/>
 <style lang="postcss">
   .progress {
     transition: stroke-dashoffset 0.35s;
