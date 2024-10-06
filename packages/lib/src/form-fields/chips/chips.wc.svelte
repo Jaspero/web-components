@@ -15,7 +15,7 @@
 />
 
 <script lang="ts">
-  import {createEventDispatcher} from 'svelte';
+  import { createEventDispatcher } from 'svelte';
   import './chips.wc.pcss';
 
   export let attachedInternals: ElementInternals;
@@ -109,7 +109,7 @@
     }
     attachedInternals.checkValidity();
     attachedInternals.setFormValue(value);
-    dispatch('value', chips);
+    dispatch('value', {value: chips});
   }
 </script>
 
