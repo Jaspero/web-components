@@ -53,7 +53,7 @@
   export let uniqueValidationMessage: string;
   export let patternValidationMessage: string;
 
-  let inputEl;
+  let inputEl: HTMLInputElement;
 
   export const getValue = () => chips;
 
