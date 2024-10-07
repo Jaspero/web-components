@@ -130,12 +130,13 @@
     if (availableSpaceBelow < dropdownHeight) {
       previewStyle = `
         width: ${rect.width}px;
-        bottom: ${window.innerHeight - rect.top}px;
+        top: ${window.scrollY + rect.top}px;
+        transform: translateY(-100%);
       `;
     } else {
       previewStyle = `
         width: ${rect.width}px;
-        top: ${rect.bottom}px;
+        top: ${window.scrollY + rect.bottom}px;
       `;
     }
     preview = !preview;
@@ -397,7 +398,7 @@
     position: absolute;
     max-width: 300px;
     max-height: 300px;
-    left: calc(100vw - 320px);
+    left:calc(100vw - 330px);
     width: auto;
     height: auto;
     background-color: var(--background-primary);
@@ -407,7 +408,7 @@
 
   .overlay {
     z-index: 100;
-    position: fixed;
+    position: absolute;
     top: 0;
     left: 0;
     width: 100vw;
