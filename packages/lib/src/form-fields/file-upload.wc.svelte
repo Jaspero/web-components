@@ -267,6 +267,7 @@
     flex-direction: row-reverse;
     align-items: center;
     text-align: left;
+    box-sizing: border-box;
     width: 100%;
     height: 3rem;
     user-select: none;
@@ -386,6 +387,8 @@
     justify-content: center;
     align-items: center;
     width: 100%;
+    background-color: transparent;
+    border: none;
     height: 100%;
   }
 
@@ -398,7 +401,7 @@
     position: absolute;
     max-width: 300px;
     max-height: 300px;
-    left:calc(100vw - 330px);
+    left: calc(100vw - 330px);
     width: auto;
     height: auto;
     background-color: var(--background-primary);
