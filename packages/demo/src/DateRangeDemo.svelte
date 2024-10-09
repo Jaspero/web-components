@@ -3,6 +3,4 @@
 	import '../../../dist/date-range.css';
 </script>
 
-<jp-date-range>
-    
-</jp-date-range>
+<jp-date-range />

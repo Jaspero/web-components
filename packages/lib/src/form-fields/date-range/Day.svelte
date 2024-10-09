@@ -100,26 +100,33 @@
       parseDate(secondInternalValue) > parseInt(generateDateString(col), 10)
     : false;
 
-  $: isFirstValue = firstDateSelected == col.day &&
-      firstMonthSelected == formatMonth(col.month -1) &&
-      firstYearSelected == formatYear(col) && secondYearSelected;
-  
-  $: isOnlyValue =  firstDateSelected == col.day &&
-      firstMonthSelected == formatMonth(col.month -1) &&
-      firstYearSelected == formatYear(col) && !secondYearSelected;
-  
-  $: isLastValue = secondYearSelected
-    ? parseDate(secondInternalValue) == parseInt(generateDateString(col), 10)
-    : false
-  </script>
+  $: isFirstValue =
+    firstDateSelected == col.day &&
+    firstMonthSelected == formatMonth(col.month - 1) &&
+    firstYearSelected == formatYear(col) &&
+    secondYearSelected;
+
+  $: isOnlyValue =
+    (firstDateSelected == col.day &&
+      firstMonthSelected == formatMonth(col.month - 1) &&
+      firstYearSelected == formatYear(col) &&
+      !secondYearSelected) ||
+    (parseDate(firstInternalValue) === parseDate(secondInternalValue) &&
+      firstDateSelected == col.day &&
+      firstMonthSelected == formatMonth(col.month - 1) &&
+      firstYearSelected == formatYear(col));
+
+  $: isLastValue =
+    secondYearSelected && parseDate(secondInternalValue) == parseInt(generateDateString(col), 10);
+</script>
 
 <div class="table-cell">
   <button
     type="button"
     class:gray={col.gray && !isActive && !isOnlyValue && !isLastValue && !isFirstValue}
-    class:active={isActive}
-    class:firstValue={isFirstValue}
-    class:lastValue={isLastValue}
+    class:active={isActive && !isOnlyValue}
+    class:firstValue={isFirstValue && !isOnlyValue}
+    class:lastValue={isLastValue && !isOnlyValue}
     class:onlyValue={isOnlyValue}
     on:click|preventDefault={handleClick}
     disabled={isOutOfMax || isOutOfMin || isOutOfBonuds}
