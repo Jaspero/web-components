@@ -93,7 +93,7 @@
 
 .menu {
   z-index: 100;
-  position: align;
+  position: absolute;
   display: flex;
   flex-direction: column;
   max-width: 312px;
@@ -108,7 +108,7 @@
 }
 
 .menu-month {
-  position: fixed;
+  position: absolute;
   top: 0;
   left: 0;
   width: 300px;
@@ -129,6 +129,7 @@
 
 .menu-month-grid-cell {
   height: 70%;
+  transform: translateX(15%);
   width: 80px;
 }
 
@@ -271,6 +272,8 @@
   width: 40px;
   height: 40px;
   text-align: center;
+  position: relative;
+  border-radius: 100%;
   align-items: center;
 }
 
@@ -280,7 +283,7 @@
   width: 100%;
   height: 100%;
   border: 0;
-  z-index: 1;
+  z-index: 0;
   border-radius: 100%;
   background-color: var(--background-primary);
 }
@@ -293,10 +296,23 @@
   opacity: 0.5;
 }
 
-.table-cell button.firstValue {
+.table-cell button.firstValue,
+.table-cell button.lastValue,
+.table-cell button.onlyValue {
   background-color: var(--primary-color);
   color: var(--text-on-primary);
-  z-index: 1;
+  position: static;
+}
+
+.table-cell button:disabled:hover {
+  color: var(--text-on-primary);
+  opacity: 1;
+}
+
+.table-cell button.active:hover {
+  color: black;
+  position: static;
+  background-color: #e651003f;
 }
 
 .table-cell button.firstValue::before {
@@ -308,48 +324,16 @@
   z-index: -1;
   overflow: hidden;
   border-radius: 0;
-  width: 55%;
+  width: 60%;
   height: 100%;
   background-color: var(--tertiary-color);
-}
-
-.table-cell button.onlyValue {
-  background-color: var(--primary-color);
-  color: var(--text-on-primary);
-}
-
-.table-cell button.lastValue {
-  background-color: var(--primary-color);
-  color: var(--text-on-primary);
-  z-index: 1;
-}
-
-.table-cell button.active:hover {
-  color: black;
-  opacity: 1;
-  width:100%;
-  z-index:1;
-  height:100%;
-  background-color: green;
-}
-
-.table-cell button.active:hover::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: -10%;
-  display: inline-block;
-  z-index: -1;
-  border-radius: 0;
-  width: 120%;
-  height: 100%;
-  background-color: blue;
 }
 
 .table-cell button.active::before {
   content: '';
   position: absolute;
   top: 0;
+  pointer-events: none;
   left: -10%;
   display: inline-block;
   z-index: -1;
@@ -359,7 +343,7 @@
   background-color: var(--tertiary-color);
 }
 
-.table-cell button.lastValue::after {
+.table-cell button.lastValue::before {
   content: '';
   position: absolute;
   top: 0;
@@ -367,14 +351,10 @@
   display: inline-block;
   z-index: -1;
   border-radius: 0;
+  overflow: clip;
   width: 55%;
   height: 100%;
   background-color: var(--tertiary-color);
-}
-
-.table-cell button:disabled:hover {
-  color: var(--text-on-primary);
-  opacity: 1;
 }
 
 .overlay {
