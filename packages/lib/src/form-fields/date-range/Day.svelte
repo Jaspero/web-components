@@ -1,16 +1,14 @@
 <script lang="ts">
-  import { isOutOfMaxBounds } from '../datepicker/is-out-of-max-bounds.js';
-  import { isOutOfMinBounds } from '../datepicker/is-out-of-min-bounds.js';
   import { createEventDispatcher } from 'svelte';
-  import { calculateRequiredAfter, calculateRequiredBefore } from './calculate-limits/min-date.js';
+  import * as calculateLimits from './calculate-limits/min-date.js';
 
   export let col: { year: number; month: number; day: number; gray: boolean };
-  export let internalMinDate: Date;
-  export let internalMaxDate: Date;
-  export let firstDateSelected: number;
-  export let firstMonthSelected: string;
-  export let firstYearSelected: number;
-  export let secondYearSelected: number;
+  export let internalMinDate: Date | null;
+  export let internalMaxDate: Date | null;
+  export let firstDateSelected: number | null;
+  export let firstMonthSelected: string | number | null;
+  export let firstYearSelected: number | null;
+  export let secondYearSelected: number | null;
   export let firstInternalValue = '';
   export let secondInternalValue = '';
   export let selectingFirst: boolean;
@@ -30,17 +28,23 @@
     });
   }
 
-  function formatYear(col) {
+  function formatYear(col: { year: any; month: any; day?: number }) {
     return col.year + (col.month < 0 ? -1 : col.month > 11 ? 1 : 0);
   }
 
-  function formatMonth(col) {
-    if (col < 0) return '12';
-    if (col > 11) return '01';
-    return (col + 1 < 10 ? '0' : '') + (col + 1);
+  function formatMonth(month: number) {
+    if (month < 0) return '12';
+    if (month > 11) return '01';
+    return (month + 1 < 10 ? '0' : '') + (month + 1);
   }
 
-  function formatDay(col) {
+  function adjustMonth(month: number) {
+    if (month < 0) return 11;
+    if (month > 11) return 0;
+    return month;
+  }
+
+  function formatDay(col: { day: number }) {
     return (col.day < 10 ? '0' : '') + col.day;
   }
 
@@ -48,7 +52,7 @@
     return parseInt(value.split('-').join(''), 10);
   }
 
-  function generateDateString(col) {
+  function generateDateString(col: { year: any; month: any; day: number }) {
     return `${formatYear(col)}${formatMonth(col.month)}${formatDay(col)}`;
   }
 
@@ -87,14 +91,14 @@
     return false;
   }
 
-  $: minDateBefore = calculateRequiredBefore(firstInternalValue, minSelectibleDays);
-  $: minDateAfter = calculateRequiredAfter(firstInternalValue, minSelectibleDays);
+  $: minDateBefore = calculateLimits.calculateRequiredBefore(firstInternalValue, minSelectibleDays);
+  $: minDateAfter = calculateLimits.calculateRequiredAfter(firstInternalValue, minSelectibleDays);
 
   $: isOutOfBonuds =
     isDateOutOfSelectableBounds(col.year, col.month, col.day, selectingFirst) ||
     isDateOutOfMinRequiredBounds(col.year, col.month, col.day, selectingFirst);
-  $: isOutOfMax = isOutOfMaxBounds(internalMaxDate, col.year, col.month, col.day);
-  $: isOutOfMin = isOutOfMinBounds(internalMinDate, col.year, col.month, col.day);
+  $: isOutOfMax = calculateLimits.isOutOfMaxBounds(internalMaxDate, col.year, col.month, col.day);
+  $: isOutOfMin = calculateLimits.isOutOfMinBounds(internalMinDate, col.year, col.month, col.day);
   $: isActive = secondYearSelected
     ? parseDate(firstInternalValue) < parseInt(generateDateString(col), 10) &&
       parseDate(secondInternalValue) > parseInt(generateDateString(col), 10)
@@ -102,33 +106,34 @@
 
   $: isFirstValue =
     firstDateSelected == col.day &&
-    firstMonthSelected == formatMonth(col.month - 1) &&
+    firstMonthSelected == adjustMonth(col.month) &&
     firstYearSelected == formatYear(col) &&
     secondYearSelected;
 
   $: isOnlyValue =
     (firstDateSelected == col.day &&
-      firstMonthSelected == formatMonth(col.month - 1) &&
+      firstMonthSelected == adjustMonth(col.month) &&
       firstYearSelected == formatYear(col) &&
       !secondYearSelected) ||
     (parseDate(firstInternalValue) === parseDate(secondInternalValue) &&
       firstDateSelected == col.day &&
-      firstMonthSelected == formatMonth(col.month - 1) &&
+      firstMonthSelected == adjustMonth(col.month) &&
       firstYearSelected == formatYear(col));
 
   $: isLastValue =
     secondYearSelected && parseDate(secondInternalValue) == parseInt(generateDateString(col), 10);
 </script>
 
-<div class="table-cell">
+<div class="jp-date-range-table-cell">
   <button
     type="button"
-    class:gray={col.gray && !isActive && !isOnlyValue && !isLastValue && !isFirstValue}
-    class:active={isActive && !isOnlyValue}
-    class:firstValue={isFirstValue && !isOnlyValue}
-    class:lastValue={isLastValue && !isOnlyValue}
-    class:onlyValue={isOnlyValue}
+    class:jp-date-range-table-cell-gray={col.gray && !isActive && !isOnlyValue && !isLastValue && !isFirstValue}
+    class:jp-date-range-table-cell-active={isActive && !isOnlyValue}
+    class:jp-date-range-table-cell-firstValue={isFirstValue && !isOnlyValue}
+    class:jp-date-range-table-cell-lastValue={isLastValue && !isOnlyValue}
+    class:jp-date-range-table-cell-onlyValue={isOnlyValue}
     on:click|preventDefault={handleClick}
+    class:jp-date-range-table-cell-disabled={isOutOfMax || isOutOfMin || isOutOfBonuds}
     disabled={isOutOfMax || isOutOfMin || isOutOfBonuds}
   >
     {col.day}

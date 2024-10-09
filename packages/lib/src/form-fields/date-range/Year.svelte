@@ -1,47 +1,47 @@
 <script lang="ts">
-    import { isOutOfMaxBounds } from '../datepicker/is-out-of-max-bounds.js';
-    import { isOutOfMinBounds } from '../datepicker/is-out-of-min-bounds.js';
-    import { createEventDispatcher } from 'svelte';
-    import './date-range.css';
-  
-    export let internalMinDate: Date;
-    export let internalMaxDate: Date;
-    export let year: number;
-    export let firstYearSelected: number;
-    export let secondYearSelected: number;
-    export let selectingFirst: boolean;
-    export let maxSelectibleDays: number;
-    export let maxDateSelectible: Date;
-    export let minDateSelectible: Date;
-  
-    const dispatch = createEventDispatcher();
-    function handleClick() {
-      dispatch('yearSelected', {
-        year: year
-      });
-    }
-  
-    function isYearOutOfSelectableBounds(year: number, selectingFirst: boolean): boolean {
-      if (!selectingFirst && maxSelectibleDays) {
-        if (year > maxDateSelectible.getFullYear() || year < minDateSelectible.getFullYear()) {
-          return true;
-        }
+  import * as calculateLimits from './calculate-limits/min-date.js';
+  import { createEventDispatcher } from 'svelte';
+  import './date-range.css';
+
+  export let internalMinDate: Date | null;
+  export let internalMaxDate: Date | null;
+  export let year: number;
+  export let firstYearSelected: number | null;
+  export let secondYearSelected: number | null;
+  export let selectingFirst: boolean;
+  export let maxSelectibleDays: number;
+  export let maxDateSelectible: Date;
+  export let minDateSelectible: Date;
+
+  const dispatch = createEventDispatcher();
+  function handleClick() {
+    dispatch('yearSelected', {
+      year: year
+    });
+  }
+
+  function isYearOutOfSelectableBounds(year: number, selectingFirst: boolean): boolean {
+    if (!selectingFirst && maxSelectibleDays) {
+      if (year > maxDateSelectible.getFullYear() || year < minDateSelectible.getFullYear()) {
+        return true;
       }
-      return false;
     }
-  
-    $: isOutOfBonuds = isYearOutOfSelectableBounds(year, selectingFirst);
-    $: isOutOfMax = isOutOfMaxBounds(internalMaxDate, year, 0, 1);
-    $: isOutOfMin = isOutOfMinBounds(internalMinDate, year, 11, 31);
-  </script>
-  
-  <button
-    type="button"
-    class:active={secondYearSelected
-      ? firstYearSelected <= year && secondYearSelected >= year
-      : firstYearSelected == year}
-    on:click|preventDefault={handleClick}
-    disabled={isOutOfMax || isOutOfMin || isOutOfBonuds}
-  >
-    {year}
-  </button>
+    return false;
+  }
+
+  $: isOutOfBonuds = isYearOutOfSelectableBounds(year, selectingFirst);
+  $: isOutOfMax = calculateLimits.isOutOfMaxBounds(internalMaxDate, year, 0, 1);
+  $: isOutOfMin = calculateLimits.isOutOfMinBounds(internalMinDate, year, 11, 31);
+</script>
+
+<button
+  type="button"
+  class:jp-date-range-menu-year-row-cell-active={secondYearSelected
+    ? Number(firstYearSelected) <= year && secondYearSelected >= year
+    : firstYearSelected == year}
+  on:click|preventDefault={handleClick}
+  class:jp-date-range-menu-year-row-cell-disabled={isOutOfMax || isOutOfMin || isOutOfBonuds}
+  disabled={isOutOfMax || isOutOfMin || isOutOfBonuds}
+>
+  {year}
+</button>

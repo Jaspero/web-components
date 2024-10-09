@@ -1,5 +1,5 @@
 <svelte:options
-        customElement={{
+  customElement={{
     tag: 'jp-date-range',
     shadow: 'none',
     extend: (customElementConstructor) => {
@@ -23,7 +23,12 @@
   import Month from './Month.svelte';
   import Year from './Year.svelte';
   import Day from './Day.svelte';
-  import { calculateMaxDate, calculateMinDate, isOutOfMaxBounds, isOutOfMinBounds} from './calculate-limits/min-date';
+  import {
+    calculateMaxDate,
+    calculateMinDate,
+    isOutOfMaxBounds,
+    isOutOfMinBounds
+  } from './calculate-limits/min-date';
 
   export let attachedInternals: ElementInternals;
   export let value: string = '';
@@ -42,8 +47,8 @@
   export let minDate: string | Date;
   export let maxDate: string | Date;
   export let selectingFirst = true;
-  export let maxSelectibleDays:number;
-  export let minSelectibleDays:number;
+  export let maxSelectibleDays: number;
+  export let minSelectibleDays: number;
   export let maxDateSelectible: Date;
   export let minDateSelectible: Date;
   let firstSelectedDateObject = new Date();
@@ -51,14 +56,14 @@
   let displayedDateString = '';
   let borderTop: boolean = false;
   let borderBottom: boolean = false;
-  let bindingElement;
-  let menuStyle;
-  let firstYearSelected = null;
-  let firstMonthSelected;
-  let firstDateSelected;
-  let secondYearSelected = null;
-  let secondMonthSelected;
-  let secondDateSelected;
+  let bindingElement: HTMLButtonElement;
+  let menuStyle: string;
+  let firstYearSelected: number | null = null;
+  let firstMonthSelected: string | number | null;
+  let firstDateSelected: number | null;
+  let secondYearSelected: number | null = null;
+  let secondMonthSelected: string | number | null;
+  let secondDateSelected: number | null;
   let pickerYear = new Date(Date.now()).getFullYear();
   let pickerMonth = new Date(Date.now()).getMonth();
   let pickerRows;
@@ -132,9 +137,9 @@
   export const getValue = () => {
     if (firstYearSelected && secondYearSelected) {
       return (
-              formatReturnDate(firstSelectedDateObject, returnFormat, returnFormatFunction) +
-              separator +
-              formatReturnDate(secondSelectedDateObject, returnFormat, returnFormatFunction)
+        formatReturnDate(firstSelectedDateObject, returnFormat, returnFormatFunction) +
+        separator +
+        formatReturnDate(secondSelectedDateObject, returnFormat, returnFormatFunction)
       );
     } else {
       return '';
@@ -145,14 +150,14 @@
 
   export const reportValidity = () => attachedInternals.reportValidity();
 
-  const getYearPickerRows = (yearPickerIndex) => {
+  const getYearPickerRows = (yearPickerIndex: number) => {
     const tmp = Array.from(Array(4 * 6).keys()).map((el) => el + 2024 + yearPickerIndex * 4 * 6);
     return Array.from(Array(6).keys()).map((el) => {
       return tmp.slice(el * 4, (el + 1) * 4);
     });
   };
 
-  const getPickerRows = (month, year) => {
+  const getPickerRows = (month: number, year: number) => {
     const thisMonthDays = 40 - new Date(year, month, 40).getDate();
     const prevMonthDays = 40 - new Date(year, month - 1, 40).getDate();
     const startingDay = new Date(year, month).getDay();
@@ -162,12 +167,12 @@
     mData = [
       ...mData,
       Array.from(Array(startingDay).keys())
-              .map((el) => prevMonthDays - el)
-              .toReversed()
-              .map((el) => {
-                let obj = { day: el, month: month - 1, year: year, gray: true };
-                return obj;
-              })
+        .map((el) => prevMonthDays - el)
+        .toReversed()
+        .map((el) => {
+          let obj = { day: el, month: month - 1, year: year, gray: true };
+          return obj;
+        })
     ];
 
     mData = [
@@ -195,14 +200,28 @@
     return mData;
   };
 
-  function checkMinBounds(internalMinDate, year, month, day, minDateAllowed, selectingFirst) {
+  function checkMinBounds(
+    internalMinDate: Date | null,
+    year: number,
+    month: number,
+    day: number,
+    minDateAllowed: number | Date,
+    selectingFirst: boolean
+  ) {
     return (
       isOutOfMinBounds(internalMinDate, year, month, day) ||
       (minDateAllowed > new Date(year, month, day) && !selectingFirst && maxSelectibleDays)
     );
   }
 
-  function checkMaxBounds(internalMaxDate, year, month, day, maxDateAllowed, selectingFirst) {
+  function checkMaxBounds(
+    internalMaxDate: Date | null,
+    year: number,
+    month: number,
+    day: number,
+    maxDateAllowed: number | Date,
+    selectingFirst: boolean
+  ) {
     return (
       isOutOfMaxBounds(internalMaxDate, year, month, day) ||
       (maxDateAllowed < new Date(year, month, day) && !selectingFirst && maxSelectibleDays)
@@ -285,7 +304,7 @@
   );
   $: internalMaxYearPageCheck = checkMaxBounds(
     internalMaxDate,
-    2024 + (yearPickerIndex + 1) * 4 * 6,
+    2024 + yearPickerIndex * 4 * 6,
     11,
     31,
     maxDateSelectible,
@@ -357,17 +376,17 @@
 
   $: {
     if (firstYearSelected) {
-      firstInternalValue = `${firstYearSelected}-${firstMonthSelected + 1 < 10 ? '0' : ''}${
-              firstMonthSelected + 1
-      }-${firstDateSelected < 10 ? '0' : ''}${firstDateSelected}`;
+      firstInternalValue = `${firstYearSelected}-${Number(firstMonthSelected) + 1 < 10 ? '0' : ''}${
+        Number(firstMonthSelected) + 1
+      }-${Number(firstDateSelected) < 10 ? '0' : ''}${firstDateSelected}`;
       firstSelectedDateObject = new Date(firstInternalValue);
       displayedDateString =
-              formatDisplayDate(firstSelectedDateObject, displayFormat, displayFormatFunction) +
-              separator;
+        formatDisplayDate(firstSelectedDateObject, displayFormat, displayFormatFunction) +
+        separator;
       if (required) {
         attachedInternals.setValidity(
-                { customError: true },
-                requiredValidationMessage || `Date is required.`
+          { customError: true },
+          requiredValidationMessage || `Date is required.`
         );
       }
       dispatch('value', { value: '' });
@@ -376,136 +395,142 @@
 
   $: {
     if (secondYearSelected) {
-      secondInternalValue = `${secondYearSelected}-${secondMonthSelected + 1 < 10 ? '0' : ''}${
-              secondMonthSelected + 1
-      }-${secondDateSelected < 10 ? '0' : ''}${secondDateSelected}`;
+      secondInternalValue = `${secondYearSelected}-${Number(secondMonthSelected) + 1 < 10 ? '0' : ''}${
+        Number(secondMonthSelected) + 1
+      }-${Number(secondDateSelected) < 10 ? '0' : ''}${secondDateSelected}`;
       secondSelectedDateObject = new Date(secondInternalValue);
       displayedDateString =
-              formatDisplayDate(firstSelectedDateObject, displayFormat, displayFormatFunction) +
-              separator +
-              formatDisplayDate(secondSelectedDateObject, displayFormat, displayFormatFunction);
+        formatDisplayDate(firstSelectedDateObject, displayFormat, displayFormatFunction) +
+        separator +
+        formatDisplayDate(secondSelectedDateObject, displayFormat, displayFormatFunction);
       const returnDate =
-              formatReturnDate(firstSelectedDateObject, returnFormat, returnFormatFunction) +
-              separator +
-              formatReturnDate(secondSelectedDateObject, returnFormat, returnFormatFunction);
+        formatReturnDate(firstSelectedDateObject, returnFormat, returnFormatFunction) +
+        separator +
+        formatReturnDate(secondSelectedDateObject, returnFormat, returnFormatFunction);
       attachedInternals.setValidity({});
       attachedInternals.setFormValue(returnDate);
       dispatch('value', { value: returnDate });
     }
   }
-  $: displayLabel = required ? `${label} *` : label; 
+  $: displayLabel = required ? `${label} *` : label;
 </script>
 
 {#if label && labelType == 'outside'}
-  <div class="label">
+  <div class="jp-date-range-label">
     {@html displayLabel}
   </div>
 {/if}
 <button
-    type="button"
-    class="field"
-    bind:this={bindingElement}
-    class:active={openPicker}
-    class:borderBottom
-    class:borderTop
-    on:click|preventDefault={toggleMenu}
+  type="button"
+  class="jp-date-range-field"
+  bind:this={bindingElement}
+  class:jp-date-range-field-active={openPicker}
+  class:jp-date-range-field-borderBottom={borderBottom}
+  class:jp-date-range-field-borderTop={borderTop}
+  on:click|preventDefault={toggleMenu}
 >
   {#if label && labelType == 'inside'}
-    <span class="field-label" class:move={openPicker || displayedDateString}>
+    <span class="jp-date-range-field-label" class:jp-date-range-field-label-move={openPicker || displayedDateString}>
       {@html displayLabel}
     </span>
-    {/if}
-    <p class={`field-input ${labelType == 'outside' || !label ? '' : 'field-input-padding'}`}>
-      {displayedDateString}
-    </p>
-  
-    <span class="field-icon">
-      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512">
-        <path
-          d="M152 24c0-13.3-10.7-24-24-24s-24 10.7-24 24V64H64C28.7 64 0 92.7 0 128v16 48V448c0 35.3 28.7 64 64 64H384c35.3 0 64-28.7 64-64V192 144 128c0-35.3-28.7-64-64-64H344V24c0-13.3-10.7-24-24-24s-24 10.7-24 24V64H152V24zM48 192H400V448c0 8.8-7.2 16-16 16H64c-8.8 0-16-7.2-16-16V192z"
-        />
-      </svg>
-    </span>
-  </button>
-  
-  <input type="date" name={`${name}-from`} bind:value={firstInternalValue} hidden />
-  <input type="date" name={`${name}-to`} bind:value={secondInternalValue} hidden />
-  
-  {#if openPicker}
-    <div class="overlay">
-      <div
-        class="menu"
-        use:clickOutside
-        on:click_outside={() => (openPicker = false)}
-        style={menuStyle}
-      >
-        <div class="menu-nav">
+  {/if}
+  <p class={`jp-date-range-field-input ${labelType == 'outside' || !label ? '' : 'jp-date-range-field-input-padding'}`}>
+    {displayedDateString}
+  </p>
+
+  <span class="jp-date-range-field-icon">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512">
+      <path
+        d="M152 24c0-13.3-10.7-24-24-24s-24 10.7-24 24V64H64C28.7 64 0 92.7 0 128v16 48V448c0 35.3 28.7 64 64 64H384c35.3 0 64-28.7 64-64V192 144 128c0-35.3-28.7-64-64-64H344V24c0-13.3-10.7-24-24-24s-24 10.7-24 24V64H152V24zM48 192H400V448c0 8.8-7.2 16-16 16H64c-8.8 0-16-7.2-16-16V192z"
+      />
+    </svg>
+  </span>
+</button>
+
+<input type="date" name={`${name}-from`} bind:value={firstInternalValue} hidden />
+<input type="date" name={`${name}-to`} bind:value={secondInternalValue} hidden />
+
+{#if openPicker}
+  <div class="jp-date-range-overlay">
+    <div
+      class="jp-date-range-menu"
+      use:clickOutside
+      on:click_outside={() => (openPicker = false)}
+      style={menuStyle}
+    >
+      <div class="jp-date-range-menu-nav">
+        <button
+          type="button"
+          class="jp-date-range-menu-nav-date"
+          on:click|preventDefault={() => (yearSelector = true)}
+        >
+          <p>{monthMap[pickerMonth]}, {pickerYear}</p>
+          <svg xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 512 512">
+            <path
+              d="M233.4 406.6c12.5 12.5 32.8 12.5 45.3 0l192-192c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L256 338.7 86.6 169.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3l192 192z"
+            />
+          </svg>
+        </button>
+        <div class="jp-date-range-menu-nav-buttons">
           <button
             type="button"
-            class="menu-nav-date"
-            on:click|preventDefault={() => (yearSelector = true)}
+            on:click|preventDefault={() => (pickerMonth = pickerMonth - 1)}
+            class:jp-date-range-menu-nav-buttons-disabled={Boolean(internalMinMonthCheck)}
+            disabled={Boolean(internalMinMonthCheck)}
           >
-            <p>{monthMap[pickerMonth]}, {pickerYear}</p>
-            <svg xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 512 512">
+            <svg xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 320 512">
               <path
-                d="M233.4 406.6c12.5 12.5 32.8 12.5 45.3 0l192-192c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L256 338.7 86.6 169.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3l192 192z"
+                d="M9.4 233.4c-12.5 12.5-12.5 32.8 0 45.3l192 192c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L77.3 256 246.6 86.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0l-192 192z"
               />
             </svg>
           </button>
-          <div class="menu-nav-buttons">
-            <button type="button" on:click|preventDefault={() => (pickerMonth = pickerMonth - 1)}
-              disabled={internalMinMonthCheck}
-              >
-              <svg xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 320 512">
-                <path
-                  d="M9.4 233.4c-12.5 12.5-12.5 32.8 0 45.3l192 192c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L77.3 256 246.6 86.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0l-192 192z"
-                />
-              </svg>
-            </button>
-            <button type="button" on:click|preventDefault={() => (pickerMonth = pickerMonth + 1)}
-              disabled={internalMaxMonthCheck}
-              >
-              <svg xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 320 512">
-                <path
-                  d="M310.6 233.4c12.5 12.5 12.5 32.8 0 45.3l-192 192c-12.5 12.5-32.8 12.5-45.3 0s-12.5-32.8 0-45.3L242.7 256 73.4 86.6c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0l192 192z"
-                />
-              </svg>
-            </button>
+          <button
+            type="button"
+            on:click|preventDefault={() => (pickerMonth = pickerMonth + 1)}
+            class:jp-date-range-menu-nav-buttons-disabled={Boolean(internalMaxMonthCheck)}
+            disabled={Boolean(internalMaxMonthCheck)}
+          >
+            <svg xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 320 512">
+              <path
+                d="M310.6 233.4c12.5 12.5 12.5 32.8 0 45.3l-192 192c-12.5 12.5-32.8 12.5-45.3 0s-12.5-32.8 0-45.3L242.7 256 73.4 86.6c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0l192 192z"
+              />
+            </svg>
+          </button>
+        </div>
       </div>
-    </div>
 
       <div>
-        <div class="table">
-          <div class="table-row">
+        <div class="jp-date-range-table">
+          <div class="jp-date-range-table-row">
             {#each daysMap as day}
-            <div class="table-cell">
-              {day}
-            </div>
+              <div class="jp-date-range-table-cell">
+                {day}
+              </div>
             {/each}
           </div>
         </div>
 
-        <div class="table">
+        <div class="jp-date-range-table">
           {#each pickerRows as row}
-            <div class="table-row">
+            <div class="jp-date-range-table-row">
               {#each row as col}
-                  <Day
-                    {minDateSelectible}
-                    {maxDateSelectible}
-                    {col}
-                    {minSelectibleDays}
-                    {maxSelectibleDays}
-                    {selectingFirst}
-                    {firstDateSelected}
-                    {internalMaxDate}
-                    {internalMinDate}
-                    {firstInternalValue}
-                    {secondInternalValue}
-                    {firstMonthSelected}
-                    {firstYearSelected}
-                    {secondYearSelected}
-                    on:dateSelected={handleSelect}
-                  ></Day>
+                <Day
+                  {minDateSelectible}
+                  {maxDateSelectible}
+                  {col}
+                  {minSelectibleDays}
+                  {maxSelectibleDays}
+                  {selectingFirst}
+                  {firstDateSelected}
+                  {internalMaxDate}
+                  {internalMinDate}
+                  {firstInternalValue}
+                  {secondInternalValue}
+                  {firstMonthSelected}
+                  {firstYearSelected}
+                  {secondYearSelected}
+                  on:dateSelected={handleSelect}
+                ></Day>
               {/each}
             </div>
           {/each}
@@ -513,11 +538,11 @@
       </div>
 
       {#if yearSelector}
-        <div class="menu-year">
-          <div class="menu-year-nav">
+        <div class="jp-date-range-menu-year">
+          <div class="jp-date-range-menu-year-nav">
             <button
               type="button"
-              class="menu-year-nav-date"
+              class="jp-date-range-menu-year-nav-date"
               on:click|stopPropagation={() => (yearSelector = false)}
             >
               <p>
@@ -531,11 +556,12 @@
                 />
               </svg>
             </button>
-            <div class="menu-year-nav-buttons">
+            <div class="jp-date-range-menu-year-nav-buttons">
               <button
                 type="button"
                 on:click|preventDefault={() => yearPickerIndex--}
-                disabled={internalMinYearPageCheck}
+                class:jp-date-range-menu-year-nav-buttons-disabled={Boolean(internalMinYearPageCheck)}
+                disabled={Boolean(internalMinYearPageCheck)}
               >
                 <svg xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 320 512">
                   <path
@@ -546,7 +572,8 @@
               <button
                 type="button"
                 on:click|preventDefault={() => yearPickerIndex++}
-                disabled={internalMaxYearPageCheck}
+                class:jp-date-range-menu-year-nav-buttons-disabled={Boolean(internalMaxYearPageCheck)}
+                disabled={Boolean(internalMaxYearPageCheck)}
               >
                 <svg xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 320 512">
                   <path
@@ -557,9 +584,9 @@
             </div>
           </div>
           {#each pickerYearRows as row}
-            <div class="menu-year-row">
+            <div class="jp-date-range-menu-year-row">
               {#each row as year}
-                <div class="menu-year-row-cell">
+                <div class="jp-date-range-menu-year-row-cell">
                   <Year
                     {minDateSelectible}
                     {maxDateSelectible}
@@ -580,11 +607,11 @@
       {/if}
 
       {#if monthSelector}
-        <div class="menu-month">
-          <div class="menu-month-nav">
+        <div class="jp-date-range-menu-month">
+          <div class="jp-date-range-menu-month-nav">
             <button
               type="button"
-              class="menu-month-nav-date"
+              class="jp-date-range-menu-month-nav-date"
               on:click|stopPropagation={() => {
                 monthSelector = false;
               }}
@@ -596,11 +623,12 @@
                 />
               </svg>
             </button>
-            <div class="menu-month-nav-buttons">
+            <div class="jp-date-range-menu-month-nav-buttons">
               <button
                 type="button"
                 on:click|preventDefault={() => (pickerYear = pickerYear - 1)}
-                disabled={internalMinYearCheck}
+                class:jp-date-range-menu-month-nav-buttons-disabled={Boolean(internalMinYearCheck)}
+                disabled={Boolean(internalMinYearCheck)}
               >
                 <svg xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 320 512">
                   <path
@@ -611,7 +639,8 @@
               <button
                 type="button"
                 on:click|preventDefault={() => (pickerYear = pickerYear + 1)}
-                disabled={internalMaxYearCheck}
+                class:jp-date-range-menu-month-nav-buttons-disabled={Boolean(internalMaxYearCheck)}
+                disabled={Boolean(internalMaxYearCheck)}
               >
                 <svg xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 320 512">
                   <path
@@ -622,9 +651,9 @@
             </div>
           </div>
 
-          <div class="menu-month-grid">
+          <div class="jp-date-range-menu-month-grid">
             {#each monthMap as month, index}
-              <div class="menu-month-grid-cell">
+              <div class="jp-date-range-menu-month-grid-cell">
                 <Month
                   {minDateSelectible}
                   {maxDateSelectible}
@@ -645,7 +674,7 @@
             {/each}
           </div>
         </div>
-    {/if}
+      {/if}
+    </div>
   </div>
-</div>
 {/if}
