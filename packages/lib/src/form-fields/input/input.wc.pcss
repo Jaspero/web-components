@@ -1,3 +1,4 @@
+@import url('https://fonts.googleapis.com/css2?family=Sen:wght@400;700&display=swap');
 .jp-input {
 
 	position: relative;
@@ -125,15 +126,14 @@
 		}
 
 		input {
+			box-sizing: border-box;
 			flex: auto;
-			height: 1rem;
+			height: 1.5rem;
+			padding: 0 0.75rem 0.5rem 0.75rem;
 			font-size: 1rem;
 			width:100%;
 			white-space: nowrap;
-			overflow: hidden;
-			font-family: serif;
 			text-overflow: ellipsis;
-			padding: 0 0.75rem 0.5rem 0.75rem;
 			border: none;
 			outline: none;
 			border-radius: 0.25rem;
@@ -151,7 +151,7 @@
 			}
 
 			&.jp-input-field-padding {
-				padding: 0 0.75rem 0.5rem 0;
+				padding: 0 0.75rem 0.5rem 0.5rem;
 				transform: translateY(-0.5rem);
 			}
 
