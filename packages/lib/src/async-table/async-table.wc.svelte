@@ -46,6 +46,7 @@
   };
   export let rows: any[] = [];
   export let arrangeColumnDialog = false;
+  export let showLoadMore = true;
 
   let formattedPageSizes = JSON.stringify(pageSizes.map((s) => ({ label: s, value: s })));
   let loading = true;
@@ -407,20 +408,22 @@
   </div>
 
   <div class="jp-table-actions">
-    <button
-      type="button"
-      class="jp-table-button"
-      class:jp-table-loading={loading}
-      disabled={!hasMore}
-      on:click={loadMore}
-    >
-      {#if loading}
-        <span class="jp-table-spinner"></span>
-        {wording.LOADING}
-      {:else}
-        {wording.LOAD_MORE}
-      {/if}
-    </button>
+    {#if showLoadMore}
+      <button
+        type="button"
+        class="jp-table-button"
+        class:jp-table-loading={loading}
+        disabled={!hasMore}
+        on:click={loadMore}
+      >
+        {#if loading}
+          <span class="jp-table-spinner"></span>
+          {wording.LOADING}
+        {:else}
+          {wording.LOAD_MORE}
+        {/if}
+      </button>
+    {/if}
     {#if pageSizes.length > 1}
       <jp-select
         label={wording.PAGE_SIZE}
