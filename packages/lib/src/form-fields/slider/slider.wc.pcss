@@ -7,7 +7,7 @@
   &-container {
     min-width: 300px;
     width: 1px;
-    height: 4px;
+    height: 20px;
 
     & input[type='range'] {
       -moz-appearance: none;
@@ -18,6 +18,7 @@
       outline: none;
       cursor: pointer;
       border: 2px;
+      margin:0;
       background: #cccccc;
       accent-color: var(--primary-color);
 
@@ -61,7 +62,6 @@
   }
 
   &-range-input {
-    display:inline;
     &:active::-moz-range-thumb,
     &:active::-webkit-slider-thumb {
       box-shadow: 0 0 0 13px rgba(255, 85, 0, 0.281);

@@ -4,3 +4,9 @@
 </script>
 
 <jp-slider label="slider"></jp-slider>
+<jp-slider label="slider"></jp-slider>
+<jp-slider label="slider"></jp-slider>
+<jp-slider label="slider"></jp-slider>
+<jp-slider label="slider"></jp-slider>
+<jp-slider ></jp-slider>
+<jp-slider disabled=true></jp-slider>
