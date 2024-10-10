@@ -11,7 +11,7 @@
 
 </script>
 
-<!-- <AsyncTableDemo /> -->
+<AsyncTableDemo />
 <!-- <MultiSelectDemo /> -->
 <!-- <FileListDemo /> -->
 <!-- <Demos /> -->
@@ -19,3 +19,5 @@
 <!-- <AsyncTableDemo /> -->
 <!-- <ImageGalleryDemo /> -->
 <DateRangeDemo />
+ <!-- <CkEditorDemo /> -->
+
