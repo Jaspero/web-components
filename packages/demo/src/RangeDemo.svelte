@@ -3,4 +3,12 @@
   import '../../../dist/range.css';
 </script>
 
-<jp-range></jp-range>
+<jp-range label="range"></jp-range>
+<jp-range label="range"></jp-range>
+<jp-range label="range"></jp-range>
+<jp-range label="range"></jp-range>
+<jp-range label="range"></jp-range>
+<jp-range label="range"></jp-range>
+<jp-range label="range"></jp-range>
+<jp-range label="range"></jp-range>
+<jp-range label="range"></jp-range>
