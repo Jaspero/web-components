@@ -30,7 +30,6 @@
   export let displayFormat = 'snake';
   export let displayFormatFunction: (name: string) => string;
 
-
   let previewStyle: string;
   let bindingElement: HTMLDivElement;
   let inputFocused: boolean = false;
@@ -41,7 +40,8 @@
   let hoveringFile = false;
   let internalValue: string;
   let fileEl: HTMLInputElement;
-  let displayedFileNameString = (value && formatDisplayFileName(value, displayFormat, displayFormatFunction)) || '';
+  let displayedFileNameString =
+    (value && formatDisplayFileName(value, displayFormat, displayFormatFunction)) || '';
 
   const dispatch = createEventDispatcher();
 
@@ -85,8 +85,12 @@
     isLocal = true;
     file = f;
     internalValue = f.name;
-    displayedFileNameString = formatDisplayFileName(internalValue,displayFormat, displayFormatFunction) as string;
-    
+    displayedFileNameString = formatDisplayFileName(
+      internalValue,
+      displayFormat,
+      displayFormatFunction
+    ) as string;
+
     if (file['type'].split('/')[0] === 'image') {
       const base64 = (await convertBase64(file)) as string;
       img = base64;
@@ -126,14 +130,13 @@
     if (availableSpaceBelow < dropdownHeight) {
       previewStyle = `
         width: ${rect.width}px;
-        bottom: ${window.innerHeight - rect.top}px;
-        left: ${rect.width - 300}px;
+        top: ${window.scrollY + rect.top}px;
+        transform: translateY(-100%);
       `;
     } else {
       previewStyle = `
         width: ${rect.width}px;
-        top: ${rect.bottom}px;
-        left: ${rect.width - 300}px;
+        top: ${window.scrollY + rect.bottom}px;
       `;
     }
     preview = !preview;
@@ -172,7 +175,7 @@
       ></div>
     {:else}
       {#if label && labelType == 'inside'}
-        <span class="field-label" class:move={inputFocused || internalValue}
+        <span class="field-label" class:move={inputFocused || displayedFileNameString}
           >{@html displayLabel}</span
         >
       {/if}
@@ -197,7 +200,6 @@
         </label>
 
         <div class="field-icon preview-button" class:hidden={!img}>
-
           <button type="button" on:click|preventDefault={() => showPreview()}>
             <svg xmlns="http://www.w3.org/2000/svg" height="1rem" viewBox="0 0 576 512">
               <path
@@ -215,6 +217,7 @@
                 img = '';
                 internalValue = '';
                 fileEl.value = '';
+                displayedFileNameString = '';
               }}
             >
               <svg xmlns="http://www.w3.org/2000/svg" height="1rem" viewBox="0 0 512 512">
@@ -260,36 +263,17 @@
 <style lang="postcss">
   .field {
     position: relative;
-    display: -webkit-box;
-    display: -webkit-flex;
-    display: -moz-box;
-    display: -ms-flexbox;
     display: flex;
-    -webkit-box-orient: horizontal;
-    -webkit-box-direction: reverse;
-    -webkit-flex-direction: row-reverse;
-    -moz-box-orient: horizontal;
-    -moz-box-direction: reverse;
-    -ms-flex-direction: row-reverse;
     flex-direction: row-reverse;
-    -webkit-box-align: center;
-    -webkit-align-items: center;
-    -moz-box-align: center;
-    -ms-flex-align: center;
     align-items: center;
     text-align: left;
+    box-sizing: border-box;
     width: 100%;
     height: 3rem;
-    padding-right: 0.75rem;
-    -webkit-user-select: none;
-    -moz-user-select: none;
-    -ms-user-select: none;
     user-select: none;
     gap: 0.75rem;
     background-color: transparent;
     border: 1px solid var(--border-primary);
-    -webkit-border-radius: 0.25rem;
-    -moz-border-radius: 0.25rem;
     border-radius: 0.25rem;
   }
 
@@ -304,8 +288,6 @@
 
   .field:focus-within {
     border-color: var(--primary-color);
-    -webkit-box-shadow: inset 0 0 0 1px var(--primary-color);
-    -moz-box-shadow: inset 0 0 0 1px var(--primary-color);
     box-shadow: inset 0 0 0 1px var(--primary-color);
   }
 
@@ -313,87 +295,39 @@
     position: absolute;
     top: 50%;
     left: 0.75rem;
-    -webkit-transform: translateY(-50%);
-    -moz-transform: translateY(-50%);
-    -ms-transform: translateY(-50%);
-    -o-transform: translateY(-50%);
     transform: translateY(-50%);
     font-size: 1rem;
-    -webkit-transition:
-      transform 0.3s,
-      top 0.3s,
-      font-size 0.3s;
-    -o-transition:
-      transform 0.3s,
-      top 0.3s,
-      font-size 0.3s;
-    -moz-transition:
-      transform 0.3s,
-      top 0.3s,
-      font-size 0.3s;
-    -webkit-transition:
-      top 0.3s,
-      font-size 0.3s,
-      -webkit-transform 0.3s;
-    transition:
-      top 0.3s,
-      font-size 0.3s,
-      -webkit-transform 0.3s;
-    -o-transition:
-      top 0.3s,
-      font-size 0.3s,
-      -o-transform 0.3s;
-    -moz-transition:
-      transform 0.3s,
-      top 0.3s,
-      font-size 0.3s,
-      -moz-transform 0.3s;
     transition:
       transform 0.3s,
       top 0.3s,
       font-size 0.3s;
-    transition:
-      transform 0.3s,
-      top 0.3s,
-      font-size 0.3s,
-      -webkit-transform 0.3s,
-      -moz-transform 0.3s,
-      -o-transform 0.3s;
   }
 
   .field-label.move {
     top: 0.25rem;
-    -webkit-transform: translateY(0);
-    -moz-transform: translateY(0);
-    -ms-transform: translateY(0);
-    -o-transform: translateY(0);
     transform: translateY(0);
     font-size: 0.75rem;
   }
 
   .field-input {
-    -webkit-box-flex: 1;
-    -webkit-flex: auto;
-    -moz-box-flex: 1;
-    -ms-flex: auto;
     flex: auto;
-    width: 10rem;
-    height: 100%;
+    height: 1rem;
     font-size: 1rem;
+    width: 100%;
     white-space: nowrap;
-    background: transparent;
     overflow: hidden;
-    -o-text-overflow: ellipsis;
+    font-family: serif;
+    transform: translateY(0.8rem);
     text-overflow: ellipsis;
     border: none;
     outline: none;
-    -webkit-border-radius: 0;
-    -moz-border-radius: 0;
-    border-radius: 0;
+    border-radius: 0.25rem;
+    background: transparent;
   }
 
   .field-input-padding {
-    padding: 1rem 0 0 0;
+    padding: 1.3rem 0.75rem 0.5rem 0;
+    transform: translateY(0);
   }
 
   .field-upload {
@@ -403,8 +337,6 @@
     left: 0;
     width: 100%;
     height: 100%;
-    -webkit-border-radius: 0;
-    -moz-border-radius: 0;
     border-radius: 0;
     opacity: 0;
     cursor: pointer;
@@ -412,57 +344,27 @@
 
   .field-upload-container {
     position: relative;
-    display: -webkit-box;
-    display: -webkit-flex;
-    display: -moz-box;
-    display: -ms-flexbox;
     display: flex;
     padding: 0 0.75rem;
     height: 100%;
     overflow: hidden;
-    -webkit-box-flex: 1;
-    -webkit-flex: 1;
-    -moz-box-flex: 1;
-    -ms-flex: 1;
     flex: 1;
   }
 
   .field-icons {
     z-index: 1;
     position: relative;
-    display: -webkit-box;
-    display: -webkit-flex;
-    display: -moz-box;
-    display: -ms-flexbox;
     display: flex;
-    -webkit-box-align: center;
-    -webkit-align-items: center;
-    -moz-box-align: center;
-    -ms-flex-align: center;
     align-items: center;
     gap: 0.375rem;
   }
 
   .field-icon {
-    display: -webkit-box;
-    display: -webkit-flex;
-    display: -moz-box;
-    display: -ms-flexbox;
     display: flex;
-    -webkit-box-pack: center;
-    -webkit-justify-content: center;
-    -moz-box-pack: center;
-    -ms-flex-pack: center;
     justify-content: center;
-    -webkit-box-align: center;
-    -webkit-align-items: center;
-    -moz-box-align: center;
-    -ms-flex-align: center;
     align-items: center;
     width: 2rem;
     height: 2rem;
-    -webkit-border-radius: 50%;
-    -moz-border-radius: 50%;
     border-radius: 50%;
     cursor: pointer;
   }
@@ -481,22 +383,12 @@
   }
 
   .field-icon button {
-    display: -webkit-box;
-    display: -webkit-flex;
-    display: -moz-box;
-    display: -ms-flexbox;
     display: flex;
-    -webkit-box-pack: center;
-    -webkit-justify-content: center;
-    -moz-box-pack: center;
-    -ms-flex-pack: center;
     justify-content: center;
-    -webkit-box-align: center;
-    -webkit-align-items: center;
-    -moz-box-align: center;
-    -ms-flex-align: center;
     align-items: center;
     width: 100%;
+    background-color: transparent;
+    border: none;
     height: 100%;
   }
 
@@ -509,20 +401,17 @@
     position: absolute;
     max-width: 300px;
     max-height: 300px;
+    left: calc(100vw - 330px);
     width: auto;
     height: auto;
     background-color: var(--background-primary);
-    -webkit-border-radius: 0.5rem;
-    -moz-border-radius: 0.5rem;
     border-radius: 0.5rem;
-    -webkit-box-shadow: 0 3px 12px 3px rgba(0, 0, 0, 0.16);
-    -moz-box-shadow: 0 3px 12px 3px rgba(0, 0, 0, 0.16);
     box-shadow: 0 3px 12px 3px rgba(0, 0, 0, 0.16);
   }
 
   .overlay {
     z-index: 100;
-    position: fixed;
+    position: absolute;
     top: 0;
     left: 0;
     width: 100vw;
