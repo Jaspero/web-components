@@ -55,6 +55,7 @@
         { "name": "getData", "values": [] },
         { "name": "rows", "values": [] },
         { "name": "arrangeColumnDialog", "values": [] },
+        { "name": "showLoadMore", "values": [] },
         { "name": "removeRow", "values": [] },
         { "name": "addRow", "values": [] },
         { "name": "updateRow", "values": [] }
@@ -173,18 +174,7 @@
         { "name": "uniqueValidationMessage", "values": [] },
         { "name": "patternValidationMessage", "values": [] },
         { "name": "getValue", "values": [] },
-        { "name": "reportValidity", "values": [] },
-        { "name": "length", "values": [] },
-        { "name": "pageIndex", "values": [] },
-        { "name": "nextPage", "values": [] },
-        { "name": "prevPage", "values": [] },
-        { "name": "lastPage", "values": [] },
-        { "name": "firstPage", "values": [] },
-        { "name": "toPage", "values": [] },
-        { "name": "displayFormat", "values": [] },
-        { "name": "displayFormatFunction", "values": [] },
-        { "name": "service", "values": [] },
-        { "name": "save", "values": [] }
+        { "name": "reportValidity", "values": [] }
       ],
       "references": []
     },
@@ -197,13 +187,17 @@
         { "name": "value", "values": [] },
         { "name": "id", "values": [] },
         { "name": "name", "values": [] },
+        { "name": "height", "values": [] },
         { "name": "label", "values": [] },
         { "name": "options", "values": [] },
         { "name": "required", "values": [] },
         { "name": "validationMessages", "values": [] },
         { "name": "requiredValidationMessage", "values": [] },
         { "name": "getValue", "values": [] },
-        { "name": "save", "values": [] }
+        { "name": "save", "values": [] },
+        { "name": "title", "values": [] },
+        { "name": "message", "values": [] },
+        { "name": "state", "values": [] }
       ],
       "references": []
     },
@@ -217,11 +211,7 @@
         { "name": "id", "values": [] },
         { "name": "value", "values": [] },
         { "name": "options", "values": [] },
-        { "name": "getValue", "values": [] },
-        { "name": "required", "values": [] },
-        { "name": "inline", "values": [] },
-        { "name": "requiredValidationMessage", "values": [] },
-        { "name": "reportValidity", "values": [] }
+        { "name": "getValue", "values": [] }
       ],
       "references": []
     },
@@ -348,25 +338,7 @@
         { "name": "displayFormatFunction", "values": [] },
         { "name": "getValue", "values": [] },
         { "name": "reportValidity", "values": [] },
-        { "name": "save", "values": [] },
-        { "name": "allowArrangeColumns", "values": [] },
-        { "name": "showArrangingColumns", "values": [] },
-        { "name": "freezeFirstColumn", "values": [] },
-        { "name": "freezeLastColumn", "values": [] },
-        { "name": "showExport", "values": [] },
-        { "name": "showImport", "values": [] },
-        { "name": "rowClickable", "values": [] },
-        { "name": "headers", "values": [] },
-        { "name": "pageSizes", "values": [] },
-        { "name": "pageSize", "values": [] },
-        { "name": "sort", "values": [] },
-        { "name": "height", "values": [] },
-        { "name": "getData", "values": [] },
-        { "name": "rows", "values": [] },
-        { "name": "arrangeColumnDialog", "values": [] },
-        { "name": "removeRow", "values": [] },
-        { "name": "addRow", "values": [] },
-        { "name": "updateRow", "values": [] }
+        { "name": "save", "values": [] }
       ],
       "references": []
     },
@@ -682,7 +654,10 @@
         { "name": "requiredValidationMessage", "values": [] },
         { "name": "label", "values": [] },
         { "name": "getValue", "values": [] },
-        { "name": "reportValidity", "values": [] }
+        { "name": "reportValidity", "values": [] },
+        { "name": "title", "values": [] },
+        { "name": "message", "values": [] },
+        { "name": "state", "values": [] }
       ],
       "references": []
     },
