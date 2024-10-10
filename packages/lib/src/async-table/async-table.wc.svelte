@@ -52,10 +52,14 @@
   let loading = true;
   let hasMore = false;
   let exportLoading = false;
+  let activeHeaders: TableHeader[];
+  let columnOrder: string[] = [];
   let arrangementColumns: Array<TableHeader & { enabled: boolean }> = [];
   let saveArrangementLoading = false;
   let importFileEl: HTMLInputElement;
   let importLoading = false;
+
+  $: activeHeaders = headers.filter((it) => !it.disabled);
 
   const dispatch = createEventDispatcher();
 
@@ -148,23 +152,21 @@
 
     exportLoading = true;
 
-    const activeHeaders = headers.filter(header => !header.disabled);
-    const data = await service.export!();
+    const data = await service.export();
     const resolved = await Promise.all(
       data.map(async (row, index) => {
         const columns = await Promise.all(
-          activeHeaders
-            .map((header) =>
-              handleColumn(
-                {
-                  key: header.key,
-                  fallback: header.exportFallback || header.fallback,
-                  pipes: header.exportPipes || header.pipes || []
-                } as TableHeader,
-                row,
-                index
-              )
+          activeHeaders.map((header) =>
+            handleColumn(
+              {
+                key: header.key,
+                fallback: header.exportFallback || header.fallback,
+                pipes: header.exportPipes || header.pipes || []
+              } as TableHeader,
+              row,
+              index
             )
+          )
         );
 
         return columns.map((col) => `"${col || ''}"`).join(',');
@@ -192,7 +194,7 @@
   }
 
   function dragstart(event: DragEvent, header: TableHeader) {
-    event.dataTransfer!.setData('text/plain', header.key);
+    event.dataTransfer.setData('text/plain', header.key);
   }
 
   function dragover(event: DragEvent) {
@@ -202,28 +204,25 @@
   async function drop(event: DragEvent, targetIndex: number) {
     event.preventDefault();
 
-    const draggedColumn = event.dataTransfer!.getData('text/plain');
-    const currentIndex = headers.findIndex(header => header.key === draggedColumn);
+    const draggedColumn = event.dataTransfer.getData('text/plain');
+    const currentIndex = columnOrder.indexOf(draggedColumn);
 
     if (currentIndex !== -1 && Number.isInteger(targetIndex)) {
-      const newHeaders = [...headers];
-      newHeaders.splice(currentIndex, 1);
-      newHeaders.splice(Number(targetIndex), 0, headers.find(header => header.key === draggedColumn)!);
+      columnOrder.splice(currentIndex, 1);
+      columnOrder.splice(Number(targetIndex), 0, draggedColumn);
 
-      headers = headers
+      activeHeaders = headers
+        .filter((it) => !it.disabled)
         .sort((a, b) => {
-          const aIndex = newHeaders.findIndex(header => header.key === a.key);
-          const bIndex = newHeaders.findIndex(header => header.key === b.key);
+          const aIndex = columnOrder.indexOf(a.key);
+          const bIndex = columnOrder.indexOf(b.key);
           return aIndex - bIndex;
         });
 
       if (service.arrangeColumns) {
         await service.arrangeColumns(
           id,
-          headers.map(header => ({
-            key: header.key,
-            disabled: header.disabled
-          }))
+          activeHeaders.map((it) => it.key)
         );
       }
     }
@@ -234,12 +233,17 @@
       .map((item: any) => {
         item.enabled = !item.disabled;
         return item;
+      })
+      .sort((a, b) => {
+        const aIndex = columnOrder.indexOf(a.key);
+        const bIndex = columnOrder.indexOf(b.key);
+        return aIndex - bIndex;
       });
 
     arrangeColumnDialog = true;
   }
 
-  async function importData(event: any) {
+  async function importData(event) {
     if (importLoading) {
       return;
     }
@@ -250,7 +254,7 @@
 
     importLoading = true;
 
-    const r = await service.import!(event.target.files[0]);
+    const r = await service.import(event.target.files[0]);
 
     if (r?.length) {
       rows = [...r, ...rows];
@@ -268,18 +272,16 @@
     saveArrangementLoading = true;
     headers = [...arrangementColumns].map((it) => {
       it.disabled = !it.enabled;
-      // @ts-ignore
       delete it.enabled;
       return it;
     });
+    activeHeaders = headers.filter((it) => !it.disabled);
+    columnOrder = activeHeaders.map((header) => header.key);
 
     if (service.arrangeColumns) {
       await service.arrangeColumns(
         id,
-        headers.map(header => ({
-          key: header.key,
-          disabled: header.disabled
-        }))
+        activeHeaders.map((it) => it.key)
       );
     }
 
@@ -294,17 +296,19 @@
       if (pulledHeaders) {
         headers = headers
           .map((header) => {
-            header.disabled = !pulledHeaders.find(it => it.key === header.key);
+            header.disabled = !pulledHeaders.includes(header.key);
             return header;
           })
           .sort((a, b) => {
-            const aIndex = pulledHeaders.findIndex(it => it.key === a.key);
-            const bIndex = pulledHeaders.findIndex(it => it.key === b.key);
+            const aIndex = pulledHeaders.indexOf(a.key);
+            const bIndex = pulledHeaders.indexOf(b.key);
             return aIndex - bIndex;
           });
       }
     }
 
+    activeHeaders = headers.filter((it) => !it.disabled);
+    columnOrder = activeHeaders.map((header) => header.key);
     await getData();
   });
 </script>
@@ -351,34 +355,32 @@
 
   <div class="jp-table-container" style:height={height}>
     <table>
-      {#if headers}
+      {#if activeHeaders}
         <tr>
-          {#each headers as header, index}
-            {#if !header.disabled}
-              <th
-                class:jp-table-sortable={allowArrangeColumns && header.sortable}
-                class:jp-table-sticky-first={freezeFirstColumn && index === 0}
-                class:jp-table-sticky-last={index === headers.length - 1 && freezeLastColumn}
-                on:click={() => adjustSort(header)}
-                on:drop={(e) => drop(e, index)}
-                on:dragover={dragover}
+          {#each activeHeaders as header, index}
+            <th
+              class:jp-table-sortable={allowArrangeColumns && header.sortable}
+              class:jp-table-sticky-first={freezeFirstColumn && index === 0}
+              class:jp-table-sticky-last={index === activeHeaders.length - 1 && freezeLastColumn}
+              on:click={() => adjustSort(header)}
+              on:drop={(e) => drop(e, index)}
+              on:dragover={dragover}
+            >
+              <span
+                class:jp-table-draggable-column={allowArrangeColumns}
+                draggable={allowArrangeColumns}
+                tabindex="-1"
+                role="button"
+                aria-label="Drag handle"
+                on:dragstart={(e) => dragstart(e, header)}
               >
-                <span
-                  class:jp-table-draggable-column={allowArrangeColumns}
-                  draggable={allowArrangeColumns}
-                  tabindex="-1"
-                  role="button"
-                  aria-label="Drag handle"
-                  on:dragstart={(e) => dragstart(e, header)}
-                >
-                  {@html header.label}
-                </span>
+                {@html header.label}
+              </span>
 
-                {#if sort?.key === header.key}
-                  <span class="jp-table-sortable">{sort.direction === 'asc' ? '↑' : '↓'}</span>
-                {/if}
-              </th>
-            {/if}
+              {#if sort?.key === header.key}
+                <span class="jp-table-sortable">{sort.direction === 'asc' ? '↑' : '↓'}</span>
+              {/if}
+            </th>
           {/each}
         </tr>
       {/if}
@@ -386,20 +388,18 @@
       {#if rows}
         {#each rows as row, ind}
           <tr class:jp-table-highlight={rowClickable}>
-            {#each headers as header, index}
-              {#if !header.disabled}
-                <td
-                  on:click={(e) => rowClick(row, index, header, e)}
-                  class:jp-table-sticky-first={freezeFirstColumn && index === 0}
-                  class:jp-table-sticky-last={index === headers.length - 1 && freezeLastColumn}
-                >
-                  {#await handleColumn(header, row, ind) then val}
-                    <span class="jp-table-cell">
-                      {@html val}
-                    </span>
-                  {/await}
-                </td>
-              {/if}
+            {#each activeHeaders as header, index}
+              <td
+                on:click={(e) => rowClick(row, index, header, e)}
+                class:jp-table-sticky-first={freezeFirstColumn && index === 0}
+                class:jp-table-sticky-last={index === activeHeaders.length - 1 && freezeLastColumn}
+              >
+                {#await handleColumn(header, row, ind) then val}
+                  <span class="jp-table-cell">
+                    {@html val}
+                  </span>
+                {/await}
+              </td>
             {/each}
           </tr>
         {/each}
