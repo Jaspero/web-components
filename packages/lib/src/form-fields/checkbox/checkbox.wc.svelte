@@ -56,8 +56,7 @@
         });
       }
     }
-  }
-
+  };
   $: if (Array.isArray(options)) {
     const checkedAmount = options.filter((el) => el.checked).length;
     if (checkedAmount < minSelects) {
@@ -78,13 +77,13 @@
       'value',
       options.filter((el) => el.checked).map((el) => el.value)
     );
-  }
+  };
+  $: displayLabel = required ? `${label} *` : label;
 
   onMount(() => {
     if (typeof options == 'string') options = JSON.parse(options);
     maxSelects = options.length;
   });
-  $: displayLabel = required ? `${label} *` : label;
 </script>
 
 <div class="jp-checkbox">
@@ -109,8 +108,6 @@
       </span>
       {#if option.label}
         {@html option.label}
-      {:else}
-        {option.value}
       {/if}
     </label>
   {/each}
