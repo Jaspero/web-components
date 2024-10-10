@@ -57,14 +57,17 @@
       }
     }
   };
-  $: if (Array.isArray(options)) {
+  $: displayLabel = required ? `${label} *` : label;
+
+  function updateState() {
     const checkedAmount = options.filter((el) => el.checked).length;
+
     if (checkedAmount < minSelects) {
       attachedInternals.setValidity(
         { customError: true },
         minselectsValidationMessage || validationMessages.minselects || 'Below limit checks.'
       );
-    } else if (checkedAmount > maxSelects) {
+    } else if (maxSelects && (checkedAmount > maxSelects)) {
       attachedInternals.setValidity(
         { customError: true },
         maxselectsValidationMessage || validationMessages.maxselects || 'Above limit checks.'
@@ -77,11 +80,13 @@
       'value',
       options.filter((el) => el.checked).map((el) => el.value)
     );
-  };
-  $: displayLabel = required ? `${label} *` : label;
+  }
 
   onMount(() => {
-    if (typeof options == 'string') options = JSON.parse(options);
+    if (typeof options == 'string') {
+      options = JSON.parse(options);
+    }
+
     maxSelects = options.length;
   });
 </script>
@@ -98,6 +103,7 @@
         type="checkbox"
         name={option.value}
         bind:checked={option.checked}
+        on:change={updateState}
         disabled={option.disabled}
       />
       <span class="jp-checkbox-checkbox">
