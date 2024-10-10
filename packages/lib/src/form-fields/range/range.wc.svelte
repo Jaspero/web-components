@@ -60,16 +60,17 @@
   $: displayLabel = required ? `${label} *` : label;
 </script>
 
-  <div class="slider-container">
+  <div class="jp-range-slider-container">
     {#if label}
     {@html displayLabel}
     {/if}
   </div>
-  <div class="slider">
-    <div class="progress" style={`left: ${low}%; right: ${100 - high}%`}></div>
+  <div class="jp-range-slider">
+    <div class="jp-range-progress" style={`left: ${low}%; right: ${100 - high}%`}></div>
     <input
       type="range"
-      class="range-input"
+      class="jp-range-input"
+      class:jp-range-input-disabled={disabled}
       {disabled}
       step={discrete ? 'any' : step}
       {min}
@@ -80,7 +81,8 @@
     />
     <input
       type="range"
-      class="range-input"
+      class="jp-range-input"
+      class:jp-range-input-disabled={disabled}
       {disabled}
       step={discrete ? 'any' : step}
       {min}
