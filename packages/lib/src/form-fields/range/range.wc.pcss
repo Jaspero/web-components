@@ -44,6 +44,11 @@
         background: transparent;
       }
 
+      &:disabled::-moz-range-thumb {
+        background: #a19d9b;
+      }
+    
+
       &::-moz-range-progress {
         appearance: none;
         background: transparent;
@@ -77,10 +82,12 @@
 
     &-disabled::-webkit-slider-thumb:hover {
       box-shadow: 0 0 0 10px rgba(131, 128, 127, 0.267);
+      background: #a19d9b;
     }
 
     &-disabled:active::-webkit-slider-thumb {
       box-shadow: 0 0 0 10px rgba(131, 128, 127, 0.267);
+      background: #a19d9b;
     }
 
     &::-webkit-slider-thumb {
