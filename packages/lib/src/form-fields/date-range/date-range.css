@@ -1,5 +1,5 @@
-.jp-date-range{
-  &-field{
+.jp-date-range {
+  &-field {
     position: relative;
     display: flex;
     justify-content: space-between;
@@ -16,7 +16,7 @@
 
     &:hover {
       border-color: var(--primary-color);
-    }    
+    }
 
     &-active {
       border-bottom-left-radius: 0;
@@ -25,12 +25,11 @@
       color: var(--primary-color);
       fill: var(--primary-color);
     }
-    
+
     &-borderTop {
       border-top-color: var(--primary-color);
       border-top-left-radius: 0;
       border-top-right-radius: 0;
-      background:green;
     }
 
     &-borderBottom {
@@ -176,19 +175,22 @@
         gap: 0.25rem;
 
         &-cell {
-          & button{
+          & button {
             flex: 1 1 0;
             padding: 0.25rem 1rem;
             width: 100%;
             border: 0;
             border-radius: 50%;
 
-            &:not(:disabled):hover,
-            &-active {
+            &:not(:disabled):hover {
               background-color: var(--primary-color);
               color: var(--text-on-primary);
             }
-            
+          }
+
+          &-active {
+            background-color: var(--primary-color);
+            color: var(--text-on-primary);
           }
 
           &-disabled:hover {
@@ -221,6 +223,7 @@
           height: 70%;
           transform: translateX(15%);
           width: 80px;
+          border-radius: 999px;
 
           & button {
             width: 100%;
@@ -228,24 +231,29 @@
             border-radius: 999px;
             border: 0;
             padding: 0.25rem 0.75rem;
+            background-color: transparent;
+
+            &:disabled:hover {
+              background-color: var(--background-secondary);
+            }
+
+            &:not(:disabled):hover {
+              background-color: var(--primary-color);
+              color: var(--text-on-primary);
+            }
           }
 
-          &-active,
-          &:not(:disabled):hover {
-            background-color: var(--primary-color);
+          &-active {
+            background-color: var(--primary-color) !important;
             color: var(--text-on-primary);
           }
-          
 
-          &-disabled:hover{
+          &-disabled:hover {
             background-color: transparent;
             color: var(--text-secondary);
           }
-          
-          
         }
       }
-      
     }
   }
 
@@ -292,70 +300,67 @@
         }
       }
 
-        &-gray {
-          opacity: 0.5;
+      &-gray {
+        opacity: 0.5;
+      }
+
+      &-onlyValue,
+      &-firstValue,
+      &-lastValue {
+        background-color: var(--primary-color) !important;
+        color: var(--text-on-primary) !important;
+        position: static !important;
+      }
+
+      &-active {
+        &:hover {
+          color: black;
+          position: static;
+          background-color: #e651003f !important;
         }
 
-        &-onlyValue,
-        &-firstValue,
-        &-lastValue {
-          background-color: var(--primary-color) !important;
-          color: var(--text-on-primary)!important;
-          position: static!important;
-        }
-
-        &-active{
-          &:hover {
-            color: black;
-            position: static;
-            background-color: #e651003f!important;
-          }
-
-          &::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            pointer-events: none;
-            left: -10%;
-            display: inline-block;
-            z-index: -1;
-            border-radius: 0;
-            width: 120%;
-            height: 100%;
-            background-color: var(--tertiary-color);
-          }
-        }
-
-        &-lastValue::before {
+        &::before {
           content: '';
           position: absolute;
           top: 0;
-          right: 50%;
+          pointer-events: none;
+          left: -10%;
           display: inline-block;
           z-index: -1;
           border-radius: 0;
-          overflow: clip;
-          width: 55%;
+          width: 120%;
           height: 100%;
           background-color: var(--tertiary-color);
         }
+      }
 
-        &-firstValue::before {
-          content: '';
-          position: absolute;
-          top: 0;
-          left: 50%;
-          display: inline-block;
-          z-index: -1;
-          overflow: hidden;
-          border-radius: 0;
-          width: 60%;
-          height: 100%;
-          background-color: var(--tertiary-color);
-        }
+      &-lastValue::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        right: 50%;
+        display: inline-block;
+        z-index: -1;
+        border-radius: 0;
+        overflow: clip;
+        width: 55%;
+        height: 100%;
+        background-color: var(--tertiary-color);
+      }
+
+      &-firstValue::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 50%;
+        display: inline-block;
+        z-index: -1;
+        overflow: hidden;
+        border-radius: 0;
+        width: 60%;
+        height: 100%;
+        background-color: var(--tertiary-color);
+      }
     }
   }
-
-  
-
 }
