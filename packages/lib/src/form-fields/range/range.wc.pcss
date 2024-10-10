@@ -1,0 +1,109 @@
+.jp-range {
+  &-slider {
+    position: relative;
+    min-width: 300px;
+    width: 1px;
+    height: 4px;
+    background-color: #ccc;
+    border-radius: 4px;
+    bottom:10px;
+
+    & input[type='range'] {
+      cursor: pointer;
+      -webkit-appearance: none;
+      -moz-appearance: none;
+      pointer-events: none;
+      width: 100%;
+      height: 100%;
+      margin: 0;
+      padding: 0;
+      border-radius: 4px;
+      outline: none;
+      border: none;
+      background: transparent;
+      accent-color: var(--primary-color);
+
+      &::-moz-range-track {
+        width: 100%;
+        height: 100%;
+        border: none;
+        border-radius: 4px;
+      }
+
+      &::-moz-range-thumb {
+        pointer-events: auto;
+        border: none;
+        height: 16px;
+        z-index: 2;
+        width: 16px;
+        border-radius: 50%;
+        background: var(--primary-color);
+        transition: 0.2s ease-in-out;
+      }
+
+      &:focus::-moz-range-track {
+        background: transparent;
+      }
+
+      &:disabled::-moz-range-thumb {
+        background: #a19d9b;
+      }
+    
+
+      &::-moz-range-progress {
+        appearance: none;
+        background: transparent;
+        height: 100%;
+        transition-delay: 50ms;
+      }
+    }
+
+    &-container {
+      width: 100%;
+      text-align: left;
+      margin-bottom: 15px;
+    }
+  }
+
+  &-progress {
+    position: absolute;
+    background-color: var(--primary-color);
+    top: 0;
+    height: 100%;
+  }
+
+  &-input {
+    position: absolute;
+    top: 0;
+    z-index:2;
+
+    &:active::-webkit-slider-thumb {
+      box-shadow: 0 0 0 13px rgba(255, 85, 0, 0.281);
+    }
+
+    &-disabled::-webkit-slider-thumb:hover {
+      box-shadow: 0 0 0 10px rgba(131, 128, 127, 0.267);
+      background: #a19d9b;
+    }
+
+    &-disabled:active::-webkit-slider-thumb {
+      box-shadow: 0 0 0 10px rgba(131, 128, 127, 0.267);
+      background: #a19d9b;
+    }
+
+    &::-webkit-slider-thumb {
+      pointer-events: auto;
+      -webkit-appearance: none;
+      border: none;
+      height: 16px;
+      width: 16px;
+      border-radius: 50%;
+      background: var(--primary-color);
+      transition: 0.2s ease-in-out;
+
+      &:hover {
+        box-shadow: 0 0 0 10px rgba(255, 85, 0, 0.1);
+      }
+    }
+  }
+}
