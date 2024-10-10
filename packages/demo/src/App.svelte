@@ -10,11 +10,11 @@
 
 </script>
 
-<!-- <AsyncTableDemo /> -->
+<AsyncTableDemo />
 <!-- <MultiSelectDemo /> -->
 <!-- <FileListDemo /> -->
 <!-- <Demos /> -->
 <!-- <InputDemo /> -->
 <!-- <AsyncTableDemo /> -->
 <!-- <ImageGalleryDemo /> -->
- <CkEditorDemo />
+ <!-- <CkEditorDemo /> -->
