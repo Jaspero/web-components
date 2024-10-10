@@ -93,6 +93,22 @@
     return value;
   }
 
+  async function handleHeader(header: TableHeader) {
+    const { label, headerPipes } = header;
+
+    let value = label;
+
+    if (!headerPipes) {
+      return value;
+    }
+
+    for (const pipe of headerPipes) {
+      value = await pipe(value);
+    }
+
+    return value;
+  }
+
   async function adjustSort(header: TableHeader) {
     const { sortable } = header;
 
@@ -192,6 +208,11 @@
   }
 
   function dragstart(event: DragEvent, header: TableHeader) {
+
+    if (header.disableOrganize) {
+      return;
+    }
+
     event.dataTransfer!.setData('text/plain', header.key);
   }
 
@@ -365,13 +386,15 @@
               >
                 <span
                   class:jp-table-draggable-column={allowArrangeColumns}
-                  draggable={allowArrangeColumns}
+                  draggable={allowArrangeColumns && !header.disableOrganize}
                   tabindex="-1"
                   role="button"
                   aria-label="Drag handle"
                   on:dragstart={(e) => dragstart(e, header)}
                 >
-                  {@html header.label}
+                  {#await handleHeader(header) then val}
+                    {@html val}
+                  {/await}
                 </span>
 
                 {#if sort?.key === header.key}
@@ -446,10 +469,12 @@
     <form class="jp-table-arrange-columns-dialog-inner" on:submit|preventDefault={saveColumnArrangement}>
       <main>
         {#each arrangementColumns as column}
-          <label>
-            <input type="checkbox" value={true} bind:checked={column.enabled} />
-            <span>{@html column.label}</span>
-          </label>
+          {#if !column.disableToggle}
+            <label>
+              <input type="checkbox" value={true} bind:checked={column.enabled} />
+              <span>{@html column.label}</span>
+            </label>
+          {/if}
         {/each}
       </main>
 
