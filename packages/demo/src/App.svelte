@@ -7,10 +7,13 @@
   import MultiSelectDemo from './MultiSelectDemo.svelte';
   import ImageGalleryDemo from './ImageGalleryDemo.svelte';
   import CkEditorDemo from './CkEditorDemo.svelte';
+  import SliderDemo from './SliderDemo.svelte';
+  import ToggleDemo from './ToggleDemo.svelte';
+  import FileUploadDemo from './FileUploadDemo.svelte';
 
 </script>
 
-<AsyncTableDemo />
+<!--<AsyncTableDemo />-->
 <!-- <MultiSelectDemo /> -->
 <!-- <FileListDemo /> -->
 <!-- <Demos /> -->
@@ -18,3 +21,6 @@
 <!-- <AsyncTableDemo /> -->
 <!-- <ImageGalleryDemo /> -->
  <!-- <CkEditorDemo /> -->
+  <FileUploadDemo />
+  <SliderDemo />
+  <ToggleDemo />
