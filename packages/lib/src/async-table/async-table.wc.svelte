@@ -43,6 +43,7 @@
     hasMore = data.hasMore;
 
     loading = false;
+    scrollToTop();
   };
   export let rows: any[] = [];
   export let arrangeColumnDialog = false;
@@ -122,15 +123,29 @@
       key: header.key,
       direction: sort?.key === header.key ? (sort.direction === 'asc' ? 'desc' : 'asc') : 'asc'
     };
+    const promises = [];
+    promises.push(service.get(sort, pageSize));
 
-    const [data] = await Promise.all([service.get(sort, pageSize), service.adjustSort(sort)]);
-
+    if (service.adjustSort){
+      promises.push(service.adjustSort(sort));
+    }
+    const [data] = await Promise.all(promises);
     rows = data.rows;
     hasMore = data.hasMore;
 
     loading = false;
+    scrollToTop();  
   }
-
+  async function scrollToTop(){
+    const tableContainer = document.querySelector('.jp-table-container');
+    if (tableContainer) {
+      tableContainer.scrollTo({
+        top: 0,
+        behavior: 'smooth'
+      });
+    }
+  }
+  
   async function loadMore() {
     loading = true;
 

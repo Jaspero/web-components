@@ -5,6 +5,10 @@
 
 	let el: HTMLElement;
 
+  let filterName = '';
+  let filterGender = '';
+	let filterAge: number | null = null;
+
 	onMount(() => {
 		const asyncTable = document.createElement('jp-async-table') as any;
     asyncTable.headers = [
@@ -41,15 +45,26 @@
     ];
     asyncTable.service = {
       get: async () => {
-        return {
-          rows: [
-            ...[...Array(100).keys()]
-              .map(() => (
-                { name: 'John', firstName: 'John', lastName: 'Johnson', gender: 'M', height: 180, age: 30, disabled: true }
-              ))
-          ],
-          hasMore: false
-        };
+        let rows = [...Array(100).keys()].map(() => ({
+          name: 'John',
+          firstName: 'John',
+          lastName: 'Johnson',
+          gender: 'M',
+          height: 180,
+          age: 30,
+          disabled: true,
+        }));
+
+        if (filterName) {
+          rows = rows.filter(row => row.name.toLowerCase().includes(filterName.toLowerCase()));
+        }
+        if (filterGender) {
+          rows = rows.filter(row => row.gender === filterGender);
+        }
+        if (filterAge !== null) {
+          rows = rows.filter(row => row.age === filterAge);
+        }
+        return { rows, hasMore: false };
       },
       export: async () => {
         return [
@@ -69,6 +84,7 @@
 				return JSON.parse(localStorage.getItem(id));
 			},
       adjustPageSize: async () => {},
+      adjustSort: async () => {}
     };
 		asyncTable.id = 'random-id';
     asyncTable.allowArrangeColumns = true;
@@ -79,6 +95,34 @@
 		asyncTable.freezeLastColumn = true;
     el.appendChild(asyncTable);
 	});
+
+  function applyFilters() {
+		el.firstChild.getData();  
+	}
 </script>
+
+
+<div>
+  <label>
+		Name:
+		<input type="text" bind:value={filterName} on:input={applyFilters} />
+	</label>
+
+	<label>
+		Gender:
+		<select bind:value={filterGender} on:change={applyFilters}>
+			<option value="">All</option>
+			<option value="M">Male</option>
+			<option value="F">Female</option>
+      <option value="O">Other</option>
+		</select>
+	</label>
+
+	<label>
+		Age:
+		<input type="number" bind:value={filterAge} on:input={applyFilters} />
+	</label>
+</div>
+
 
 <div bind:this={el}></div>
