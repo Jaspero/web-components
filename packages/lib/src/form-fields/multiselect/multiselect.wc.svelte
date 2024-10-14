@@ -31,6 +31,7 @@
   export let internalValue = '';
   export let id = '';
   export let name = '';
+  export let autocomplete = '';
   export let label = '';
   export let labelType: 'inside' | 'outside' = 'inside';
   export let showClear = false;
@@ -362,7 +363,7 @@
     </button>
   {/if}
 
-  <input class="jp-multiselect-input" class:jp-multiselect-input-required={required} tabindex="-1" bind:value={internalValue} {required} {id} {name}/>
+  <input class="jp-multiselect-input" class:jp-multiselect-input-required={required} tabindex="-1" bind:value={internalValue} {required} {id} {name} autocomplete="{autocomplete || name}" />
 
   <button
     type="button"
@@ -453,3 +454,4 @@
     </div>
   {/if}
 </div>
+
