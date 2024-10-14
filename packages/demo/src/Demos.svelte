@@ -1,35 +1,41 @@
 <script lang="ts">
   import '../../../dist/checkbox.wc';
+  import '../../../dist/checkbox.css';
   import '../../../dist/input.wc';
+  import '../../../dist/input.css';
   import '../../../dist/select.wc';
+  import '../../../dist/select.css';
   import '../../lib/src/index.css';
   import '../../../dist/toggle.wc';
+  import '../../../dist/toggle.css';
   import '../../../dist/textarea.wc';
   import '../../../dist/textarea.css';
   import '../../../dist/slider.wc';
+  import '../../../dist/slider.css';
   import '../../../dist/range.wc';
+  import '../../../dist/range.css';
   import '../../../dist/radio.wc';
+  import '../../../dist/radio.css';
   import '../../../dist/quill.wc';
   import '../../../dist/quill.css';
-  import '../../../dist/input.css';
   import '../../../dist/multiselect.wc';
   import '../../../dist/multiselect.css';
   import '../../../dist/multisearch.wc';
   import '../../../dist/multisearch.css';
   import '../../../dist/file-upload.wc';
+  import '../../../dist/file-upload.css';
   import '../../../dist/file-list.wc';
   import '../../../dist/datepicker.wc';
   import '../../../dist/date-range.wc';
+  import '../../../dist/date-range.css';
   import '../../../dist/color.wc';
   import '../../../dist/color.css';
   import '../../../dist/ckeditor.wc';
   import '../../../dist/ckeditor.css';
   import '../../../dist/chips.wc';
   import '../../../dist/chips.css';
-  import '../../../dist/checkbox.wc';
   import '../../../dist/autocomplete.wc';
   import '../../../dist/autocomplete.css';
-  import '../../../dist/checkbox.css';
   import { onMount } from 'svelte';
   
   const options = [
