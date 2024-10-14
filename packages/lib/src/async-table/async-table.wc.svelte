@@ -122,13 +122,29 @@
       key: header.key,
       direction: sort?.key === header.key ? (sort.direction === 'asc' ? 'desc' : 'asc') : 'asc'
     };
+    const promises = [];
+    promises.push(service.get(sort, pageSize));
 
-    const [data] = await Promise.all([service.get(sort, pageSize), service.adjustSort(sort)]);
-
+    if (service.adjustSort){
+      //console.log("TRUE");
+      promises.push(service.adjustSort(sort));
+    }
+    else{
+      //console.log("FALSE");
+    }
+    const [data] = await Promise.all(promises);
     rows = data.rows;
     hasMore = data.hasMore;
 
     loading = false;
+
+    const tableContainer = document.querySelector('.jp-table-container');
+    if (tableContainer) {
+      tableContainer.scrollTo({
+        top: 0,
+        behavior: 'smooth'
+      });
+    }
   }
 
   async function loadMore() {
