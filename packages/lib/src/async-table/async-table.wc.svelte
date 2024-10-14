@@ -43,6 +43,13 @@
     hasMore = data.hasMore;
 
     loading = false;
+    const tableContainer = document.querySelector('.jp-table-container');
+    if (tableContainer) {
+      tableContainer.scrollTo({
+        top: 0,
+        behavior: 'smooth'
+      });
+    }
   };
   export let rows: any[] = [];
   export let arrangeColumnDialog = false;

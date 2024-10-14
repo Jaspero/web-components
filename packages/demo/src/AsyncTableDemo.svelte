@@ -98,13 +98,6 @@
 
   function applyFilters() {
 		el.firstChild.getData();  
-    const tableContainer = document.querySelector('.jp-table-container');
-    if (tableContainer) {
-      tableContainer.scrollTo({
-        top: 0,
-        behavior: 'smooth'
-      });
-    }
 	}
 </script>
 
@@ -114,7 +107,7 @@
 		Name:
 		<input type="text" bind:value={filterName} on:input={applyFilters} />
 	</label>
-  
+
 	<label>
 		Gender:
 		<select bind:value={filterGender} on:change={applyFilters}>
