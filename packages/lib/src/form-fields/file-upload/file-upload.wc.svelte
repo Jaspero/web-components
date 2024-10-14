@@ -15,10 +15,11 @@
 />
 
 <script lang="ts">
-  import { clickOutside } from '../click-outside';
-  import type FileService from '../types/file.service';
+  import { clickOutside } from '../../click-outside';
+  import type FileService from '../../types/file.service';
   import { createEventDispatcher } from 'svelte';
-  import { formatDisplayFileName } from '../utils/fileNameFormatter';
+  import { formatDisplayFileName } from '../../utils/fileNameFormatter';
+  import './file-upload.wc.pcss';
 
   export let label = '';
   export let labelType: 'inside' | 'outside' = 'inside';
@@ -162,30 +163,30 @@
 <div>
   <!-- svelte-ignore a11y-no-static-element-interactions -->
   <div
-    class="field"
+    class="jp-file-upload-field"
     bind:this={bindingElement}
     on:dragover|preventDefault={() => (hoveringFile = true)}
   >
     {#if hoveringFile}
       <div
-        class="drop"
+        class="jp-file-upload-drop"
         on:dragleave={() => (hoveringFile = false)}
         on:dragend={() => (hoveringFile = false)}
         on:drop|preventDefault={(e) => handleDrop(e)}
       ></div>
     {:else}
       {#if label && labelType == 'inside'}
-        <span class="field-label" class:move={inputFocused || displayedFileNameString}
+        <span class="jp-file-upload-label" class:jp-file-upload-label-move={inputFocused || displayedFileNameString}
           >{@html displayLabel}</span
         >
       {/if}
 
-      <div class="field-icons">
-        <label for={name} class="field-icon field-icon-upload">
+      <div class="jp-file-upload-field-icons">
+        <label for={name} class="jp-file-upload-field-icon jp-file-upload-field-icon-upload">
           <input
             type="file"
             id={name}
-            class="field-upload"
+            class="jp-file-upload-field-upload"
             accept={service && service.acceptedFiles}
             bind:this={fileEl}
             on:change={filePicked}
@@ -199,7 +200,7 @@
           </svg>
         </label>
 
-        <div class="field-icon preview-button" class:hidden={!img}>
+        <div class="jp-file-upload-field-icon jp-file-upload-field-icon-preview-button" class:jp-file-upload-field-icon-hidden={!img}>
           <button type="button" on:click|preventDefault={() => showPreview()}>
             <svg xmlns="http://www.w3.org/2000/svg" height="1rem" viewBox="0 0 576 512">
               <path
@@ -209,7 +210,7 @@
           </button>
         </div>
         {#if internalValue}
-          <div class="field-icon">
+          <div class="jp-file-upload-field-icon">
             <button
               type="button"
               on:click|preventDefault={() => {
@@ -230,9 +231,9 @@
         {/if}
       </div>
 
-      <span class="field-upload-container">
+      <span class="jp-file-upload-field-upload-container">
         <input
-          class={`field-input ${labelType == 'outside' || !label ? '' : 'field-input-padding'}`}
+          class={`jp-file-upload-field-input ${labelType == 'outside' || !label ? '' : 'jp-file-upload-field-input-padding'}`}
           type="text"
           {name}
           {id}
@@ -248,9 +249,9 @@
 </div>
 
 {#if preview}
-  <div class="overlay">
+  <div class="jp-file-upload-overlay">
     <img
-      class="preview"
+      class="jp-file-upload-preview"
       style={previewStyle}
       src={img}
       alt="preview"
@@ -259,162 +260,3 @@
     />
   </div>
 {/if}
-
-<style lang="postcss">
-  .field {
-    position: relative;
-    display: flex;
-    flex-direction: row-reverse;
-    align-items: center;
-    text-align: left;
-    box-sizing: border-box;
-    width: 100%;
-    height: 3rem;
-    user-select: none;
-    gap: 0.75rem;
-    background-color: transparent;
-    border: 1px solid var(--border-primary);
-    border-radius: 0.25rem;
-  }
-
-  .drop {
-    position: absolute;
-    left: 0;
-    right: 0;
-    top: 0;
-    bottom: 0;
-    border: 2px dashed var(--primary-color);
-  }
-
-  .field:focus-within {
-    border-color: var(--primary-color);
-    box-shadow: inset 0 0 0 1px var(--primary-color);
-  }
-
-  .field-label {
-    position: absolute;
-    top: 50%;
-    left: 0.75rem;
-    transform: translateY(-50%);
-    font-size: 1rem;
-    transition:
-      transform 0.3s,
-      top 0.3s,
-      font-size 0.3s;
-  }
-
-  .field-label.move {
-    top: 0.25rem;
-    transform: translateY(0);
-    font-size: 0.75rem;
-  }
-
-  .field-input {
-    flex: auto;
-    height: 1rem;
-    font-size: 1rem;
-    width: 100%;
-    white-space: nowrap;
-    overflow: hidden;
-    font-family: serif;
-    transform: translateY(0.8rem);
-    text-overflow: ellipsis;
-    border: none;
-    outline: none;
-    border-radius: 0.25rem;
-    background: transparent;
-  }
-
-  .field-input-padding {
-    padding: 1.3rem 0.75rem 0.5rem 0;
-    transform: translateY(0);
-  }
-
-  .field-upload {
-    z-index: 1;
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    border-radius: 0;
-    opacity: 0;
-    cursor: pointer;
-  }
-
-  .field-upload-container {
-    position: relative;
-    display: flex;
-    padding: 0 0.75rem;
-    height: 100%;
-    overflow: hidden;
-    flex: 1;
-  }
-
-  .field-icons {
-    z-index: 1;
-    position: relative;
-    display: flex;
-    align-items: center;
-    gap: 0.375rem;
-  }
-
-  .field-icon {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    width: 2rem;
-    height: 2rem;
-    border-radius: 50%;
-    cursor: pointer;
-  }
-
-  .field-icon:hover {
-    background: var(--background-tertiary);
-  }
-
-  .field-icon.hidden {
-    display: none;
-  }
-
-  .field-icon-upload {
-    position: relative;
-    cursor: pointer;
-  }
-
-  .field-icon button {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    width: 100%;
-    background-color: transparent;
-    border: none;
-    height: 100%;
-  }
-
-  .preview-button {
-    position: relative;
-  }
-
-  .preview {
-    z-index: 1;
-    position: absolute;
-    max-width: 300px;
-    max-height: 300px;
-    left: calc(100vw - 330px);
-    width: auto;
-    height: auto;
-    background-color: var(--background-primary);
-    border-radius: 0.5rem;
-    box-shadow: 0 3px 12px 3px rgba(0, 0, 0, 0.16);
-  }
-
-  .overlay {
-    z-index: 100;
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100vw;
-    height: 100vh;
-  }
-</style>
