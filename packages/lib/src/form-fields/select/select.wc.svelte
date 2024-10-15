@@ -20,7 +20,7 @@
   import { clickOutside } from '../../click-outside';
   import clearIcon from '../../icons/clear.svg?raw';
   import { wait } from '../../utils/wait';
-  import arrowIcon from './arrow.svg?raw';
+  import arrowIcon from '../../icons/arrow.svg?raw';
   import checkIcon from '../../icons/check.svg?raw';
   import './select.wc.pcss';
 
