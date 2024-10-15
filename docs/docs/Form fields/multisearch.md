@@ -24,8 +24,6 @@
 |          labelType          |          |          `'outside'` or `'inside'`          |          whether label is inside or outside of the field          |
 |            hint             |          |                  `string`                   |                       shows below the field                       |
 |     validationMessages      |          | `{[type]: string}` where `type` is `string` | compact way of writing validation messages in a single attribute  |
-|        defaultSearch        |          |                  `boolean`                  |          determines if options are visible upon opening           |
-|      defaultShowNumber      |          |                  `number`                   |                determines number of visible options               |
 
 ### Interfaces
 
