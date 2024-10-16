@@ -226,11 +226,7 @@
         { "name": "label", "values": [] },
         { "name": "disabled", "values": [] },
         { "name": "required", "values": [] },
-        { "name": "getValue", "values": [] },
-        { "name": "max", "values": [] },
-        { "name": "min", "values": [] },
-        { "name": "step", "values": [] },
-        { "name": "discrete", "values": [] }
+        { "name": "getValue", "values": [] }
       ],
       "references": []
     },
@@ -286,6 +282,13 @@
         { "name": "displayFormatFunction", "values": [] },
         { "name": "returnFormat", "values": [] },
         { "name": "returnFormatFunction", "values": [] },
+        { "name": "minDate", "values": [] },
+        { "name": "maxDate", "values": [] },
+        { "name": "selectingFirst", "values": [] },
+        { "name": "maxSelectibleDays", "values": [] },
+        { "name": "minSelectibleDays", "values": [] },
+        { "name": "maxDateSelectible", "values": [] },
+        { "name": "minDateSelectible", "values": [] },
         { "name": "getValue", "values": [] },
         { "name": "reportValidity", "values": [] }
       ],
@@ -428,13 +431,7 @@
         { "name": "id", "values": [] },
         { "name": "value", "values": [] },
         { "name": "options", "values": [] },
-        { "name": "getValue", "values": [] },
-        { "name": "disabled", "values": [] },
-        { "name": "max", "values": [] },
-        { "name": "min", "values": [] },
-        { "name": "step", "values": [] },
-        { "name": "discrete", "values": [] },
-        { "name": "required", "values": [] }
+        { "name": "getValue", "values": [] }
       ],
       "references": []
     },
@@ -499,6 +496,7 @@
         { "name": "internalValue", "values": [] },
         { "name": "id", "values": [] },
         { "name": "name", "values": [] },
+        { "name": "autocomplete", "values": [] },
         { "name": "label", "values": [] },
         { "name": "labelType", "values": [] },
         { "name": "showClear", "values": [] },
@@ -533,19 +531,7 @@
         { "name": "prevPage", "values": [] },
         { "name": "lastPage", "values": [] },
         { "name": "firstPage", "values": [] },
-        { "name": "toPage", "values": [] },
-        { "name": "label", "values": [] },
-        { "name": "labelType", "values": [] },
-        { "name": "attachedInternals", "values": [] },
-        { "name": "value", "values": [] },
-        { "name": "id", "values": [] },
-        { "name": "name", "values": [] },
-        { "name": "required", "values": [] },
-        { "name": "displayFormat", "values": [] },
-        { "name": "displayFormatFunction", "values": [] },
-        { "name": "service", "values": [] },
-        { "name": "getValue", "values": [] },
-        { "name": "save", "values": [] }
+        { "name": "toPage", "values": [] }
       ],
       "references": []
     },
@@ -594,18 +580,7 @@
         { "name": "progress", "values": [] },
         { "name": "radius", "values": [] },
         { "name": "stroke", "values": [] },
-        { "name": "color", "values": [] },
-        { "name": "disabled", "values": [] },
-        { "name": "id", "values": [] },
-        { "name": "max", "values": [] },
-        { "name": "min", "values": [] },
-        { "name": "value", "values": [] },
-        { "name": "step", "values": [] },
-        { "name": "name", "values": [] },
-        { "name": "discrete", "values": [] },
-        { "name": "required", "values": [] },
-        { "name": "label", "values": [] },
-        { "name": "getValue", "values": [] }
+        { "name": "color", "values": [] }
       ],
       "references": []
     },
@@ -634,10 +609,7 @@
         { "name": "prevPage", "values": [] },
         { "name": "lastPage", "values": [] },
         { "name": "firstPage", "values": [] },
-        { "name": "toPage", "values": [] },
-        { "name": "labelType", "values": [] },
-        { "name": "displayFormat", "values": [] },
-        { "name": "displayFormatFunction", "values": [] }
+        { "name": "toPage", "values": [] }
       ],
       "references": []
     },
@@ -702,6 +674,7 @@
         { "name": "value", "values": [] },
         { "name": "id", "values": [] },
         { "name": "name", "values": [] },
+        { "name": "autocomplete", "values": [] },
         { "name": "label", "values": [] },
         { "name": "labelType", "values": [] },
         { "name": "showClear", "values": [] },
@@ -753,7 +726,28 @@
         { "name": "showExport", "values": [] },
         { "name": "showArrangingColumns", "values": [] },
         { "name": "freezeFirstColumn", "values": [] },
-        { "name": "freezeLastColumn", "values": [] }
+        { "name": "freezeLastColumn", "values": [] },
+        { "name": "attachedInternals", "values": [] },
+        { "name": "minSelects", "values": [] },
+        { "name": "maxSelects", "values": [] },
+        { "name": "options", "values": [] },
+        { "name": "disabled", "values": [] },
+        { "name": "required", "values": [] },
+        { "name": "hint", "values": [] },
+        { "name": "value", "values": [] },
+        { "name": "internalValue", "values": [] },
+        { "name": "id", "values": [] },
+        { "name": "name", "values": [] },
+        { "name": "autocomplete", "values": [] },
+        { "name": "label", "values": [] },
+        { "name": "labelType", "values": [] },
+        { "name": "showClear", "values": [] },
+        { "name": "getValue", "values": [] },
+        { "name": "validationMessages", "values": [] },
+        { "name": "requiredValidationMessage", "values": [] },
+        { "name": "minselectsValidationMessage", "values": [] },
+        { "name": "maxselectsValidationMessage", "values": [] },
+        { "name": "reportValidity", "values": [] }
       ],
       "references": []
     },
@@ -799,11 +793,7 @@
         { "name": "prevPage", "values": [] },
         { "name": "lastPage", "values": [] },
         { "name": "firstPage", "values": [] },
-        { "name": "toPage", "values": [] },
-        { "name": "displayFormat", "values": [] },
-        { "name": "displayFormatFunction", "values": [] },
-        { "name": "service", "values": [] },
-        { "name": "save", "values": [] }
+        { "name": "toPage", "values": [] }
       ],
       "references": []
     },
