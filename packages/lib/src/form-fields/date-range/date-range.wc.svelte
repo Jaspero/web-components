@@ -17,7 +17,7 @@
 
 <script lang="ts">
   import { clickOutside } from '../../click-outside';
-  import './date-range.css';
+  import './date-range.pcss';
   import { createEventDispatcher } from 'svelte';
   import { formatDisplayDate, formatReturnDate } from '../../utils/dateFormatter';
   import Month from './Month.svelte';
@@ -92,20 +92,20 @@
   ];
   let yearPickerIndex = 0;
 
-  function handleYearSelected(event) {
+  function handleYearSelected(event: { detail: { year: any; }; }) {
     const { year } = event.detail;
     pickerYear = year;
     yearSelector = false;
     monthSelector = true;
   }
 
-  function handleMonthSelected(event) {
+  function handleMonthSelected(event: { detail: { month: any; }; }) {
     const { month } = event.detail;
     pickerMonth = month;
     monthSelector = false;
   }
 
-  function handleSelect(event) {
+  function handleSelect(event: { detail: { day: any; month: any; year: any; }; }) {
     const { day, month, year } = event.detail;
     if (selectingFirst) {
       firstDateSelected = day;
@@ -167,7 +167,7 @@
     const prevMonthDays = 40 - new Date(year, month - 1, 40).getDate();
     const startingDay = new Date(year, month).getDay();
     const daysAfter = 6 * 7 - thisMonthDays - startingDay;
-    let mData = [];
+    let mData: any[] = [];
 
     mData = [
       ...mData,
@@ -349,20 +349,20 @@
       attachedInternals.checkValidity();
     }
   }
-  $: if (firstMonthSelected == 12) {
+  $: if (firstMonthSelected == 12 && firstYearSelected) {
     firstMonthSelected = 0;
     firstYearSelected++;
   }
-  $: if (firstMonthSelected == -1) {
+  $: if (firstMonthSelected == -1 && firstYearSelected) {
     firstMonthSelected = 11;
     firstYearSelected--;
   }
 
-  $: if (secondMonthSelected == 12) {
+  $: if (secondMonthSelected == 12 && secondYearSelected) {
     secondMonthSelected = 0;
     secondYearSelected++;
   }
-  $: if (secondMonthSelected == -1) {
+  $: if (secondMonthSelected == -1 && secondYearSelected) {
     secondMonthSelected = 11;
     secondYearSelected--;
   }
