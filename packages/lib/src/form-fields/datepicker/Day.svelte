@@ -3,13 +3,13 @@
   import { isOutOfMinBounds } from './is-out-of-min-bounds.js';
   import { createEventDispatcher } from 'svelte';
   export let col: { year: number; month: number; day: number; gray: boolean; selected: boolean };
-  export let internalMinDate: Date;
-  export let internalMaxDate: Date;
+  export let internalMinDate: Date | null;
+  export let internalMaxDate: Date | null;
   export let dateSelected: number;
   export let monthSelected: number;
-  export let yearSelected: number;
+  export let yearSelected: number | null;
   export let enableMultiple: boolean;
-  export let selectedDates = [];
+  export let selectedDates: any[] = [];
 
   let isDatePicked = false;
   let date = null;
@@ -38,17 +38,20 @@
 </script>
 
 {#if enableMultiple}
-  <div class="day">
     <button
       type="button"
       class:gray={col.gray}
-      class:active={selectedDates.some((e) => e.year === col.year && e.month === col.month && e.day === col.day)}
+      class:active={selectedDates.some(
+        (e) => e.year === col.year && e.month === col.month && e.day === col.day
+      )}
       on:click|preventDefault={() => {
         dateSelected = col.day;
         yearSelected = col.year;
         monthSelected = col.month;
         date = { year: col.year, month: col.month, day: col.day };
-        const index = selectedDates.findIndex((e) => e.year === col.year && e.month === col.month && e.day === col.day);
+        const index = selectedDates.findIndex(
+          (e) => e.year === col.year && e.month === col.month && e.day === col.day
+        );
         if (index !== -1) {
           isDatePicked = false;
           selectedDates = [...selectedDates.slice(0, index), ...selectedDates.slice(index + 1)];
@@ -62,9 +65,7 @@
     >
       {col.day}
     </button>
-  </div>
 {:else}
-  <div class="day">
     <button
       type="button"
       class:gray={col.gray}
@@ -76,5 +77,4 @@
     >
       {col.day}
     </button>
-  </div>
 {/if}

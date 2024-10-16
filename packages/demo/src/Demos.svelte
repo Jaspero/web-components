@@ -26,6 +26,7 @@
   import '../../../dist/file-upload.css';
   import '../../../dist/file-list.wc';
   import '../../../dist/datepicker.wc';
+  import '../../../dist/datepicker.css';
   import '../../../dist/date-range.wc';
   import '../../../dist/date-range.css';
   import '../../../dist/color.wc';
@@ -89,6 +90,7 @@
 </script>
 
 <div class="form-container">
+  <jp-datepicker label="Pick a date" required="true"></jp-datepicker>
   <jp-chips label="Chips" placeholder="Placeholder" required="true"></jp-chips>
   <jp-chips placeholder="Placeholder" required="true"></jp-chips>
   <jp-input label="Input" required="true" />
