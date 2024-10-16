@@ -1,5 +1,5 @@
 <script lang="ts">
-    import '../../../dist/chips.wc';
+    import '../../../../dist/chips.wc';
     import '../../../dist/chips.css';
 </script>
 <form>

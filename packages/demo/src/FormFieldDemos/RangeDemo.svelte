@@ -1,5 +1,5 @@
 <script>
-  import '../../../dist/range.wc';
+  import '../../../../dist/range.wc';
   import '../../../dist/range.css';
 </script>
 
