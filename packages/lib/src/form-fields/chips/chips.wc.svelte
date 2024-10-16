@@ -70,7 +70,7 @@
   }
 
   $: {
-    if (!value) {
+    if (!value && required) {
       attachedInternals.setValidity(
         { valueMissing: true },
         requiredValidationMessage || validationMessages.required || `Chips should be non-empty.`,
