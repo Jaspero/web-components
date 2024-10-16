@@ -60,12 +60,15 @@
   export let minselectsValidationMessage: string;
   export let maxselectsValidationMessage: string;
   export let singleSelect = false;
+  export let defaultSearch = false;
+  export let defaultShow = 5;
+  let numberOfSelected: number = 0;
 
   let isTabbing = false; // Variable to track if the user is tabbing
   let open = false;
   let bindingElement: HTMLButtonElement;
   let menuStyle: string;
-  let optionElements = []; // Array to store references to option buttons
+  let optionElements: HTMLButtonElement[] = []; // Array to store references to option buttons
   let searchTerm = ''; // focus search term
   let searchTimeout: any; // focus search timeout
   let displayValue: string[];
@@ -145,6 +148,23 @@
     loadingSearch = false;
   }
 
+  async function handleDefaultSearch() {
+    options = options.filter((el) => el.selected);
+    numberOfSelected = options.length;
+    loadingSearch = true;
+    const searchResults = await service.search('');
+    options = [
+      ...options,
+      ...searchResults.map((el) => {
+        el.selected = false;
+        return el;
+      })
+    ] as any;
+
+    options = options.slice(0,numberOfSelected + Math.max(0, defaultShow - numberOfSelected));
+    loadingSearch = false;
+  }
+
   function toggleMenu(event?: MouseEvent) {
     if (event?.target?.closest('.menu')) {
       return;
@@ -182,7 +202,7 @@
       }, 10); // A short delay, 10ms
     } else {
       setTimeout(() => {
-        if (isTabbing) {
+        if (isTabbing && bindingElement.nextElementSibling instanceof HTMLButtonElement) {
           bindingElement.nextElementSibling.focus(); // Focus the next sibling element (if any)
         } else {
           bindingElement.focus();
@@ -329,7 +349,7 @@
     }
   }
 
-  async function loadValues(value) {
+  async function loadValues(value: string) {
     valueLoad = true;
     const values = Array.isArray(value) ? value : value.split(',');
     await Promise.all(
@@ -372,20 +392,30 @@
 <div class="jp-multisearch-wrapper" class:jp-multisearch-has-hint={hint}>
 <input class="jp-multisearch-hidden-input" tabindex="-1" bind:value={internalValue} {id} {name} {required} />
 
-<button
-  type="button"
-  class="jp-multisearch-select"
-  class:jp-multisearch-select-toggled={open}
-  bind:this={bindingElement}
-  disabled={disabled || valueLoad}
-  on:click|preventDefault={toggleMenu}
-  on:keydown={handleKeydown}
->
-  {#if valueLoad}
-    <span class="jp-multisearch-select-label"> {wording.LOADING} </span>
-  {:else if label && labelType == 'inside'}
-    <span class="jp-multisearch-select-label" class:jp-multisearch-select-label-move={internalValue || open}>
-      {@html label}
+  <button
+    type="button"
+    class="jp-multisearch-select"
+    class:jp-multisearch-select-toggled={open}
+    bind:this={bindingElement}
+    disabled={disabled || valueLoad}
+    on:click|preventDefault={toggleMenu}
+    on:click={() => {
+      if (defaultSearch && !loadingSearch) handleDefaultSearch();
+    }}
+    on:keydown={handleKeydown}
+  >
+    {#if valueLoad}
+      <span class="jp-multisearch-select-label"> {wording.LOADING} </span>
+    {:else if label && labelType == 'inside'}
+      <span class="jp-multisearch-select-label" class:jp-multisearch-select-label-move={internalValue || open}>
+        {@html label}
+      </span>
+    {/if}
+
+    <span
+      class={`jp-multisearch-select-option ${labelType == 'outside' || !label ? '' : 'jp-multisearch-select-option-padding'}`}
+    >
+      {displayValue || ''}
     </span>
   {/if}
 
@@ -405,53 +435,54 @@
   {/if}
 
   {#if open}
-  <div class="jp-multisearch-overlay">
-    <!-- svelte-ignore a11y-no-noninteractive-element-interactions -->
-    <div
-      class="jp-multisearch-menu"
-      use:clickOutside
-      on:click_outside={() => (open = false)}
-      on:keydown={handleKeydown}
-      style={menuStyle}
-      role="dialog"
-    >
-      {#if service.search}
-        <div class="jp-multisearch-search-field">
-          <span class="jp-multisearch-search-label" class:jp-multisearch-search-label-move={searchFocused || searchValue}>Search</span>
-          <input
-            name="search"
-            type="text"
-            class="jp-multisearch-search-input"
-            on:input={() => {
-              if (!loadingSearch) handleSearch();
-            }}
-            bind:value={searchValue}
-            on:focus={() => (searchFocused = true)}
-            on:blur={() => (searchFocused = false)}
-          />
-        </div>
-      {/if}
-      <div class="jp-multisearch-menu-buttons">
-        {#each options as option, index (option)}
-          <button
-            type="button"
-            class="jp-multisearch-menu-button"
-            class:jp-multisearch-menu-button-selected={option.selected}
-            bind:this={optionElements[index]}
-            disabled={option.disabled}
-            on:click|preventDefault={() => {
-              if (singleSelect) {
-                options = options.map((opt) => {
-                  opt.selected = opt === option;
-                  return opt;
-                });
-                open = false;
-              } else {
-                option.selected = !option.selected;
-              }
-            }}
-          >
-            <span>{option.label || option.value}</span>
+    <div class="jp-multisearch-overlay">
+      <!-- svelte-ignore a11y-no-noninteractive-element-interactions -->
+      <div
+        class="jp-multisearch-menu"
+        use:clickOutside
+        on:click_outside={() => (open = false)}
+        on:keydown={handleKeydown}
+        style={menuStyle}
+        role="dialog"
+      >
+        {#if service.search}
+          <div class="jp-multisearch-search-field">
+            <span class="jp-multisearch-search-label" class:jp-multisearch-search-label-move={searchFocused || searchValue}>Search</span>
+            <input
+              name="search"
+              type="text"
+              class="jp-multisearch-search-input"
+              bind:value={searchValue}
+              on:input={() => {
+                if (!loadingSearch && (searchValue !='' || !defaultSearch)) handleSearch()
+                if (!loadingSearch && searchValue =='' && defaultSearch) handleDefaultSearch()
+              }}
+              on:focus={() => (searchFocused = true)}
+              on:blur={() => (searchFocused = false)}
+            />
+          </div>
+        {/if}
+        <div class="jp-multisearch-menu-buttons">
+          {#each options as option, index (option)}
+            <button
+              type="button"
+              class="jp-multisearch-menu-button"
+              class:jp-multisearch-menu-button-selected={option.selected}
+              bind:this={optionElements[index]}
+              disabled={option.disabled}
+              on:click|preventDefault={() => {
+                if (singleSelect) {
+                  options = options.map((opt) => {
+                    opt.selected = opt === option;
+                    return opt;
+                  });
+                  open = false;
+                } else {
+                  option.selected = !option.selected;
+                }
+              }}
+            >
+              <span>{option.label || option.value}</span>
 
             {#if option.selected}
                 {@html checkmarkIcon}

@@ -9,8 +9,12 @@
   import CkEditorDemo from './CkEditorDemo.svelte';
   import DateRangeDemo from './DateRangeDemo.svelte';
   import RangeDemo from './RangeDemo.svelte';
+  import ChipsDemo from './ChipsDemo.svelte';
+  import MultiSearchDemo from './MultiSearchDemo.svelte';
 </script>
 
+<MultiSearchDemo />
+<!--<ChipsDemo/>-->
 <!-- <AsyncTableDemo />-->
 <!-- <MultiSelectDemo /> -->
 <!-- <FileListDemo /> -->

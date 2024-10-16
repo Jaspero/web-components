@@ -40,9 +40,9 @@
   export let name = '';
   export let label = '';
   export let labelType: 'inside' | 'outside' = 'inside';
-  export let displayFormat = 'normal';
+  export let displayFormat: 'custom' | 'normal' | 'short' | 'medium' | 'long' | 'full' = 'normal';
   export let displayFormatFunction: (date: Date) => string = (date) => date.toDateString();
-  export let returnFormat = 'js';
+  export let returnFormat: 'custom' | 'js' | 'unix' | 'json' | 'utc' | 'iso' | 'isoDate' = 'js';
   export let returnFormatFunction: (date: Date) => any = (date) => date.valueOf();
   export let minDate: string | Date;
   export let maxDate: string | Date;
@@ -117,8 +117,14 @@
     openPicker = true;
     datePicked = isDatePicked;
     date = { year: yearSelected, month: monthSelected, day: dateSelected };
-    if (selectedDates.some((e) => e.year === yearSelected && e.month === monthSelected && e.day === dateSelected)) {
-      const index = selectedDates.findIndex((e) => e.year === yearSelected && e.month === monthSelected && e.day === dateSelected);
+    if (
+      selectedDates.some(
+        (e) => e.year === yearSelected && e.month === monthSelected && e.day === dateSelected
+      )
+    ) {
+      const index = selectedDates.findIndex(
+        (e) => e.year === yearSelected && e.month === monthSelected && e.day === dateSelected
+      );
       selectedDates.splice(index, 1);
     } else {
       selectedDates.push(date);
@@ -396,7 +402,14 @@
     </span>
   </button>
 
-  <input type="date" tabindex="-1" class="hidden-input" {name} bind:value={internalValue} {required} />
+  <input
+    type="date"
+    tabindex="-1"
+    class="hidden-input"
+    {name}
+    bind:value={internalValue}
+    {required}
+  />
   {#if openPicker}
     <div class="overlay">
       <div
