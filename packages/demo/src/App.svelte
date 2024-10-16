@@ -10,8 +10,11 @@
   import DateRangeDemo from './DateRangeDemo.svelte';
   import RangeDemo from './RangeDemo.svelte';
   import ChipsDemo from './ChipsDemo.svelte';
+  import MultiSearchDemo from './MultiSearchDemo.svelte';
 </script>
-<ChipsDemo/>
+
+<MultiSearchDemo />
+<!--<ChipsDemo/>-->
 <!-- <AsyncTableDemo />-->
 <!-- <MultiSelectDemo /> -->
 <!-- <FileListDemo /> -->

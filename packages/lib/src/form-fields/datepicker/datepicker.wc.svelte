@@ -36,9 +36,9 @@
   export let name = '';
   export let label = '';
   export let labelType: 'inside' | 'outside' = 'inside';
-  export let displayFormat = 'normal';
+  export let displayFormat: 'custom' | 'normal' | 'short' | 'medium' | 'long' | 'full' = 'normal';
   export let displayFormatFunction: (date: Date) => string = (date) => date.toDateString();
-  export let returnFormat = 'js';
+  export let returnFormat: 'custom' | 'js' | 'unix' | 'json' | 'utc' | 'iso' | 'isoDate' = 'js';
   export let returnFormatFunction: (date: Date) => any = (date) => date.valueOf();
   export let minDate: string | Date;
   export let maxDate: string | Date;
