@@ -8,7 +8,7 @@
 <script lang="ts">
   import { onDestroy, onMount, tick } from 'svelte';
 
-  export let images: Array<{src: string; alt: string;}> = [];
+  export let images: Array<{gridSrc: string; overlaySrc: string; alt: string;}> = [];
   export let enablePagination = false;
   export let sliderBar = false;
   export let autoSlide = false;
@@ -180,7 +180,7 @@
     <div class="image-container">
       <!-- svelte-ignore a11y-click-events-have-key-events -->
       <!-- svelte-ignore a11y-no-noninteractive-element-interactions -->
-      <img class="image" src={image.src} alt={image.alt} on:click={() => openCarousel(index)} />
+      <img class="image" src={image.gridSrc} alt={image.alt} on:click={() => openCarousel(index)} />
     </div>
   {/each}
 </div>
@@ -194,7 +194,7 @@
     <div class="slider-container" on:click|stopPropagation>
       <div class="slider-images" style="transform: translateX(-{currentIndex * 100}%);">
         {#each images as image}
-          <img class="slider-image" src={image.src} alt={image.alt} />
+          <img class="slider-image" src={image.overlaySrc} alt={image.alt} />
         {/each}
       </div>
       <button type="button" class="prev" on:click={prevImage}> &larr; </button>
