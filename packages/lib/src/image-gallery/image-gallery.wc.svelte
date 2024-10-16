@@ -27,12 +27,25 @@
   let canNavigate = true;
   let intervalFunction: any;
   let scrollPosition: number;
+  let touchstartX = 0;
+  let touchstartY = 0;
+  let touchendX = 0;
+  let touchendY = 0;
 
-  $: if (focused) {
+  $: if (focused) { 
     if (autoSlide) {
       intervalFunction = setInterval(nextImage, interval);
     }
-  } else {
+    window.addEventListener('touchstart', function (event) {
+        touchstartX = event.changedTouches[0].screenX;
+        touchstartY = event.changedTouches[0].screenY;
+      });
+    window.addEventListener('touchend', function (event) {
+        touchendX = event.changedTouches[0].screenX;
+        touchendY = event.changedTouches[0].screenY;
+        handleGesture();
+      });
+    } else {
     if (intervalFunction) {
       clearInterval(intervalFunction);
       intervalFunction = null;
@@ -67,15 +80,15 @@
     const imageElements = Array.from(container.getElementsByTagName('img'));
 
     await Promise.all(imageElements.map((img) => {
-      if (img.complete) {
-        return Promise.resolve();
-      } else {
-        return new Promise((resolve) => {
-          img.onload = resolve;
-          img.onerror = resolve;
-        });
-      }
-    }));
+        if (img.complete) {
+          return Promise.resolve();
+        } else {
+          return new Promise((resolve) => {
+            img.onload = resolve;
+            img.onerror = resolve;
+          });
+        }
+      }));
 
     layout();
   }
@@ -150,6 +163,15 @@
     window.scrollTo(0, scrollPosition);
     await tick();
     layout();
+  }
+
+  function handleGesture() {
+    if (touchendX < touchstartX) {
+      nextImage();
+    }
+    if (touchendX > touchstartX) {
+      prevImage();
+    }
   }
 </script>
 

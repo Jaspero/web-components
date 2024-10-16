@@ -18,8 +18,8 @@
  <!--<Demos />-->
 <!-- <InputDemo /> -->
 <!-- <AsyncTableDemo /> -->
-<!-- <ImageGalleryDemo /> -->
-<DateRangeDemo />
+<ImageGalleryDemo />
+<!-- <DateRangeDemo /> -->
  <!-- <CkEditorDemo /> -->
  <!-- <CkEditorDemo /> -->
- <RangeDemo />
+ <!-- <RangeDemo /> -->
