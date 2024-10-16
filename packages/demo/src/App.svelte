@@ -18,7 +18,7 @@
 <!-- <AsyncTableDemo />-->
 <!-- <MultiSelectDemo /> -->
 <!-- <FileListDemo /> -->
-<!--<Demos />-->
+<Demos />
 <!-- <InputDemo /> -->
 <!-- <ImageGalleryDemo /> -->
 <!-- <DateRangeDemo /> -->

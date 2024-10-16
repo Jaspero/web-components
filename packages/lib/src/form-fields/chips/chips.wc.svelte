@@ -4,7 +4,7 @@
     shadow: 'none',
     extend: (customElementConstructor) => {
       return class extends customElementConstructor {
-        static formAssociated = true;
+        static formAssociated = truegit pull origin main
         constructor() {
           super();
           this.attachedInternals = this.attachInternals();
