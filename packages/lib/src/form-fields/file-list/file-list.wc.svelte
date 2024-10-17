@@ -339,7 +339,7 @@
                   </audio>
                 </div>
               {/if}
-              {:else if file.external}
+            {:else if file.external}
               {@html externalLinkIcon}
             {:else}
               {@html unknownFileIcon}

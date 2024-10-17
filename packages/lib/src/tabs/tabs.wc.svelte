@@ -9,9 +9,9 @@
   import { createEventDispatcher, onMount } from 'svelte';
   import previousArrowIcon from '../../../lib/src/icons/previous-arrow.svg?raw';
   import nextArrowIcon from '../../../lib/src/icons/next-arrow.svg?raw';
-  
+
   export let tab: number = 1;
-  
+
   let tabs = [];
   let tabsEl;
   let contentEl;
@@ -46,17 +46,32 @@
 </script>
 
 <div class="container">
-  <button type="button" class="arrow" on:click|preventDefault={() => previous()} hidden={!overflownTabs}>
+  <button
+    type="button"
+    class="arrow"
+    on:click|preventDefault={() => previous()}
+    hidden={!overflownTabs}
+  >
     {@html previousArrowIcon}
   </button>
   <div class="tabs" bind:this={tabsEl}>
     {#each tabs as Tab, index}
-      <button type="button" class="tab" on:click={() => (tab = index + 1)} class:active={tab == index + 1}>
+      <button
+        type="button"
+        class="tab"
+        on:click={() => (tab = index + 1)}
+        class:active={tab == index + 1}
+      >
         {Tab.getAttribute('title')}
       </button>
     {/each}
   </div>
-  <button type="button" class="arrow" on:click|preventDefault={() => next()} hidden={!overflownTabs}>
+  <button
+    type="button"
+    class="arrow"
+    on:click|preventDefault={() => next()}
+    hidden={!overflownTabs}
+  >
     {@html nextArrowIcon}
   </button>
 </div>

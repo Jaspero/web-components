@@ -71,7 +71,11 @@
   <button type="button" on:click={nextPage} disabled={pageIndex == Math.ceil(length / pageSize) - 1}
     >{@html nextPageIcon}
   </button>
-  <button type="button" on:click={lastPage} disabled={pageIndex == Math.ceil(length / pageSize) - 1}>
+  <button
+    type="button"
+    on:click={lastPage}
+    disabled={pageIndex == Math.ceil(length / pageSize) - 1}
+  >
     {@html lastPageIcon}
   </button>
 </div>
@@ -92,15 +96,15 @@
     border: none;
     border-radius: 50%;
     cursor: pointer;
-    transition: .3s;
+    transition: 0.3s;
   }
 
   button:disabled {
-    opacity: .5;
+    opacity: 0.5;
     pointer-events: none;
   }
 
   button:not(:disabled):hover {
-    background: rgba(0,0,0,.08);
+    background: rgba(0, 0, 0, 0.08);
   }
 </style>

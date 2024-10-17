@@ -32,12 +32,10 @@
     <button
       type="button"
       class="tree-arrow"
-      on:click={() => expanded = !expanded}
+      on:click={() => (expanded = !expanded)}
       disabled={!collapsable}
     >
-    <ToggleArrowIcon 
-    {expanded} 
-  />
+      <ToggleArrowIcon {expanded} />
     </button>
     <p class="tree-header-title">{@html title}</p>
   </div>
@@ -98,4 +96,3 @@
     padding-left: 50px;
   }
 </style>
- 

@@ -48,47 +48,47 @@
   $: dispatch('value', { value: internalValue });
 
   $: {
-    if(!value){
-      internalValue = [min, max]
+    if (!value) {
+      internalValue = [min, max];
     } else {
-      if(typeof value == 'string'){
-        value = JSON.parse(value)
+      if (typeof value == 'string') {
+        value = JSON.parse(value);
       }
-      internalValue = value
+      internalValue = value;
     }
   }
   $: displayLabel = required ? `${label} *` : label;
 </script>
 
-  <div class="jp-range-slider-container">
-    {#if label}
+<div class="jp-range-slider-container">
+  {#if label}
     {@html displayLabel}
-    {/if}
-  </div>
-  <div class="jp-range-slider">
-    <div class="jp-range-progress" style={`left: ${low}%; right: ${100 - high}%`}></div>
-    <input
-      type="range"
-      class="jp-range-input"
-      class:jp-range-input-disabled={disabled}
-      {disabled}
-      step={discrete ? 'any' : step}
-      {min}
-      {max}
-      id={id + '_min'}
-      name={name + '_min'}
-      bind:value={internalValue[0]}
-    />
-    <input
-      type="range"
-      class="jp-range-input"
-      class:jp-range-input-disabled={disabled}
-      {disabled}
-      step={discrete ? 'any' : step}
-      {min}
-      {max}
-      id={id + '_max'}
-      name={name + '_max'}
-      bind:value={internalValue[1]}
-    />
-  </div>
+  {/if}
+</div>
+<div class="jp-range-slider">
+  <div class="jp-range-progress" style={`left: ${low}%; right: ${100 - high}%`}></div>
+  <input
+    type="range"
+    class="jp-range-input"
+    class:jp-range-input-disabled={disabled}
+    {disabled}
+    step={discrete ? 'any' : step}
+    {min}
+    {max}
+    id={id + '_min'}
+    name={name + '_min'}
+    bind:value={internalValue[0]}
+  />
+  <input
+    type="range"
+    class="jp-range-input"
+    class:jp-range-input-disabled={disabled}
+    {disabled}
+    step={discrete ? 'any' : step}
+    {min}
+    {max}
+    id={id + '_max'}
+    name={name + '_max'}
+    bind:value={internalValue[1]}
+  />
+</div>

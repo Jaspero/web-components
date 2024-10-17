@@ -7,7 +7,7 @@
 
 <script lang="ts">
   import { createEventDispatcher, onMount } from 'svelte';
-  
+
   import StarIcon from '../icons/star.svelte';
   export let value: number = 0;
   export let starsInput = true;
@@ -156,12 +156,7 @@
         disabled={!starsInput}
         aria-label={`Star ${star.index}`}
       >
-      <StarIcon 
-      {star}
-      {style}
-      {getFullFillColor}
-      {getStarPoints}
-    />
+        <StarIcon {star} {style} {getFullFillColor} {getStarPoints} />
       </button>
     {/each}
     {#if indicator}

@@ -126,7 +126,7 @@
     const promises = [];
     promises.push(service.get(sort, pageSize));
 
-    if (service.adjustSort){
+    if (service.adjustSort) {
       promises.push(service.adjustSort(sort));
     }
     const [data] = await Promise.all(promises);
@@ -134,9 +134,9 @@
     hasMore = data.hasMore;
 
     loading = false;
-    scrollToTop();  
+    scrollToTop();
   }
-  async function scrollToTop(){
+  async function scrollToTop() {
     const tableContainer = document.querySelector('.jp-table-container');
     if (tableContainer) {
       tableContainer.scrollTo({
@@ -145,7 +145,7 @@
       });
     }
   }
-  
+
   async function loadMore() {
     loading = true;
 
@@ -179,23 +179,22 @@
 
     exportLoading = true;
 
-    const activeHeaders = headers.filter(header => !header.disabled);
+    const activeHeaders = headers.filter((header) => !header.disabled);
     const data = await service.export!();
     const resolved = await Promise.all(
       data.map(async (row, index) => {
         const columns = await Promise.all(
-          activeHeaders
-            .map((header) =>
-              handleColumn(
-                {
-                  key: header.key,
-                  fallback: header.exportFallback || header.fallback,
-                  pipes: header.exportPipes || header.pipes || []
-                } as TableHeader,
-                row,
-                index
-              )
+          activeHeaders.map((header) =>
+            handleColumn(
+              {
+                key: header.key,
+                fallback: header.exportFallback || header.fallback,
+                pipes: header.exportPipes || header.pipes || []
+              } as TableHeader,
+              row,
+              index
             )
+          )
         );
 
         return columns.map((col) => `"${col || ''}"`).join(',');
@@ -223,7 +222,6 @@
   }
 
   function dragstart(event: DragEvent, header: TableHeader) {
-
     if (header.disableOrganize) {
       return;
     }
@@ -239,24 +237,27 @@
     event.preventDefault();
 
     const draggedColumn = event.dataTransfer!.getData('text/plain');
-    const currentIndex = headers.findIndex(header => header.key === draggedColumn);
+    const currentIndex = headers.findIndex((header) => header.key === draggedColumn);
 
     if (currentIndex !== -1 && Number.isInteger(targetIndex)) {
       const newHeaders = [...headers];
       newHeaders.splice(currentIndex, 1);
-      newHeaders.splice(Number(targetIndex), 0, headers.find(header => header.key === draggedColumn)!);
+      newHeaders.splice(
+        Number(targetIndex),
+        0,
+        headers.find((header) => header.key === draggedColumn)!
+      );
 
-      headers = headers
-        .sort((a, b) => {
-          const aIndex = newHeaders.findIndex(header => header.key === a.key);
-          const bIndex = newHeaders.findIndex(header => header.key === b.key);
-          return aIndex - bIndex;
-        });
+      headers = headers.sort((a, b) => {
+        const aIndex = newHeaders.findIndex((header) => header.key === a.key);
+        const bIndex = newHeaders.findIndex((header) => header.key === b.key);
+        return aIndex - bIndex;
+      });
 
       if (service.arrangeColumns) {
         await service.arrangeColumns(
           id,
-          headers.map(header => ({
+          headers.map((header) => ({
             key: header.key,
             disabled: header.disabled
           }))
@@ -266,11 +267,10 @@
   }
 
   function arrangeColumns() {
-    arrangementColumns = [...headers]
-      .map((item: any) => {
-        item.enabled = !item.disabled;
-        return item;
-      });
+    arrangementColumns = [...headers].map((item: any) => {
+      item.enabled = !item.disabled;
+      return item;
+    });
 
     arrangeColumnDialog = true;
   }
@@ -312,7 +312,7 @@
     if (service.arrangeColumns) {
       await service.arrangeColumns(
         id,
-        headers.map(header => ({
+        headers.map((header) => ({
           key: header.key,
           disabled: header.disabled
         }))
@@ -330,12 +330,12 @@
       if (pulledHeaders) {
         headers = headers
           .map((header) => {
-            header.disabled = !pulledHeaders.find(it => it.key === header.key);
+            header.disabled = !pulledHeaders.find((it) => it.key === header.key);
             return header;
           })
           .sort((a, b) => {
-            const aIndex = pulledHeaders.findIndex(it => it.key === a.key);
-            const bIndex = pulledHeaders.findIndex(it => it.key === b.key);
+            const aIndex = pulledHeaders.findIndex((it) => it.key === a.key);
+            const bIndex = pulledHeaders.findIndex((it) => it.key === b.key);
             return aIndex - bIndex;
           });
       }
@@ -357,11 +357,7 @@
 
       {#if showImport}
         &nbsp;
-        <button
-          type="button"
-          class="jp-table-button"
-          on:click={() => importFileEl.click()}
-        >
+        <button type="button" class="jp-table-button" on:click={() => importFileEl.click()}>
           {wording.IMPORT}
         </button>
       {/if}
@@ -385,7 +381,7 @@
     </div>
   {/if}
 
-  <div class="jp-table-container" style:height={height}>
+  <div class="jp-table-container" style:height>
     <table>
       {#if headers}
         <tr>
@@ -481,7 +477,10 @@
       class="jp-table-arrange-columns-dialog-backdrop"
       on:click={() => (arrangeColumnDialog = false)}
     ></div>
-    <form class="jp-table-arrange-columns-dialog-inner" on:submit|preventDefault={saveColumnArrangement}>
+    <form
+      class="jp-table-arrange-columns-dialog-inner"
+      on:submit|preventDefault={saveColumnArrangement}
+    >
       <main>
         {#each arrangementColumns as column}
           {#if !column.disableToggle}

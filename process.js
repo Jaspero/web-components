@@ -1,4 +1,4 @@
-import {copyFile, readFile, readdir, rm, writeFile} from 'fs/promises';
+import { copyFile, readFile, readdir, rm, writeFile } from 'fs/promises';
 
 (async () => {
   const files = await readdir('dist');
@@ -6,18 +6,17 @@ import {copyFile, readFile, readdir, rm, writeFile} from 'fs/promises';
 
   await Promise.all(
     files.map(async (file) => {
-
-      if (!file.endsWith('.js') && !file.endsWith('.map') && !file.endsWith('.ts') && !file.endsWith('.css')) {
+      if (
+        !file.endsWith('.js') &&
+        !file.endsWith('.map') &&
+        !file.endsWith('.ts') &&
+        !file.endsWith('.css')
+      ) {
         const files = await readdir('dist/' + file);
 
-        await Promise.allSettled(
-          files.map(f => copyFile('dist/' + file + '/' + f, 'dist/' + f))
-        );
+        await Promise.allSettled(files.map((f) => copyFile('dist/' + file + '/' + f, 'dist/' + f)));
 
-        await Promise.all(
-          files.map(f => rm('dist/' + file, {recursive: true}))
-        );
-
+        await Promise.all(files.map((f) => rm('dist/' + file, { recursive: true })));
       } else if (file.endsWith('.wc.js')) {
         const path = `dist/${file}`;
         const data = (await readFile(path)).toString();

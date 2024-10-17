@@ -94,7 +94,7 @@
       displayFormat,
       displayFormatFunction
     ) as string;
-    
+
     if (file['type'].split('/')[0] === 'image') {
       const base64 = (await convertBase64(file)) as string;
       img = base64;
@@ -172,14 +172,16 @@
   >
     {#if hoveringFile}
       <div
-       class="jp-file-upload-drop"
+        class="jp-file-upload-drop"
         on:dragleave={() => (hoveringFile = false)}
         on:dragend={() => (hoveringFile = false)}
         on:drop|preventDefault={(e) => handleDrop(e)}
       ></div>
     {:else}
       {#if label && labelType == 'inside'}
-      <span class="jp-file-upload-label" class:jp-file-upload-label-move={inputFocused || displayedFileNameString}
+        <span
+          class="jp-file-upload-label"
+          class:jp-file-upload-label-move={inputFocused || displayedFileNameString}
           >{@html displayLabel}</span
         >
       {/if}
@@ -199,13 +201,16 @@
           {@html folderIcon}
         </label>
 
-        <div class="jp-file-upload-field-icon jp-file-upload-field-icon-preview-button" class:jp-file-upload-field-icon-hidden={!img}>
+        <div
+          class="jp-file-upload-field-icon jp-file-upload-field-icon-preview-button"
+          class:jp-file-upload-field-icon-hidden={!img}
+        >
           <button type="button" on:click|preventDefault={() => showPreview()}>
             {@html eyeIcon}
           </button>
         </div>
         {#if internalValue}
-        <div class="jp-file-upload-field-icon">
+          <div class="jp-file-upload-field-icon">
             <button
               type="button"
               on:click|preventDefault={() => {
@@ -224,7 +229,7 @@
 
       <span class="jp-file-upload-field-upload-container">
         <input
-        class={`jp-file-upload-field-input ${labelType == 'outside' || !label ? '' : 'jp-file-upload-field-input-padding'}`}
+          class={`jp-file-upload-field-input ${labelType == 'outside' || !label ? '' : 'jp-file-upload-field-input-padding'}`}
           type="text"
           {name}
           {id}
@@ -240,9 +245,9 @@
 </div>
 
 {#if preview}
-<div class="jp-file-upload-overlay">
+  <div class="jp-file-upload-overlay">
     <img
-     class="jp-file-upload-preview"
+      class="jp-file-upload-preview"
       style={previewStyle}
       src={img}
       alt="preview"

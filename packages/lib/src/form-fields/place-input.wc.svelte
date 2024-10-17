@@ -20,8 +20,8 @@
   import { onMount, createEventDispatcher } from 'svelte';
   import { clickOutside } from '../click-outside';
   import { loadScript } from '../utils/scriptLoader';
+  import locationIcon from '../icons/location.svg?raw';
 
-  import locationIcon from '../../icons/location.svg?raw';
   export let apiKey: string;
   export let value = '';
   export let attachedInternals: ElementInternals;
@@ -62,7 +62,7 @@
   let map;
   let searchInput: HTMLInputElement;
   let coordinates = '';
-  let mapStyle;
+  let mapStyle: string;
 
   const dispatch = createEventDispatcher();
 
@@ -204,7 +204,7 @@
     }
     mapStyle = style;
     openMap = !openMap;
-    if(openMap){
+    if (openMap) {
       searchInput.focus();
     }
   }
@@ -235,7 +235,7 @@
     } catch (error) {
       console.error('Failed to load the Google Maps script', error);
     }
-    if(inputFocused){
+    if (inputFocused) {
       searchInput.focus();
     }
   });
@@ -251,7 +251,9 @@
     <div class="nav">
       <label class="field" class:required>
         {#if label && labelType === 'inside'}
-          <span class="field-label" class:move={inputFocused || value || openMap}>{@html label}</span>
+          <span class="field-label" class:move={inputFocused || value || openMap}
+            >{@html label}</span
+          >
         {/if}
         <input
           class={`searchInput ${labelType === 'outside' || !label ? '' : 'searchInput-padding'}`}
@@ -493,5 +495,4 @@
   .map-field {
     border-radius: 0.25rem;
   }
-
 </style>

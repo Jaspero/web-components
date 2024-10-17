@@ -30,7 +30,8 @@
   export let required = false;
   export let disabled = false;
   export let readonly = false;
-  export let type: 'text' | 'password' | 'email' | 'tel' | 'url' | 'number' | 'color' | 'time' = 'text';
+  export let type: 'text' | 'password' | 'email' | 'tel' | 'url' | 'number' | 'color' | 'time' =
+    'text';
   export let id: string | null = null;
   export let hint: string | null = null;
   export let minlength: number | null = null;
@@ -117,8 +118,8 @@
   $: fieldPadding = labelType !== 'outside' && !label;
   $: displayLabel = required ? `${label} *` : label;
 
-  onMount(()=> {
-    if(inputFocused){
+  onMount(() => {
+    if (inputFocused) {
       inputEl.focus();
     }
   });
@@ -132,10 +133,16 @@
 <div class="jp-input" class:jp-input-has-hint={!!hint}>
   <label class="jp-input-field" class:jp-input-field-disabled={disabled || readonly}>
     {#if label && labelType === 'inside'}
-      <span class="jp-input-field-label" class:jp-input-field-move={focused || value || type === 'time' || value === 0}>{@html displayLabel}</span>
+      <span
+        class="jp-input-field-label"
+        class:jp-input-field-move={focused || value || type === 'time' || value === 0}
+        >{@html displayLabel}</span
+      >
     {/if}
     {#if prefix && (value || focused)}
-      <div class="jp-input-field-prefix" class:jp-input-field-prefix-move={fieldPadding}>{@html prefix}</div>
+      <div class="jp-input-field-prefix" class:jp-input-field-prefix-move={fieldPadding}>
+        {@html prefix}
+      </div>
     {/if}
     {#if type === 'text'}
       <input
@@ -314,8 +321,10 @@
       />
       <span>{value}</span>
     {/if}
-    {#if suffix  && (value || focused)}
-      <div class="jp-input-field-suffix" class:jp-input-field-suffix-move={fieldPadding}>{@html suffix}</div>
+    {#if suffix && (value || focused)}
+      <div class="jp-input-field-suffix" class:jp-input-field-suffix-move={fieldPadding}>
+        {@html suffix}
+      </div>
     {/if}
   </label>
 

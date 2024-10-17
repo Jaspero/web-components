@@ -8,7 +8,7 @@
 <script lang="ts">
   import { onDestroy, onMount, tick } from 'svelte';
 
-  export let images: Array<{src: string; alt: string;}> = [];
+  export let images: Array<{ src: string; alt: string }> = [];
   export let enablePagination = false;
   export let sliderBar = false;
   export let autoSlide = false;
@@ -66,16 +66,18 @@
   async function checkImagesLoaded() {
     const imageElements = Array.from(container.getElementsByTagName('img'));
 
-    await Promise.all(imageElements.map((img) => {
-      if (img.complete) {
-        return Promise.resolve();
-      } else {
-        return new Promise((resolve) => {
-          img.onload = resolve;
-          img.onerror = resolve;
-        });
-      }
-    }));
+    await Promise.all(
+      imageElements.map((img) => {
+        if (img.complete) {
+          return Promise.resolve();
+        } else {
+          return new Promise((resolve) => {
+            img.onload = resolve;
+            img.onerror = resolve;
+          });
+        }
+      })
+    );
 
     layout();
   }
@@ -83,13 +85,18 @@
   function layout() {
     if (!container || !container.offsetParent) {
       return;
-    };
+    }
 
     sizes = [];
     columns = [];
     const containerWidth = container.clientWidth;
 
-    const colCount = window.innerWidth < 600 ? columnCountMobile : window.innerWidth < 1024 ? columnCountTable : columnCount;
+    const colCount =
+      window.innerWidth < 600
+        ? columnCountMobile
+        : window.innerWidth < 1024
+          ? columnCountTable
+          : columnCount;
     const colWidth = (containerWidth - (colCount - 1) * gapX) / colCount;
 
     for (let i = 0; i < colCount; i++) {

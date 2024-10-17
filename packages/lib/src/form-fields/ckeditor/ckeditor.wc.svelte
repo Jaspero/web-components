@@ -288,4 +288,11 @@
 <div bind:this={wrapperEl}>
   <div bind:this={containerEl} />
 </div>
-<textarea class="jp-ckeditor-textarea" {id} {name} bind:value={internalValue} {required} bind:this={textareaEl} />
+<textarea
+  class="jp-ckeditor-textarea"
+  {id}
+  {name}
+  bind:value={internalValue}
+  {required}
+  bind:this={textareaEl}
+/>
