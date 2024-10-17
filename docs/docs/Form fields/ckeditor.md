@@ -17,6 +17,7 @@ It's a wrapper around https://ckeditor.com/.
 |   name   |      ✓       |            `string`             |                      name of the form control                      |
 |  label   |              |            `string`             |                          shows at the top                          |
 | height   |              |            `string`             |               defines the height of the editable area              |
+|  width   |              |            `string`             |               defines the width of the editable area               |
 
 ### Interfaces
 
