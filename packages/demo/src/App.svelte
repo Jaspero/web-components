@@ -11,17 +11,10 @@
   import RangeDemo from './FormFieldDemos/RangeDemo.svelte';
   import ChipsDemo from './FormFieldDemos/ChipsDemo.svelte';
   import MultiSearchDemo from './FormFieldDemos/MultiSearchDemo.svelte';
+  import SelectDemo from './FormFieldDemos/SelectDemo.svelte';
 </script>
 
- <MultiSearchDemo /> 
-<ChipsDemo/>
-<!-- <AsyncTableDemo />-->
- <MultiSelectDemo />
- <FileListDemo /> 
-<!--<Demos />-->
- <InputDemo />
-<!-- <ImageGalleryDemo /> -->
-<DateRangeDemo /> 
- <CkEditorDemo /> 
- <CkEditorDemo /> 
- <RangeDemo /> 
+<form>
+  <CkEditorDemo />
+  <button type="submit">Submit</button>
+</form>
