@@ -8,10 +8,12 @@
 		min-height: 68px;
 		display: flex;
 		justify-content: flex-end;
+		
 
 		button {
 			background-color: var(--background-secondary);
 			color: var(--text-on-secondary);
+			
 		}
 	}
 
@@ -53,7 +55,20 @@
 			padding: 0.5rem;
 			border-bottom: 1px solid rgba(0, 0, 0, 0.16);
 		}
+		th {
+        position: sticky;
+        z-index: 2;
+        top: 0;
+        background-color: var(--background-primary);
+        font-weight: bold;
 
+        &.jp-table-sticky-first {
+            z-index: 3;
+        }
+
+        /* Add the grab cursor styles here */
+        cursor: grab; /* Hand cursor on header */
+    }
 		th {
 			position: sticky;
 			z-index: 2;
@@ -64,6 +79,10 @@
 			&.jp-table-sticky-first {
 				z-index: 3;
 			}
+			cursor: grab;
+		}
+		th:active {
+			cursor: grabbing;
 		}
 	}
 
@@ -107,7 +126,7 @@
 	}
 
 	&-highlight {
-		cursor: pointer;
+		cursor: grab;
 		transition: 0.3s;
 
 		&:hover {
@@ -207,3 +226,51 @@
 		transform: rotate(360deg);
 	}
 }
+.material-symbols-outlined {
+                    font-variation-settings:
+                      'FILL' 0,
+                      'wght' 400,
+                      'GRAD' 0,
+                      'opsz' 24;
+                    position: relative; 
+  					cursor: grab; 
+}
+
+.jp-table-arrange-columns-dialog-inner {
+  padding: 1rem;
+}
+
+.arrange-column-label {
+  display: flex;
+  align-items: center;
+  user-select: none;
+  padding: 0.5rem 0;
+  transition: background-color 0.3s;
+}
+
+.arrange-column-label .material-symbols-outlined {
+  margin-right: 0.5rem;
+  
+}
+
+
+.drag-handle {
+  cursor: grab;
+}
+
+.drag-handle:active {
+  cursor: grabbing; 
+}
+
+.no-cursor {
+  cursor: default; 
+  pointer-events: none; 
+}
+.arrange-column-label.hovered {
+  background-color: transparent; 
+}
+
+.arrange-column-label:not(.hovered) {
+  background-color: #D3D3D3; 
+}
+
