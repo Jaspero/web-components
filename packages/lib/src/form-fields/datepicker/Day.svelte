@@ -3,13 +3,13 @@
   import { isOutOfMinBounds } from './is-out-of-min-bounds.js';
   import { createEventDispatcher } from 'svelte';
   export let col: { year: number; month: number; day: number; gray: boolean; selected: boolean };
-  export let internalMinDate: Date;
-  export let internalMaxDate: Date;
+  export let internalMinDate: Date | null;
+  export let internalMaxDate: Date | null;
   export let dateSelected: number;
   export let monthSelected: number;
-  export let yearSelected: number;
+  export let yearSelected: number | null;
   export let enableMultiple: boolean;
-  export let selectedDates = [];
+  export let selectedDates: any[] = [];
 
   let isDatePicked = false;
   let date = null;
@@ -38,7 +38,6 @@
 </script>
 
 {#if enableMultiple}
-  <div class="day">
     <button
       type="button"
       class:gray={col.gray}
@@ -66,9 +65,7 @@
     >
       {col.day}
     </button>
-  </div>
 {:else}
-  <div class="day">
     <button
       type="button"
       class:gray={col.gray}
@@ -80,5 +77,4 @@
     >
       {col.day}
     </button>
-  </div>
 {/if}

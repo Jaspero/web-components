@@ -1,4 +1,12 @@
-.jp-date-range {
+.jp-datepicker {
+  &-hidden-input {
+    top: 0;
+    height: 100%;
+    opacity: 0;
+    position: absolute;
+    width: 100%;
+    z-index: -1;
+  }
   &-field {
     position: relative;
     display: flex;
@@ -24,6 +32,11 @@
       border-bottom-color: var(--primary-color);
       color: var(--primary-color);
       fill: var(--primary-color);
+    }
+
+    &-active &-icon{
+        color: var(--primary-color);
+        fill: var(--primary-color);
     }
 
     &-borderTop {
@@ -73,12 +86,10 @@
     }
 
     &-icon {
-      width: 1rem;
-      height: 1rem;
-      fill: var(--text-primary);
-      transition: 0.3s;
-      color: var(--primary-color);
-      fill: var(--primary-color);
+        width: 1rem;
+        height: 1rem;
+        fill: var(--text-primary);
+        transition: 0.3s;
     }
   }
 
@@ -176,7 +187,7 @@
 
         &-cell {
           & button {
-            flex: 1 1 0;
+            background-color: var(--background-tertiary);
             padding: 0.25rem 1rem;
             width: 100%;
             border: 0;
@@ -215,7 +226,6 @@
         display: grid;
         row-gap: 0.75rem;
         width: 300px;
-        z-index: 2;
         height: 300px;
         grid-template-columns: repeat(3, minmax(0, 1fr));
 
@@ -231,7 +241,7 @@
             border-radius: 999px;
             border: 0;
             padding: 0.25rem 0.75rem;
-            background-color: transparent;
+            background-color: var(--background-tertiary);
 
             &:disabled:hover {
               background-color: var(--background-secondary);
@@ -259,17 +269,13 @@
 
   &-table {
     display: table;
-    align-items: center;
-    justify-content: space-around;
     width: 100%;
-    gap: 0.25rem;
 
     &-row {
       display: flex;
       align-items: center;
       height: 40px;
       justify-content: space-around;
-      flex: 1 1 0;
       gap: 0.25rem;
       margin: 1px 0 1px;
       border-radius: 999px;
@@ -277,89 +283,43 @@
     }
 
     &-cell {
-      display: inline-block;
+      display: table-cell;
       width: 40px;
       height: 40px;
+      max-width: 40px;
+      line-height: 40px;
       text-align: center;
-      position: relative;
-      border-radius: 100%;
-      align-items: center;
+      padding: 0;
 
       & button {
-        display: inline-block;
-        position: relative;
         width: 100%;
         height: 100%;
+        border-radius: 50%;
         border: 0;
-        z-index: 0;
-        border-radius: 100%;
         background-color: var(--background-primary);
+
+        &.gray {
+            opacity: 0.5;
+          }
 
         &:hover {
           background-color: var(--background-secondary);
         }
+
+        &.active {
+          background: var(--primary-color);
+          color: var(--text-on-primary);
+        }
+
+        &:disabled:hover {
+            background-color: var(--background-tertiary)!important;
+            color: var(--text-secondary);
+          }
       }
+      
 
       &-gray {
         opacity: 0.5;
-      }
-
-      &-onlyValue,
-      &-firstValue,
-      &-lastValue {
-        background-color: var(--primary-color) !important;
-        color: var(--text-on-primary) !important;
-        position: static !important;
-      }
-
-      &-active {
-        &:hover {
-          color: black;
-          position: static;
-          background-color: #e651003f !important;
-        }
-
-        &::before {
-          content: '';
-          position: absolute;
-          top: 0;
-          pointer-events: none;
-          left: -10%;
-          display: inline-block;
-          z-index: -1;
-          border-radius: 0;
-          width: 120%;
-          height: 100%;
-          background-color: var(--tertiary-color);
-        }
-      }
-
-      &-lastValue::before {
-        content: '';
-        position: absolute;
-        top: 0;
-        right: 50%;
-        display: inline-block;
-        z-index: -1;
-        border-radius: 0;
-        overflow: clip;
-        width: 55%;
-        height: 100%;
-        background-color: var(--tertiary-color);
-      }
-
-      &-firstValue::before {
-        content: '';
-        position: absolute;
-        top: 0;
-        left: 50%;
-        display: inline-block;
-        z-index: -1;
-        overflow: hidden;
-        border-radius: 0;
-        width: 60%;
-        height: 100%;
-        background-color: var(--tertiary-color);
       }
     }
   }

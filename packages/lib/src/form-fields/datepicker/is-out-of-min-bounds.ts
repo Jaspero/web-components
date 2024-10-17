@@ -4,7 +4,7 @@ function getLastDayOfMonth(year: number, month: number) {
   return nextMonth.getDate();
 }
 
-export function isOutOfMinBounds(internalMinDate: Date, year: number, month: number, date: number) {
+export function isOutOfMinBounds(internalMinDate: Date | null, year: number, month: number, date: number) {
   if (internalMinDate === null) {
     return false;
   }
