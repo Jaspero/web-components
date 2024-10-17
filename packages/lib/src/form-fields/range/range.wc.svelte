@@ -66,7 +66,7 @@
     {/if}
   </div>
   <div class="jp-range-slider">
-    <div class="jp-range-progress" style={`left: ${low}%; right: ${100 - high}%`}></div>
+    <div class="jp-range-progress" style={`left: ${low}%; right: ${100 - high}%`} class:jp-range-progress-disabled={disabled}></div>
     <input
       type="range"
       class="jp-range-input"
