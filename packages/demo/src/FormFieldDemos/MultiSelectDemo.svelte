@@ -1,50 +1,47 @@
 <script lang="ts">
   import '../../../../dist/multiselect.wc.js';
-  import '../../../dist/multiselect.css';
+  import '../../../../dist/multiselect.css';
 
   const options = [
-		{value: 1, label: 'Monday'},
-		{value: 2, label: 'Tuesday'},
-		{value: 3, label: 'Wednesday'},
-		{value: 4, label: 'Thursday'},
-		{value: 5, label: 'Friday'},
-		{value: 6, label: 'Saturday'},
-		{value: 0, label: 'Sunday'}
-	];
+    { value: 1, label: 'Monday' },
+    { value: 2, label: 'Tuesday' },
+    { value: 3, label: 'Wednesday' },
+    { value: 4, label: 'Thursday' },
+    { value: 5, label: 'Friday' },
+    { value: 6, label: 'Saturday' },
+    { value: 0, label: 'Sunday' }
+  ];
 
   console.log(JSON.stringify(options));
 </script>
+<form>
 <div>
-<jp-multiselect  options={options}>
-</jp-multiselect>
+  <jp-multiselect {options} labelType="outside" label="Label"> </jp-multiselect>
 </div>
 
 <div>
-<jp-multiselect  options={options}  hint="hint">
-</jp-multiselect>
+  <jp-multiselect {options} hint="hint" labelType="inside" label="Label"> </jp-multiselect>
 </div>
 <div>
-<jp-multiselect  options={options}>
-</jp-multiselect>
+  <jp-multiselect {options}> </jp-multiselect>
 </div>
 <div>
-<jp-multiselect  options={options} required=true>
-</jp-multiselect>
+  <jp-multiselect {options} required="true" label="required"> </jp-multiselect>
 </div>
 <div>
-<jp-multiselect  options={options} disabled=true>
-</jp-multiselect>
+  <jp-multiselect {options} disabled="true" label="disabled"> </jp-multiselect>
 </div>
 <div>
-<jp-multiselect  options={options} label="label" labelType='outside'>
-</jp-multiselect>
+  <jp-multiselect {options} label="label maxSelects" labelType="outside" maxSelects=4> </jp-multiselect>
 </div>
 <div>
-<jp-multiselect  options={options} label="label" labelType='inside'>
-</jp-multiselect></div>
+  <jp-multiselect {options} label="label maxSelects" labelType="inside" maxSelects=4> </jp-multiselect>
+</div>
 
+<button type="submit">submit</button>
+</form>
 <style>
-	div{
-		padding-top: 10px;
-	}
+  div {
+    padding-top: 10px;
+  }
 </style>

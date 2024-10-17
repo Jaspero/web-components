@@ -1,7 +1,7 @@
 <script lang="ts">
   import { onMount } from 'svelte';
   import '../../../../dist/multisearch.wc.js';
-  import '../../../dist/multisearch.css';
+  import '../../../../dist/multisearch.css';
 
   let el: HTMLDivElement;
 
