@@ -15,8 +15,12 @@ export default defineConfig({
     lib: {
       entry: [
         // ...sync('packages/lib/**/*.css').map(i => i.replace(`packages/lib/`, '').replace(`packages\\lib\\`, '')),
-        ...sync('packages/lib/**/*.ts').map(i => i.replace(`packages/lib/`, '').replace(`packages\\lib\\`, '')),
-        ...sync('packages/lib/**/*.wc.svelte').map(i => i.replace(`packages/lib/`, '').replace(`packages\\lib\\`, '')),
+        ...sync('packages/lib/**/*.ts').map((i) =>
+          i.replace(`packages/lib/`, '').replace(`packages\\lib\\`, '')
+        ),
+        ...sync('packages/lib/**/*.wc.svelte').map((i) =>
+          i.replace(`packages/lib/`, '').replace(`packages\\lib\\`, '')
+        )
       ],
       formats: ['es']
     },
@@ -42,7 +46,9 @@ export default defineConfig({
       apply: 'build',
       ...dts({
         insertTypesEntry: true,
-        include: sync('packages/lib/**/*.ts').map(i => i.replace(`packages/lib/`, '').replace(`packages\\lib\\`, ''))
+        include: sync('packages/lib/**/*.ts').map((i) =>
+          i.replace(`packages/lib/`, '').replace(`packages\\lib\\`, '')
+        )
       })
     },
     minifyEs()

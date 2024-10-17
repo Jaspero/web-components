@@ -38,11 +38,11 @@
   import '../../../dist/autocomplete.wc';
   import '../../../dist/autocomplete.css';
   import { onMount } from 'svelte';
-  
+
   const options = [
     { value: 'Option 1', label: 'Option 1' },
     { value: 'Option 2', label: 'Option 2' },
-    { value: 'Option 3', label: 'Option 3' },
+    { value: 'Option 3', label: 'Option 3' }
   ];
   let el: HTMLElement;
   let isRequired = true; // Set to true or false based on your requirement
@@ -53,18 +53,18 @@
     multisearch.options = options;
     // Set the required property
     multisearch.required = isRequired;
-    multisearch.label = "Multisearch"
+    multisearch.label = 'Multisearch';
     multisearch.service = {
       i: 0,
       async search(str: string) {
-        await new Promise(resolve => setTimeout(resolve, 1500));
+        await new Promise((resolve) => setTimeout(resolve, 1500));
         return [
           { value: str + '1', label: str + '1' },
           { value: str + '2', label: str + '2' }
         ];
       },
       async loadMore(str: string) {
-        await new Promise(resolve => setTimeout(resolve, 1500));
+        await new Promise((resolve) => setTimeout(resolve, 1500));
         return [
           { value: str + '3', label: str + '3' },
           { value: str + '4', label: str + '4' },
@@ -73,7 +73,7 @@
         ];
       },
       async getSingle(value: string) {
-        await new Promise(resolve => setTimeout(resolve, 1500));
+        await new Promise((resolve) => setTimeout(resolve, 1500));
         return { value: value, label: this.i++ };
       }
     };
@@ -90,20 +90,17 @@
 </script>
 
 <div class="form-container">
-  <jp-datepicker label="Pick a date" required="true"></jp-datepicker>
   <jp-chips label="Chips" placeholder="Placeholder" required="true"></jp-chips>
   <jp-chips placeholder="Placeholder" required="true"></jp-chips>
   <jp-input label="Input" required="true" />
-  <jp-select label="Select" required="true"></jp-select>  
+  <jp-select label="Select" required="true"></jp-select>
   <jp-toggle label="Toggle" required="true"></jp-toggle>
-  <jp-textarea label="Textarea" required="true" hint=true></jp-textarea>
+  <jp-textarea label="Textarea" required="true" hint="true"></jp-textarea>
   <jp-slider label="Slider" required="true"></jp-slider>
   <jp-range label="Range" required="true"></jp-range>
-  <jp-radio label="Options" {options} required="true"/>
+  <jp-radio label="Options" {options} required="true" />
   <jp-quill label="Quill" value="<p>Blup</p>" required="true"></jp-quill>
-  <div bind:this={el} class="container">
-    
-  </div>
+  <div bind:this={el} class="container"></div>
   <jp-multiselect {options} label="Multiselect" required="true"> </jp-multiselect>
   <jp-file-upload label="Upload a file" required="true" />
   <jp-file-list label="File list" required="true"></jp-file-list>
@@ -113,7 +110,8 @@
   <jp-ckeditor label="CK Editor" value="<p>Blup</p>" required="true"></jp-ckeditor>
   <jp-chips label="Chips" placeholder="Placeholder" required="true"></jp-chips>
   <jp-checkbox label="Checkbox" {options} required="true"></jp-checkbox>
-  <jp-autocomplete options='["One", "Two", "Three"]' label="Autocomplete" required="true"></jp-autocomplete>
+  <jp-autocomplete options="['One', 'Two', 'Three']" label="Autocomplete" required="true"
+  ></jp-autocomplete>
 </div>
 
 <style>
@@ -123,7 +121,7 @@
     gap: 30px;
     width: 100%;
   }
-  .container {  
+  .container {
     position: relative;
     margin: 1rem 0;
   }

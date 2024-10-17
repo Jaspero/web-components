@@ -20,6 +20,7 @@
   import { onMount, createEventDispatcher } from 'svelte';
   import { clickOutside } from '../click-outside';
   import { loadScript } from '../utils/scriptLoader';
+  import locationIcon from '../icons/location.svg?raw';
 
   export let apiKey: string;
   export let value = '';
@@ -61,7 +62,7 @@
   let map;
   let searchInput: HTMLInputElement;
   let coordinates = '';
-  let mapStyle;
+  let mapStyle: string;
 
   const dispatch = createEventDispatcher();
 
@@ -203,7 +204,7 @@
     }
     mapStyle = style;
     openMap = !openMap;
-    if(openMap){
+    if (openMap) {
       searchInput.focus();
     }
   }
@@ -234,7 +235,7 @@
     } catch (error) {
       console.error('Failed to load the Google Maps script', error);
     }
-    if(inputFocused){
+    if (inputFocused) {
       searchInput.focus();
     }
   });
@@ -250,7 +251,9 @@
     <div class="nav">
       <label class="field" class:required>
         {#if label && labelType === 'inside'}
-          <span class="field-label" class:move={inputFocused || value || openMap}>{@html label}</span>
+          <span class="field-label" class:move={inputFocused || value || openMap}
+            >{@html label}</span
+          >
         {/if}
         <input
           class={`searchInput ${labelType === 'outside' || !label ? '' : 'searchInput-padding'}`}
@@ -270,18 +273,7 @@
           on:blur={() => (inputFocused = false)}
         />
         <button class="button" class:active={openMap} on:click|preventDefault={toggleMap}>
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            width="20"
-            height="20"
-            fill="currentColor"
-            class="bi bi-geo-alt-fill"
-            viewBox="0 0 16 16"
-          >
-            <path
-              d="M8 16s6-5.686 6-10A6 6 0 0 0 2 6c0 4.314 6 10 6 10m0-7a3 3 0 1 1 0-6 3 3 0 0 1 0 6"
-            />
-          </svg>
+          {@html locationIcon}
         </button>
       </label>
     </div>
@@ -503,5 +495,4 @@
   .map-field {
     border-radius: 0.25rem;
   }
-
 </style>

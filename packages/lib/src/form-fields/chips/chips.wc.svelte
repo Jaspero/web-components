@@ -65,8 +65,8 @@
 
   $: {
     if (value) {
-      chips = Array.isArray(value) ? value : value.split(',')
-    };
+      chips = Array.isArray(value) ? value : value.split(',');
+    }
   }
 
   $: {
@@ -109,7 +109,7 @@
     }
     attachedInternals.checkValidity();
     attachedInternals.setFormValue(value);
-    dispatch('value', {value: chips});
+    dispatch('value', { value: chips });
   }
 </script>
 
@@ -141,9 +141,15 @@
 <!-- svelte-ignore a11y-click-events-have-key-events -->
 <!-- svelte-ignore a11y-no-static-element-interactions -->
 <div on:click|preventDefault={() => inputEl.focus()}>
-  <label class="jp-chips-field" class:jp-chips-field-disabled={disabled} class:jp-chips-field-required={required}>
+  <label
+    class="jp-chips-field"
+    class:jp-chips-field-disabled={disabled}
+    class:jp-chips-field-required={required}
+  >
     {#if label && labelType == 'inside'}
-      <span class="jp-chips-field-label" class:jp-chips-field-label-move={inputFocused || value}>{@html label}</span>
+      <span class="jp-chips-field-label" class:jp-chips-field-label-move={inputFocused || value}
+        >{@html label}</span
+      >
     {/if}
 
     <div

@@ -9,7 +9,7 @@
   export let month;
   export let pickerYear: number;
   export let monthSelected: number;
-
+  
   $: isOutOfMax = isOutOfMaxBounds(internalMaxDate, pickerYear, index, 1);
   $: isOutOfMin = isOutOfMinBounds(internalMinDate, pickerYear, index, 31);
 

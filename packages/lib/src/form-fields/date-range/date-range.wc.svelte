@@ -30,6 +30,11 @@
     isOutOfMinBounds
   } from './calculate-limits/min-date';
 
+  import calendarIcon from '../../icons/calendar.svg?raw';
+  import dropdownArrowExpandedIcon from '../../icons/dropdown-arrow-expanded.svg?raw';
+  import leftArrowIcon from '../../icons/left-arrow.svg?raw';
+  import rightArrowIcon from '../../icons/right-arrow.svg?raw';
+  import upArrowIcon from '../../icons/up-arrow.svg?raw';
   export let attachedInternals: ElementInternals;
   export let value: string = '';
   export let firstInternalValue: string = '';
@@ -430,20 +435,21 @@
   on:click|preventDefault={toggleMenu}
 >
   {#if label && labelType == 'inside'}
-    <span class="jp-date-range-field-label" class:jp-date-range-field-label-move={openPicker || displayedDateString}>
+    <span
+      class="jp-date-range-field-label"
+      class:jp-date-range-field-label-move={openPicker || displayedDateString}
+    >
       {@html displayLabel}
     </span>
   {/if}
-  <p class={`jp-date-range-field-input ${labelType == 'outside' || !label ? '' : 'jp-date-range-field-input-padding'}`}>
+  <p
+    class={`jp-date-range-field-input ${labelType == 'outside' || !label ? '' : 'jp-date-range-field-input-padding'}`}
+  >
     {displayedDateString}
   </p>
 
   <span class="jp-date-range-field-icon">
-    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512">
-      <path
-        d="M152 24c0-13.3-10.7-24-24-24s-24 10.7-24 24V64H64C28.7 64 0 92.7 0 128v16 48V448c0 35.3 28.7 64 64 64H384c35.3 0 64-28.7 64-64V192 144 128c0-35.3-28.7-64-64-64H344V24c0-13.3-10.7-24-24-24s-24 10.7-24 24V64H152V24zM48 192H400V448c0 8.8-7.2 16-16 16H64c-8.8 0-16-7.2-16-16V192z"
-      />
-    </svg>
+    {@html calendarIcon}
   </span>
 </button>
 
@@ -465,11 +471,7 @@
           on:click|preventDefault={() => (yearSelector = true)}
         >
           <p>{monthMap[pickerMonth]}, {pickerYear}</p>
-          <svg xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 512 512">
-            <path
-              d="M233.4 406.6c12.5 12.5 32.8 12.5 45.3 0l192-192c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L256 338.7 86.6 169.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3l192 192z"
-            />
-          </svg>
+          {@html dropdownArrowExpandedIcon}
         </button>
         <div class="jp-date-range-menu-nav-buttons">
           <button
@@ -478,11 +480,7 @@
             class:jp-date-range-menu-nav-buttons-disabled={Boolean(internalMinMonthCheck)}
             disabled={Boolean(internalMinMonthCheck)}
           >
-            <svg xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 320 512">
-              <path
-                d="M9.4 233.4c-12.5 12.5-12.5 32.8 0 45.3l192 192c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L77.3 256 246.6 86.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0l-192 192z"
-              />
-            </svg>
+            {@html leftArrowIcon}
           </button>
           <button
             type="button"
@@ -490,11 +488,7 @@
             class:jp-date-range-menu-nav-buttons-disabled={Boolean(internalMaxMonthCheck)}
             disabled={Boolean(internalMaxMonthCheck)}
           >
-            <svg xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 320 512">
-              <path
-                d="M310.6 233.4c12.5 12.5 12.5 32.8 0 45.3l-192 192c-12.5 12.5-32.8 12.5-45.3 0s-12.5-32.8 0-45.3L242.7 256 73.4 86.6c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0l192 192z"
-              />
-            </svg>
+            {@html rightArrowIcon}
           </button>
         </div>
       </div>
@@ -550,36 +544,28 @@
                   pickerYearRows[pickerYearRows.length - 1].length - 1
                 ]}
               </p>
-              <svg xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 512 512">
-                <path
-                  d="M233.4 105.4c12.5-12.5 32.8-12.5 45.3 0l192 192c12.5 12.5 12.5 32.8 0 45.3s-32.8 12.5-45.3 0L256 173.3 86.6 342.6c-12.5 12.5-32.8 12.5-45.3 0s-12.5-32.8 0-45.3l192-192z"
-                />
-              </svg>
+              {@html upArrowIcon}
             </button>
             <div class="jp-date-range-menu-year-nav-buttons">
               <button
                 type="button"
                 on:click|preventDefault={() => yearPickerIndex--}
-                class:jp-date-range-menu-year-nav-buttons-disabled={Boolean(internalMinYearPageCheck)}
+                class:jp-date-range-menu-year-nav-buttons-disabled={Boolean(
+                  internalMinYearPageCheck
+                )}
                 disabled={Boolean(internalMinYearPageCheck)}
               >
-                <svg xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 320 512">
-                  <path
-                    d="M9.4 233.4c-12.5 12.5-12.5 32.8 0 45.3l192 192c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L77.3 256 246.6 86.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0l-192 192z"
-                  />
-                </svg>
+                {@html leftArrowIcon}
               </button>
               <button
                 type="button"
                 on:click|preventDefault={() => yearPickerIndex++}
-                class:jp-date-range-menu-year-nav-buttons-disabled={Boolean(internalMaxYearPageCheck)}
+                class:jp-date-range-menu-year-nav-buttons-disabled={Boolean(
+                  internalMaxYearPageCheck
+                )}
                 disabled={Boolean(internalMaxYearPageCheck)}
               >
-                <svg xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 320 512">
-                  <path
-                    d="M310.6 233.4c12.5 12.5 12.5 32.8 0 45.3l-192 192c-12.5 12.5-32.8 12.5-45.3 0s-12.5-32.8 0-45.3L242.7 256 73.4 86.6c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0l192 192z"
-                  />
-                </svg>
+                {@html rightArrowIcon}
               </button>
             </div>
           </div>
@@ -617,11 +603,7 @@
               }}
             >
               <p>{pickerYear}</p>
-              <svg xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 512 512">
-                <path
-                  d="M233.4 406.6c12.5 12.5 32.8 12.5 45.3 0l192-192c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L256 338.7 86.6 169.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3l192 192z"
-                />
-              </svg>
+              {@html upArrowIcon}
             </button>
             <div class="jp-date-range-menu-month-nav-buttons">
               <button
@@ -630,11 +612,7 @@
                 class:jp-date-range-menu-month-nav-buttons-disabled={Boolean(internalMinYearCheck)}
                 disabled={Boolean(internalMinYearCheck)}
               >
-                <svg xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 320 512">
-                  <path
-                    d="M9.4 233.4c-12.5 12.5-12.5 32.8 0 45.3l192 192c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L77.3 256 246.6 86.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0l-192 192z"
-                  />
-                </svg>
+                {@html leftArrowIcon}
               </button>
               <button
                 type="button"
@@ -642,11 +620,7 @@
                 class:jp-date-range-menu-month-nav-buttons-disabled={Boolean(internalMaxYearCheck)}
                 disabled={Boolean(internalMaxYearCheck)}
               >
-                <svg xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 320 512">
-                  <path
-                    d="M310.6 233.4c12.5 12.5 12.5 32.8 0 45.3l-192 192c-12.5 12.5-32.8 12.5-45.3 0s-12.5-32.8 0-45.3L242.7 256 73.4 86.6c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0l192 192z"
-                  />
-                </svg>
+                {@html rightArrowIcon}
               </button>
             </div>
           </div>

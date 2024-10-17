@@ -16,7 +16,7 @@
 />
 
 <script lang="ts">
-  import {createEventDispatcher, onMount} from 'svelte';
+  import { createEventDispatcher, onMount } from 'svelte';
   import './radio.wc.pcss';
 
   export let attachedInternals: ElementInternals;
@@ -63,11 +63,11 @@
 </script>
 
 {#if label}
-    <div class="jp-radio-label">
-      {@html displayLabel}
-    </div>
-  {/if}
-  <div class={`jp-radio-box ${inline ? 'jp-radio-box-inline' : ''}`} >
+  <div class="jp-radio-label">
+    {@html displayLabel}
+  </div>
+{/if}
+<div class={`jp-radio-box ${inline ? 'jp-radio-box-inline' : ''}`}>
   {#each options as option}
     <label class="jp-radio-label" class:jp-radio-label-disabled={option.disabled}>
       <input
