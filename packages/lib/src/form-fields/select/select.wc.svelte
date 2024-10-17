@@ -321,7 +321,15 @@
     </span>
   {/if}
 
-  <input tabindex="-1" bind:this={inputEl} bind:value {id} {name} {required} autocomplete="{autocomplete || name}" />
+  <input
+    tabindex="-1"
+    bind:this={inputEl}
+    bind:value
+    {id}
+    {name}
+    {required}
+    autocomplete={autocomplete || name}
+  />
 </div>
 
 {#if open}

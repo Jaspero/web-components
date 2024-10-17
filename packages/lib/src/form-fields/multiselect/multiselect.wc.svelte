@@ -20,13 +20,19 @@
   import { createEventDispatcher, onMount } from 'svelte';
   import './multiselect.wc.pcss';
   import clearIcon from '../../icons/clear.svg?raw';
-  import ArrowRotate from "../../icons/arrow-rotate.svelte";
+  import ArrowRotate from '../../icons/arrow-rotate.svelte';
   import checkmarkIcon from '../../icons/checkmark.svg?raw';
 
   export let attachedInternals: ElementInternals;
   export let minSelects = 0;
   export let maxSelects: number | null = null;
-  export let options: Array<{ label?: string; value: string; selected?: boolean; selectedOrder?: number; disabled?: boolean }> = [];
+  export let options: Array<{
+    label?: string;
+    value: string;
+    selected?: boolean;
+    selectedOrder?: number;
+    disabled?: boolean;
+  }> = [];
   export let disabled = false;
   export let required = false;
   export let hint = '';
@@ -38,10 +44,11 @@
   export let label = '';
   export let labelType: 'inside' | 'outside' = 'inside';
   export let showClear = false;
-  export const getValue = () => options
-    .filter((el) => el.selected)
-    .sort((a, b) => a.selectedOrder - b.selectedOrder)
-    .map((el) => el.value);
+  export const getValue = () =>
+    options
+      .filter((el) => el.selected)
+      .sort((a, b) => a.selectedOrder - b.selectedOrder)
+      .map((el) => el.value);
 
   export let validationMessages: {
     required?: string;
@@ -78,7 +85,7 @@
 
   $: if (Array.isArray(options)) {
     const selects = options.filter((el) => el.selected).length;
-    
+
     if (selects == 0 && required) {
       attachedInternals.setValidity(
         { customError: true },
@@ -109,14 +116,14 @@
       .filter((el) => el.selected)
       .sort((a, b) => a.selectedOrder - b.selectedOrder);
 
-    internalValue = sortedValue
-      .map((el) => el.value)
-      .join(',');
+    internalValue = sortedValue.map((el) => el.value).join(',');
 
-    displayValue = sortedValue
-      .map((el) => (el.label ? el.label : el.value));
+    displayValue = sortedValue.map((el) => (el.label ? el.label : el.value));
 
-    dispatch('value', sortedValue.map((el) => el.value));
+    dispatch(
+      'value',
+      sortedValue.map((el) => el.value)
+    );
   }
 
   function clearSelection() {
@@ -144,7 +151,7 @@
 
     if (typeof value == 'string') {
       const values = value.split(',');
-      
+
       values.forEach((el, index) => {
         const ref = options[options.findIndex((o) => o.value == el)];
 
@@ -156,7 +163,7 @@
     } else {
       value.forEach((el, index) => {
         const ref = options[options.findIndex((o) => o.value == el)];
-        
+
         ref.selected = true;
         ref.selectedOrder = index;
       });
@@ -231,7 +238,7 @@
 
   function handleKeydown(event: KeyboardEvent) {
     const currentIndex = optionElements.findIndex((el) => el === document.activeElement);
-    
+
     let nextIndex: number;
 
     if (open) {
@@ -332,7 +339,7 @@
   onMount(() => {
     if (typeof options == 'string') {
       options = JSON.parse(options);
-    };
+    }
 
     if (!maxSelects) {
       maxSelects = options.length;
@@ -357,12 +364,21 @@
 {/if}
 <div class="jp-multiselect-wrapper" class:jp-multiselect-has-hint={hint}>
   {#if showClear && hasSelectedOption}
-  <button class="jp-multiselect-clear" on:click={clearSelection}>
+    <button class="jp-multiselect-clear" on:click={clearSelection}>
       {@html clearIcon}
     </button>
   {/if}
 
-  <input class="jp-multiselect-input" class:jp-multiselect-input-required={required} tabindex="-1" bind:value={internalValue} {required} {id} {name} autocomplete="{autocomplete || name}" />
+  <input
+    class="jp-multiselect-input"
+    class:jp-multiselect-input-required={required}
+    tabindex="-1"
+    bind:value={internalValue}
+    {required}
+    {id}
+    {name}
+    autocomplete={autocomplete || name}
+  />
 
   <button
     type="button"
@@ -375,7 +391,10 @@
     on:keydown={handleKeydown}
   >
     {#if label && labelType == 'inside'}
-      <span class="jp-multiselect-select-label" class:jp-multiselect-select-label-move={internalValue || open}>
+      <span
+        class="jp-multiselect-select-label"
+        class:jp-multiselect-select-label-move={internalValue || open}
+      >
         {@html label}
       </span>
     {/if}
@@ -387,46 +406,46 @@
       {displayValue || ''}
     </span>
 
-<ArrowRotate {open} />
-</button>
+    <ArrowRotate {open} />
+  </button>
 
   {#if hint}
-  <span class="jp-multiselect-select-hint">
-    {@html hint}
-  </span>
-{/if}
+    <span class="jp-multiselect-select-hint">
+      {@html hint}
+    </span>
+  {/if}
 
-{#if open}
-  <div class="jp-multiselect-overlay">
-    <!-- svelte-ignore a11y-no-static-element-interactions -->
-    <div
-      class="jp-multiselect-menu"
-      use:clickOutside
-      on:click_outside={() => (open = false)}
-      style={menuStyle}
-      on:keydown={handleKeydown}
-    >
-      {#each options as option, index (option)}
-        <button
-          type="button"
-          class="jp-multiselect-menu-button"
-          class:jp-multiselect-menu-button-selected={option.selected}
-          class:jp-multiselect-menu-button-disabled={option.disabled}
-          disabled={option.disabled}
-          bind:this={optionElements[index]}
-          on:click|preventDefault={() => {
-            option.selected = !option.selected;
+  {#if open}
+    <div class="jp-multiselect-overlay">
+      <!-- svelte-ignore a11y-no-static-element-interactions -->
+      <div
+        class="jp-multiselect-menu"
+        use:clickOutside
+        on:click_outside={() => (open = false)}
+        style={menuStyle}
+        on:keydown={handleKeydown}
+      >
+        {#each options as option, index (option)}
+          <button
+            type="button"
+            class="jp-multiselect-menu-button"
+            class:jp-multiselect-menu-button-selected={option.selected}
+            class:jp-multiselect-menu-button-disabled={option.disabled}
+            disabled={option.disabled}
+            bind:this={optionElements[index]}
+            on:click|preventDefault={() => {
+              option.selected = !option.selected;
 
-            if (option.selected) {
-              option.selectedOrder = selectedItems++;
-            } else {
-              option.selectedOrder = null;
-            }
-          }}
-        >
-          <span>{option.label ? option.label : option.value}</span>
+              if (option.selected) {
+                option.selectedOrder = selectedItems++;
+              } else {
+                option.selectedOrder = null;
+              }
+            }}
+          >
+            <span>{option.label ? option.label : option.value}</span>
 
-          {#if option.selected}
+            {#if option.selected}
               {@html checkmarkIcon}
             {/if}
           </button>
@@ -435,4 +454,3 @@
     </div>
   {/if}
 </div>
-

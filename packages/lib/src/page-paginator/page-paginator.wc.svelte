@@ -7,9 +7,9 @@
 
 <script lang="ts">
   import { createEventDispatcher } from 'svelte';
-  
+
   import prevPageIcon from '../../../lib/src/icons/prevPage.svg?raw';
-  import nextPageIcon from '../../../lib/src/icons/nextPage.svg?raw'; 
+  import nextPageIcon from '../../../lib/src/icons/nextPage.svg?raw';
   export let length: number = 10;
   export let pageIndex: number = 1;
   let center = 4;

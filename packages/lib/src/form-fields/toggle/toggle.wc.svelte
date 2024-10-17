@@ -56,7 +56,7 @@
 </script>
 
 {#if label}
-  <span class="jp-toggle-label" class:jp-toggle-label-small={size==='small'}
+  <span class="jp-toggle-label" class:jp-toggle-label-small={size === 'small'}
     >{@html displayLabel}</span
   >
 {/if}

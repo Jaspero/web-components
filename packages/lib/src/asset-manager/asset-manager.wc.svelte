@@ -130,7 +130,11 @@
 
         if (shownFiles?.length) {
           // @ts-ignore
-          items = items.filter(item => item.type === 'folder' || shownFiles.some(file => (item as Asset).contentType.startsWith(file)));
+          items = items.filter(
+            (item) =>
+              item.type === 'folder' ||
+              shownFiles.some((file) => (item as Asset).contentType.startsWith(file))
+          );
         }
       })
       .finally(() => {
@@ -193,7 +197,7 @@
           title="Add Files"
           on:click|preventDefault={() => browseFilesEl.click()}
         >
-        {@html addFilesIcon}
+          {@html addFilesIcon}
         </button>
       </div>
     </header>
@@ -251,7 +255,6 @@
 />
 
 <style lang="postcss">
-
   * {
     box-sizing: border-box;
   }
@@ -336,7 +339,7 @@
     height: 40px;
     padding: 0 16px;
     font-weight: bold;
-    background-color: #E66439;
+    background-color: #e66439;
     color: white;
     border: none;
     border-radius: 12px;
@@ -345,19 +348,19 @@
   }
 
   footer button:disabled {
-    opacity: .5;
+    opacity: 0.5;
     pointer-events: none;
   }
 
   footer button:active {
-    transform: scale(.95);
+    transform: scale(0.95);
   }
 
   .add-folder-submit {
     height: 32px;
     padding: 0 12px;
     font-weight: bold;
-    background-color: #E66439;
+    background-color: #e66439;
     color: white;
     border: none;
     border-radius: 8px;
@@ -367,12 +370,12 @@
   }
 
   .add-folder-submit:disabled {
-    opacity: .5;
+    opacity: 0.5;
     pointer-events: none;
   }
 
   .add-folder-submit:active {
-    transform: scale(.95);
+    transform: scale(0.95);
   }
 
   .drop-here {
@@ -391,7 +394,7 @@
   }
 
   .add-folder-form {
-    padding: 20px
+    padding: 20px;
   }
 
   .add-folder-input {
@@ -404,7 +407,7 @@
   }
 
   .add-folder-input input {
-    border: 1px solid rgba(0,0,0,.08);
+    border: 1px solid rgba(0, 0, 0, 0.08);
     height: 40px;
     padding: 0 12px;
     border-radius: 8px;
@@ -486,7 +489,7 @@
   }
 
   .asset-button.selected {
-    border: 1px solid #E66439;
+    border: 1px solid #e66439;
   }
 
   :global(.asset-button:hover .file) {
@@ -534,8 +537,8 @@
     border-radius: 50%;
     border: 9px solid var(--primary-color);
     animation:
-            spinner-bulqg1 0.8s infinite linear alternate,
-            spinner-oaa3wk 1.6s infinite linear;
+      spinner-bulqg1 0.8s infinite linear alternate,
+      spinner-oaa3wk 1.6s infinite linear;
   }
 
   @keyframes spinner-bulqg1 {

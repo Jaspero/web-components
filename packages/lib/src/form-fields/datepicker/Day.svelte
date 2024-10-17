@@ -42,13 +42,17 @@
     <button
       type="button"
       class:gray={col.gray}
-      class:active={selectedDates.some((e) => e.year === col.year && e.month === col.month && e.day === col.day)}
+      class:active={selectedDates.some(
+        (e) => e.year === col.year && e.month === col.month && e.day === col.day
+      )}
       on:click|preventDefault={() => {
         dateSelected = col.day;
         yearSelected = col.year;
         monthSelected = col.month;
         date = { year: col.year, month: col.month, day: col.day };
-        const index = selectedDates.findIndex((e) => e.year === col.year && e.month === col.month && e.day === col.day);
+        const index = selectedDates.findIndex(
+          (e) => e.year === col.year && e.month === col.month && e.day === col.day
+        );
         if (index !== -1) {
           isDatePicked = false;
           selectedDates = [...selectedDates.slice(0, index), ...selectedDates.slice(index + 1)];

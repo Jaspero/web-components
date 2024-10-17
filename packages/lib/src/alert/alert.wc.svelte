@@ -37,7 +37,7 @@
         class="alert-container-header-close"
         on:click|preventDefault={() => dispatch('close')}
       >
-      {@html clearIcon}
+        {@html clearIcon}
       </button>
     </div>
     {#if message}
@@ -98,7 +98,7 @@
 
   .alert-container-header-icon {
     font-size: 1.5rem;
-    margin-right: .5rem;
+    margin-right: 0.5rem;
   }
 
   .alert-container-header-title {

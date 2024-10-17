@@ -1,168 +1,167 @@
 @import url('https://fonts.googleapis.com/css2?family=Sen:wght@400;700&display=swap');
 .jp-input {
+  position: relative;
 
-	position: relative;
+  &-label {
+    margin-top: 0.5rem;
+    margin-bottom: 0.125rem;
+    font-size: 0.875rem;
+  }
 
-	&-label {
-		margin-top: 0.5rem;
-		margin-bottom: 0.125rem;
-		font-size: 0.875rem;
-	}
+  &-field {
+    font-size: 0.75rem;
+    line-height: 1rem;
+    font-family: serif;
+    display: flex;
+    justify-content: space-between;
+    align-items: end;
+    text-align: left;
+    box-sizing: border-box;
+    width: 100%;
+    height: 3rem;
+    position: relative;
+    user-select: none;
+    gap: 0.75rem;
+    color: var(--text-primary);
+    background-color: var(--background-primary);
+    border: 1px solid var(--border-primary);
+    border-radius: 0.25rem;
 
-	&-field {
-		font-size: 0.75rem;
-		line-height: 1rem;
-		font-family: serif;
-		display:flex;
-		justify-content: space-between;
-		align-items: end;
-		text-align: left;
-		box-sizing: border-box;
-		width: 100%;
-		height: 3rem;
-		position: relative;
-		user-select: none;
-		gap: 0.75rem;
-		color: var(--text-primary);
-		background-color: var(--background-primary);
-		border: 1px solid var(--border-primary);
-		border-radius: 0.25rem;
+    &-disabled {
+      pointer-events: none;
+      opacity: 0.5;
+    }
 
-		&-disabled {
-			pointer-events: none;
-			opacity: 0.5;
-		}
+    &:focus-within {
+      border-color: var(--primary-color);
+      box-shadow: inset 0 0 0 1px var(--primary-color);
+    }
 
-		&:focus-within {
-			border-color: var(--primary-color);
-			box-shadow: inset 0 0 0 1px var(--primary-color);
-		}
+    &-label {
+      position: absolute;
+      top: 50%;
+      left: 0.75rem;
+      transform: translateY(-50%);
+      font-size: 1rem;
+      transition:
+        transform 0.3s,
+        top 0.3s,
+        font-size 0.3s;
+    }
 
-		&-label {
-			position: absolute;
-			top: 50%;
-			left: 0.75rem;
-			transform: translateY(-50%);
-			font-size: 1rem;
-			transition:
-				transform 0.3s,
-				top 0.3s,
-				font-size 0.3s;
-		}
+    &-move {
+      top: 0.25rem;
+      transform: translateY(0);
+      font-size: 0.75rem;
+    }
 
-		&-move {
-			top: 0.25rem;
-			transform: translateY(0);
-			font-size: 0.75rem;
-		}
+    &-prefix {
+      flex: 0 0 auto;
+      height: 1rem;
+      font-size: 1rem;
+      padding: 0 0 0.5rem 0.75rem;
+      left: 0.75rem;
+      border: none;
+      outline: none;
+      background: transparent;
 
-		&-prefix {
-			flex: 0 0 auto;
-			height: 1rem;
-			font-size: 1rem;
-			padding: 0 0 0.5rem 0.75rem;
-			left: 0.75rem;
-			border: none;
-			outline: none;
-			background: transparent;
+      &-move {
+        transform: translateY(-0.5rem);
+      }
+    }
 
-			&-move{
-				transform: translateY(-0.5rem);
-			}
-		}
+    &-suffix {
+      flex: 0 0 auto;
+      height: 1rem;
+      width: fit-content;
+      font-size: 1rem;
+      padding: 0 0.75rem 0.5rem 0;
+      border: none;
+      outline: none;
+      background: transparent;
 
-		&-suffix {
-			flex: 0 0 auto;
-			height: 1rem;	
-			width: fit-content;
-			font-size: 1rem;
-			padding: 0 0.75rem 0.5rem 0	;
-			border: none;
-			outline: none;
-			background: transparent;
+      &-move {
+        transform: translateY(-0.5rem);
+      }
+    }
 
-			&-move{
-				transform: translateY(-0.5rem);
-			}
-		}
+    &-move {
+      input::placeholder {
+        opacity: 1;
+      }
+    }
 
-		&-move {
-			input::placeholder {
-				opacity: 1;
-			}
-		}
+    &-hint {
+      position: absolute;
+      top: 100%;
+      left: 0;
+      width: 100%;
+      height: 1.25rem;
+      line-height: 1.25rem;
+      font-size: 0.75rem;
+      padding: 0 0.75rem;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      color: var(--text-secondary);
 
-		&-hint {
-			position: absolute;
-			top: 100%;
-			left: 0;
-			width: 100%;
-			height: 1.25rem;
-			line-height: 1.25rem;
-			font-size: 0.75rem;
-			padding: 0 0.75rem;
-			white-space: nowrap;
-			overflow: hidden;
-			text-overflow: ellipsis;
-			color: var(--text-secondary);
+      &:hover {
+        z-index: 255;
+        overflow: unset;
+      }
 
-			&:hover {
-				z-index: 255;
-				overflow: unset;
-			}
-		
-			&:has(input[type='color']) {
-				padding: 1.5rem 0.5rem 0.5rem;
-				justify-content: flex-start;
-			}
-		}
+      &:has(input[type='color']) {
+        padding: 1.5rem 0.5rem 0.5rem;
+        justify-content: flex-start;
+      }
+    }
 
-		&-color-picker {
-			display: block;
-			width: 24px;
-			height: 12px;
-			border-radius: 0.25rem;
-			border: 1px solid rgba(0, 0, 0, 0.12);
-		}
+    &-color-picker {
+      display: block;
+      width: 24px;
+      height: 12px;
+      border-radius: 0.25rem;
+      border: 1px solid rgba(0, 0, 0, 0.12);
+    }
 
-		input {
-			box-sizing: border-box;
-			flex: auto;
-			height: 1.5rem;
-			padding: 0 0.75rem 0.5rem 0.75rem;
-			font-size: 1rem;
-			width:100%;
-			white-space: nowrap;
-			text-overflow: ellipsis;
-			border: none;
-			outline: none;
-			border-radius: 0.25rem;
-			background: transparent;
+    input {
+      box-sizing: border-box;
+      flex: auto;
+      height: 1.5rem;
+      padding: 0 0.75rem 0.5rem 0.75rem;
+      font-size: 1rem;
+      width: 100%;
+      white-space: nowrap;
+      text-overflow: ellipsis;
+      border: none;
+      outline: none;
+      border-radius: 0.25rem;
+      background: transparent;
 
-			&[type='color'] {
-				position: absolute;
-				visibility: hidden;
-				opacity: 0;
-			}
+      &[type='color'] {
+        position: absolute;
+        visibility: hidden;
+        opacity: 0;
+      }
 
-			&[class="jp-input-field-move-left"]{
-				padding-left:0;
-				padding-right:0;
-			}
+      &[class='jp-input-field-move-left'] {
+        padding-left: 0;
+        padding-right: 0;
+      }
 
-			&.jp-input-field-padding {
-				padding: 0 0.75rem 0.5rem 0.75rem;
-				transform: translateY(-0.5rem);
-			}
+      &.jp-input-field-padding {
+        padding: 0 0.75rem 0.5rem 0.75rem;
+        transform: translateY(-0.5rem);
+      }
 
-			&::placeholder {
-				opacity: 0;
-				transition: opacity 0.3s;
-			}
-		}
-	}
+      &::placeholder {
+        opacity: 0;
+        transition: opacity 0.3s;
+      }
+    }
+  }
 
-	&-has-hint {
-		margin-bottom: 1.25rem;
-	}
+  &-has-hint {
+    margin-bottom: 1.25rem;
+  }
 }

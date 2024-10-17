@@ -100,8 +100,8 @@
   }
 
   onMount(() => {
-    updateHeight()
-  })
+    updateHeight();
+  });
 
   function updateHeight() {
     if (textareaEl) {
@@ -117,9 +117,16 @@
   </div>
 {/if}
 <div class:jp-textarea-has-hint={hint}>
-  <label class="jp-textarea-field" class:jp-textarea-field-disabled={disabled || readonly} class:jp-textarea-field-required={required}>
+  <label
+    class="jp-textarea-field"
+    class:jp-textarea-field-disabled={disabled || readonly}
+    class:jp-textarea-field-required={required}
+  >
     {#if label && labelType == 'inside'}
-      <span class="jp-textarea-field-label" class:jp-textarea-field-label-move={inputFocused || value}>{@html label}</span>
+      <span
+        class="jp-textarea-field-label"
+        class:jp-textarea-field-label-move={inputFocused || value}>{@html label}</span
+      >
     {/if}
 
     <textarea
@@ -141,8 +148,8 @@
       on:focus={() => (inputFocused = true)}
       on:blur={() => (inputFocused = false)}
       on:input={(event) => {
-            updateHeight();
-            dispatch('input', event);
+        updateHeight();
+        dispatch('input', event);
       }}
     ></textarea>
   </label>

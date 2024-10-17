@@ -127,7 +127,11 @@
 <div class="jp-date-range-table-cell">
   <button
     type="button"
-    class:jp-date-range-table-cell-gray={col.gray && !isActive && !isOnlyValue && !isLastValue && !isFirstValue}
+    class:jp-date-range-table-cell-gray={col.gray &&
+      !isActive &&
+      !isOnlyValue &&
+      !isLastValue &&
+      !isFirstValue}
     class:jp-date-range-table-cell-active={isActive && !isOnlyValue}
     class:jp-date-range-table-cell-firstValue={isFirstValue && !isOnlyValue}
     class:jp-date-range-table-cell-lastValue={isLastValue && !isOnlyValue}

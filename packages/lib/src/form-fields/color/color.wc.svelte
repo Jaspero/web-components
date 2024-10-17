@@ -18,30 +18,30 @@
 <script lang="ts">
   import { createEventDispatcher, onMount } from 'svelte';
   import './color.wc.pcss';
-  
+
   export let attachedInternals: ElementInternals;
   export let id;
   export let name;
   export let value = 'e65100';
-  export let label = ''
+  export let label = '';
   export let disabled = false;
   export let required = false;
 
   export const getValue = () => value;
 
   $: {
-    attachedInternals.setFormValue(value)
-    dispatch('value', {value})
+    attachedInternals.setFormValue(value);
+    dispatch('value', { value });
   }
 
   const dispatch = createEventDispatcher();
   $: displayLabel = required ? `${label} *` : label;
 </script>
-  {#if label}
-    <!-- svelte-ignore a11y-label-has-associated-control -->
-    <div class="jp-color-label">
-      {@html displayLabel}
-    </div>
-  {/if}
-  <input type="color" {id} {name} {disabled} bind:value />
 
+{#if label}
+  <!-- svelte-ignore a11y-label-has-associated-control -->
+  <div class="jp-color-label">
+    {@html displayLabel}
+  </div>
+{/if}
+<input type="color" {id} {name} {disabled} bind:value />
