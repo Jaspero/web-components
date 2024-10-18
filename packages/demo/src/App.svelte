@@ -11,14 +11,16 @@
   import RangeDemo from './RangeDemo.svelte';
   import ChipsDemo from './ChipsDemo.svelte';
   import MultiSearchDemo from './MultiSearchDemo.svelte';
+  import AssetManagerDemo from './AssetManagerDemo.svelte';
 </script>
 
-<MultiSearchDemo />
+<AssetManagerDemo />
+<!-- <MultiSearchDemo /> -->
 <!--<ChipsDemo/>-->
 <!-- <AsyncTableDemo />-->
 <!-- <MultiSelectDemo /> -->
 <!-- <FileListDemo /> -->
-<Demos />
+<!-- <Demos /> -->
 <!-- <InputDemo /> -->
 <!-- <ImageGalleryDemo /> -->
 <!-- <DateRangeDemo /> -->

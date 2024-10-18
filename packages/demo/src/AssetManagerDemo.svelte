@@ -10,8 +10,8 @@
     item.service = new AMService();
     item.rootPath = 'landing-pages';
 
-    item.selectable = 'single';
-    // item.selectable = 'multiple';
+    //item.selectable = 'single';
+    item.selectable = 'multiple';
 
     item.addEventListener('selected', (event) => {
       console.log('event', event);
