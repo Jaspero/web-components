@@ -32,6 +32,8 @@
   export let shownFiles: string[];
   export let service: AssetManagerService;
   export let selectable: '' | 'single' | 'multiple' = '';
+  export let minSelected: number;
+  export let maxSelected: number;
 
   const dispatch = createEventDispatcher();
 
@@ -44,12 +46,16 @@
   let folderName = '';
   let folderDialog = false;
   let folderNamePattern = '[a-z_\\-]{3,}';
-
+  
   export function clearSelection() {
     selectedItems = {};
   }
 
   async function removeFile(index: number, id: string) {
+    if (selectedItems[id]) {
+      delete selectedItems[id];
+      selectedItems = { ...selectedItems };
+    }
     items = items.filter((item) => item.id !== id);
   }
 
@@ -123,6 +129,14 @@
   }
 
   function confirmSelection() {
+    if (Object.keys(selectedItems).length < minSelected){
+      console.log("Please select a file first.");
+      return;
+    }
+    if (Object.keys(selectedItems).length >= maxSelected) {
+      console.log(`Too many files have been selected. The maximum allowed is ${maxSelected}.`);
+      return;
+    }
     const selection = Object.values(selectedItems);
     dispatch('selected', selectable === 'single' ? selection[0] : selection);
   }
@@ -150,6 +164,11 @@
   function handleClickOutside(event: MouseEvent) {
   const clickedElement = event.target as HTMLElement;
   const clickedOnAsset = clickedElement.closest('.asset-button');
+  const clickedOnConfirm = clickedElement.closest('button');
+
+  if(clickedOnConfirm && Object.keys(selectedItems).length >= maxSelected){
+    return;
+  }
 
   if (!clickedOnAsset) {
     clearSelection();
