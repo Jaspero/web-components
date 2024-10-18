@@ -1,4 +1,4 @@
-<script>
+<script lang="ts">
   import '../../../../dist/range.wc';
   import '../../../../dist/range.css';
 </script>

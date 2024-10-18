@@ -12,9 +12,32 @@
   import ChipsDemo from './FormFieldDemos/ChipsDemo.svelte';
   import MultiSearchDemo from './FormFieldDemos/MultiSearchDemo.svelte';
   import SelectDemo from './FormFieldDemos/SelectDemo.svelte';
+  import AssetManagerDemo from './AssetManagerDemo.svelte';
+  import AutocompleteDemo from './FormFieldDemos/AutocompleteDemo.svelte';
+  import CheckboxDemo from './FormFieldDemos/CheckboxDemo.svelte';
+  import ColorDemo from './FormFieldDemos/ColorDemo.svelte';
+  import DatepickerDemo from './FormFieldDemos/DatepickerDemo.svelte';
+  import FileUploadDemo from './FormFieldDemos/FileUploadDemo.svelte';
+  import QuillDemo from './FormFieldDemos/QuillDemo.svelte';
+  import RadioDemo from './FormFieldDemos/RadioDemo.svelte';
 </script>
 
-<form>
-  <CkEditorDemo />
-  <button type="submit">Submit</button>
-</form>
+  <!--<AutocompleteDemo />-->
+  <!--<CheckboxDemo /> -->
+  <!--<ChipsDemo /> -->
+  <!--<CkEditorDemo /> -->
+  <!--<ColorDemo /> -->
+  <!--<DateRangeDemo /> -->
+  <!--<DatepickerDemo /> -->
+  <!--<FileListDemo />-->
+ <!--<FileUploadDemo /> -->
+  <!--<InputDemo />-->
+  <!--<MultiSearchDemo />-->
+  <!--<MultiSelectDemo />-->
+  <!--<QuillDemo /> -->
+  <RadioDemo />
+  <!--<RangeDemo />-->
+  <!--<SelectDemo />-->
+  <!--<AssetManagerDemo />-->
+  <!--<AsyncTableDemo />-->
+  <!--<ImageGalleryDemo />-->
