@@ -86,8 +86,6 @@
     if (typeof options == 'string') {
       options = JSON.parse(options);
     }
-
-    maxSelects = options.length;
   });
 </script>
 
