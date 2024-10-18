@@ -12,12 +12,13 @@
   ];
 </script>
 <form>
-    <h1>first two options are diabled</h1>
+    <!--first two options are diabled</h1> -->
     <!--Should isolate checkboxes if testing limits because they share values -->
-    <jp-checkbox {options} label="Checkbox"></jp-checkbox>
-    <jp-checkbox {options} labelType="outside" label="Checkbox outside label"></jp-checkbox>
-    <jp-checkbox {options} label="Checkbox maxSelect 3" maxSelects=3></jp-checkbox>
-    <jp-checkbox {options} label="Checkbox minSelect 2" minSelects=2></jp-checkbox>
+    <jp-checkbox {options} label="Checkbox" />
+    <jp-checkbox {options} label="Checkbox required"  required=true/>
+    <jp-checkbox {options} labelType="outside" label="Checkbox outside label" />
+    <jp-checkbox {options} label="Checkbox maxSelect 3" maxSelects=3 />
+    <jp-checkbox {options} label="Checkbox minSelect 2" minSelects=2 />
 
 <button type="submit">submit</button>
 </form>

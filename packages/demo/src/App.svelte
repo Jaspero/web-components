@@ -20,24 +20,31 @@
   import FileUploadDemo from './FormFieldDemos/FileUploadDemo.svelte';
   import QuillDemo from './FormFieldDemos/QuillDemo.svelte';
   import RadioDemo from './FormFieldDemos/RadioDemo.svelte';
+  import SliderDemo from './FormFieldDemos/SliderDemo.svelte';
+  import Textarea from './FormFieldDemos/TextareaDemo.svelte';
+  import TextareaDemo from './FormFieldDemos/TextareaDemo.svelte';
+  import ToggleDemo from './FormFieldDemos/ToggleDemo.svelte';
 </script>
 
-  <!--<AutocompleteDemo />-->
-  <!--<CheckboxDemo /> -->
-  <!--<ChipsDemo /> -->
-  <!--<CkEditorDemo /> -->
-  <!--<ColorDemo /> -->
-  <!--<DateRangeDemo /> -->
-  <!--<DatepickerDemo /> -->
-  <!--<FileListDemo />-->
- <!--<FileUploadDemo /> -->
-  <!--<InputDemo />-->
-  <!--<MultiSearchDemo />-->
-  <!--<MultiSelectDemo />-->
-  <!--<QuillDemo /> -->
-  <RadioDemo />
-  <!--<RangeDemo />-->
-  <!--<SelectDemo />-->
-  <!--<AssetManagerDemo />-->
-  <!--<AsyncTableDemo />-->
-  <!--<ImageGalleryDemo />-->
+<!--<AutocompleteDemo />-->
+<!--<CheckboxDemo /> -->
+<!--<ChipsDemo /> -->
+<!--<CkEditorDemo /> -->
+<!--<ColorDemo /> -->
+<!--<DateRangeDemo /> -->
+<!--<DatepickerDemo /> -->
+<!--<FileListDemo />-->
+<!-- <FileUploadDemo />-->
+<!--<InputDemo />-->
+<!--<MultiSearchDemo />-->
+<!--<MultiSelectDemo />-->
+<!--<QuillDemo /> -->
+<!--<RadioDemo /> -->
+<!--<RangeDemo />-->
+<!-- <SelectDemo /> -->
+<!-- <SliderDemo /> -->
+<!-- <TextareaDemo /> -->
+ <ToggleDemo />
+<!--<AssetManagerDemo />-->
+<!--<AsyncTableDemo />-->
+<!--<ImageGalleryDemo />-->
