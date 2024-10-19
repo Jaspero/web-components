@@ -26,6 +26,7 @@
   import '../../../dist/file-upload.css';
   import '../../../dist/file-list.wc';
   import '../../../dist/datepicker.wc';
+  import '../../../dist/datepicker.css';
   import '../../../dist/date-range.wc';
   import '../../../dist/date-range.css';
   import '../../../dist/color.wc';

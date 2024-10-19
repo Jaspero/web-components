@@ -3,11 +3,11 @@
   import { isOutOfMinBounds } from './is-out-of-min-bounds.js';
   import { createEventDispatcher } from 'svelte';
 
-  export let internalMinDate: Date;
-  export let internalMaxDate: Date;
-  export let yearSelected: number;
+  export let internalMinDate: Date | null;
+  export let internalMaxDate: Date | null;
+  export let yearSelected: number | null;
   export let year: number;
-  // export let pickerYear;
+
   $: isOutOfMax = isOutOfMaxBounds(internalMaxDate, year, 0, 1);
   $: isOutOfMin = isOutOfMinBounds(internalMinDate, year, 11, 31);
 
