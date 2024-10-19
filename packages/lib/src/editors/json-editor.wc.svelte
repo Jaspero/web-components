@@ -24,8 +24,8 @@
   export let value: any = {};
   export let options = {};
 
-  let editor;
-  let stringValue;
+  let editor: any;
+  let stringValue: string;
   let containerEl: HTMLDivElement;
 
   const dispatch = createEventDispatcher();
@@ -49,6 +49,7 @@
       }
     };
 
+    // @ts-ignore
     editor = new window.JSONEditor(containerEl, options);
     editor.set(value);
   });
