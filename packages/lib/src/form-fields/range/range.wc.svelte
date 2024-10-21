@@ -72,7 +72,7 @@
     class="jp-range-input"
     class:jp-range-input-disabled={disabled}
     {disabled}
-    step={discrete ? 'any' : step}
+    step={discrete ? step : 'any'}
     {min}
     {max}
     id={id + '_min'}
@@ -84,7 +84,7 @@
     class="jp-range-input"
     class:jp-range-input-disabled={disabled}
     {disabled}
-    step={discrete ? 'any' : step}
+    step={discrete ? step : 'any'}
     {min}
     {max}
     id={id + '_max'}
