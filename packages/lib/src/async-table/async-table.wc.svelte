@@ -426,7 +426,7 @@ onMount(async () => {
               class:jp-table-sortable={allowArrangeColumns && header.sortable}
               class:jp-table-sticky-first={freezeFirstColumn && index === 0}
               class:jp-table-sticky-last={index === headers.length - 1 && freezeLastColumn}
-              class:no-cursor={header.key === nameColumnKey}
+              class:jp-table-no-cursor={header.key === nameColumnKey}
               style="background-color: {hoveringOverColumnIndex === index ? '#D3D3D3' : columnColors[index % columnColors.length]};"
               
               on:click={() => adjustSort(header)}
@@ -520,14 +520,14 @@ onMount(async () => {
       {#each arrangementColumns as column, index}
         {#if !column.disableToggle}
           <label 
-            class="arrange-column-label" 
+            class="jp-table-arrange-column-label" 
             
             style:background-color={dialogHoveringOverColumnIndex === index ? '#D3D3D3' : columnColors[index % columnColors.length]}>
             <!-- svelte-ignore a11y-no-static-element-interactions -->
             <span
-              class="material-symbols-outlined drag-handle"
+              class="jp-table-material-symbols-outlined drag-handle"
               draggable="true"
-              class:no-cursor={column.key === nameColumnKey} 
+              class:jp-table-no-cursor={column.key === nameColumnKey} 
               style="cursor: {column.key === nameColumnKey ? 'default' : 'grab'}; pointer-events: {column.key === nameColumnKey ? 'none' : 'auto'};" 
               on:dragstart={(e) => { if (column.key !== nameColumnKey) dragstart(e, column); }}
               on:dragover={(e) => { if (column.key !== nameColumnKey) dragover(e, index); }}
