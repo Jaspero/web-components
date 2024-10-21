@@ -1291,32 +1291,6 @@
               "kind": "field",
               "name": "reportValidity",
               "readonly": true
-            },
-            {
-              "kind": "field",
-              "name": "tab",
-              "inheritedFrom": {
-                "name": "J",
-                "module": "dist/tabs.wc.js"
-              }
-            },
-            {
-              "kind": "field",
-              "name": "next",
-              "readonly": true,
-              "inheritedFrom": {
-                "name": "J",
-                "module": "dist/tabs.wc.js"
-              }
-            },
-            {
-              "kind": "field",
-              "name": "previous",
-              "readonly": true,
-              "inheritedFrom": {
-                "name": "J",
-                "module": "dist/tabs.wc.js"
-              }
             }
           ],
           "attributes": [
@@ -1367,30 +1341,6 @@
             {
               "name": "reportValidity",
               "fieldName": "reportValidity"
-            },
-            {
-              "name": "tab",
-              "fieldName": "tab",
-              "inheritedFrom": {
-                "name": "J",
-                "module": "dist/tabs.wc.js"
-              }
-            },
-            {
-              "name": "next",
-              "fieldName": "next",
-              "inheritedFrom": {
-                "name": "J",
-                "module": "dist/tabs.wc.js"
-              }
-            },
-            {
-              "name": "previous",
-              "fieldName": "previous",
-              "inheritedFrom": {
-                "name": "J",
-                "module": "dist/tabs.wc.js"
-              }
             }
           ],
           "superclass": {
@@ -1660,11 +1610,15 @@
         {
           "kind": "class",
           "description": "",
-          "name": "A",
+          "name": "O",
           "members": [
             {
               "kind": "field",
-              "name": "attachedInternals"
+              "name": "attachedInternals",
+              "inheritedFrom": {
+                "name": "A",
+                "module": "dist/checkbox.wc.js"
+              }
             },
             {
               "kind": "field",
@@ -1672,7 +1626,11 @@
             },
             {
               "kind": "field",
-              "name": "value"
+              "name": "value",
+              "inheritedFrom": {
+                "name": "A",
+                "module": "dist/checkbox.wc.js"
+              }
             },
             {
               "kind": "field",
@@ -1688,19 +1646,39 @@
             },
             {
               "kind": "field",
-              "name": "label"
+              "name": "width"
             },
             {
               "kind": "field",
-              "name": "options"
+              "name": "label",
+              "inheritedFrom": {
+                "name": "A",
+                "module": "dist/checkbox.wc.js"
+              }
             },
             {
               "kind": "field",
-              "name": "required"
+              "name": "options",
+              "inheritedFrom": {
+                "name": "A",
+                "module": "dist/checkbox.wc.js"
+              }
             },
             {
               "kind": "field",
-              "name": "validationMessages"
+              "name": "required",
+              "inheritedFrom": {
+                "name": "A",
+                "module": "dist/checkbox.wc.js"
+              }
+            },
+            {
+              "kind": "field",
+              "name": "validationMessages",
+              "inheritedFrom": {
+                "name": "A",
+                "module": "dist/checkbox.wc.js"
+              }
             },
             {
               "kind": "field",
@@ -1709,243 +1687,16 @@
             {
               "kind": "field",
               "name": "getValue",
-              "readonly": true
+              "readonly": true,
+              "inheritedFrom": {
+                "name": "A",
+                "module": "dist/checkbox.wc.js"
+              }
             },
             {
               "kind": "field",
               "name": "save",
               "readonly": true
-            },
-            {
-              "kind": "field",
-              "name": "tab",
-              "inheritedFrom": {
-                "name": "J",
-                "module": "dist/tabs.wc.js"
-              }
-            },
-            {
-              "kind": "field",
-              "name": "next",
-              "readonly": true,
-              "inheritedFrom": {
-                "name": "J",
-                "module": "dist/tabs.wc.js"
-              }
-            },
-            {
-              "kind": "field",
-              "name": "previous",
-              "readonly": true,
-              "inheritedFrom": {
-                "name": "J",
-                "module": "dist/tabs.wc.js"
-              }
-            }
-          ],
-          "attributes": [
-            {
-              "name": "attachedInternals",
-              "fieldName": "attachedInternals"
-            },
-            {
-              "name": "service",
-              "fieldName": "service"
-            },
-            {
-              "name": "value",
-              "fieldName": "value"
-            },
-            {
-              "name": "id",
-              "fieldName": "id"
-            },
-            {
-              "name": "name",
-              "fieldName": "name"
-            },
-            {
-              "name": "height",
-              "fieldName": "height"
-            },
-            {
-              "name": "label",
-              "fieldName": "label"
-            },
-            {
-              "name": "options",
-              "fieldName": "options"
-            },
-            {
-              "name": "required",
-              "fieldName": "required"
-            },
-            {
-              "name": "validationMessages",
-              "fieldName": "validationMessages"
-            },
-            {
-              "name": "requiredValidationMessage",
-              "fieldName": "requiredValidationMessage"
-            },
-            {
-              "name": "getValue",
-              "fieldName": "getValue"
-            },
-            {
-              "name": "save",
-              "fieldName": "save"
-            },
-            {
-              "name": "tab",
-              "fieldName": "tab",
-              "inheritedFrom": {
-                "name": "J",
-                "module": "dist/tabs.wc.js"
-              }
-            },
-            {
-              "name": "next",
-              "fieldName": "next",
-              "inheritedFrom": {
-                "name": "J",
-                "module": "dist/tabs.wc.js"
-              }
-            },
-            {
-              "name": "previous",
-              "fieldName": "previous",
-              "inheritedFrom": {
-                "name": "J",
-                "module": "dist/tabs.wc.js"
-              }
-            }
-          ],
-          "superclass": {
-            "name": "J",
-            "module": "/dist/svelte.js"
-          },
-          "tagName": "jp-ckeditor",
-          "customElement": true
-        }
-      ],
-      "exports": [
-        {
-          "kind": "custom-element-definition",
-          "name": "jp-ckeditor",
-          "declaration": {
-            "name": "anonymous_0",
-            "module": "dist/ckeditor.wc.js"
-          }
-        },
-        {
-          "kind": "js",
-          "name": "default",
-          "declaration": {
-            "name": "A",
-            "module": "dist/ckeditor.wc.js"
-          }
-        }
-      ]
-    },
-    {
-      "kind": "javascript-module",
-      "path": "dist/code-editor.wc.js",
-      "declarations": [
-        {
-          "kind": "class",
-          "description": "",
-          "name": "I",
-          "members": [
-            {
-              "kind": "field",
-              "name": "attachedInternals",
-              "inheritedFrom": {
-                "name": "A",
-                "module": "dist/ckeditor.wc.js"
-              }
-            },
-            {
-              "kind": "field",
-              "name": "label",
-              "inheritedFrom": {
-                "name": "A",
-                "module": "dist/ckeditor.wc.js"
-              }
-            },
-            {
-              "kind": "field",
-              "name": "name",
-              "inheritedFrom": {
-                "name": "A",
-                "module": "dist/ckeditor.wc.js"
-              }
-            },
-            {
-              "kind": "field",
-              "name": "id",
-              "inheritedFrom": {
-                "name": "A",
-                "module": "dist/ckeditor.wc.js"
-              }
-            },
-            {
-              "kind": "field",
-              "name": "value",
-              "inheritedFrom": {
-                "name": "A",
-                "module": "dist/ckeditor.wc.js"
-              }
-            },
-            {
-              "kind": "field",
-              "name": "options",
-              "inheritedFrom": {
-                "name": "A",
-                "module": "dist/ckeditor.wc.js"
-              }
-            },
-            {
-              "kind": "field",
-              "name": "getValue",
-              "readonly": true,
-              "inheritedFrom": {
-                "name": "A",
-                "module": "dist/ckeditor.wc.js"
-              }
-            },
-            {
-              "kind": "field",
-              "name": "required",
-              "inheritedFrom": {
-                "name": "A",
-                "module": "dist/ckeditor.wc.js"
-              }
-            },
-            {
-              "kind": "field",
-              "name": "inline",
-              "inheritedFrom": {
-                "name": "O",
-                "module": "dist/radio.wc.js"
-              }
-            },
-            {
-              "kind": "field",
-              "name": "requiredValidationMessage",
-              "inheritedFrom": {
-                "name": "A",
-                "module": "dist/ckeditor.wc.js"
-              }
-            },
-            {
-              "kind": "field",
-              "name": "reportValidity",
-              "readonly": true,
-              "inheritedFrom": {
-                "name": "O",
-                "module": "dist/radio.wc.js"
-              }
             },
             {
               "kind": "field",
@@ -1989,61 +1740,43 @@
             },
             {
               "kind": "field",
-              "name": "service",
+              "name": "minSelects",
               "inheritedFrom": {
                 "name": "A",
-                "module": "dist/ckeditor.wc.js"
+                "module": "dist/checkbox.wc.js"
               }
             },
             {
               "kind": "field",
-              "name": "height",
+              "name": "maxSelects",
               "inheritedFrom": {
                 "name": "A",
-                "module": "dist/ckeditor.wc.js"
+                "module": "dist/checkbox.wc.js"
               }
             },
             {
               "kind": "field",
-              "name": "validationMessages",
+              "name": "minselectsValidationMessage",
               "inheritedFrom": {
                 "name": "A",
-                "module": "dist/ckeditor.wc.js"
+                "module": "dist/checkbox.wc.js"
               }
             },
             {
               "kind": "field",
-              "name": "save",
+              "name": "maxselectsValidationMessage",
+              "inheritedFrom": {
+                "name": "A",
+                "module": "dist/checkbox.wc.js"
+              }
+            },
+            {
+              "kind": "field",
+              "name": "reportValidity",
               "readonly": true,
               "inheritedFrom": {
                 "name": "A",
-                "module": "dist/ckeditor.wc.js"
-              }
-            },
-            {
-              "kind": "field",
-              "name": "tab",
-              "inheritedFrom": {
-                "name": "J",
-                "module": "dist/tabs.wc.js"
-              }
-            },
-            {
-              "kind": "field",
-              "name": "next",
-              "readonly": true,
-              "inheritedFrom": {
-                "name": "J",
-                "module": "dist/tabs.wc.js"
-              }
-            },
-            {
-              "kind": "field",
-              "name": "previous",
-              "readonly": true,
-              "inheritedFrom": {
-                "name": "J",
-                "module": "dist/tabs.wc.js"
+                "module": "dist/checkbox.wc.js"
               }
             }
           ],
@@ -2053,39 +1786,43 @@
               "fieldName": "attachedInternals",
               "inheritedFrom": {
                 "name": "A",
-                "module": "dist/ckeditor.wc.js"
+                "module": "dist/checkbox.wc.js"
               }
             },
             {
-              "name": "label",
-              "fieldName": "label",
-              "inheritedFrom": {
-                "name": "A",
-                "module": "dist/ckeditor.wc.js"
-              }
-            },
-            {
-              "name": "name",
-              "fieldName": "name",
-              "inheritedFrom": {
-                "name": "A",
-                "module": "dist/ckeditor.wc.js"
-              }
-            },
-            {
-              "name": "id",
-              "fieldName": "id",
-              "inheritedFrom": {
-                "name": "A",
-                "module": "dist/ckeditor.wc.js"
-              }
+              "name": "service",
+              "fieldName": "service"
             },
             {
               "name": "value",
               "fieldName": "value",
               "inheritedFrom": {
                 "name": "A",
-                "module": "dist/ckeditor.wc.js"
+                "module": "dist/checkbox.wc.js"
+              }
+            },
+            {
+              "name": "id",
+              "fieldName": "id"
+            },
+            {
+              "name": "name",
+              "fieldName": "name"
+            },
+            {
+              "name": "height",
+              "fieldName": "height"
+            },
+            {
+              "name": "width",
+              "fieldName": "width"
+            },
+            {
+              "name": "label",
+              "fieldName": "label",
+              "inheritedFrom": {
+                "name": "A",
+                "module": "dist/checkbox.wc.js"
               }
             },
             {
@@ -2093,15 +1830,7 @@
               "fieldName": "options",
               "inheritedFrom": {
                 "name": "A",
-                "module": "dist/ckeditor.wc.js"
-              }
-            },
-            {
-              "name": "getValue",
-              "fieldName": "getValue",
-              "inheritedFrom": {
-                "name": "A",
-                "module": "dist/ckeditor.wc.js"
+                "module": "dist/checkbox.wc.js"
               }
             },
             {
@@ -2109,32 +1838,32 @@
               "fieldName": "required",
               "inheritedFrom": {
                 "name": "A",
-                "module": "dist/ckeditor.wc.js"
+                "module": "dist/checkbox.wc.js"
               }
             },
             {
-              "name": "inline",
-              "fieldName": "inline",
+              "name": "validationMessages",
+              "fieldName": "validationMessages",
               "inheritedFrom": {
-                "name": "O",
-                "module": "dist/radio.wc.js"
+                "name": "A",
+                "module": "dist/checkbox.wc.js"
               }
             },
             {
               "name": "requiredValidationMessage",
-              "fieldName": "requiredValidationMessage",
+              "fieldName": "requiredValidationMessage"
+            },
+            {
+              "name": "getValue",
+              "fieldName": "getValue",
               "inheritedFrom": {
                 "name": "A",
-                "module": "dist/ckeditor.wc.js"
+                "module": "dist/checkbox.wc.js"
               }
             },
             {
-              "name": "reportValidity",
-              "fieldName": "reportValidity",
-              "inheritedFrom": {
-                "name": "O",
-                "module": "dist/radio.wc.js"
-              }
+              "name": "save",
+              "fieldName": "save"
             },
             {
               "name": "title",
@@ -2177,64 +1906,192 @@
               }
             },
             {
-              "name": "service",
-              "fieldName": "service",
+              "name": "minSelects",
+              "fieldName": "minSelects",
               "inheritedFrom": {
                 "name": "A",
-                "module": "dist/ckeditor.wc.js"
+                "module": "dist/checkbox.wc.js"
               }
             },
             {
-              "name": "height",
-              "fieldName": "height",
+              "name": "maxSelects",
+              "fieldName": "maxSelects",
               "inheritedFrom": {
                 "name": "A",
-                "module": "dist/ckeditor.wc.js"
+                "module": "dist/checkbox.wc.js"
               }
             },
             {
-              "name": "validationMessages",
-              "fieldName": "validationMessages",
+              "name": "minselectsValidationMessage",
+              "fieldName": "minselectsValidationMessage",
               "inheritedFrom": {
                 "name": "A",
-                "module": "dist/ckeditor.wc.js"
+                "module": "dist/checkbox.wc.js"
               }
             },
             {
-              "name": "save",
-              "fieldName": "save",
+              "name": "maxselectsValidationMessage",
+              "fieldName": "maxselectsValidationMessage",
               "inheritedFrom": {
                 "name": "A",
-                "module": "dist/ckeditor.wc.js"
+                "module": "dist/checkbox.wc.js"
               }
             },
             {
-              "name": "tab",
-              "fieldName": "tab",
+              "name": "reportValidity",
+              "fieldName": "reportValidity",
               "inheritedFrom": {
-                "name": "J",
-                "module": "dist/tabs.wc.js"
-              }
-            },
-            {
-              "name": "next",
-              "fieldName": "next",
-              "inheritedFrom": {
-                "name": "J",
-                "module": "dist/tabs.wc.js"
-              }
-            },
-            {
-              "name": "previous",
-              "fieldName": "previous",
-              "inheritedFrom": {
-                "name": "J",
-                "module": "dist/tabs.wc.js"
+                "name": "A",
+                "module": "dist/checkbox.wc.js"
               }
             }
           ],
           "superclass": {
+            "name": "U",
+            "module": "/dist/svelte.js"
+          },
+          "tagName": "jp-ckeditor",
+          "customElement": true
+        }
+      ],
+      "exports": [
+        {
+          "kind": "custom-element-definition",
+          "name": "jp-ckeditor",
+          "declaration": {
+            "name": "anonymous_0",
+            "module": "dist/ckeditor.wc.js"
+          }
+        },
+        {
+          "kind": "js",
+          "name": "default",
+          "declaration": {
             "name": "O",
+            "module": "dist/ckeditor.wc.js"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "dist/code-editor.wc.js",
+      "declarations": [
+        {
+          "kind": "class",
+          "description": "",
+          "name": "I",
+          "members": [
+            {
+              "kind": "field",
+              "name": "attachedInternals"
+            },
+            {
+              "kind": "field",
+              "name": "label"
+            },
+            {
+              "kind": "field",
+              "name": "name"
+            },
+            {
+              "kind": "field",
+              "name": "id"
+            },
+            {
+              "kind": "field",
+              "name": "value"
+            },
+            {
+              "kind": "field",
+              "name": "options"
+            },
+            {
+              "kind": "field",
+              "name": "getValue",
+              "readonly": true
+            },
+            {
+              "kind": "field",
+              "name": "title",
+              "inheritedFrom": {
+                "name": "S",
+                "module": "dist/alert.wc.js"
+              }
+            },
+            {
+              "kind": "field",
+              "name": "message",
+              "inheritedFrom": {
+                "name": "S",
+                "module": "dist/alert.wc.js"
+              }
+            },
+            {
+              "kind": "field",
+              "name": "state",
+              "inheritedFrom": {
+                "name": "S",
+                "module": "dist/alert.wc.js"
+              }
+            }
+          ],
+          "attributes": [
+            {
+              "name": "attachedInternals",
+              "fieldName": "attachedInternals"
+            },
+            {
+              "name": "label",
+              "fieldName": "label"
+            },
+            {
+              "name": "name",
+              "fieldName": "name"
+            },
+            {
+              "name": "id",
+              "fieldName": "id"
+            },
+            {
+              "name": "value",
+              "fieldName": "value"
+            },
+            {
+              "name": "options",
+              "fieldName": "options"
+            },
+            {
+              "name": "getValue",
+              "fieldName": "getValue"
+            },
+            {
+              "name": "title",
+              "fieldName": "title",
+              "inheritedFrom": {
+                "name": "S",
+                "module": "dist/alert.wc.js"
+              }
+            },
+            {
+              "name": "message",
+              "fieldName": "message",
+              "inheritedFrom": {
+                "name": "S",
+                "module": "dist/alert.wc.js"
+              }
+            },
+            {
+              "name": "state",
+              "fieldName": "state",
+              "inheritedFrom": {
+                "name": "S",
+                "module": "dist/alert.wc.js"
+              }
+            }
+          ],
+          "superclass": {
+            "name": "S",
             "module": "/dist/svelte.js"
           },
           "tagName": "jp-code-editor",
@@ -2398,15 +2255,7 @@
               "name": "attachedInternals",
               "inheritedFrom": {
                 "name": "A",
-                "module": "dist/ckeditor.wc.js"
-              }
-            },
-            {
-              "kind": "field",
-              "name": "service",
-              "inheritedFrom": {
-                "name": "A",
-                "module": "dist/ckeditor.wc.js"
+                "module": "dist/checkbox.wc.js"
               }
             },
             {
@@ -2414,39 +2263,7 @@
               "name": "value",
               "inheritedFrom": {
                 "name": "A",
-                "module": "dist/ckeditor.wc.js"
-              }
-            },
-            {
-              "kind": "field",
-              "name": "id",
-              "inheritedFrom": {
-                "name": "A",
-                "module": "dist/ckeditor.wc.js"
-              }
-            },
-            {
-              "kind": "field",
-              "name": "name",
-              "inheritedFrom": {
-                "name": "A",
-                "module": "dist/ckeditor.wc.js"
-              }
-            },
-            {
-              "kind": "field",
-              "name": "height",
-              "inheritedFrom": {
-                "name": "A",
-                "module": "dist/ckeditor.wc.js"
-              }
-            },
-            {
-              "kind": "field",
-              "name": "label",
-              "inheritedFrom": {
-                "name": "A",
-                "module": "dist/ckeditor.wc.js"
+                "module": "dist/checkbox.wc.js"
               }
             },
             {
@@ -2454,15 +2271,39 @@
               "name": "options",
               "inheritedFrom": {
                 "name": "A",
-                "module": "dist/ckeditor.wc.js"
+                "module": "dist/checkbox.wc.js"
               }
             },
             {
               "kind": "field",
-              "name": "required",
+              "name": "minSelects",
               "inheritedFrom": {
                 "name": "A",
-                "module": "dist/ckeditor.wc.js"
+                "module": "dist/checkbox.wc.js"
+              }
+            },
+            {
+              "kind": "field",
+              "name": "maxSelects",
+              "inheritedFrom": {
+                "name": "A",
+                "module": "dist/checkbox.wc.js"
+              }
+            },
+            {
+              "kind": "field",
+              "name": "minselectsValidationMessage",
+              "inheritedFrom": {
+                "name": "A",
+                "module": "dist/checkbox.wc.js"
+              }
+            },
+            {
+              "kind": "field",
+              "name": "maxselectsValidationMessage",
+              "inheritedFrom": {
+                "name": "A",
+                "module": "dist/checkbox.wc.js"
               }
             },
             {
@@ -2470,15 +2311,23 @@
               "name": "validationMessages",
               "inheritedFrom": {
                 "name": "A",
-                "module": "dist/ckeditor.wc.js"
+                "module": "dist/checkbox.wc.js"
               }
             },
             {
               "kind": "field",
-              "name": "requiredValidationMessage",
+              "name": "label",
               "inheritedFrom": {
                 "name": "A",
-                "module": "dist/ckeditor.wc.js"
+                "module": "dist/checkbox.wc.js"
+              }
+            },
+            {
+              "kind": "field",
+              "name": "required",
+              "inheritedFrom": {
+                "name": "A",
+                "module": "dist/checkbox.wc.js"
               }
             },
             {
@@ -2487,42 +2336,16 @@
               "readonly": true,
               "inheritedFrom": {
                 "name": "A",
-                "module": "dist/ckeditor.wc.js"
+                "module": "dist/checkbox.wc.js"
               }
             },
             {
               "kind": "field",
-              "name": "save",
+              "name": "reportValidity",
               "readonly": true,
               "inheritedFrom": {
                 "name": "A",
-                "module": "dist/ckeditor.wc.js"
-              }
-            },
-            {
-              "kind": "field",
-              "name": "tab",
-              "inheritedFrom": {
-                "name": "J",
-                "module": "dist/tabs.wc.js"
-              }
-            },
-            {
-              "kind": "field",
-              "name": "next",
-              "readonly": true,
-              "inheritedFrom": {
-                "name": "J",
-                "module": "dist/tabs.wc.js"
-              }
-            },
-            {
-              "kind": "field",
-              "name": "previous",
-              "readonly": true,
-              "inheritedFrom": {
-                "name": "J",
-                "module": "dist/tabs.wc.js"
+                "module": "dist/checkbox.wc.js"
               }
             }
           ],
@@ -2552,15 +2375,7 @@
               "fieldName": "attachedInternals",
               "inheritedFrom": {
                 "name": "A",
-                "module": "dist/ckeditor.wc.js"
-              }
-            },
-            {
-              "name": "service",
-              "fieldName": "service",
-              "inheritedFrom": {
-                "name": "A",
-                "module": "dist/ckeditor.wc.js"
+                "module": "dist/checkbox.wc.js"
               }
             },
             {
@@ -2568,39 +2383,7 @@
               "fieldName": "value",
               "inheritedFrom": {
                 "name": "A",
-                "module": "dist/ckeditor.wc.js"
-              }
-            },
-            {
-              "name": "id",
-              "fieldName": "id",
-              "inheritedFrom": {
-                "name": "A",
-                "module": "dist/ckeditor.wc.js"
-              }
-            },
-            {
-              "name": "name",
-              "fieldName": "name",
-              "inheritedFrom": {
-                "name": "A",
-                "module": "dist/ckeditor.wc.js"
-              }
-            },
-            {
-              "name": "height",
-              "fieldName": "height",
-              "inheritedFrom": {
-                "name": "A",
-                "module": "dist/ckeditor.wc.js"
-              }
-            },
-            {
-              "name": "label",
-              "fieldName": "label",
-              "inheritedFrom": {
-                "name": "A",
-                "module": "dist/ckeditor.wc.js"
+                "module": "dist/checkbox.wc.js"
               }
             },
             {
@@ -2608,15 +2391,39 @@
               "fieldName": "options",
               "inheritedFrom": {
                 "name": "A",
-                "module": "dist/ckeditor.wc.js"
+                "module": "dist/checkbox.wc.js"
               }
             },
             {
-              "name": "required",
-              "fieldName": "required",
+              "name": "minSelects",
+              "fieldName": "minSelects",
               "inheritedFrom": {
                 "name": "A",
-                "module": "dist/ckeditor.wc.js"
+                "module": "dist/checkbox.wc.js"
+              }
+            },
+            {
+              "name": "maxSelects",
+              "fieldName": "maxSelects",
+              "inheritedFrom": {
+                "name": "A",
+                "module": "dist/checkbox.wc.js"
+              }
+            },
+            {
+              "name": "minselectsValidationMessage",
+              "fieldName": "minselectsValidationMessage",
+              "inheritedFrom": {
+                "name": "A",
+                "module": "dist/checkbox.wc.js"
+              }
+            },
+            {
+              "name": "maxselectsValidationMessage",
+              "fieldName": "maxselectsValidationMessage",
+              "inheritedFrom": {
+                "name": "A",
+                "module": "dist/checkbox.wc.js"
               }
             },
             {
@@ -2624,15 +2431,23 @@
               "fieldName": "validationMessages",
               "inheritedFrom": {
                 "name": "A",
-                "module": "dist/ckeditor.wc.js"
+                "module": "dist/checkbox.wc.js"
               }
             },
             {
-              "name": "requiredValidationMessage",
-              "fieldName": "requiredValidationMessage",
+              "name": "label",
+              "fieldName": "label",
               "inheritedFrom": {
                 "name": "A",
-                "module": "dist/ckeditor.wc.js"
+                "module": "dist/checkbox.wc.js"
+              }
+            },
+            {
+              "name": "required",
+              "fieldName": "required",
+              "inheritedFrom": {
+                "name": "A",
+                "module": "dist/checkbox.wc.js"
               }
             },
             {
@@ -2640,39 +2455,15 @@
               "fieldName": "getValue",
               "inheritedFrom": {
                 "name": "A",
-                "module": "dist/ckeditor.wc.js"
+                "module": "dist/checkbox.wc.js"
               }
             },
             {
-              "name": "save",
-              "fieldName": "save",
+              "name": "reportValidity",
+              "fieldName": "reportValidity",
               "inheritedFrom": {
                 "name": "A",
-                "module": "dist/ckeditor.wc.js"
-              }
-            },
-            {
-              "name": "tab",
-              "fieldName": "tab",
-              "inheritedFrom": {
-                "name": "J",
-                "module": "dist/tabs.wc.js"
-              }
-            },
-            {
-              "name": "next",
-              "fieldName": "next",
-              "inheritedFrom": {
-                "name": "J",
-                "module": "dist/tabs.wc.js"
-              }
-            },
-            {
-              "name": "previous",
-              "fieldName": "previous",
-              "inheritedFrom": {
-                "name": "J",
-                "module": "dist/tabs.wc.js"
+                "module": "dist/checkbox.wc.js"
               }
             }
           ],
@@ -3058,47 +2849,27 @@
         {
           "kind": "class",
           "description": "",
-          "name": "at",
+          "name": "nt",
           "members": [
             {
               "kind": "field",
-              "name": "attachedInternals",
-              "inheritedFrom": {
-                "name": "Y",
-                "module": "dist/textarea.wc.js"
-              }
+              "name": "attachedInternals"
             },
             {
               "kind": "field",
-              "name": "value",
-              "inheritedFrom": {
-                "name": "Y",
-                "module": "dist/textarea.wc.js"
-              }
+              "name": "value"
             },
             {
               "kind": "field",
-              "name": "internalValue",
-              "inheritedFrom": {
-                "name": "Me",
-                "module": "dist/multisearch.wc.js"
-              }
+              "name": "internalValue"
             },
             {
               "kind": "field",
-              "name": "required",
-              "inheritedFrom": {
-                "name": "Y",
-                "module": "dist/textarea.wc.js"
-              }
+              "name": "required"
             },
             {
               "kind": "field",
-              "name": "requiredValidationMessage",
-              "inheritedFrom": {
-                "name": "Y",
-                "module": "dist/textarea.wc.js"
-              }
+              "name": "requiredValidationMessage"
             },
             {
               "kind": "field",
@@ -3110,27 +2881,15 @@
             },
             {
               "kind": "field",
-              "name": "name",
-              "inheritedFrom": {
-                "name": "Y",
-                "module": "dist/textarea.wc.js"
-              }
+              "name": "name"
             },
             {
               "kind": "field",
-              "name": "label",
-              "inheritedFrom": {
-                "name": "Y",
-                "module": "dist/textarea.wc.js"
-              }
+              "name": "label"
             },
             {
               "kind": "field",
-              "name": "labelType",
-              "inheritedFrom": {
-                "name": "Y",
-                "module": "dist/textarea.wc.js"
-              }
+              "name": "labelType"
             },
             {
               "kind": "field",
@@ -3159,238 +2918,34 @@
             {
               "kind": "field",
               "name": "getValue",
-              "readonly": true,
-              "inheritedFrom": {
-                "name": "Y",
-                "module": "dist/textarea.wc.js"
-              }
+              "readonly": true
             },
             {
               "kind": "field",
               "name": "reportValidity",
-              "readonly": true,
-              "inheritedFrom": {
-                "name": "Y",
-                "module": "dist/textarea.wc.js"
-              }
-            },
-            {
-              "kind": "field",
-              "name": "wording",
-              "inheritedFrom": {
-                "name": "Me",
-                "module": "dist/multisearch.wc.js"
-              }
-            },
-            {
-              "kind": "field",
-              "name": "minSelects",
-              "inheritedFrom": {
-                "name": "Me",
-                "module": "dist/multisearch.wc.js"
-              }
-            },
-            {
-              "kind": "field",
-              "name": "maxSelects",
-              "inheritedFrom": {
-                "name": "Me",
-                "module": "dist/multisearch.wc.js"
-              }
-            },
-            {
-              "kind": "field",
-              "name": "disabled",
-              "inheritedFrom": {
-                "name": "Y",
-                "module": "dist/textarea.wc.js"
-              }
-            },
-            {
-              "kind": "field",
-              "name": "hint",
-              "inheritedFrom": {
-                "name": "Y",
-                "module": "dist/textarea.wc.js"
-              }
-            },
-            {
-              "kind": "field",
-              "name": "id",
-              "inheritedFrom": {
-                "name": "Y",
-                "module": "dist/textarea.wc.js"
-              }
-            },
-            {
-              "kind": "field",
-              "name": "service",
-              "inheritedFrom": {
-                "name": "Me",
-                "module": "dist/multisearch.wc.js"
-              }
-            },
-            {
-              "kind": "field",
-              "name": "validationMessages",
-              "inheritedFrom": {
-                "name": "Y",
-                "module": "dist/textarea.wc.js"
-              }
-            },
-            {
-              "kind": "field",
-              "name": "minselectsValidationMessage",
-              "inheritedFrom": {
-                "name": "Me",
-                "module": "dist/multisearch.wc.js"
-              }
-            },
-            {
-              "kind": "field",
-              "name": "maxselectsValidationMessage",
-              "inheritedFrom": {
-                "name": "Me",
-                "module": "dist/multisearch.wc.js"
-              }
-            },
-            {
-              "kind": "field",
-              "name": "singleSelect",
-              "inheritedFrom": {
-                "name": "Me",
-                "module": "dist/multisearch.wc.js"
-              }
-            },
-            {
-              "kind": "field",
-              "name": "defaultSearch",
-              "inheritedFrom": {
-                "name": "Me",
-                "module": "dist/multisearch.wc.js"
-              }
-            },
-            {
-              "kind": "field",
-              "name": "defaultShow",
-              "inheritedFrom": {
-                "name": "Me",
-                "module": "dist/multisearch.wc.js"
-              }
-            },
-            {
-              "kind": "field",
-              "name": "placeholder",
-              "inheritedFrom": {
-                "name": "Y",
-                "module": "dist/textarea.wc.js"
-              }
-            },
-            {
-              "kind": "field",
-              "name": "inputFocused",
-              "inheritedFrom": {
-                "name": "Y",
-                "module": "dist/textarea.wc.js"
-              }
-            },
-            {
-              "kind": "field",
-              "name": "rows",
-              "inheritedFrom": {
-                "name": "Y",
-                "module": "dist/textarea.wc.js"
-              }
-            },
-            {
-              "kind": "field",
-              "name": "readonly",
-              "inheritedFrom": {
-                "name": "Y",
-                "module": "dist/textarea.wc.js"
-              }
-            },
-            {
-              "kind": "field",
-              "name": "minlength",
-              "inheritedFrom": {
-                "name": "Y",
-                "module": "dist/textarea.wc.js"
-              }
-            },
-            {
-              "kind": "field",
-              "name": "maxlength",
-              "inheritedFrom": {
-                "name": "Y",
-                "module": "dist/textarea.wc.js"
-              }
-            },
-            {
-              "kind": "field",
-              "name": "minlengthValidationMessage",
-              "inheritedFrom": {
-                "name": "Y",
-                "module": "dist/textarea.wc.js"
-              }
-            },
-            {
-              "kind": "field",
-              "name": "maxlengthValidationMessage",
-              "inheritedFrom": {
-                "name": "Y",
-                "module": "dist/textarea.wc.js"
-              }
-            },
-            {
-              "kind": "field",
-              "name": "patternValidationMessage",
-              "inheritedFrom": {
-                "name": "Y",
-                "module": "dist/textarea.wc.js"
-              }
+              "readonly": true
             }
           ],
           "attributes": [
             {
               "name": "attachedInternals",
-              "fieldName": "attachedInternals",
-              "inheritedFrom": {
-                "name": "Y",
-                "module": "dist/textarea.wc.js"
-              }
+              "fieldName": "attachedInternals"
             },
             {
               "name": "value",
-              "fieldName": "value",
-              "inheritedFrom": {
-                "name": "Y",
-                "module": "dist/textarea.wc.js"
-              }
+              "fieldName": "value"
             },
             {
               "name": "internalValue",
-              "fieldName": "internalValue",
-              "inheritedFrom": {
-                "name": "Me",
-                "module": "dist/multisearch.wc.js"
-              }
+              "fieldName": "internalValue"
             },
             {
               "name": "required",
-              "fieldName": "required",
-              "inheritedFrom": {
-                "name": "Y",
-                "module": "dist/textarea.wc.js"
-              }
+              "fieldName": "required"
             },
             {
               "name": "requiredValidationMessage",
-              "fieldName": "requiredValidationMessage",
-              "inheritedFrom": {
-                "name": "Y",
-                "module": "dist/textarea.wc.js"
-              }
+              "fieldName": "requiredValidationMessage"
             },
             {
               "name": "enableMultiple",
@@ -3402,27 +2957,15 @@
             },
             {
               "name": "name",
-              "fieldName": "name",
-              "inheritedFrom": {
-                "name": "Y",
-                "module": "dist/textarea.wc.js"
-              }
+              "fieldName": "name"
             },
             {
               "name": "label",
-              "fieldName": "label",
-              "inheritedFrom": {
-                "name": "Y",
-                "module": "dist/textarea.wc.js"
-              }
+              "fieldName": "label"
             },
             {
               "name": "labelType",
-              "fieldName": "labelType",
-              "inheritedFrom": {
-                "name": "Y",
-                "module": "dist/textarea.wc.js"
-              }
+              "fieldName": "labelType"
             },
             {
               "name": "displayFormat",
@@ -3450,199 +2993,15 @@
             },
             {
               "name": "getValue",
-              "fieldName": "getValue",
-              "inheritedFrom": {
-                "name": "Y",
-                "module": "dist/textarea.wc.js"
-              }
+              "fieldName": "getValue"
             },
             {
               "name": "reportValidity",
-              "fieldName": "reportValidity",
-              "inheritedFrom": {
-                "name": "Y",
-                "module": "dist/textarea.wc.js"
-              }
-            },
-            {
-              "name": "wording",
-              "fieldName": "wording",
-              "inheritedFrom": {
-                "name": "Me",
-                "module": "dist/multisearch.wc.js"
-              }
-            },
-            {
-              "name": "minSelects",
-              "fieldName": "minSelects",
-              "inheritedFrom": {
-                "name": "Me",
-                "module": "dist/multisearch.wc.js"
-              }
-            },
-            {
-              "name": "maxSelects",
-              "fieldName": "maxSelects",
-              "inheritedFrom": {
-                "name": "Me",
-                "module": "dist/multisearch.wc.js"
-              }
-            },
-            {
-              "name": "disabled",
-              "fieldName": "disabled",
-              "inheritedFrom": {
-                "name": "Y",
-                "module": "dist/textarea.wc.js"
-              }
-            },
-            {
-              "name": "hint",
-              "fieldName": "hint",
-              "inheritedFrom": {
-                "name": "Y",
-                "module": "dist/textarea.wc.js"
-              }
-            },
-            {
-              "name": "id",
-              "fieldName": "id",
-              "inheritedFrom": {
-                "name": "Y",
-                "module": "dist/textarea.wc.js"
-              }
-            },
-            {
-              "name": "service",
-              "fieldName": "service",
-              "inheritedFrom": {
-                "name": "Me",
-                "module": "dist/multisearch.wc.js"
-              }
-            },
-            {
-              "name": "validationMessages",
-              "fieldName": "validationMessages",
-              "inheritedFrom": {
-                "name": "Y",
-                "module": "dist/textarea.wc.js"
-              }
-            },
-            {
-              "name": "minselectsValidationMessage",
-              "fieldName": "minselectsValidationMessage",
-              "inheritedFrom": {
-                "name": "Me",
-                "module": "dist/multisearch.wc.js"
-              }
-            },
-            {
-              "name": "maxselectsValidationMessage",
-              "fieldName": "maxselectsValidationMessage",
-              "inheritedFrom": {
-                "name": "Me",
-                "module": "dist/multisearch.wc.js"
-              }
-            },
-            {
-              "name": "singleSelect",
-              "fieldName": "singleSelect",
-              "inheritedFrom": {
-                "name": "Me",
-                "module": "dist/multisearch.wc.js"
-              }
-            },
-            {
-              "name": "defaultSearch",
-              "fieldName": "defaultSearch",
-              "inheritedFrom": {
-                "name": "Me",
-                "module": "dist/multisearch.wc.js"
-              }
-            },
-            {
-              "name": "defaultShow",
-              "fieldName": "defaultShow",
-              "inheritedFrom": {
-                "name": "Me",
-                "module": "dist/multisearch.wc.js"
-              }
-            },
-            {
-              "name": "placeholder",
-              "fieldName": "placeholder",
-              "inheritedFrom": {
-                "name": "Y",
-                "module": "dist/textarea.wc.js"
-              }
-            },
-            {
-              "name": "inputFocused",
-              "fieldName": "inputFocused",
-              "inheritedFrom": {
-                "name": "Y",
-                "module": "dist/textarea.wc.js"
-              }
-            },
-            {
-              "name": "rows",
-              "fieldName": "rows",
-              "inheritedFrom": {
-                "name": "Y",
-                "module": "dist/textarea.wc.js"
-              }
-            },
-            {
-              "name": "readonly",
-              "fieldName": "readonly",
-              "inheritedFrom": {
-                "name": "Y",
-                "module": "dist/textarea.wc.js"
-              }
-            },
-            {
-              "name": "minlength",
-              "fieldName": "minlength",
-              "inheritedFrom": {
-                "name": "Y",
-                "module": "dist/textarea.wc.js"
-              }
-            },
-            {
-              "name": "maxlength",
-              "fieldName": "maxlength",
-              "inheritedFrom": {
-                "name": "Y",
-                "module": "dist/textarea.wc.js"
-              }
-            },
-            {
-              "name": "minlengthValidationMessage",
-              "fieldName": "minlengthValidationMessage",
-              "inheritedFrom": {
-                "name": "Y",
-                "module": "dist/textarea.wc.js"
-              }
-            },
-            {
-              "name": "maxlengthValidationMessage",
-              "fieldName": "maxlengthValidationMessage",
-              "inheritedFrom": {
-                "name": "Y",
-                "module": "dist/textarea.wc.js"
-              }
-            },
-            {
-              "name": "patternValidationMessage",
-              "fieldName": "patternValidationMessage",
-              "inheritedFrom": {
-                "name": "Y",
-                "module": "dist/textarea.wc.js"
-              }
+              "fieldName": "reportValidity"
             }
           ],
           "superclass": {
-            "name": "Me",
+            "name": "xe",
             "module": "/dist/svelte.js"
           },
           "tagName": "jp-datepicker",
@@ -3662,7 +3021,7 @@
           "kind": "js",
           "name": "default",
           "declaration": {
-            "name": "at",
+            "name": "nt",
             "module": "dist/datepicker.wc.js"
           }
         }
@@ -6038,7 +5397,7 @@
               "name": "attachedInternals",
               "inheritedFrom": {
                 "name": "A",
-                "module": "dist/ckeditor.wc.js"
+                "module": "dist/checkbox.wc.js"
               }
             },
             {
@@ -6046,7 +5405,7 @@
               "name": "options",
               "inheritedFrom": {
                 "name": "A",
-                "module": "dist/ckeditor.wc.js"
+                "module": "dist/checkbox.wc.js"
               }
             },
             {
@@ -6054,7 +5413,7 @@
               "name": "required",
               "inheritedFrom": {
                 "name": "A",
-                "module": "dist/ckeditor.wc.js"
+                "module": "dist/checkbox.wc.js"
               }
             },
             {
@@ -6062,16 +5421,12 @@
               "name": "value",
               "inheritedFrom": {
                 "name": "A",
-                "module": "dist/ckeditor.wc.js"
+                "module": "dist/checkbox.wc.js"
               }
             },
             {
               "kind": "field",
-              "name": "name",
-              "inheritedFrom": {
-                "name": "A",
-                "module": "dist/ckeditor.wc.js"
-              }
+              "name": "name"
             },
             {
               "kind": "field",
@@ -6079,18 +5434,14 @@
             },
             {
               "kind": "field",
-              "name": "requiredValidationMessage",
-              "inheritedFrom": {
-                "name": "A",
-                "module": "dist/ckeditor.wc.js"
-              }
+              "name": "requiredValidationMessage"
             },
             {
               "kind": "field",
               "name": "label",
               "inheritedFrom": {
                 "name": "A",
-                "module": "dist/ckeditor.wc.js"
+                "module": "dist/checkbox.wc.js"
               }
             },
             {
@@ -6099,13 +5450,17 @@
               "readonly": true,
               "inheritedFrom": {
                 "name": "A",
-                "module": "dist/ckeditor.wc.js"
+                "module": "dist/checkbox.wc.js"
               }
             },
             {
               "kind": "field",
               "name": "reportValidity",
-              "readonly": true
+              "readonly": true,
+              "inheritedFrom": {
+                "name": "A",
+                "module": "dist/checkbox.wc.js"
+              }
             },
             {
               "kind": "field",
@@ -6149,26 +5504,34 @@
             },
             {
               "kind": "field",
-              "name": "service",
+              "name": "minSelects",
               "inheritedFrom": {
                 "name": "A",
-                "module": "dist/ckeditor.wc.js"
+                "module": "dist/checkbox.wc.js"
               }
             },
             {
               "kind": "field",
-              "name": "id",
+              "name": "maxSelects",
               "inheritedFrom": {
                 "name": "A",
-                "module": "dist/ckeditor.wc.js"
+                "module": "dist/checkbox.wc.js"
               }
             },
             {
               "kind": "field",
-              "name": "height",
+              "name": "minselectsValidationMessage",
               "inheritedFrom": {
                 "name": "A",
-                "module": "dist/ckeditor.wc.js"
+                "module": "dist/checkbox.wc.js"
+              }
+            },
+            {
+              "kind": "field",
+              "name": "maxselectsValidationMessage",
+              "inheritedFrom": {
+                "name": "A",
+                "module": "dist/checkbox.wc.js"
               }
             },
             {
@@ -6176,42 +5539,7 @@
               "name": "validationMessages",
               "inheritedFrom": {
                 "name": "A",
-                "module": "dist/ckeditor.wc.js"
-              }
-            },
-            {
-              "kind": "field",
-              "name": "save",
-              "readonly": true,
-              "inheritedFrom": {
-                "name": "A",
-                "module": "dist/ckeditor.wc.js"
-              }
-            },
-            {
-              "kind": "field",
-              "name": "tab",
-              "inheritedFrom": {
-                "name": "J",
-                "module": "dist/tabs.wc.js"
-              }
-            },
-            {
-              "kind": "field",
-              "name": "next",
-              "readonly": true,
-              "inheritedFrom": {
-                "name": "J",
-                "module": "dist/tabs.wc.js"
-              }
-            },
-            {
-              "kind": "field",
-              "name": "previous",
-              "readonly": true,
-              "inheritedFrom": {
-                "name": "J",
-                "module": "dist/tabs.wc.js"
+                "module": "dist/checkbox.wc.js"
               }
             }
           ],
@@ -6221,7 +5549,7 @@
               "fieldName": "attachedInternals",
               "inheritedFrom": {
                 "name": "A",
-                "module": "dist/ckeditor.wc.js"
+                "module": "dist/checkbox.wc.js"
               }
             },
             {
@@ -6229,7 +5557,7 @@
               "fieldName": "options",
               "inheritedFrom": {
                 "name": "A",
-                "module": "dist/ckeditor.wc.js"
+                "module": "dist/checkbox.wc.js"
               }
             },
             {
@@ -6237,7 +5565,7 @@
               "fieldName": "required",
               "inheritedFrom": {
                 "name": "A",
-                "module": "dist/ckeditor.wc.js"
+                "module": "dist/checkbox.wc.js"
               }
             },
             {
@@ -6245,16 +5573,12 @@
               "fieldName": "value",
               "inheritedFrom": {
                 "name": "A",
-                "module": "dist/ckeditor.wc.js"
+                "module": "dist/checkbox.wc.js"
               }
             },
             {
               "name": "name",
-              "fieldName": "name",
-              "inheritedFrom": {
-                "name": "A",
-                "module": "dist/ckeditor.wc.js"
-              }
+              "fieldName": "name"
             },
             {
               "name": "inline",
@@ -6262,18 +5586,14 @@
             },
             {
               "name": "requiredValidationMessage",
-              "fieldName": "requiredValidationMessage",
-              "inheritedFrom": {
-                "name": "A",
-                "module": "dist/ckeditor.wc.js"
-              }
+              "fieldName": "requiredValidationMessage"
             },
             {
               "name": "label",
               "fieldName": "label",
               "inheritedFrom": {
                 "name": "A",
-                "module": "dist/ckeditor.wc.js"
+                "module": "dist/checkbox.wc.js"
               }
             },
             {
@@ -6281,12 +5601,16 @@
               "fieldName": "getValue",
               "inheritedFrom": {
                 "name": "A",
-                "module": "dist/ckeditor.wc.js"
+                "module": "dist/checkbox.wc.js"
               }
             },
             {
               "name": "reportValidity",
-              "fieldName": "reportValidity"
+              "fieldName": "reportValidity",
+              "inheritedFrom": {
+                "name": "A",
+                "module": "dist/checkbox.wc.js"
+              }
             },
             {
               "name": "title",
@@ -6329,27 +5653,35 @@
               }
             },
             {
-              "name": "service",
-              "fieldName": "service",
+              "name": "minSelects",
+              "fieldName": "minSelects",
               "inheritedFrom": {
                 "name": "A",
-                "module": "dist/ckeditor.wc.js"
+                "module": "dist/checkbox.wc.js"
               }
             },
             {
-              "name": "id",
-              "fieldName": "id",
+              "name": "maxSelects",
+              "fieldName": "maxSelects",
               "inheritedFrom": {
                 "name": "A",
-                "module": "dist/ckeditor.wc.js"
+                "module": "dist/checkbox.wc.js"
               }
             },
             {
-              "name": "height",
-              "fieldName": "height",
+              "name": "minselectsValidationMessage",
+              "fieldName": "minselectsValidationMessage",
               "inheritedFrom": {
                 "name": "A",
-                "module": "dist/ckeditor.wc.js"
+                "module": "dist/checkbox.wc.js"
+              }
+            },
+            {
+              "name": "maxselectsValidationMessage",
+              "fieldName": "maxselectsValidationMessage",
+              "inheritedFrom": {
+                "name": "A",
+                "module": "dist/checkbox.wc.js"
               }
             },
             {
@@ -6357,39 +5689,7 @@
               "fieldName": "validationMessages",
               "inheritedFrom": {
                 "name": "A",
-                "module": "dist/ckeditor.wc.js"
-              }
-            },
-            {
-              "name": "save",
-              "fieldName": "save",
-              "inheritedFrom": {
-                "name": "A",
-                "module": "dist/ckeditor.wc.js"
-              }
-            },
-            {
-              "name": "tab",
-              "fieldName": "tab",
-              "inheritedFrom": {
-                "name": "J",
-                "module": "dist/tabs.wc.js"
-              }
-            },
-            {
-              "name": "next",
-              "fieldName": "next",
-              "inheritedFrom": {
-                "name": "J",
-                "module": "dist/tabs.wc.js"
-              }
-            },
-            {
-              "name": "previous",
-              "fieldName": "previous",
-              "inheritedFrom": {
-                "name": "J",
-                "module": "dist/tabs.wc.js"
+                "module": "dist/checkbox.wc.js"
               }
             }
           ],
