@@ -30,6 +30,8 @@
   import AlertDemo from './OtherDemos/AlertDemo.svelte';
   import ButtonsDemo from './OtherDemos/ButtonsDemo.svelte';
   import CarouselDemo from './OtherDemos/CarouselDemo.svelte';
+  import ConfirmDemo from './OtherDemos/ConfirmDemo.svelte';
+  import DataPaginatorDemo from './OtherDemos/DataPaginatorDemo.svelte';
 </script>
 
 <div class="form fields">
@@ -49,7 +51,7 @@
   <!-- <RadioDemo /> -->
   <!-- <RangeDemo /> -->
   <!-- <SelectDemo /> -->
-   <SliderDemo /> 
+  <!-- <SliderDemo /> -->
   <!-- <TextareaDemo /> -->
   <!-- <ToggleDemo /> -->
 </div>
@@ -60,9 +62,11 @@
 <div class="other editors">
   <!-- <AccordionDemo/> -->
   <!-- <AlertDemo /> -->
-  <!-- <ButtonsDemo/> -->
-  <!-- <CarouselDemo />-->
   <!-- <AssetManagerDemo /> --> 
   <!-- <AsyncTableDemo /> --> 
+  <!-- <ButtonsDemo/> -->
+  <!-- <CarouselDemo /> -->
+  <!-- <ConfirmDemo /> -->
+   <DataPaginatorDemo />
   <!-- <ImageGalleryDemo />-->  
 </div>
