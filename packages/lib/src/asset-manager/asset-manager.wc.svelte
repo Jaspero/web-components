@@ -15,7 +15,14 @@
   import backArrowIcon from '../../../lib/src/icons/back-arrow.svg?raw';
   import addFolderIcon from '../../../lib/src/icons/add-folder.svg?raw';
   import addFilesIcon from '../../../lib/src/icons/add-files.svg?raw';
+  import {Notifications} from '@tadashi/svelte-notification';
+  import {acts} from '@tadashi/svelte-notification';
 
+  // let triggers = [
+	// 	{mode: 'success', message: 'File already exist!', lifetime: 2},
+  //   {mode: 'success', message: 'Please select a file first! ', lifetime: 2},
+  //   {mode: 'success', message: 'Too many files have been selected!', lifetime: 2}
+  // ]
   export let wording = {
     DROP_FILES_HERE: 'Drop your files here',
     FOLDER_NAME: 'Folder name',
@@ -32,8 +39,8 @@
   export let shownFiles: string[];
   export let service: AssetManagerService;
   export let selectable: '' | 'single' | 'multiple' = '';
-  export let minSelected: number;
-  export let maxSelected: number;
+  export let minSelected: number | null = null;
+  export let maxSelected: number | null = null;
 
   const dispatch = createEventDispatcher();
 
@@ -81,11 +88,14 @@
         .filter((file) => {
           const fileExists = items.some((item) => item.name === file.name && item.size === file.size);
           if (fileExists) {
+            showNotification('success',`File "${file.name}" already exists!`);
+            //acts.add(triggers.find(trigger => trigger.mode === 'succes'));
             console.log(`File ${file.name} already exists.`);
             return false; 
           }
           // TODO: Show alert for each file violating file size
           if (!maxSize || maxSize < file.size) {
+            showNotification('success',`File "${file.name}" is too big!`);
             return false; 
           }
 
@@ -129,13 +139,20 @@
   }
 
   function confirmSelection() {
-    if (Object.keys(selectedItems).length < minSelected){
-      console.log("Please select a file first.");
-      return;
+    if (minSelected){
+      if (Object.keys(selectedItems).length < minSelected){
+        showNotification('success',`Please select a file first.`);
+        //acts.add(triggers.find(trigger => trigger.mode === 'success'));
+        console.log("Please select a file first.");
+        return;
+      }
     }
-    if (Object.keys(selectedItems).length >= maxSelected) {
-      console.log(`Too many files have been selected. The maximum allowed is ${maxSelected}.`);
-      return;
+    if (maxSelected){
+      if (Object.keys(selectedItems).length >= maxSelected) {
+        showNotification('success',`Too many files have been selected. The maximum allowed is ${maxSelected}.`);
+        console.log(`Too many files have been selected. The maximum allowed is ${maxSelected}.`);
+        return;
+      }
     }
     const selection = Object.values(selectedItems);
     dispatch('selected', selectable === 'single' ? selection[0] : selection);
@@ -200,11 +217,18 @@
       service.remove(sortedValues[i].toString());
     }
 }
+function showNotification( mode: string, message: string) {
+  acts.add({mode, message, lifetime: 20});
+}
 
   $: if (path) {
     loadData();
   }
 </script>
+
+<Notifications />
+<!-- <div class="notification success">This is a test notification!</div> -->
+<!-- <div class="notification success" style="background-color: #4caf50; color: white;">This is a test notification!</div> -->
 
 <!-- svelte-ignore a11y-no-static-element-interactions -->
 <!-- svelte-ignore missing-declaration -->
@@ -309,6 +333,7 @@
     {/if}
     {/if}
 </section>
+
 
 <input
   type="file"
