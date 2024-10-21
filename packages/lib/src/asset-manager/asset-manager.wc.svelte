@@ -15,7 +15,14 @@
   import backArrowIcon from '../../../lib/src/icons/back-arrow.svg?raw';
   import addFolderIcon from '../../../lib/src/icons/add-folder.svg?raw';
   import addFilesIcon from '../../../lib/src/icons/add-files.svg?raw';
+  import {Notifications} from '@tadashi/svelte-notification';
+  import {acts} from '@tadashi/svelte-notification';
 
+  // let triggers = [
+	// 	{mode: 'success', message: 'File already exist!', lifetime: 2},
+  //   {mode: 'success', message: 'Please select a file first! ', lifetime: 2},
+  //   {mode: 'success', message: 'Too many files have been selected!', lifetime: 2}
+  // ]
   export let wording = {
     DROP_FILES_HERE: 'Drop your files here',
     FOLDER_NAME: 'Folder name',
@@ -32,6 +39,8 @@
   export let shownFiles: string[];
   export let service: AssetManagerService;
   export let selectable: '' | 'single' | 'multiple' = '';
+  export let minSelected: number | null = null;
+  export let maxSelected: number | null = null;
 
   const dispatch = createEventDispatcher();
 
@@ -44,12 +53,16 @@
   let folderName = '';
   let folderDialog = false;
   let folderNamePattern = '[a-z_\\-]{3,}';
-
+  
   export function clearSelection() {
     selectedItems = {};
   }
 
   async function removeFile(index: number, id: string) {
+    if (selectedItems[id]) {
+      delete selectedItems[id];
+      selectedItems = { ...selectedItems };
+    }
     items = items.filter((item) => item.id !== id);
   }
 
@@ -73,9 +86,17 @@
     return Promise.all(
       Array.from(files)
         .filter((file) => {
+          const fileExists = items.some((item) => item.name === file.name && item.size === file.size);
+          if (fileExists) {
+            showNotification('success',`File "${file.name}" already exists!`);
+            //acts.add(triggers.find(trigger => trigger.mode === 'succes'));
+            console.log(`File ${file.name} already exists.`);
+            return false; 
+          }
           // TODO: Show alert for each file violating file size
           if (!maxSize || maxSize < file.size) {
-            return false;
+            showNotification('success',`File "${file.name}" is too big!`);
+            return false; 
           }
 
           return true;
@@ -105,6 +126,7 @@
   function select(item: Asset) {
     if (selectedItems[item.id]) {
       delete selectedItems[item.id];
+      selectedItems = { ...selectedItems };
     } else {
       if (selectable === 'single') {
         selectedItems = {
@@ -117,6 +139,21 @@
   }
 
   function confirmSelection() {
+    if (minSelected){
+      if (Object.keys(selectedItems).length < minSelected){
+        showNotification('success',`Please select a file first.`);
+        //acts.add(triggers.find(trigger => trigger.mode === 'success'));
+        console.log("Please select a file first.");
+        return;
+      }
+    }
+    if (maxSelected){
+      if (Object.keys(selectedItems).length >= maxSelected) {
+        showNotification('success',`Too many files have been selected. The maximum allowed is ${maxSelected}.`);
+        console.log(`Too many files have been selected. The maximum allowed is ${maxSelected}.`);
+        return;
+      }
+    }
     const selection = Object.values(selectedItems);
     dispatch('selected', selectable === 'single' ? selection[0] : selection);
   }
@@ -141,13 +178,61 @@
         loading = false;
       });
   }
+  function handleClickOutside(event: MouseEvent) {
+  const clickedElement = event.target as HTMLElement;
+  const clickedOnAsset = clickedElement.closest('.asset-button');
+  const clickedOnConfirm = clickedElement.closest('button');
+
+  if(clickedOnConfirm && Object.keys(selectedItems).length >= maxSelected){
+    return;
+  }
+
+  if (!clickedOnAsset) {
+    clearSelection();
+  }
+}
+  async function removeSelectedFiles(index: number, id: string) {
+    const selectedIds = Object.keys(selectedItems);
+    console.log(selectedIds);
+    const indexes: any[] = [];
+    for (const id of selectedIds) {
+      indexes.push(items.findIndex(item => item.id === id));
+    }
+    console.log(indexes);
+
+    const paired = selectedIds.map((value, index) => ({
+      value,
+      index: indexes[index]
+    }));
+    paired.sort((a, b) => b.index - a.index);
+
+    const sortedValues = paired.map(item => item.value);
+    const sortedIndices = paired.map(item => item.index);
+
+    console.log(sortedValues); 
+    console.log(sortedIndices); 
+    for (let i = 0; i < sortedIndices.length; i++) {
+      removeFile(sortedIndices[i], sortedValues[i]);
+      cancelUpload(sortedValues[i].toString());
+      service.remove(sortedValues[i].toString());
+    }
+}
+function showNotification( mode: string, message: string) {
+  acts.add({mode, message, lifetime: 20});
+}
 
   $: if (path) {
     loadData();
   }
 </script>
 
+<Notifications />
+<!-- <div class="notification success">This is a test notification!</div> -->
+<!-- <div class="notification success" style="background-color: #4caf50; color: white;">This is a test notification!</div> -->
+
 <!-- svelte-ignore a11y-no-static-element-interactions -->
+<!-- svelte-ignore missing-declaration -->
+<!-- svelte-ignore a11y-click-events-have-key-events -->
 <section
   class="card"
   class:full-border={hoveringFile}
@@ -155,6 +240,7 @@
   on:dragleave={() => (hoveringFile = false)}
   on:dragend={() => (hoveringFile = false)}
   on:drop|preventDefault={(e) => handleDrop(e)}
+  on:click={(e) => handleClickOutside(e)}
 >
   {#if hoveringFile}
     <div class="drop-here">
@@ -240,10 +326,14 @@
     {#if selectable}
       <footer>
         <button type="button" on:click={confirmSelection}>{wording.CONFIRM_SELECTION}</button>
+        {#if Object.keys(selectedItems).length > 1}
+          <button type="button" on:click={removeSelectedFiles}>Delete files: ({Object.keys(selectedItems).length})</button>  
+        {/if}
       </footer>
     {/if}
-  {/if}
+    {/if}
 </section>
+
 
 <input
   type="file"
@@ -333,6 +423,7 @@
     background-color: white;
     padding: 20px;
     border-top: 1px solid rgba(0, 0, 0, 0.12);
+    gap: 10px;
   }
 
   footer button {
@@ -470,6 +561,7 @@
     align-content: flex-start;
     flex-wrap: wrap;
     padding: 12px;
+    gap:7px;
   }
 
   .info {
@@ -481,7 +573,7 @@
   }
 
   .asset-button {
-    width: 25%;
+    width: 24%;
     padding: 8px;
     transition: 0.25s;
     border-radius: 12px;
@@ -588,4 +680,15 @@
       transform: scaleY(-1) rotate(-135deg);
     }
   }
+  footer button {
+  height: 40px;
+  padding: 0 16px;
+  font-weight: bold;
+  background-color: #e66439;
+  color: white;
+  border: none;
+  border-radius: 12px;
+  cursor: pointer;
+  transition: 0.25s;
+}
 </style>
