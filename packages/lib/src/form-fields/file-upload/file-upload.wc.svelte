@@ -197,8 +197,6 @@
             accept={service && service.acceptedFiles}
             bind:this={fileEl}
             on:change={filePicked}
-            on:focus={() => (inputFocused = true)}
-            on:blur={() => (inputFocused = false)}
           />
           {@html folderIcon}
         </label>
