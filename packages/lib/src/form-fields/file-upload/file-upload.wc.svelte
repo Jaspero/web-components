@@ -79,7 +79,7 @@
     return internalValue;
   }
 
-  async function handleLocalChange(f) {
+  async function handleLocalChange(f: { size: number; name: string; }) {
     if (service && service.maxSize) {
       if (f.size > service.maxSize) {
         dispatch('rejected', { file: f.name, code: 'maxSize' });
