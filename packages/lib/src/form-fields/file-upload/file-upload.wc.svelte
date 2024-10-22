@@ -136,11 +136,13 @@
         width: ${rect.width}px;
         top: ${window.scrollY + rect.top}px;
         transform: translateY(-100%);
+        right: ${window.innerWidth - rect.right}px;
       `;
     } else {
       previewStyle = `
         width: ${rect.width}px;
         top: ${window.scrollY + rect.bottom}px;
+        right: ${window.innerWidth - rect.right}px;
       `;
     }
     preview = !preview;
