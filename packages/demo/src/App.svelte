@@ -89,7 +89,7 @@
       <!-- <ButtonsDemo/> -->
       <!-- <CarouselDemo /> -->
       <!-- <ConfirmDemo /> -->
-      <!-- <DataPaginatorDemo /> --> 
+      <!-- <DataPaginatorDemo /> -->
       <!-- <ImageGalleryDemo /> -->
       <!-- <LinkDemo /> -->
       <!-- <MenuDemo /> -->

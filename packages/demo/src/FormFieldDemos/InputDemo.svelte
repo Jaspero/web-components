@@ -9,37 +9,26 @@
   $: console.log(v);
 </script>
 
-
 <form>
-<jp-input
-  label="Cool"
-  required
-  use:bind={v}
-  suffix="ms"
-  prefix="Vrijeme:"
-  on:bind={(e) => (v = e.detail)}
-></jp-input>
-
-
-<jp-input
-  label="step u"
-  required
-  use:bind={v}
-  type="number"
-  step=5
-  suffix="ms"
-  prefix="Vrijeme:"
-  on:bind={(e) => (v = e.detail)}
-></jp-input>
-
-
-<jp-input
-  label="Cool"
-  hint="hint"
-  use:bind={v}
-  suffix="ms"
-  prefix="Vrijeme:"
-  on:bind={(e) => (v = e.detail)}
-></jp-input>
-<button type="submit">submit</button>
+  <jp-input label="default" />
+  <jp-input label="label type outside" labelType="outside" />
+  <jp-input placeholder="placeholder" />
+  <jp-input label="hint" hint="hint" />
+  <jp-input label="autocomplete" autocomplete="on" />
+  <jp-input label="disabled" disabled="true" />
+  <jp-input label="min number 10" type="number" min="10" />
+  <jp-input label="max number 10" type="number" max="10" />
+  <jp-input label="minlength of chars 5" minlength="5" />
+  <jp-input label="maxlength of chars 5" maxlength="5" />
+  <jp-input label="step" step="3" type="number" />
+  <jp-input label="required" required="true" />
+  <jp-input label="readonly" readonly="true" />
+  <jp-input label="type text" type="text" />
+  <jp-input label="type password" type="password" />
+  <jp-input label="type email" type="email" />
+  <jp-input label="type tel" type="tel" />
+  <jp-input label="type url" type="url" />
+  <jp-input label="pattern 'pattern'" pattern="pattern" />
+  <button type="submit">submit</button>
+  <jp-input label="" />
 </form>
