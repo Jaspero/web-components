@@ -1,8 +1,5 @@
 <script lang="ts">
   import '../../../../dist/menu.wc.js';
-  function hello() {
-    alert('Hello');
-  }
 </script>
 
 <jp-menu>
