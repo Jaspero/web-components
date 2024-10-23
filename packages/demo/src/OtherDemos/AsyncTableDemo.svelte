@@ -102,11 +102,12 @@
       import: async () => {
         return [{ name: 'Imported John', age: 30, disabled: true }];
       },
-      arrangeColumns: async (id: string, headers) => {
+      arrangeColumns: async (id: string, headers: any) => {
         localStorage.setItem(id, JSON.stringify(headers));
       },
-      getColumnOrder: async (id) => {
-        return JSON.parse(localStorage.getItem(id));
+      getColumnOrder: async (id: string) => {
+        const storedValue = localStorage.getItem(id);
+        return storedValue ? JSON.parse(storedValue) : null;
       },
       adjustPageSize: async () => {},
       adjustSort: async () => {}
@@ -122,7 +123,9 @@
   });
 
   function applyFilters() {
-    el.firstChild.getData();
+    if (el.firstChild) {
+      el.firstChild.getData();
+    }
   }
 </script>
 

@@ -37,6 +37,8 @@
   import PagePaginatorDemo from './OtherDemos/PagePaginatorDemo.svelte';
   import ProgressSpinnerDemo from './OtherDemos/ProgressSpinnerDemo.svelte';
   import ReviewStarsDemo from './OtherDemos/ReviewStarsDemo.svelte';
+  import StepperDemo from './OtherDemos/StepperDemo.svelte';
+  import TableDemo from './OtherDemos/TableDemo.svelte';
 </script>
 
 <div class="layout-container">
@@ -90,7 +92,9 @@
       <!-- <MenuDemo /> -->
       <!-- <PagePaginatorDemo/> -->
       <!-- <ProgressSpinnerDemo /> -->
-       <ReviewStarsDemo />
+      <!-- <ReviewStarsDemo /> -->
+      <!-- <StepperDemo /> -->
+       <TableDemo/>
     </div>
   </div>
   <!--
