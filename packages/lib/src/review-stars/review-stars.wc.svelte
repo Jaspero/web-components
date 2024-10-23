@@ -150,6 +150,7 @@
         type="button"
         on:mouseover={() => handleMouseOver(star.index)}
         on:click={() => handleClick(star.index)}
+        on:click={() => (value = star.index)}
         on:mouseout={() => resetStars()}
         on:focus={() => handleMouseOver(star.index)}
         on:blur={() => resetStars()}
@@ -160,7 +161,7 @@
       </button>
     {/each}
     {#if indicator}
-      <div class="indicator">{value}</div>
+      <div class="indicator">{value}/{totalStars}</div>
     {/if}
   </div>
 </div>
