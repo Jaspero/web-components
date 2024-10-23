@@ -39,6 +39,9 @@
   import ReviewStarsDemo from './OtherDemos/ReviewStarsDemo.svelte';
   import StepperDemo from './OtherDemos/StepperDemo.svelte';
   import TableDemo from './OtherDemos/TableDemo.svelte';
+  import TabsDemo from './OtherDemos/TabsDemo.svelte';
+  import TooltipDemo from './OtherDemos/TooltipDemo.svelte';
+  import TreeDemo from './OtherDemos/TreeDemo.svelte';
 </script>
 
 <div class="layout-container">
@@ -94,7 +97,10 @@
       <!-- <ProgressSpinnerDemo /> -->
       <!-- <ReviewStarsDemo /> -->
       <!-- <StepperDemo /> -->
-       <TableDemo/>
+      <!-- <TableDemo/> -->
+      <!-- <TabsDemo /> -->
+      <!-- <TooltipDemo /> -->
+      <!-- <TreeDemo /> -->
     </div>
   </div>
   <!--
