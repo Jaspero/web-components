@@ -133,6 +133,7 @@
 
   function handleClick(index: number) {
     if (!starsInput) return;
+    value = index;
     dispatch('rating', index);
   }
 
@@ -150,7 +151,6 @@
         type="button"
         on:mouseover={() => handleMouseOver(star.index)}
         on:click={() => handleClick(star.index)}
-        on:click={() => (value = star.index)}
         on:mouseout={() => resetStars()}
         on:focus={() => handleMouseOver(star.index)}
         on:blur={() => resetStars()}
