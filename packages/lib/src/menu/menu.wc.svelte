@@ -12,8 +12,8 @@
   // Default needs to be invisible rather than unrendered because of .offsetHeight
   // It's pushed left by default so it doesn't expand the document size when not open
   let menuStyle = 'opacity: 0; left: -100vw;';
-  let menuEl;
-  let bindingEl;
+  let menuEl: HTMLDivElement;
+  let bindingEl: HTMLButtonElement;
   let open = false;
 
   function toggleMenu() {
