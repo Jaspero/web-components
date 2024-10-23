@@ -32,41 +32,120 @@
   import CarouselDemo from './OtherDemos/CarouselDemo.svelte';
   import ConfirmDemo from './OtherDemos/ConfirmDemo.svelte';
   import DataPaginatorDemo from './OtherDemos/DataPaginatorDemo.svelte';
+  import LinkDemo from './OtherDemos/LinkDemo.svelte';
+  import MenuDemo from './OtherDemos/MenuDemo.svelte';
+  import PagePaginatorDemo from './OtherDemos/PagePaginatorDemo.svelte';
+  import ProgressSpinnerDemo from './OtherDemos/ProgressSpinnerDemo.svelte';
+  import ReviewStarsDemo from './OtherDemos/ReviewStarsDemo.svelte';
 </script>
 
-<div class="form fields">
-  <!-- <AutocompleteDemo /> -->
-  <!-- <CheckboxDemo /> -->
-  <!-- <ChipsDemo /> -->
-  <!-- <CkEditorDemo /> -->
-  <!-- <ColorDemo /> -->
-  <!-- <DateRangeDemo /> -->
-  <!-- <DatepickerDemo /> -->
-  <!-- <FileListDemo /> -->
-  <!-- <FileUploadDemo /> -->
-  <!-- <InputDemo /> -->
-  <!-- <MultiSearchDemo /> -->
-  <!-- <MultiSelectDemo /> -->  
-  <!-- <QuillDemo /> -->
-  <!-- <RadioDemo /> -->
-  <!-- <RangeDemo /> -->
-  <!-- <SelectDemo /> -->
-  <!-- <SliderDemo /> -->
-  <!-- <TextareaDemo /> -->
-  <!-- <ToggleDemo /> -->
+<div class="layout-container">
+  <!--
+  <aside class="sidebar">
+    <ul>
+      <li><a href="#">Link 1</a></li>
+      <li><a href="#">Link 2</a></li>
+      <li><a href="#">Link 3</a></li>
+      <li><a href="#">Link 4</a></li>
+    </ul>
+  </aside>
+-->
+  <div class="form-container">
+    <div class="form fields">
+      <!-- <AutocompleteDemo /> -->
+      <!-- <CheckboxDemo /> -->
+      <!-- <ChipsDemo /> -->
+      <!-- <CkEditorDemo /> -->
+      <!-- <ColorDemo /> -->
+      <!-- <DateRangeDemo /> -->
+      <!-- <DatepickerDemo /> -->
+      <!-- <FileListDemo /> -->
+      <!-- <FileUploadDemo /> -->
+      <!-- <InputDemo /> -->
+      <!-- <MultiSearchDemo /> -->
+      <!-- <MultiSelectDemo /> -->
+      <!-- <QuillDemo /> -->
+      <!-- <RadioDemo /> -->
+      <!-- <RangeDemo /> -->
+      <!-- <SelectDemo /> -->
+      <!-- <SliderDemo /> -->
+      <!-- <TextareaDemo /> -->
+      <!-- <ToggleDemo /> -->
+    </div>
+    <div class="editors">
+      <!-- <CodeEditorDemo /> -->
+      <!-- <JsonEditorDemos /> -->
+    </div>
+    <div class="other editors">
+      <!-- <AccordionDemo/> -->
+      <!-- <AlertDemo /> -->
+      <!-- <AssetManagerDemo /> -->
+      <!-- <AsyncTableDemo /> -->
+      <!-- <ButtonsDemo/> -->
+      <!-- <CarouselDemo /> -->
+      <!-- <ConfirmDemo /> -->
+      <!-- <DataPaginatorDemo /> --> 
+      <!-- <ImageGalleryDemo /> -->
+      <!-- <LinkDemo /> -->
+      <!-- <MenuDemo /> -->
+      <!-- <PagePaginatorDemo/> -->
+      <!-- <ProgressSpinnerDemo /> -->
+       <ReviewStarsDemo />
+    </div>
+  </div>
+  <!--
+  <aside class="sidebar-right">
+    <ul>
+      <li><a href="#">Link 1</a></li>
+      <li><a href="#">Link 2</a></li>
+      <li><a href="#">Link 3</a></li>
+      <li><a href="#">Link 4</a></li>
+    </ul>
+  </aside>
+-->
 </div>
-<div class="editors">
-  <!-- <CodeEditorDemo /> -->
-  <!-- <JsonEditorDemos /> -->
-</div>
-<div class="other editors">
-  <!-- <AccordionDemo/> -->
-  <!-- <AlertDemo /> -->
-  <!-- <AssetManagerDemo /> --> 
-  <!-- <AsyncTableDemo /> --> 
-  <!-- <ButtonsDemo/> -->
-  <!-- <CarouselDemo /> -->
-  <!-- <ConfirmDemo /> -->
-   <DataPaginatorDemo />
-  <!-- <ImageGalleryDemo />-->  
-</div>
+
+<style>
+  .layout-container {
+    display: flex;
+    width: 100%;
+  }
+
+  aside {
+    width: 20%;
+    background-color: #f4f4f4;
+    padding: 15px;
+    box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
+  }
+
+  .sidebar {
+    flex-shrink: 0;
+  }
+
+  .sidebar-right {
+    flex-shrink: 0;
+  }
+
+  .form-container {
+    flex-grow: 1;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+  }
+
+  aside ul {
+    list-style: none;
+    padding: 0;
+  }
+
+  aside ul li {
+    margin: 10px 0;
+  }
+
+  aside ul li a {
+    text-decoration: none;
+    color: #333;
+    font-weight: bold;
+  }
+</style>
