@@ -406,7 +406,7 @@
       {displayedDateString}
     </p>
 
-    <span class="field-icon">
+    <span class="jp-datepicker-field-icon">
       {@html calendarIcon}
     </span>
   </button>
