@@ -56,7 +56,7 @@
         });
       }
     }
-  };
+  }
   $: displayLabel = required ? `${label} *` : label;
 
   function updateState() {
@@ -67,7 +67,7 @@
         { customError: true },
         minselectsValidationMessage || validationMessages.minselects || 'Below limit checks.'
       );
-    } else if (maxSelects && (checkedAmount > maxSelects)) {
+    } else if (maxSelects && checkedAmount > maxSelects) {
       attachedInternals.setValidity(
         { customError: true },
         maxselectsValidationMessage || validationMessages.maxselects || 'Above limit checks.'
@@ -86,8 +86,6 @@
     if (typeof options == 'string') {
       options = JSON.parse(options);
     }
-
-    maxSelects = options.length;
   });
 </script>
 

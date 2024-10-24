@@ -2,7 +2,7 @@ export function jpTreeStructure(tree: Element): Object {
   if (tree.tagName !== 'JP-TREE' || !tree.hasAttribute('value')) return '';
 
   const structure: {
-    [key: string]: string[]
+    [key: string]: string[];
   } = {};
   const ind = tree.getAttribute('value') as string;
 

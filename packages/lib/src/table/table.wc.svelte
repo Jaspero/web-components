@@ -211,7 +211,7 @@
             on:click={finishArrangingColumns}
             class="table-button settings-button"
           >
-          {wording.FINISH_ARRANGING}
+            {wording.FINISH_ARRANGING}
           </button>
         {/if}
       {/if}

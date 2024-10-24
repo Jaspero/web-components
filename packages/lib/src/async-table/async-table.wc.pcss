@@ -1,277 +1,273 @@
 .jp-table {
-	background-color: var(--background-primary);
-	border-radius: 0.25rem;
-	box-shadow: 0 3px 12px rgba(0, 0, 0, 0.16);
+  background-color: var(--background-primary);
+  border-radius: 0.25rem;
+  box-shadow: 0 3px 12px rgba(0, 0, 0, 0.16);
 
-	&-header {
-		padding: 1rem;
-		min-height: 68px;
-		display: flex;
-		justify-content: flex-end;
-		
+  &-header {
+    padding: 1rem;
+    min-height: 68px;
+    display: flex;
+    justify-content: flex-end;
 
-		button {
-			background-color: var(--background-secondary);
-			color: var(--text-on-secondary);
-			
-		}
-	}
-
-	&-button {
-		display: flex;
-		justify-content: center;
-		align-items: center;
-		border: none;
-		cursor: pointer;
-		border-radius: 0.25rem;
-		min-width: 4rem;
-		height: 2.25rem;
-		padding: 0 1rem;
-		user-select: none;
-
-		&:disabled {
-			opacity: 0.5;
-		}
-
-		&.jp-table-loading {
-			pointer-events: none;
-		}
-	}
-
-	&-container {
-		overflow-x: auto;
-		width: 100%;
-
-		table {
-			width: 100%;
-		}
-
-		th,
-		td {
-			text-align: left;
-			white-space: nowrap;
-			font-size: 0.75rem;
-			font-weight: normal;
-			padding: 0.5rem;
-			border-bottom: 1px solid rgba(0, 0, 0, 0.16);
-		}
-		th {
-        position: sticky;
-        z-index: 2;
-        top: 0;
-        background-color: var(--background-primary);
-        font-weight: bold;
-
-        &.jp-table-sticky-first {
-            z-index: 3;
-        }
-
-        /* Add the grab cursor styles here */
-        cursor: grab; /* Hand cursor on header */
+    button {
+      background-color: var(--background-secondary);
+      color: var(--text-on-secondary);
     }
-		th {
-			position: sticky;
-			z-index: 2;
-			top: 0;
-			background-color: var(--background-primary);
-			font-weight: bold;
+  }
 
-			&.jp-table-sticky-first {
-				z-index: 3;
-			}
-			cursor: grab;
-		}
-		th:active {
-			cursor: grabbing;
-		}
-	}
+  &-button {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: none;
+    cursor: pointer;
+    border-radius: 0.25rem;
+    min-width: 4rem;
+    height: 2.25rem;
+    padding: 0 1rem;
+    user-select: none;
 
-	&-spinner {
-		display: block;
-		border-top: 2px solid var(--text-on-primary);
-		border-bottom: 2px solid var(--text-on-primary);
-		border-left: 2px solid transparent;
-		border-right: 2px solid transparent;
-		border-radius: 50%;
-		width: 1rem;
-		height: 1rem;
-		margin-right: 0.5rem;
-		animation: jp-table-spin 1s linear infinite;
-	}
+    &:disabled {
+      opacity: 0.5;
+    }
 
-	&-actions {
-		padding: 1rem;
-		display: flex;
-		justify-content: space-between;
+    &.jp-table-loading {
+      pointer-events: none;
+    }
+  }
 
-		> button {
-			background-color: var(--primary-color);
-			color: var(--text-on-primary);
-		}
-	}
+  &-container {
+    overflow-x: auto;
+    width: 100%;
 
-	&-sortable {
-		cursor: pointer;
-	}
+    table {
+      width: 100%;
+    }
 
-	&-draggable-column {
-		cursor: grab;
-	}
+    th,
+    td {
+      text-align: left;
+      white-space: nowrap;
+      font-size: 0.75rem;
+      font-weight: normal;
+      padding: 0.5rem;
+      border-bottom: 1px solid rgba(0, 0, 0, 0.16);
+    }
+    th {
+      position: sticky;
+      z-index: 2;
+      top: 0;
+      background-color: var(--background-primary);
+      font-weight: bold;
 
-	&-cell {
-		display: block;
-		max-width: 64ch;
-		overflow: hidden;
-		text-overflow: ellipsis;
-	}
+      &.jp-table-sticky-first {
+        z-index: 3;
+      }
 
-	&-highlight {
-		cursor: grab;
-		transition: 0.3s;
+      /* Add the grab cursor styles here */
+      cursor: grab; /* Hand cursor on header */
+    }
+    th {
+      position: sticky;
+      z-index: 2;
+      top: 0;
+      background-color: var(--background-primary);
+      font-weight: bold;
 
-		&:hover {
-			background-color: #ddd;
-		}
-	}
+      &.jp-table-sticky-first {
+        z-index: 3;
+      }
+      cursor: grab;
+    }
+    th:active {
+      cursor: grabbing;
+    }
+  }
 
-	&-arrange-columns-dialog {
-		position: fixed;
-		top: 0;
-		left: 0;
-		width: 100%;
-		height: 100%;
-		z-index: 1000;
-		display: flex;
-		justify-content: center;
+  &-spinner {
+    display: block;
+    border-top: 2px solid var(--text-on-primary);
+    border-bottom: 2px solid var(--text-on-primary);
+    border-left: 2px solid transparent;
+    border-right: 2px solid transparent;
+    border-radius: 50%;
+    width: 1rem;
+    height: 1rem;
+    margin-right: 0.5rem;
+    animation: jp-table-spin 1s linear infinite;
+  }
 
-		&-backdrop {
-			position: absolute;
-			top: 0;
-			left: 0;
-			width: 100%;
-			height: 100%;
-			background-color: rgba(0, 0, 0, 0.5);
-			z-index: 1001;
-		}
+  &-actions {
+    padding: 1rem;
+    display: flex;
+    justify-content: space-between;
 
-		&-inner {
-			width: 500px;
-			max-width: 100%;
-			z-index: 1002;
-			background-color: white;
-			border-radius: 0.25rem;
-			box-shadow: 0 3px 12px rgba(0, 0, 0, 0.16);
-			margin-top: 50px;
-			padding: 1rem;
-			display: flex;
-			flex-direction: column;
-			height: min-content;
+    > button {
+      background-color: var(--primary-color);
+      color: var(--text-on-primary);
+    }
+  }
 
-			> main {
-				display: flex;
-				flex-direction: column;
-				flex: 1;
-				padding-bottom: 1rem;
-				max-height: 400px;
-				overflow-y: auto;
-			}
-		}
-	}
+  &-sortable {
+    cursor: pointer;
+  }
 
-	&-sticky-first {
-		position: sticky;
-		left: 0;
-		background-color: var(--background-primary);
+  &-draggable-column {
+    cursor: grab;
+  }
 
-		&:after {
-			content: '';
-			position: absolute;
-			top: 0;
-			right: 0;
-			bottom: 0;
-			width: 0.5px;
-			height: 100%;
-			background-color: rgba(0, 0, 0, 0.16);
-		}
-	}
+  &-cell {
+    display: block;
+    max-width: 64ch;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
 
-	&-sticky-first,
-	&-sticky-last {
-		z-index: 1; 
-	}
+  &-highlight {
+    cursor: grab;
+    transition: 0.3s;
 
-	&-sticky-last {
-		position: sticky;
-		right: 0;
-		background-color: var(--background-primary);
+    &:hover {
+      background-color: #ddd;
+    }
+  }
 
-		&:before {
-			content: '';
-			position: absolute;
-			top: 0;
-			left: 0;
-			bottom: 0;
-			width: 0.5px;
-			height: 100%;
-			background-color: rgba(0, 0, 0, 0.16);
-		}
-	}
+  &-arrange-columns-dialog {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 1000;
+    display: flex;
+    justify-content: center;
 
-	&-material-symbols-outlined {
-		font-variation-settings:
-			'FILL' 0,
-			'wght' 400,
-			'GRAD' 0,
-			'opsz' 24;
-		position: relative; 
-		cursor: grab; 
+    &-backdrop {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0, 0, 0, 0.5);
+      z-index: 1001;
+    }
 
-		.drag-handle {
-			cursor: grab;
-		}
+    &-inner {
+      width: 500px;
+      max-width: 100%;
+      z-index: 1002;
+      background-color: white;
+      border-radius: 0.25rem;
+      box-shadow: 0 3px 12px rgba(0, 0, 0, 0.16);
+      margin-top: 50px;
+      padding: 1rem;
+      display: flex;
+      flex-direction: column;
+      height: min-content;
 
-		.drag-handle:active {
-			cursor: grabbing;
-		}
+      > main {
+        display: flex;
+        flex-direction: column;
+        flex: 1;
+        padding-bottom: 1rem;
+        max-height: 400px;
+        overflow-y: auto;
+      }
+    }
+  }
 
-	}
+  &-sticky-first {
+    position: sticky;
+    left: 0;
+    background-color: var(--background-primary);
 
-	&-arrange-columns-dialog-inner {
-		padding: 1rem;
-	}
+    &:after {
+      content: '';
+      position: absolute;
+      top: 0;
+      right: 0;
+      bottom: 0;
+      width: 0.5px;
+      height: 100%;
+      background-color: rgba(0, 0, 0, 0.16);
+    }
+  }
 
-	&-arrange-column-label {
-		display: flex;
-		align-items: center;
-		user-select: none;
-		padding: 0.5rem 0;
-		transition: background-color 0.3s;
+  &-sticky-first,
+  &-sticky-last {
+    z-index: 1;
+  }
 
-		&.hovered {
-			background-color: transparent;
-		}
+  &-sticky-last {
+    position: sticky;
+    right: 0;
+    background-color: var(--background-primary);
 
-		&:not(.hovered) {
-			background-color: #D3D3D3;
-		}
+    &:before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      bottom: 0;
+      width: 0.5px;
+      height: 100%;
+      background-color: rgba(0, 0, 0, 0.16);
+    }
+  }
 
-		&.material-symbols-outlined {
-			margin-right: 0.5rem;	
-		}
-	}
+  &-material-symbols-outlined {
+    font-variation-settings:
+      'FILL' 0,
+      'wght' 400,
+      'GRAD' 0,
+      'opsz' 24;
+    position: relative;
+    cursor: grab;
 
-	&-no-cursor {
-		cursor: default; 
-		pointer-events: none; 
-	}
+    .drag-handle {
+      cursor: grab;
+    }
+
+    .drag-handle:active {
+      cursor: grabbing;
+    }
+  }
+
+  &-arrange-columns-dialog-inner {
+    padding: 1rem;
+  }
+
+  &-arrange-column-label {
+    display: flex;
+    align-items: center;
+    user-select: none;
+    padding: 0.5rem 0;
+    transition: background-color 0.3s;
+
+    &.hovered {
+      background-color: transparent;
+    }
+
+    &:not(.hovered) {
+      background-color: #d3d3d3;
+    }
+
+    &.material-symbols-outlined {
+      margin-right: 0.5rem;
+    }
+  }
+
+  &-no-cursor {
+    cursor: default;
+    pointer-events: none;
+  }
 }
 
 @keyframes jp-table-spin {
-	0% {
-		transform: rotate(0deg);
-	}
-	100% {
-		transform: rotate(360deg);
-	}
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
 }
-

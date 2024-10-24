@@ -63,7 +63,7 @@
   const dispatch = createEventDispatcher();
 
   const getValue = () => value;
-  
+
   $: {
     if (open) {
       document.documentElement.style.overflowY = 'hidden';
@@ -232,12 +232,15 @@
 >
   <label class="jp-autocomplete-field" class:jp-autocomplete-field-disabled={disabled}>
     {#if label && labelType === 'inside'}
-      <span class="jp-autocomplete-field-label" class:jp-autocomplete-field-label-move={open || value}>
+      <span
+        class="jp-autocomplete-field-label"
+        class:jp-autocomplete-field-label-move={open || value}
+      >
         {@html displayLabel}
       </span>
     {/if}
     <input
-    class={`jp-autocomplete-field-input ${labelType == 'outside' || !label ? '' : 'jp-autocomplete-field-input-padding'}`}  
+      class={`jp-autocomplete-field-input ${labelType == 'outside' || !label ? '' : 'jp-autocomplete-field-input-padding'}`}
       type="text"
       {id}
       {name}
@@ -250,9 +253,9 @@
       bind:this={inputEl}
       bind:value
       on:focus={toggleMenu}
-      >
-    
-      {#if open}
+    />
+
+    {#if open}
       <div class="jp-autocomplete-overlay">
         <div class="jp-autocomplete-menu" style={menuStyle}>
           {#if !loading}
@@ -263,6 +266,7 @@
                 bind:this={optionElements[index]}
                 on:mousedown|preventDefault={() => {
                   value = option;
+                  inputEl.value = value;
                   inputEl.blur();
                 }}
                 on:click|preventDefault>{option}</button

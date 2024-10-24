@@ -1,41 +1,49 @@
 <script lang="ts">
   import '../../../dist/checkbox.wc';
+  import '../../../dist/checkbox.css';
   import '../../../dist/input.wc';
+  import '../../../dist/input.css';
   import '../../../dist/select.wc';
+  import '../../../dist/select.css';
   import '../../lib/src/index.css';
   import '../../../dist/toggle.wc';
+  import '../../../dist/toggle.css';
   import '../../../dist/textarea.wc';
   import '../../../dist/textarea.css';
   import '../../../dist/slider.wc';
+  import '../../../dist/slider.css';
   import '../../../dist/range.wc';
+  import '../../../dist/range.css';
   import '../../../dist/radio.wc';
+  import '../../../dist/radio.css';
   import '../../../dist/quill.wc';
   import '../../../dist/quill.css';
-  import '../../../dist/input.css';
   import '../../../dist/multiselect.wc';
   import '../../../dist/multiselect.css';
   import '../../../dist/multisearch.wc';
   import '../../../dist/multisearch.css';
   import '../../../dist/file-upload.wc';
+  import '../../../dist/file-upload.css';
   import '../../../dist/file-list.wc';
   import '../../../dist/datepicker.wc';
+  import '../../../dist/datepicker.css';
   import '../../../dist/date-range.wc';
+  import '../../../dist/date-range.css';
   import '../../../dist/color.wc';
   import '../../../dist/color.css';
   import '../../../dist/ckeditor.wc';
   import '../../../dist/ckeditor.css';
   import '../../../dist/chips.wc';
   import '../../../dist/chips.css';
-  import '../../../dist/checkbox.wc';
   import '../../../dist/autocomplete.wc';
   import '../../../dist/autocomplete.css';
-  import '../../../dist/checkbox.css';
+  import '../../../dist/review-stars.wc';
   import { onMount } from 'svelte';
-  
+
   const options = [
     { value: 'Option 1', label: 'Option 1' },
     { value: 'Option 2', label: 'Option 2' },
-    { value: 'Option 3', label: 'Option 3' },
+    { value: 'Option 3', label: 'Option 3' }
   ];
   let el: HTMLElement;
   let isRequired = true; // Set to true or false based on your requirement
@@ -46,18 +54,18 @@
     multisearch.options = options;
     // Set the required property
     multisearch.required = isRequired;
-    multisearch.label = "Multisearch"
+    multisearch.label = 'Multisearch';
     multisearch.service = {
       i: 0,
       async search(str: string) {
-        await new Promise(resolve => setTimeout(resolve, 1500));
+        await new Promise((resolve) => setTimeout(resolve, 1500));
         return [
           { value: str + '1', label: str + '1' },
           { value: str + '2', label: str + '2' }
         ];
       },
       async loadMore(str: string) {
-        await new Promise(resolve => setTimeout(resolve, 1500));
+        await new Promise((resolve) => setTimeout(resolve, 1500));
         return [
           { value: str + '3', label: str + '3' },
           { value: str + '4', label: str + '4' },
@@ -66,7 +74,7 @@
         ];
       },
       async getSingle(value: string) {
-        await new Promise(resolve => setTimeout(resolve, 1500));
+        await new Promise((resolve) => setTimeout(resolve, 1500));
         return { value: value, label: this.i++ };
       }
     };
@@ -83,19 +91,18 @@
 </script>
 
 <div class="form-container">
+  <jp-review-stars />
   <jp-chips label="Chips" placeholder="Placeholder" required="true"></jp-chips>
   <jp-chips placeholder="Placeholder" required="true"></jp-chips>
   <jp-input label="Input" required="true" />
-  <jp-select label="Select" required="true"></jp-select>  
+  <jp-select label="Select" required="true"></jp-select>
   <jp-toggle label="Toggle" required="true"></jp-toggle>
-  <jp-textarea label="Textarea" required="true" hint=true></jp-textarea>
+  <jp-textarea label="Textarea" required="true" hint="true"></jp-textarea>
   <jp-slider label="Slider" required="true"></jp-slider>
   <jp-range label="Range" required="true"></jp-range>
-  <jp-radio label="Options" {options} required="true"/>
+  <jp-radio label="Options" {options} required="true" />
   <jp-quill label="Quill" value="<p>Blup</p>" required="true"></jp-quill>
-  <div bind:this={el} class="container">
-    
-  </div>
+  <div bind:this={el} class="container"></div>
   <jp-multiselect {options} label="Multiselect" required="true"> </jp-multiselect>
   <jp-file-upload label="Upload a file" required="true" />
   <jp-file-list label="File list" required="true"></jp-file-list>
@@ -105,7 +112,8 @@
   <jp-ckeditor label="CK Editor" value="<p>Blup</p>" required="true"></jp-ckeditor>
   <jp-chips label="Chips" placeholder="Placeholder" required="true"></jp-chips>
   <jp-checkbox label="Checkbox" {options} required="true"></jp-checkbox>
-  <jp-autocomplete options='["One", "Two", "Three"]' label="Autocomplete" required="true"></jp-autocomplete>
+  <jp-autocomplete options="['One', 'Two', 'Three']" label="Autocomplete" required="true"
+  ></jp-autocomplete>
 </div>
 
 <style>
@@ -115,7 +123,7 @@
     gap: 30px;
     width: 100%;
   }
-  .container {  
+  .container {
     position: relative;
     margin: 1rem 0;
   }

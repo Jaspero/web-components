@@ -30,7 +30,7 @@ export async function renderConfirm(
     }
   }
 
-  confirmEl.addEventListener('confirmation', (e: {detail: string}) => clear(e.detail));
+  confirmEl.addEventListener('confirmation', (e: { detail: string }) => clear(e.detail));
 
   if (options.closable) {
     confirmEl.addEventListener('close', () => clear('close'));

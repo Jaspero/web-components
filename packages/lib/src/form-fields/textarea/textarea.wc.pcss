@@ -1,104 +1,106 @@
 .jp-textarea {
-    &-has-hint {
-      position: relative;
-      margin-bottom: 1.25rem;
+  &-has-hint {
+    position: relative;
+    margin-bottom: 1.25rem;
+  }
+
+  &-field {
+    font-size: 0.75rem;
+    line-height: 1rem;
+    position: relative;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    text-align: left;
+    width: 100%;
+    min-height: 2rem;
+    user-select: none;
+    gap: 0.75rem;
+    background-color: transparent;
+    border: 1px solid var(--border-primary);
+    border-radius: 0.25rem;
+
+    &-disabled {
+      pointer-events: none;
+      opacity: 0.5;
     }
-  
-    &-field {
-      font-size: 0.75rem;
-      line-height: 1rem;
-      position: relative;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      text-align: left;
-      width: 100%;
-      min-height: 2rem;
-      user-select: none;
-      gap: 0.75rem;
-      background-color: transparent;
-      border: 1px solid var(--border-primary);
-      border-radius: 0.25rem;
-  
-      &-disabled {
-        pointer-events: none;
-        opacity: 0.5;
+
+    &-required {
+      .jp-textarea-field-label::after {
+        content: ' *';
       }
-  
-      &-required {
-        .jp-textarea-field-label::after {
-          content: ' *';
-        }
-      }
-  
-      &:focus-within {
-        border-color: var(--primary-color);
-        box-shadow: inset 0 0 0 1px var(--primary-color);
-      }
-  
-      &-label {
-        position: absolute;
-        top: 1.25rem;
-        left: 0.75rem;
-        font-size: 1rem;
-        transition: transform 0.3s, top 0.3s, font-size 0.3s;
-  
-        &-move {
-          top: 0.25rem;
-          font-size: 0.75rem;
-        }
-      }
-  
-      &-label-move {
-        + .jp-textarea-field-input::placeholder {
-          opacity: 1;
-        }
-      }
-  
-      &-input {
-        font-family: inherit;
-        white-space: initial;
-        flex: auto;
-        width: 10rem;
-        font-size: 1rem;
-        overflow-x: hidden;
-        text-overflow: ellipsis;
-        padding: 0.75rem;
-        line-height: 1.375rem;
-        border: none;
-        outline: none;
-        border-radius: 0.25rem;
-        background-color: transparent;
-  
-        &-margin {
-          padding: 1.25rem 0.75rem 0.5rem;
-        }
-  
-        &::placeholder {
-          opacity: 0;
-          transition: opacity 0.3s;
-        }
-      }
-  
-      &-hint {
-        position: absolute;
-        top: 100%;
-        left: 0;
-        width: 100%;
-        height: 1.25rem;
-        line-height: 1.25rem;
+    }
+
+    &:focus-within {
+      border-color: var(--primary-color);
+      box-shadow: inset 0 0 0 1px var(--primary-color);
+    }
+
+    &-label {
+      position: absolute;
+      top: 1.25rem;
+      left: 0.75rem;
+      font-size: 1rem;
+      transition:
+        transform 0.3s,
+        top 0.3s,
+        font-size 0.3s;
+
+      &-move {
+        top: 0.25rem;
         font-size: 0.75rem;
-        padding: 0 0.75rem;
-        white-space: nowrap;
-        overflow: hidden;
-        text-overflow: ellipsis;
-        color: var(--text-secondary);
-  
-        &:hover {
-          z-index: 255;
-          overflow: unset;
-        }
+      }
+    }
+
+    &-label-move {
+      + .jp-textarea-field-input::placeholder {
+        opacity: 1;
+      }
+    }
+
+    &-input {
+      font-family: inherit;
+      white-space: initial;
+      flex: auto;
+      width: 10rem;
+      font-size: 1rem;
+      overflow-x: hidden;
+      text-overflow: ellipsis;
+      padding: 0.75rem;
+      line-height: 1.375rem;
+      border: none;
+      outline: none;
+      border-radius: 0.25rem;
+      background-color: transparent;
+
+      &-margin {
+        padding: 1.25rem 0.75rem 0.5rem;
+      }
+
+      &::placeholder {
+        opacity: 0;
+        transition: opacity 0.3s;
+      }
+    }
+
+    &-hint {
+      position: absolute;
+      top: 100%;
+      left: 0;
+      width: 100%;
+      height: 1.25rem;
+      line-height: 1.25rem;
+      font-size: 0.75rem;
+      padding: 0 0.75rem;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      color: var(--text-secondary);
+
+      &:hover {
+        z-index: 255;
+        overflow: unset;
       }
     }
   }
-  
+}

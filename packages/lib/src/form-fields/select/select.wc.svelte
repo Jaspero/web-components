@@ -20,7 +20,7 @@
   import { clickOutside } from '../../click-outside';
   import clearIcon from '../../icons/clear.svg?raw';
   import { wait } from '../../utils/wait';
-  import arrowIcon from './arrow.svg?raw';
+  import arrowIcon from '../../icons/arrow.svg?raw';
   import checkIcon from '../../icons/check.svg?raw';
   import './select.wc.pcss';
 
@@ -321,7 +321,15 @@
     </span>
   {/if}
 
-  <input tabindex="-1" bind:this={inputEl} bind:value {id} {name} {required} autocomplete="{autocomplete || name}" />
+  <input
+    tabindex="-1"
+    bind:this={inputEl}
+    bind:value
+    {id}
+    {name}
+    {required}
+    autocomplete={autocomplete || name}
+  />
 </div>
 
 {#if open}

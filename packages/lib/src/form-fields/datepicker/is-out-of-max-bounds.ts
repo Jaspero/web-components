@@ -1,4 +1,9 @@
-export function isOutOfMaxBounds(internalMaxDate: Date, year: number, month: number, date: number) {
+export function isOutOfMaxBounds(
+  internalMaxDate: Date | null,
+  year: number,
+  month: number,
+  date: number
+) {
   if (internalMaxDate === null) {
     return false;
   }
