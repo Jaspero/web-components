@@ -133,6 +133,7 @@
 
   function handleClick(index: number) {
     if (!starsInput) return;
+    value = index;
     dispatch('rating', index);
   }
 
@@ -160,7 +161,7 @@
       </button>
     {/each}
     {#if indicator}
-      <div class="indicator">{value}</div>
+      <div class="indicator">{value}/{totalStars}</div>
     {/if}
   </div>
 </div>

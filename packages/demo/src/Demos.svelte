@@ -37,6 +37,7 @@
   import '../../../dist/chips.css';
   import '../../../dist/autocomplete.wc';
   import '../../../dist/autocomplete.css';
+  import '../../../dist/review-stars.wc';
   import { onMount } from 'svelte';
 
   const options = [
@@ -90,6 +91,7 @@
 </script>
 
 <div class="form-container">
+  <jp-review-stars />
   <jp-chips label="Chips" placeholder="Placeholder" required="true"></jp-chips>
   <jp-chips placeholder="Placeholder" required="true"></jp-chips>
   <jp-input label="Input" required="true" />
