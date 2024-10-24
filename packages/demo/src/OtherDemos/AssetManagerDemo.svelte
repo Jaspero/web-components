@@ -1,7 +1,7 @@
 <script lang="ts">
   import { onMount } from 'svelte';
-  import '../../../dist/asset-manager.wc.js';
-  import { AMService } from './asset-manager.service.js';
+  import '../../../../dist/asset-manager.wc.js';
+  import { AMService } from '../asset-manager.service.js';
 
   let el: HTMLDivElement;
 
