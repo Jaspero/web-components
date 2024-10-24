@@ -5855,7 +5855,7 @@
         {
           "kind": "class",
           "description": "",
-          "name": "K",
+          "name": "L",
           "members": [
             {
               "kind": "field",
@@ -5893,7 +5893,7 @@
             }
           ],
           "superclass": {
-            "name": "D",
+            "name": "R",
             "module": "/dist/svelte.js"
           },
           "tagName": "jp-review-stars",
@@ -5913,7 +5913,7 @@
           "kind": "js",
           "name": "default",
           "declaration": {
-            "name": "K",
+            "name": "L",
             "module": "dist/review-stars.wc.js"
           }
         }
