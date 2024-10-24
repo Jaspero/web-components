@@ -224,14 +224,14 @@
   }
 
   $: if (width && editor) {
-  const toolbarElement = editor.ui.view.toolbar.element;
-  const editorElement = editor.ui.view.editable.element;
+    const toolbarElement = editor.ui.view.toolbar.element;
+    const editorElement = editor.ui.view.editable.element;
 
-  toolbarElement.style.width = `${width}`;
-  toolbarElement.style.boxSizing = 'border-box';
+    toolbarElement.style.width = `${width}`;
+    toolbarElement.style.boxSizing = 'border-box';
 
-  editorElement.style.width = `${width}`;
-  editorElement.style.boxSizing = 'border-box';
+    editorElement.style.width = `${width}`;
+    editorElement.style.boxSizing = 'border-box';
   }
 
   function getEditor() {

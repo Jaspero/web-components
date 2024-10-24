@@ -92,20 +92,20 @@
   ];
   let yearPickerIndex = 0;
 
-  function handleYearSelected(event: { detail: { year: any; }; }) {
+  function handleYearSelected(event: { detail: { year: any } }) {
     const { year } = event.detail;
     pickerYear = year;
     yearSelector = false;
     monthSelector = true;
   }
 
-  function handleMonthSelected(event: { detail: { month: any; }; }) {
+  function handleMonthSelected(event: { detail: { month: any } }) {
     const { month } = event.detail;
     pickerMonth = month;
     monthSelector = false;
   }
 
-  function handleSelect(event: { detail: { day: any; month: any; year: any; }; }) {
+  function handleSelect(event: { detail: { day: any; month: any; year: any } }) {
     const { day, month, year } = event.detail;
     if (selectingFirst) {
       firstDateSelected = day;

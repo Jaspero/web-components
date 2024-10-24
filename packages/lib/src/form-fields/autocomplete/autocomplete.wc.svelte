@@ -265,7 +265,7 @@
                 class="jp-autocomplete-menu-button"
                 bind:this={optionElements[index]}
                 on:mousedown|preventDefault={() => {
-                  value = option; 
+                  value = option;
                   inputEl.value = value;
                   inputEl.blur();
                 }}

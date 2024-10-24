@@ -38,43 +38,41 @@
 </script>
 
 {#if enableMultiple}
-    <button
-      type="button"
-      class:gray={col.gray}
-      class:active={selectedDates.some(
+  <button
+    type="button"
+    class:gray={col.gray}
+    class:active={selectedDates.some(
+      (e) => e.year === col.year && e.month === col.month && e.day === col.day
+    )}
+    on:click|preventDefault={() => {
+      dateSelected = col.day;
+      yearSelected = col.year;
+      monthSelected = col.month;
+      date = { year: col.year, month: col.month, day: col.day };
+      const index = selectedDates.findIndex(
         (e) => e.year === col.year && e.month === col.month && e.day === col.day
-      )}
-      on:click|preventDefault={() => {
-        dateSelected = col.day;
-        yearSelected = col.year;
-        monthSelected = col.month;
-        date = { year: col.year, month: col.month, day: col.day };
-        const index = selectedDates.findIndex(
-          (e) => e.year === col.year && e.month === col.month && e.day === col.day
-        );
-        if (index !== -1) {
-          isDatePicked = false;
-          selectedDates = [...selectedDates.slice(0, index), ...selectedDates.slice(index + 1)];
-        } else {
-          isDatePicked = true;
-          selectedDates = [...selectedDates, date];
-        }
-        handleMultipleClicks();
-      }}
-      disabled={isOutOfMin || isOutOfMax}
-    >
-      {col.day}
-    </button>
+      );
+      if (index !== -1) {
+        isDatePicked = false;
+        selectedDates = [...selectedDates.slice(0, index), ...selectedDates.slice(index + 1)];
+      } else {
+        isDatePicked = true;
+        selectedDates = [...selectedDates, date];
+      }
+      handleMultipleClicks();
+    }}
+    disabled={isOutOfMin || isOutOfMax}
+  >
+    {col.day}
+  </button>
 {:else}
-    <button
-      type="button"
-      class:gray={col.gray}
-      class:active={dateSelected == col.day &&
-        monthSelected == col.month &&
-        yearSelected == col.year}
-      on:click|preventDefault={handleClick}
-      disabled={isOutOfMin || isOutOfMax}
-    >
-      {col.day}
-    </button>
+  <button
+    type="button"
+    class:gray={col.gray}
+    class:active={dateSelected == col.day && monthSelected == col.month && yearSelected == col.year}
+    on:click|preventDefault={handleClick}
+    disabled={isOutOfMin || isOutOfMax}
+  >
+    {col.day}
+  </button>
 {/if}
