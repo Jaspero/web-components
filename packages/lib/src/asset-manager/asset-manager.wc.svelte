@@ -15,14 +15,12 @@
   import backArrowIcon from '../../../lib/src/icons/back-arrow.svg?raw';
   import addFolderIcon from '../../../lib/src/icons/add-folder.svg?raw';
   import addFilesIcon from '../../../lib/src/icons/add-files.svg?raw';
-  import {Notifications} from '@tadashi/svelte-notification';
-  import {acts} from '@tadashi/svelte-notification';
-
-  // let triggers = [
-	// 	{mode: 'success', message: 'File already exist!', lifetime: 2},
-  //   {mode: 'success', message: 'Please select a file first! ', lifetime: 2},
-  //   {mode: 'success', message: 'Too many files have been selected!', lifetime: 2}
-  // ]
+  
+  import { flip } from "svelte/animate";
+  import { fly } from "svelte/transition";
+  import {notifications} from './notifications'
+  import FileList from '../form-fields/file-list/file-list.wc.svelte';
+  
   export let wording = {
     DROP_FILES_HERE: 'Drop your files here',
     FOLDER_NAME: 'Folder name',
@@ -41,6 +39,13 @@
   export let selectable: '' | 'single' | 'multiple' = '';
   export let minSelected: number | null = null;
   export let maxSelected: number | null = null;
+  let themes = {
+      danger: "#E26D69",
+      success: "#84C991",
+      warning: "#f0ad4e",
+      info: "#5bc0de",
+      default: "#aaaaaa",
+  };
 
   const dispatch = createEventDispatcher();
 
@@ -53,6 +58,9 @@
   let folderName = '';
   let folderDialog = false;
   let folderNamePattern = '[a-z_\\-]{3,}';
+  
+  let showSelectionNotification = false;
+  let showSelectionNotification2 = false;
   
   export function clearSelection() {
     selectedItems = {};
@@ -81,29 +89,49 @@
 
     hoveringFile = false;
   }
-
-  function filesToItems(files: FileList) {
-    return Promise.all(
-      Array.from(files)
-        .filter((file) => {
-          const fileExists = items.some((item) => item.name === file.name && item.size === file.size);
-          if (fileExists) {
-            showNotification('success',`File "${file.name}" already exists!`);
-            //acts.add(triggers.find(trigger => trigger.mode === 'succes'));
-            console.log(`File ${file.name} already exists.`);
-            return false; 
-          }
-          // TODO: Show alert for each file violating file size
-          if (!maxSize || maxSize < file.size) {
-            showNotification('success',`File "${file.name}" is too big!`);
-            return false; 
-          }
-
-          return true;
-        })
-        .map((file) => service.upload(path, file))
-    );
+  async function sleep(ms: number | undefined) {
+    return new Promise(resolve => setTimeout(resolve, ms));
+}
+  function delay(ms: number | undefined) {
+    return new Promise(resolve => setTimeout(resolve, ms));
   }
+
+  async function filesToItems(files: FileList) {
+  const existingFiles: unknown[] = [];
+  const addedFiles: unknown[] = [];
+  const validFiles = Array.from(files).filter((file) => {
+    const fileExists = items.some((item) => item.name === file.name && item.size === file.size);
+    
+    if (fileExists) {
+      existingFiles.push(file);
+      console.log(`File ${file.name} already exists!`);
+      return false;
+    }
+    else{
+      addedFiles.push(file);
+    }
+  
+    // TODO: Show alert for each file violating file size
+    if (maxSize && file.size > maxSize) {
+      return false; 
+    }
+
+    return true;
+  });
+
+  for(let i = 0; i<addedFiles.length; i++){
+      notifications.success(`File "${addedFiles[i].name}" added successfully!`,800);
+      await sleep(1000);
+    } 
+    for(let i = 0; i<existingFiles.length; i++){
+      notifications.warning(`File "${existingFiles[i].name}" already exists!`,800);
+      await sleep(1000);
+    } 
+  return Promise.all(
+    validFiles.map((file) => service.upload(path, file))
+  );
+}
+
 
   function back() {
     path = path.split('/').slice(0, -1).join('/');
@@ -136,26 +164,33 @@
         selectedItems[item.id] = item;
       }
     }
+    if (Object.keys(selectedItems).length > 0) {
+      showSelectionNotification = false;
+    }
+    if (maxSelected && Object.keys(selectedItems).length === maxSelected){
+      showSelectionNotification2 = false;
+    }
   }
 
-  function confirmSelection() {
+  async function confirmSelection() {
     if (minSelected){
       if (Object.keys(selectedItems).length < minSelected){
-        showNotification('success',`Please select a file first.`);
-        //acts.add(triggers.find(trigger => trigger.mode === 'success'));
+        showSelectionNotification = true;
         console.log("Please select a file first.");
         return;
       }
     }
     if (maxSelected){
-      if (Object.keys(selectedItems).length >= maxSelected) {
-        showNotification('success',`Too many files have been selected. The maximum allowed is ${maxSelected}.`);
+      if (Object.keys(selectedItems).length > maxSelected) {
+        showSelectionNotification2 = true;
         console.log(`Too many files have been selected. The maximum allowed is ${maxSelected}.`);
         return;
       }
     }
     const selection = Object.values(selectedItems);
     dispatch('selected', selectable === 'single' ? selection[0] : selection);
+    showSelectionNotification = false;
+    showSelectionNotification2 = false;
   }
 
   function loadData() {
@@ -170,7 +205,7 @@
           items = items.filter(
             (item) =>
               item.type === 'folder' ||
-              shownFiles.some((file) => (item as Asset).contentType.startsWith(file))
+              shownFiles.some((file) => (item as unknown as Asset).contentType.startsWith(file))
           );
         }
       })
@@ -183,23 +218,25 @@
   const clickedOnAsset = clickedElement.closest('.asset-button');
   const clickedOnConfirm = clickedElement.closest('button');
 
-  if(clickedOnConfirm && Object.keys(selectedItems).length >= maxSelected){
-    return;
+  if(maxSelected){
+    if(clickedOnConfirm && Object.keys(selectedItems).length > maxSelected){
+      return;
+    }
   }
-
+  if (!clickedOnConfirm && !clickedOnAsset){
+    showSelectionNotification = false;
+  }
   if (!clickedOnAsset) {
     clearSelection();
+    showSelectionNotification2 = false;
   }
 }
   async function removeSelectedFiles(index: number, id: string) {
     const selectedIds = Object.keys(selectedItems);
-    console.log(selectedIds);
     const indexes: any[] = [];
     for (const id of selectedIds) {
       indexes.push(items.findIndex(item => item.id === id));
     }
-    console.log(indexes);
-
     const paired = selectedIds.map((value, index) => ({
       value,
       index: indexes[index]
@@ -209,26 +246,16 @@
     const sortedValues = paired.map(item => item.value);
     const sortedIndices = paired.map(item => item.index);
 
-    console.log(sortedValues); 
-    console.log(sortedIndices); 
     for (let i = 0; i < sortedIndices.length; i++) {
       removeFile(sortedIndices[i], sortedValues[i]);
       cancelUpload(sortedValues[i].toString());
       service.remove(sortedValues[i].toString());
     }
 }
-function showNotification( mode: string, message: string) {
-  acts.add({mode, message, lifetime: 20});
-}
-
   $: if (path) {
     loadData();
   }
 </script>
-
-<Notifications />
-<!-- <div class="notification success">This is a test notification!</div> -->
-<!-- <div class="notification success" style="background-color: #4caf50; color: white;">This is a test notification!</div> -->
 
 <!-- svelte-ignore a11y-no-static-element-interactions -->
 <!-- svelte-ignore missing-declaration -->
@@ -329,6 +356,29 @@ function showNotification( mode: string, message: string) {
         {#if Object.keys(selectedItems).length > 1}
           <button type="button" on:click={removeSelectedFiles}>Delete files: ({Object.keys(selectedItems).length})</button>  
         {/if}
+        <div class="notifications">
+          {#each $notifications as notification (notification.id)}
+              <div
+                  animate:flip
+                  class="toast"
+                  style="background: {themes[notification.type]};"
+                  transition:fly={{ y: 30 }}
+              >
+                  <div class="content">{notification.message}</div>
+                  {#if notification.icon}<i class={notification.icon} />{/if}
+              </div>
+          {/each}
+          {#if showSelectionNotification}
+            <div class="toast" style="background: {themes.danger};" transition:fly={{ y: 30 }}>
+              <div class="content">Please select a file first.</div>
+            </div>
+          {/if}
+          {#if showSelectionNotification2}
+            <div class="toast" style="background: {themes.danger};" transition:fly={{ y: 30 }}>
+              <div class="content">Too many files have been selected. The maximum allowed is {maxSelected}.</div>
+            </div>
+          {/if}
+      </div>
       </footer>
     {/if}
     {/if}
@@ -417,7 +467,6 @@ function showNotification( mode: string, message: string) {
 
   footer {
     z-index: 1;
-    position: sticky;
     bottom: 0;
     display: flex;
     background-color: white;
@@ -691,4 +740,55 @@ function showNotification( mode: string, message: string) {
   cursor: pointer;
   transition: 0.25s;
 }
+.notifications {
+    position: absolute;
+    bottom: 10px;
+    left: 300px;
+    right: 0;
+    margin: 0 auto;
+    padding: 0;
+    z-index: 9999;
+    display: flex;
+    justify-content: flex-start;
+    justify-content: center;
+    align-items: center;
+    pointer-events: none;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.content {
+    padding: 0px;
+    display: block;
+    color: white;
+    font-weight: 500;
+    
+    
+}
+.footer-notifications {
+  display: flex;
+  align-items: right;
+  margin-left: auto;
+  z-index: 10;
+ 
+}
+
+footer {
+  position: relative;
+  height: auto;
+  overflow: hidden;
+  flex-direction: row;
+}
+
+.toast {
+  background-color: #333;
+  color: white;
+  padding: 10px;
+  margin-bottom: 10px;
+  border-radius: 12px;
+  display: inline-block;
+  height: 40px;
+  flex-direction: row;
+}
+
 </style>
