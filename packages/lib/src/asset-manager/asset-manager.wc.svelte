@@ -15,6 +15,7 @@
   import backArrowIcon from '../../../lib/src/icons/back-arrow.svg?raw';
   import addFolderIcon from '../../../lib/src/icons/add-folder.svg?raw';
   import addFilesIcon from '../../../lib/src/icons/add-files.svg?raw';
+  import './asset-manager.wc.pcss';
   
   import { flip } from "svelte/animate";
   import { fly } from "svelte/transition";
@@ -39,13 +40,6 @@
   export let selectable: '' | 'single' | 'multiple' = '';
   export let minSelected: number | null = null;
   export let maxSelected: number | null = null;
-  let themes = {
-      danger: "#E26D69",
-      success: "#84C991",
-      warning: "#f0ad4e",
-      info: "#5bc0de",
-      default: "#aaaaaa",
-  };
 
   const dispatch = createEventDispatcher();
 
@@ -61,6 +55,10 @@
   
   let showSelectionNotification = false;
   let showSelectionNotification2 = false;
+  let addedSuccessfully = false;
+  let alreadyExists = false;
+  let fileName = '';
+  let existingFile = '';
   
   export function clearSelection() {
     selectedItems = {};
@@ -113,6 +111,7 @@
   
     // TODO: Show alert for each file violating file size
     if (maxSize && file.size > maxSize) {
+      notifications.danger(`File ${file.name} is too big!`, 2000);
       return false; 
     }
 
@@ -120,12 +119,20 @@
   });
 
   for(let i = 0; i<addedFiles.length; i++){
-      notifications.success(`File "${addedFiles[i].name}" added successfully!`,800);
-      await sleep(1000);
+      fileName = addedFiles[i].name;
+      addedSuccessfully = true;
+      await sleep(800);
+      addedSuccessfully = false;
+      await sleep (800);
     } 
+    addedSuccessfully = false;
     for(let i = 0; i<existingFiles.length; i++){
-      notifications.warning(`File "${existingFiles[i].name}" already exists!`,800);
-      await sleep(1000);
+      existingFile = existingFiles[i].name;
+      alreadyExists = true;
+      await sleep(800);
+      alreadyExists = false;
+      await sleep(800);
+      //notifications.warning(`File "${existingFiles[i].name}" already exists!`, 800);
     } 
   return Promise.all(
     validFiles.map((file) => service.upload(path, file))
@@ -215,7 +222,7 @@
   }
   function handleClickOutside(event: MouseEvent) {
   const clickedElement = event.target as HTMLElement;
-  const clickedOnAsset = clickedElement.closest('.asset-button');
+  const clickedOnAsset = clickedElement.closest('.jp-asset-manager-asset-button');
   const clickedOnConfirm = clickedElement.closest('button');
 
   if(maxSelected){
@@ -261,7 +268,7 @@
 <!-- svelte-ignore missing-declaration -->
 <!-- svelte-ignore a11y-click-events-have-key-events -->
 <section
-  class="card"
+  class="jp-asset-manager-card"
   class:full-border={hoveringFile}
   on:dragover|preventDefault={() => (hoveringFile = true)}
   on:dragleave={() => (hoveringFile = false)}
@@ -270,28 +277,28 @@
   on:click={(e) => handleClickOutside(e)}
 >
   {#if hoveringFile}
-    <div class="drop-here">
+    <div class="jp-asset-manager-drop-here">
       {@html uploadIcon}
       <div>{wording.DROP_FILES_HERE}</div>
     </div>
   {:else if folderDialog}
-    <header>
-      <div class="header-actions">
+    <div class = "jp-asset-manager-header">
+      <div class="jp-asset-manager-header-actions">
         <button type="button" on:click={() => (folderDialog = false)}>
           {@html closeCrossIcon}
         </button>
       </div>
-    </header>
+    </div>
 
-    <form class="add-folder-form" on:submit|preventDefault={createFolder}>
-      <label class="add-folder-input">
+    <form class="jp-asset-manager-add-folder-form" on:submit|preventDefault={createFolder}>
+      <label class="jp-asset-manager-add-folder-input">
         <span>{wording.FOLDER_NAME}</span>
         <input bind:value={folderName} pattern={folderNamePattern} required />
       </label>
-      <button class="add-folder-submit" type="submit">{wording.SUBMIT}</button>
+      <button class="jp-asset-manager-add-folder-submit" type="submit">{wording.SUBMIT}</button>
     </form>
   {:else}
-    <header>
+    <div class = "jp-asset-manager-header">
       <nav>
         <button type="button" title="Back" disabled={path === rootPath} on:click={back}>
           {@html backArrowIcon}
@@ -300,7 +307,7 @@
         <span class="route">{path.replace(rootPath, '') || '/'}</span>
       </nav>
 
-      <div class="header-actions">
+      <div class="jp-asset-manager-header-actions">
         <button type="button" title="Add Folder" on:click|preventDefault={addFolder}>
           {@html addFolderIcon}
         </button>
@@ -313,18 +320,18 @@
           {@html addFilesIcon}
         </button>
       </div>
-    </header>
+    </div>
 
     {#if loading}
-      <div class="loader">
-        <div class="spinner"></div>
+      <div class="jp-asset-manager-loader">
+        <div class="jp-asset-manager-spinner"></div>
       </div>
     {:else if items.length == 0}
-      <div class="info">
+      <div class="jp-asset-manager-info">
         <p>{wording.FOLDER_IS_EMPTY}</p>
       </div>
     {:else}
-      <div class="files">
+      <div class="jp-asset-manager-files">
         {#each items as item, index}
           {#if item.type === 'folder'}
             <Folder folder={item} bind:path />
@@ -332,7 +339,7 @@
             <!-- svelte-ignore a11y-positive-tabindex -->
             <!-- svelte-ignore a11y-click-events-have-key-events -->
             <div
-              class="asset-button"
+              class="jp-asset-manager-asset-button"
               role="button"
               tabindex="1"
               class:selected={selectedItems[item.id]}
@@ -351,35 +358,45 @@
     {/if}
 
     {#if selectable}
-      <footer>
+      <div class = "jp-asset-manager-footer">
         <button type="button" on:click={confirmSelection}>{wording.CONFIRM_SELECTION}</button>
         {#if Object.keys(selectedItems).length > 1}
           <button type="button" on:click={removeSelectedFiles}>Delete files: ({Object.keys(selectedItems).length})</button>  
         {/if}
-        <div class="notifications">
+        <div class="jp-asset-manager-notifications">
           {#each $notifications as notification (notification.id)}
               <div
                   animate:flip
-                  class="toast"
-                  style="background: {themes[notification.type]};"
+                  class="jp-asset-manager-toast"
+                  
                   transition:fly={{ y: 30 }}
               >
-                  <div class="content">{notification.message}</div>
+                  <div class="jp-asset-manager-content">{notification.message}</div>
                   {#if notification.icon}<i class={notification.icon} />{/if}
               </div>
           {/each}
           {#if showSelectionNotification}
-            <div class="toast" style="background: {themes.danger};" transition:fly={{ y: 30 }}>
-              <div class="content">Please select a file first.</div>
+            <div class="jp-asset-manager-toast"  transition:fly={{ y: 30 }}>
+              <div class="jp-asset-manager-content">Please select a file first.</div>
             </div>
           {/if}
           {#if showSelectionNotification2}
-            <div class="toast" style="background: {themes.danger};" transition:fly={{ y: 30 }}>
-              <div class="content">Too many files have been selected. The maximum allowed is {maxSelected}.</div>
+            <div class="jp-asset-manager-toast"  transition:fly={{ y: 30 }}>
+              <div class="jp-asset-manager-content">Too many files have been selected. The maximum allowed is {maxSelected}.</div>
             </div>
           {/if}
+          {#if addedSuccessfully}
+            <div class = "jp-asset-manager-toast-added" transition:fly={{ y: 30 }}>
+              <div class="jp-asset-manager-content">File {fileName} added successfully!</div>
+            </div>
+          {/if}
+          {#if alreadyExists}
+            <div class = "jp-asset-manager-toast-exist" transition:fly={{ y: 30 }}>
+              <div class="jp-asset-manager-content">File {fileName} already exists!</div>
+            </div>
+          {/if} 
       </div>
-      </footer>
+    </div>
     {/if}
     {/if}
 </section>
@@ -393,402 +410,3 @@
   on:change={(e) => handleFileInput(e)}
   hidden
 />
-
-<style lang="postcss">
-  * {
-    box-sizing: border-box;
-  }
-
-  .card {
-    position: relative;
-    display: flex;
-    flex-direction: column;
-    max-width: 802px;
-    width: 100%;
-    height: 500px;
-    overflow: auto;
-    background-color: white;
-    box-shadow: 0 3px 6px rgba(0, 0, 0, 0.12);
-    font-family: sans-serif;
-  }
-
-  header {
-    z-index: 1;
-    position: -webkit-sticky;
-    position: sticky;
-    top: 0;
-    display: flex;
-    justify-content: space-between;
-    background-color: white;
-    padding: 20px;
-    border-bottom: 1px solid rgba(0, 0, 0, 0.12);
-  }
-
-  header .route {
-    display: flex;
-    align-items: center;
-    height: 100%;
-    font-size: 20px;
-  }
-
-  header nav {
-    display: flex;
-    gap: 12px;
-  }
-
-  .header-actions {
-    display: flex;
-    gap: 12px;
-  }
-
-  header button {
-    width: 40px;
-    height: 40px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    background-color: transparent;
-    border: 1px solid rgba(0, 0, 0, 0.12);
-    border-radius: 12px;
-    cursor: pointer;
-    transition: 0.25s;
-  }
-
-  header button:disabled {
-    opacity: 0.5;
-    background-color: rgba(0, 0, 0, 0.1);
-    pointer-events: none;
-  }
-
-  header button:hover {
-    background-color: rgba(0, 0, 0, 0.08);
-    border-color: rgba(0, 0, 0, 0.2);
-  }
-
-  footer {
-    z-index: 1;
-    bottom: 0;
-    display: flex;
-    background-color: white;
-    padding: 20px;
-    border-top: 1px solid rgba(0, 0, 0, 0.12);
-    gap: 10px;
-  }
-
-  footer button {
-    height: 40px;
-    padding: 0 16px;
-    font-weight: bold;
-    background-color: #e66439;
-    color: white;
-    border: none;
-    border-radius: 12px;
-    cursor: pointer;
-    transition: 0.25s;
-  }
-
-  footer button:disabled {
-    opacity: 0.5;
-    pointer-events: none;
-  }
-
-  footer button:active {
-    transform: scale(0.95);
-  }
-
-  .add-folder-submit {
-    height: 32px;
-    padding: 0 12px;
-    font-weight: bold;
-    background-color: #e66439;
-    color: white;
-    border: none;
-    border-radius: 8px;
-    cursor: pointer;
-    margin-top: 12px;
-    transition: 0.25s;
-  }
-
-  .add-folder-submit:disabled {
-    opacity: 0.5;
-    pointer-events: none;
-  }
-
-  .add-folder-submit:active {
-    transform: scale(0.95);
-  }
-
-  .drop-here {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    display: flex;
-
-    flex-direction: column;
-    gap: 12px;
-    justify-content: center;
-    align-items: center;
-    background-color: white;
-  }
-
-  .add-folder-form {
-    padding: 20px;
-  }
-
-  .add-folder-input {
-    display: block;
-  }
-
-  .add-folder-input span {
-    display: block;
-    font-size: 14px;
-  }
-
-  .add-folder-input input {
-    border: 1px solid rgba(0, 0, 0, 0.08);
-    height: 40px;
-    padding: 0 12px;
-    border-radius: 8px;
-    font-size: 14px;
-    margin-top: 4px;
-  }
-
-  :global(.file) {
-    position: relative;
-    height: 100%;
-    border: 1px solid rgba(0, 0, 0, 0.12);
-    border-radius: 12px;
-    background-color: white;
-    overflow: hidden;
-  }
-
-  :global(.file-name) {
-    padding: 6px 12px 0;
-  }
-
-  :global(.file-info) {
-    padding: 4px 12px 6px;
-  }
-
-  :global(.file-icon .icon-only) {
-    padding: 12px;
-  }
-
-  :global(.file .file-remove) {
-    position: absolute;
-    top: 4px;
-    right: 4px;
-    width: 32px;
-    height: 32px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    background-color: white;
-    border-radius: 8px;
-    cursor: pointer;
-    border: 1px solid rgba(0, 0, 0, 0.08);
-  }
-
-  :global(.file .file-remove:hover) {
-    border-color: rgba(0, 0, 0, 0.4);
-  }
-
-  :global(.file .file-icon-image) {
-    width: 100%;
-    height: 150px;
-    object-fit: contain;
-    user-select: none;
-    pointer-events: none;
-    background-color: rgba(0, 0, 0, 0.02);
-  }
-
-  .files {
-    display: flex;
-    flex: 1;
-    align-content: flex-start;
-    flex-wrap: wrap;
-    padding: 12px;
-    gap:7px;
-  }
-
-  .info {
-    display: flex;
-    flex: 1;
-    align-content: flex-start;
-    flex-wrap: wrap;
-    padding: 20px;
-  }
-
-  .asset-button {
-    width: 24%;
-    padding: 8px;
-    transition: 0.25s;
-    border-radius: 12px;
-    cursor: pointer;
-  }
-
-  .asset-button.selected {
-    border: 1px solid #e66439;
-  }
-
-  :global(.asset-button:hover .file) {
-    background-color: rgba(0, 0, 0, 0.08);
-    border-color: rgba(0, 0, 0, 0.2);
-  }
-
-  :global(.folder) {
-    box-sizing: border-box;
-    width: 25%;
-    padding: 8px;
-  }
-
-  :global(.folder button) {
-    width: 100%;
-    padding: 12px;
-    display: flex;
-    justify-content: flex-start;
-    align-items: center;
-    border: 1px solid rgba(0, 0, 0, 0.12);
-    gap: 6px;
-    background-color: transparent;
-    font-size: 14px;
-    border-radius: 12px;
-    cursor: pointer;
-    transition: 0.25s;
-  }
-
-  :global(.folder button:hover) {
-    background-color: rgba(0, 0, 0, 0.08);
-    border-color: rgba(0, 0, 0, 0.2);
-  }
-
-  .loader {
-    width: 100%;
-    height: 100%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-  }
-
-  .spinner {
-    width: 150px;
-    height: 150px;
-    border-radius: 50%;
-    border: 9px solid var(--primary-color);
-    animation:
-      spinner-bulqg1 0.8s infinite linear alternate,
-      spinner-oaa3wk 1.6s infinite linear;
-  }
-
-  @keyframes spinner-bulqg1 {
-    0% {
-      clip-path: polygon(50% 50%, 0 0, 50% 0%, 50% 0%, 50% 0%, 50% 0%, 50% 0%);
-    }
-
-    12.5% {
-      clip-path: polygon(50% 50%, 0 0, 50% 0%, 100% 0%, 100% 0%, 100% 0%, 100% 0%);
-    }
-
-    25% {
-      clip-path: polygon(50% 50%, 0 0, 50% 0%, 100% 0%, 100% 100%, 100% 100%, 100% 100%);
-    }
-
-    50% {
-      clip-path: polygon(50% 50%, 0 0, 50% 0%, 100% 0%, 100% 100%, 50% 100%, 0% 100%);
-    }
-
-    62.5% {
-      clip-path: polygon(50% 50%, 100% 0, 100% 0%, 100% 0%, 100% 100%, 50% 100%, 0% 100%);
-    }
-
-    75% {
-      clip-path: polygon(50% 50%, 100% 100%, 100% 100%, 100% 100%, 100% 100%, 50% 100%, 0% 100%);
-    }
-
-    100% {
-      clip-path: polygon(50% 50%, 50% 100%, 50% 100%, 50% 100%, 50% 100%, 50% 100%, 0% 100%);
-    }
-  }
-
-  @keyframes spinner-oaa3wk {
-    0% {
-      transform: scaleY(1) rotate(0deg);
-    }
-
-    49.99% {
-      transform: scaleY(1) rotate(135deg);
-    }
-
-    50% {
-      transform: scaleY(-1) rotate(0deg);
-    }
-
-    100% {
-      transform: scaleY(-1) rotate(-135deg);
-    }
-  }
-  footer button {
-  height: 40px;
-  padding: 0 16px;
-  font-weight: bold;
-  background-color: #e66439;
-  color: white;
-  border: none;
-  border-radius: 12px;
-  cursor: pointer;
-  transition: 0.25s;
-}
-.notifications {
-    position: absolute;
-    bottom: 10px;
-    left: 300px;
-    right: 0;
-    margin: 0 auto;
-    padding: 0;
-    z-index: 9999;
-    display: flex;
-    justify-content: flex-start;
-    justify-content: center;
-    align-items: center;
-    pointer-events: none;
-    flex-direction: column;
-    gap: 10px;
-}
-
-.content {
-    padding: 0px;
-    display: block;
-    color: white;
-    font-weight: 500;
-    
-    
-}
-.footer-notifications {
-  display: flex;
-  align-items: right;
-  margin-left: auto;
-  z-index: 10;
- 
-}
-
-footer {
-  position: relative;
-  height: auto;
-  overflow: hidden;
-  flex-direction: row;
-}
-
-.toast {
-  background-color: #333;
-  color: white;
-  padding: 10px;
-  margin-bottom: 10px;
-  border-radius: 12px;
-  display: inline-block;
-  height: 40px;
-  flex-direction: row;
-}
-
-</style>
