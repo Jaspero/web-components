@@ -52,7 +52,7 @@
   {#if center < 5}
     <button on:click={() => toPage(2)} class:selected={pageIndex == 2}> 2 </button>
   {:else}
-    <div>...</div>
+    <div class="dots">...</div>
   {/if}
   <button type="button" class:selected={center - 1 == pageIndex} on:click={() => toPage(center - 1)}
     >{center - 1}</button
@@ -72,7 +72,7 @@
       {length - 1}
     </button>
   {:else}
-    <div>...</div>
+    <div class="dots">...</div>
   {/if}
   <button type="button" on:click={() => lastPage()} class:selected={pageIndex == length}>
     {length}
@@ -86,6 +86,17 @@
   .page-paginator {
     display: flex;
     gap: 0.25rem;
+  }
+
+  .dots {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 32px;
+    height: 32px;
+    line-height: 32px;
+    border: none;
+    background: none;
   }
 
   button {
