@@ -27,24 +27,24 @@
   }
 </script>
 
-<div class="file" class:removing>
-  <button class="file-remove" type="button" on:click|preventDefault={remove}>
+<div class="jp-asset-manager-file" class:removing>
+  <button class="jp-asset-manager-file-remove" type="button" on:click|preventDefault={remove}>
     {@html fileRemoveIcon}
   </button>
-  <div class="file-icon">
+  <div class="jp-asset-manager-file-icon">
     {#if asset.contentType.startsWith('image')}
-      <img class="file-icon-image" src={asset.url} alt={asset.name} />
+      <img class="jp-asset-manager-file-icon-image" src={asset.url} alt={asset.name} />
     {:else if asset.contentType.startsWith('video')}
-      <div class="icon-only">
+      <div class="jp-asset-manager-icon-only">
         {@html folderOutlineIcon}
       </div>
     {:else}
-      <div class="icon-only">
+      <div class="jp-asset-manager-icon-only">
         {@html documentListIcon}
       </div>
     {/if}
   </div>
-  <div class="file-name">
+  <div class="jp-asset-manager-file-name">
     {asset.name}
     <Progress
       {wording}
@@ -54,7 +54,7 @@
       on:cancel={() => dispatch('cancel')}
     />
   </div>
-  <div class="file-info">
+  <div class="jp-asset-manager-file-info">
     <span>{fileSize(asset.size)}</span>
   </div>
 </div>

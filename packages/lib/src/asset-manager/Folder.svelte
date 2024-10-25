@@ -5,7 +5,7 @@
   export let path: string;
 </script>
 
-<div class="folder">
+<div class="jp-asset-manager-folder">
   <button type="button" on:click={() => (path = folder.id)}>
     {@html folderOutlineIcon}
     <span>{folder.name}</span>

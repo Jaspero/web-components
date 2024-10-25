@@ -132,7 +132,6 @@
       await sleep(800);
       alreadyExists = false;
       await sleep(800);
-      //notifications.warning(`File "${existingFiles[i].name}" already exists!`, 800);
     } 
   return Promise.all(
     validFiles.map((file) => service.upload(path, file))
@@ -392,7 +391,7 @@
           {/if}
           {#if alreadyExists}
             <div class = "jp-asset-manager-toast-exist" transition:fly={{ y: 30 }}>
-              <div class="jp-asset-manager-content">File {fileName} already exists!</div>
+              <div class="jp-asset-manager-content">File {existingFile} already exists!</div>
             </div>
           {/if} 
       </div>

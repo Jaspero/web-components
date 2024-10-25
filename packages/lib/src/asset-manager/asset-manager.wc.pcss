@@ -70,13 +70,16 @@
   }
 
   .jp-asset-manager-footer {
-    z-index: 1;
-    bottom: 0;
-    display: flex;
-    background-color: white;
-    padding: 20px;
-    border-top: 1px solid rgba(0, 0, 0, 0.12);
+    position: sticky;
+    top: 8px !important;
+    bottom: 0px !important;
+    padding: 40px 10px !important;
+    background-color: #f9f9f9;
+    box-shadow: 0 -2px 5px rgba(0, 0, 0, 0.1) !important;
+    display: flex !important;
+    align-items: center;
     gap: 10px;
+    height: 70px !important;
   }
 
   .jp-asset-manager-footer button {
@@ -90,11 +93,11 @@
     cursor: pointer;
     transition: 0.25s;
   }
-/* 
-  .footjp-asset-footer button:disabled {
+
+  .jp-asset-manager-footer button:disabled {
     opacity: 0.5;
     pointer-events: none;
-  } */
+  }
 
   .jp-asset-manager-footer button:active {
     transform: scale(0.95);
@@ -159,7 +162,7 @@
     margin-top: 4px;
   }
 
-  :global(.file) {
+  .jp-asset-manager-file {
     position: relative;
     height: 100%;
     border: 1px solid rgba(0, 0, 0, 0.12);
@@ -168,19 +171,19 @@
     overflow: hidden;
   }
 
-  :global(.file-name) {
+  .jp-asset-manager-file-name {
     padding: 6px 12px 0;
   }
 
-  :global(.file-info) {
+  .jp-asset-manager-file-info {
     padding: 4px 12px 6px;
   }
 
-  :global(.file-icon .icon-only) {
+  .jp-asset-manager-file-icon .jp-asset-manager-icon-only {
     padding: 12px;
   }
 
-  :global(.file .file-remove) {
+  .jp-asset-manager-file .jp-asset-manager-file-remove {
     position: absolute;
     top: 4px;
     right: 4px;
@@ -195,11 +198,11 @@
     border: 1px solid rgba(0, 0, 0, 0.08);
   }
 
-  :global(.file .file-remove:hover) {
+  .jp-asset-manager-file .jp-asset-manager-file-remove:hover {
     border-color: rgba(0, 0, 0, 0.4);
   }
 
-  :global(.file .file-icon-image) {
+  .jp-asset-manager-file .jp-asset-manager-file-icon-image {
     width: 100%;
     height: 150px;
     object-fit: contain;
@@ -237,18 +240,18 @@
     border: 1px solid #e66439;
   }
 
-  :global(.jp-asset-manager-asset-button:hover .file) {
+  .jp-asset-manager-asset-button:hover .jp-asset-manager-file {
     background-color: rgba(0, 0, 0, 0.08);
     border-color: rgba(0, 0, 0, 0.2);
   }
 
-  :global(.folder) {
+  .jp-asset-manager-folder {
     box-sizing: border-box;
     width: 25%;
     padding: 8px;
   }
 
-  :global(.folder button) {
+  .jp-asset-manager-folder button {
     width: 100%;
     padding: 12px;
     display: flex;
@@ -263,7 +266,7 @@
     transition: 0.25s;
   }
 
-  :global(.folder button:hover) {
+  .jp-asset-manager-folder button:hover {
     background-color: rgba(0, 0, 0, 0.08);
     border-color: rgba(0, 0, 0, 0.2);
   }
@@ -415,4 +418,17 @@
   display: inline-block;
   height: 40px;
   flex-direction: row;
+}
+
+
+
+.jp-asset-manager-footer {
+  position: sticky;
+  
+  bottom: 0;
+  left: 0;
+  right: 0;
+  padding: 50px;
+  background-color: #f9f9f9; /* Or any desired background */
+  box-shadow: 0 -2px 5px rgba(0, 0, 0, 0.1);
 }
