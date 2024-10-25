@@ -31,9 +31,11 @@
   export let maxSelects: number | null = null;
   export let minselectsValidationMessage: string;
   export let maxselectsValidationMessage: string;
+  export let requiredValidationMessage: string;
   export let validationMessages: {
     minselects?: string;
     maxselects?: string;
+    required?: string;
   } = {};
   export let label = '';
   export let required = false;
@@ -42,6 +44,7 @@
   export const reportValidity = () => attachedInternals.reportValidity();
 
   const dispatch = createEventDispatcher();
+  let checkedAmount: number = 0;
 
   $: {
     if (value && Array.isArray(options)) {
@@ -51,7 +54,7 @@
           options[options.findIndex((o) => o.value == el)].checked = true;
         });
       } else {
-        value.forEach((el) => {
+        value.forEach((el: string) => {
           options[options.findIndex((o) => o.value == el)].checked = true;
         });
       }
@@ -59,8 +62,19 @@
   }
   $: displayLabel = required ? `${label} *` : label;
 
+  $: {
+    attachedInternals.checkValidity();
+
+    if (required && checkedAmount === 0) {
+      attachedInternals.setValidity(
+        { customError: true },
+        requiredValidationMessage || validationMessages.required || 'Checkbox is required.'
+      );
+    }
+  }
+
   function updateState() {
-    const checkedAmount = options.filter((el) => el.checked).length;
+    checkedAmount = options.filter((el) => el.checked).length;
 
     if (checkedAmount < minSelects) {
       attachedInternals.setValidity(

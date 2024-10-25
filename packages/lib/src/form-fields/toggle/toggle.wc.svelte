@@ -48,7 +48,7 @@
           requiredValidationMessage || checkboxEl.validationMessage,
           checkboxEl
         );
-      }
+      } else attachedInternals.setValidity({});
     }
     dispatch('value', value);
   }
