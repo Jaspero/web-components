@@ -30,7 +30,7 @@
   export let requiredValidationMessage;
   export let label = '';
 
-  let inputEl;
+  let inputEl: HTMLInputElement;
 
   export const getValue = () => value;
 
@@ -43,10 +43,10 @@
   $: {
     attachedInternals.checkValidity();
     if (inputEl) {
-      if (inputEl.validity.valueMissing) {
+      if (value === '' && required) {
         attachedInternals.setValidity(
           { valueMissing: true },
-          requiredValidationMessage || inputEl.validationMessage,
+          requiredValidationMessage || inputEl.validationMessage || 'This field is required.',
           inputEl
         );
       } else {
