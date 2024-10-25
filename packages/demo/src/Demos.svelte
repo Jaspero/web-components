@@ -49,7 +49,14 @@
   let isRequired = true; // Set to true or false based on your requirement
   let isOpen = false; // Track if the dropdown is open
   onMount(() => {
-    const multisearch = document.createElement('jp-multisearch') as HTMLJpMultisearchElement;
+
+    const datepicker = document.createElement('jp-datepicker') as any;
+
+    datepicker.value = new Date().getTime();
+
+    el.appendChild(datepicker);
+
+    const multisearch = document.createElement('jp-multisearch') as any;
     // Set initial options
     multisearch.options = options;
     // Set the required property
@@ -106,7 +113,7 @@
   <jp-multiselect {options} label="Multiselect" required="true"> </jp-multiselect>
   <jp-file-upload label="Upload a file" required="true" />
   <jp-file-list label="File list" required="true"></jp-file-list>
-  <jp-datepicker label="Pick a date" required="true"></jp-datepicker>
+  <jp-datepicker label="Pick a date" required="true" disabled="true"></jp-datepicker>
   <jp-date-range label="Pick a date range" required="true"></jp-date-range>
   <jp-color label="Pick a color" required="true"></jp-color>
   <jp-ckeditor label="CK Editor" value="<p>Blup</p>" required="true"></jp-ckeditor>

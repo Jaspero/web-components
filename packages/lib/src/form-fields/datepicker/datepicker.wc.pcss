@@ -22,7 +22,7 @@
     border: 1px solid var(--border-primary);
     border-radius: 0.25rem;
 
-    &:hover {
+    &:not(.jp-datepicker-field-disabled):hover {
       border-color: var(--primary-color);
     }
 
@@ -90,6 +90,12 @@
       height: 1rem;
       fill: var(--text-primary);
       transition: 0.3s;
+    }
+
+    &-disabled {
+      .jp-datepicker-field-icon {
+        opacity: .5;
+      }
     }
   }
 

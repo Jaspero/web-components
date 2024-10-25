@@ -47,6 +47,8 @@
   export let returnFormatFunction: (date: Date) => any = (date) => date.valueOf();
   export let minDate: string | Date;
   export let maxDate: string | Date;
+  export let disabled = false;
+  export let readonly = false;
 
   let selectedDateObject = new Date();
   let displayedDateString = formatDisplayDate(
@@ -56,7 +58,7 @@
   );
   let returnDate = formatDisplayDate(selectedDateObject, displayFormat, returnFormatFunction);
   let selectedDates: { year: any; month: any; day: any }[] = [];
-  let date;
+  let date: {year: number; month: number; day: number};
   let dates: (string | number | Date)[] = [];
   let datePicked: boolean;
   let borderTop = false;
@@ -111,7 +113,7 @@
   }
 
   function handleMultipleSelects(event: {
-    detail: { day: any; month: any; year: any; isDatePicked: any };
+    detail: { day: number; month: number; year: number; isDatePicked: any };
   }) {
     const { day, month, year, isDatePicked } = event.detail;
     dateSelected = day;
@@ -391,6 +393,8 @@
     class:jp-datepicker-field-active={openPicker}
     class:jp-datepicker-field-borderBottom={borderBottom}
     class:jp-datepicker-field-borderTop={borderTop}
+    class:jp-datepicker-field-disabled={disabled}
+    disabled={disabled || readonly}
     on:click|preventDefault={toggleMenu}
   >
     {#if label && labelType == 'inside'}
@@ -417,6 +421,8 @@
     class="jp-datepicker-hidden-input"
     {name}
     bind:value={internalValue}
+    {disabled}
+    {readonly}
     {required}
   />
   {#if openPicker}
