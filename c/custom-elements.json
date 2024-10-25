@@ -593,7 +593,7 @@
         {
           "kind": "class",
           "description": "",
-          "name": "Se",
+          "name": "_e",
           "members": [
             {
               "kind": "field",
@@ -778,7 +778,7 @@
             }
           ],
           "superclass": {
-            "name": "Qe",
+            "name": "dn",
             "module": "/dist/svelte.js"
           },
           "tagName": "jp-async-table",
@@ -798,7 +798,7 @@
           "kind": "js",
           "name": "default",
           "declaration": {
-            "name": "Se",
+            "name": "_e",
             "module": "dist/async-table.wc.js"
           }
         }
@@ -2849,7 +2849,7 @@
         {
           "kind": "class",
           "description": "",
-          "name": "nt",
+          "name": "rt",
           "members": [
             {
               "kind": "field",
@@ -2914,6 +2914,14 @@
             {
               "kind": "field",
               "name": "maxDate"
+            },
+            {
+              "kind": "field",
+              "name": "disabled"
+            },
+            {
+              "kind": "field",
+              "name": "readonly"
             },
             {
               "kind": "field",
@@ -2992,6 +3000,14 @@
               "fieldName": "maxDate"
             },
             {
+              "name": "disabled",
+              "fieldName": "disabled"
+            },
+            {
+              "name": "readonly",
+              "fieldName": "readonly"
+            },
+            {
               "name": "getValue",
               "fieldName": "getValue"
             },
@@ -3001,7 +3017,7 @@
             }
           ],
           "superclass": {
-            "name": "xe",
+            "name": "Fe",
             "module": "/dist/svelte.js"
           },
           "tagName": "jp-datepicker",
@@ -3021,7 +3037,7 @@
           "kind": "js",
           "name": "default",
           "declaration": {
-            "name": "nt",
+            "name": "rt",
             "module": "dist/datepicker.wc.js"
           }
         }

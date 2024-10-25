@@ -351,6 +351,8 @@
         { "name": "returnFormatFunction", "values": [] },
         { "name": "minDate", "values": [] },
         { "name": "maxDate", "values": [] },
+        { "name": "disabled", "values": [] },
+        { "name": "readonly", "values": [] },
         { "name": "getValue", "values": [] },
         { "name": "reportValidity", "values": [] }
       ],
