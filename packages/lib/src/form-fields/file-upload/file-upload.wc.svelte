@@ -79,7 +79,7 @@
     return internalValue;
   }
 
-  async function handleLocalChange(f) {
+  async function handleLocalChange(f: { size: number; name: string; }) {
     if (service && service.maxSize) {
       if (f.size > service.maxSize) {
         dispatch('rejected', { file: f.name, code: 'maxSize' });
@@ -136,11 +136,13 @@
         width: ${rect.width}px;
         top: ${window.scrollY + rect.top}px;
         transform: translateY(-100%);
+        right: ${window.innerWidth - rect.right}px;
       `;
     } else {
       previewStyle = `
         width: ${rect.width}px;
         top: ${window.scrollY + rect.bottom}px;
+        right: ${window.innerWidth - rect.right}px;
       `;
     }
     preview = !preview;
@@ -195,8 +197,6 @@
             accept={service && service.acceptedFiles}
             bind:this={fileEl}
             on:change={filePicked}
-            on:focus={() => (inputFocused = true)}
-            on:blur={() => (inputFocused = false)}
           />
           {@html folderIcon}
         </label>
