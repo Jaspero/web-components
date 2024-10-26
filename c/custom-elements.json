@@ -1240,7 +1240,7 @@
         {
           "kind": "class",
           "description": "",
-          "name": "A",
+          "name": "H",
           "members": [
             {
               "kind": "field",
@@ -1248,7 +1248,11 @@
             },
             {
               "kind": "field",
-              "name": "value"
+              "name": "value",
+              "inheritedFrom": {
+                "name": "N",
+                "module": "dist/range.wc.js"
+              }
             },
             {
               "kind": "field",
@@ -1272,25 +1276,97 @@
             },
             {
               "kind": "field",
+              "name": "requiredValidationMessage"
+            },
+            {
+              "kind": "field",
               "name": "validationMessages"
             },
             {
               "kind": "field",
-              "name": "label"
+              "name": "label",
+              "inheritedFrom": {
+                "name": "N",
+                "module": "dist/range.wc.js"
+              }
             },
             {
               "kind": "field",
-              "name": "required"
+              "name": "required",
+              "inheritedFrom": {
+                "name": "N",
+                "module": "dist/range.wc.js"
+              }
             },
             {
               "kind": "field",
               "name": "getValue",
-              "readonly": true
+              "readonly": true,
+              "inheritedFrom": {
+                "name": "N",
+                "module": "dist/range.wc.js"
+              }
             },
             {
               "kind": "field",
               "name": "reportValidity",
               "readonly": true
+            },
+            {
+              "kind": "field",
+              "name": "disabled",
+              "inheritedFrom": {
+                "name": "N",
+                "module": "dist/range.wc.js"
+              }
+            },
+            {
+              "kind": "field",
+              "name": "id",
+              "inheritedFrom": {
+                "name": "N",
+                "module": "dist/range.wc.js"
+              }
+            },
+            {
+              "kind": "field",
+              "name": "max",
+              "inheritedFrom": {
+                "name": "N",
+                "module": "dist/range.wc.js"
+              }
+            },
+            {
+              "kind": "field",
+              "name": "min",
+              "inheritedFrom": {
+                "name": "N",
+                "module": "dist/range.wc.js"
+              }
+            },
+            {
+              "kind": "field",
+              "name": "step",
+              "inheritedFrom": {
+                "name": "N",
+                "module": "dist/range.wc.js"
+              }
+            },
+            {
+              "kind": "field",
+              "name": "name",
+              "inheritedFrom": {
+                "name": "N",
+                "module": "dist/range.wc.js"
+              }
+            },
+            {
+              "kind": "field",
+              "name": "discrete",
+              "inheritedFrom": {
+                "name": "N",
+                "module": "dist/range.wc.js"
+              }
             }
           ],
           "attributes": [
@@ -1300,7 +1376,11 @@
             },
             {
               "name": "value",
-              "fieldName": "value"
+              "fieldName": "value",
+              "inheritedFrom": {
+                "name": "N",
+                "module": "dist/range.wc.js"
+              }
             },
             {
               "name": "options",
@@ -1323,28 +1403,100 @@
               "fieldName": "maxselectsValidationMessage"
             },
             {
+              "name": "requiredValidationMessage",
+              "fieldName": "requiredValidationMessage"
+            },
+            {
               "name": "validationMessages",
               "fieldName": "validationMessages"
             },
             {
               "name": "label",
-              "fieldName": "label"
+              "fieldName": "label",
+              "inheritedFrom": {
+                "name": "N",
+                "module": "dist/range.wc.js"
+              }
             },
             {
               "name": "required",
-              "fieldName": "required"
+              "fieldName": "required",
+              "inheritedFrom": {
+                "name": "N",
+                "module": "dist/range.wc.js"
+              }
             },
             {
               "name": "getValue",
-              "fieldName": "getValue"
+              "fieldName": "getValue",
+              "inheritedFrom": {
+                "name": "N",
+                "module": "dist/range.wc.js"
+              }
             },
             {
               "name": "reportValidity",
               "fieldName": "reportValidity"
+            },
+            {
+              "name": "disabled",
+              "fieldName": "disabled",
+              "inheritedFrom": {
+                "name": "N",
+                "module": "dist/range.wc.js"
+              }
+            },
+            {
+              "name": "id",
+              "fieldName": "id",
+              "inheritedFrom": {
+                "name": "N",
+                "module": "dist/range.wc.js"
+              }
+            },
+            {
+              "name": "max",
+              "fieldName": "max",
+              "inheritedFrom": {
+                "name": "N",
+                "module": "dist/range.wc.js"
+              }
+            },
+            {
+              "name": "min",
+              "fieldName": "min",
+              "inheritedFrom": {
+                "name": "N",
+                "module": "dist/range.wc.js"
+              }
+            },
+            {
+              "name": "step",
+              "fieldName": "step",
+              "inheritedFrom": {
+                "name": "N",
+                "module": "dist/range.wc.js"
+              }
+            },
+            {
+              "name": "name",
+              "fieldName": "name",
+              "inheritedFrom": {
+                "name": "N",
+                "module": "dist/range.wc.js"
+              }
+            },
+            {
+              "name": "discrete",
+              "fieldName": "discrete",
+              "inheritedFrom": {
+                "name": "N",
+                "module": "dist/range.wc.js"
+              }
             }
           ],
           "superclass": {
-            "name": "G",
+            "name": "N",
             "module": "/dist/svelte.js"
           },
           "tagName": "jp-checkbox",
@@ -1364,7 +1516,7 @@
           "kind": "js",
           "name": "default",
           "declaration": {
-            "name": "A",
+            "name": "H",
             "module": "dist/checkbox.wc.js"
           }
         }
@@ -1614,11 +1766,7 @@
           "members": [
             {
               "kind": "field",
-              "name": "attachedInternals",
-              "inheritedFrom": {
-                "name": "A",
-                "module": "dist/checkbox.wc.js"
-              }
+              "name": "attachedInternals"
             },
             {
               "kind": "field",
@@ -1626,11 +1774,7 @@
             },
             {
               "kind": "field",
-              "name": "value",
-              "inheritedFrom": {
-                "name": "A",
-                "module": "dist/checkbox.wc.js"
-              }
+              "name": "value"
             },
             {
               "kind": "field",
@@ -1650,35 +1794,19 @@
             },
             {
               "kind": "field",
-              "name": "label",
-              "inheritedFrom": {
-                "name": "A",
-                "module": "dist/checkbox.wc.js"
-              }
+              "name": "label"
             },
             {
               "kind": "field",
-              "name": "options",
-              "inheritedFrom": {
-                "name": "A",
-                "module": "dist/checkbox.wc.js"
-              }
+              "name": "options"
             },
             {
               "kind": "field",
-              "name": "required",
-              "inheritedFrom": {
-                "name": "A",
-                "module": "dist/checkbox.wc.js"
-              }
+              "name": "required"
             },
             {
               "kind": "field",
-              "name": "validationMessages",
-              "inheritedFrom": {
-                "name": "A",
-                "module": "dist/checkbox.wc.js"
-              }
+              "name": "validationMessages"
             },
             {
               "kind": "field",
@@ -1687,11 +1815,7 @@
             {
               "kind": "field",
               "name": "getValue",
-              "readonly": true,
-              "inheritedFrom": {
-                "name": "A",
-                "module": "dist/checkbox.wc.js"
-              }
+              "readonly": true
             },
             {
               "kind": "field",
@@ -1737,57 +1861,12 @@
                 "name": "E",
                 "module": "dist/confirm.wc.js"
               }
-            },
-            {
-              "kind": "field",
-              "name": "minSelects",
-              "inheritedFrom": {
-                "name": "A",
-                "module": "dist/checkbox.wc.js"
-              }
-            },
-            {
-              "kind": "field",
-              "name": "maxSelects",
-              "inheritedFrom": {
-                "name": "A",
-                "module": "dist/checkbox.wc.js"
-              }
-            },
-            {
-              "kind": "field",
-              "name": "minselectsValidationMessage",
-              "inheritedFrom": {
-                "name": "A",
-                "module": "dist/checkbox.wc.js"
-              }
-            },
-            {
-              "kind": "field",
-              "name": "maxselectsValidationMessage",
-              "inheritedFrom": {
-                "name": "A",
-                "module": "dist/checkbox.wc.js"
-              }
-            },
-            {
-              "kind": "field",
-              "name": "reportValidity",
-              "readonly": true,
-              "inheritedFrom": {
-                "name": "A",
-                "module": "dist/checkbox.wc.js"
-              }
             }
           ],
           "attributes": [
             {
               "name": "attachedInternals",
-              "fieldName": "attachedInternals",
-              "inheritedFrom": {
-                "name": "A",
-                "module": "dist/checkbox.wc.js"
-              }
+              "fieldName": "attachedInternals"
             },
             {
               "name": "service",
@@ -1795,11 +1874,7 @@
             },
             {
               "name": "value",
-              "fieldName": "value",
-              "inheritedFrom": {
-                "name": "A",
-                "module": "dist/checkbox.wc.js"
-              }
+              "fieldName": "value"
             },
             {
               "name": "id",
@@ -1819,35 +1894,19 @@
             },
             {
               "name": "label",
-              "fieldName": "label",
-              "inheritedFrom": {
-                "name": "A",
-                "module": "dist/checkbox.wc.js"
-              }
+              "fieldName": "label"
             },
             {
               "name": "options",
-              "fieldName": "options",
-              "inheritedFrom": {
-                "name": "A",
-                "module": "dist/checkbox.wc.js"
-              }
+              "fieldName": "options"
             },
             {
               "name": "required",
-              "fieldName": "required",
-              "inheritedFrom": {
-                "name": "A",
-                "module": "dist/checkbox.wc.js"
-              }
+              "fieldName": "required"
             },
             {
               "name": "validationMessages",
-              "fieldName": "validationMessages",
-              "inheritedFrom": {
-                "name": "A",
-                "module": "dist/checkbox.wc.js"
-              }
+              "fieldName": "validationMessages"
             },
             {
               "name": "requiredValidationMessage",
@@ -1855,11 +1914,7 @@
             },
             {
               "name": "getValue",
-              "fieldName": "getValue",
-              "inheritedFrom": {
-                "name": "A",
-                "module": "dist/checkbox.wc.js"
-              }
+              "fieldName": "getValue"
             },
             {
               "name": "save",
@@ -1903,46 +1958,6 @@
               "inheritedFrom": {
                 "name": "E",
                 "module": "dist/confirm.wc.js"
-              }
-            },
-            {
-              "name": "minSelects",
-              "fieldName": "minSelects",
-              "inheritedFrom": {
-                "name": "A",
-                "module": "dist/checkbox.wc.js"
-              }
-            },
-            {
-              "name": "maxSelects",
-              "fieldName": "maxSelects",
-              "inheritedFrom": {
-                "name": "A",
-                "module": "dist/checkbox.wc.js"
-              }
-            },
-            {
-              "name": "minselectsValidationMessage",
-              "fieldName": "minselectsValidationMessage",
-              "inheritedFrom": {
-                "name": "A",
-                "module": "dist/checkbox.wc.js"
-              }
-            },
-            {
-              "name": "maxselectsValidationMessage",
-              "fieldName": "maxselectsValidationMessage",
-              "inheritedFrom": {
-                "name": "A",
-                "module": "dist/checkbox.wc.js"
-              }
-            },
-            {
-              "name": "reportValidity",
-              "fieldName": "reportValidity",
-              "inheritedFrom": {
-                "name": "A",
-                "module": "dist/checkbox.wc.js"
               }
             }
           ],
@@ -2249,104 +2264,6 @@
             {
               "kind": "field",
               "name": "closable"
-            },
-            {
-              "kind": "field",
-              "name": "attachedInternals",
-              "inheritedFrom": {
-                "name": "A",
-                "module": "dist/checkbox.wc.js"
-              }
-            },
-            {
-              "kind": "field",
-              "name": "value",
-              "inheritedFrom": {
-                "name": "A",
-                "module": "dist/checkbox.wc.js"
-              }
-            },
-            {
-              "kind": "field",
-              "name": "options",
-              "inheritedFrom": {
-                "name": "A",
-                "module": "dist/checkbox.wc.js"
-              }
-            },
-            {
-              "kind": "field",
-              "name": "minSelects",
-              "inheritedFrom": {
-                "name": "A",
-                "module": "dist/checkbox.wc.js"
-              }
-            },
-            {
-              "kind": "field",
-              "name": "maxSelects",
-              "inheritedFrom": {
-                "name": "A",
-                "module": "dist/checkbox.wc.js"
-              }
-            },
-            {
-              "kind": "field",
-              "name": "minselectsValidationMessage",
-              "inheritedFrom": {
-                "name": "A",
-                "module": "dist/checkbox.wc.js"
-              }
-            },
-            {
-              "kind": "field",
-              "name": "maxselectsValidationMessage",
-              "inheritedFrom": {
-                "name": "A",
-                "module": "dist/checkbox.wc.js"
-              }
-            },
-            {
-              "kind": "field",
-              "name": "validationMessages",
-              "inheritedFrom": {
-                "name": "A",
-                "module": "dist/checkbox.wc.js"
-              }
-            },
-            {
-              "kind": "field",
-              "name": "label",
-              "inheritedFrom": {
-                "name": "A",
-                "module": "dist/checkbox.wc.js"
-              }
-            },
-            {
-              "kind": "field",
-              "name": "required",
-              "inheritedFrom": {
-                "name": "A",
-                "module": "dist/checkbox.wc.js"
-              }
-            },
-            {
-              "kind": "field",
-              "name": "getValue",
-              "readonly": true,
-              "inheritedFrom": {
-                "name": "A",
-                "module": "dist/checkbox.wc.js"
-              }
-            },
-            {
-              "kind": "field",
-              "name": "reportValidity",
-              "readonly": true,
-              "inheritedFrom": {
-                "name": "A",
-                "module": "dist/checkbox.wc.js"
-              }
             }
           ],
           "attributes": [
@@ -2369,102 +2286,6 @@
             {
               "name": "closable",
               "fieldName": "closable"
-            },
-            {
-              "name": "attachedInternals",
-              "fieldName": "attachedInternals",
-              "inheritedFrom": {
-                "name": "A",
-                "module": "dist/checkbox.wc.js"
-              }
-            },
-            {
-              "name": "value",
-              "fieldName": "value",
-              "inheritedFrom": {
-                "name": "A",
-                "module": "dist/checkbox.wc.js"
-              }
-            },
-            {
-              "name": "options",
-              "fieldName": "options",
-              "inheritedFrom": {
-                "name": "A",
-                "module": "dist/checkbox.wc.js"
-              }
-            },
-            {
-              "name": "minSelects",
-              "fieldName": "minSelects",
-              "inheritedFrom": {
-                "name": "A",
-                "module": "dist/checkbox.wc.js"
-              }
-            },
-            {
-              "name": "maxSelects",
-              "fieldName": "maxSelects",
-              "inheritedFrom": {
-                "name": "A",
-                "module": "dist/checkbox.wc.js"
-              }
-            },
-            {
-              "name": "minselectsValidationMessage",
-              "fieldName": "minselectsValidationMessage",
-              "inheritedFrom": {
-                "name": "A",
-                "module": "dist/checkbox.wc.js"
-              }
-            },
-            {
-              "name": "maxselectsValidationMessage",
-              "fieldName": "maxselectsValidationMessage",
-              "inheritedFrom": {
-                "name": "A",
-                "module": "dist/checkbox.wc.js"
-              }
-            },
-            {
-              "name": "validationMessages",
-              "fieldName": "validationMessages",
-              "inheritedFrom": {
-                "name": "A",
-                "module": "dist/checkbox.wc.js"
-              }
-            },
-            {
-              "name": "label",
-              "fieldName": "label",
-              "inheritedFrom": {
-                "name": "A",
-                "module": "dist/checkbox.wc.js"
-              }
-            },
-            {
-              "name": "required",
-              "fieldName": "required",
-              "inheritedFrom": {
-                "name": "A",
-                "module": "dist/checkbox.wc.js"
-              }
-            },
-            {
-              "name": "getValue",
-              "fieldName": "getValue",
-              "inheritedFrom": {
-                "name": "A",
-                "module": "dist/checkbox.wc.js"
-              }
-            },
-            {
-              "name": "reportValidity",
-              "fieldName": "reportValidity",
-              "inheritedFrom": {
-                "name": "A",
-                "module": "dist/checkbox.wc.js"
-              }
             }
           ],
           "superclass": {
@@ -3348,7 +3169,7 @@
             }
           ],
           "superclass": {
-            "name": "we",
+            "name": "ge",
             "module": "/dist/svelte.js"
           },
           "tagName": "jp-file-upload",
@@ -5410,35 +5231,19 @@
           "members": [
             {
               "kind": "field",
-              "name": "attachedInternals",
-              "inheritedFrom": {
-                "name": "A",
-                "module": "dist/checkbox.wc.js"
-              }
+              "name": "attachedInternals"
             },
             {
               "kind": "field",
-              "name": "options",
-              "inheritedFrom": {
-                "name": "A",
-                "module": "dist/checkbox.wc.js"
-              }
+              "name": "options"
             },
             {
               "kind": "field",
-              "name": "required",
-              "inheritedFrom": {
-                "name": "A",
-                "module": "dist/checkbox.wc.js"
-              }
+              "name": "required"
             },
             {
               "kind": "field",
-              "name": "value",
-              "inheritedFrom": {
-                "name": "A",
-                "module": "dist/checkbox.wc.js"
-              }
+              "name": "value"
             },
             {
               "kind": "field",
@@ -5454,29 +5259,17 @@
             },
             {
               "kind": "field",
-              "name": "label",
-              "inheritedFrom": {
-                "name": "A",
-                "module": "dist/checkbox.wc.js"
-              }
+              "name": "label"
             },
             {
               "kind": "field",
               "name": "getValue",
-              "readonly": true,
-              "inheritedFrom": {
-                "name": "A",
-                "module": "dist/checkbox.wc.js"
-              }
+              "readonly": true
             },
             {
               "kind": "field",
               "name": "reportValidity",
-              "readonly": true,
-              "inheritedFrom": {
-                "name": "A",
-                "module": "dist/checkbox.wc.js"
-              }
+              "readonly": true
             },
             {
               "kind": "field",
@@ -5517,80 +5310,24 @@
                 "name": "E",
                 "module": "dist/confirm.wc.js"
               }
-            },
-            {
-              "kind": "field",
-              "name": "minSelects",
-              "inheritedFrom": {
-                "name": "A",
-                "module": "dist/checkbox.wc.js"
-              }
-            },
-            {
-              "kind": "field",
-              "name": "maxSelects",
-              "inheritedFrom": {
-                "name": "A",
-                "module": "dist/checkbox.wc.js"
-              }
-            },
-            {
-              "kind": "field",
-              "name": "minselectsValidationMessage",
-              "inheritedFrom": {
-                "name": "A",
-                "module": "dist/checkbox.wc.js"
-              }
-            },
-            {
-              "kind": "field",
-              "name": "maxselectsValidationMessage",
-              "inheritedFrom": {
-                "name": "A",
-                "module": "dist/checkbox.wc.js"
-              }
-            },
-            {
-              "kind": "field",
-              "name": "validationMessages",
-              "inheritedFrom": {
-                "name": "A",
-                "module": "dist/checkbox.wc.js"
-              }
             }
           ],
           "attributes": [
             {
               "name": "attachedInternals",
-              "fieldName": "attachedInternals",
-              "inheritedFrom": {
-                "name": "A",
-                "module": "dist/checkbox.wc.js"
-              }
+              "fieldName": "attachedInternals"
             },
             {
               "name": "options",
-              "fieldName": "options",
-              "inheritedFrom": {
-                "name": "A",
-                "module": "dist/checkbox.wc.js"
-              }
+              "fieldName": "options"
             },
             {
               "name": "required",
-              "fieldName": "required",
-              "inheritedFrom": {
-                "name": "A",
-                "module": "dist/checkbox.wc.js"
-              }
+              "fieldName": "required"
             },
             {
               "name": "value",
-              "fieldName": "value",
-              "inheritedFrom": {
-                "name": "A",
-                "module": "dist/checkbox.wc.js"
-              }
+              "fieldName": "value"
             },
             {
               "name": "name",
@@ -5606,27 +5343,15 @@
             },
             {
               "name": "label",
-              "fieldName": "label",
-              "inheritedFrom": {
-                "name": "A",
-                "module": "dist/checkbox.wc.js"
-              }
+              "fieldName": "label"
             },
             {
               "name": "getValue",
-              "fieldName": "getValue",
-              "inheritedFrom": {
-                "name": "A",
-                "module": "dist/checkbox.wc.js"
-              }
+              "fieldName": "getValue"
             },
             {
               "name": "reportValidity",
-              "fieldName": "reportValidity",
-              "inheritedFrom": {
-                "name": "A",
-                "module": "dist/checkbox.wc.js"
-              }
+              "fieldName": "reportValidity"
             },
             {
               "name": "title",
@@ -5666,46 +5391,6 @@
               "inheritedFrom": {
                 "name": "E",
                 "module": "dist/confirm.wc.js"
-              }
-            },
-            {
-              "name": "minSelects",
-              "fieldName": "minSelects",
-              "inheritedFrom": {
-                "name": "A",
-                "module": "dist/checkbox.wc.js"
-              }
-            },
-            {
-              "name": "maxSelects",
-              "fieldName": "maxSelects",
-              "inheritedFrom": {
-                "name": "A",
-                "module": "dist/checkbox.wc.js"
-              }
-            },
-            {
-              "name": "minselectsValidationMessage",
-              "fieldName": "minselectsValidationMessage",
-              "inheritedFrom": {
-                "name": "A",
-                "module": "dist/checkbox.wc.js"
-              }
-            },
-            {
-              "name": "maxselectsValidationMessage",
-              "fieldName": "maxselectsValidationMessage",
-              "inheritedFrom": {
-                "name": "A",
-                "module": "dist/checkbox.wc.js"
-              }
-            },
-            {
-              "name": "validationMessages",
-              "fieldName": "validationMessages",
-              "inheritedFrom": {
-                "name": "A",
-                "module": "dist/checkbox.wc.js"
               }
             }
           ],

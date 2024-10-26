@@ -158,11 +158,19 @@
         { "name": "maxSelects", "values": [] },
         { "name": "minselectsValidationMessage", "values": [] },
         { "name": "maxselectsValidationMessage", "values": [] },
+        { "name": "requiredValidationMessage", "values": [] },
         { "name": "validationMessages", "values": [] },
         { "name": "label", "values": [] },
         { "name": "required", "values": [] },
         { "name": "getValue", "values": [] },
-        { "name": "reportValidity", "values": [] }
+        { "name": "reportValidity", "values": [] },
+        { "name": "disabled", "values": [] },
+        { "name": "id", "values": [] },
+        { "name": "max", "values": [] },
+        { "name": "min", "values": [] },
+        { "name": "step", "values": [] },
+        { "name": "name", "values": [] },
+        { "name": "discrete", "values": [] }
       ],
       "references": []
     },
@@ -219,12 +227,7 @@
         { "name": "message", "values": [] },
         { "name": "reject", "values": [] },
         { "name": "accept", "values": [] },
-        { "name": "closable", "values": [] },
-        { "name": "minSelects", "values": [] },
-        { "name": "maxSelects", "values": [] },
-        { "name": "minselectsValidationMessage", "values": [] },
-        { "name": "maxselectsValidationMessage", "values": [] },
-        { "name": "reportValidity", "values": [] }
+        { "name": "closable", "values": [] }
       ],
       "references": []
     },
@@ -268,19 +271,7 @@
         { "name": "message", "values": [] },
         { "name": "reject", "values": [] },
         { "name": "accept", "values": [] },
-        { "name": "closable", "values": [] },
-        { "name": "attachedInternals", "values": [] },
-        { "name": "value", "values": [] },
-        { "name": "options", "values": [] },
-        { "name": "minSelects", "values": [] },
-        { "name": "maxSelects", "values": [] },
-        { "name": "minselectsValidationMessage", "values": [] },
-        { "name": "maxselectsValidationMessage", "values": [] },
-        { "name": "validationMessages", "values": [] },
-        { "name": "label", "values": [] },
-        { "name": "required", "values": [] },
-        { "name": "getValue", "values": [] },
-        { "name": "reportValidity", "values": [] }
+        { "name": "closable", "values": [] }
       ],
       "references": []
     },
@@ -674,12 +665,7 @@
         { "name": "message", "values": [] },
         { "name": "reject", "values": [] },
         { "name": "accept", "values": [] },
-        { "name": "closable", "values": [] },
-        { "name": "minSelects", "values": [] },
-        { "name": "maxSelects", "values": [] },
-        { "name": "minselectsValidationMessage", "values": [] },
-        { "name": "maxselectsValidationMessage", "values": [] },
-        { "name": "validationMessages", "values": [] }
+        { "name": "closable", "values": [] }
       ],
       "references": []
     },
