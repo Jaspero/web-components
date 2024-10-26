@@ -115,7 +115,6 @@
   <jp-file-list label="File list" required="true"></jp-file-list>
   <jp-datepicker label="Pick a date" required="true" disabled="true"></jp-datepicker>
   <jp-date-range label="Pick a date range" required="true"></jp-date-range>
-  <jp-color label="Pick a color" required="true"></jp-color>
   <jp-ckeditor label="CK Editor" value="<p>Blup</p>" required="true"></jp-ckeditor>
   <jp-chips label="Chips" placeholder="Placeholder" required="true"></jp-chips>
   <jp-checkbox label="Checkbox" {options} required="true"></jp-checkbox>
