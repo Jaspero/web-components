@@ -121,6 +121,7 @@
 
   async function exportData() {
     exportLoading = true;
+    if (service.export === undefined) return;
 
     const data = await service.export();
     const resolved = await Promise.all(
@@ -165,6 +166,7 @@
   }
 
   function dragstart(event: DragEvent, header: TableHeader) {
+    if (event.dataTransfer === null) return;
     event.dataTransfer.setData('text/plain', header.key);
     isDraging = true;
   }
@@ -176,6 +178,7 @@
 
   function drop(event: DragEvent) {
     event.preventDefault();
+    if (event.dataTransfer === null) return;
     const draggedColumn = event.dataTransfer.getData('text/plain');
     const currentIndex = columnOrder.indexOf(draggedColumn);
     const targetIndex = (event.target as HTMLElement)?.dataset.index;
@@ -197,19 +200,23 @@
   $: activeHeaders = headers.filter((it) => !it.disabled);
 </script>
 
-<div class="table-card">
+<div class="jp-table-card">
   {#if showArrangingColumns || showExport}
-    <div class="table-header">
+    <div class="jp-table-header">
       {#if showArrangingColumns}
         {#if !arrangingColumns}
-          <button type="button" on:click={arrangeColumns} class="table-button settings-button">
+          <button
+            type="button"
+            on:click={arrangeColumns}
+            class="jp-table-button jp-table-settings-button"
+          >
             {wording.ARRANGE_COLUMNS}
           </button>
         {:else}
           <button
             type="button"
             on:click={finishArrangingColumns}
-            class="table-button settings-button"
+            class="jp-table-button jp-table-settings-button"
           >
             {wording.FINISH_ARRANGING}
           </button>
@@ -219,7 +226,7 @@
         &nbsp;
         <button
           type="button"
-          class="table-button settings-button"
+          class="jp-table-button jp-table-settings-button"
           on:click={exportData}
           class:loading={exportLoading}
         >
@@ -228,15 +235,16 @@
       {/if}
     </div>
   {/if}
-  <div class="table-container">
-    <table>
+  <div class="jp-table-container">
+    <table class="jp-table-table">
       {#if activeHeaders}
         <tr>
           {#each activeHeaders as header, index}
             <th
-              class:sortable={header.sortable}
-              class:sticky-first={index === 0 && freezeFirstColumn}
-              class:sticky-last={index === activeHeaders.length - 1 && freezeLastColumn}
+              class="jp-table-header-content"
+              class:jp-table-sortable={header.sortable}
+              class:jp-table-sticky-first={index === 0 && freezeFirstColumn}
+              class:jp-table-sticky-last={index === activeHeaders.length - 1 && freezeLastColumn}
               on:click={() => adjustSort(header)}
               on:drop={drop}
               on:dragover={dragover}
@@ -261,11 +269,12 @@
             {#each activeHeaders as header, index}
               <td
                 on:click={(e) => rowClick(row, index, header, e)}
-                class:sticky-first={index === 0 && freezeFirstColumn}
-                class:sticky-last={index === activeHeaders.length - 1 && freezeLastColumn}
+                class="jp-table-cell-content"
+                class:jp-table-sticky-first={index === 0 && freezeFirstColumn}
+                class:jp-table-sticky-last={index === activeHeaders.length - 1 && freezeLastColumn}
               >
                 {#await handleColumn(header, row, index) then val}
-                  <span class="cell">
+                  <span class="jp-table-cell">
                     {@html val}
                   </span>
                 {/await}
@@ -279,121 +288,102 @@
 </div>
 
 <style lang="postcss">
-  .table-card {
-    background-color: var(--background-primary);
-    -webkit-border-radius: 0.25rem;
-    -moz-border-radius: 0.25rem;
-    border-radius: 0.25rem;
-    -webkit-box-shadow: 0 3px 12px rgba(0, 0, 0, 0.16);
-    -moz-box-shadow: 0 3px 12px rgba(0, 0, 0, 0.16);
-    box-shadow: 0 3px 12px rgba(0, 0, 0, 0.16);
-  }
+  .jp-table {
+    &-card {
+      background-color: var(--background-primary);
+      border-radius: 0.25rem;
+      box-shadow: 0 3px 12px rgba(0, 0, 0, 0.16);
+    }
 
-  .table-container {
-    overflow-x: auto;
-    width: 100%;
-  }
+    &-container {
+      overflow-x: auto;
+      width: 100%;
+    }
 
-  table {
-    width: 100%;
-  }
+    &-table {
+      width: 100%;
+    }
 
-  th,
-  td {
-    text-align: left;
-    white-space: nowrap;
-    font-size: 0.75rem;
-    font-weight: normal;
-    padding: 0.5rem;
-    border-bottom: 1px solid rgba(0, 0, 0, 0.16);
-  }
+    &-header-content,
+    &-cell-content {
+      text-align: left;
+      white-space: nowrap;
+      font-size: 0.75rem;
+      font-weight: normal;
+      padding: 0.5rem;
+      border-bottom: 1px solid rgba(0, 0, 0, 0.16);
+    }
 
-  th {
-    opacity: 0.75;
-  }
+    &-header {
+      padding: 1rem;
+      min-height: 68px;
+      display: flex;
+      justify-content: flex-end;
 
-  .cell {
-    display: block;
-    max-width: 64ch;
-    overflow: hidden;
-    text-overflow: ellipsis;
-  }
+      &-content {
+        opacity: 0.75;
+      }
+    }
 
-  .table-header {
-    padding: 1rem;
-    min-height: 68px;
-    display: flex;
-    justify-content: flex-end;
-  }
+    &-cell {
+      display: block;
+      max-width: 64ch;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
 
-  .table-button {
-    display: -webkit-box;
-    display: -webkit-flex;
-    display: -moz-box;
-    display: -ms-flexbox;
-    display: flex;
-    -webkit-box-pack: center;
-    -webkit-justify-content: center;
-    -moz-box-pack: center;
-    -ms-flex-pack: center;
-    justify-content: center;
-    -webkit-box-align: center;
-    -webkit-align-items: center;
-    -moz-box-align: center;
-    -ms-flex-align: center;
-    align-items: center;
-    -webkit-border-radius: 0.25rem;
-    -moz-border-radius: 0.25rem;
-    border-radius: 0.25rem;
-    min-width: 4rem;
-    height: 2.25rem;
-    padding: 0 1rem;
-    -webkit-user-select: none;
-    -moz-user-select: none;
-    -ms-user-select: none;
-    user-select: none;
-  }
+    &-button {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      border-radius: 0.25rem;
+      min-width: 4rem;
+      height: 2.25rem;
+      padding: 0 1rem;
+      user-select: none;
+    }
 
-  .settings-button {
-    background-color: var(--background-secondary);
-    color: var(--text-on-secondary);
-  }
+    &-settings-button {
+      background-color: var(--background-secondary);
+      color: var(--text-on-secondary);
+    }
 
-  .sticky-first {
-    position: sticky;
-    left: 0;
-    opacity: 1;
-    background-color: var(--background-primary);
-    z-index: 1;
-  }
+    &-sticky-first {
+      position: sticky;
+      left: 0;
+      opacity: 1;
+      background-color: var(--background-primary);
+      z-index: 1;
 
-  .sticky-first:after {
-    content: '';
-    position: absolute;
-    top: 0;
-    right: 0;
-    bottom: 0;
-    width: 0.5px;
-    height: 100%;
-    background-color: rgba(0, 0, 0, 0.16);
-  }
+      &:after {
+        content: '';
+        position: absolute;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        width: 0.5px;
+        height: 100%;
+        background-color: rgba(0, 0, 0, 0.16);
+      }
+    }
 
-  .sticky-last {
-    position: sticky;
-    right: 0;
-    opacity: 1;
-    background-color: var(--background-primary);
-    z-index: 1;
-  }
+    &-sticky-last {
+      position: sticky;
+      right: 0;
+      opacity: 1;
+      background-color: var(--background-primary);
+      z-index: 1;
 
-  .sticky-last:before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    bottom: 0;
-    width: 0.5px;
-    height: 100%;
-    background-color: rgba(0, 0, 0, 0.16);
+      &:before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        bottom: 0;
+        width: 0.5px;
+        height: 100%;
+        background-color: rgba(0, 0, 0, 0.16);
+      }
+    }
   }
 </style>
