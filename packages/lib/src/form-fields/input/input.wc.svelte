@@ -111,11 +111,11 @@
         attachedInternals.setValidity({});
       }
     }
-
+    value = String(value);
     attachedInternals.setFormValue(value);
     dispatch('value', { value });
   }
-  $: fieldPadding = labelType !== 'outside' && !label;
+  $: fieldPadding = labelType === 'outside' || !label;
   $: displayLabel = required ? `${label} *` : label;
 
   onMount(() => {
@@ -319,7 +319,7 @@
         on:focus={() => (focused = true)}
         on:blur={() => (focused = false)}
       />
-      <span>{value}</span>
+      <span class="jp-input-field-color-picker-value">{value}</span>
     {/if}
     {#if suffix && (value || focused)}
       <div class="jp-input-field-suffix" class:jp-input-field-suffix-move={fieldPadding}>
