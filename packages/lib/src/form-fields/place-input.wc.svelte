@@ -329,24 +329,8 @@
     position: absolute;
     top: 50%;
     left: 0.75rem;
-    -webkit-transform: translateY(-50%);
-    -moz-transform: translateY(-50%);
-    -ms-transform: translateY(-50%);
-    -o-transform: translateY(-50%);
     transform: translateY(-50%);
     font-size: 1rem;
-    -webkit-transition:
-      transform 0.3s,
-      top 0.3s,
-      font-size 0.3s;
-    -o-transition:
-      transform 0.3s,
-      top 0.3s,
-      font-size 0.3s;
-    -moz-transition:
-      transform 0.3s,
-      top 0.3s,
-      font-size 0.3s;
     transition:
       transform 0.3s,
       top 0.3s,
@@ -355,10 +339,6 @@
 
   .field-label.move {
     top: 0.25rem;
-    -webkit-transform: translateY(0);
-    -moz-transform: translateY(0);
-    -ms-transform: translateY(0);
-    -o-transform: translateY(0);
     transform: translateY(0);
     font-size: 0.75rem;
   }
@@ -400,9 +380,6 @@
 
   .searchInput::placeholder {
     opacity: 0;
-    -webkit-transition: opacity 0.3s;
-    -o-transition: opacity 0.3s;
-    -moz-transition: opacity 0.3s;
     transition: opacity 0.3s;
   }
 
@@ -459,31 +436,15 @@
   .overlay {
     z-index: 100;
     position: absolute;
-    display: -webkit-box;
-    display: -webkit-flex;
-    display: -moz-box;
-    display: -ms-flexbox;
     display: flex;
-    -webkit-box-orient: vertical;
-    -webkit-box-direction: normal;
-    -webkit-flex-direction: column;
-    -moz-box-orient: vertical;
-    -moz-box-direction: normal;
-    -ms-flex-direction: column;
     flex-direction: column;
     max-width: 370px;
     max-height: 420px;
     width: 100%;
     padding: 0.7rem;
     overflow-y: hidden;
-    -webkit-border-bottom-left-radius: 0.25rem;
-    -moz-border-radius-bottomleft: 0.25rem;
     border-bottom-left-radius: 0.25rem;
-    -webkit-border-bottom-right-radius: 0.25rem;
-    -moz-border-radius-bottomright: 0.25rem;
     border-bottom-right-radius: 0.25rem;
-    -webkit-box-shadow: 0 6px 9px rgba(0, 0, 0, 0.16);
-    -moz-box-shadow: 0 6px 9px rgba(0, 0, 0, 0.16);
     box-shadow: 0 6px 9px rgba(0, 0, 0, 0.16);
     background-color: var(--background-primary);
   }

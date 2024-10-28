@@ -281,11 +281,7 @@
 <style lang="postcss">
   .table-card {
     background-color: var(--background-primary);
-    -webkit-border-radius: 0.25rem;
-    -moz-border-radius: 0.25rem;
     border-radius: 0.25rem;
-    -webkit-box-shadow: 0 3px 12px rgba(0, 0, 0, 0.16);
-    -moz-box-shadow: 0 3px 12px rgba(0, 0, 0, 0.16);
     box-shadow: 0 3px 12px rgba(0, 0, 0, 0.16);
   }
 
@@ -327,30 +323,13 @@
   }
 
   .table-button {
-    display: -webkit-box;
-    display: -webkit-flex;
-    display: -moz-box;
-    display: -ms-flexbox;
     display: flex;
-    -webkit-box-pack: center;
-    -webkit-justify-content: center;
-    -moz-box-pack: center;
-    -ms-flex-pack: center;
     justify-content: center;
-    -webkit-box-align: center;
-    -webkit-align-items: center;
-    -moz-box-align: center;
-    -ms-flex-align: center;
     align-items: center;
-    -webkit-border-radius: 0.25rem;
-    -moz-border-radius: 0.25rem;
     border-radius: 0.25rem;
     min-width: 4rem;
     height: 2.25rem;
     padding: 0 1rem;
-    -webkit-user-select: none;
-    -moz-user-select: none;
-    -ms-user-select: none;
     user-select: none;
   }
 
