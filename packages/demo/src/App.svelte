@@ -5,7 +5,6 @@
   import CheckboxDemo from './FormFieldDemos/CheckboxDemo.svelte';
   import ChipsDemo from './FormFieldDemos/ChipsDemo.svelte';
   import CkEditorDemo from './FormFieldDemos/CkEditorDemo.svelte';
-  import ColorDemo from './FormFieldDemos/ColorDemo.svelte';
   import DateRangeDemo from './FormFieldDemos/DateRangeDemo.svelte';
   import DatepickerDemo from './FormFieldDemos/DatepickerDemo.svelte';
   import FileListDemo from './FormFieldDemos/FileListDemo.svelte';
@@ -64,7 +63,6 @@
       <!-- <CheckboxDemo /> -->
       <!-- <ChipsDemo /> -->
       <!-- <CkEditorDemo /> -->
-      <!-- <ColorDemo /> -->
       <!-- <DateRangeDemo /> -->
       <!-- <DatepickerDemo /> -->
       <!-- <FileListDemo /> -->
