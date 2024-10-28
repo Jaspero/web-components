@@ -1,6 +1,5 @@
 <script lang="ts">
   import '../../../../dist/input.wc.js';
-  import { bind } from '../../../../dist/bind.js';
   import '../../../../dist/input.css';
   import '../../../../dist/select.wc.js';
   import '../../../../dist/select.css';
@@ -28,6 +27,7 @@
   <jp-input label="type email" type="email" />
   <jp-input label="type tel" type="tel" />
   <jp-input label="type url" type="url" />
+  <jp-input label="type color" type="color"/>
   <jp-input label="pattern 'pattern'" pattern="pattern" />
   <button type="submit">submit</button>
   <jp-input label="" />
