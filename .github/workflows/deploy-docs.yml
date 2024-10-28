@@ -1,6 +1,10 @@
 name: Deploy Docs
 
 on:
+  workflow_run:
+    workflows: [Publish]
+    types:
+      - completed
   workflow_dispatch:
   push:
     branches:
@@ -30,7 +34,6 @@ jobs:
         run: |
           find node_modules/@docusaurus/theme-live-codeblock -name "*.css" -exec sed -i "s/overflow: hidden;/overflow: visible;/g" {} +
       - name: Copy Web Components
-        if: ${{ success() }} 
         run: |
           cp -r node_modules/@jaspero/web-components/dist static/c
           echo "t()" >> static/c/export.js
