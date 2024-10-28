@@ -94,22 +94,15 @@ function generateComponentExport(): Plugin {
 
         const wcImports = files
           .filter(file => file.endsWith('.wc.js'))
-          .map(file => `import('./${file}')`)
-          .join(',\n    ')
+          .map(file => `import("./${file}")`)
+          .join(',')
 
         const cssImports = files
           .filter(file => file.endsWith('.css'))
-          .map(file => `import('./${file}')`)
-          .join(',\n    ')
+          .map(file => `import("./${file}")`)
+          .join(',')
 
-        const content = `const t = () => {
-  return Promise.all([
-    ${cssImports},
-    ${wcImports}
-  ]);
-};
-
-export { t as default };
+        const content = `const t=()=>{${cssImports},${wcImports}};export {t as default};
 `
 
         await fs.promises.writeFile(outputFilePath, content)
