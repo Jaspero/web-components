@@ -249,21 +249,6 @@
       "references": []
     },
     {
-      "name": "jp-color",
-      "description": "\n---\n",
-      "attributes": [
-        { "name": "attachedInternals", "values": [] },
-        { "name": "id", "values": [] },
-        { "name": "name", "values": [] },
-        { "name": "value", "values": [] },
-        { "name": "label", "values": [] },
-        { "name": "disabled", "values": [] },
-        { "name": "required", "values": [] },
-        { "name": "getValue", "values": [] }
-      ],
-      "references": []
-    },
-    {
       "name": "jp-confirm",
       "description": "\n---\n",
       "attributes": [

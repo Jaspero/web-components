@@ -2134,110 +2134,6 @@
     },
     {
       "kind": "javascript-module",
-      "path": "dist/color.wc.js",
-      "declarations": [
-        {
-          "kind": "class",
-          "description": "",
-          "name": "x",
-          "members": [
-            {
-              "kind": "field",
-              "name": "attachedInternals"
-            },
-            {
-              "kind": "field",
-              "name": "id"
-            },
-            {
-              "kind": "field",
-              "name": "name"
-            },
-            {
-              "kind": "field",
-              "name": "value"
-            },
-            {
-              "kind": "field",
-              "name": "label"
-            },
-            {
-              "kind": "field",
-              "name": "disabled"
-            },
-            {
-              "kind": "field",
-              "name": "required"
-            },
-            {
-              "kind": "field",
-              "name": "getValue",
-              "readonly": true
-            }
-          ],
-          "attributes": [
-            {
-              "name": "attachedInternals",
-              "fieldName": "attachedInternals"
-            },
-            {
-              "name": "id",
-              "fieldName": "id"
-            },
-            {
-              "name": "name",
-              "fieldName": "name"
-            },
-            {
-              "name": "value",
-              "fieldName": "value"
-            },
-            {
-              "name": "label",
-              "fieldName": "label"
-            },
-            {
-              "name": "disabled",
-              "fieldName": "disabled"
-            },
-            {
-              "name": "required",
-              "fieldName": "required"
-            },
-            {
-              "name": "getValue",
-              "fieldName": "getValue"
-            }
-          ],
-          "superclass": {
-            "name": "H",
-            "module": "/dist/svelte.js"
-          },
-          "tagName": "jp-color",
-          "customElement": true
-        }
-      ],
-      "exports": [
-        {
-          "kind": "custom-element-definition",
-          "name": "jp-color",
-          "declaration": {
-            "name": "anonymous_0",
-            "module": "dist/color.wc.js"
-          }
-        },
-        {
-          "kind": "js",
-          "name": "default",
-          "declaration": {
-            "name": "x",
-            "module": "dist/color.wc.js"
-          }
-        }
-      ]
-    },
-    {
-      "kind": "javascript-module",
       "path": "dist/confirm.wc.js",
       "declarations": [
         {
@@ -4603,7 +4499,7 @@
         {
           "kind": "class",
           "description": "",
-          "name": "U",
+          "name": "R",
           "members": [
             {
               "kind": "field",
@@ -4670,7 +4566,7 @@
             }
           ],
           "superclass": {
-            "name": "W",
+            "name": "V",
             "module": "/dist/svelte.js"
           },
           "tagName": "jp-page-paginator",
@@ -4690,7 +4586,7 @@
           "kind": "js",
           "name": "default",
           "declaration": {
-            "name": "U",
+            "name": "R",
             "module": "dist/page-paginator.wc.js"
           }
         }
