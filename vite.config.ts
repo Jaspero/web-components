@@ -81,7 +81,7 @@ function minifyEs(): Plugin {
 function generateComponentExport(): Plugin {
   return {
     name: 'component-exporter',
-    async writeBundle(options: NormalizedOutputOptions, bundle: OutputBundle) {
+    generateBundle(options, bundle) {
       const componentsDir = path.resolve('dist')
       const outputFilePath = path.join(componentsDir, 'export.js')
 
@@ -90,7 +90,7 @@ function generateComponentExport(): Plugin {
       }
 
       try {
-        const files = await fs.promises.readdir(componentsDir)
+        const files = Object.keys(bundle)
 
         const wcImports = files
           .filter(file => file.endsWith('.wc.js'))
@@ -102,13 +102,16 @@ function generateComponentExport(): Plugin {
           .map(file => `import("./${file}")`)
           .join(',')
 
-        const content = `const t=()=>{${cssImports},${wcImports}};export {t as default};
-`
+        const content = `const t=()=>{${cssImports},${wcImports}};export{t as default};\n`
 
-        await fs.promises.writeFile(outputFilePath, content)
+        this.emitFile({
+          type: 'asset',
+          fileName: 'export.js',
+          source: content
+        })
       } catch (error) {
         throw error
       }
     }
-  };
+  }
 }
