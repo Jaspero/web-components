@@ -274,6 +274,7 @@
 
   header {
     z-index: 1;
+    position: -webkit-sticky;
     position: sticky;
     top: 0;
     display: flex;

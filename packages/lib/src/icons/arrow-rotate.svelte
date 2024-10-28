@@ -18,10 +18,17 @@
     height: 1rem;
     min-width: 1rem;
     min-height: 1rem;
+    -webkit-transition: 0.3s;
+    -o-transition: 0.3s;
+    -moz-transition: 0.3s;
     transition: 0.3s;
   }
 
   .select-arrow.rotate {
+    -webkit-transform: rotate(-180deg);
+    -moz-transform: rotate(-180deg);
+    -ms-transform: rotate(-180deg);
+    -o-transform: rotate(-180deg);
     transform: rotate(-180deg);
   }
 </style>
