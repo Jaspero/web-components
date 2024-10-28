@@ -3,7 +3,7 @@
  * and scoped locally.
  */
 
-.hero {
+ .hero {
   color: white;
   flex-grow: 1;
   display: flex;
@@ -35,6 +35,7 @@
     rgb(80, 30, 0) 100%
   );
 }
+
 
 .heroUpperContainer {
   display: flex;
@@ -148,4 +149,41 @@
 .terminalCode button > span {
   font-family: var(--ifm-font-family-monospace);
   font-size: var(--ifm-code-font-size);
+}
+
+@media screen and (max-width: 996px) {
+  .hero {
+    display: flex;
+    flex-direction: column;
+    align-itmes: center;
+    padding: 0;
+    overflow-x: hidden;
+    width: 100%;
+  }
+
+  .heroUpperContainer {
+    display: flex;
+    flex-direction: column;
+    align-itmes: center;
+    padding: 0;
+  }
+
+  .heroUpperContainer img {
+    padding: 3rem;
+  }
+
+  .documentationTitle{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .documentationTitle h1 {
+    display: flex;                   
+    align-items: center;             
+    justify-content: center;              
+    text-indent: 0.5rem;
+  }
+
 }
