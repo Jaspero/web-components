@@ -815,7 +815,11 @@
           "members": [
             {
               "kind": "field",
-              "name": "wording"
+              "name": "wording",
+              "inheritedFrom": {
+                "name": "ve",
+                "module": "dist/file-list.wc.js"
+              }
             },
             {
               "kind": "field",
@@ -823,7 +827,11 @@
             },
             {
               "kind": "field",
-              "name": "value"
+              "name": "value",
+              "inheritedFrom": {
+                "name": "ve",
+                "module": "dist/file-list.wc.js"
+              }
             },
             {
               "kind": "field",
@@ -835,7 +843,11 @@
             },
             {
               "kind": "field",
-              "name": "label"
+              "name": "label",
+              "inheritedFrom": {
+                "name": "ve",
+                "module": "dist/file-list.wc.js"
+              }
             },
             {
               "kind": "field",
@@ -843,11 +855,19 @@
             },
             {
               "kind": "field",
-              "name": "id"
+              "name": "id",
+              "inheritedFrom": {
+                "name": "ve",
+                "module": "dist/file-list.wc.js"
+              }
             },
             {
               "kind": "field",
-              "name": "name"
+              "name": "name",
+              "inheritedFrom": {
+                "name": "ve",
+                "module": "dist/file-list.wc.js"
+              }
             },
             {
               "kind": "field",
@@ -855,11 +875,19 @@
             },
             {
               "kind": "field",
-              "name": "attachedInternals"
+              "name": "attachedInternals",
+              "inheritedFrom": {
+                "name": "ve",
+                "module": "dist/file-list.wc.js"
+              }
             },
             {
               "kind": "field",
-              "name": "required"
+              "name": "required",
+              "inheritedFrom": {
+                "name": "ve",
+                "module": "dist/file-list.wc.js"
+              }
             },
             {
               "kind": "field",
@@ -879,7 +907,11 @@
             },
             {
               "kind": "field",
-              "name": "validationMessages"
+              "name": "validationMessages",
+              "inheritedFrom": {
+                "name": "ve",
+                "module": "dist/file-list.wc.js"
+              }
             },
             {
               "kind": "field",
@@ -900,13 +932,103 @@
             {
               "kind": "field",
               "name": "reportValidity",
-              "readonly": true
+              "readonly": true,
+              "inheritedFrom": {
+                "name": "ve",
+                "module": "dist/file-list.wc.js"
+              }
+            },
+            {
+              "kind": "field",
+              "name": "service",
+              "inheritedFrom": {
+                "name": "ve",
+                "module": "dist/file-list.wc.js"
+              }
+            },
+            {
+              "kind": "field",
+              "name": "maxfiles",
+              "inheritedFrom": {
+                "name": "ve",
+                "module": "dist/file-list.wc.js"
+              }
+            },
+            {
+              "kind": "field",
+              "name": "minfiles",
+              "inheritedFrom": {
+                "name": "ve",
+                "module": "dist/file-list.wc.js"
+              }
+            },
+            {
+              "kind": "field",
+              "name": "maxfilesValidationMessage",
+              "inheritedFrom": {
+                "name": "ve",
+                "module": "dist/file-list.wc.js"
+              }
+            },
+            {
+              "kind": "field",
+              "name": "minfilesValidationMessage",
+              "inheritedFrom": {
+                "name": "ve",
+                "module": "dist/file-list.wc.js"
+              }
+            },
+            {
+              "kind": "field",
+              "name": "sortable",
+              "inheritedFrom": {
+                "name": "ve",
+                "module": "dist/file-list.wc.js"
+              }
+            },
+            {
+              "kind": "field",
+              "name": "displayFormat",
+              "inheritedFrom": {
+                "name": "ve",
+                "module": "dist/file-list.wc.js"
+              }
+            },
+            {
+              "kind": "field",
+              "name": "displayFormatFunction",
+              "inheritedFrom": {
+                "name": "ve",
+                "module": "dist/file-list.wc.js"
+              }
+            },
+            {
+              "kind": "field",
+              "name": "getValue",
+              "readonly": true,
+              "inheritedFrom": {
+                "name": "ve",
+                "module": "dist/file-list.wc.js"
+              }
+            },
+            {
+              "kind": "field",
+              "name": "save",
+              "readonly": true,
+              "inheritedFrom": {
+                "name": "ve",
+                "module": "dist/file-list.wc.js"
+              }
             }
           ],
           "attributes": [
             {
               "name": "wording",
-              "fieldName": "wording"
+              "fieldName": "wording",
+              "inheritedFrom": {
+                "name": "ve",
+                "module": "dist/file-list.wc.js"
+              }
             },
             {
               "name": "options",
@@ -914,7 +1036,11 @@
             },
             {
               "name": "value",
-              "fieldName": "value"
+              "fieldName": "value",
+              "inheritedFrom": {
+                "name": "ve",
+                "module": "dist/file-list.wc.js"
+              }
             },
             {
               "name": "asyncOptions",
@@ -926,7 +1052,11 @@
             },
             {
               "name": "label",
-              "fieldName": "label"
+              "fieldName": "label",
+              "inheritedFrom": {
+                "name": "ve",
+                "module": "dist/file-list.wc.js"
+              }
             },
             {
               "name": "labelType",
@@ -934,11 +1064,19 @@
             },
             {
               "name": "id",
-              "fieldName": "id"
+              "fieldName": "id",
+              "inheritedFrom": {
+                "name": "ve",
+                "module": "dist/file-list.wc.js"
+              }
             },
             {
               "name": "name",
-              "fieldName": "name"
+              "fieldName": "name",
+              "inheritedFrom": {
+                "name": "ve",
+                "module": "dist/file-list.wc.js"
+              }
             },
             {
               "name": "disabled",
@@ -946,11 +1084,19 @@
             },
             {
               "name": "attachedInternals",
-              "fieldName": "attachedInternals"
+              "fieldName": "attachedInternals",
+              "inheritedFrom": {
+                "name": "ve",
+                "module": "dist/file-list.wc.js"
+              }
             },
             {
               "name": "required",
-              "fieldName": "required"
+              "fieldName": "required",
+              "inheritedFrom": {
+                "name": "ve",
+                "module": "dist/file-list.wc.js"
+              }
             },
             {
               "name": "placeholder",
@@ -970,7 +1116,11 @@
             },
             {
               "name": "validationMessages",
-              "fieldName": "validationMessages"
+              "fieldName": "validationMessages",
+              "inheritedFrom": {
+                "name": "ve",
+                "module": "dist/file-list.wc.js"
+              }
             },
             {
               "name": "requiredValidationMessage",
@@ -990,7 +1140,91 @@
             },
             {
               "name": "reportValidity",
-              "fieldName": "reportValidity"
+              "fieldName": "reportValidity",
+              "inheritedFrom": {
+                "name": "ve",
+                "module": "dist/file-list.wc.js"
+              }
+            },
+            {
+              "name": "service",
+              "fieldName": "service",
+              "inheritedFrom": {
+                "name": "ve",
+                "module": "dist/file-list.wc.js"
+              }
+            },
+            {
+              "name": "maxfiles",
+              "fieldName": "maxfiles",
+              "inheritedFrom": {
+                "name": "ve",
+                "module": "dist/file-list.wc.js"
+              }
+            },
+            {
+              "name": "minfiles",
+              "fieldName": "minfiles",
+              "inheritedFrom": {
+                "name": "ve",
+                "module": "dist/file-list.wc.js"
+              }
+            },
+            {
+              "name": "maxfilesValidationMessage",
+              "fieldName": "maxfilesValidationMessage",
+              "inheritedFrom": {
+                "name": "ve",
+                "module": "dist/file-list.wc.js"
+              }
+            },
+            {
+              "name": "minfilesValidationMessage",
+              "fieldName": "minfilesValidationMessage",
+              "inheritedFrom": {
+                "name": "ve",
+                "module": "dist/file-list.wc.js"
+              }
+            },
+            {
+              "name": "sortable",
+              "fieldName": "sortable",
+              "inheritedFrom": {
+                "name": "ve",
+                "module": "dist/file-list.wc.js"
+              }
+            },
+            {
+              "name": "displayFormat",
+              "fieldName": "displayFormat",
+              "inheritedFrom": {
+                "name": "ve",
+                "module": "dist/file-list.wc.js"
+              }
+            },
+            {
+              "name": "displayFormatFunction",
+              "fieldName": "displayFormatFunction",
+              "inheritedFrom": {
+                "name": "ve",
+                "module": "dist/file-list.wc.js"
+              }
+            },
+            {
+              "name": "getValue",
+              "fieldName": "getValue",
+              "inheritedFrom": {
+                "name": "ve",
+                "module": "dist/file-list.wc.js"
+              }
+            },
+            {
+              "name": "save",
+              "fieldName": "save",
+              "inheritedFrom": {
+                "name": "ve",
+                "module": "dist/file-list.wc.js"
+              }
             }
           ],
           "superclass": {
@@ -2767,7 +3001,7 @@
         {
           "kind": "class",
           "description": "",
-          "name": "me",
+          "name": "ve",
           "members": [
             {
               "kind": "field",
@@ -2948,7 +3182,7 @@
           "kind": "js",
           "name": "default",
           "declaration": {
-            "name": "me",
+            "name": "ve",
             "module": "dist/file-list.wc.js"
           }
         }
@@ -3217,7 +3451,7 @@
         {
           "kind": "class",
           "description": "",
-          "name": "le",
+          "name": "ie",
           "members": [
             {
               "kind": "field",
@@ -3520,7 +3754,7 @@
           "kind": "js",
           "name": "default",
           "declaration": {
-            "name": "le",
+            "name": "ie",
             "module": "dist/input.wc.js"
           }
         }
@@ -6314,11 +6548,7 @@
           "members": [
             {
               "kind": "field",
-              "name": "wording",
-              "inheritedFrom": {
-                "name": "fe",
-                "module": "dist/asset-manager.wc.js"
-              }
+              "name": "wording"
             },
             {
               "kind": "field",
@@ -6326,11 +6556,7 @@
             },
             {
               "kind": "field",
-              "name": "rows",
-              "inheritedFrom": {
-                "name": "Y",
-                "module": "dist/textarea.wc.js"
-              }
+              "name": "rows"
             },
             {
               "kind": "field",
@@ -6338,11 +6564,7 @@
             },
             {
               "kind": "field",
-              "name": "service",
-              "inheritedFrom": {
-                "name": "fe",
-                "module": "dist/asset-manager.wc.js"
-              }
+              "name": "service"
             },
             {
               "kind": "field",
@@ -6359,235 +6581,12 @@
             {
               "kind": "field",
               "name": "freezeLastColumn"
-            },
-            {
-              "kind": "field",
-              "name": "rootPath",
-              "inheritedFrom": {
-                "name": "fe",
-                "module": "dist/asset-manager.wc.js"
-              }
-            },
-            {
-              "kind": "field",
-              "name": "maxSize",
-              "inheritedFrom": {
-                "name": "fe",
-                "module": "dist/asset-manager.wc.js"
-              }
-            },
-            {
-              "kind": "field",
-              "name": "acceptedFiles",
-              "inheritedFrom": {
-                "name": "fe",
-                "module": "dist/asset-manager.wc.js"
-              }
-            },
-            {
-              "kind": "field",
-              "name": "shownFiles",
-              "inheritedFrom": {
-                "name": "fe",
-                "module": "dist/asset-manager.wc.js"
-              }
-            },
-            {
-              "kind": "field",
-              "name": "selectable",
-              "inheritedFrom": {
-                "name": "fe",
-                "module": "dist/asset-manager.wc.js"
-              }
-            },
-            {
-              "kind": "field",
-              "name": "clearSelection",
-              "readonly": true,
-              "inheritedFrom": {
-                "name": "fe",
-                "module": "dist/asset-manager.wc.js"
-              }
-            },
-            {
-              "kind": "field",
-              "name": "attachedInternals",
-              "inheritedFrom": {
-                "name": "Y",
-                "module": "dist/textarea.wc.js"
-              }
-            },
-            {
-              "kind": "field",
-              "name": "id",
-              "inheritedFrom": {
-                "name": "Y",
-                "module": "dist/textarea.wc.js"
-              }
-            },
-            {
-              "kind": "field",
-              "name": "value",
-              "inheritedFrom": {
-                "name": "Y",
-                "module": "dist/textarea.wc.js"
-              }
-            },
-            {
-              "kind": "field",
-              "name": "label",
-              "inheritedFrom": {
-                "name": "Y",
-                "module": "dist/textarea.wc.js"
-              }
-            },
-            {
-              "kind": "field",
-              "name": "labelType",
-              "inheritedFrom": {
-                "name": "Y",
-                "module": "dist/textarea.wc.js"
-              }
-            },
-            {
-              "kind": "field",
-              "name": "hint",
-              "inheritedFrom": {
-                "name": "Y",
-                "module": "dist/textarea.wc.js"
-              }
-            },
-            {
-              "kind": "field",
-              "name": "disabled",
-              "inheritedFrom": {
-                "name": "Y",
-                "module": "dist/textarea.wc.js"
-              }
-            },
-            {
-              "kind": "field",
-              "name": "name",
-              "inheritedFrom": {
-                "name": "Y",
-                "module": "dist/textarea.wc.js"
-              }
-            },
-            {
-              "kind": "field",
-              "name": "placeholder",
-              "inheritedFrom": {
-                "name": "Y",
-                "module": "dist/textarea.wc.js"
-              }
-            },
-            {
-              "kind": "field",
-              "name": "inputFocused",
-              "inheritedFrom": {
-                "name": "Y",
-                "module": "dist/textarea.wc.js"
-              }
-            },
-            {
-              "kind": "field",
-              "name": "required",
-              "inheritedFrom": {
-                "name": "Y",
-                "module": "dist/textarea.wc.js"
-              }
-            },
-            {
-              "kind": "field",
-              "name": "readonly",
-              "inheritedFrom": {
-                "name": "Y",
-                "module": "dist/textarea.wc.js"
-              }
-            },
-            {
-              "kind": "field",
-              "name": "minlength",
-              "inheritedFrom": {
-                "name": "Y",
-                "module": "dist/textarea.wc.js"
-              }
-            },
-            {
-              "kind": "field",
-              "name": "maxlength",
-              "inheritedFrom": {
-                "name": "Y",
-                "module": "dist/textarea.wc.js"
-              }
-            },
-            {
-              "kind": "field",
-              "name": "getValue",
-              "readonly": true,
-              "inheritedFrom": {
-                "name": "Y",
-                "module": "dist/textarea.wc.js"
-              }
-            },
-            {
-              "kind": "field",
-              "name": "validationMessages",
-              "inheritedFrom": {
-                "name": "Y",
-                "module": "dist/textarea.wc.js"
-              }
-            },
-            {
-              "kind": "field",
-              "name": "requiredValidationMessage",
-              "inheritedFrom": {
-                "name": "Y",
-                "module": "dist/textarea.wc.js"
-              }
-            },
-            {
-              "kind": "field",
-              "name": "minlengthValidationMessage",
-              "inheritedFrom": {
-                "name": "Y",
-                "module": "dist/textarea.wc.js"
-              }
-            },
-            {
-              "kind": "field",
-              "name": "maxlengthValidationMessage",
-              "inheritedFrom": {
-                "name": "Y",
-                "module": "dist/textarea.wc.js"
-              }
-            },
-            {
-              "kind": "field",
-              "name": "patternValidationMessage",
-              "inheritedFrom": {
-                "name": "Y",
-                "module": "dist/textarea.wc.js"
-              }
-            },
-            {
-              "kind": "field",
-              "name": "reportValidity",
-              "readonly": true,
-              "inheritedFrom": {
-                "name": "Y",
-                "module": "dist/textarea.wc.js"
-              }
             }
           ],
           "attributes": [
             {
               "name": "wording",
-              "fieldName": "wording",
-              "inheritedFrom": {
-                "name": "fe",
-                "module": "dist/asset-manager.wc.js"
-              }
+              "fieldName": "wording"
             },
             {
               "name": "headers",
@@ -6595,11 +6594,7 @@
             },
             {
               "name": "rows",
-              "fieldName": "rows",
-              "inheritedFrom": {
-                "name": "Y",
-                "module": "dist/textarea.wc.js"
-              }
+              "fieldName": "rows"
             },
             {
               "name": "sort",
@@ -6607,11 +6602,7 @@
             },
             {
               "name": "service",
-              "fieldName": "service",
-              "inheritedFrom": {
-                "name": "fe",
-                "module": "dist/asset-manager.wc.js"
-              }
+              "fieldName": "service"
             },
             {
               "name": "showExport",
@@ -6628,226 +6619,10 @@
             {
               "name": "freezeLastColumn",
               "fieldName": "freezeLastColumn"
-            },
-            {
-              "name": "rootPath",
-              "fieldName": "rootPath",
-              "inheritedFrom": {
-                "name": "fe",
-                "module": "dist/asset-manager.wc.js"
-              }
-            },
-            {
-              "name": "maxSize",
-              "fieldName": "maxSize",
-              "inheritedFrom": {
-                "name": "fe",
-                "module": "dist/asset-manager.wc.js"
-              }
-            },
-            {
-              "name": "acceptedFiles",
-              "fieldName": "acceptedFiles",
-              "inheritedFrom": {
-                "name": "fe",
-                "module": "dist/asset-manager.wc.js"
-              }
-            },
-            {
-              "name": "shownFiles",
-              "fieldName": "shownFiles",
-              "inheritedFrom": {
-                "name": "fe",
-                "module": "dist/asset-manager.wc.js"
-              }
-            },
-            {
-              "name": "selectable",
-              "fieldName": "selectable",
-              "inheritedFrom": {
-                "name": "fe",
-                "module": "dist/asset-manager.wc.js"
-              }
-            },
-            {
-              "name": "clearSelection",
-              "fieldName": "clearSelection",
-              "inheritedFrom": {
-                "name": "fe",
-                "module": "dist/asset-manager.wc.js"
-              }
-            },
-            {
-              "name": "attachedInternals",
-              "fieldName": "attachedInternals",
-              "inheritedFrom": {
-                "name": "Y",
-                "module": "dist/textarea.wc.js"
-              }
-            },
-            {
-              "name": "id",
-              "fieldName": "id",
-              "inheritedFrom": {
-                "name": "Y",
-                "module": "dist/textarea.wc.js"
-              }
-            },
-            {
-              "name": "value",
-              "fieldName": "value",
-              "inheritedFrom": {
-                "name": "Y",
-                "module": "dist/textarea.wc.js"
-              }
-            },
-            {
-              "name": "label",
-              "fieldName": "label",
-              "inheritedFrom": {
-                "name": "Y",
-                "module": "dist/textarea.wc.js"
-              }
-            },
-            {
-              "name": "labelType",
-              "fieldName": "labelType",
-              "inheritedFrom": {
-                "name": "Y",
-                "module": "dist/textarea.wc.js"
-              }
-            },
-            {
-              "name": "hint",
-              "fieldName": "hint",
-              "inheritedFrom": {
-                "name": "Y",
-                "module": "dist/textarea.wc.js"
-              }
-            },
-            {
-              "name": "disabled",
-              "fieldName": "disabled",
-              "inheritedFrom": {
-                "name": "Y",
-                "module": "dist/textarea.wc.js"
-              }
-            },
-            {
-              "name": "name",
-              "fieldName": "name",
-              "inheritedFrom": {
-                "name": "Y",
-                "module": "dist/textarea.wc.js"
-              }
-            },
-            {
-              "name": "placeholder",
-              "fieldName": "placeholder",
-              "inheritedFrom": {
-                "name": "Y",
-                "module": "dist/textarea.wc.js"
-              }
-            },
-            {
-              "name": "inputFocused",
-              "fieldName": "inputFocused",
-              "inheritedFrom": {
-                "name": "Y",
-                "module": "dist/textarea.wc.js"
-              }
-            },
-            {
-              "name": "required",
-              "fieldName": "required",
-              "inheritedFrom": {
-                "name": "Y",
-                "module": "dist/textarea.wc.js"
-              }
-            },
-            {
-              "name": "readonly",
-              "fieldName": "readonly",
-              "inheritedFrom": {
-                "name": "Y",
-                "module": "dist/textarea.wc.js"
-              }
-            },
-            {
-              "name": "minlength",
-              "fieldName": "minlength",
-              "inheritedFrom": {
-                "name": "Y",
-                "module": "dist/textarea.wc.js"
-              }
-            },
-            {
-              "name": "maxlength",
-              "fieldName": "maxlength",
-              "inheritedFrom": {
-                "name": "Y",
-                "module": "dist/textarea.wc.js"
-              }
-            },
-            {
-              "name": "getValue",
-              "fieldName": "getValue",
-              "inheritedFrom": {
-                "name": "Y",
-                "module": "dist/textarea.wc.js"
-              }
-            },
-            {
-              "name": "validationMessages",
-              "fieldName": "validationMessages",
-              "inheritedFrom": {
-                "name": "Y",
-                "module": "dist/textarea.wc.js"
-              }
-            },
-            {
-              "name": "requiredValidationMessage",
-              "fieldName": "requiredValidationMessage",
-              "inheritedFrom": {
-                "name": "Y",
-                "module": "dist/textarea.wc.js"
-              }
-            },
-            {
-              "name": "minlengthValidationMessage",
-              "fieldName": "minlengthValidationMessage",
-              "inheritedFrom": {
-                "name": "Y",
-                "module": "dist/textarea.wc.js"
-              }
-            },
-            {
-              "name": "maxlengthValidationMessage",
-              "fieldName": "maxlengthValidationMessage",
-              "inheritedFrom": {
-                "name": "Y",
-                "module": "dist/textarea.wc.js"
-              }
-            },
-            {
-              "name": "patternValidationMessage",
-              "fieldName": "patternValidationMessage",
-              "inheritedFrom": {
-                "name": "Y",
-                "module": "dist/textarea.wc.js"
-              }
-            },
-            {
-              "name": "reportValidity",
-              "fieldName": "reportValidity",
-              "inheritedFrom": {
-                "name": "Y",
-                "module": "dist/textarea.wc.js"
-              }
             }
           ],
           "superclass": {
-            "name": "fe",
+            "name": "me",
             "module": "/dist/svelte.js"
           },
           "tagName": "jp-table",
