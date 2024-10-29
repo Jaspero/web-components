@@ -1,7 +1,9 @@
 <script lang="ts">
-  import { onMount } from 'svelte';
+  import '../../../../dist/asset-manager.css';
   import '../../../../dist/asset-manager.wc.js';
+  import { onMount } from 'svelte';
   import { AMService } from '../asset-manager.service.js';
+  import '../../../lib/src/asset-manager/asset-manager.wc.pcss'
 
   let el: HTMLDivElement;
 
@@ -10,8 +12,10 @@
     item.service = new AMService();
     item.rootPath = 'landing-pages';
 
-    item.selectable = 'single';
-    // item.selectable = 'multiple';
+    //item.selectable = 'single';
+    item.selectable = 'multiple';
+    item.minSelected = 1;
+    item.maxSelected = 3;
 
     item.addEventListener('selected', (event) => {
       console.log('event', event);

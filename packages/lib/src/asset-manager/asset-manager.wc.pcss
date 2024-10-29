@@ -1,0 +1,402 @@
+  .jp-asset-manager-card {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    max-width: 802px;
+    width: 100%;
+    height: 500px;
+    overflow: auto;
+    background-color: white;
+    box-shadow: 0 3px 6px rgba(0, 0, 0, 0.12);
+    font-family: sans-serif;
+  }
+
+  .jp-asset-manager-header {
+    z-index: 1;
+    position: sticky;
+    top: 0;
+    display: flex;
+    justify-content: space-between;
+    background-color: white;
+    padding: 20px;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.12);
+  }
+
+  .jp-asset-manager-header .route {
+    display: flex;
+    align-items: center;
+    height: 100%;
+    font-size: 20px;
+  }
+
+  .jp-asset-manager-header nav {
+    display: flex;
+    gap: 12px;
+  }
+
+  .jp-asset-manager-header-actions {
+    display: flex;
+    gap: 12px;
+  }
+
+  .jp-asset-manager-header button {
+    width: 40px;
+    height: 40px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: transparent;
+    border: 1px solid rgba(0, 0, 0, 0.12);
+    border-radius: 12px;
+    cursor: pointer;
+    transition: 0.25s;
+  }
+
+  .jp-asset-manager-header button:disabled {
+    opacity: 0.5;
+    background-color: rgba(0, 0, 0, 0.1);
+    pointer-events: none;
+  }
+
+  .jp-asset-manager-header button:hover {
+    background-color: rgba(0, 0, 0, 0.08);
+    border-color: rgba(0, 0, 0, 0.2);
+  }
+
+  .jp-asset-manager-footer {
+    position: sticky;
+    top: 8px;
+    bottom: 0px;
+    padding: 40px 10px;
+    background-color: #f9f9f9;
+    box-shadow: 0 -2px 5px rgba(0, 0, 0, 0.1);
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    height: 0px;
+    overflow: hidden;
+    flex-direction: row;
+    left: 0;
+    right: 0;
+  }
+
+  .jp-asset-manager-footer button {
+    height: 40px;
+    padding: 0 16px;
+    font-weight: bold;
+    background-color: #e66439;
+    color: white;
+    border: none;
+    border-radius: 12px;
+    cursor: pointer;
+    transition: 0.25s;
+  }
+
+  .jp-asset-manager-footer button:disabled {
+    opacity: 0.5;
+    pointer-events: none;
+  }
+
+  .jp-asset-manager-footer button:active {
+    transform: scale(0.95);
+  }
+
+  .jp-asset-manager-add-folder-submit {
+    height: 32px;
+    padding: 0 12px;
+    font-weight: bold;
+    background-color: #e66439;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    margin-top: 12px;
+    transition: 0.25s;
+  }
+
+  .jp-asset-manager-add-folder-submit:disabled {
+    opacity: 0.5;
+    pointer-events: none;
+  }
+
+  .jp-asset-manager-add-folder-submit:active {
+    transform: scale(0.95);
+  }
+
+  .jp-asset-manager-drop-here {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+
+    flex-direction: column;
+    gap: 12px;
+    justify-content: center;
+    align-items: center;
+    background-color: white;
+  }
+
+  .jp-asset-manager-add-folder-form {
+    padding: 20px;
+  }
+
+  .jp-asset-manager-add-folder-input {
+    display: block;
+  }
+
+  .jp-asset-manager-add-folder-input span {
+    display: block;
+    font-size: 14px;
+  }
+
+  .jp-asset-manager-add-folder-input input {
+    border: 1px solid rgba(0, 0, 0, 0.08);
+    height: 40px;
+    padding: 0 12px;
+    border-radius: 8px;
+    font-size: 14px;
+    margin-top: 4px;
+  }
+
+  .jp-asset-manager-file {
+    position: relative;
+    height: 100%;
+    border: 1px solid rgba(0, 0, 0, 0.12);
+    border-radius: 12px;
+    background-color: white;
+    overflow: hidden;
+  }
+
+  .jp-asset-manager-file-name {
+    padding: 6px 12px 0;
+  }
+
+  .jp-asset-manager-file-info {
+    padding: 4px 12px 6px;
+  }
+
+  .jp-asset-manager-file-icon .jp-asset-manager-icon-only {
+    padding: 12px;
+  }
+
+  .jp-asset-manager-file .jp-asset-manager-file-remove {
+    position: absolute;
+    top: 4px;
+    right: 4px;
+    width: 32px;
+    height: 32px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: white;
+    border-radius: 8px;
+    cursor: pointer;
+    border: 1px solid rgba(0, 0, 0, 0.08);
+  }
+
+  .jp-asset-manager-file .jp-asset-manager-file-remove:hover {
+    border-color: rgba(0, 0, 0, 0.4);
+  }
+
+  .jp-asset-manager-file .jp-asset-manager-file-icon-image {
+    width: 100%;
+    height: 150px;
+    object-fit: contain;
+    user-select: none;
+    pointer-events: none;
+    background-color: rgba(0, 0, 0, 0.02);
+  }
+
+  .jp-asset-manager-files {
+    display: flex;
+    flex: 1;
+    align-content: flex-start;
+    flex-wrap: wrap;
+    padding: 12px;
+    gap:7px;
+  }
+
+  .jp-asset-manager-info {
+    display: flex;
+    flex: 1;
+    align-content: flex-start;
+    flex-wrap: wrap;
+    padding: 20px;
+  }
+
+  .jp-asset-manager-asset-button {
+    width: 24%;
+    padding: 8px;
+    transition: 0.25s;
+    border-radius: 12px;
+    cursor: pointer;
+  }
+
+  .jp-asset-manager-asset-button.selected {
+    border: 1px solid #e66439;
+  }
+
+  .jp-asset-manager-asset-button:hover .jp-asset-manager-file {
+    background-color: rgba(0, 0, 0, 0.08);
+    border-color: rgba(0, 0, 0, 0.2);
+  }
+
+  .jp-asset-manager-folder {
+    box-sizing: border-box;
+    width: 25%;
+    padding: 8px;
+  }
+
+  .jp-asset-manager-folder button {
+    width: 100%;
+    padding: 12px;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    border: 1px solid rgba(0, 0, 0, 0.12);
+    gap: 6px;
+    background-color: transparent;
+    font-size: 14px;
+    border-radius: 12px;
+    cursor: pointer;
+    transition: 0.25s;
+  }
+
+  .jp-asset-manager-folder button:hover {
+    background-color: rgba(0, 0, 0, 0.08);
+    border-color: rgba(0, 0, 0, 0.2);
+  }
+
+  .jp-asset-manager-loader {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .jp-asset-manager-spinner {
+    width: 150px;
+    height: 150px;
+    border-radius: 50%;
+    border: 9px solid var(--primary-color);
+    animation:
+      jp-asset-manager-spinner-bulqg1 0.8s infinite linear alternate,
+      jp-asset-manager-spinner-oaa3wk 1.6s infinite linear;
+  }
+
+  @keyframes jp-asset-manager-spinner-bulqg1 {
+    0% {
+      clip-path: polygon(50% 50%, 0 0, 50% 0%, 50% 0%, 50% 0%, 50% 0%, 50% 0%);
+    }
+
+    12.5% {
+      clip-path: polygon(50% 50%, 0 0, 50% 0%, 100% 0%, 100% 0%, 100% 0%, 100% 0%);
+    }
+
+    25% {
+      clip-path: polygon(50% 50%, 0 0, 50% 0%, 100% 0%, 100% 100%, 100% 100%, 100% 100%);
+    }
+
+    50% {
+      clip-path: polygon(50% 50%, 0 0, 50% 0%, 100% 0%, 100% 100%, 50% 100%, 0% 100%);
+    }
+
+    62.5% {
+      clip-path: polygon(50% 50%, 100% 0, 100% 0%, 100% 0%, 100% 100%, 50% 100%, 0% 100%);
+    }
+
+    75% {
+      clip-path: polygon(50% 50%, 100% 100%, 100% 100%, 100% 100%, 100% 100%, 50% 100%, 0% 100%);
+    }
+
+    100% {
+      clip-path: polygon(50% 50%, 50% 100%, 50% 100%, 50% 100%, 50% 100%, 50% 100%, 0% 100%);
+    }
+  }
+
+  @keyframes jp-asset-manager-spinner-oaa3wk {
+    0% {
+      transform: scaleY(1) rotate(0deg);
+    }
+
+    49.99% {
+      transform: scaleY(1) rotate(135deg);
+    }
+
+    50% {
+      transform: scaleY(-1) rotate(0deg);
+    }
+
+    100% {
+      transform: scaleY(-1) rotate(-135deg);
+    }
+  }
+
+
+
+.jp-asset-manager-notifications {
+  position: absolute;
+  bottom: 20px;
+  left: 300px;
+  right: 0;
+  top: 30px;
+  padding: 0;
+  z-index: 9999;
+  display: flex;
+  justify-content: flex-start;
+  justify-content: center;
+  align-items: center;
+  pointer-events: none;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.jp-asset-manager-content {
+  padding: 0px;
+  display: block;
+  color: white;
+  font-weight: 500;
+}
+
+.jp-asset-manager-footer-notifications {
+  display: flex;
+  align-items: right;
+  margin-left: auto;
+  z-index: 10;
+}
+
+.jp-asset-manager-toast {
+  background-color: var(--danger-color);
+  color: white;
+  padding: 10px;
+  margin-bottom: 10px;
+  border-radius: 12px;
+  display: inline-block;
+  height: 40px;
+  flex-direction: row;
+}
+
+.jp-asset-manager-toast-added {
+  background-color: var(--success-color);
+  color: white;
+  padding: 10px;
+  margin-bottom: 10px;
+  border-radius: 12px;
+  display: inline-block;
+  height: 40px;
+  flex-direction: row;
+}
+
+.jp-asset-manager-toast-exist {
+  background-color: var(--focus-color);
+  color: white;
+  padding: 10px;
+  margin-bottom: 10px;
+  border-radius: 12px;
+  display: inline-block;
+  height: 40px;
+  flex-direction: row;
+}

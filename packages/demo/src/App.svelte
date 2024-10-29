@@ -44,7 +44,24 @@
   import TreeDemo from './OtherDemos/TreeDemo.svelte';
 
   import Demos from './Demos.svelte';
+  
 </script>
+
+<AssetManagerDemo />
+<!-- <MultiSearchDemo /> -->
+<!--<ChipsDemo/>-->
+<!-- <AsyncTableDemo />-->
+<!-- <MultiSelectDemo /> -->
+<!-- <FileListDemo /> -->
+<!-- <Demos /> -->
+<!-- <InputDemo /> -->
+<!-- <ImageGalleryDemo /> -->
+<!-- <DateRangeDemo /> -->
+<!-- <CkEditorDemo /> -->
+<!-- <CkEditorDemo /> -->
+<!-- <RangeDemo /> -->
+
+
 
 <div class="layout-container">
   <!--
