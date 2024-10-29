@@ -8,12 +8,12 @@
 <script lang="ts">
 </script>
 
-<div class="node">
+<div class="jp-node">
   <slot />
 </div>
 
 <style lang="postcss">
-  .node {
+  .jp-node {
     width: 100%;
     margin: 1rem 0;
   }
