@@ -1,8 +1,3 @@
- 
-  * {
-    box-sizing: border-box;
-  }
-
   .jp-asset-manager-card {
     position: relative;
     display: flex;
@@ -18,7 +13,6 @@
 
   .jp-asset-manager-header {
     z-index: 1;
-    position: -webkit-sticky;
     position: sticky;
     top: 0;
     display: flex;
@@ -71,15 +65,19 @@
 
   .jp-asset-manager-footer {
     position: sticky;
-    top: 8px !important;
-    bottom: 0px !important;
-    padding: 40px 10px !important;
+    top: 8px;
+    bottom: 0px;
+    padding: 40px 10px;
     background-color: #f9f9f9;
-    box-shadow: 0 -2px 5px rgba(0, 0, 0, 0.1) !important;
-    display: flex !important;
+    box-shadow: 0 -2px 5px rgba(0, 0, 0, 0.1);
+    display: flex;
     align-items: center;
     gap: 10px;
-    height: 70px !important;
+    height: 0px;
+    overflow: hidden;
+    flex-direction: row;
+    left: 0;
+    right: 0;
   }
 
   .jp-asset-manager-footer button {
@@ -336,55 +334,38 @@
       transform: scaleY(-1) rotate(-135deg);
     }
   }
-  .jp-asset-manager-footer button {
-  height: 40px;
-  padding: 0 16px;
-  font-weight: bold;
-  background-color: #e66439;
-  color: white;
-  border: none;
-  border-radius: 12px;
-  cursor: pointer;
-  transition: 0.25s;
-}
+
+
+
 .jp-asset-manager-notifications {
-    position: absolute;
-    bottom: 10px;
-    left: 300px;
-    right: 0;
-    margin: 0 auto;
-    padding: 0;
-    z-index: 9999;
-    display: flex;
-    justify-content: flex-start;
-    justify-content: center;
-    align-items: center;
-    pointer-events: none;
-    flex-direction: column;
-    gap: 10px;
+  position: absolute;
+  bottom: 20px;
+  left: 300px;
+  right: 0;
+  top: 30px;
+  padding: 0;
+  z-index: 9999;
+  display: flex;
+  justify-content: flex-start;
+  justify-content: center;
+  align-items: center;
+  pointer-events: none;
+  flex-direction: column;
+  gap: 10px;
 }
 
 .jp-asset-manager-content {
-    padding: 0px;
-    display: block;
-    color: white;
-    font-weight: 500;
-    
-    
+  padding: 0px;
+  display: block;
+  color: white;
+  font-weight: 500;
 }
+
 .jp-asset-manager-footer-notifications {
   display: flex;
   align-items: right;
   margin-left: auto;
   z-index: 10;
- 
-}
-
-.jp-asset-manager-footer {
-  position: relative;
-  height: auto;
-  overflow: hidden;
-  flex-direction: row;
 }
 
 .jp-asset-manager-toast {
@@ -418,17 +399,4 @@
   display: inline-block;
   height: 40px;
   flex-direction: row;
-}
-
-
-
-.jp-asset-manager-footer {
-  position: sticky;
-  
-  bottom: 0;
-  left: 0;
-  right: 0;
-  padding: 50px;
-  background-color: #f9f9f9; /* Or any desired background */
-  box-shadow: 0 -2px 5px rgba(0, 0, 0, 0.1);
 }
