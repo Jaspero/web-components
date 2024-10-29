@@ -11,7 +11,7 @@
 {#if determinate}
   <svg height={radius * 2} width={radius * 2}
     ><circle
-      class="progress"
+      class="jp-progress-spinner"
       stroke={color}
       fill="transparent"
       stroke-dasharray="{circumference} {circumference}"
@@ -24,7 +24,7 @@
   >
 {:else}
   <svg width={radius * 2} height={radius * 2} stroke={color} viewBox="0 0 24 24"
-    ><g class="spinner"
+    ><g class="jp-progress-spinner-spinner"
       ><circle cx="12" cy="12" r="9.5" fill="none" stroke-width={(12 / radius) * stroke}
       ></circle></g
     ></svg
@@ -32,18 +32,21 @@
 {/if}
 
 <style lang="postcss">
-  .progress {
+  .jp-progress-spinner {
     transition: stroke-dashoffset 0.35s;
     transform: rotate(-90deg);
     transform-origin: 50% 50%;
+
+    &-spinner {
+      transform-origin: center;
+      animation: rotateAnim 2s linear infinite;
+
+      & circle {
+        animation: strokeAnim 1.5s ease-in-out infinite;
+      }
+    }
   }
-  .spinner {
-    transform-origin: center;
-    animation: rotateAnim 2s linear infinite;
-  }
-  .spinner circle {
-    animation: strokeAnim 1.5s ease-in-out infinite;
-  }
+
   @keyframes rotateAnim {
     100% {
       transform: rotate(360deg);
