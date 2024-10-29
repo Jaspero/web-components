@@ -5,13 +5,14 @@
   }}
 />
 
-<script>
+<script lang="ts">
   import { onMount } from 'svelte';
 
   export let multiple = false;
-  let panels = [];
 
-  function onToggle(event, index) {
+  let panels: Element[] = [];
+
+  function onToggle(event: Event, index: number) {
     if (!multiple) {
       const panelToKeepOpen = panels[index].title;
       window.dispatchEvent(new CustomEvent('request-close', { detail: panelToKeepOpen }));
@@ -26,12 +27,12 @@
   });
 </script>
 
-<div class="accordion">
+<div class="jp-accordion">
   <slot />
 </div>
 
 <style lang="postcss">
-  .accordion {
+  .jp-accordion {
     width: 100%;
     margin: 1rem 0;
     border-radius: 50%;
