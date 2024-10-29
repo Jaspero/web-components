@@ -1,7 +1,7 @@
 <script lang="ts">
   import * as calculateLimits from './calculate-limits/min-date.js';
   import { createEventDispatcher } from 'svelte';
-  import './date-range.css';
+  import './date-range.pcss';
 
   export let internalMinDate: Date | null;
   export let internalMaxDate: Date | null;

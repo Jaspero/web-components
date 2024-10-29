@@ -93,7 +93,7 @@ const config = {
       src: 'https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.14/mode/javascript/javascript.min.js'
     },
     {
-      src: '/web-components/c/index.js',
+      src: '/web-components/c/export.js',
       type: 'module'
     }
   ],

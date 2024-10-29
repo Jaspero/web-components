@@ -266,6 +266,7 @@
                 bind:this={optionElements[index]}
                 on:mousedown|preventDefault={() => {
                   value = option;
+                  inputEl.value = value;
                   inputEl.blur();
                 }}
                 on:click|preventDefault>{option}</button

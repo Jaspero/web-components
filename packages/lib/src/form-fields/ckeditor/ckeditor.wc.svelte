@@ -27,6 +27,7 @@
   export let id: string | null = null;
   export let name: string | null = null;
   export let height: string | null = null;
+  export let width: string | null = null;
   export let label = '';
   export let options: any = {
     toolbar: {
@@ -220,6 +221,17 @@
     editor.editing.view.change((writer: any) => {
       writer.setStyle('height', height, editor.editing.view.document.getRoot());
     });
+  }
+
+  $: if (width && editor) {
+    const toolbarElement = editor.ui.view.toolbar.element;
+    const editorElement = editor.ui.view.editable.element;
+
+    toolbarElement.style.width = `${width}`;
+    toolbarElement.style.boxSizing = 'border-box';
+
+    editorElement.style.width = `${width}`;
+    editorElement.style.boxSizing = 'border-box';
   }
 
   function getEditor() {

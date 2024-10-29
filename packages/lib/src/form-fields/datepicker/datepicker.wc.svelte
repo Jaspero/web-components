@@ -29,6 +29,7 @@
   import Year from '../datepicker/Year.svelte';
   import { isOutOfMaxBounds } from './is-out-of-max-bounds';
   import { isOutOfMinBounds } from './is-out-of-min-bounds';
+  import './datepicker.wc.pcss';
 
   export let attachedInternals: ElementInternals;
   export let value = '';
@@ -46,6 +47,8 @@
   export let returnFormatFunction: (date: Date) => any = (date) => date.valueOf();
   export let minDate: string | Date;
   export let maxDate: string | Date;
+  export let disabled = false;
+  export let readonly = false;
 
   let selectedDateObject = new Date();
   let displayedDateString = formatDisplayDate(
@@ -54,17 +57,17 @@
     displayFormatFunction
   );
   let returnDate = formatDisplayDate(selectedDateObject, displayFormat, returnFormatFunction);
-  let selectedDates = [];
-  let date;
-  let dates = [];
-  let datePicked;
+  let selectedDates: { year: any; month: any; day: any }[] = [];
+  let date: {year: number; month: number; day: number};
+  let dates: (string | number | Date)[] = [];
+  let datePicked: boolean;
   let borderTop = false;
   let borderBottom = false;
-  let bindingElement;
-  let menuStyle;
-  let yearSelected = null;
-  let monthSelected;
-  let dateSelected;
+  let bindingElement: HTMLButtonElement;
+  let menuStyle: string;
+  let yearSelected: number | null = null;
+  let monthSelected: number;
+  let dateSelected: number;
   let pickerYear = new Date(Date.now()).getFullYear();
   let pickerMonth = new Date(Date.now()).getMonth();
   let pickerRows;
@@ -88,7 +91,7 @@
   ];
   let yearPickerIndex = 0;
 
-  function handleDateSelected(event) {
+  function handleDateSelected(event: { detail: { day: any; month: any; year: any } }) {
     const { day, month, year } = event.detail;
     dateSelected = day;
     monthSelected = month;
@@ -96,20 +99,22 @@
     openPicker = false;
   }
 
-  function handleMonthSelected(event) {
+  function handleMonthSelected(event: { detail: { month: any } }) {
     const { month } = event.detail;
     pickerMonth = month;
     monthSelector = false;
   }
 
-  function handleYearSelected(event) {
+  function handleYearSelected(event: { detail: { year: any } }) {
     const { year } = event.detail;
     pickerYear = year;
     yearSelector = false;
     monthSelector = true;
   }
 
-  function handleMultipleSelects(event) {
+  function handleMultipleSelects(event: {
+    detail: { day: number; month: number; year: number; isDatePicked: any };
+  }) {
     const { day, month, year, isDatePicked } = event.detail;
     dateSelected = day;
     monthSelected = month;
@@ -163,19 +168,19 @@
 
   export const reportValidity = () => attachedInternals.reportValidity();
 
-  const getYearPickerRows = (yearPickerIndex) => {
-    const tmp = Array.from(Array(4 * 6).keys()).map((el) => el + 2000 + yearPickerIndex * 4 * 6);
+  const getYearPickerRows = (yearPickerIndex: number) => {
+    const tmp = Array.from(Array(4 * 6).keys()).map((el) => el + 2024 + yearPickerIndex * 4 * 6);
     return Array.from(Array(6).keys()).map((el) => {
       return tmp.slice(el * 4, (el + 1) * 4);
     });
   };
 
-  const getPickerRows = (month, year) => {
+  const getPickerRows = (month: number, year: number) => {
     const thisMonthDays = 40 - new Date(year, month, 40).getDate();
     const prevMonthDays = 40 - new Date(year, month - 1, 40).getDate();
     const startingDay = new Date(year, month).getDay();
     const daysAfter = 6 * 7 - thisMonthDays - startingDay;
-    let mData = [];
+    let mData: any[] = [];
 
     mData = [
       ...mData,
@@ -254,11 +259,11 @@
       pickerYear = tmp.getFullYear();
     }
   }
-  $: if (monthSelected == 12) {
+  $: if (monthSelected == 12 && yearSelected) {
     monthSelected = 0;
     yearSelected++;
   }
-  $: if (monthSelected == -1) {
+  $: if (monthSelected == -1 && yearSelected) {
     monthSelected = 11;
     yearSelected--;
   }
@@ -291,7 +296,7 @@
             dates[i - 1] = temp;
           }
         }
-        let tempList = [];
+        let tempList: (string | undefined)[] = [];
         dates.forEach((elem) => {
           selectedDateObject = new Date(elem);
           let selectedDateObjectString = formatDisplayDate(
@@ -320,7 +325,7 @@
               dates.splice(i, 1);
             }
           }
-          let tempList = [];
+          let tempList: (string | undefined)[] = [];
           dates.forEach((elem) => {
             selectedDateObject = new Date(elem);
             let selectedDateObjectString = formatDisplayDate(
@@ -383,21 +388,29 @@
 
   <button
     type="button"
-    class="field"
+    class="jp-datepicker-field"
     bind:this={bindingElement}
-    class:active={openPicker}
-    class:borderBottom
-    class:borderTop
+    class:jp-datepicker-field-active={openPicker}
+    class:jp-datepicker-field-borderBottom={borderBottom}
+    class:jp-datepicker-field-borderTop={borderTop}
+    class:jp-datepicker-field-disabled={disabled}
+    disabled={disabled || readonly}
     on:click|preventDefault={toggleMenu}
   >
     {#if label && labelType == 'inside'}
-      <span class="field-label" class:move={openPicker || internalValue}>{@html displayLabel}</span>
+      <span
+        class="jp-datepicker-field-label"
+        class:jp-datepicker-field-label-move={openPicker || internalValue}
+        >{@html displayLabel}</span
+      >
     {/if}
-    <p class={`field-input ${labelType == 'outside' || !label ? '' : 'field-input-padding'}`}>
+    <p
+      class={`jp-datepicker-field-input ${labelType == 'outside' || !label ? '' : 'jp-datepicker-field-input-padding'}`}
+    >
       {displayedDateString}
     </p>
 
-    <span class="field-icon">
+    <span class="jp-datepicker-field-icon">
       {@html calendarIcon}
     </span>
   </button>
@@ -405,32 +418,35 @@
   <input
     type="date"
     tabindex="-1"
-    class="hidden-input"
+    class="jp-datepicker-hidden-input"
     {name}
     bind:value={internalValue}
+    {disabled}
+    {readonly}
     {required}
   />
   {#if openPicker}
-    <div class="overlay">
+    <div class="jp-datepicker-overlay">
       <div
-        class="menu"
+        class="jp-datepicker-menu"
         use:clickOutside
         on:click_outside={() => (openPicker = false)}
         style={menuStyle}
       >
-        <div class="menu-nav">
+        <div class="jp-datepicker-menu-nav">
           <button
             type="button"
-            class="menu-nav-date"
+            class="jp-datepicker-menu-nav-date"
             on:click|preventDefault={() => (yearSelector = true)}
           >
             <p>{monthMap[pickerMonth]}, {pickerYear}</p>
             {@html dropdownArrowExpandedIcon}
           </button>
-          <div class="menu-nav-buttons">
+          <div class="jp-datepicker-menu-nav-buttons">
             <button
               type="button"
               on:click|preventDefault={() => (pickerMonth = pickerMonth - 1)}
+              class:jp-datepicker-menu-nav-buttons-disabled={internalMinMonthCheck}
               disabled={internalMinMonthCheck}
             >
               {@html leftArrowIcon}
@@ -438,6 +454,7 @@
             <button
               type="button"
               on:click|preventDefault={() => (pickerMonth = pickerMonth + 1)}
+              class:jp-datepicker-menu-nav-buttons-disabled={internalMaxMonthCheck}
               disabled={internalMaxMonthCheck}
             >
               {@html rightArrowIcon}
@@ -446,19 +463,21 @@
         </div>
 
         <div>
-          <div class="table">
-            {#each daysMap as day}
-              <div class="table-cell">
-                {day}
-              </div>
-            {/each}
+          <div class="jp-datepicker-table">
+            <div class="jp-datepicker-table-row">
+              {#each daysMap as day}
+                <div class="jp-datepicker-table-cell">
+                  {day}
+                </div>
+              {/each}
+            </div>
           </div>
 
-          <div class="table">
+          <div class="jp-datepicker-table">
             {#each pickerRows as row}
-              <div class="table-row">
+              <div class="jp-datepicker-table-row">
                 {#each row as col}
-                  <div class="table-cell">
+                  <div class="jp-datepicker-table-cell">
                     <Day
                       {col}
                       {internalMinDate}
@@ -479,11 +498,11 @@
         </div>
 
         {#if yearSelector}
-          <div class="menu-year">
-            <div class="menu-year-nav">
+          <div class="jp-datepicker-menu-year">
+            <div class="jp-datepicker-menu-year-nav">
               <button
                 type="button"
-                class="menu-year-nav-date"
+                class="jp-datepicker-menu-year-nav-date"
                 on:click|stopPropagation={() => (yearSelector = false)}
               >
                 <p>
@@ -493,10 +512,11 @@
                 </p>
                 {@html upArrowIcon}
               </button>
-              <div class="menu-year-nav-buttons">
+              <div class="jp-datepicker-menu-year-nav-buttons">
                 <button
                   type="button"
                   on:click|preventDefault={() => yearPickerIndex--}
+                  class:jp-datepicker-menu-year-nav-buttons-disabled={internalMinYearPageCheck}
                   disabled={internalMinYearPageCheck}
                 >
                   {@html leftArrowIcon}
@@ -504,6 +524,7 @@
                 <button
                   type="button"
                   on:click|preventDefault={() => yearPickerIndex++}
+                  class:jp-datepicker-menu-year-nav-buttonsv={internalMaxYearPageCheck}
                   disabled={internalMaxYearPageCheck}
                 >
                   {@html rightArrowIcon}
@@ -511,9 +532,9 @@
               </div>
             </div>
             {#each pickerYearRows as row}
-              <div class="menu-year-row">
+              <div class="jp-datepicker-menu-year-row">
                 {#each row as year}
-                  <div class="menu-year-row-cell">
+                  <div class="jp-datepicker-menu-year-row-cell">
                     <Year
                       {internalMaxDate}
                       {internalMinDate}
@@ -529,11 +550,11 @@
         {/if}
 
         {#if monthSelector}
-          <div class="menu-month">
-            <div class="menu-month-nav">
+          <div class="jp-datepicker-menu-month">
+            <div class="jp-datepicker-menu-month-nav">
               <button
                 type="button"
-                class="menu-month-nav-date"
+                class="jp-datepicker-menu-month-nav-date"
                 on:click|preventDefault={() => {
                   monthSelector = false;
                 }}
@@ -541,10 +562,11 @@
                 <p>{pickerYear}</p>
                 {@html upArrowIcon}
               </button>
-              <div class="menu-month-nav-buttons">
+              <div class="jp-datepicker-menu-month-nav-buttons">
                 <button
                   type="button"
                   on:click|preventDefault={() => (pickerYear = pickerYear - 1)}
+                  class:jp-datepicker-menu-month-nav-buttons-disabled={internalMinYearCheck}
                   disabled={internalMinYearCheck}
                 >
                   {@html leftArrowIcon}
@@ -552,6 +574,7 @@
                 <button
                   type="button"
                   on:click|preventDefault={() => (pickerYear = pickerYear + 1)}
+                  class:jp-datepicker-menu-month-nav-buttons-disabled={internalMaxYearCheck}
                   disabled={internalMaxYearCheck}
                 >
                   {@html rightArrowIcon}
@@ -559,9 +582,9 @@
               </div>
             </div>
 
-            <div class="menu-month-grid">
+            <div class="jp-datepicker-menu-month-grid">
               {#each monthMap as month, index}
-                <div class="menu-month-grid-cell">
+                <div class="jp-datepicker-menu-month-grid-cell">
                   <Month
                     {index}
                     {month}
@@ -580,357 +603,3 @@
     </div>
   {/if}
 </div>
-
-<style lang="postcss">
-  .field {
-    position: relative;
-    display: -webkit-box;
-    display: -webkit-flex;
-    display: -moz-box;
-    display: -ms-flexbox;
-    display: flex;
-    -webkit-box-pack: justify;
-    -webkit-justify-content: space-between;
-    -moz-box-pack: justify;
-    -ms-flex-pack: justify;
-    justify-content: space-between;
-    -webkit-box-align: center;
-    -webkit-align-items: center;
-    -moz-box-align: center;
-    -ms-flex-align: center;
-    align-items: center;
-    text-align: left;
-    width: 100%;
-    height: 3rem;
-    -webkit-user-select: none;
-    -moz-user-select: none;
-    -ms-user-select: none;
-    user-select: none;
-    padding: 0 0.75rem;
-    gap: 0.75rem;
-    background-color: transparent;
-    border: 1px solid var(--border-primary);
-    -webkit-border-radius: 0.25rem;
-    -moz-border-radius: 0.25rem;
-    border-radius: 0.25rem;
-  }
-
-  .field:hover {
-    border-color: var(--primary-color);
-  }
-
-  .field.active {
-    border-bottom-left-radius: 0;
-    border-bottom-right-radius: 0;
-    border-bottom-color: var(--primary-color);
-  }
-
-  .field.active .field-icon {
-    color: var(--primary-color);
-    fill: var(--primary-color);
-  }
-
-  .field.borderTop {
-    border-top-color: var(--primary-color);
-    border-top-left-radius: 0;
-    border-top-right-radius: 0;
-  }
-
-  .field.borderBottom {
-    border-bottom-color: var(--primary-color);
-    border-bottom-left-radius: 0;
-    border-bottom-right-radius: 0;
-  }
-
-  .field-input {
-    -webkit-box-flex: 1;
-    -webkit-flex: auto;
-    -moz-box-flex: 1;
-    -ms-flex: auto;
-    flex: auto;
-    width: 10rem;
-    font-size: 1rem;
-    white-space: nowrap;
-    overflow: hidden;
-    -o-text-overflow: ellipsis;
-    text-overflow: ellipsis;
-    border: none;
-    outline: none;
-    -webkit-border-radius: 0;
-    -moz-border-radius: 0;
-    border-radius: 0;
-    background-color: transparent;
-  }
-
-  .field-input-padding {
-    padding: 1rem 0 0 0;
-  }
-
-  .field-label {
-    position: absolute;
-    top: 50%;
-    -webkit-transform: translateY(-50%);
-    -moz-transform: translateY(-50%);
-    -ms-transform: translateY(-50%);
-    -o-transform: translateY(-50%);
-    transform: translateY(-50%);
-    font-size: 1rem;
-    -webkit-transition:
-      transform 0.3s,
-      top 0.3s,
-      font-size 0.3s;
-    -o-transition:
-      transform 0.3s,
-      top 0.3s,
-      font-size 0.3s;
-    -moz-transition:
-      transform 0.3s,
-      top 0.3s,
-      font-size 0.3s;
-    transition:
-      transform 0.3s,
-      top 0.3s,
-      font-size 0.3s;
-  }
-
-  .field-label.move {
-    top: 0.25rem;
-    -webkit-transform: translateY(0);
-    -moz-transform: translateY(0);
-    -ms-transform: translateY(0);
-    -o-transform: translateY(0);
-    transform: translateY(0);
-    font-size: 0.75rem;
-  }
-
-  .field-icon {
-    width: 1rem;
-    height: 1rem;
-    fill: var(--text-primary);
-    transition: 0.3s;
-  }
-
-  .menu {
-    z-index: 100;
-    position: absolute;
-    right: 0;
-    display: -webkit-box;
-    display: -webkit-flex;
-    display: -moz-box;
-    display: -ms-flexbox;
-    display: flex;
-    -webkit-box-orient: vertical;
-    -webkit-box-direction: normal;
-    -webkit-flex-direction: column;
-    -moz-box-orient: vertical;
-    -moz-box-direction: normal;
-    -ms-flex-direction: column;
-    flex-direction: column;
-    max-width: 312px;
-    max-height: 390px;
-    width: 100%;
-    padding: 1rem;
-    overflow-y: auto;
-    -webkit-border-bottom-left-radius: 0.25rem;
-    -moz-border-radius-bottomleft: 0.25rem;
-    border-bottom-left-radius: 0.25rem;
-    -webkit-border-bottom-right-radius: 0.25rem;
-    -moz-border-radius-bottomright: 0.25rem;
-    border-bottom-right-radius: 0.25rem;
-    -webkit-box-shadow: 0 6px 9px rgba(0, 0, 0, 0.16);
-    -moz-box-shadow: 0 6px 9px rgba(0, 0, 0, 0.16);
-    box-shadow: 0 6px 9px rgba(0, 0, 0, 0.16);
-    background-color: var(--background-primary);
-  }
-
-  .menu-month {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    padding: 1rem;
-    background-color: var(--background-primary);
-  }
-
-  .menu-month-grid {
-    display: grid;
-    gap: 0.75rem;
-    grid-template-columns: repeat(3, minmax(0, 1fr));
-  }
-
-  :global(.menu-month-grid-cell button) {
-    width: 100%;
-    border-radius: 999px;
-    padding: 0.25rem 0.75rem;
-  }
-
-  :global(.menu-month-grid-cell button.active, .menu-month-grid-cell button:hover) {
-    background-color: var(--primary-color);
-    color: var(--text-on-primary);
-  }
-
-  .menu-year {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    padding: 1rem;
-    display: flex;
-    flex-direction: column;
-    background-color: var(--background-primary);
-  }
-
-  .menu-nav,
-  .menu-month-nav,
-  .menu-year-nav {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 1rem;
-    gap: 0.5rem;
-  }
-
-  .menu-year-nav-buttons,
-  .menu-month-nav-buttons,
-  .menu-nav-buttons {
-    display: flex;
-  }
-
-  .menu-year-nav-buttons button,
-  .menu-month-nav-buttons button,
-  .menu-nav-buttons button {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    width: 2.5rem;
-    height: 2.5rem;
-    padding: 0;
-    border-radius: 50%;
-  }
-
-  .menu-year-nav-buttons button:hover,
-  .menu-month-nav-buttons button:hover,
-  .menu-nav-buttons button:hover {
-    background-color: var(--background-secondary);
-  }
-
-  .menu-year-row {
-    display: flex;
-    align-items: center;
-    justify-content: space-around;
-    flex: 1 1 0;
-    gap: 0.25rem;
-  }
-
-  :global(.menu-year-row-cell button) {
-    flex: 1 1 0;
-    padding: 0.25rem 1rem;
-    border-radius: 999px;
-  }
-
-  :global(.menu-year-row-cell button:hover, .menu-year-row-cell button.active) {
-    background-color: var(--primary-color);
-    color: var(--text-on-primary);
-  }
-
-  :global(
-      .table-cell button:disabled:hover,
-      .menu-month-grid-cell button:disabled:hover,
-      .menu-year-row-cell button:disabled:hover
-    ),
-  .menu-nav-buttons button:disabled:hover,
-  .menu-year-nav-buttons button:disabled:hover,
-  .menu-month-nav-buttons button:disabled:hover {
-    background-color: transparent;
-    color: var(--text-secondary);
-  }
-  .menu-nav-date,
-  .menu-month-nav-date,
-  .menu-year-nav-date {
-    display: flex;
-    align-items: center;
-    gap: 0.75rem;
-    text-align: left;
-    padding: 0.5rem 0.75rem;
-    border-radius: 0.25rem;
-  }
-
-  .menu-nav-date:hover,
-  .menu-month-nav-date:hover,
-  .menu-year-nav-date:hover {
-    background-color: var(--background-secondary);
-  }
-
-  .table {
-    display: table;
-    width: max-content;
-  }
-
-  .table-row {
-    display: flex;
-    width: max-content;
-    flex-direction: row;
-  }
-
-  :global(.table-cell) {
-    display: table-cell;
-    width: 40px;
-    height: 40px;
-    max-width: 40px;
-    line-height: 40px;
-    text-align: center;
-    padding: 0;
-  }
-
-  :global(.table-cell button) {
-    width: 100%;
-    height: 100%;
-    border-radius: 50%;
-  }
-
-  :global(.table-cell button:hover) {
-    width: 40px;
-    height: 40px;
-    max-width: 40px;
-    line-height: 40px;
-    text-align: center;
-    padding: 0;
-    background-color: var(--background-secondary);
-  }
-
-  :global(.table-cell button.gray) {
-    opacity: 0.5;
-  }
-
-  :global(.table-cell button.active) {
-    width: 40px;
-    height: 40px;
-    max-width: 40px;
-    line-height: 40px;
-    text-align: center;
-    padding: 0;
-    background-color: var(--primary-color);
-    color: var(--text-on-primary);
-    opacity: 1;
-  }
-
-  .overlay {
-    z-index: 100;
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100vw;
-    height: 100vh;
-  }
-
-  .hidden-input {
-    top: 0;
-    height: 100%;
-    opacity: 0;
-    position: absolute;
-    width: 100%;
-    z-index: -1;
-  }
-</style>

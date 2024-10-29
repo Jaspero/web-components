@@ -26,16 +26,16 @@
   import '../../../dist/file-upload.css';
   import '../../../dist/file-list.wc';
   import '../../../dist/datepicker.wc';
+  import '../../../dist/datepicker.css';
   import '../../../dist/date-range.wc';
   import '../../../dist/date-range.css';
-  import '../../../dist/color.wc';
-  import '../../../dist/color.css';
   import '../../../dist/ckeditor.wc';
   import '../../../dist/ckeditor.css';
   import '../../../dist/chips.wc';
   import '../../../dist/chips.css';
   import '../../../dist/autocomplete.wc';
   import '../../../dist/autocomplete.css';
+  import '../../../dist/review-stars.wc';
   import { onMount } from 'svelte';
 
   const options = [
@@ -47,7 +47,14 @@
   let isRequired = true; // Set to true or false based on your requirement
   let isOpen = false; // Track if the dropdown is open
   onMount(() => {
-    const multisearch = document.createElement('jp-multisearch') as HTMLJpMultisearchElement;
+
+    const datepicker = document.createElement('jp-datepicker') as any;
+
+    datepicker.value = new Date().getTime();
+
+    el.appendChild(datepicker);
+
+    const multisearch = document.createElement('jp-multisearch') as any;
     // Set initial options
     multisearch.options = options;
     // Set the required property
@@ -89,6 +96,7 @@
 </script>
 
 <div class="form-container">
+  <jp-review-stars />
   <jp-chips label="Chips" placeholder="Placeholder" required="true"></jp-chips>
   <jp-chips placeholder="Placeholder" required="true"></jp-chips>
   <jp-input label="Input" required="true" />
@@ -103,9 +111,8 @@
   <jp-multiselect {options} label="Multiselect" required="true"> </jp-multiselect>
   <jp-file-upload label="Upload a file" required="true" />
   <jp-file-list label="File list" required="true"></jp-file-list>
-  <jp-datepicker label="Pick a date" required="true"></jp-datepicker>
+  <jp-datepicker label="Pick a date" required="true" disabled="true"></jp-datepicker>
   <jp-date-range label="Pick a date range" required="true"></jp-date-range>
-  <jp-color label="Pick a color" required="true"></jp-color>
   <jp-ckeditor label="CK Editor" value="<p>Blup</p>" required="true"></jp-ckeditor>
   <jp-chips label="Chips" placeholder="Placeholder" required="true"></jp-chips>
   <jp-checkbox label="Checkbox" {options} required="true"></jp-checkbox>
