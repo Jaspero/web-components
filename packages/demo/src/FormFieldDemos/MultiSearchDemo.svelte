@@ -1,9 +1,12 @@
 <script lang="ts">
   import { onMount } from 'svelte';
   import '../../../../dist/multisearch.wc.js';
-  import '../../../../dist/multisearch.css';
+  import '../../../../dist/multisearch.wc.css';
 
   let el: HTMLDivElement;
+  let isLoading = false;
+  let initialLoadComplete = false;
+  let multisearch: HTMLJpMultisearchElement;
 
   const options = [
     { label: 'ALABAMA', value: 'AL'},
@@ -65,15 +68,65 @@
     { label: 'WEST VIRGINIA', value: 'WV'},
     { label: 'WISCONSIN', value: 'WI'},
     { label: 'WYOMING', value: 'WY' }
-]
+  ];
 
-  let isRequired = true; // Set to true or false based on your requirement
-  let isOpen = false;
+  let isRequired = true;
+  let selectedValues: string[] = [];
+  let loadedOptions = new Map<string, any>();
+
+  async function loadInitialValues(values: string[]) {
+    if (!values.length) {
+      initialLoadComplete = true;
+      return;
+    }
+
+    isLoading = true;
+    try {
+      const loadedDetails = await Promise.all(
+        values.map(async (value) => {
+          if (loadedOptions.has(value)) {
+            return loadedOptions.get(value);
+          }
+
+          try {
+            const result = await multisearch.service.getSingle(value);
+            if (result) {
+              loadedOptions.set(value, result);
+              return result;
+            }
+            throw new Error(`No result found for ${value}`);
+          } catch (error) {
+            console.error(`Error loading value ${value}:`, error);
+            return { value, label: `ID: ${value}`, error: true };
+          }
+        })
+      );
+
+      multisearch.options = [
+        ...loadedDetails,
+        ...options.filter(opt => !values.includes(opt.value))
+      ];
+      
+      multisearch.value = values.join(',');
+    } catch (error) {
+      console.error('Error loading initial values:', error);
+    } finally {
+      isLoading = false;
+      initialLoadComplete = true;
+    }
+  }
+
+  function debounce(func: (...args: any[]) => void, delay: number) {
+    let timeoutId: NodeJS.Timeout;
+    return function(...args: any[]) {
+      clearTimeout(timeoutId);
+      timeoutId = setTimeout(() => {
+        func.apply(this, args);
+      }, delay);
+    };
+  }
   onMount(() => {
-    const multisearch = document.createElement('jp-multisearch') as HTMLJpMultisearchElement;
-    // Set initial options
-    multisearch.options = options;
-    // Set the required property
+    multisearch = document.createElement('jp-multisearch') as HTMLJpMultisearchElement;
     multisearch.required = isRequired;
     multisearch.label = 'Multisearch';
     multisearch.defaultSearch = true;
@@ -81,27 +134,19 @@
     multisearch.service = {
       i: 0,
       async search(str: string) {
-        await new Promise((resolve) => setTimeout(resolve, 1500));
-
-        return [
-          ...options
-            .filter((option) => option.value.toLowerCase().startsWith(str.toLowerCase()))
-            .map((option) => ({
-              value: option.value,
-              label: option.label
-            })),
-
-          ...options
-            .filter(
-              (option) =>
-                option.value.toLowerCase().includes(str.toLowerCase()) &&
-                !option.value.toLowerCase().startsWith(str.toLowerCase())
-            )
-            .map((option) => ({
-              value: option.value,
-              label: option.label
-            }))
-        ];
+        const results = options
+          .filter((option) =>
+            option.label.toLowerCase().includes(str.toLowerCase()) || 
+            option.value.toLowerCase().includes(str.toLowerCase())
+          )
+          .map((option) => ({
+            value: option.value,
+            label: option.label
+          }));
+        if (results.length === 0) {
+          return [{ value: '', label: 'No results' }];
+        }
+        return results;
       },
       async loadMore(str: string) {
         await new Promise((resolve) => setTimeout(resolve, 1500));
@@ -113,17 +158,29 @@
         ];
       },
       async getSingle(value: string) {
+        const existingOption = options.find(opt => opt.value === value);
+        if (existingOption) return existingOption;
         await new Promise((resolve) => setTimeout(resolve, 1500));
-        return { value: value, label: this.i++ };
+        return { value, label: `ID: ${value}` };
       }
     };
+    if (selectedValues.length) {
+      loadInitialValues(selectedValues);
+    }
+    const debouncedSearch = debounce(async (str: string) => {
+      if (!initialLoadComplete) return;
+      const results = await multisearch.service.search(str);
+      multisearch.results = results;
+    }, 250);
     multisearch.addEventListener('change', (event: Event) => {
       const selectedValue = (event as CustomEvent).detail;
-      multisearch.value = selectedValue || ''; // Maintain placeholder if no value is selected
+      multisearch.value = selectedValue || '';
+      selectedValues = selectedValue ? selectedValue.split(',') : [];
     });
     // Listen to the open event
-    multisearch.addEventListener('click', () => {
-      isOpen = !isOpen;
+    multisearch.addEventListener('input', (event: Event) => {
+      const inputValue = (event.target as HTMLInputElement).value;
+      debouncedSearch(inputValue);
     });
     el.appendChild(multisearch);
   });
