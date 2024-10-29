@@ -4,6 +4,10 @@ import { transform } from 'esbuild';
 import { viteStaticCopy } from 'vite-plugin-static-copy';
 import { sync } from 'glob';
 import dts from 'vite-plugin-dts';
+import * as fs from 'fs';
+import * as path from 'path';
+import type { Plugin } from 'vite';
+import type { NormalizedOutputOptions, OutputBundle } from 'rollup';
 
 export default defineConfig({
   root: './packages/lib/',
@@ -14,7 +18,6 @@ export default defineConfig({
     emptyOutDir: true,
     lib: {
       entry: [
-        // ...sync('packages/lib/**/*.css').map(i => i.replace(`packages/lib/`, '').replace(`packages\\lib\\`, '')),
         ...sync('packages/lib/**/*.ts').map((i) =>
           i.replace(`packages/lib/`, '').replace(`packages\\lib\\`, '')
         ),
@@ -40,7 +43,10 @@ export default defineConfig({
       }
     }),
     svelte({
-      include: /\.wc\.svelte$/ as any
+      include: /\.wc\.svelte$/ as any,
+      compilerOptions: {
+        customElement: true
+      }
     }),
     {
       apply: 'build',
@@ -51,12 +57,13 @@ export default defineConfig({
         )
       })
     },
-    minifyEs()
+    minifyEs(),
+    generateComponentExport()
   ]
 });
 
 // Workaround for https://github.com/vitejs/vite/issues/6555
-function minifyEs() {
+function minifyEs(): Plugin {
   return {
     name: 'minifyEs',
     renderChunk: {
@@ -65,9 +72,46 @@ function minifyEs() {
         if (outputOptions.format === 'es') {
           return await transform(code, { minify: true });
         }
-
         return code;
       }
     }
   };
+}
+
+function generateComponentExport(): Plugin {
+  return {
+    name: 'component-exporter',
+    generateBundle(options, bundle) {
+      const componentsDir = path.resolve('dist')
+      const outputFilePath = path.join(componentsDir, 'export.js')
+
+      if (!fs.existsSync(componentsDir)) {
+        fs.mkdirSync(componentsDir, { recursive: true })
+      }
+
+      try {
+        const files = Object.keys(bundle)
+
+        const wcImports = files
+          .filter(file => file.endsWith('.wc.js'))
+          .map(file => `import("./${file}")`)
+          .join(',')
+
+        const cssImports = files
+          .filter(file => file.endsWith('.css'))
+          .map(file => `import("./${file}")`)
+          .join(',')
+
+        const content = `const t=()=>{${cssImports},${wcImports}};export{t as default};\n`
+
+        this.emitFile({
+          type: 'asset',
+          fileName: 'export.js',
+          source: content
+        })
+      } catch (error) {
+        throw error
+      }
+    }
+  }
 }
