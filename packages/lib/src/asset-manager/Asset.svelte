@@ -1,5 +1,6 @@
 <script lang="ts">
   import type { Asset, AssetManagerService } from '../types/asset-manager.service';
+  import './asset-manager.wc.pcss';
   import { createEventDispatcher } from 'svelte';
   import Progress from './Progress.svelte';
   import { fileSize } from './file-size';
@@ -27,7 +28,7 @@
   }
 </script>
 
-<div class="jp-asset-manager-file" class:removing>
+<div class="jp-asset-manager-file" class:jp-asset-manager-file-removing={removing}>
   <button class="jp-asset-manager-file-remove" type="button" on:click|preventDefault={remove}>
     {@html fileRemoveIcon}
   </button>

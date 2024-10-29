@@ -1,6 +1,7 @@
 <script lang="ts">
   import '../../../../dist/asset-manager.css';
   import '../../../../dist/asset-manager.wc.js';
+  import '../../../../dist/asset-manager.css';
   import { onMount } from 'svelte';
   import { AMService } from '../asset-manager.service.js';
   import '../../../lib/src/asset-manager/asset-manager.wc.pcss'
@@ -17,7 +18,7 @@
     item.minSelected = 1;
     item.maxSelected = 3;
 
-    item.addEventListener('selected', (event) => {
+    item.addEventListener('selected', (event: any) => {
       console.log('event', event);
     });
 

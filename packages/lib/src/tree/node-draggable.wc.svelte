@@ -7,8 +7,8 @@
 
 <script lang="ts">
   let isGrabbed = false;
-  let node;
-  let startingX, startingY;
+  let node: HTMLDivElement;
+  let startingX: number, startingY: number;
 </script>
 
 <svelte:document
@@ -30,7 +30,7 @@
 
 <!-- svelte-ignore a11y-no-static-element-interactions -->
 <div
-  class="node"
+  class="jp-node"
   on:mousedown={(e) => {
     node.style.pointerEvents = 'none';
     isGrabbed = true;
@@ -44,7 +44,7 @@
 </div>
 
 <style lang="postcss">
-  .node {
+  .jp-node {
     width: 100%;
     margin: 1rem 0;
     cursor: grab;

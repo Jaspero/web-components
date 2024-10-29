@@ -10,7 +10,7 @@
   import prevPageIcon from '../../../lib/src/icons/prevPage.svg?raw';
   import nextPageIcon from '../../../lib/src/icons/nextPage.svg?raw';
 
-  export let images = [];
+  export let images: string | any[] = [];
   export let imagesPerSlide = 1;
   export let enablePagination = false;
   export let sliderBar = false;
@@ -19,7 +19,7 @@
 
   let currentIndex = 0;
   let canNavigate = true;
-  let intervalFunction;
+  let intervalFunction: string | number | NodeJS.Timeout | undefined;
 
   function nextImage() {
     if (!canNavigate) return;
@@ -83,41 +83,41 @@
   }
 </script>
 
-<div class="flex flex-col slider">
-  <div class="slider-container" style="--images-per-slide: {imagesPerSlide};">
+<div class="jp-carousel-flex jp-carousel-flex-col jp-carousel-slider">
+  <div class="jp-carousel-slider-container" style="--images-per-slide: {imagesPerSlide};">
     <div
-      class="slider-images"
+      class="jp-carousel-slider-images"
       style={`transform: translateX(-${currentIndex * (100 / imagesPerSlide)}%);`}
     >
       {#each images as image}
-        <img class="slider-image" src={image.src} alt={image.alt} />
+        <img class="jp-carousel-slider-image" src={image.src} alt={image.alt} />
       {/each}
     </div>
-    <button type="button" class="prev" on:click={prevImage}>
+    <button type="button" class="jp-carousel-prev" on:click={prevImage}>
       {@html prevPageIcon}
     </button>
-    <button type="button" class="next" on:click={nextImage}>
+    <button type="button" class="jp-carousel-next" on:click={nextImage}>
       {@html nextPageIcon}
     </button>
   </div>
 
   {#if sliderBar}
-    <div class="slider-bar">
+    <div class="jp-carousel-slider-bar">
       <div
-        class="slider-bar-bg"
+        class="jp-carousel-slider-bar-bg"
         style={`width: calc(calc(${currentIndex} + ${imagesPerSlide}) / ${images.length} * 100%);`}
       ></div>
     </div>
   {/if}
 
   {#if enablePagination}
-    <div class="pagination">
+    <div class="jp-carousel-pagination">
       {#each images as item, index}
         <button
           type="button"
           on:click={() => (currentIndex = index)}
-          class="pagination-button"
-          class:active={currentIndex === index}
+          class="jp-carousel-pagination-button"
+          class:jp-carousel-pagination-button-active={currentIndex === index}
         >
         </button>
       {/each}
@@ -126,101 +126,102 @@
 </div>
 
 <style lang="postcss">
-  .slider {
-    --slider-max-width: 600px;
-  }
+  .jp-carousel {
+    &-slider {
+      --slider-max-width: 600px;
 
-  .slider-container {
-    position: relative;
-    overflow: hidden;
-    width: 100%;
-    max-width: var(--slider-max-width);
-    margin: 0 auto;
-  }
+      &-container {
+        position: relative;
+        overflow: hidden;
+        width: 100%;
+        max-width: var(--slider-max-width);
+        margin: 0 auto;
+      }
 
-  .slider-images {
-    display: flex;
-    transition: transform 0.3s;
-  }
+      &-images {
+        display: flex;
+        transition: transform 0.3s;
+      }
 
-  .slider-image {
-    width: calc(100% / var(--images-per-slide));
-    flex-shrink: 0;
-    object-fit: cover;
-  }
+      &-image {
+        width: calc(100% / var(--images-per-slide));
+        flex-shrink: 0;
+        object-fit: cover;
+      }
 
-  .prev,
-  .next {
-    position: absolute;
-    top: 50%;
-    transform: translateY(-50%);
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    border-radius: 50%;
-    width: 2rem;
-    height: 2rem;
-    background: rgba(0, 0, 0, 0.5);
-    color: white;
-    fill: white;
-    border: none;
-    cursor: pointer;
-    transition: 0.3s;
-  }
+      &-bar {
+        position: relative;
+        max-width: var(--slider-max-width);
+        margin: 0 auto;
+        width: 100%;
+        height: 4px;
+        background-color: var(--border-primary);
 
-  .prev:hover,
-  .next:hover {
-    background-color: rgba(0, 0, 0, 0.75);
-  }
+        &-bg {
+          position: absolute;
+          top: 50%;
+          transform: translateY(-50%);
+          background-color: var(--primary-color);
+          height: 8px;
+          transition: 0.3s;
+        }
+      }
+    }
 
-  .prev {
-    left: 10px;
-  }
+    &-prev,
+    &-next {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      border-radius: 50%;
+      width: 2rem;
+      height: 2rem;
+      background: rgba(0, 0, 0, 0.5);
+      color: white;
+      fill: white;
+      border: none;
+      cursor: pointer;
+      transition: 0.3s;
 
-  .next {
-    right: 10px;
-  }
+      &:hover {
+        background-color: rgba(0, 0, 0, 0.75);
+      }
+    }
 
-  .slider-bar {
-    position: relative;
-    max-width: var(--slider-max-width);
-    margin: 0 auto;
-    width: 100%;
-    height: 4px;
-    background-color: var(--border-primary);
-  }
+    &-prev {
+      left: 10px;
+    }
 
-  .slider-bar-bg {
-    position: absolute;
-    top: 50%;
-    transform: translateY(-50%);
-    background-color: var(--primary-color);
-    height: 8px;
-    transition: 0.3s;
-  }
+    &-next {
+      right: 10px;
+    }
 
-  .pagination {
-    display: flex;
-    justify-content: center;
-    gap: 0.75rem;
-    margin-top: 2rem;
-  }
+    &-pagination {
+      display: flex;
+      justify-content: center;
+      gap: 0.75rem;
+      margin-top: 2rem;
 
-  .pagination-button {
-    position: relative;
-    width: 0.875rem;
-    height: 0.875rem;
-    border: 2px solid var(--border-primary);
-    border-radius: 50%;
-    transition: 0.3s;
-  }
+      &-button {
+        position: relative;
+        width: 0.875rem;
+        height: 0.875rem;
+        border: 2px solid var(--border-primary);
+        border-radius: 50%;
+        transition: 0.3s;
 
-  .pagination-button:hover {
-    background-color: var(--background-secondary);
-  }
+        &:hover {
+          background-color: var(--background-secondary);
+        }
 
-  .pagination-button.active {
-    border-color: var(--primary-color);
-    background-color: var(--primary-color);
+        &-active {
+          border-color: var(--primary-color);
+          background-color: var(--primary-color);
+        }
+      }
+    }
   }
 </style>

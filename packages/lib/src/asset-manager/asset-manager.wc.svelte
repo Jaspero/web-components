@@ -7,6 +7,7 @@
 
 <script lang="ts">
   import type { AssetManagerService, Item } from '../types/asset-manager.service';
+  import './asset-manager.wc.pcss';
   import Folder from './Folder.svelte';
   import Asset from './Asset.svelte';
   import { createEventDispatcher } from 'svelte';
@@ -281,37 +282,59 @@
       <div>{wording.DROP_FILES_HERE}</div>
     </div>
   {:else if folderDialog}
-    <div class = "jp-asset-manager-header">
+    <header class="jp-asset-manager-header">
       <div class="jp-asset-manager-header-actions">
-        <button type="button" on:click={() => (folderDialog = false)}>
+        <button
+          class="jp-asset-manager-header-actions-button"
+          type="button"
+          on:click={() => (folderDialog = false)}
+        >
           {@html closeCrossIcon}
         </button>
       </div>
     </div>
 
     <form class="jp-asset-manager-add-folder-form" on:submit|preventDefault={createFolder}>
-      <label class="jp-asset-manager-add-folder-input">
-        <span>{wording.FOLDER_NAME}</span>
-        <input bind:value={folderName} pattern={folderNamePattern} required />
+      <label class="jp-asset-manager-add-folder-form-input">
+        <span class="jp-asset-manager-add-folder-form-input-span">{wording.FOLDER_NAME}</span>
+        <input
+          class="jp-asset-manager-add-folder-form-input-input"
+          bind:value={folderName}
+          pattern={folderNamePattern}
+          required
+        />
       </label>
-      <button class="jp-asset-manager-add-folder-submit" type="submit">{wording.SUBMIT}</button>
+      <button class="jp-asset-manager-add-folder-form-submit" type="submit">{wording.SUBMIT}</button
+      >
     </form>
   {:else}
-    <div class = "jp-asset-manager-header">
-      <nav>
-        <button type="button" title="Back" disabled={path === rootPath} on:click={back}>
+    <header class="jp-asset-manager-header">
+      <nav class="jp-asset-manager-header-nav">
+        <button
+          class="jp-asset-manager-header-actions-button"
+          type="button"
+          title="Back"
+          disabled={path === rootPath}
+          on:click={back}
+        >
           {@html backArrowIcon}
         </button>
 
-        <span class="route">{path.replace(rootPath, '') || '/'}</span>
+        <span class="jp-asset-manager-route">{path.replace(rootPath, '') || '/'}</span>
       </nav>
 
       <div class="jp-asset-manager-header-actions">
-        <button type="button" title="Add Folder" on:click|preventDefault={addFolder}>
+        <button
+          class="jp-asset-manager-header-actions-button"
+          type="button"
+          title="Add Folder"
+          on:click|preventDefault={addFolder}
+        >
           {@html addFolderIcon}
         </button>
 
         <button
+          class="jp-asset-manager-header-actions-button"
           type="button"
           title="Add Files"
           on:click|preventDefault={() => browseFilesEl.click()}
@@ -323,7 +346,7 @@
 
     {#if loading}
       <div class="jp-asset-manager-loader">
-        <div class="jp-asset-manager-spinner"></div>
+        <div class="jp-asset-manager-loader-spinner"></div>
       </div>
     {:else if items.length == 0}
       <div class="jp-asset-manager-info">
@@ -341,7 +364,7 @@
               class="jp-asset-manager-asset-button"
               role="button"
               tabindex="1"
-              class:selected={selectedItems[item.id]}
+              class:jp-asset-manager-asset-button-selected={selectedItems[item.id]}
               on:click={() => select(item)}
             >
               <Asset
@@ -358,7 +381,7 @@
 
     {#if selectable}
       <div class = "jp-asset-manager-footer">
-        <button type="button" on:click={confirmSelection}>{wording.CONFIRM_SELECTION}</button>
+        <button class="jp-asset-manager-footer-button" type="button" on:click={confirmSelection}>{wording.CONFIRM_SELECTION}</button>
         {#if Object.keys(selectedItems).length > 1}
           <button type="button" on:click={removeSelectedFiles}>Delete files: ({Object.keys(selectedItems).length})</button>  
         {/if}
