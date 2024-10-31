@@ -150,7 +150,7 @@
   }
   
   async function scrollToTop() {
-    const tableContainer = document.querySelector('.jp-table-container');
+    const tableContainer = document.querySelector('.jp-async-table-container');
     if (tableContainer) {
       tableContainer.scrollTo({
         top: 0,
@@ -381,19 +381,19 @@
   });
 </script>
 
-<div class="jp-table">
+<div class="jp-async-table">
   {#if showArrangingColumns || showImport || showExport}
-    <div class="jp-table-header">
+    <div class="jp-async-table-header">
       {#if showArrangingColumns}
         &nbsp;
-        <button type="button" on:click={arrangeColumns} class="jp-table-button">
+        <button type="button" on:click={arrangeColumns} class="jp-async-table-button">
           {wording.ARRANGE_COLUMNS}
         </button>
       {/if}
 
       {#if showImport}
         &nbsp;
-        <button type="button" class="jp-table-button" on:click={() => importFileEl.click()}>
+        <button type="button" class="jp-async-table-button" on:click={() => importFileEl.click()}>
           {wording.IMPORT}
         </button>
       {/if}
@@ -401,13 +401,13 @@
         &nbsp;
         <button
           type="button"
-          class="jp-table-button"
+          class="jp-async-table-button"
           on:click={exportData}
-          class:jp-table-loading={exportLoading}
+          class:jp-async-table-loading={exportLoading}
           disabled={exportLoading}
         >
           {#if exportLoading}
-            <span class="jp-table-spinner"></span>
+            <span class="jp-async-table-spinner"></span>
             {wording.LOADING}
           {:else}
             {wording.EXPORT}
@@ -417,17 +417,17 @@
     </div>
   {/if}
 
-  <div class="jp-table-container" style:height>
+  <div class="jp-async-table-container" style:height>
     <table>
       {#if headers}
         <tr>
           {#each headers as header, index}
             {#if !header.disabled}
               <th
-                class:jp-table-sortable={allowArrangeColumns && header.sortable}
-                class:jp-table-sticky-first={freezeFirstColumn && index === 0}
-                class:jp-table-sticky-last={index === headers.length - 1 && freezeLastColumn}
-                class:jp-table-no-cursor={header.key === nameColumnKey}
+                class:jp-async-table-sortable={allowArrangeColumns && header.sortable}
+                class:jp-async-table-sticky-first={freezeFirstColumn && index === 0}
+                class:jp-async-table-sticky-last={index === headers.length - 1 && freezeLastColumn}
+                class:jp-async-table-no-cursor={header.key === nameColumnKey}
                 style="background-color: {hoveringOverColumnIndex === index
                   ? '#D3D3D3'
                   : columnColors[index % columnColors.length]};"
@@ -449,7 +449,7 @@
                 }}
               >
                 <span
-                  class:jp-table-draggable-column={allowArrangeColumns &&
+                  class:jp-async-table-draggable-column={allowArrangeColumns &&
                     header.key !== nameColumnKey}
                   tabindex="-1"
                   role="button"
@@ -461,7 +461,7 @@
                 </span>
 
                 {#if sort?.key === header.key}
-                  <span class="jp-table-sortable">{sort.direction === 'asc' ? '↑' : '↓'}</span>
+                  <span class="jp-async-table-sortable">{sort.direction === 'asc' ? '↑' : '↓'}</span>
                 {/if}
               </th>
             {/if}
@@ -471,19 +471,19 @@
 
       {#if rows}
         {#each rows as row, ind}
-          <tr class:jp-table-highlight={rowClickable}>
+          <tr class:jp-async-table-highlight={rowClickable}>
             {#each headers as header, index}
               {#if !header.disabled}
                 <td
-                  class:jp-table-sortable={allowArrangeColumns && header.sortable}
-                  class:jp-table-sticky-first={freezeFirstColumn && index === 0}
-                  class:jp-table-sticky-last={index === headers.length - 1 && freezeLastColumn}
+                  class:jp-async-table-sortable={allowArrangeColumns && header.sortable}
+                  class:jp-async-table-sticky-first={freezeFirstColumn && index === 0}
+                  class:jp-async-table-sticky-last={index === headers.length - 1 && freezeLastColumn}
                   style="background-color: {hoveringOverColumnIndex === index
                     ? '#D3D3D3'
                     : columnColors[index % columnColors.length]};"
                 >
                   {#await handleColumn(header, row, ind) then val}
-                    <span class="jp-table-cell">
+                    <span class="jp-async-table-cell">
                       {@html val}
                     </span>
                   {/await}
@@ -496,17 +496,17 @@
     </table>
   </div>
 
-  <div class="jp-table-actions">
+  <div class="jp-async-table-actions">
     {#if showLoadMore}
       <button
         type="button"
-        class="jp-table-button"
-        class:jp-table-loading={loading}
+        class="jp-async-table-button"
+        class:jp-async-table-loading={loading}
         disabled={!hasMore}
         on:click={loadMore}
       >
         {#if loading}
-          <span class="jp-table-spinner"></span>
+          <span class="jp-async-table-spinner"></span>
           {wording.LOADING}
         {:else}
           {wording.LOAD_MORE}
@@ -525,31 +525,31 @@
 </div>
 
 {#if arrangeColumnDialog}
-  <div class="jp-table-arrange-columns-dialog">
+  <div class="jp-async-table-arrange-columns-dialog">
     <!-- svelte-ignore a11y-click-events-have-key-events -->
     <!-- svelte-ignore a11y-no-static-element-interactions -->
     <div
-      class="jp-table-arrange-columns-dialog-backdrop"
+      class="jp-async-table-arrange-columns-dialog-backdrop"
       on:click={() => (arrangeColumnDialog = false)}
     ></div>
     <form
-      class="jp-table-arrange-columns-dialog-inner"
+      class="jp-async-table-arrange-columns-dialog-inner"
       on:submit|preventDefault={saveColumnArrangement}
     >
       <main>
         {#each arrangementColumns as column, index}
           {#if !column.disableToggle}
             <label
-              class="jp-table-arrange-column-label"
+              class="jp-async-table-arrange-column-label"
               style:background-color={dialogHoveringOverColumnIndex === index
                 ? '#D3D3D3'
                 : columnColors[index % columnColors.length]}
             >
               <!-- svelte-ignore a11y-no-static-element-interactions -->
               <span
-                class="jp-table-material-symbols-outlined drag-handle"
+                class="jp-async-table-material-symbols-outlined drag-handle"
                 draggable="true"
-                class:jp-table-no-cursor={column.key === nameColumnKey}
+                class:jp-async-table-no-cursor={column.key === nameColumnKey}
                 style="cursor: {column.key === nameColumnKey
                   ? 'default'
                   : 'grab'}; pointer-events: {column.key === nameColumnKey ? 'none' : 'auto'};"
@@ -584,8 +584,8 @@
       <footer>
         <button
           type="submit"
-          class="jp-table-button"
-          class:jp-table-loading={saveArrangementLoading}
+          class="jp-async-table-button"
+          class:jp-async-table-loading={saveArrangementLoading}
           disabled={saveArrangementLoading}
         >
           {#if loading}

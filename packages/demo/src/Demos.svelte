@@ -29,8 +29,6 @@
   import '../../../dist/datepicker.css';
   import '../../../dist/date-range.wc';
   import '../../../dist/date-range.css';
-  import '../../../dist/color.wc';
-  import '../../../dist/color.css';
   import '../../../dist/ckeditor.wc';
   import '../../../dist/ckeditor.css';
   import '../../../dist/chips.wc';

@@ -20,7 +20,7 @@
   let emptyStar = 0;
   let fullStar = 1;
   let totalStars = 5;
-  let oldStars = [];
+  let oldStars: any[] = [];
   let stars: {
     raw: number;
     percent: string;
@@ -144,8 +144,8 @@
   });
 </script>
 
-<div class="star-container">
-  <div class="star-rating">
+<div class="jp-review-stars-container">
+  <div class="jp-review-stars-rating">
     {#each stars as star}
       <button
         type="button"
@@ -161,23 +161,25 @@
       </button>
     {/each}
     {#if indicator}
-      <div class="indicator">{value}/{totalStars}</div>
+      <div class="jp-review-stars-indicator">{value}/{totalStars}</div>
     {/if}
   </div>
 </div>
 
 <style lang="postcss">
-  .star-rating {
+  .jp-review-stars{
+    &-container:not(:last-child) {
+    margin-right: 5px;
+    position: relative;
+  }
+
+  &-rating {
     display: flex;
     align-items: center;
   }
-
-  .indicator {
+  
+  &-indicator {
     font-size: 1rem;
   }
-
-  .star-container:not(:last-child) {
-    margin-right: 5px;
-    position: relative;
   }
 </style>

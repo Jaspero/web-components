@@ -50,18 +50,16 @@
   }
 </script>
 
-<div class="paginator">
-  {itemsPerPageLabel}
-
+<div class="jp-data-paginator">
+    {itemsPerPageLabel}
   <select bind:value={pageSize} on:change={() => pageSizeHandler()}>
     {#each pageSizeOptions as option (option)}
       <option value={option}>{option}</option>
     {/each}
   </select>
-  {pageIndex * internalPageSize + 1} - {(pageIndex + 1) * internalPageSize}
-  {getRangeLabel}
-  {length}
-
+    {pageIndex * internalPageSize + 1} - {(pageIndex + 1) * internalPageSize}
+    {getRangeLabel}
+    {length}
   <button type="button" on:click={firstPage} disabled={!pageIndex}>
     {@html firstPageIcon}
   </button>
@@ -81,30 +79,31 @@
 </div>
 
 <style lang="postcss">
-  .paginator {
+  .jp-data-paginator {
     font-size: 1rem;
-  }
 
-  select {
-    height: 32px;
-  }
+    & select {
+      height: 32px;
+    }
 
-  button {
-    width: 32px;
-    height: 32px;
-    background: none;
-    border: none;
-    border-radius: 50%;
-    cursor: pointer;
-    transition: 0.3s;
-  }
+    & button {
+      width: 32px;
+      height: 32px;
+      background: none;
+      border: none;
+      border-radius: 50%;
+      cursor: pointer;
+      transition: 0.3s;
 
-  button:disabled {
-    opacity: 0.5;
-    pointer-events: none;
-  }
+      &:disabled {
+        opacity: 0.5;
+        pointer-events: none;
+      }
 
-  button:not(:disabled):hover {
-    background: rgba(0, 0, 0, 0.08);
+      &:not(:disabled):hover {
+        background: rgba(0, 0, 0, 0.08);
+      }
+    }
+
   }
 </style>

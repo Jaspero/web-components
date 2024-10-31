@@ -30,7 +30,7 @@ export default function Home() {
       <div className={styles.hero}>
         <div className={styles.heroUpper}>
           <div className={styles.heroUpperContainer}>
-            <div>
+            <div className={styles.documentationTitle}>
               <h1>JASPERO</h1>
               <h2>Web components</h2>
               <Link className="button button--secondary button--lg" to="/docs/intro">
@@ -38,7 +38,7 @@ export default function Home() {
               </Link>
             </div>
 
-            <img src={useBaseUrl('/img/logo.svg')} alt="logo" />
+            <img src={useBaseUrl('/img/logo.svg')} alt="logo"/>
           </div>
         </div>
         <div className={styles.heroLower}>

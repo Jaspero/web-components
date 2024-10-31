@@ -1,0 +1,334 @@
+
+* {
+  box-sizing: border-box;
+}
+
+.jp-asset-manager {
+  &-card {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    max-width: 802px;
+    width: 100%;
+    height: 500px;
+    overflow: auto;
+    background-color: white;
+    box-shadow: 0 3px 6px rgba(0, 0, 0, 0.12);
+    font-family: sans-serif;
+  }
+
+  &-drop-here {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    justify-content: center;
+    align-items: center;
+    background-color: white;
+  }
+
+  &-header {
+    z-index: 1;
+    position: sticky;
+    top: 0;
+    display: flex;
+    justify-content: space-between;
+    background-color: white;
+    padding: 20px;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.12);
+
+    &-nav {
+      display: flex;
+      gap: 12px;
+    }
+
+    &-actions {
+      display: flex;
+      gap: 12px;
+
+      &-button {
+        width: 40px;
+        height: 40px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        background-color: transparent;
+        border: 1px solid rgba(0, 0, 0, 0.12);
+        border-radius: 12px;
+        cursor: pointer;
+        transition: 0.25s;
+
+        &:disabled {
+          opacity: 0.5;
+          background-color: rgba(0, 0, 0, 0.1);
+          pointer-events: none;
+        }
+
+        &:hover {
+          background-color: rgba(0, 0, 0, 0.08);
+          border-color: rgba(0, 0, 0, 0.2);
+        }
+      }
+    }
+  }
+
+  &-add-folder-form {
+    padding: 20px;
+
+    &-input {
+      display: block;
+
+      &-span {
+        display: block;
+        font-size: 14px;
+      }
+
+      &-input {
+        border: 1px solid rgba(0, 0, 0, 0.08);
+        height: 40px;
+        padding: 0 12px;
+        border-radius: 8px;
+        font-size: 14px;
+        margin-top: 4px;
+      }
+    }
+
+    &-submit {
+      height: 32px;
+      padding: 0 12px;
+      font-weight: bold;
+      background-color: #e66439;
+      color: white;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      margin-top: 12px;
+      transition: 0.25s;
+
+      &:disabled {
+        opacity: 0.5;
+        pointer-events: none;
+      }
+
+      &:active {
+        transform: scale(0.95);
+      }
+    }
+  }
+
+  &-loader {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    &-spinner {
+      width: 150px;
+      height: 150px;
+      border-radius: 50%;
+      border: 9px solid var(--primary-color);
+      animation:
+        spinner-bulqg1 0.8s infinite linear alternate,
+        spinner-oaa3wk 1.6s infinite linear;
+    }
+  }
+
+  &-info {
+    display: flex;
+    flex: 1;
+    align-content: flex-start;
+    flex-wrap: wrap;
+    padding: 20px;
+  }
+
+  &-files {
+    display: flex;
+    flex: 1;
+    align-content: flex-start;
+    flex-wrap: wrap;
+    padding: 12px;
+  }
+
+  &-asset-button {
+    width: 25%;
+    padding: 8px;
+    transition: 0.25s;
+    border-radius: 12px;
+    cursor: pointer;
+
+    &-selected {
+      border: 1px solid #e66439;
+    }
+
+    &:hover .jp-asset-manager-file {
+      background-color: rgba(0, 0, 0, 0.08);
+      border-color: rgba(0, 0, 0, 0.2);
+    }
+  }
+
+  &-route {
+    display: flex;
+    align-items: center;
+    height: 100%;
+    font-size: 20px;
+  }
+
+  &-file {
+    position: relative;
+    height: 100%;
+    border: 1px solid rgba(0, 0, 0, 0.12);
+    border-radius: 12px;
+    background-color: white;
+    overflow: hidden;
+
+    &-name {
+      padding: 6px 12px 0;
+    }
+
+    &-info {
+      padding: 4px 12px 6px;
+    }
+
+    .jp-asset-manager-file-remove {
+      position: absolute;
+      top: 4px;
+      right: 4px;
+      width: 32px;
+      height: 32px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background-color: white;
+      border-radius: 8px;
+      cursor: pointer;
+      border: 1px solid rgba(0, 0, 0, 0.08);
+    }
+
+    .jp-asset-manager-file-icon-image {
+      width: 100%;
+      height: 150px;
+      object-fit: contain;
+      user-select: none;
+      pointer-events: none;
+      background-color: rgba(0, 0, 0, 0.02);
+    }
+
+    .jp-asset-manager-file-remove:hover {
+      border-color: rgba(0, 0, 0, 0.4);
+    }
+  }
+
+  &-file-icon .jp-asset-manager-icon-only {
+    padding: 12px;
+  }
+
+  &-footer {
+    z-index: 1;
+    position: sticky;
+    bottom: 0;
+    display: flex;
+    background-color: white;
+    padding: 20px;
+    border-top: 1px solid rgba(0, 0, 0, 0.12);
+
+    &-button {
+      height: 40px;
+      padding: 0 16px;
+      font-weight: bold;
+      background-color: #e66439;
+      color: white;
+      border: none;
+      border-radius: 12px;
+      cursor: pointer;
+      transition: 0.25s;
+
+      &:disabled {
+        opacity: 0.5;
+        pointer-events: none;
+      }
+
+      &:active {
+        transform: scale(0.95);
+      }
+    }
+  }
+
+  &-folder {
+    box-sizing: border-box;
+    width: 25%;
+    padding: 8px;
+
+    &-button {
+      width: 100%;
+      padding: 12px;
+      display: flex;
+      justify-content: flex-start;
+      align-items: center;
+      border: 1px solid rgba(0, 0, 0, 0.12);
+      gap: 6px;
+      background-color: transparent;
+      font-size: 14px;
+      border-radius: 12px;
+      cursor: pointer;
+      transition: 0.25s;
+
+      &:hover {
+        background-color: rgba(0, 0, 0, 0.08);
+        border-color: rgba(0, 0, 0, 0.2);
+      }
+    }
+  }
+}
+
+@keyframes spinner-bulqg1 {
+  0% {
+    clip-path: polygon(50% 50%, 0 0, 50% 0%, 50% 0%, 50% 0%, 50% 0%, 50% 0%);
+  }
+
+  12.5% {
+    clip-path: polygon(50% 50%, 0 0, 50% 0%, 100% 0%, 100% 0%, 100% 0%, 100% 0%);
+  }
+
+  25% {
+    clip-path: polygon(50% 50%, 0 0, 50% 0%, 100% 0%, 100% 100%, 100% 100%, 100% 100%);
+  }
+
+  50% {
+    clip-path: polygon(50% 50%, 0 0, 50% 0%, 100% 0%, 100% 100%, 50% 100%, 0% 100%);
+  }
+
+  62.5% {
+    clip-path: polygon(50% 50%, 100% 0, 100% 0%, 100% 0%, 100% 100%, 50% 100%, 0% 100%);
+  }
+
+  75% {
+    clip-path: polygon(50% 50%, 100% 100%, 100% 100%, 100% 100%, 100% 100%, 50% 100%, 0% 100%);
+  }
+
+  100% {
+    clip-path: polygon(50% 50%, 50% 100%, 50% 100%, 50% 100%, 50% 100%, 50% 100%, 0% 100%);
+  }
+}
+
+@keyframes spinner-oaa3wk {
+  0% {
+    transform: scaleY(1) rotate(0deg);
+  }
+
+  49.99% {
+    transform: scaleY(1) rotate(135deg);
+  }
+
+  50% {
+    transform: scaleY(-1) rotate(0deg);
+  }
+
+  100% {
+    transform: scaleY(-1) rotate(-135deg);
+  }
+}

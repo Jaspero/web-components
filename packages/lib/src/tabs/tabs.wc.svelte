@@ -12,9 +12,9 @@
 
   export let tab: number = 1;
 
-  let tabs = [];
-  let tabsEl;
-  let contentEl;
+  let tabs: any[] = [];
+  let tabsEl: Element;
+  let contentEl: HTMLDivElement;
   let overflownTabs = false;
 
   const dispatch = createEventDispatcher();
@@ -34,7 +34,7 @@
     tabsEl.scrollLeft -= 150;
   }
 
-  function checkOverflow(e) {
+  function checkOverflow(e: { contentRect: { width: number } }[]) {
     overflownTabs = e[0].contentRect.width < 150 * tabs.length;
   }
 
@@ -45,22 +45,22 @@
   });
 </script>
 
-<div class="container">
+<div class="jp-tabs-container">
   <button
     type="button"
-    class="arrow"
+    class="jp-tabs-container-arrow"
     on:click|preventDefault={() => previous()}
     hidden={!overflownTabs}
   >
     {@html previousArrowIcon}
   </button>
-  <div class="tabs" bind:this={tabsEl}>
+  <div class="jp-tabs" bind:this={tabsEl}>
     {#each tabs as Tab, index}
       <button
         type="button"
-        class="tab"
+        class="jp-tabs-tab"
         on:click={() => (tab = index + 1)}
-        class:active={tab == index + 1}
+        class:jp-tabs-tab-active={tab == index + 1}
       >
         {Tab.getAttribute('title')}
       </button>
@@ -68,7 +68,7 @@
   </div>
   <button
     type="button"
-    class="arrow"
+    class="jp-tabs-arrow"
     on:click|preventDefault={() => next()}
     hidden={!overflownTabs}
   >
@@ -80,7 +80,7 @@
   <slot />
 </div>
 
-<div class="content">
+<div class="jp-tabs-content">
   {#each tabs as Tab, index}
     {#if tab === index + 1}
       {@html Tab.innerHTML}
@@ -89,49 +89,46 @@
 </div>
 
 <style lang="postcss">
-  .container {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    width: 100%;
-  }
-
-  .content {
-    position: relative;
-    width: 100%;
-  }
-
-  .tabs {
+  .jp-tabs {
     display: flex;
     overflow: hidden;
-  }
 
-  .tab {
-    text-align: center;
-    min-width: 150px;
-    overflow: hidden;
-    text-overflow: ellipsis;
-  }
+    &-container {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      width: 100%;
+    }
 
-  button {
-    color: rgb(82, 81, 80);
-    background: transparent;
-    font-size: 16px;
-    font-weight: 400;
-    padding: 10px 10px;
-    border-color: rgba(244, 252, 252, 0.377);
-    border-width: 1px;
-    border-left: transparent;
-    border-right: transparent;
-    border-top: transparent;
-  }
+    &-tab {
+      text-align: center;
+      min-width: 150px;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      color: rgb(82, 81, 80);
+      background: transparent;
+      font-size: 16px;
+      font-weight: 400;
+      padding: 10px 10px;
+      border-color: rgba(244, 252, 252, 0.377);
+      border-width: 1px;
+      border-left: transparent;
+      border-right: transparent;
+      border-top: transparent;
 
-  button:hover {
-    background-color: rgb(250, 245, 243);
-  }
+      &:hover {
+        background-color: rgb(250, 245, 243);
+      }
 
-  button.active {
-    border-bottom: 2px solid rgb(215, 73, 12);
-    color: rgb(199, 64, 15);
+      &-active {
+        border-bottom: 2px solid rgb(215, 73, 12);
+        color: rgb(199, 64, 15);
+      }
+    }
+
+    &-content {
+      position: relative;
+      width: 100%;
+    }
   }
 </style>

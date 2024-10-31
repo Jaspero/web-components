@@ -160,12 +160,17 @@
   }
 </script>
 
-<div class="gallery" bind:this={container}>
+<div class="jp-image-gallery" bind:this={container}>
   {#each images as image, index}
-    <div class="image-container">
+    <div class="jp-image-gallery-container">
       <!-- svelte-ignore a11y-click-events-have-key-events -->
       <!-- svelte-ignore a11y-no-noninteractive-element-interactions -->
-      <img class="image" src={image.src} alt={image.alt} on:click={() => openCarousel(index)} />
+      <img
+        class="jp-image-gallery-image"
+        src={image.src}
+        alt={image.alt}
+        on:click={() => openCarousel(index)}
+      />
     </div>
   {/each}
 </div>
@@ -173,35 +178,40 @@
 {#if focused}
   <!-- svelte-ignore a11y-click-events-have-key-events -->
   <!-- svelte-ignore a11y-no-static-element-interactions -->
-  <div class="slider" on:click={closeCarousel}>
+  <div class="jp-image-gallery-slider" on:click={closeCarousel}>
     <!-- svelte-ignore a11y-click-events-have-key-events -->
     <!-- svelte-ignore a11y-no-static-element-interactions -->
-    <div class="slider-container" on:click|stopPropagation>
-      <div class="slider-images" style="transform: translateX(-{currentIndex * 100}%);">
+    <div class="jp-image-gallery-slider-container" on:click|stopPropagation>
+      <div
+        class="jp-image-gallery-slider-images"
+        style="transform: translateX(-{currentIndex * 100}%);"
+      >
         {#each images as image}
-          <img class="slider-image" src={image.src} alt={image.alt} />
+          <img class="jp-image-gallery-slider-image" src={image.src} alt={image.alt} />
         {/each}
       </div>
-      <button type="button" class="prev" on:click={prevImage}> &larr; </button>
-      <button type="button" class="next" on:click={nextImage}> &rarr; </button>
-      <button type="button" class="close" on:click={closeCarousel}> &times; </button>
+      <button type="button" class="jp-image-gallery-prev" on:click={prevImage}> &larr; </button>
+      <button type="button" class="jp-image-gallery-next" on:click={nextImage}> &rarr; </button>
+      <button type="button" class="jp-image-gallery-close" on:click={closeCarousel}>
+        &times;
+      </button>
     </div>
     {#if sliderBar}
-      <div class="slider-bar">
+      <div class="jp-image-gallery-slider-bar">
         <div
-          class="slider-bar-bg"
+          class="jp-image-gallery-slider-bar-bg"
           style="width: {((currentIndex + 1) / images.length) * 100}%;"
         ></div>
       </div>
     {/if}
     {#if enablePagination}
-      <div class="pagination">
+      <div class="jp-image-gallery-pagination">
         {#each images as _, index}
           <button
             type="button"
             on:click={() => (currentIndex = index)}
-            class="pagination-button"
-            class:active={currentIndex === index}
+            class="jp-image-gallery-pagination-button"
+            class:jp-image-gallery-pagination-button-active={currentIndex === index}
           ></button>
         {/each}
       </div>
@@ -212,130 +222,135 @@
 <svelte:window on:keydown={keydownFunction} on:resize={layout} />
 
 <style lang="postcss">
-  .gallery {
+  .jp-image-gallery {
     position: relative;
-  }
 
-  .image-container {
-    position: absolute;
-  }
+    &-container {
+      position: absolute;
+    }
+    &-image {
+      width: 100%;
+      height: auto;
+      cursor: pointer;
+      display: block;
 
-  .image {
-    width: 100%;
-    height: auto;
-    cursor: pointer;
-    display: block;
-  }
+      &:hover {
+        transform: scale(1.002);
+      }
+    }
 
-  .image:hover {
-    transform: scale(1.002);
-  }
+    &-slider {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.9);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      z-index: 1000;
+      overflow: auto;
 
-  .slider {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: rgba(0, 0, 0, 0.9);
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    z-index: 1000;
-    overflow: auto;
-  }
+      &-container {
+        position: relative;
+        width: 100%;
+        max-height: 100%;
+        overflow: hidden;
+      }
 
-  .slider-container {
-    position: relative;
-    width: 100%;
-    max-height: 100%;
-    overflow: hidden;
-  }
+      &-container {
+        position: relative;
+        width: 100%;
+        max-height: 100%;
+        overflow: hidden;
+      }
 
-  .slider-images {
-    display: flex;
-    transition: transform 0.3s;
-    width: 100%;
-  }
+      &-images {
+        display: flex;
+        transition: transform 0.3s;
+        width: 100%;
+      }
 
-  .slider-image {
-    flex-shrink: 0;
-    width: 100%;
-    max-height: 90vh;
-    object-fit: contain;
-  }
+      &-image {
+        flex-shrink: 0;
+        width: 100%;
+        max-height: 90vh;
+        object-fit: contain;
+      }
+    }
 
-  .prev,
-  .next {
-    position: absolute;
-    top: 50%;
-    transform: translateY(-50%);
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    border-radius: 50%;
-    width: 2rem;
-    height: 2rem;
-    background: rgba(0, 0, 0, 0.5);
-    color: white;
-    border: none;
-    cursor: pointer;
-    transition: 0.3s;
-  }
+    &-prev,
+    &-next {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      border-radius: 50%;
+      width: 2rem;
+      height: 2rem;
+      background: rgba(0, 0, 0, 0.5);
+      color: white;
+      border: none;
+      cursor: pointer;
+      transition: 0.3s;
 
-  .prev:hover,
-  .next:hover {
-    background-color: rgba(0, 0, 0, 0.75);
-  }
+      &:hover {
+        background-color: rgba(0, 0, 0, 0.75);
+      }
+    }
 
-  .prev {
-    left: 10px;
-  }
+    &-prev {
+      left: 10px;
+    }
 
-  .next {
-    right: 10px;
-  }
+    &-next {
+      right: 10px;
+    }
 
-  .close {
-    position: absolute;
-    top: 10px;
-    right: 10px;
-    background: none;
-    border: none;
-    color: white;
-    font-size: 2rem;
-    cursor: pointer;
-  }
+    &-close {
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      background: none;
+      border: none;
+      color: white;
+      font-size: 2rem;
+      cursor: pointer;
+    }
 
-  .slider-bar {
-    position: relative;
-    width: 100%;
-    height: 4px;
-    background-color: gray;
-    margin-top: 1rem;
-  }
+    &-slider-bar {
+      position: relative;
+      width: 100%;
+      height: 4px;
+      background-color: gray;
+      margin-top: 1rem;
 
-  .slider-bar-bg {
-    position: absolute;
-    top: 0;
-    left: 0;
-    height: 4px;
-    background-color: white;
-  }
+      &-bg {
+        position: absolute;
+        top: 0;
+        left: 0;
+        height: 4px;
+        background-color: white;
+      }
+    }
 
-  .pagination {
-    display: flex;
-    justify-content: center;
-    gap: 0.5rem;
-    margin-top: 1rem;
-  }
+    &-pagination {
+      display: flex;
+      justify-content: center;
+      gap: 0.5rem;
+      margin-top: 1rem;
 
-  .pagination-button {
-    width: 10px;
-    height: 10px;
-    border-radius: 50%;
-    background: gray;
-    border: none;
-    cursor: pointer;
+      &-button {
+        width: 10px;
+        height: 10px;
+        border-radius: 50%;
+        background: gray;
+        border: none;
+        cursor: pointer;
+      }
+    }
   }
 </style>
