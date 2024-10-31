@@ -38,18 +38,7 @@ Defines the accepted file types and provides a method to upload a file.
 In order for this component to work you have to include the following
 
 ```html
-<link
-  href="
-https://cdn.jsdelivr.net/npm/ckeditor-full@4.7.3/skins/moono-lisa/editor.min.css
-"
-  rel="stylesheet"
-/>
-```
-
-```html
-<script src="
-https://cdn.jsdelivr.net/npm/ckeditor-full@4.7.3/ckeditor.min.js
-"></script>
+<script src="https://cdn.ckeditor.com/ckeditor5/41.2.1/super-build/ckeditor.js"></script>
 ```
 
 ### Slots
