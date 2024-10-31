@@ -18,7 +18,7 @@
 
 <script lang="ts">
   import { onMount, createEventDispatcher } from 'svelte';
-  import { clickOutside } from '../click-outside';
+  import { clickOutside } from '../utils/click-outside';
   import { loadScript } from '../utils/scriptLoader';
   import locationIcon from '../icons/location.svg?raw';
 

@@ -21,7 +21,7 @@
   import upArrowIcon from '../../icons/up-arrow.svg?raw';
   import leftArrowIcon from '../../icons/left-arrow.svg?raw';
   import rightArrowIcon from '../../icons/right-arrow.svg?raw';
-  import { clickOutside } from '../../click-outside';
+  import { clickOutside } from '../../utils/click-outside';
   import { createEventDispatcher } from 'svelte';
   import { formatDisplayDate, formatReturnDate } from '../../utils/dateFormatter';
   import Day from '../datepicker/Day.svelte';

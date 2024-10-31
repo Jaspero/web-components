@@ -15,7 +15,7 @@
 />
 
 <script lang="ts">
-  import { clickOutside } from '../../click-outside';
+  import { clickOutside } from '../../utils/click-outside';
   import type FileService from '../../types/file.service';
   import { createEventDispatcher } from 'svelte';
   import { formatDisplayFileName } from '../../utils/fileNameFormatter';

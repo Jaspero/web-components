@@ -6,7 +6,7 @@
 />
 
 <script lang="ts">
-  import { clickOutside } from '../click-outside';
+  import { clickOutside } from '../utils/click-outside';
 
   export let label = 'Menu';
   // Default needs to be invisible rather than unrendered because of .offsetHeight

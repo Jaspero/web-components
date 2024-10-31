@@ -6,7 +6,7 @@
 />
 
 <script lang="ts">
-  import { clickOutside } from '../click-outside';
+  import { clickOutside } from '../utils/click-outside';
   export let label: string = 'label';
   export let mode: 'static' | 'dynamic' = 'static';
   let cloud: HTMLDivElement;

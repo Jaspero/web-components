@@ -16,7 +16,7 @@
 />
 
 <script lang="ts">
-  import { clickOutside } from '../../click-outside';
+  import { clickOutside } from '../../utils/click-outside';
   import './date-range.pcss';
   import { createEventDispatcher } from 'svelte';
   import { formatDisplayDate, formatReturnDate } from '../../utils/dateFormatter';

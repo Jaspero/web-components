@@ -16,7 +16,7 @@
 />
 
 <script lang="ts">
-  import { clickOutside } from '../../click-outside';
+  import { clickOutside } from '../../utils/click-outside';
   import { createEventDispatcher } from 'svelte';
   import type SearchService from '../../types/search.service';
   import './multisearch.wc.pcss';

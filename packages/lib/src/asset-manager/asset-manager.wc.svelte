@@ -292,7 +292,7 @@
           {@html closeCrossIcon}
         </button>
       </div>
-    </div>
+    </header>
 
     <form class="jp-asset-manager-add-folder-form" on:submit|preventDefault={createFolder}>
       <label class="jp-asset-manager-add-folder-form-input">
@@ -342,7 +342,7 @@
           {@html addFilesIcon}
         </button>
       </div>
-    </div>
+    </header>
 
     {#if loading}
       <div class="jp-asset-manager-loader">

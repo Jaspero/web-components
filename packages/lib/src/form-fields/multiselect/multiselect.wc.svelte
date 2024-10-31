@@ -16,7 +16,7 @@
 />
 
 <script lang="ts">
-  import { clickOutside } from '../../click-outside';
+  import { clickOutside } from '../../utils/click-outside';
   import { createEventDispatcher, onMount } from 'svelte';
   import './multiselect.wc.pcss';
   import clearIcon from '../../icons/clear.svg?raw';

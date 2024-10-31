@@ -7,7 +7,7 @@
 
 <script>
   import { createEventDispatcher } from 'svelte';
-  import { clickOutside } from '../click-outside';
+  import { clickOutside } from '../utils/click-outside';
 
   export let title = '';
   export let message = '';
