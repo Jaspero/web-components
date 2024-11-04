@@ -1,5 +1,5 @@
-// import '../../static/c/input.wc.js';
-// import '../../static/c/input.css';
+import '../../static/c/input.wc.js';
+import '../../static/c/input.css';
 
 # Input
 
