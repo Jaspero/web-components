@@ -40,6 +40,7 @@
   export let id: string;
   export let height: string | null = null;
   let additionalExportTypes = [];
+  let activeHeaders: TableHeader[] = [];
   let fileContent, mimeType, extension;
 
   let isOpen = false;
@@ -250,7 +251,7 @@
 
     exportLoading = true;
 
-    const activeHeaders = headers.filter((header) => !header.disabled);
+    activeHeaders = headers.filter((header) => !header.disabled);
     const data = await service.export!();
     const resolved = await Promise.all(
       data.map(async (row, index) => {
@@ -415,6 +416,7 @@
     if (exportLoading) return;
     exportLoading = true;
 
+    activeHeaders = headers.filter((header) => !header.disabled);
     const data = await service.export();
     resolved = await Promise.all(
       data.map(async (row, index) => {
