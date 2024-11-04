@@ -1,33 +1,33 @@
 <script lang="ts">
-	import '../../../dist/async-table.wc';
+  import '../../../dist/async-table.wc';
   import '../../../dist/async-table.css';
   import {onMount} from 'svelte';
 
-	let el: HTMLElement;
+  let el: HTMLElement;
 
-	onMount(() => {
-		const asyncTable = document.createElement('jp-async-table') as any;
+  onMount(() => {
+    const asyncTable = document.createElement('jp-async-table') as any;
     asyncTable.headers = [
       {
         key: '/name',
         label: 'Name'
       },
-			{
-				key: '/firstName',
-				label: 'First Name',
-			},
-			{
-				key: '/lastName',
-				label: 'Last Name',
-			},
-			{
-				key: '/gender',
-				label: 'Gender'
-			},
-			{
-				key: '/height',
-				label: 'Height'
-			},
+      {
+        key: '/firstName',
+        label: 'First Name',
+      },
+      {
+        key: '/lastName',
+        label: 'Last Name',
+      },
+      {
+        key: '/gender',
+        label: 'Gender'
+      },
+      {
+        key: '/height',
+        label: 'Height'
+      },
       {
         key: '/age',
         label: 'Age',
@@ -45,7 +45,15 @@
           rows: [
             ...[...Array(100).keys()]
               .map(() => (
-                { name: 'John', firstName: 'John', lastName: 'Johnson', gender: 'M', height: 180, age: 30, disabled: true }
+                {
+                  name: 'John',
+                  firstName: 'John',
+                  lastName: 'Johnson',
+                  gender: 'M',
+                  height: 180,
+                  age: 30,
+                  disabled: true
+                }
               ))
           ],
           hasMore: false
@@ -53,32 +61,63 @@
       },
       export: async () => {
         return [
-          { name: 'John', age: 30, disabled: true },
-          { name: 'Jane', age: 31, disabled: true }
+          asyncTable.headers.map(header => header.label),
+          ...[...Array(100).keys()]
+            .map(() => (
+              {
+                name: 'John',
+                firstName: 'John',
+                lastName: 'Johnson',
+                gender: 'M',
+                height: 180,
+                age: 30,
+                disabled: true
+              }
+            ))
         ];
       },
-			import: async () => {
-				return [
-					{ name: 'Imported John', age: 30, disabled: true },
-				]
-			},
-			arrangeColumns: async (id: string, headers) => {
-				localStorage.setItem(id, JSON.stringify(headers));
-			},
-			getColumnOrder: async id => {
-				return JSON.parse(localStorage.getItem(id));
-			},
-      adjustPageSize: async () => {},
+      // additionalExportTypes: async () => {
+      //   return [
+      //     {
+      //       label: 'csv',
+      //       type: 'csv',
+      //       method: (activeHeaders: TableHeader[], resolved: string[]) => {
+      //         return {
+      //           fileContent: [
+      //             activeHeaders.map(h => `"${h.label}"`).join(','),
+      //             ...resolved
+      //           ].join('\n'),
+      //           mimeType: 'text/csv',
+      //           extension: 'csv'
+      //         }
+      //       }
+      //     }
+      //   ]
+      // },
+      import: async () => {
+        return [
+          {name: 'Imported John', age: 30, disabled: true},
+        ]
+      },
+      arrangeColumns: async (id: string, headers) => {
+        localStorage.setItem(id, JSON.stringify(headers));
+      },
+      getColumnOrder: async id => {
+        return JSON.parse(localStorage.getItem(id));
+      },
+      adjustPageSize: async () => {
+      },
     };
-		asyncTable.id = 'random-id';
+    asyncTable.id = 'random-id';
     asyncTable.allowArrangeColumns = true;
     asyncTable.pageSizes = [10];
+    asyncTable.dropdownMenuExport = true;
     asyncTable.sort = {key: '/age', direction: 'asc'};
     asyncTable.height = '500px';
-		asyncTable.freezeFirstColumn = true;
-		asyncTable.freezeLastColumn = true;
+    asyncTable.freezeFirstColumn = true;
+    asyncTable.freezeLastColumn = true;
     el.appendChild(asyncTable);
-	});
+  });
 </script>
 
 <div bind:this={el}></div>
