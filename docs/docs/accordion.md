@@ -1,5 +1,5 @@
-import '../static//c/accordion.wc.js';
-import '../static//c/bellow.wc.js';
+import '../static/c/accordion.wc.js';
+import '../static/c/bellow.wc.js';
 
 # Accordion
 
