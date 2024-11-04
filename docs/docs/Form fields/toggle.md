@@ -1,3 +1,7 @@
+import '../../static/c/toggle.wc.js';
+import '../../static/c/toggle.css';
+
+
 # Toggle
 
 ### Description
@@ -35,5 +39,8 @@ This component does not have any slots.
 ### Demo
 
 ```jsx live
+// import '../../static/c/toggle.wc.js';
+// import '../../static/c/toggle.css';
+
 <jp-toggle></jp-toggle>
 ```

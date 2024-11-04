@@ -1,3 +1,5 @@
+import '../static/c/stepper.wc.js';
+
 # Stepper
 
 ### Description
@@ -31,5 +33,7 @@ This component does not have any slots.
 ### Demo
 
 ```jsx live
+// import '../static/c/stepper.wc.js';
+
 <jp-stepper steps='["one", "two", "three"]'></jp-stepper>
 ```

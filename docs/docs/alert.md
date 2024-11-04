@@ -1,3 +1,5 @@
+import '../static/c/alert.wc.js';
+
 # Alert
 
 ### Description
@@ -28,6 +30,8 @@ This component does not have any methods.
 ### Demo
 
 ```jsx live
+// import '../static/c/alert.wc.js';
+
 function alert(props) {
   const [show, setShow] = useState(false);
   return (

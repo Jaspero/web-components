@@ -1,3 +1,5 @@
+import '../static/c/data-paginator.wc.js';
+
 # Data Paginator
 
 ### Description
@@ -34,5 +36,7 @@ This component does not have any slots.
 ### Demo
 
 ```jsx live
+// import '../static/c/data-paginator.wc.js';
+
 <jp-data-paginator></jp-data-paginator>
 ```

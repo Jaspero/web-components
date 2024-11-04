@@ -1,3 +1,5 @@
+import '../static/c/link.wc.js';
+
 # Link
 
 ### Description
@@ -28,5 +30,7 @@ This component does not have any events.
 ### Demo
 
 ```jsx live
+// import '../static/c/link.wc.js';
+
 <jp-link> link </jp-link>
 ```

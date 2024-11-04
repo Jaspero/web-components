@@ -1,3 +1,6 @@
+import '../../static/c/range.wc.js';
+import '../../static/c/range.css';
+
 # Range
 
 ### Description
@@ -34,5 +37,8 @@ This component does not have any slots.
 ### Demo
 
 ```jsx live
+// import '../../static/c/range.wc.js';
+// import '../../static/c/range.css';
+
 <jp-range></jp-range>
 ```

@@ -1,3 +1,5 @@
+import '../static/c/tabs.wc.js';
+
 # Tabs
 
 ### Description
@@ -29,6 +31,8 @@
 ### Demo
 
 ```jsx live
+// import '../static/c/tabs.wc.js';
+
 <jp-tabs>
   <jp-tab title="one">Content 1</jp-tab>
   <jp-tab title="two">Content 2</jp-tab>

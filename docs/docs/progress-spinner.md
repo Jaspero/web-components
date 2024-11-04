@@ -1,3 +1,6 @@
+import '../static/c/progress-spinner.wc.js';
+import '../static/c/progress-spinner.css';
+
 # Progress-Spinner
 
 ### Description
@@ -29,5 +32,8 @@ This component does not have any events.
 ### Demo
 
 ```jsx live
+// import '../static/c/progress-spinner.wc.js';
+// import '../static/c/progress-spinner.css';
+
 <jp-progress-spinner determinate progress="33"></jp-progress-spinner>
 ```

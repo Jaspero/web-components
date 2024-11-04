@@ -1,3 +1,6 @@
+import '../../static/c/radio.wc.js';
+import '../../static/c/radio.css';
+
 # Radio
 
 ### Description
@@ -34,5 +37,8 @@ This component does not have any slots.
 ### Demo
 
 ```jsx live
+// import '../../static/c/radio.wc.js';
+// import '../../static/c/radio.css';
+
 <jp-radio options='[{"value": "aaa"}, {"name": "bcb", "value":"bbb"}, {"value":"ccc"}]'></jp-radio>
 ```

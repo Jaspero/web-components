@@ -1,3 +1,5 @@
+import '../static/c/menu.wc.js';
+
 # Menu
 
 ### Description
@@ -25,6 +27,8 @@ This component does not have any events.
 ### Demo
 
 ```jsx live
+// import '../static/c/menu.wc.js';
+
 <jp-menu>
   <button style={{ width: '200px' }} onClick={() => alert('first')}>
     First item

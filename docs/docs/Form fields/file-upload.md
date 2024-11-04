@@ -1,3 +1,6 @@
+import '../../static/c/file-upload.wc.js';
+import '../../static/c/file-upload.css';
+
 # File upload
 
 ### Description
@@ -51,5 +54,8 @@ This component does not have any methods.
 ### Demo
 
 ```jsx live
+// import '../../static/c/file-upload.wc.js';
+// import '../../static/c/file-upload.css';
+
 <jp-file-upload label="Upload a file"></jp-file-upload>
 ```

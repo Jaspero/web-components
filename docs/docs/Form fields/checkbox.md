@@ -1,3 +1,6 @@
+import '../../static/c/checkbox.wc.js';
+import '../../static/c/checkbox.css';
+
 # Checkbox
 
 ### Description
@@ -37,5 +40,8 @@ This component does not have any slots.
 ### Demo
 
 ```jsx live
+// import '../../static/c/checkbox.wc.js';
+// import '../../static/c/checkbox.css';
+
 <jp-checkbox options='[{"value": "aaa"},{"value": "lorem aa"},{"value": "lorem adasda"}]'></jp-checkbox>
 ```

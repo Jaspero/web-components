@@ -1,3 +1,6 @@
+import '../../static/c/quill.wc.js';
+import '../../static/c/quill.css';
+
 # Quill
 
 ### Description
@@ -66,5 +69,8 @@ This component does not have any slots.
 ### Demo
 
 ```jsx live
+// import '../../static/c/quill.wc.js';
+// import '../../static/c/quill.css';
+
 <jp-quill value="<p>Blup</p>"></jp-quill>
 ```

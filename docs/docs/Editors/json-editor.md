@@ -1,3 +1,5 @@
+import '../../static/c/json-editor.wc.js';
+
 # JSON Editor
 
 ### Description
@@ -50,5 +52,7 @@ This component does not have any methods.
 ### Demo
 
 ```jsx live
+//import '../../static/c/json-editor.wc.js';
+
 <jp-json-editor value='{"array": [1, 2, 3],"boolean": true,"color": "#82b92c","null": null,"number": 123,"object": { "a": "b", "c": "d" },"string": "Hello World"}'></jp-json-editor>
 ```

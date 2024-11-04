@@ -1,3 +1,5 @@
+import '../../static/c/place-input.wc.js';
+
 # Place Input
 
 ### Description
@@ -55,7 +57,7 @@ In order to use certain attributes you have to implement them in a certain way. 
 
 #### `apiKey`
 
-In order to be able to use a map, an apiKey needs to be generated.
+In order to be able to use a map, API key needs to be generated.
 Steps on how to create an API key can be found at https://developers.google.com/maps/documentation/javascript/get-api-key#create-api-keys
 
 #### `mapId`
@@ -92,8 +94,11 @@ This component does not have any slots.
   - triggers when value of the field changes if returnedValue is set to 'extended'
 
 ### Demo
+In order to be able to see the demo, api key needs to be filled as the `apiKey` property of the `placeInput` object, as well as the `mapId` property.
 
 ```jsx live
+// import '../../static/c/place-input.wc.js';
+
 function placeInput(props){
   let el = useRef(null);
   useEffect(() => {

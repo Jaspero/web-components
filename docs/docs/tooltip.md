@@ -1,3 +1,5 @@
+import '../static/c/tooltip.wc.js';
+
 # Tooltip
 
 ### Description
@@ -26,6 +28,8 @@ This component does not have any events.
 ### Demo
 
 ```jsx live
+// import '../static/c/tabs.wc.js';
+ 
 <jp-tooltip label="Lorem ipsum">
   Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed eleifend odio eu tellus scelerisque,
   sit amet convallis est dapibus. Vestibulum ornare nunc scelerisque nisl iaculis, scelerisque

@@ -1,3 +1,6 @@
+import '../../static/c/multisearch.wc.js';
+import '../../static/c/multisearch.css';
+
 # Multisearch
 
 ### Description
@@ -64,6 +67,9 @@ This component does not have any slots.
 ### Demo
 
 ```jsx live
+// import '../../static/c/multisearch.wc.js';
+// import '../../static/c/multisearch.css';
+
 function multisearch(props) {
   let el = useRef(null);
   useEffect(() => {

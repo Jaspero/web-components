@@ -1,3 +1,5 @@
+import '../static/c/carousel.wc.js';
+
 # Carousel
 
 ### Description
@@ -30,5 +32,7 @@ This component does not have any events.
 ### Demo
 
 ```jsx live
-<jp-carousel images='[{"src": "https://picsum.photos/200/300"}, {"src": "https://picsum.photos/200/200"}, {"src": "https://picsum.photos/300/300"}]'></jp-carousel>
+// import '../static/c/carousel.wc.js';
+
+<jp-carousel images='[{"src": "https://picsum.photos/1920/1080"}, {"src": "https://picsum.photos/1280/720"}, {"src": "https://picsum.photos//600"}]'></jp-carousel>
 ```

@@ -1,3 +1,6 @@
+import '../../static/c/slider.wc.js';
+import '../../static/c/slider.css';
+
 # Slider
 
 ### Description
@@ -34,5 +37,8 @@ This component does not have any slots.
 ### Demo
 
 ```jsx live
+// import '../../static/c/slider.wc.js';
+// import '../../static/c/slider.css';
+
 <jp-slider></jp-slider>
 ```
