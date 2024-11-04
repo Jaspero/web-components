@@ -19,6 +19,12 @@
 |   returnFormatFunction    | if `returnFormat` <br></br> is `custom`  |                        `(date:Date) => any`                         |                  custom return format function                  |
 |       displayFormat       |                                          |   `custom` \| `normal` \| `short` \| `medium` \| `long` \| `full`   |              format of displayed date in the field              |
 |   displayFormatFunction   | if `displayFormat` <br></br> is `custom` |                       `(date:Date) => string`                       |                 custom display format function                  |
+|           minDate         |                                          |                          `string \| Date `                          |        earliest date that can be selected by the user.          |
+|           maxDate         |                                          |                          `string \| Date `                          |          last date that can be selected by the user.            |
+|     maxSelectibleDays     |                                          |                                `number`                             |               number of days that can be in range               |
+|     minSelectibleDays     |                                          |                                `number`                             |              number of days that must be in range               |
+|     maxDateSelectible     |                                          |                                 `Date`                              |    Automatically set based on the value of maxSelectibleDays    |
+|     minDateSelectible     |                                          |                                 `Date`                              |    Automatically set based on the value of maxSelectibleDays    |
 
 ### Slots
 

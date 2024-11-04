@@ -17,10 +17,10 @@
 
 <script lang="ts">
   import { createEventDispatcher, onMount } from 'svelte';
-  import { clickOutside } from '../../click-outside';
+  import { clickOutside } from '../../utils/click-outside';
   import clearIcon from '../../icons/clear.svg?raw';
   import { wait } from '../../utils/wait';
-  import arrowIcon from './arrow.svg?raw';
+  import arrowIcon from '../../icons/arrow.svg?raw';
   import checkIcon from '../../icons/check.svg?raw';
   import './select.wc.pcss';
 
@@ -32,6 +32,7 @@
   export let value = '';
   export let id = '';
   export let name = '';
+  export let autocomplete = '';
   export let label = '';
   export let labelType: 'inside' | 'outside' = 'inside';
   export let showClear = false;
@@ -320,7 +321,15 @@
     </span>
   {/if}
 
-  <input tabindex="-1" bind:this={inputEl} bind:value {id} {name} {required} />
+  <input
+    tabindex="-1"
+    bind:this={inputEl}
+    bind:value
+    {id}
+    {name}
+    {required}
+    autocomplete={autocomplete || name}
+  />
 </div>
 
 {#if open}

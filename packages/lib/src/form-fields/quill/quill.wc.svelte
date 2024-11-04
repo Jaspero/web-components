@@ -146,8 +146,8 @@
             ['bold', 'italic', 'underline', 'strike'],
             [{ header: [1, 2, 3, 4, 5, 6, false] }],
             [{ list: 'ordered' }, { list: 'bullet' }],
-            [{'script': 'sub'}, {'script': 'super'}],
-            [{'indent': '-1'}, {'indent': '+1'}],
+            [{ script: 'sub' }, { script: 'super' }],
+            [{ indent: '-1' }, { indent: '+1' }],
             ['table', 'blockquote', 'code-block'],
             ['image', 'link'],
             [{ color: [] }, { background: [] }],
@@ -206,11 +206,19 @@
 </script>
 
 {#if label}
-    <div class="jp-quill-label">
-      {@html displayLabel}
-    </div>
-  {/if}
+  <div class="jp-quill-label">
+    {@html displayLabel}
+  </div>
+{/if}
 <div bind:this={wrapperEl}>
   <div bind:this={containerEl} />
 </div>
-<textarea class="jp-quill-textarea" {id} {name} bind:value={internalValue} {required} tabindex="-1" bind:this={textareaEl} />
+<textarea
+  class="jp-quill-textarea"
+  {id}
+  {name}
+  bind:value={internalValue}
+  {required}
+  tabindex="-1"
+  bind:this={textareaEl}
+/>

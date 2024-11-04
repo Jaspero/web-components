@@ -6,7 +6,10 @@ export interface TableHeader {
   sortable?: boolean;
   sortMethod?: (direction: 'asc' | 'desc', one?: any, two?: any) => 1 | -1 | 0;
   pipes?: TablePipe[];
+  headerPipes?: Array<(label: string) => string>;
   fallback?: any;
+  disableOrganize?: boolean;
+  disableToggle?: boolean;
   disabled?: boolean;
   /**
    * @description

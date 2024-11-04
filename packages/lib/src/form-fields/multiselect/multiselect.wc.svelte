@@ -16,14 +16,23 @@
 />
 
 <script lang="ts">
-  import { clickOutside } from '../../click-outside';
+  import { clickOutside } from '../../utils/click-outside';
   import { createEventDispatcher, onMount } from 'svelte';
   import './multiselect.wc.pcss';
+  import clearIcon from '../../icons/clear.svg?raw';
+  import ArrowRotate from '../../icons/arrow-rotate.svelte';
+  import checkmarkIcon from '../../icons/checkmark.svg?raw';
 
   export let attachedInternals: ElementInternals;
   export let minSelects = 0;
   export let maxSelects: number | null = null;
-  export let options: Array<{ label?: string; value: string; selected?: boolean; selectedOrder?: number; disabled?: boolean }> = [];
+  export let options: Array<{
+    label?: string;
+    value: string;
+    selected?: boolean;
+    selectedOrder?: number;
+    disabled?: boolean;
+  }> = [];
   export let disabled = false;
   export let required = false;
   export let hint = '';
@@ -31,13 +40,15 @@
   export let internalValue = '';
   export let id = '';
   export let name = '';
+  export let autocomplete = '';
   export let label = '';
   export let labelType: 'inside' | 'outside' = 'inside';
   export let showClear = false;
-  export const getValue = () => options
-    .filter((el) => el.selected)
-    .sort((a, b) => a.selectedOrder - b.selectedOrder)
-    .map((el) => el.value);
+  export const getValue = () =>
+    options
+      .filter((el) => el.selected)
+      .sort((a, b) => a.selectedOrder - b.selectedOrder)
+      .map((el) => el.value);
 
   export let validationMessages: {
     required?: string;
@@ -74,7 +85,7 @@
 
   $: if (Array.isArray(options)) {
     const selects = options.filter((el) => el.selected).length;
-    
+
     if (selects == 0 && required) {
       attachedInternals.setValidity(
         { customError: true },
@@ -105,14 +116,14 @@
       .filter((el) => el.selected)
       .sort((a, b) => a.selectedOrder - b.selectedOrder);
 
-    internalValue = sortedValue
-      .map((el) => el.value)
-      .join(',');
+    internalValue = sortedValue.map((el) => el.value).join(',');
 
-    displayValue = sortedValue
-      .map((el) => (el.label ? el.label : el.value));
+    displayValue = sortedValue.map((el) => (el.label ? el.label : el.value));
 
-    dispatch('value', sortedValue.map((el) => el.value));
+    dispatch(
+      'value',
+      sortedValue.map((el) => el.value)
+    );
   }
 
   function clearSelection() {
@@ -140,7 +151,7 @@
 
     if (typeof value == 'string') {
       const values = value.split(',');
-      
+
       values.forEach((el, index) => {
         const ref = options[options.findIndex((o) => o.value == el)];
 
@@ -152,7 +163,7 @@
     } else {
       value.forEach((el, index) => {
         const ref = options[options.findIndex((o) => o.value == el)];
-        
+
         ref.selected = true;
         ref.selectedOrder = index;
       });
@@ -227,7 +238,7 @@
 
   function handleKeydown(event: KeyboardEvent) {
     const currentIndex = optionElements.findIndex((el) => el === document.activeElement);
-    
+
     let nextIndex: number;
 
     if (open) {
@@ -328,7 +339,7 @@
   onMount(() => {
     if (typeof options == 'string') {
       options = JSON.parse(options);
-    };
+    }
 
     if (!maxSelects) {
       maxSelects = options.length;
@@ -354,15 +365,20 @@
 <div class="jp-multiselect-wrapper" class:jp-multiselect-has-hint={hint}>
   {#if showClear && hasSelectedOption}
     <button class="jp-multiselect-clear" on:click={clearSelection}>
-      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512">
-        <path
-          d="M342.6 150.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L192 210.7 86.6 105.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3L146.7 256 41.4 361.4c-12.5 12.5-12.5 32.8 0 45.3s32.8 12.5 45.3 0L192 301.3 297.4 406.6c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L237.3 256 342.6 150.6z"
-        />
-      </svg>
+      {@html clearIcon}
     </button>
   {/if}
 
-  <input class="jp-multiselect-input" class:jp-multiselect-input-required={required} tabindex="-1" bind:value={internalValue} {required} {id} {name}/>
+  <input
+    class="jp-multiselect-input"
+    class:jp-multiselect-input-required={required}
+    tabindex="-1"
+    bind:value={internalValue}
+    {required}
+    {id}
+    {name}
+    autocomplete={autocomplete || name}
+  />
 
   <button
     type="button"
@@ -375,7 +391,10 @@
     on:keydown={handleKeydown}
   >
     {#if label && labelType == 'inside'}
-      <span class="jp-multiselect-select-label" class:jp-multiselect-select-label-move={internalValue || open}>
+      <span
+        class="jp-multiselect-select-label"
+        class:jp-multiselect-select-label-move={internalValue || open}
+      >
         {@html label}
       </span>
     {/if}
@@ -387,16 +406,7 @@
       {displayValue || ''}
     </span>
 
-    <svg
-      xmlns="http://www.w3.org/2000/svg"
-      viewBox="0 0 320 512"
-      class="jp-multiselect-select-arrow"
-      class:jp-multiselect-rotate={open}
-    >
-      <path
-        d="M137.4 374.6c12.5 12.5 32.8 12.5 45.3 0l128-128c9.2-9.2 11.9-22.9 6.9-34.9s-16.6-19.8-29.6-19.8L32 192c-12.9 0-24.6 7.8-29.6 19.8s-2.2 25.7 6.9 34.9l128 128z"
-      />
-    </svg>
+    <ArrowRotate {open} />
   </button>
 
   {#if hint}
@@ -436,16 +446,7 @@
             <span>{option.label ? option.label : option.value}</span>
 
             {#if option.selected}
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                width="1rem"
-                height="1rem"
-                viewBox="0 0 448 512"
-              >
-                <path
-                  d="M438.6 105.4c12.5 12.5 12.5 32.8 0 45.3l-256 256c-12.5 12.5-32.8 12.5-45.3 0l-128-128c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0L160 338.7 393.4 105.4c12.5-12.5 32.8-12.5 45.3 0z"
-                />
-              </svg>
+              {@html checkmarkIcon}
             {/if}
           </button>
         {/each}

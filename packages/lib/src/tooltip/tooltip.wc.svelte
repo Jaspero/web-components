@@ -6,11 +6,11 @@
 />
 
 <script lang="ts">
-  import { clickOutside } from '../click-outside';
+  import { clickOutside } from '../utils/click-outside';
   export let label: string = 'label';
   export let mode: 'static' | 'dynamic' = 'static';
-  let cloud;
-  let bindingEl;
+  let cloud: HTMLDivElement;
+  let bindingEl: HTMLSpanElement;
   let cloudStyle = '';
 
   function toggleStaticCloud() {
@@ -35,7 +35,7 @@
 
 <!-- svelte-ignore a11y-no-static-element-interactions -->
 <!-- svelte-ignore a11y-mouse-events-have-key-events -->
-<div class="tooltip">
+<div class="jp-tooltip">
   {#if mode == 'dynamic'}
     <span
       on:mouseover={() => cloud.removeAttribute('hidden')}
@@ -54,12 +54,12 @@
     </span>
   {/if}
   <div
-    class="cloud"
+    class="jp-tooltip-cloud"
     bind:this={cloud}
     use:clickOutside
     on:click_outside={() => {
-      if(!cloud.hasAttribute('hidden')){
-        cloud.setAttribute('hidden', 'true')
+      if (!cloud.hasAttribute('hidden')) {
+        cloud.setAttribute('hidden', 'true');
       }
     }}
     style={`position: ${mode == 'static' ? 'absolute' : 'fixed'};` + cloudStyle}
@@ -70,20 +70,20 @@
 </div>
 
 <style lang="postcss">
-  .tooltip {
+  .jp-tooltip {
     position: relative;
-  }
+    & span {
+      text-decoration: underline;
+      text-decoration-style: dotted;
+    }
 
-  .tooltip span {
-    text-decoration: underline;
-    text-decoration-style: dotted;
-  }
-
-  .cloud {
-    padding: 5px;
-    background-color: var(--tertiary-color);
-    color: #000;
-    border-radius: 4px;
-    max-width: 250px;
+    &-cloud {
+      padding: 5px;
+      background-color: var(--tertiary-color);
+      color: #000;
+      border-radius: 4px;
+      z-index: 1;
+      max-width: 250px;
+    }
   }
 </style>

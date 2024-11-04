@@ -31,9 +31,11 @@
   export let maxSelects: number | null = null;
   export let minselectsValidationMessage: string;
   export let maxselectsValidationMessage: string;
+  export let requiredValidationMessage: string;
   export let validationMessages: {
     minselects?: string;
     maxselects?: string;
+    required?: string;
   } = {};
   export let label = '';
   export let required = false;
@@ -42,6 +44,7 @@
   export const reportValidity = () => attachedInternals.reportValidity();
 
   const dispatch = createEventDispatcher();
+  let checkedAmount: number = 0;
 
   $: {
     if (value && Array.isArray(options)) {
@@ -51,21 +54,34 @@
           options[options.findIndex((o) => o.value == el)].checked = true;
         });
       } else {
-        value.forEach((el) => {
+        value.forEach((el: string) => {
           options[options.findIndex((o) => o.value == el)].checked = true;
         });
       }
     }
   }
+  $: displayLabel = required ? `${label} *` : label;
 
-  $: if (Array.isArray(options)) {
-    const checkedAmount = options.filter((el) => el.checked).length;
+  $: {
+    attachedInternals.checkValidity();
+
+    if (required && checkedAmount === 0) {
+      attachedInternals.setValidity(
+        { customError: true },
+        requiredValidationMessage || validationMessages.required || 'Checkbox is required.'
+      );
+    }
+  }
+
+  function updateState() {
+    checkedAmount = options.filter((el) => el.checked).length;
+
     if (checkedAmount < minSelects) {
       attachedInternals.setValidity(
         { customError: true },
         minselectsValidationMessage || validationMessages.minselects || 'Below limit checks.'
       );
-    } else if (checkedAmount > maxSelects) {
+    } else if (maxSelects && checkedAmount > maxSelects) {
       attachedInternals.setValidity(
         { customError: true },
         maxselectsValidationMessage || validationMessages.maxselects || 'Above limit checks.'
@@ -81,10 +97,10 @@
   }
 
   onMount(() => {
-    if (typeof options == 'string') options = JSON.parse(options);
-    maxSelects = options.length;
+    if (typeof options == 'string') {
+      options = JSON.parse(options);
+    }
   });
-  $: displayLabel = required ? `${label} *` : label;
 </script>
 
 <div class="jp-checkbox">
@@ -99,6 +115,7 @@
         type="checkbox"
         name={option.value}
         bind:checked={option.checked}
+        on:change={updateState}
         disabled={option.disabled}
       />
       <span class="jp-checkbox-checkbox">
@@ -109,8 +126,6 @@
       </span>
       {#if option.label}
         {@html option.label}
-      {:else}
-        {option.value}
       {/if}
     </label>
   {/each}

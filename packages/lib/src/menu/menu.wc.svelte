@@ -6,14 +6,14 @@
 />
 
 <script lang="ts">
-  import { clickOutside } from '../click-outside';
+  import { clickOutside } from '../utils/click-outside';
 
   export let label = 'Menu';
   // Default needs to be invisible rather than unrendered because of .offsetHeight
   // It's pushed left by default so it doesn't expand the document size when not open
   let menuStyle = 'opacity: 0; left: -100vw;';
-  let menuEl;
-  let bindingEl;
+  let menuEl: HTMLDivElement;
+  let bindingEl: HTMLButtonElement;
   let open = false;
 
   function toggleMenu() {
@@ -34,13 +34,13 @@
   }
 </script>
 
-<div class="wrapper">
-  <button type="button" class="menu-button" on:click={() => toggleMenu()} bind:this={bindingEl}>
+<div class="jp-menu-wrapper">
+  <button type="button" class="jp-menu-button" on:click={() => toggleMenu()} bind:this={bindingEl}>
     {@html label}
   </button>
 
   <div
-    class="menu"
+    class="jp-menu"
     bind:this={menuEl}
     style={menuStyle}
     use:clickOutside
@@ -53,24 +53,7 @@
 </div>
 
 <style lang="postcss">
-  .wrapper {
-    display: inline-block;
-    position: relative;
-  }
-
-  .menu-button {
-    cursor: pointer;
-    background-color: transparent;
-    border: none;
-    padding: 10px;
-    font-weight: 600;
-  }
-
-  .menu-button:hover {
-    background-color: var(--background-tertiary);
-  }
-
-  .menu {
+  .jp-menu {
     background-color: var(--background-primary);
     position: absolute;
     display: flex;
@@ -83,5 +66,22 @@
       0 5px 5px -3px #0003,
       0 8px 10px 1px #00000024,
       0 3px 14px 2px #0000001f;
+
+    &-wrapper {
+      display: inline-block;
+      position: relative;
+    }
+
+    &-button {
+      cursor: pointer;
+      background-color: transparent;
+      border: none;
+      padding: 10px;
+      font-weight: 600;
+
+      &:hover {
+        background-color: var(--background-tertiary);
+      }
+    }
   }
 </style>

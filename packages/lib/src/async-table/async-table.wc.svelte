@@ -23,6 +23,7 @@
     PAGE_SIZE: 'Page size',
     SAVE: 'Save'
   };
+
   export let allowArrangeColumns = true;
   export let showArrangingColumns = true;
   export let freezeFirstColumn = false;
@@ -96,6 +97,7 @@
     hasMore = data.hasMore;
 
     loading = false;
+    scrollToTop();
   };
   export let rows: any[] = [];
   export let arrangeColumnDialog = false;
@@ -105,14 +107,20 @@
   let loading = true;
   let hasMore = false;
   let exportLoading = false;
-  let activeHeaders: TableHeader[];
-  let columnOrder: string[] = [];
   let arrangementColumns: Array<TableHeader & { enabled: boolean }> = [];
   let saveArrangementLoading = false;
   let importFileEl: HTMLInputElement;
   let importLoading = false;
-
-  $: activeHeaders = headers.filter((it) => !it.disabled);
+  const columnColors = [
+    '#ffffff',
+    '#ffffff',
+    '#ffffff',
+    '#ffffff',
+    '#ffffff',
+    '#ffffff',
+    '#ffffff',
+    '#ffffff'
+  ];
 
   const dispatch = createEventDispatcher();
 
@@ -149,6 +157,22 @@
     return value;
   }
 
+  async function handleHeader(header: TableHeader) {
+    const { label, headerPipes } = header;
+
+    let value = label;
+
+    if (!headerPipes) {
+      return value;
+    }
+
+    for (const pipe of headerPipes) {
+      value = await pipe(value);
+    }
+
+    return value;
+  }
+
   async function adjustSort(header: TableHeader) {
     const {sortable} = header;
 
@@ -162,13 +186,29 @@
       key: header.key,
       direction: sort?.key === header.key ? (sort.direction === 'asc' ? 'desc' : 'asc') : 'asc'
     };
+    const promises = [service.get(sort, pageSize)];
 
-    const [data] = await Promise.all([service.get(sort, pageSize), service.adjustSort(sort)]);
+    if (service.adjustSort) {
+      promises.push(service.adjustSort(sort) as any);
+    }
+
+    const [data] = await Promise.all(promises);
 
     rows = data.rows;
     hasMore = data.hasMore;
 
     loading = false;
+    scrollToTop();
+  }
+
+  async function scrollToTop() {
+    const tableContainer = document.querySelector('.jp-async-table-container');
+    if (tableContainer) {
+      tableContainer.scrollTo({
+        top: 0,
+        behavior: 'smooth'
+      });
+    }
   }
 
   async function loadMore() {
@@ -194,7 +234,13 @@
   async function updatePageSize(event: { detail: number }) {
     pageSize = event.detail;
 
-    await Promise.all([getData(), service.adjustPageSize(pageSize)]);
+    const promises = [getData()];
+
+    if (service.adjustPageSize) {
+      promises.push(service.adjustPageSize(pageSize));
+    }
+
+    await Promise.all(promises);
   }
 
   async function exportData() {
@@ -204,7 +250,8 @@
 
     exportLoading = true;
 
-    const data = await service.export();
+    const activeHeaders = headers.filter((header) => !header.disabled);
+    const data = await service.export!();
     const resolved = await Promise.all(
       data.map(async (row, index) => {
         const columns = await Promise.all(
@@ -245,57 +292,78 @@
     exportLoading = false;
   }
 
+  let draggingHeaderKey = '';
+  let hoveringOverColumnIndex: number | null = null;
+  let dialogHoveringOverColumnIndex: number | null = null;
+
+  const nameColumnKey = '/name';
+
   function dragstart(event: DragEvent, header: TableHeader) {
-    event.dataTransfer.setData('text/plain', header.key);
+    if (header.disableOrganize || header.key === nameColumnKey) {
+      return;
+    }
+    draggingHeaderKey = header.key;
+    event.dataTransfer!.setData('text/plain', draggingHeaderKey);
   }
 
-  function dragover(event: DragEvent) {
+  function dragover(event: DragEvent, index: number) {
     event.preventDefault();
+    if (headers[index].key === nameColumnKey) {
+      return;
+    }
+    hoveringOverColumnIndex = index;
+    dialogHoveringOverColumnIndex = index;
   }
 
+  function dragleave() {
+    hoveringOverColumnIndex = null;
+    dialogHoveringOverColumnIndex = null;
+  }
   async function drop(event: DragEvent, targetIndex: number) {
     event.preventDefault();
+    if (headers[targetIndex].key === nameColumnKey) {
+      return;
+    }
+    hoveringOverColumnIndex = null;
+    dialogHoveringOverColumnIndex = null;
+    const draggedColumnKey = event.dataTransfer!.getData('text/plain');
+    const currentIndex = headers.findIndex((header) => header.key === draggedColumnKey);
 
-    const draggedColumn = event.dataTransfer.getData('text/plain');
-    const currentIndex = columnOrder.indexOf(draggedColumn);
+    if (currentIndex !== -1 && currentIndex !== targetIndex) {
+      const newHeaders = [...headers];
+      const newArrangementColumns = [...arrangementColumns];
 
-    if (currentIndex !== -1 && Number.isInteger(targetIndex)) {
-      columnOrder.splice(currentIndex, 1);
-      columnOrder.splice(Number(targetIndex), 0, draggedColumn);
+      const [draggedHeader] = newHeaders.splice(currentIndex, 1);
+      const [draggedColumn] = newArrangementColumns.splice(currentIndex, 1);
 
-      activeHeaders = headers
-        .filter((it) => !it.disabled)
-        .sort((a, b) => {
-          const aIndex = columnOrder.indexOf(a.key);
-          const bIndex = columnOrder.indexOf(b.key);
-          return aIndex - bIndex;
-        });
+      newHeaders.splice(targetIndex, 0, draggedHeader);
+      newArrangementColumns.splice(targetIndex, 0, draggedColumn);
+
+      headers = newHeaders;
+      arrangementColumns = newArrangementColumns;
 
       if (service.arrangeColumns) {
         await service.arrangeColumns(
           id,
-          activeHeaders.map((it) => it.key)
+          newHeaders.map((header) => ({
+            key: header.key,
+            disabled: header.disabled
+          }))
         );
       }
     }
   }
 
   function arrangeColumns() {
-    arrangementColumns = [...headers]
-      .map((item: any) => {
-        item.enabled = !item.disabled;
-        return item;
-      })
-      .sort((a, b) => {
-        const aIndex = columnOrder.indexOf(a.key);
-        const bIndex = columnOrder.indexOf(b.key);
-        return aIndex - bIndex;
-      });
+    arrangementColumns = [...headers].map((item: any) => {
+      item.enabled = !item.disabled;
+      return item;
+    });
 
     arrangeColumnDialog = true;
   }
 
-  async function importData(event) {
+  async function importData(event: any) {
     if (importLoading) {
       return;
     }
@@ -306,7 +374,7 @@
 
     importLoading = true;
 
-    const r = await service.import(event.target.files[0]);
+    const r = await service.import!(event.target.files[0]);
 
     if (r?.length) {
       rows = [...r, ...rows];
@@ -324,16 +392,18 @@
     saveArrangementLoading = true;
     headers = [...arrangementColumns].map((it) => {
       it.disabled = !it.enabled;
+      // @ts-ignore
       delete it.enabled;
       return it;
     });
-    activeHeaders = headers.filter((it) => !it.disabled);
-    columnOrder = activeHeaders.map((header) => header.key);
 
     if (service.arrangeColumns) {
       await service.arrangeColumns(
         id,
-        activeHeaders.map((it) => it.key)
+        headers.map((header) => ({
+          key: header.key,
+          disabled: header.disabled
+        }))
       );
     }
 
@@ -400,18 +470,18 @@
       const pulledHeaders = await service.getColumnOrder(id);
       if (pulledHeaders) {
         headers = headers.map(header => {
-          header.disabled = !pulledHeaders.includes(header.key);
+          header.disabled = !pulledHeaders.find((it) => it.key === header.key);
           return header;
         }).sort((a, b) => {
-          const aIndex = pulledHeaders.indexOf(a.key);
-          const bIndex = pulledHeaders.indexOf(b.key);
+          const aIndex = pulledHeaders.findIndex((it) => it.key === a.key);
+          const bIndex = pulledHeaders.findIndex((it) => it.key === b.key);
           return aIndex - bIndex;
         });
       }
     }
 
-    activeHeaders = headers.filter(it => !it.disabled);
-    columnOrder = activeHeaders.map(header => header.key);
+    activeHeaders = headers.filter((it) => !it.disabled);
+    columnOrder = activeHeaders.map((header) => header.key);
     await getData();
   });
 
@@ -421,12 +491,12 @@
   };
 </script>
 
-<div class="jp-table">
+<div class="jp-async-table">
     {#if showArrangingColumns || showImport || showExport}
-        <div class="jp-table-header">
+        <div class="jp-async-table-header">
             {#if showArrangingColumns}
                 &nbsp;
-                <button type="button" on:click={arrangeColumns} class="jp-table-button">
+                <button type="button" on:click={arrangeColumns} class="jp-async-table-button">
                     {wording.ARRANGE_COLUMNS}
                 </button>
             {/if}
@@ -435,9 +505,9 @@
                 &nbsp;
                 <button
                         type="button"
-                        class="jp-table-button"
-                        on:click={() => importFileEl.click()}
-                >
+                        class="jp-async-table-button"
+                        on:click={() => importFileEl.click()}>
+
                     {wording.IMPORT}
                 </button>
             {/if}
@@ -446,13 +516,13 @@
                 {#if !dropdownMenuExport}
                     <button
                             type="button"
-                            class="jp-table-button"
+                            class="jp-async-table-button"
                             on:click={exportData}
-                            class:jp-table-loading={exportLoading}
+                            class:jp-async-table-loading={exportLoading}
                             disabled={exportLoading}
                     >
                         {#if exportLoading}
-                            <span class="jp-table-spinner"></span>
+                            <span class="jp-async-table-spinner"></span>
                             {wording.LOADING}
                         {:else}
                             {wording.EXPORT}
@@ -478,53 +548,73 @@
         </div>
     {/if}
 
-    <div class="jp-table-container" style:height={height}>
+    <div class="jp-async-table-container" style:height>
         <table>
-            {#if activeHeaders}
+            {#if headers}
                 <tr>
-                    {#each activeHeaders as header, index}
-                        <th
-                                class:jp-table-sortable={allowArrangeColumns && header.sortable}
-                                class:jp-table-sticky-first={freezeFirstColumn && index === 0}
-                                class:jp-table-sticky-last={index === activeHeaders.length - 1 && freezeLastColumn}
-                                on:click={() => adjustSort(header)}
-                                on:drop={(e) => drop(e, index)}
-                                on:dragover={dragover}
+                    {#each headers as header, index}
+                        {#if !header.disabled}<th
+                                class:jp-async-table-sortable={allowArrangeColumns && header.sortable}
+                                class:jp-async-table-sticky-first={freezeFirstColumn && index === 0}
+                                class:jp-async-table-sticky-last={index === headers.length - 1 && freezeLastColumn}
+                                class:jp-async-table-no-cursor={header.key === nameColumnKey}
+                style="background-color: {hoveringOverColumnIndex === index
+                  ? '#D3D3D3'
+                  : columnColors[index % columnColors.length]};"on:click={() => adjustSort(header)}
+                                draggable={allowArrangeColumns &&
+                  !header.disableOrganize &&
+                  header.key !== nameColumnKey}
+                on:dragstart={(e) => {
+                  if (header.key !== nameColumnKey) dragstart(e, header);
+                }}
+                                on:dragover={(e) => {
+                  if (header.key !== nameColumnKey) dragover(e, index);
+                }}
+                on:dragleave={() => {
+                  if (header.key !== nameColumnKey) dragleave();
+                }}
+                on:drop={(e) => {
+                  if (header.key !== nameColumnKey) drop(e, index);
+                }}
                         >
               <span
-                      class:jp-table-draggable-column={allowArrangeColumns}
-                      draggable={allowArrangeColumns}
+                      class:jp-async-table-draggable-column={allowArrangeColumns &&
+                      header.key !== nameColumnKey}
                       tabindex="-1"
                       role="button"
                       aria-label="Drag handle"
-                      on:dragstart={(e) => dragstart(e, header)}
-              >
-                {@html header.label}
-              </span>
+                      >
+                  {#await handleHeader(header) then val}
+                    {@html val}
+                  {/await}
+                </span>
 
                             {#if sort?.key === header.key}
-                                <span class="jp-table-sortable">{sort.direction === 'asc' ? '↑' : '↓'}</span>
+                                <span class="jp-async-table-sortable">{sort.direction === 'asc' ? '↑' : '↓'}</span>
                             {/if}
-                        </th>
+                        </th>{/if}
                     {/each}
                 </tr>
             {/if}
 
             {#if rows}
                 {#each rows as row, ind}
-                    <tr class:jp-table-highlight={rowClickable}>
-                        {#each activeHeaders as header, index}
+                    <tr class:jp-async-table-highlight={rowClickable}>
+                        {#each headers as header, index}
+              {#if !header.disabled}
                             <td
-                                    on:click={(e) => rowClick(row, index, header, e)}
-                                    class:jp-table-sticky-first={freezeFirstColumn && index === 0}
-                                    class:jp-table-sticky-last={index === activeHeaders.length - 1 && freezeLastColumn}
-                            >
+                                    class:jp-async-table-sortable={allowArrangeColumns && header.sortable}
+                                    class:jp-async-table-sticky-first={freezeFirstColumn && index === 0}
+                                    class:jp-async-table-sticky-last={index === headers.length - 1 && freezeLastColumn}
+                            style="background-color: {hoveringOverColumnIndex === index
+                    ? '#D3D3D3'
+                    : columnColors[index % columnColors.length]};">
                                 {#await handleColumn(header, row, ind) then val}
-                  <span class="jp-table-cell">
+                  <span class="jp-async-table-cell">
                     {@html val}
                   </span>
                                 {/await}
-                            </td>
+                            </td>{/if}
                         {/each}
                     </tr>
                 {/each}
@@ -532,17 +622,17 @@
         </table>
     </div>
 
-    <div class="jp-table-actions">
+    <div class="jp-async-table-actions">
         {#if showLoadMore}
             <button
                     type="button"
-                    class="jp-table-button"
-                    class:jp-table-loading={loading}
+                    class="jp-async-table-button"
+                    class:jp-async-table-loading={loading}
                     disabled={!hasMore}
                     on:click={loadMore}
             >
                 {#if loading}
-                    <span class="jp-table-spinner"></span>
+                    <span class="jp-async-table-spinner"></span>
                     {wording.LOADING}
                 {:else}
                     {wording.LOAD_MORE}
@@ -561,28 +651,62 @@
 </div>
 
 {#if arrangeColumnDialog}
-    <div class="jp-table-arrange-columns-dialog">
+    <div class="jp-async-table-arrange-columns-dialog">
         <!-- svelte-ignore a11y-click-events-have-key-events -->
         <!-- svelte-ignore a11y-no-static-element-interactions -->
         <div
-                class="jp-table-arrange-columns-dialog-backdrop"
+                class="jp-async-table-arrange-columns-dialog-backdrop"
                 on:click={() => (arrangeColumnDialog = false)}
         ></div>
-        <form class="jp-table-arrange-columns-dialog-inner" on:submit|preventDefault={saveColumnArrangement}>
+        <form class="jp-async-table-arrange-columns-dialog-inner" on:submit|preventDefault={saveColumnArrangement}>
             <main>
-                {#each arrangementColumns as column}
-                    <label>
-                        <input type="checkbox" value={true} bind:checked={column.enabled}/>
+                {#each arrangementColumns as column, index}
+          {#if !column.disableToggle}
+                    <label
+                        class="jp-async-table-arrange-column-label"
+              style:background-color={dialogHoveringOverColumnIndex === index
+                ? '#D3D3D3'
+                : columnColors[index % columnColors.length]}
+            >
+              <!-- svelte-ignore a11y-no-static-element-interactions -->
+              <span
+                class="jp-async-table-material-symbols-outlined drag-handle"
+                draggable="true"
+                class:jp-async-table-no-cursor={column.key === nameColumnKey}
+                style="cursor: {column.key === nameColumnKey
+                  ? 'default'
+                  : 'grab'}; pointer-events: {column.key === nameColumnKey ? 'none' : 'auto'};"
+                on:dragstart={(e) => {
+                  if (column.key !== nameColumnKey) dragstart(e, column);
+                }}
+                on:dragover={(e) => {
+                  if (column.key !== nameColumnKey) dragover(e, index);
+                }}
+                on:dragleave={() => {
+                  if (column.key !== nameColumnKey) dragleave();
+                }}
+                on:drop={(e) => {
+                  if (column.key !== nameColumnKey) drop(e, index);
+                }}
+              >
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  height="24px"
+                  viewBox="0 -960 960 960"
+                  width="24px"
+                  fill="#5f6368"><path d="M160-360v-80h640v80H160Zm0-160v-80h640v80H160Z" /></svg
+                >
+              </span><input type="checkbox" value={true} bind:checked={column.enabled}/>
                         <span>{@html column.label}</span>
-                    </label>
+                    </label>{/if}
                 {/each}
             </main>
 
             <footer>
                 <button
                         type="submit"
-                        class="jp-table-button"
-                        class:jp-table-loading={saveArrangementLoading}
+                        class="jp-async-table-button"
+                        class:jp-async-table-loading={saveArrangementLoading}
                         disabled={saveArrangementLoading}
                 >
                     {#if loading}

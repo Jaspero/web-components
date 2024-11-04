@@ -27,6 +27,7 @@
   export let id: string | null = null;
   export let name: string | null = null;
   export let height: string | null = null;
+  export let width: string | null = null;
   export let label = '';
   export let options: any = {
     toolbar: {
@@ -222,6 +223,17 @@
     });
   }
 
+  $: if (width && editor) {
+    const toolbarElement = editor.ui.view.toolbar.element;
+    const editorElement = editor.ui.view.editable.element;
+
+    toolbarElement.style.width = `${width}`;
+    toolbarElement.style.boxSizing = 'border-box';
+
+    editorElement.style.width = `${width}`;
+    editorElement.style.boxSizing = 'border-box';
+  }
+
   function getEditor() {
     // @ts-ignore
     return window.CKEDITOR?.ClassicEditor;
@@ -288,4 +300,11 @@
 <div bind:this={wrapperEl}>
   <div bind:this={containerEl} />
 </div>
-<textarea class="jp-ckeditor-textarea" {id} {name} bind:value={internalValue} {required} bind:this={textareaEl} />
+<textarea
+  class="jp-ckeditor-textarea"
+  {id}
+  {name}
+  bind:value={internalValue}
+  {required}
+  bind:this={textareaEl}
+/>

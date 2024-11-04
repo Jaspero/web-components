@@ -1,4 +1,3 @@
-
 .jp-multiselect {
   &-wrapper {
     position: relative;
@@ -81,10 +80,9 @@
       text-overflow: ellipsis;
 
       &-padding {
-        margin-top :1rem;
+        margin-top: 1rem;
       }
     }
-
 
     &-arrow {
       width: 1rem;
@@ -131,7 +129,7 @@
     border-bottom-right-radius: 0.25rem;
     box-shadow: 0 6px 9px rgba(0, 0, 0, 0.16);
     background-color: var(--background-primary);
-    
+
     &-button {
       display: flex;
       justify-content: space-between;
@@ -142,25 +140,25 @@
       text-align: left;
       outline: none;
       transition: 0.3s;
-  
+
       &-selected {
         background-color: var(--background-tertiary);
         color: var(--primary-color);
         fill: var(--primary-color);
       }
-  
+
       &-disabled {
         opacity: 0.33;
       }
-      
+
       &:focus {
         background-color: var(--background-secondary);
       }
     }
 
     :not(.jp-multiselect-menu-button-disabled):hover {
-        background-color: var(--background-secondary);
-      }
+      background-color: var(--background-secondary);
+    }
   }
 
   &-clear {

@@ -5,15 +5,15 @@
   }}
 />
 
-<script>
+<script lang="ts">
   import { createEventDispatcher } from 'svelte';
-
+  import arrowIcon from '../../../lib/src/icons/arrow.svg?raw';
   const dispatch = createEventDispatcher();
 
   let expanded = false;
   export let title = 'Panel Title'; // Default title
   let contentHeight = 0; // to store the natural height of the content
-  let contentElement;
+  let contentElement: HTMLDivElement;
 
   function toggleExpansion() {
     expanded = !expanded;
@@ -34,23 +34,15 @@
   });
 </script>
 
-<div class="expansion-panel" class:expanded>
-  <button type="button" class="expansion-header" on:click={toggleExpansion}>
-    <p class="expansion-header-title">{@html title}</p>
-    <svg
-      xmlns="http://www.w3.org/2000/svg"
-      viewBox="0 0 320 512"
-      class="toggle-arrow"
-      class:rotate={expanded}
-    >
-      <!--! Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2023 Fonticons, Inc.-->
-      <path
-        d="M137.4 374.6c12.5 12.5 32.8 12.5 45.3 0l128-128c9.2-9.2 11.9-22.9 6.9-34.9s-16.6-19.8-29.6-19.8L32 192c-12.9 0-24.6 7.8-29.6 19.8s-2.2 25.7 6.9 34.9l128 128z"
-      />
-    </svg>
+<div class="jp-bellow-expansion-panel" class:jp-bellow-expansion-panel-expanded={expanded}>
+  <button type="button" class="jp-bellow-expansion-header" on:click={toggleExpansion}>
+    <p class="jp-bellow-expansion-header-title">{@html title}</p>
+    <p class="jp-bellow-toggle-arrow" class:jp-bellow-toggle-arrow-rotate={expanded}>
+      {@html arrowIcon}
+    </p>
   </button>
   <div
-    class="expansion-content"
+    class="jp-bellow-expansion-content"
     bind:this={contentElement}
     style="height: {expanded ? `${contentHeight}px` : '0px'}"
   >
@@ -59,63 +51,67 @@
 </div>
 
 <style lang="postcss">
-  .expansion-panel {
-    background-color: var(--background-primary);
-    box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16);
-    transition: 0.3s;
-  }
+  .jp-bellow {
+    &-expansion {
+      &-panel {
+        background-color: var(--background-primary);
+        box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16);
+        transition: 0.3s;
 
-  .expansion-panel:not(.expanded) .expansion-content {
-    visibility: hidden;
-  }
+        &:not(.jp-bellow-expansion-panel-expanded) .jp-bellow-expansion-content {
+          visibility: hidden;
+        }
 
-  .expansion-panel.expanded {
-    border-radius: 0.25rem;
-    margin: 1rem 0;
-  }
+        &-expanded {
+          border-radius: 0.25rem;
+          margin: 1rem 0;
+        }
 
-  .expansion-panel.expanded .expansion-content {
-    padding: 0.75rem 1rem;
-  }
+        &-expanded .jp-bellow-expansion-content {
+          padding: 0.75rem 1rem;
+        }
+      }
 
-  .expansion-header {
-    width: 100%;
-    display: flex;
-    align-items: center;
-    background: none;
-    border: none;
-    text-align: left;
-    font-size: 1rem;
-    cursor: pointer;
-    padding: 0.75rem 1rem;
-    transition: background-color 0.3s;
-  }
+      &-header {
+        width: 100%;
+        display: flex;
+        align-items: center;
+        background: none;
+        border: none;
+        text-align: left;
+        font-size: 1rem;
+        cursor: pointer;
+        padding: 0.75rem 1rem;
+        transition: background-color 0.3s;
 
-  .expansion-header:hover,
-  .expansion-header:focus {
-    background: var(--background-tertiary);
-  }
+        &:hover,
+        &:focus {
+          background: var(--background-tertiary);
+        }
 
-  .expansion-header-title {
-    flex-grow: 1;
-    margin: 0;
-  }
+        &-title {
+          flex-grow: 1;
+          margin: 0;
+        }
 
-  .expansion-content {
-    overflow: hidden;
-    padding: 0 1rem;
-    transition: 0.3s ease-out;
-  }
+        &-content {
+          overflow: hidden;
+          padding: 0 1rem;
+          transition: 0.3s ease-out;
+        }
+      }
+    }
 
-  .toggle-arrow {
-    width: 1rem;
-    height: 1rem;
-    min-width: 1rem;
-    min-height: 1rem;
-    transition: transform 0.3s;
-  }
+    &-toggle-arrow {
+      width: 1rem;
+      height: 1rem;
+      min-width: 1rem;
+      min-height: 1rem;
+      transition: transform 0.3s;
 
-  .toggle-arrow.rotate {
-    transform: rotate(-180deg);
+      &-rotate {
+        transform: rotate(-180deg);
+      }
+    }
   }
 </style>

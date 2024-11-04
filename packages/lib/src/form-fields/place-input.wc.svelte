@@ -18,8 +18,9 @@
 
 <script lang="ts">
   import { onMount, createEventDispatcher } from 'svelte';
-  import { clickOutside } from '../click-outside';
+  import { clickOutside } from '../utils/click-outside';
   import { loadScript } from '../utils/scriptLoader';
+  import locationIcon from '../icons/location.svg?raw';
 
   export let apiKey: string;
   export let value = '';
@@ -61,7 +62,7 @@
   let map;
   let searchInput: HTMLInputElement;
   let coordinates = '';
-  let mapStyle;
+  let mapStyle: string;
 
   const dispatch = createEventDispatcher();
 
@@ -203,7 +204,7 @@
     }
     mapStyle = style;
     openMap = !openMap;
-    if(openMap){
+    if (openMap) {
       searchInput.focus();
     }
   }
@@ -234,7 +235,7 @@
     } catch (error) {
       console.error('Failed to load the Google Maps script', error);
     }
-    if(inputFocused){
+    if (inputFocused) {
       searchInput.focus();
     }
   });
@@ -250,7 +251,9 @@
     <div class="nav">
       <label class="field" class:required>
         {#if label && labelType === 'inside'}
-          <span class="field-label" class:move={inputFocused || value || openMap}>{@html label}</span>
+          <span class="field-label" class:move={inputFocused || value || openMap}
+            >{@html label}</span
+          >
         {/if}
         <input
           class={`searchInput ${labelType === 'outside' || !label ? '' : 'searchInput-padding'}`}
@@ -270,18 +273,7 @@
           on:blur={() => (inputFocused = false)}
         />
         <button class="button" class:active={openMap} on:click|preventDefault={toggleMap}>
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            width="20"
-            height="20"
-            fill="currentColor"
-            class="bi bi-geo-alt-fill"
-            viewBox="0 0 16 16"
-          >
-            <path
-              d="M8 16s6-5.686 6-10A6 6 0 0 0 2 6c0 4.314 6 10 6 10m0-7a3 3 0 1 1 0-6 3 3 0 0 1 0 6"
-            />
-          </svg>
+          {@html locationIcon}
         </button>
       </label>
     </div>
@@ -337,24 +329,8 @@
     position: absolute;
     top: 50%;
     left: 0.75rem;
-    -webkit-transform: translateY(-50%);
-    -moz-transform: translateY(-50%);
-    -ms-transform: translateY(-50%);
-    -o-transform: translateY(-50%);
     transform: translateY(-50%);
     font-size: 1rem;
-    -webkit-transition:
-      transform 0.3s,
-      top 0.3s,
-      font-size 0.3s;
-    -o-transition:
-      transform 0.3s,
-      top 0.3s,
-      font-size 0.3s;
-    -moz-transition:
-      transform 0.3s,
-      top 0.3s,
-      font-size 0.3s;
     transition:
       transform 0.3s,
       top 0.3s,
@@ -363,10 +339,6 @@
 
   .field-label.move {
     top: 0.25rem;
-    -webkit-transform: translateY(0);
-    -moz-transform: translateY(0);
-    -ms-transform: translateY(0);
-    -o-transform: translateY(0);
     transform: translateY(0);
     font-size: 0.75rem;
   }
@@ -408,9 +380,6 @@
 
   .searchInput::placeholder {
     opacity: 0;
-    -webkit-transition: opacity 0.3s;
-    -o-transition: opacity 0.3s;
-    -moz-transition: opacity 0.3s;
     transition: opacity 0.3s;
   }
 
@@ -467,31 +436,15 @@
   .overlay {
     z-index: 100;
     position: absolute;
-    display: -webkit-box;
-    display: -webkit-flex;
-    display: -moz-box;
-    display: -ms-flexbox;
     display: flex;
-    -webkit-box-orient: vertical;
-    -webkit-box-direction: normal;
-    -webkit-flex-direction: column;
-    -moz-box-orient: vertical;
-    -moz-box-direction: normal;
-    -ms-flex-direction: column;
     flex-direction: column;
     max-width: 370px;
     max-height: 420px;
     width: 100%;
     padding: 0.7rem;
     overflow-y: hidden;
-    -webkit-border-bottom-left-radius: 0.25rem;
-    -moz-border-radius-bottomleft: 0.25rem;
     border-bottom-left-radius: 0.25rem;
-    -webkit-border-bottom-right-radius: 0.25rem;
-    -moz-border-radius-bottomright: 0.25rem;
     border-bottom-right-radius: 0.25rem;
-    -webkit-box-shadow: 0 6px 9px rgba(0, 0, 0, 0.16);
-    -moz-box-shadow: 0 6px 9px rgba(0, 0, 0, 0.16);
     box-shadow: 0 6px 9px rgba(0, 0, 0, 0.16);
     background-color: var(--background-primary);
   }
@@ -503,5 +456,4 @@
   .map-field {
     border-radius: 0.25rem;
   }
-
 </style>

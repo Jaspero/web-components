@@ -17,6 +17,7 @@
 
 <script lang="ts">
   import { createEventDispatcher, onMount } from 'svelte';
+  import './code-editor.wc.pcss';
 
   export let attachedInternals: ElementInternals;
   export let label = '';
@@ -25,8 +26,8 @@
   export let value = '';
   export let options = {};
 
-  let containerEl;
-  let editor;
+  let containerEl: HTMLDivElement;
+  let editor: any;
 
   export const getValue = () => value;
 
@@ -36,9 +37,11 @@
     if (typeof options == 'string') {
       options = JSON.parse(options);
     }
+
+    // @ts-ignore
     editor = new window.CodeMirror(containerEl, options);
     editor.setValue(value);
-    editor.on('change', (e) => {
+    editor.on('change', (e: any) => {
       value = editor.getValue();
 
       attachedInternals.checkValidity();
@@ -53,15 +56,8 @@
   <span>{label}</span>
 {/if}
 
-<div class="code-editor">
+<div class="jp-code-editor">
   <div bind:this={containerEl}></div>
 </div>
 
 <textarea {name} {id} {value} hidden></textarea>
-
-<style lang="postcss">
-  .code-editor {
-    border: 1px solid var(--border-primary);
-    border-radius: 0.25rem;
-  }
-</style>
