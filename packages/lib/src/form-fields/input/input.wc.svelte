@@ -111,7 +111,6 @@
         attachedInternals.setValidity({});
       }
     }
-    value = String(value);
     attachedInternals.setFormValue(value);
     dispatch('value', { value });
   }
