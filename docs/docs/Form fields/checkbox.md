@@ -43,5 +43,9 @@ This component does not have any slots.
 // import '../../static/c/checkbox.wc.js';
 // import '../../static/c/checkbox.css';
 
-<jp-checkbox options='[{"value": "aaa"},{"value": "lorem aa"},{"value": "lorem adasda"}]'></jp-checkbox>
+<jp-checkbox options='[
+    {"value": "aaa", "label": "aaa"},
+    {"value": "lorem aa", "label": "lorem aa"},
+    {"value": "lorem adasda", "label": "lorem adasda"}
+]'></jp-checkbox>
 ```
