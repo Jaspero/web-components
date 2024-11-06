@@ -39,9 +39,9 @@
   export let service: TableService;
   export let id: string;
   export let height: string | null = null;
+
   let additionalExportTypes = [];
   let activeHeaders: TableHeader[] = [];
-  let fileContent, mimeType, extension;
 
   let isOpen = false;
   const options = ['csv', 'json', 'xml'];
@@ -412,12 +412,16 @@
     arrangeColumnDialog = false;
   }
 
-  async function exportDataGeneric(fileType) {
-    if (exportLoading) return;
+  async function exportDataGeneric(fileType: string) {
+    if (exportLoading) {
+      return
+    };
+
     exportLoading = true;
 
     activeHeaders = headers.filter((header) => !header.disabled);
-    const data = await service.export();
+    const data = await service.export!();
+
     resolved = await Promise.all(
       data.map(async (row, index) => {
         const columns = await Promise.all(
@@ -438,16 +442,11 @@
     );
 
     const selectedOption = switchOptions.find(option => option.label === fileType);
-    console.log(selectedOption?.method().fileContent);
-    if (selectedOption) {
-      const { fileContent: content, mimeType: type, extension: ext } = selectedOption.method();
-      fileContent = content;
-      mimeType = type;
-      extension = ext;
-    }
+    const { fileContent, mimeType, extension } = selectedOption!.method();
 
     const blob = new Blob([fileContent], { type: mimeType });
     const link = document.createElement('a');
+    
     link.href = URL.createObjectURL(blob);
     link.download = `export.${extension}`;
     link.click();
@@ -483,11 +482,10 @@
     }
 
     activeHeaders = headers.filter((it) => !it.disabled);
-    columnOrder = activeHeaders.map((header) => header.key);
     await getData();
   });
 
-  const handleOptionClick = (option) => {
+  const handleOptionClick = (option: string) => {
     exportDataGeneric(option);
     isOpen = false;
   };
