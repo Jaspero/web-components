@@ -22,10 +22,14 @@ import { copyFile, readFile, readdir, rm, writeFile } from 'fs/promises';
         const data = (await readFile(path)).toString();
         const match = regex.exec(data);
 
-        await writeFile(
-          path,
-          data.replace(match[0], `try{customElements.define(${match[1]});}catch{};export`)
-        );
+        if (match) {
+          await writeFile(
+            path,
+            data.replace(match[0], `try{customElements.define(${match[1]});}catch{};export`)
+          );
+        } else {
+          console.error(`No matches found in file: ${path}`);
+        }
       }
     })
   );
