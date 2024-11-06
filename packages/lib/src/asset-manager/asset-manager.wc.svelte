@@ -17,12 +17,11 @@
   import addFolderIcon from '../../../lib/src/icons/add-folder.svg?raw';
   import addFilesIcon from '../../../lib/src/icons/add-files.svg?raw';
   import './asset-manager.wc.pcss';
-  
-  import { flip } from "svelte/animate";
-  import { fly } from "svelte/transition";
-  import {notifications} from './notifications'
-  import FileList from '../form-fields/file-list/file-list.wc.svelte';
-  
+
+  import { flip } from 'svelte/animate';
+  import { fly } from 'svelte/transition';
+  import { notifications } from './notifications';
+
   export let wording = {
     DROP_FILES_HERE: 'Drop your files here',
     FOLDER_NAME: 'Folder name',
@@ -53,14 +52,14 @@
   let folderName = '';
   let folderDialog = false;
   let folderNamePattern = '[a-z_\\-]{3,}';
-  
+
   let showSelectionNotification = false;
   let showSelectionNotification2 = false;
   let addedSuccessfully = false;
   let alreadyExists = false;
   let fileName = '';
   let existingFile = '';
-  
+
   export function clearSelection() {
     selectedItems = {};
   }
@@ -89,56 +88,52 @@
     hoveringFile = false;
   }
   async function sleep(ms: number | undefined) {
-    return new Promise(resolve => setTimeout(resolve, ms));
-}
+    return new Promise((resolve) => setTimeout(resolve, ms));
+  }
   function delay(ms: number | undefined) {
-    return new Promise(resolve => setTimeout(resolve, ms));
+    return new Promise((resolve) => setTimeout(resolve, ms));
   }
 
   async function filesToItems(files: FileList) {
-  const existingFiles: unknown[] = [];
-  const addedFiles: unknown[] = [];
-  const validFiles = Array.from(files).filter((file) => {
-    const fileExists = items.some((item) => item.name === file.name && item.size === file.size);
-    
-    if (fileExists) {
-      existingFiles.push(file);
-      console.log(`File ${file.name} already exists!`);
-      return false;
-    }
-    else{
-      addedFiles.push(file);
-    }
-  
-    // TODO: Show alert for each file violating file size
-    if (maxSize && file.size > maxSize) {
-      notifications.danger(`File ${file.name} is too big!`, 2000);
-      return false; 
-    }
+    const existingFiles: unknown[] = [];
+    const addedFiles: unknown[] = [];
+    const validFiles = Array.from(files).filter((file) => {
+      const fileExists = items.some((item) => item.name === file.name && item.size === file.size);
 
-    return true;
-  });
+      if (fileExists) {
+        existingFiles.push(file);
+        console.log(`File ${file.name} already exists!`);
+        return false;
+      } else {
+        addedFiles.push(file);
+      }
 
-  for(let i = 0; i<addedFiles.length; i++){
+      // TODO: Show alert for each file violating file size
+      if (maxSize && file.size > maxSize) {
+        notifications.danger(`File ${file.name} is too big!`, 2000);
+        return false;
+      }
+
+      return true;
+    });
+
+    for (let i = 0; i < addedFiles.length; i++) {
       fileName = addedFiles[i].name;
       addedSuccessfully = true;
       await sleep(800);
       addedSuccessfully = false;
-      await sleep (800);
-    } 
+      await sleep(800);
+    }
     addedSuccessfully = false;
-    for(let i = 0; i<existingFiles.length; i++){
+    for (let i = 0; i < existingFiles.length; i++) {
       existingFile = existingFiles[i].name;
       alreadyExists = true;
       await sleep(800);
       alreadyExists = false;
       await sleep(800);
-    } 
-  return Promise.all(
-    validFiles.map((file) => service.upload(path, file))
-  );
-}
-
+    }
+    return Promise.all(validFiles.map((file) => service.upload(path, file)));
+  }
 
   function back() {
     path = path.split('/').slice(0, -1).join('/');
@@ -174,20 +169,20 @@
     if (Object.keys(selectedItems).length > 0) {
       showSelectionNotification = false;
     }
-    if (maxSelected && Object.keys(selectedItems).length === maxSelected){
+    if (maxSelected && Object.keys(selectedItems).length === maxSelected) {
       showSelectionNotification2 = false;
     }
   }
 
   async function confirmSelection() {
-    if (minSelected){
-      if (Object.keys(selectedItems).length < minSelected){
+    if (minSelected) {
+      if (Object.keys(selectedItems).length < minSelected) {
         showSelectionNotification = true;
-        console.log("Please select a file first.");
+        console.log('Please select a file first.');
         return;
       }
     }
-    if (maxSelected){
+    if (maxSelected) {
       if (Object.keys(selectedItems).length > maxSelected) {
         showSelectionNotification2 = true;
         console.log(`Too many files have been selected. The maximum allowed is ${maxSelected}.`);
@@ -221,28 +216,28 @@
       });
   }
   function handleClickOutside(event: MouseEvent) {
-  const clickedElement = event.target as HTMLElement;
-  const clickedOnAsset = clickedElement.closest('.jp-asset-manager-asset-button');
-  const clickedOnConfirm = clickedElement.closest('button');
+    const clickedElement = event.target as HTMLElement;
+    const clickedOnAsset = clickedElement.closest('.jp-asset-manager-asset-button');
+    const clickedOnConfirm = clickedElement.closest('button');
 
-  if(maxSelected){
-    if(clickedOnConfirm && Object.keys(selectedItems).length > maxSelected){
-      return;
+    if (maxSelected) {
+      if (clickedOnConfirm && Object.keys(selectedItems).length > maxSelected) {
+        return;
+      }
+    }
+    if (!clickedOnConfirm && !clickedOnAsset) {
+      showSelectionNotification = false;
+    }
+    if (!clickedOnAsset) {
+      clearSelection();
+      showSelectionNotification2 = false;
     }
   }
-  if (!clickedOnConfirm && !clickedOnAsset){
-    showSelectionNotification = false;
-  }
-  if (!clickedOnAsset) {
-    clearSelection();
-    showSelectionNotification2 = false;
-  }
-}
   async function removeSelectedFiles(index: number, id: string) {
     const selectedIds = Object.keys(selectedItems);
     const indexes: any[] = [];
     for (const id of selectedIds) {
-      indexes.push(items.findIndex(item => item.id === id));
+      indexes.push(items.findIndex((item) => item.id === id));
     }
     const paired = selectedIds.map((value, index) => ({
       value,
@@ -250,15 +245,15 @@
     }));
     paired.sort((a, b) => b.index - a.index);
 
-    const sortedValues = paired.map(item => item.value);
-    const sortedIndices = paired.map(item => item.index);
+    const sortedValues = paired.map((item) => item.value);
+    const sortedIndices = paired.map((item) => item.index);
 
     for (let i = 0; i < sortedIndices.length; i++) {
       removeFile(sortedIndices[i], sortedValues[i]);
       cancelUpload(sortedValues[i].toString());
       service.remove(sortedValues[i].toString());
     }
-}
+  }
   $: if (path) {
     loadData();
   }
@@ -380,49 +375,49 @@
     {/if}
 
     {#if selectable}
-      <div class = "jp-asset-manager-footer">
-        <button class="jp-asset-manager-footer-button" type="button" on:click={confirmSelection}>{wording.CONFIRM_SELECTION}</button>
+      <div class="jp-asset-manager-footer">
+        <button class="jp-asset-manager-footer-button" type="button" on:click={confirmSelection}
+          >{wording.CONFIRM_SELECTION}</button
+        >
         {#if Object.keys(selectedItems).length > 1}
-          <button type="button" on:click={removeSelectedFiles}>Delete files: ({Object.keys(selectedItems).length})</button>  
+          <button type="button" on:click={removeSelectedFiles}
+            >Delete files: ({Object.keys(selectedItems).length})</button
+          >
         {/if}
         <div class="jp-asset-manager-notifications">
           {#each $notifications as notification (notification.id)}
-              <div
-                  animate:flip
-                  class="jp-asset-manager-toast"
-                  
-                  transition:fly={{ y: 30 }}
-              >
-                  <div class="jp-asset-manager-content">{notification.message}</div>
-                  {#if notification.icon}<i class={notification.icon} />{/if}
-              </div>
+            <div animate:flip class="jp-asset-manager-toast" transition:fly={{ y: 30 }}>
+              <div class="jp-asset-manager-content">{notification.message}</div>
+              {#if notification.icon}<i class={notification.icon} />{/if}
+            </div>
           {/each}
           {#if showSelectionNotification}
-            <div class="jp-asset-manager-toast"  transition:fly={{ y: 30 }}>
+            <div class="jp-asset-manager-toast" transition:fly={{ y: 30 }}>
               <div class="jp-asset-manager-content">Please select a file first.</div>
             </div>
           {/if}
           {#if showSelectionNotification2}
-            <div class="jp-asset-manager-toast"  transition:fly={{ y: 30 }}>
-              <div class="jp-asset-manager-content">Too many files have been selected. The maximum allowed is {maxSelected}.</div>
+            <div class="jp-asset-manager-toast" transition:fly={{ y: 30 }}>
+              <div class="jp-asset-manager-content">
+                Too many files have been selected. The maximum allowed is {maxSelected}.
+              </div>
             </div>
           {/if}
           {#if addedSuccessfully}
-            <div class = "jp-asset-manager-toast-added" transition:fly={{ y: 30 }}>
+            <div class="jp-asset-manager-toast-added" transition:fly={{ y: 30 }}>
               <div class="jp-asset-manager-content">File {fileName} added successfully!</div>
             </div>
           {/if}
           {#if alreadyExists}
-            <div class = "jp-asset-manager-toast-exist" transition:fly={{ y: 30 }}>
+            <div class="jp-asset-manager-toast-exist" transition:fly={{ y: 30 }}>
               <div class="jp-asset-manager-content">File {existingFile} already exists!</div>
             </div>
-          {/if} 
+          {/if}
+        </div>
       </div>
-    </div>
     {/if}
-    {/if}
+  {/if}
 </section>
-
 
 <input
   type="file"
