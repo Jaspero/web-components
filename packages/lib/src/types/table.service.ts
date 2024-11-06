@@ -1,4 +1,3 @@
-import type { TableHeader } from './table-header.interface';
 import type { TableSort } from './table-sort.interface';
 
 export interface TableService<T = any> {
@@ -8,6 +7,7 @@ export interface TableService<T = any> {
     id: string,
     headers: Array<{ key: string; disabled?: boolean }>
   ) => Promise<void>;
+  additionalExportTypes?: () => Promise<T[]>;
   getColumnOrder?: (id: string) => Promise<Array<{ key: string; disabled?: boolean }>>;
   adjustPageSize?: (pageSize: number) => Promise<void>;
   adjustSort?: (sort: TableSort) => Promise<void>;
