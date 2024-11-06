@@ -1,3 +1,6 @@
+import '../../static/c/select.wc.js';
+import '../../static/c/select.css';
+
 # Select
 
 ### Description
@@ -38,5 +41,8 @@ This component does not have any slots.
 ### Demo
 
 ```jsx live
+// import '../../static/c/select.wc.js';
+// import '../../static/c/select.css';
+
 <jp-select options='[{"value":"aaa"}, {"value":"bbb"}, {"value":"ccc"}]' label="Select"></jp-select>
 ```

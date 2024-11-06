@@ -1,3 +1,5 @@
+import '../static/c/button.wc.js';
+
 # Button
 
 ### Description
@@ -29,5 +31,7 @@ This component does not have any events.
 ### Demo
 
 ```jsx live
+// import '../static/c/button.wc.js';
+
 <jp-button>button</jp-button>
 ```

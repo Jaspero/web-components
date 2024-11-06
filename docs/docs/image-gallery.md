@@ -1,3 +1,5 @@
+import '../static/c/image-gallery.wc.js';
+
 # Image Gallery
 
 ### Description
@@ -36,6 +38,8 @@ This component does not have any events.
 ### Demo
 
 ```jsx live
-<jp-image-gallery images='[{"src": "https://picsum.photos/200/300"}, {"src": "https://picsum.photos/200/200"}, {"src": "https://picsum.photos/300/300"}, {"src": "https://picsum.photos/200/300"}, {"src": "https://picsum.photos/300/400"}, {"src": "https://picsum.photos/200/300"}, {"src": "https://picsum.photos/400/400"}, {"src": "https://picsum.photos/300/600"}, {"src": "https://picsum.photos/800/400"}, {"src": "https://picsum.photos/700/900"}, {"src": "https://picsum.photos/500/500"}, {"src": "https://picsum.photos/800/700"}] '>
+// import '../static/c/image-gallery.wc.js';
+
+<jp-image-gallery images='[{"src": "https://picsum.photos//700"}, {"src": "https://picsum.photos/1280/720"}, {"src": "https://picsum.photos/1920/1080"}, {"src": "https://picsum.photos//800"}, {"src": "https://picsum.photos/900/900"}, {"src": "https://picsum.photos/854/480"}, {"src": "https://picsum.photos/2560/1440"}, {"src": "https://picsum.photos/1000/1000"}, {"src": "https://picsum.photos/800/600"}, {"src": "https://picsum.photos/700/900"}, {"src": "https://picsum.photos/700/700"}, {"src": "https://picsum.photos/1200/1200"}] '>
 </jp-image-gallery>
 ```

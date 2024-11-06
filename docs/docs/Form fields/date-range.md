@@ -1,3 +1,6 @@
+import '../../static/c/date-range.wc.js';
+import '../../static/c/date-range.css';
+
 # Date Range
 
 ### Description
@@ -45,5 +48,8 @@ This component does not have any slots.
 ### Demo
 
 ```jsx live
+// import '../../static/c/date-range.wc.js';
+// import '../../static/c/date-range.css';
+
 <jp-date-range label="Pick a date range"></jp-date-range>
 ```

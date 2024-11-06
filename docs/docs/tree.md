@@ -1,3 +1,8 @@
+import '../static/c/tree.wc.js';
+import '../static/c/tree.css';
+import '../static/c/node.wc.js';
+import '../static/c/node-draggable.wc.js';
+
 # Tree
 
 ### Description
@@ -30,6 +35,11 @@ This component does not have any events.
 ### Demo
 
 ```jsx live
+// import '../static/c/tree.wc.js';
+// import '../static/c/tree.css';
+// import '../static/c/node.wc.js';
+// import '../static/c/node-draggable.wc.js';
+
 <div>
   <jp-tree title="Fruit">
     <jp-node>Apple</jp-node>

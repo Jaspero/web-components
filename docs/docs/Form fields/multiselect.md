@@ -1,3 +1,6 @@
+import '../../static/c/multiselect.wc.js';
+import '../../static/c/multiselect.css';
+
 # Multiselect
 
 ### Description
@@ -43,6 +46,9 @@ This component does not have any slots.
 ### Demo
 
 ```jsx live
+// import '../../static/c/multiselect.wc.js';
+// import '../../static/c/multiselect.css';
+
 <jp-multiselect
   options='[{"value":"aaa"}, {"value":"bbb"}, {"value":"ccc"}]'
   label="Multiselect"

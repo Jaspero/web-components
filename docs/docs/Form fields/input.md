@@ -1,3 +1,6 @@
+import '../../static/c/input.wc.js';
+import '../../static/c/input.css';
+
 # Input
 
 ### Description
@@ -61,5 +64,8 @@
 ### Demo
 
 ```jsx live
+// import '../../static/c/input.wc.js';
+// import '../../static/c/input.css';
+
 <jp-input label="Input"></jp-input>
 ```

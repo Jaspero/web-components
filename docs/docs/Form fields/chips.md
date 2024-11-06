@@ -1,3 +1,6 @@
+import '../../static/c/chips.wc.js';
+import '../../static/c/chips.css';
+
 # Chips
 
 ### Description
@@ -45,5 +48,8 @@ This component does not have any slots.
 ### Demo
 
 ```jsx live
+// import '../../static/c/chips.wc.js';
+// import '../../static/c/chips.css';
+
 <jp-chips label="Chips" placeholder="Placeholder"></jp-chips>
 ```

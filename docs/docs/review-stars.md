@@ -1,3 +1,5 @@
+import '../static/c/review-stars.wc.js';
+
 # Review stars
 
 ### Description
@@ -28,5 +30,7 @@ This component does not have any methods.
 ### Demo
 
 ```jsx live
+// import '../static/c/review-stars.wc.js';
+
 <jp-review-stars></jp-review-stars>
 ```

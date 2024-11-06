@@ -1,3 +1,6 @@
+import '../../static/c/ckeditor.wc.js';
+import '../../static/c/ckeditor.css';
+
 # CKEditor
 
 ### Description
@@ -58,5 +61,8 @@ This component does not have any slots.
 ### Demo
 
 ```jsx live
+// import '../../static/c/ckeditor.wc.js';
+// import '../../static/c/ckeditor.css';
+
 <jp-ckeditor value="<p>Blup</p>"></jp-ckeditor>
 ```

@@ -1,3 +1,5 @@
+import '../static/c/page-paginator.wc.js';
+
 # Page Paginator
 
 ### Description
@@ -32,5 +34,7 @@ This component does not have any slots.
 ### Demo
 
 ```jsx live
+// import '../static/c/page-paginator.wc.js';
+
 <jp-page-paginator></jp-page-paginator>
 ```
