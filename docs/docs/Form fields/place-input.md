@@ -105,7 +105,9 @@ function placeInput(props){
     const placeInput = document.createElement('jp-place-input')
     placeInput.apiKey = '';
     placeInput.mapId = 'DEMO-MAP-ID';
+    //limit the search inside United States
     placeInput.componentRestrictions = {country: 'us'};
+    //limit the search by looking only for hospitals
     placeInput.types = ['hospital'];
     placeInput.label = 'Place Input'
     el.current.appendChild(placeInput)
