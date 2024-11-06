@@ -150,7 +150,8 @@
       transition: 0.3s;
 
       &-selected {
-        background-color: var(--secondary-color);
+        background-color: var(--primary-color);
+        color: var(--text-on-primary);
       }
 
       &:not(.jp-page-paginator-button-selected):active {

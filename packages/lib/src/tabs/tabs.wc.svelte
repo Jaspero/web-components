@@ -117,11 +117,12 @@
       border-top: transparent;
 
       &:hover {
-        background-color: rgb(250, 245, 243);
+        background-color: var(--background-secondary);
       }
 
       &-active {
-        border-bottom: 2px solid rgb(215, 73, 12);
+        border-bottom: 2px solid;
+        border-color: var(--primary-color);
         color: rgb(199, 64, 15);
       }
     }

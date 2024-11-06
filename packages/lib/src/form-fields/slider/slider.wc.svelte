@@ -37,11 +37,11 @@
   $: displayLabel = required ? `${label} *` : label;
 </script>
 
-{#if label}
-  <span class="jp-slider-label">
+<div class="jp-slider-label">
+  {#if label}
     {@html displayLabel}
-  </span>
-{/if}
+  {/if}
+</div>
 <div class="jp-slider-container">
   <input
     type="range"
