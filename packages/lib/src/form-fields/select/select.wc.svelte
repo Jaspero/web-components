@@ -28,7 +28,6 @@
   export let options: Array<{ label?: string; value: string; disabled?: boolean }> | string = [];
   export let disabled = false;
   export let required = false;
-  export let hidden = false;
   export let hint = '';
   export let value = '';
   export let id = '';
@@ -65,8 +64,7 @@
   }
 
   $: {
-    console.log($$props.hidden);
-    if ($$props.hidden) {
+    if ($$props.hidden === '' && inputEl) {
       inputEl.disabled = true;
     }
   }
@@ -348,7 +346,7 @@
     {id}
     {name}
     {required}
-    {hidden}
+    {disabled}
     autocomplete={autocomplete || name}
   />
 </div>
