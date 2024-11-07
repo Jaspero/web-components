@@ -28,6 +28,7 @@
   export let options: Array<{ label?: string; value: string; disabled?: boolean }> | string = [];
   export let disabled = false;
   export let required = false;
+  export let hidden = false;
   export let hint = '';
   export let value = '';
   export let id = '';
@@ -54,6 +55,21 @@
   const dispatch = createEventDispatcher();
 
   export const reportValidity = () => attachedInternals.reportValidity();
+
+  $: {
+    if ($$props.style && inputEl) {
+      if ($$props.style.includes('display: none;')) {
+        inputEl.disabled = true;
+      }
+    }
+  }
+
+  $: {
+    console.log($$props.hidden);
+    if ($$props.hidden) {
+      inputEl.disabled = true;
+    }
+  }
 
   $: {
     if (open) {
@@ -121,7 +137,9 @@
     if (open) {
       setTimeout(() => {
         // Find the first non-disabled option
-        const firstEnabledOptionIndex = (options as any).findIndex((option) => !option.disabled);
+        const firstEnabledOptionIndex = (options as any).findIndex(
+          (option: { disabled: any }) => !option.disabled
+        );
         if (firstEnabledOptionIndex !== -1) {
           optionElements[firstEnabledOptionIndex].focus();
         }
@@ -175,7 +193,9 @@
         event.preventDefault();
 
         // Find the first non-disabled option's index
-        const firstEnabledOptionIndex = options.findIndex((option) => !option.disabled);
+        const firstEnabledOptionIndex = options.findIndex(
+          (option: { disabled: any }) => !option.disabled
+        );
 
         // If there's a non-disabled option, focus on it
         if (firstEnabledOptionIndex !== -1) {
@@ -193,7 +213,7 @@
         const lastEnabledOptionIndex = options
           .slice()
           .reverse()
-          .findIndex((option) => !option.disabled);
+          .findIndex((option: { disabled: any }) => !option.disabled);
 
         // Convert the reversed index back to the original array's indexing
         const actualIndex =
@@ -252,7 +272,7 @@
 
         searchTerm += event.key;
 
-        const matchingIndex = options.findIndex((option) =>
+        const matchingIndex = options.findIndex((option: { value: string }) =>
           option.value.toLowerCase().startsWith(searchTerm.toLowerCase())
         );
 
@@ -328,6 +348,7 @@
     {id}
     {name}
     {required}
+    {hidden}
     autocomplete={autocomplete || name}
   />
 </div>
@@ -344,22 +365,24 @@
       role="dialog"
     >
       {#each options as option, index (option)}
-        <button
-          type="button"
-          class:jp-select-menu-selected={value == option.value}
-          bind:this={optionElements[index]}
-          disabled={option.disabled}
-          on:click|preventDefault={() => {
-            value = option.value;
-            toggleMenu();
-          }}
-        >
-          <span>{option.label ? option.label : option.value}</span>
+        {#if typeof option === 'object'}
+          <button
+            type="button"
+            class:jp-select-menu-selected={value == option.value}
+            bind:this={optionElements[index]}
+            disabled={option.disabled}
+            on:click|preventDefault={() => {
+              value = option.value;
+              toggleMenu();
+            }}
+          >
+            <span>{option.label ? option.label : option.value}</span>
 
-          {#if value == option.value}
-            {@html checkIcon}
-          {/if}
-        </button>
+            {#if value == option.value}
+              {@html checkIcon}
+            {/if}
+          </button>
+        {/if}
       {/each}
     </div>
   </div>
