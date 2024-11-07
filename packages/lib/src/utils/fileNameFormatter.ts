@@ -81,5 +81,7 @@ export function formatDisplayFileName(
         name &&
         name.match(/[A-Z]{2,}(?=[A-Z][a-z]+[0-9]*|\b)|[A-Z]?[a-z]+[0-9]*|[A-Z]|[0-9]+/g)!.join(' ');
       return name.slice(0, 1).toUpperCase() + name.slice(1);
+    default:
+      return name;
   }
 }

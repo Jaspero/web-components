@@ -31,7 +31,7 @@
   export let id = '';
   export let name = '';
   export let required = false;
-  export let displayFormat = 'snake';
+  export let displayFormat: '' | 'custom' | 'camel' | 'snake' | 'kebab' | 'pascal' | 'title' | 'upper' | 'lower' | 'dot' | 'sentence' = '';
   export let displayFormatFunction: (name: string) => string;
 
   let previewStyle: string;
