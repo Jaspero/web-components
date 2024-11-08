@@ -15,6 +15,7 @@ export interface Asset {
   contentType: string;
   status?: Writable<'uploading' | 'uploaded' | 'paused' | 'error'>;
   progress?: Writable<number>;
+  preventDelete?: boolean;
   uploader?: {
     pause: () => void;
     resume: () => void;

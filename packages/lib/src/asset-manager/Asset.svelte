@@ -29,9 +29,11 @@
 </script>
 
 <div class="jp-asset-manager-file" class:jp-asset-manager-file-removing={removing}>
-  <button class="jp-asset-manager-file-remove" type="button" on:click|preventDefault={remove}>
-    {@html fileRemoveIcon}
-  </button>
+  {#if !asset.preventDelete}
+    <button class="jp-asset-manager-file-remove" type="button" on:click|preventDefault={remove}>
+      {@html fileRemoveIcon}
+    </button>
+  {/if}
   <div class="jp-asset-manager-file-icon">
     {#if asset.contentType.startsWith('image')}
       <img class="jp-asset-manager-file-icon-image" src={asset.url} alt={asset.name} />
