@@ -31,7 +31,18 @@
   export let id = '';
   export let name = '';
   export let required = false;
-  export let displayFormat: '' | 'custom' | 'camel' | 'snake' | 'kebab' | 'pascal' | 'title' | 'upper' | 'lower' | 'dot' | 'sentence' = '';
+  export let displayFormat:
+    | ''
+    | 'custom'
+    | 'camel'
+    | 'snake'
+    | 'kebab'
+    | 'pascal'
+    | 'title'
+    | 'upper'
+    | 'lower'
+    | 'dot'
+    | 'sentence' = '';
   export let displayFormatFunction: (name: string) => string;
 
   let previewStyle: string;
@@ -79,7 +90,7 @@
     return internalValue;
   }
 
-  async function handleLocalChange(f: { size: number; name: string; }) {
+  async function handleLocalChange(f: { size: number; name: string }) {
     if (service && service.maxSize) {
       if (f.size > service.maxSize) {
         dispatch('rejected', { file: f.name, code: 'maxSize' });

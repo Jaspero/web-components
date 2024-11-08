@@ -44,7 +44,6 @@
   import TreeDemo from './OtherDemos/TreeDemo.svelte';
 
   import Demos from './Demos.svelte';
-  
 </script>
 
 <AssetManagerDemo />
@@ -60,8 +59,6 @@
 <!-- <CkEditorDemo /> -->
 <!-- <CkEditorDemo /> -->
 <!-- <RangeDemo /> -->
-
-
 
 <div class="layout-container">
   <!--
@@ -92,7 +89,7 @@
       <!-- <RangeDemo /> -->
       <!-- <SelectDemo /> -->
       <!-- <SliderDemo /> -->
-      <!-- <TextareaDemo /> --> 
+      <!-- <TextareaDemo /> -->
       <!-- <ToggleDemo /> -->
     </div>
     <div class="editors">

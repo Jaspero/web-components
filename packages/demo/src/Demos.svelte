@@ -47,7 +47,6 @@
   let isRequired = true; // Set to true or false based on your requirement
   let isOpen = false; // Track if the dropdown is open
   onMount(() => {
-
     const datepicker = document.createElement('jp-datepicker') as any;
 
     datepicker.value = new Date().getTime();

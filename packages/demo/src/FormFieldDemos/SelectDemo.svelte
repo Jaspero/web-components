@@ -4,11 +4,11 @@
 </script>
 
 <form>
-<jp-select {options} label="Select" />
-<jp-select {options} label="Select outside" labelType="outside" />
-<jp-select {options} label="Select disabled" disabled=true />
-<jp-select {options} label="Select required" required=true/>
-<jp-select {options} label="Select hint" hint="hint"/>
+  <jp-select {options} label="Select" />
+  <jp-select {options} label="Select outside" labelType="outside" />
+  <jp-select {options} label="Select disabled" disabled="true" />
+  <jp-select {options} label="Select required" required="true" />
+  <jp-select {options} label="Select hint" hint="hint" />
 
-<button type="submit">submit</button>
+  <button type="submit">submit</button>
 </form>

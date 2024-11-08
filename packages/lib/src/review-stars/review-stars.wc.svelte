@@ -167,19 +167,19 @@
 </div>
 
 <style lang="postcss">
-  .jp-review-stars{
+  .jp-review-stars {
     &-container:not(:last-child) {
-    margin-right: 5px;
-    position: relative;
-  }
+      margin-right: 5px;
+      position: relative;
+    }
 
-  &-rating {
-    display: flex;
-    align-items: center;
-  }
-  
-  &-indicator {
-    font-size: 1rem;
-  }
+    &-rating {
+      display: flex;
+      align-items: center;
+    }
+
+    &-indicator {
+      font-size: 1rem;
+    }
   }
 </style>

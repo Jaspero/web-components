@@ -1,16 +1,16 @@
 <svelte:options
-        customElement={{
+  customElement={{
     tag: 'jp-async-table',
     shadow: 'none'
   }}
 />
 
 <script lang="ts">
-  import {createEventDispatcher, onMount} from 'svelte';
-  import {get} from '../utils/json-pointer';
-  import type {TableHeader} from '../types/table-header.interface';
-  import type {TableSort} from '../types/table-sort.interface';
-  import type {TableService} from '../types/table.service';
+  import { createEventDispatcher, onMount } from 'svelte';
+  import { get } from '../utils/json-pointer';
+  import type { TableHeader } from '../types/table-header.interface';
+  import type { TableSort } from '../types/table-sort.interface';
+  import type { TableService } from '../types/table.service';
   import './async-table.wc.pcss';
 
   export let wording = {
@@ -44,17 +44,15 @@
   let activeHeaders: TableHeader[] = [];
 
   let isOpen = false;
-  const options = ['csv', 'json', 'xml'];
   let resolved: string[] = [];
+
+  const options = ['csv', 'json', 'xml'];
   const switchOptions = [
     {
       label: 'CSV',
       type: 'csv',
       method: () => ({
-        fileContent: [
-          activeHeaders.map(h => `"${h.label}"`).join(','),
-          ...resolved
-        ].join('\n'),
+        fileContent: [activeHeaders.map((h) => `"${h.label}"`).join(','), ...resolved].join('\n'),
         mimeType: 'text/csv',
         extension: 'csv'
       })
@@ -64,7 +62,7 @@
       type: 'json',
       method: () => ({
         fileContent: JSON.stringify(
-          resolved.map(row => {
+          resolved.map((row) => {
             const values = row.split(',');
             return Object.fromEntries(
               activeHeaders.map((header, i) => [header.label, values[i]?.replace(/"/g, '') || ''])
@@ -81,15 +79,14 @@
       label: 'XML',
       type: 'xml',
       method: () => ({
-        fileContent: `<root>\n${resolved.map(row =>
-          `  <row>\n${row}</row>`
-        ).join('\n')}\n</root>`,
+        fileContent: `<root>\n${resolved
+          .map((row) => `  <row>\n${row}</row>`)
+          .join('\n')}\n</root>`,
         mimeType: 'application/xml',
         extension: 'xml'
       })
     }
   ];
-
 
   export let getData = async () => {
     const data = await service.get(sort, pageSize);
@@ -104,7 +101,7 @@
   export let arrangeColumnDialog = false;
   export let showLoadMore = true;
 
-  let formattedPageSizes = JSON.stringify(pageSizes.map((s) => ({label: s, value: s})));
+  let formattedPageSizes = JSON.stringify(pageSizes.map((s) => ({ label: s, value: s })));
   let loading = true;
   let hasMore = false;
   let exportLoading = false;
@@ -134,11 +131,11 @@
   }
 
   export async function updateRow(value: any, index: number) {
-    rows = rows.map((it, ind) => (ind === index ? {...it, ...value} : it));
+    rows = rows.map((it, ind) => (ind === index ? { ...it, ...value } : it));
   }
 
   async function handleColumn(header: TableHeader, row: any, index: number) {
-    const {key, fallback, pipes} = header;
+    const { key, fallback, pipes } = header;
 
     let value: any;
     try {
@@ -175,7 +172,7 @@
   }
 
   async function adjustSort(header: TableHeader) {
-    const {sortable} = header;
+    const { sortable } = header;
 
     if (!sortable) {
       return;
@@ -250,8 +247,8 @@
     }
 
     exportLoading = true;
-
     activeHeaders = headers.filter((header) => !header.disabled);
+
     const data = await service.export!();
     const resolved = await Promise.all(
       data.map(async (row, index) => {
@@ -282,7 +279,7 @@
           ...resolved
         ].join('\n')
       ],
-      {type: 'text/csv'}
+      { type: 'text/csv' }
     );
     const link = document.createElement('a');
 
@@ -414,8 +411,8 @@
 
   async function exportDataGeneric(fileType: string) {
     if (exportLoading) {
-      return
-    };
+      return;
+    }
 
     exportLoading = true;
 
@@ -425,7 +422,7 @@
     resolved = await Promise.all(
       data.map(async (row, index) => {
         const columns = await Promise.all(
-          activeHeaders.map(header =>
+          activeHeaders.map((header) =>
             handleColumn(
               {
                 key: header.key,
@@ -437,16 +434,16 @@
             )
           )
         );
-        return columns.map(col => `"${col || ''}"`).join(',');
+        return columns.map((col) => `"${col || ''}"`).join(',');
       })
     );
 
-    const selectedOption = switchOptions.find(option => option.label === fileType);
+    const selectedOption = switchOptions.find((option) => option.type === fileType);
     const { fileContent, mimeType, extension } = selectedOption!.method();
 
     const blob = new Blob([fileContent], { type: mimeType });
     const link = document.createElement('a');
-    
+
     link.href = URL.createObjectURL(blob);
     link.download = `export.${extension}`;
     link.click();
@@ -457,7 +454,7 @@
   onMount(async () => {
     if (service.additionalExportTypes) {
       additionalExportTypes = await service.additionalExportTypes();
-      additionalExportTypes.forEach(type => {
+      additionalExportTypes.forEach((type) => {
         options.push(type.label);
         switchOptions.push({
           label: type.label,
@@ -470,14 +467,16 @@
     if (service.getColumnOrder) {
       const pulledHeaders = await service.getColumnOrder(id);
       if (pulledHeaders) {
-        headers = headers.map(header => {
-          header.disabled = !pulledHeaders.find((it) => it.key === header.key);
-          return header;
-        }).sort((a, b) => {
-          const aIndex = pulledHeaders.findIndex((it) => it.key === a.key);
-          const bIndex = pulledHeaders.findIndex((it) => it.key === b.key);
-          return aIndex - bIndex;
-        });
+        headers = headers
+          .map((header) => {
+            header.disabled = !pulledHeaders.find((it) => it.key === header.key);
+            return header;
+          })
+          .sort((a, b) => {
+            const aIndex = pulledHeaders.findIndex((it) => it.key === a.key);
+            const bIndex = pulledHeaders.findIndex((it) => it.key === b.key);
+            return aIndex - bIndex;
+          });
       }
     }
 
@@ -492,82 +491,77 @@
 </script>
 
 <div class="jp-async-table">
-    {#if showArrangingColumns || showImport || showExport}
-        <div class="jp-async-table-header">
-            {#if showArrangingColumns}
-                &nbsp;
-                <button type="button" on:click={arrangeColumns} class="jp-async-table-button">
-                    {wording.ARRANGE_COLUMNS}
-                </button>
-            {/if}
+  {#if showArrangingColumns || showImport || showExport}
+    <div class="jp-async-table-header">
+      {#if showArrangingColumns}
+        &nbsp;
+        <button type="button" on:click={arrangeColumns} class="jp-async-table-button">
+          {wording.ARRANGE_COLUMNS}
+        </button>
+      {/if}
 
-            {#if showImport}
-                &nbsp;
-                <button
-                        type="button"
-                        class="jp-async-table-button"
-                        on:click={() => importFileEl.click()}>
-
-                    {wording.IMPORT}
-                </button>
+      {#if showImport}
+        &nbsp;
+        <button type="button" class="jp-async-table-button" on:click={() => importFileEl.click()}>
+          {wording.IMPORT}
+        </button>
+      {/if}
+      {#if showExport}
+        &nbsp;
+        {#if !dropdownMenuExport}
+          <button
+            type="button"
+            class="jp-async-table-button"
+            on:click={exportData}
+            class:jp-async-table-loading={exportLoading}
+            disabled={exportLoading}
+          >
+            {#if exportLoading}
+              <span class="jp-async-table-spinner"></span>
+              {wording.LOADING}
+            {:else}
+              {wording.EXPORT}
             {/if}
-            {#if showExport}
-                &nbsp;
-                {#if !dropdownMenuExport}
-                    <button
-                            type="button"
-                            class="jp-async-table-button"
-                            on:click={exportData}
-                            class:jp-async-table-loading={exportLoading}
-                            disabled={exportLoading}
-                    >
-                        {#if exportLoading}
-                            <span class="jp-async-table-spinner"></span>
-                            {wording.LOADING}
-                        {:else}
-                            {wording.EXPORT}
-                        {/if}
-                    </button>
-                {:else}
-                    <div class="dropdown">
-                        <button class="jp-table-button" on:click={() => isOpen = !isOpen}>Export</button>
-                        {#if isOpen}
-                            <ul class="dropdown-menu" style="background-color: #EFEFEF">
-                                {#each options as option}
-                                    <button class="dropdown-option"
-                                            on:click={() => handleOptionClick(option)}
-                                    >
-                                        {option}
-                                    </button>
-                                {/each}
-                            </ul>
-                        {/if}
-                    </div>
-                {/if}
+          </button>
+        {:else}
+          <div class="jp-async-table-dropdown">
+            <button type="button" class="jp-async-table-button" on:click={() => (isOpen = !isOpen)}>Export</button>
+            {#if isOpen}
+              <ul class="jp-async-table-dropdown-menu">
+                {#each options as option}
+                  <button type="button" class="jp-async-table-dropdown-option" on:click={() => handleOptionClick(option)}>
+                    {option}
+                  </button>
+                {/each}
+              </ul>
             {/if}
-        </div>
-    {/if}
+          </div>
+        {/if}
+      {/if}
+    </div>
+  {/if}
 
-    <div class="jp-async-table-container" style:height>
-        <table>
-            {#if headers}
-                <tr>
-                    {#each headers as header, index}
-                        {#if !header.disabled}<th
-                                class:jp-async-table-sortable={allowArrangeColumns && header.sortable}
-                                class:jp-async-table-sticky-first={freezeFirstColumn && index === 0}
-                                class:jp-async-table-sticky-last={index === headers.length - 1 && freezeLastColumn}
-                                class:jp-async-table-no-cursor={header.key === nameColumnKey}
+  <div class="jp-async-table-container" style:height>
+    <table>
+      {#if headers}
+        <tr>
+          {#each headers as header, index}
+            {#if !header.disabled}<th
+                class:jp-async-table-sortable={allowArrangeColumns && header.sortable}
+                class:jp-async-table-sticky-first={freezeFirstColumn && index === 0}
+                class:jp-async-table-sticky-last={index === headers.length - 1 && freezeLastColumn}
+                class:jp-async-table-no-cursor={header.key === nameColumnKey}
                 style="background-color: {hoveringOverColumnIndex === index
                   ? '#D3D3D3'
-                  : columnColors[index % columnColors.length]};"on:click={() => adjustSort(header)}
-                                draggable={allowArrangeColumns &&
+                  : columnColors[index % columnColors.length]};"
+                on:click={() => adjustSort(header)}
+                draggable={allowArrangeColumns &&
                   !header.disableOrganize &&
                   header.key !== nameColumnKey}
                 on:dragstart={(e) => {
                   if (header.key !== nameColumnKey) dragstart(e, header);
                 }}
-                                on:dragover={(e) => {
+                on:dragover={(e) => {
                   if (header.key !== nameColumnKey) dragover(e, index);
                 }}
                 on:dragleave={() => {
@@ -576,94 +570,101 @@
                 on:drop={(e) => {
                   if (header.key !== nameColumnKey) drop(e, index);
                 }}
-                        >
-              <span
-                      class:jp-async-table-draggable-column={allowArrangeColumns &&
-                      header.key !== nameColumnKey}
-                      tabindex="-1"
-                      role="button"
-                      aria-label="Drag handle"
-                      >
+              >
+                <span
+                  class:jp-async-table-draggable-column={allowArrangeColumns &&
+                    header.key !== nameColumnKey}
+                  tabindex="-1"
+                  role="button"
+                  aria-label="Drag handle"
+                >
                   {#await handleHeader(header) then val}
                     {@html val}
                   {/await}
                 </span>
 
-                            {#if sort?.key === header.key}
-                                <span class="jp-async-table-sortable">{sort.direction === 'asc' ? '↑' : '↓'}</span>
-                            {/if}
-                        </th>{/if}
-                    {/each}
-                </tr>
-            {/if}
-
-            {#if rows}
-                {#each rows as row, ind}
-                    <tr class:jp-async-table-highlight={rowClickable}>
-                        {#each headers as header, index}
-              {#if !header.disabled}
-                            <td
-                                    class:jp-async-table-sortable={allowArrangeColumns && header.sortable}
-                                    class:jp-async-table-sticky-first={freezeFirstColumn && index === 0}
-                                    class:jp-async-table-sticky-last={index === headers.length - 1 && freezeLastColumn}
-                            style="background-color: {hoveringOverColumnIndex === index
-                    ? '#D3D3D3'
-                    : columnColors[index % columnColors.length]};">
-                                {#await handleColumn(header, row, ind) then val}
-                  <span class="jp-async-table-cell">
-                    {@html val}
-                  </span>
-                                {/await}
-                            </td>{/if}
-                        {/each}
-                    </tr>
-                {/each}
-            {/if}
-        </table>
-    </div>
-
-    <div class="jp-async-table-actions">
-        {#if showLoadMore}
-            <button
-                    type="button"
-                    class="jp-async-table-button"
-                    class:jp-async-table-loading={loading}
-                    disabled={!hasMore}
-                    on:click={loadMore}
-            >
-                {#if loading}
-                    <span class="jp-async-table-spinner"></span>
-                    {wording.LOADING}
-                {:else}
-                    {wording.LOAD_MORE}
+                {#if sort?.key === header.key}
+                  <span class="jp-async-table-sortable">{sort.direction === 'asc' ? '↑' : '↓'}</span
+                  >
                 {/if}
-            </button>
+              </th>{/if}
+          {/each}
+        </tr>
+      {/if}
+
+      {#if rows}
+        {#each rows as row, ind}
+          <tr class:jp-async-table-highlight={rowClickable}>
+            {#each headers as header, index}
+              {#if !header.disabled}
+                <td
+                  class:jp-async-table-sortable={allowArrangeColumns && header.sortable}
+                  class:jp-async-table-sticky-first={freezeFirstColumn && index === 0}
+                  class:jp-async-table-sticky-last={index === headers.length - 1 &&
+                    freezeLastColumn}
+                  style="background-color: {hoveringOverColumnIndex === index
+                    ? '#D3D3D3'
+                    : columnColors[index % columnColors.length]};"
+                  on:click={(e) => rowClick(row, index, header, e)}
+                >
+                  {#await handleColumn(header, row, ind) then val}
+                    <span class="jp-async-table-cell">
+                      {@html val}
+                    </span>
+                  {/await}
+                </td>{/if}
+            {/each}
+          </tr>
+        {/each}
+      {/if}
+    </table>
+  </div>
+
+  <div class="jp-async-table-actions">
+    {#if showLoadMore}
+      <button
+        type="button"
+        class="jp-async-table-button"
+        class:jp-async-table-loading={loading}
+        disabled={!hasMore}
+        on:click={loadMore}
+      >
+        {#if loading}
+          <span class="jp-async-table-spinner"></span>
+          {wording.LOADING}
+        {:else}
+          {wording.LOAD_MORE}
         {/if}
-        {#if pageSizes.length > 1}
-            <jp-select
-                    label={wording.PAGE_SIZE}
-                    options={formattedPageSizes}
-                    value={pageSize}
-                    on:value={updatePageSize}
-            ></jp-select>
-        {/if}
-    </div>
+      </button>
+    {/if}
+    {#if pageSizes.length > 1}
+      <jp-select
+        label={wording.PAGE_SIZE}
+        options={formattedPageSizes}
+        value={pageSize}
+        on:value={updatePageSize}
+      ></jp-select>
+    {/if}
+  </div>
 </div>
 
 {#if arrangeColumnDialog}
-    <div class="jp-async-table-arrange-columns-dialog">
-        <!-- svelte-ignore a11y-click-events-have-key-events -->
-        <!-- svelte-ignore a11y-no-static-element-interactions -->
-        <div
-                class="jp-async-table-arrange-columns-dialog-backdrop"
-                on:click={() => (arrangeColumnDialog = false)}
-        ></div>
-        <form class="jp-async-table-arrange-columns-dialog-inner" on:submit|preventDefault={saveColumnArrangement}>
-            <main>
-                {#each arrangementColumns as column, index}
+  <div class="jp-async-table-arrange-columns-dialog">
+    <!-- svelte-ignore a11y-click-events-have-key-events -->
+    <!-- svelte-ignore a11y-no-static-element-interactions -->
+    <div
+      class="jp-async-table-arrange-columns-dialog-backdrop"
+      on:click={() => (arrangeColumnDialog = false)}
+    ></div>
+    <form
+      class="jp-async-table-arrange-columns-dialog-inner"
+      on:submit|preventDefault={saveColumnArrangement}
+    >
+      <main>
+        {#each arrangementColumns as column, index}
           {#if !column.disableToggle}
-                    <label
-                        class="jp-async-table-arrange-column-label"
+            <label
+              class="jp-async-table-arrange-column-label"
               style:background-color={dialogHoveringOverColumnIndex === index
                 ? '#D3D3D3'
                 : columnColors[index % columnColors.length]}
@@ -696,62 +697,29 @@
                   width="24px"
                   fill="#5f6368"><path d="M160-360v-80h640v80H160Zm0-160v-80h640v80H160Z" /></svg
                 >
-              </span><input type="checkbox" value={true} bind:checked={column.enabled}/>
-                        <span>{@html column.label}</span>
-                    </label>{/if}
-                {/each}
-            </main>
+              </span><input type="checkbox" value={true} bind:checked={column.enabled} />
+              <span>{@html column.label}</span>
+            </label>{/if}
+        {/each}
+      </main>
 
-            <footer>
-                <button
-                        type="submit"
-                        class="jp-async-table-button"
-                        class:jp-async-table-loading={saveArrangementLoading}
-                        disabled={saveArrangementLoading}
-                >
-                    {#if loading}
-                        <span class="spinner"></span>
-                        {wording.LOADING}
-                    {:else}
-                        {wording.SAVE}
-                    {/if}
-                </button>
-            </footer>
-        </form>
-    </div>
+      <footer>
+        <button
+          type="submit"
+          class="jp-async-table-button"
+          class:jp-async-table-loading={saveArrangementLoading}
+          disabled={saveArrangementLoading}
+        >
+          {#if loading}
+            <span class="spinner"></span>
+            {wording.LOADING}
+          {:else}
+            {wording.SAVE}
+          {/if}
+        </button>
+      </footer>
+    </form>
+  </div>
 {/if}
 
-<input accept=".csv" bind:this={importFileEl} hidden on:change={importData} type="file"/>
-
-<style>
-    .dropdown {
-        position: relative;
-        display: inline-block;
-    }
-
-    .dropdown-menu {
-        position: absolute;
-        z-index: 5;
-        background-color: #fff;
-        border-radius: 4px;
-        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-        margin-top: 5px;
-        padding: 0;
-        list-style: none;
-        width: 100%;
-    }
-
-    .dropdown-option {
-        padding: 10px 15px;
-        cursor: pointer;
-        border: none;
-        width: 100%;
-        background-color: transparent;
-        transition: background-color 0.3s;
-        text-align: left;
-    }
-
-    .dropdown-option:hover {
-        background-color: #E0E0E0;
-    }
-</style>
+<input accept=".csv" bind:this={importFileEl} hidden on:change={importData} type="file" />

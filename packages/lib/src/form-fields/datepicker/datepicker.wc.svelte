@@ -58,7 +58,7 @@
   );
   let returnDate = formatDisplayDate(selectedDateObject, displayFormat, returnFormatFunction);
   let selectedDates: { year: any; month: any; day: any }[] = [];
-  let date: {year: number; month: number; day: number};
+  let date: { year: number; month: number; day: number };
   let dates: (string | number | Date)[] = [];
   let datePicked: boolean;
   let borderTop = false;

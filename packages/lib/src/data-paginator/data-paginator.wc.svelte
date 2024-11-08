@@ -51,15 +51,15 @@
 </script>
 
 <div class="jp-data-paginator">
-    {itemsPerPageLabel}
+  {itemsPerPageLabel}
   <select bind:value={pageSize} on:change={() => pageSizeHandler()}>
     {#each pageSizeOptions as option (option)}
       <option value={option}>{option}</option>
     {/each}
   </select>
-    {pageIndex * internalPageSize + 1} - {(pageIndex + 1) * internalPageSize}
-    {getRangeLabel}
-    {length}
+  {pageIndex * internalPageSize + 1} - {(pageIndex + 1) * internalPageSize}
+  {getRangeLabel}
+  {length}
   <button type="button" on:click={firstPage} disabled={!pageIndex}>
     {@html firstPageIcon}
   </button>
@@ -104,6 +104,5 @@
         background: rgba(0, 0, 0, 0.08);
       }
     }
-
   }
 </style>

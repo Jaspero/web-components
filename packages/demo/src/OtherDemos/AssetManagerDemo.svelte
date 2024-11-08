@@ -4,7 +4,7 @@
   import '../../../../dist/asset-manager.css';
   import { onMount } from 'svelte';
   import { AMService } from '../asset-manager.service.js';
-  import '../../../lib/src/asset-manager/asset-manager.wc.pcss'
+  import '../../../lib/src/asset-manager/asset-manager.wc.pcss';
 
   let el: HTMLDivElement;
 

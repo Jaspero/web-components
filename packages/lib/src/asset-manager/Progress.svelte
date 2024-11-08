@@ -25,7 +25,7 @@
     if (!asset.uploader) return;
     asset.uploader.pause();
   }
-  
+
   function resume() {
     if (!asset.uploader) return;
     asset.uploader.resume();

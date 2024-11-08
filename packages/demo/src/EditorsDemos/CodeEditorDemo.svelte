@@ -1,7 +1,7 @@
 <script lang="ts">
   import '../../../../dist/code-editor.wc';
   let options = {
-    mode: {name: "javascript", json: true},
+    mode: { name: 'javascript', json: true },
     lineNumbers: true,
     theme: 'default',
     indentUnit: 2

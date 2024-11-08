@@ -10,5 +10,5 @@
 
 <div>
   page size
-  <jp-data-paginator {pageSizeOptions}/>
+  <jp-data-paginator {pageSizeOptions} />
 </div>

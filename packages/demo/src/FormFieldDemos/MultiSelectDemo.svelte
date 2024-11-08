@@ -14,32 +14,36 @@
 
   console.log(JSON.stringify(options));
 </script>
+
 <form>
-<div>
-  <jp-multiselect {options} labelType="outside" label="Label"> </jp-multiselect>
-</div>
+  <div>
+    <jp-multiselect {options} labelType="outside" label="Label"> </jp-multiselect>
+  </div>
 
-<div>
-  <jp-multiselect {options} hint="hint" labelType="inside" label="Label"> </jp-multiselect>
-</div>
-<div>
-  <jp-multiselect {options}> </jp-multiselect>
-</div>
-<div>
-  <jp-multiselect {options} required="true" label="required"> </jp-multiselect>
-</div>
-<div>
-  <jp-multiselect {options} disabled="true" label="disabled"> </jp-multiselect>
-</div>
-<div>
-  <jp-multiselect {options} label="label maxSelects" labelType="outside" maxSelects=4> </jp-multiselect>
-</div>
-<div>
-  <jp-multiselect {options} label="label maxSelects" labelType="inside" maxSelects=4> </jp-multiselect>
-</div>
+  <div>
+    <jp-multiselect {options} hint="hint" labelType="inside" label="Label"> </jp-multiselect>
+  </div>
+  <div>
+    <jp-multiselect {options}> </jp-multiselect>
+  </div>
+  <div>
+    <jp-multiselect {options} required="true" label="required"> </jp-multiselect>
+  </div>
+  <div>
+    <jp-multiselect {options} disabled="true" label="disabled"> </jp-multiselect>
+  </div>
+  <div>
+    <jp-multiselect {options} label="label maxSelects" labelType="outside" maxSelects="4">
+    </jp-multiselect>
+  </div>
+  <div>
+    <jp-multiselect {options} label="label maxSelects" labelType="inside" maxSelects="4">
+    </jp-multiselect>
+  </div>
 
-<button type="submit">submit</button>
+  <button type="submit">submit</button>
 </form>
+
 <style>
   div {
     padding-top: 10px;

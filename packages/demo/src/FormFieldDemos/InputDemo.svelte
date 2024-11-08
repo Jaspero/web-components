@@ -10,10 +10,10 @@
 
 <form>
   <jp-input label="default" />
-  <jp-input label="prefix" prefix="prefix"/>
-  <jp-input label="suffix" suffix="suffix"/>
-  <jp-input label="prefix outside" labelType="outside" prefix="prefix"/>
-  <jp-input label="suffix outside" labelType="outside" suffix="suffix"/>
+  <jp-input label="prefix" prefix="prefix" />
+  <jp-input label="suffix" suffix="suffix" />
+  <jp-input label="prefix outside" labelType="outside" prefix="prefix" />
+  <jp-input label="suffix outside" labelType="outside" suffix="suffix" />
   <jp-input label="label type outside" labelType="outside" />
   <jp-input placeholder="placeholder" />
   <jp-input label="hint" hint="hint" />
@@ -31,7 +31,7 @@
   <jp-input label="type email" type="email" />
   <jp-input label="type tel" type="tel" />
   <jp-input label="type url" type="url" />
-  <jp-input label="type color" type="color"/>
+  <jp-input label="type color" type="color" />
   <jp-input label="pattern 'pattern'" pattern="pattern" />
   <button type="submit">submit</button>
   <jp-input label="" />

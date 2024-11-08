@@ -261,6 +261,37 @@
     cursor: default;
     pointer-events: none;
   }
+
+  &-dropdown {
+    position: relative;
+    display: inline-block;
+
+    &-menu {
+      position: absolute;
+      z-index: 5;
+      background-color: #EFEFEF;
+      border-radius: 4px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+      margin-top: 5px;
+      padding: 0;
+      list-style: none;
+      width: 100%;
+    }
+
+    &-option {
+      padding: 10px 15px;
+      cursor: pointer;
+      border: none;
+      width: 100%;
+      background-color: transparent;
+      transition: background-color 0.3s;
+      text-align: left;
+
+      &:hover {
+        background-color: #e0e0e0;
+      }
+    }
+  }
 }
 
 @keyframes jp-table-spin {

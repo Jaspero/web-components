@@ -73,9 +73,9 @@
     asyncTable.service = {
       get: async () => {
         let rows = [...Array(100).keys()].map(() => ({
-          name: firstNames [Math.floor(Math.random() * 10)],
-          firstName: firstNames [Math.floor(Math.random() * 10)],
-          lastName: lastNames [Math.floor(Math.random() * 10)],
+          name: firstNames[Math.floor(Math.random() * 10)],
+          firstName: firstNames[Math.floor(Math.random() * 10)],
+          lastName: lastNames[Math.floor(Math.random() * 10)],
           gender: gender[Math.floor(Math.random() * 3)],
           height: Math.floor(Math.random() * (200 - 120) + 120),
           age: Math.floor(Math.random() * 100),
