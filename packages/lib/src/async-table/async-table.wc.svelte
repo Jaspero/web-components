@@ -247,7 +247,7 @@
     }
 
     exportLoading = true;
-    activeHeaders = headers.filter((header) => !header.disabled);
+    activeHeaders = headers.filter((header) => !header.disabled && !header.hideOnExport);
 
     const data = await service.export!();
     const resolved = await Promise.all(
@@ -294,21 +294,22 @@
   let hoveringOverColumnIndex: number | null = null;
   let dialogHoveringOverColumnIndex: number | null = null;
 
-  const nameColumnKey = '/name';
-
   function dragstart(event: DragEvent, header: TableHeader) {
-    if (header.disableOrganize || header.key === nameColumnKey) {
+    if (header.disableOrganize) {
       return;
     }
+
     draggingHeaderKey = header.key;
     event.dataTransfer!.setData('text/plain', draggingHeaderKey);
   }
 
   function dragover(event: DragEvent, index: number) {
     event.preventDefault();
-    if (headers[index].key === nameColumnKey) {
+    
+    if (headers[index].disableOrganize) {
       return;
     }
+
     hoveringOverColumnIndex = index;
     dialogHoveringOverColumnIndex = index;
   }
@@ -319,11 +320,14 @@
   }
   async function drop(event: DragEvent, targetIndex: number) {
     event.preventDefault();
-    if (headers[targetIndex].key === nameColumnKey) {
+
+    if (headers[targetIndex].disableOrganize) {
       return;
     }
+
     hoveringOverColumnIndex = null;
     dialogHoveringOverColumnIndex = null;
+    
     const draggedColumnKey = event.dataTransfer!.getData('text/plain');
     const currentIndex = headers.findIndex((header) => header.key === draggedColumnKey);
 
@@ -416,7 +420,7 @@
 
     exportLoading = true;
 
-    activeHeaders = headers.filter((header) => !header.disabled);
+    activeHeaders = headers.filter((header) => !header.disabled && !header.hideOnExport);
     const data = await service.export!();
 
     resolved = await Promise.all(
@@ -550,30 +554,28 @@
                 class:jp-async-table-sortable={allowArrangeColumns && header.sortable}
                 class:jp-async-table-sticky-first={freezeFirstColumn && index === 0}
                 class:jp-async-table-sticky-last={index === headers.length - 1 && freezeLastColumn}
-                class:jp-async-table-no-cursor={header.key === nameColumnKey}
+                class:jp-async-table-no-cursor={header.disableOrganize}
                 style="background-color: {hoveringOverColumnIndex === index
                   ? '#D3D3D3'
                   : columnColors[index % columnColors.length]};"
                 on:click={() => adjustSort(header)}
-                draggable={allowArrangeColumns &&
-                  !header.disableOrganize &&
-                  header.key !== nameColumnKey}
+                draggable={allowArrangeColumns && !header.disableOrganize}
                 on:dragstart={(e) => {
-                  if (header.key !== nameColumnKey) dragstart(e, header);
+                  if (!header.disableOrganize) dragstart(e, header);
                 }}
                 on:dragover={(e) => {
-                  if (header.key !== nameColumnKey) dragover(e, index);
+                  if (!header.disableOrganize) dragover(e, index);
                 }}
                 on:dragleave={() => {
-                  if (header.key !== nameColumnKey) dragleave();
+                  if (!header.disableOrganize) dragleave();
                 }}
                 on:drop={(e) => {
-                  if (header.key !== nameColumnKey) drop(e, index);
+                  if (!header.disableOrganize) drop(e, index);
                 }}
               >
                 <span
                   class:jp-async-table-draggable-column={allowArrangeColumns &&
-                    header.key !== nameColumnKey}
+                    !header.disableOrganize}
                   tabindex="-1"
                   role="button"
                   aria-label="Drag handle"
@@ -673,21 +675,21 @@
               <span
                 class="jp-async-table-material-symbols-outlined drag-handle"
                 draggable="true"
-                class:jp-async-table-no-cursor={column.key === nameColumnKey}
-                style="cursor: {column.key === nameColumnKey
+                class:jp-async-table-no-cursor={column.disableOrganize}
+                style="cursor: {column.disableOrganize
                   ? 'default'
-                  : 'grab'}; pointer-events: {column.key === nameColumnKey ? 'none' : 'auto'};"
+                  : 'grab'}; pointer-events: {column.disableOrganize ? 'none' : 'auto'};"
                 on:dragstart={(e) => {
-                  if (column.key !== nameColumnKey) dragstart(e, column);
+                  if (!column.disableOrganize) dragstart(e, column);
                 }}
                 on:dragover={(e) => {
-                  if (column.key !== nameColumnKey) dragover(e, index);
+                  if (!column.disableOrganize) dragover(e, index);
                 }}
                 on:dragleave={() => {
-                  if (column.key !== nameColumnKey) dragleave();
+                  if (!column.disableOrganize) dragleave();
                 }}
                 on:drop={(e) => {
-                  if (column.key !== nameColumnKey) drop(e, index);
+                  if (!column.disableOrganize) drop(e, index);
                 }}
               >
                 <svg
