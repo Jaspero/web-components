@@ -46,14 +46,14 @@
   import Demos from './Demos.svelte';
 </script>
 
-<AssetManagerDemo />
+<!-- <AssetManagerDemo /> -->
 <!-- <MultiSearchDemo /> -->
 <!--<ChipsDemo/>-->
 <!-- <AsyncTableDemo />-->
 <!-- <MultiSelectDemo /> -->
 <!-- <FileListDemo /> -->
 <!-- <Demos /> -->
-<!-- <InputDemo /> -->
+<InputDemo />
 <!-- <ImageGalleryDemo /> -->
 <!-- <DateRangeDemo /> -->
 <!-- <CkEditorDemo /> -->
