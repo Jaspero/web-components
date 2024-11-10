@@ -1,5 +1,6 @@
 <script lang="ts">
   import '../../lib/src/index.css';
+  import './style.css';
   //FORM FIELDS
   import AutocompleteDemo from './FormFieldDemos/AutocompleteDemo.svelte';
   import CheckboxDemo from './FormFieldDemos/CheckboxDemo.svelte';
@@ -48,7 +49,7 @@
 
 <!-- <AssetManagerDemo /> -->
 <!-- <MultiSearchDemo /> -->
-<!--<ChipsDemo/>-->
+<ChipsDemo/>
 <!-- <AsyncTableDemo />-->
 <!-- <MultiSelectDemo /> -->
 <!-- <FileListDemo /> -->

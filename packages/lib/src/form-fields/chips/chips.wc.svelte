@@ -179,6 +179,7 @@
         type="text"
         class="jp-chips-field-container-input"
         class:jp-chips-field-disabled={disabled}
+        disabled={disabled}
         {placeholder}
         on:focus={() => (inputFocused = true)}
         on:blur={() => {
