@@ -35,9 +35,10 @@
   let filterName = '';
   let filterGender = '';
   let filterAge: number | null = null;
-
+  /*values are set by random function, so sort and filter doesnt work properly*/
   onMount(() => {
     const asyncTable = document.createElement('jp-async-table') as any;
+    asyncTable.dropdownMenuExport = true;
     asyncTable.headers = [
       {
         key: '/name',
