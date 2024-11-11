@@ -431,12 +431,6 @@
       {displayValue || ''}
     </span>
 
-    <span
-      class={`jp-multisearch-select-option ${labelType == 'outside' || !label ? '' : 'jp-multisearch-select-option-padding'}`}
-    >
-      {displayValue || ''}
-    </span>
-
     <ArrowRotate {open} />
   </button>
 
