@@ -1,13 +1,14 @@
-import React, { useState } from 'react';
+import React, {useState} from 'react';
 import Link from '@docusaurus/Link';
 import useDocusaurusContext from '@docusaurus/useDocusaurusContext';
 import Layout from '@theme/Layout';
 import styles from './index.module.css';
 import useBaseUrl from '@docusaurus/useBaseUrl';
 import {Accessibility} from 'accessibility';
+import ExecutionEnvironment from '@docusaurus/ExecutionEnvironment';
 
 export default function Home() {
-  const { siteConfig } = useDocusaurusContext();
+  const {siteConfig} = useDocusaurusContext();
 
   const [isCopied, setIsCopied] = useState(false);
 
@@ -23,6 +24,7 @@ export default function Home() {
     });
   };
 
+  if (ExecutionEnvironment.canUseDOM) {
     new Accessibility({
       language: {
         textToSpeechLang: 'en',
@@ -45,19 +47,19 @@ export default function Home() {
         disableAnimations: true
       }
     });
-
+  
     const style = document.createElement('style');
     style.innerHTML = `
-      body {
-          --_access-icon-top: 100px;
-          --_access-icon-right: 0px;
-          --_access-icon-bg: var(--secondary-color);
-          /* --_access-icon-right: unset; */
-          /* --_access-icon-bottom: unset; */
-      }
-    `;
+        body {
+            --_access-icon-top: 100px;
+            --_access-icon-right: 0px;
+            --_access-icon-bg: var(--secondary-color);
+            /* --_access-icon-right: unset; */
+            /* --_access-icon-bottom: unset; */
+        }
+      `;
     document.head.appendChild(style);
-
+  }
 
   return (
     <Layout
@@ -75,7 +77,7 @@ export default function Home() {
               </Link>
             </div>
 
-            <img src={useBaseUrl('/img/logo.svg')} alt="logo"/>
+            <img src={useBaseUrl('/img/logo.svg')} alt="logo" />
           </div>
         </div>
         <div className={styles.heroLower}>
