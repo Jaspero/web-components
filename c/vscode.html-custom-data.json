@@ -5,10 +5,7 @@
     {
       "name": "jp-accordion",
       "description": "\n---\n",
-      "attributes": [
-        { "name": "multiple", "values": [] },
-        { "name": "label", "values": [] }
-      ],
+      "attributes": [{ "name": "multiple", "values": [] }],
       "references": []
     },
     {
@@ -32,29 +29,9 @@
         { "name": "shownFiles", "values": [] },
         { "name": "service", "values": [] },
         { "name": "selectable", "values": [] },
-        { "name": "clearSelection", "values": [] },
-        { "name": "attachedInternals", "values": [] },
-        { "name": "id", "values": [] },
-        { "name": "value", "values": [] },
-        { "name": "label", "values": [] },
-        { "name": "labelType", "values": [] },
-        { "name": "hint", "values": [] },
-        { "name": "disabled", "values": [] },
-        { "name": "name", "values": [] },
-        { "name": "placeholder", "values": [] },
-        { "name": "inputFocused", "values": [] },
-        { "name": "rows", "values": [] },
-        { "name": "required", "values": [] },
-        { "name": "readonly", "values": [] },
-        { "name": "minlength", "values": [] },
-        { "name": "maxlength", "values": [] },
-        { "name": "getValue", "values": [] },
-        { "name": "validationMessages", "values": [] },
-        { "name": "requiredValidationMessage", "values": [] },
-        { "name": "minlengthValidationMessage", "values": [] },
-        { "name": "maxlengthValidationMessage", "values": [] },
-        { "name": "patternValidationMessage", "values": [] },
-        { "name": "reportValidity", "values": [] }
+        { "name": "minSelected", "values": [] },
+        { "name": "maxSelected", "values": [] },
+        { "name": "clearSelection", "values": [] }
       ],
       "references": []
     },
@@ -72,6 +49,7 @@
         { "name": "rowClickable", "values": [] },
         { "name": "headers", "values": [] },
         { "name": "pageSizes", "values": [] },
+        { "name": "dropdownMenuExport", "values": [] },
         { "name": "pageSize", "values": [] },
         { "name": "sort", "values": [] },
         { "name": "service", "values": [] },
@@ -173,14 +151,7 @@
         { "name": "label", "values": [] },
         { "name": "required", "values": [] },
         { "name": "getValue", "values": [] },
-        { "name": "reportValidity", "values": [] },
-        { "name": "disabled", "values": [] },
-        { "name": "id", "values": [] },
-        { "name": "max", "values": [] },
-        { "name": "min", "values": [] },
-        { "name": "step", "values": [] },
-        { "name": "name", "values": [] },
-        { "name": "discrete", "values": [] }
+        { "name": "reportValidity", "values": [] }
       ],
       "references": []
     },
@@ -232,12 +203,7 @@
         { "name": "validationMessages", "values": [] },
         { "name": "requiredValidationMessage", "values": [] },
         { "name": "getValue", "values": [] },
-        { "name": "save", "values": [] },
-        { "name": "title", "values": [] },
-        { "name": "message", "values": [] },
-        { "name": "reject", "values": [] },
-        { "name": "accept", "values": [] },
-        { "name": "closable", "values": [] }
+        { "name": "save", "values": [] }
       ],
       "references": []
     },
@@ -252,9 +218,14 @@
         { "name": "value", "values": [] },
         { "name": "options", "values": [] },
         { "name": "getValue", "values": [] },
-        { "name": "title", "values": [] },
-        { "name": "message", "values": [] },
-        { "name": "state", "values": [] }
+        { "name": "starsInput", "values": [] },
+        { "name": "indicator", "values": [] },
+        { "name": "style", "values": [] },
+        { "name": "determinate", "values": [] },
+        { "name": "progress", "values": [] },
+        { "name": "radius", "values": [] },
+        { "name": "stroke", "values": [] },
+        { "name": "color", "values": [] }
       ],
       "references": []
     },
@@ -402,7 +373,8 @@
         { "name": "columnCountTable", "values": [] },
         { "name": "columnCountMobile", "values": [] },
         { "name": "gapX", "values": [] },
-        { "name": "gapY", "values": [] }
+        { "name": "gapY", "values": [] },
+        { "name": "enableGallery", "values": [] }
       ],
       "references": []
     },
@@ -504,16 +476,7 @@
         { "name": "singleSelect", "values": [] },
         { "name": "defaultSearch", "values": [] },
         { "name": "defaultShow", "values": [] },
-        { "name": "reportValidity", "values": [] },
-        { "name": "placeholder", "values": [] },
-        { "name": "inputFocused", "values": [] },
-        { "name": "rows", "values": [] },
-        { "name": "readonly", "values": [] },
-        { "name": "minlength", "values": [] },
-        { "name": "maxlength", "values": [] },
-        { "name": "minlengthValidationMessage", "values": [] },
-        { "name": "maxlengthValidationMessage", "values": [] },
-        { "name": "patternValidationMessage", "values": [] }
+        { "name": "reportValidity", "values": [] }
       ],
       "references": []
     },
@@ -655,12 +618,7 @@
         { "name": "requiredValidationMessage", "values": [] },
         { "name": "label", "values": [] },
         { "name": "getValue", "values": [] },
-        { "name": "reportValidity", "values": [] },
-        { "name": "title", "values": [] },
-        { "name": "message", "values": [] },
-        { "name": "reject", "values": [] },
-        { "name": "accept", "values": [] },
-        { "name": "closable", "values": [] }
+        { "name": "reportValidity", "values": [] }
       ],
       "references": []
     },
@@ -689,7 +647,12 @@
         { "name": "value", "values": [] },
         { "name": "starsInput", "values": [] },
         { "name": "indicator", "values": [] },
-        { "name": "style", "values": [] }
+        { "name": "style", "values": [] },
+        { "name": "determinate", "values": [] },
+        { "name": "progress", "values": [] },
+        { "name": "radius", "values": [] },
+        { "name": "stroke", "values": [] },
+        { "name": "color", "values": [] }
       ],
       "references": []
     },
@@ -722,16 +685,7 @@
         { "name": "maxselectsValidationMessage", "values": [] },
         { "name": "singleSelect", "values": [] },
         { "name": "defaultSearch", "values": [] },
-        { "name": "defaultShow", "values": [] },
-        { "name": "placeholder", "values": [] },
-        { "name": "inputFocused", "values": [] },
-        { "name": "rows", "values": [] },
-        { "name": "readonly", "values": [] },
-        { "name": "minlength", "values": [] },
-        { "name": "maxlength", "values": [] },
-        { "name": "minlengthValidationMessage", "values": [] },
-        { "name": "maxlengthValidationMessage", "values": [] },
-        { "name": "patternValidationMessage", "values": [] }
+        { "name": "defaultShow", "values": [] }
       ],
       "references": []
     },
@@ -787,7 +741,16 @@
       "attributes": [
         { "name": "tab", "values": [] },
         { "name": "next", "values": [] },
-        { "name": "previous", "values": [] }
+        { "name": "previous", "values": [] },
+        { "name": "value", "values": [] },
+        { "name": "starsInput", "values": [] },
+        { "name": "indicator", "values": [] },
+        { "name": "style", "values": [] },
+        { "name": "determinate", "values": [] },
+        { "name": "progress", "values": [] },
+        { "name": "radius", "values": [] },
+        { "name": "stroke", "values": [] },
+        { "name": "color", "values": [] }
       ],
       "references": []
     },
@@ -833,8 +796,7 @@
         { "name": "size", "values": [] },
         { "name": "disabled", "values": [] },
         { "name": "getValue", "values": [] },
-        { "name": "reportValidity", "values": [] },
-        { "name": "mode", "values": [] }
+        { "name": "reportValidity", "values": [] }
       ],
       "references": []
     },

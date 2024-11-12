@@ -12,6 +12,7 @@ export interface TableService<T = any> {
         key: string;
         disabled?: boolean;
     }>) => Promise<void>;
+    additionalExportTypes?: () => Promise<T[]>;
     getColumnOrder?: (id: string) => Promise<Array<{
         key: string;
         disabled?: boolean;

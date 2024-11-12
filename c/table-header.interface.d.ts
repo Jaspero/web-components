@@ -10,6 +10,7 @@ export interface TableHeader {
     disableOrganize?: boolean;
     disableToggle?: boolean;
     disabled?: boolean;
+    hideOnExport?: boolean;
     /**
      * @description
      * Used when formatting values for export. If nothing is provided we use pipes and fallback.

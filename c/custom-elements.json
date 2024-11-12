@@ -14,28 +14,12 @@
             {
               "kind": "field",
               "name": "multiple"
-            },
-            {
-              "kind": "field",
-              "name": "label",
-              "inheritedFrom": {
-                "name": "m",
-                "module": "dist/menu.wc.js"
-              }
             }
           ],
           "attributes": [
             {
               "name": "multiple",
               "fieldName": "multiple"
-            },
-            {
-              "name": "label",
-              "fieldName": "label",
-              "inheritedFrom": {
-                "name": "m",
-                "module": "dist/menu.wc.js"
-              }
             }
           ],
           "superclass": {
@@ -102,7 +86,7 @@
             }
           ],
           "superclass": {
-            "name": "_",
+            "name": "q",
             "module": "/dist/svelte.js"
           },
           "tagName": "jp-alert",
@@ -135,7 +119,7 @@
         {
           "kind": "class",
           "description": "",
-          "name": "fe",
+          "name": "Ye",
           "members": [
             {
               "kind": "field",
@@ -167,186 +151,16 @@
             },
             {
               "kind": "field",
+              "name": "minSelected"
+            },
+            {
+              "kind": "field",
+              "name": "maxSelected"
+            },
+            {
+              "kind": "field",
               "name": "clearSelection",
               "readonly": true
-            },
-            {
-              "kind": "field",
-              "name": "attachedInternals",
-              "inheritedFrom": {
-                "name": "Y",
-                "module": "dist/textarea.wc.js"
-              }
-            },
-            {
-              "kind": "field",
-              "name": "id",
-              "inheritedFrom": {
-                "name": "Y",
-                "module": "dist/textarea.wc.js"
-              }
-            },
-            {
-              "kind": "field",
-              "name": "value",
-              "inheritedFrom": {
-                "name": "Y",
-                "module": "dist/textarea.wc.js"
-              }
-            },
-            {
-              "kind": "field",
-              "name": "label",
-              "inheritedFrom": {
-                "name": "Y",
-                "module": "dist/textarea.wc.js"
-              }
-            },
-            {
-              "kind": "field",
-              "name": "labelType",
-              "inheritedFrom": {
-                "name": "Y",
-                "module": "dist/textarea.wc.js"
-              }
-            },
-            {
-              "kind": "field",
-              "name": "hint",
-              "inheritedFrom": {
-                "name": "Y",
-                "module": "dist/textarea.wc.js"
-              }
-            },
-            {
-              "kind": "field",
-              "name": "disabled",
-              "inheritedFrom": {
-                "name": "Y",
-                "module": "dist/textarea.wc.js"
-              }
-            },
-            {
-              "kind": "field",
-              "name": "name",
-              "inheritedFrom": {
-                "name": "Y",
-                "module": "dist/textarea.wc.js"
-              }
-            },
-            {
-              "kind": "field",
-              "name": "placeholder",
-              "inheritedFrom": {
-                "name": "Y",
-                "module": "dist/textarea.wc.js"
-              }
-            },
-            {
-              "kind": "field",
-              "name": "inputFocused",
-              "inheritedFrom": {
-                "name": "Y",
-                "module": "dist/textarea.wc.js"
-              }
-            },
-            {
-              "kind": "field",
-              "name": "rows",
-              "inheritedFrom": {
-                "name": "Y",
-                "module": "dist/textarea.wc.js"
-              }
-            },
-            {
-              "kind": "field",
-              "name": "required",
-              "inheritedFrom": {
-                "name": "Y",
-                "module": "dist/textarea.wc.js"
-              }
-            },
-            {
-              "kind": "field",
-              "name": "readonly",
-              "inheritedFrom": {
-                "name": "Y",
-                "module": "dist/textarea.wc.js"
-              }
-            },
-            {
-              "kind": "field",
-              "name": "minlength",
-              "inheritedFrom": {
-                "name": "Y",
-                "module": "dist/textarea.wc.js"
-              }
-            },
-            {
-              "kind": "field",
-              "name": "maxlength",
-              "inheritedFrom": {
-                "name": "Y",
-                "module": "dist/textarea.wc.js"
-              }
-            },
-            {
-              "kind": "field",
-              "name": "getValue",
-              "readonly": true,
-              "inheritedFrom": {
-                "name": "Y",
-                "module": "dist/textarea.wc.js"
-              }
-            },
-            {
-              "kind": "field",
-              "name": "validationMessages",
-              "inheritedFrom": {
-                "name": "Y",
-                "module": "dist/textarea.wc.js"
-              }
-            },
-            {
-              "kind": "field",
-              "name": "requiredValidationMessage",
-              "inheritedFrom": {
-                "name": "Y",
-                "module": "dist/textarea.wc.js"
-              }
-            },
-            {
-              "kind": "field",
-              "name": "minlengthValidationMessage",
-              "inheritedFrom": {
-                "name": "Y",
-                "module": "dist/textarea.wc.js"
-              }
-            },
-            {
-              "kind": "field",
-              "name": "maxlengthValidationMessage",
-              "inheritedFrom": {
-                "name": "Y",
-                "module": "dist/textarea.wc.js"
-              }
-            },
-            {
-              "kind": "field",
-              "name": "patternValidationMessage",
-              "inheritedFrom": {
-                "name": "Y",
-                "module": "dist/textarea.wc.js"
-              }
-            },
-            {
-              "kind": "field",
-              "name": "reportValidity",
-              "readonly": true,
-              "inheritedFrom": {
-                "name": "Y",
-                "module": "dist/textarea.wc.js"
-              }
             }
           ],
           "attributes": [
@@ -379,188 +193,20 @@
               "fieldName": "selectable"
             },
             {
+              "name": "minSelected",
+              "fieldName": "minSelected"
+            },
+            {
+              "name": "maxSelected",
+              "fieldName": "maxSelected"
+            },
+            {
               "name": "clearSelection",
               "fieldName": "clearSelection"
-            },
-            {
-              "name": "attachedInternals",
-              "fieldName": "attachedInternals",
-              "inheritedFrom": {
-                "name": "Y",
-                "module": "dist/textarea.wc.js"
-              }
-            },
-            {
-              "name": "id",
-              "fieldName": "id",
-              "inheritedFrom": {
-                "name": "Y",
-                "module": "dist/textarea.wc.js"
-              }
-            },
-            {
-              "name": "value",
-              "fieldName": "value",
-              "inheritedFrom": {
-                "name": "Y",
-                "module": "dist/textarea.wc.js"
-              }
-            },
-            {
-              "name": "label",
-              "fieldName": "label",
-              "inheritedFrom": {
-                "name": "Y",
-                "module": "dist/textarea.wc.js"
-              }
-            },
-            {
-              "name": "labelType",
-              "fieldName": "labelType",
-              "inheritedFrom": {
-                "name": "Y",
-                "module": "dist/textarea.wc.js"
-              }
-            },
-            {
-              "name": "hint",
-              "fieldName": "hint",
-              "inheritedFrom": {
-                "name": "Y",
-                "module": "dist/textarea.wc.js"
-              }
-            },
-            {
-              "name": "disabled",
-              "fieldName": "disabled",
-              "inheritedFrom": {
-                "name": "Y",
-                "module": "dist/textarea.wc.js"
-              }
-            },
-            {
-              "name": "name",
-              "fieldName": "name",
-              "inheritedFrom": {
-                "name": "Y",
-                "module": "dist/textarea.wc.js"
-              }
-            },
-            {
-              "name": "placeholder",
-              "fieldName": "placeholder",
-              "inheritedFrom": {
-                "name": "Y",
-                "module": "dist/textarea.wc.js"
-              }
-            },
-            {
-              "name": "inputFocused",
-              "fieldName": "inputFocused",
-              "inheritedFrom": {
-                "name": "Y",
-                "module": "dist/textarea.wc.js"
-              }
-            },
-            {
-              "name": "rows",
-              "fieldName": "rows",
-              "inheritedFrom": {
-                "name": "Y",
-                "module": "dist/textarea.wc.js"
-              }
-            },
-            {
-              "name": "required",
-              "fieldName": "required",
-              "inheritedFrom": {
-                "name": "Y",
-                "module": "dist/textarea.wc.js"
-              }
-            },
-            {
-              "name": "readonly",
-              "fieldName": "readonly",
-              "inheritedFrom": {
-                "name": "Y",
-                "module": "dist/textarea.wc.js"
-              }
-            },
-            {
-              "name": "minlength",
-              "fieldName": "minlength",
-              "inheritedFrom": {
-                "name": "Y",
-                "module": "dist/textarea.wc.js"
-              }
-            },
-            {
-              "name": "maxlength",
-              "fieldName": "maxlength",
-              "inheritedFrom": {
-                "name": "Y",
-                "module": "dist/textarea.wc.js"
-              }
-            },
-            {
-              "name": "getValue",
-              "fieldName": "getValue",
-              "inheritedFrom": {
-                "name": "Y",
-                "module": "dist/textarea.wc.js"
-              }
-            },
-            {
-              "name": "validationMessages",
-              "fieldName": "validationMessages",
-              "inheritedFrom": {
-                "name": "Y",
-                "module": "dist/textarea.wc.js"
-              }
-            },
-            {
-              "name": "requiredValidationMessage",
-              "fieldName": "requiredValidationMessage",
-              "inheritedFrom": {
-                "name": "Y",
-                "module": "dist/textarea.wc.js"
-              }
-            },
-            {
-              "name": "minlengthValidationMessage",
-              "fieldName": "minlengthValidationMessage",
-              "inheritedFrom": {
-                "name": "Y",
-                "module": "dist/textarea.wc.js"
-              }
-            },
-            {
-              "name": "maxlengthValidationMessage",
-              "fieldName": "maxlengthValidationMessage",
-              "inheritedFrom": {
-                "name": "Y",
-                "module": "dist/textarea.wc.js"
-              }
-            },
-            {
-              "name": "patternValidationMessage",
-              "fieldName": "patternValidationMessage",
-              "inheritedFrom": {
-                "name": "Y",
-                "module": "dist/textarea.wc.js"
-              }
-            },
-            {
-              "name": "reportValidity",
-              "fieldName": "reportValidity",
-              "inheritedFrom": {
-                "name": "Y",
-                "module": "dist/textarea.wc.js"
-              }
             }
           ],
           "superclass": {
-            "name": "Y",
+            "name": "ie",
             "module": "/dist/svelte.js"
           },
           "tagName": "jp-asset-manager",
@@ -580,7 +226,7 @@
           "kind": "js",
           "name": "default",
           "declaration": {
-            "name": "fe",
+            "name": "Ye",
             "module": "dist/asset-manager.wc.js"
           }
         }
@@ -593,7 +239,7 @@
         {
           "kind": "class",
           "description": "",
-          "name": "_e",
+          "name": "Qe",
           "members": [
             {
               "kind": "field",
@@ -634,6 +280,10 @@
             {
               "kind": "field",
               "name": "pageSizes"
+            },
+            {
+              "kind": "field",
+              "name": "dropdownMenuExport"
             },
             {
               "kind": "field",
@@ -729,6 +379,10 @@
               "fieldName": "pageSizes"
             },
             {
+              "name": "dropdownMenuExport",
+              "fieldName": "dropdownMenuExport"
+            },
+            {
               "name": "pageSize",
               "fieldName": "pageSize"
             },
@@ -778,7 +432,7 @@
             }
           ],
           "superclass": {
-            "name": "dn",
+            "name": "Ot",
             "module": "/dist/svelte.js"
           },
           "tagName": "jp-async-table",
@@ -798,7 +452,7 @@
           "kind": "js",
           "name": "default",
           "declaration": {
-            "name": "_e",
+            "name": "Qe",
             "module": "dist/async-table.wc.js"
           }
         }
@@ -1261,7 +915,7 @@
         {
           "kind": "class",
           "description": "",
-          "name": "$",
+          "name": "h",
           "members": [
             {
               "kind": "field",
@@ -1275,7 +929,7 @@
             }
           ],
           "superclass": {
-            "name": "w",
+            "name": "$",
             "module": "/dist/svelte.js"
           },
           "tagName": "jp-bellow",
@@ -1295,7 +949,7 @@
           "kind": "js",
           "name": "default",
           "declaration": {
-            "name": "$",
+            "name": "h",
             "module": "dist/bellow.wc.js"
           }
         }
@@ -1354,7 +1008,7 @@
             }
           ],
           "superclass": {
-            "name": "w",
+            "name": "x",
             "module": "/dist/svelte.js"
           },
           "tagName": "jp-button",
@@ -1441,7 +1095,7 @@
             }
           ],
           "superclass": {
-            "name": "_",
+            "name": "q",
             "module": "/dist/svelte.js"
           },
           "tagName": "jp-carousel",
@@ -1482,11 +1136,7 @@
             },
             {
               "kind": "field",
-              "name": "value",
-              "inheritedFrom": {
-                "name": "N",
-                "module": "dist/range.wc.js"
-              }
+              "name": "value"
             },
             {
               "kind": "field",
@@ -1518,89 +1168,21 @@
             },
             {
               "kind": "field",
-              "name": "label",
-              "inheritedFrom": {
-                "name": "N",
-                "module": "dist/range.wc.js"
-              }
+              "name": "label"
             },
             {
               "kind": "field",
-              "name": "required",
-              "inheritedFrom": {
-                "name": "N",
-                "module": "dist/range.wc.js"
-              }
+              "name": "required"
             },
             {
               "kind": "field",
               "name": "getValue",
-              "readonly": true,
-              "inheritedFrom": {
-                "name": "N",
-                "module": "dist/range.wc.js"
-              }
+              "readonly": true
             },
             {
               "kind": "field",
               "name": "reportValidity",
               "readonly": true
-            },
-            {
-              "kind": "field",
-              "name": "disabled",
-              "inheritedFrom": {
-                "name": "N",
-                "module": "dist/range.wc.js"
-              }
-            },
-            {
-              "kind": "field",
-              "name": "id",
-              "inheritedFrom": {
-                "name": "N",
-                "module": "dist/range.wc.js"
-              }
-            },
-            {
-              "kind": "field",
-              "name": "max",
-              "inheritedFrom": {
-                "name": "N",
-                "module": "dist/range.wc.js"
-              }
-            },
-            {
-              "kind": "field",
-              "name": "min",
-              "inheritedFrom": {
-                "name": "N",
-                "module": "dist/range.wc.js"
-              }
-            },
-            {
-              "kind": "field",
-              "name": "step",
-              "inheritedFrom": {
-                "name": "N",
-                "module": "dist/range.wc.js"
-              }
-            },
-            {
-              "kind": "field",
-              "name": "name",
-              "inheritedFrom": {
-                "name": "N",
-                "module": "dist/range.wc.js"
-              }
-            },
-            {
-              "kind": "field",
-              "name": "discrete",
-              "inheritedFrom": {
-                "name": "N",
-                "module": "dist/range.wc.js"
-              }
             }
           ],
           "attributes": [
@@ -1610,11 +1192,7 @@
             },
             {
               "name": "value",
-              "fieldName": "value",
-              "inheritedFrom": {
-                "name": "N",
-                "module": "dist/range.wc.js"
-              }
+              "fieldName": "value"
             },
             {
               "name": "options",
@@ -1646,87 +1224,19 @@
             },
             {
               "name": "label",
-              "fieldName": "label",
-              "inheritedFrom": {
-                "name": "N",
-                "module": "dist/range.wc.js"
-              }
+              "fieldName": "label"
             },
             {
               "name": "required",
-              "fieldName": "required",
-              "inheritedFrom": {
-                "name": "N",
-                "module": "dist/range.wc.js"
-              }
+              "fieldName": "required"
             },
             {
               "name": "getValue",
-              "fieldName": "getValue",
-              "inheritedFrom": {
-                "name": "N",
-                "module": "dist/range.wc.js"
-              }
+              "fieldName": "getValue"
             },
             {
               "name": "reportValidity",
               "fieldName": "reportValidity"
-            },
-            {
-              "name": "disabled",
-              "fieldName": "disabled",
-              "inheritedFrom": {
-                "name": "N",
-                "module": "dist/range.wc.js"
-              }
-            },
-            {
-              "name": "id",
-              "fieldName": "id",
-              "inheritedFrom": {
-                "name": "N",
-                "module": "dist/range.wc.js"
-              }
-            },
-            {
-              "name": "max",
-              "fieldName": "max",
-              "inheritedFrom": {
-                "name": "N",
-                "module": "dist/range.wc.js"
-              }
-            },
-            {
-              "name": "min",
-              "fieldName": "min",
-              "inheritedFrom": {
-                "name": "N",
-                "module": "dist/range.wc.js"
-              }
-            },
-            {
-              "name": "step",
-              "fieldName": "step",
-              "inheritedFrom": {
-                "name": "N",
-                "module": "dist/range.wc.js"
-              }
-            },
-            {
-              "name": "name",
-              "fieldName": "name",
-              "inheritedFrom": {
-                "name": "N",
-                "module": "dist/range.wc.js"
-              }
-            },
-            {
-              "name": "discrete",
-              "fieldName": "discrete",
-              "inheritedFrom": {
-                "name": "N",
-                "module": "dist/range.wc.js"
-              }
             }
           ],
           "superclass": {
@@ -1763,7 +1273,7 @@
         {
           "kind": "class",
           "description": "",
-          "name": "Y",
+          "name": "X",
           "members": [
             {
               "kind": "field",
@@ -1983,7 +1493,7 @@
           "kind": "js",
           "name": "default",
           "declaration": {
-            "name": "Y",
+            "name": "X",
             "module": "dist/chips.wc.js"
           }
         }
@@ -2055,46 +1565,6 @@
               "kind": "field",
               "name": "save",
               "readonly": true
-            },
-            {
-              "kind": "field",
-              "name": "title",
-              "inheritedFrom": {
-                "name": "E",
-                "module": "dist/confirm.wc.js"
-              }
-            },
-            {
-              "kind": "field",
-              "name": "message",
-              "inheritedFrom": {
-                "name": "E",
-                "module": "dist/confirm.wc.js"
-              }
-            },
-            {
-              "kind": "field",
-              "name": "reject",
-              "inheritedFrom": {
-                "name": "E",
-                "module": "dist/confirm.wc.js"
-              }
-            },
-            {
-              "kind": "field",
-              "name": "accept",
-              "inheritedFrom": {
-                "name": "E",
-                "module": "dist/confirm.wc.js"
-              }
-            },
-            {
-              "kind": "field",
-              "name": "closable",
-              "inheritedFrom": {
-                "name": "E",
-                "module": "dist/confirm.wc.js"
-              }
             }
           ],
           "attributes": [
@@ -2153,46 +1623,6 @@
             {
               "name": "save",
               "fieldName": "save"
-            },
-            {
-              "name": "title",
-              "fieldName": "title",
-              "inheritedFrom": {
-                "name": "E",
-                "module": "dist/confirm.wc.js"
-              }
-            },
-            {
-              "name": "message",
-              "fieldName": "message",
-              "inheritedFrom": {
-                "name": "E",
-                "module": "dist/confirm.wc.js"
-              }
-            },
-            {
-              "name": "reject",
-              "fieldName": "reject",
-              "inheritedFrom": {
-                "name": "E",
-                "module": "dist/confirm.wc.js"
-              }
-            },
-            {
-              "name": "accept",
-              "fieldName": "accept",
-              "inheritedFrom": {
-                "name": "E",
-                "module": "dist/confirm.wc.js"
-              }
-            },
-            {
-              "name": "closable",
-              "fieldName": "closable",
-              "inheritedFrom": {
-                "name": "E",
-                "module": "dist/confirm.wc.js"
-              }
             }
           ],
           "superclass": {
@@ -2249,7 +1679,11 @@
             },
             {
               "kind": "field",
-              "name": "value"
+              "name": "value",
+              "inheritedFrom": {
+                "name": "K",
+                "module": "dist/review-stars.wc.js"
+              }
             },
             {
               "kind": "field",
@@ -2262,26 +1696,66 @@
             },
             {
               "kind": "field",
-              "name": "title",
+              "name": "starsInput",
               "inheritedFrom": {
-                "name": "S",
-                "module": "dist/alert.wc.js"
+                "name": "K",
+                "module": "dist/review-stars.wc.js"
               }
             },
             {
               "kind": "field",
-              "name": "message",
+              "name": "indicator",
               "inheritedFrom": {
-                "name": "S",
-                "module": "dist/alert.wc.js"
+                "name": "K",
+                "module": "dist/review-stars.wc.js"
               }
             },
             {
               "kind": "field",
-              "name": "state",
+              "name": "style",
               "inheritedFrom": {
-                "name": "S",
-                "module": "dist/alert.wc.js"
+                "name": "K",
+                "module": "dist/review-stars.wc.js"
+              }
+            },
+            {
+              "kind": "field",
+              "name": "determinate",
+              "inheritedFrom": {
+                "name": "R",
+                "module": "dist/progress-spinner.wc.js"
+              }
+            },
+            {
+              "kind": "field",
+              "name": "progress",
+              "inheritedFrom": {
+                "name": "R",
+                "module": "dist/progress-spinner.wc.js"
+              }
+            },
+            {
+              "kind": "field",
+              "name": "radius",
+              "inheritedFrom": {
+                "name": "R",
+                "module": "dist/progress-spinner.wc.js"
+              }
+            },
+            {
+              "kind": "field",
+              "name": "stroke",
+              "inheritedFrom": {
+                "name": "R",
+                "module": "dist/progress-spinner.wc.js"
+              }
+            },
+            {
+              "kind": "field",
+              "name": "color",
+              "inheritedFrom": {
+                "name": "R",
+                "module": "dist/progress-spinner.wc.js"
               }
             }
           ],
@@ -2304,7 +1778,11 @@
             },
             {
               "name": "value",
-              "fieldName": "value"
+              "fieldName": "value",
+              "inheritedFrom": {
+                "name": "K",
+                "module": "dist/review-stars.wc.js"
+              }
             },
             {
               "name": "options",
@@ -2315,27 +1793,67 @@
               "fieldName": "getValue"
             },
             {
-              "name": "title",
-              "fieldName": "title",
+              "name": "starsInput",
+              "fieldName": "starsInput",
               "inheritedFrom": {
-                "name": "S",
-                "module": "dist/alert.wc.js"
+                "name": "K",
+                "module": "dist/review-stars.wc.js"
               }
             },
             {
-              "name": "message",
-              "fieldName": "message",
+              "name": "indicator",
+              "fieldName": "indicator",
               "inheritedFrom": {
-                "name": "S",
-                "module": "dist/alert.wc.js"
+                "name": "K",
+                "module": "dist/review-stars.wc.js"
               }
             },
             {
-              "name": "state",
-              "fieldName": "state",
+              "name": "style",
+              "fieldName": "style",
               "inheritedFrom": {
-                "name": "S",
-                "module": "dist/alert.wc.js"
+                "name": "K",
+                "module": "dist/review-stars.wc.js"
+              }
+            },
+            {
+              "name": "determinate",
+              "fieldName": "determinate",
+              "inheritedFrom": {
+                "name": "R",
+                "module": "dist/progress-spinner.wc.js"
+              }
+            },
+            {
+              "name": "progress",
+              "fieldName": "progress",
+              "inheritedFrom": {
+                "name": "R",
+                "module": "dist/progress-spinner.wc.js"
+              }
+            },
+            {
+              "name": "radius",
+              "fieldName": "radius",
+              "inheritedFrom": {
+                "name": "R",
+                "module": "dist/progress-spinner.wc.js"
+              }
+            },
+            {
+              "name": "stroke",
+              "fieldName": "stroke",
+              "inheritedFrom": {
+                "name": "R",
+                "module": "dist/progress-spinner.wc.js"
+              }
+            },
+            {
+              "name": "color",
+              "fieldName": "color",
+              "inheritedFrom": {
+                "name": "R",
+                "module": "dist/progress-spinner.wc.js"
               }
             }
           ],
@@ -2373,7 +1891,7 @@
         {
           "kind": "class",
           "description": "",
-          "name": "E",
+          "name": "B",
           "members": [
             {
               "kind": "field",
@@ -2439,7 +1957,7 @@
           "kind": "js",
           "name": "default",
           "declaration": {
-            "name": "E",
+            "name": "B",
             "module": "dist/confirm.wc.js"
           }
         }
@@ -2452,7 +1970,7 @@
         {
           "kind": "class",
           "description": "",
-          "name": "X",
+          "name": "Y",
           "members": [
             {
               "kind": "field",
@@ -2562,7 +2080,7 @@
           "kind": "js",
           "name": "default",
           "declaration": {
-            "name": "X",
+            "name": "Y",
             "module": "dist/data-paginator.wc.js"
           }
         }
@@ -3195,7 +2713,7 @@
         {
           "kind": "class",
           "description": "",
-          "name": "X",
+          "name": "Q",
           "members": [
             {
               "kind": "field",
@@ -3319,7 +2837,7 @@
           "kind": "js",
           "name": "default",
           "declaration": {
-            "name": "X",
+            "name": "Q",
             "module": "dist/file-upload.wc.js"
           }
         }
@@ -3332,7 +2850,7 @@
         {
           "kind": "class",
           "description": "",
-          "name": "ie",
+          "name": "ae",
           "members": [
             {
               "kind": "field",
@@ -3373,6 +2891,10 @@
             {
               "kind": "field",
               "name": "gapY"
+            },
+            {
+              "kind": "field",
+              "name": "enableGallery"
             }
           ],
           "attributes": [
@@ -3415,10 +2937,14 @@
             {
               "name": "gapY",
               "fieldName": "gapY"
+            },
+            {
+              "name": "enableGallery",
+              "fieldName": "enableGallery"
             }
           ],
           "superclass": {
-            "name": "de",
+            "name": "pe",
             "module": "/dist/svelte.js"
           },
           "tagName": "jp-image-gallery",
@@ -3438,7 +2964,7 @@
           "kind": "js",
           "name": "default",
           "declaration": {
-            "name": "ie",
+            "name": "ae",
             "module": "dist/image-gallery.wc.js"
           }
         }
@@ -3451,7 +2977,7 @@
         {
           "kind": "class",
           "description": "",
-          "name": "ie",
+          "name": "ae",
           "members": [
             {
               "kind": "field",
@@ -3754,7 +3280,7 @@
           "kind": "js",
           "name": "default",
           "declaration": {
-            "name": "ie",
+            "name": "ae",
             "module": "dist/input.wc.js"
           }
         }
@@ -3901,7 +3427,7 @@
             }
           ],
           "superclass": {
-            "name": "j",
+            "name": "f",
             "module": "/dist/svelte.js"
           },
           "tagName": "jp-link",
@@ -3934,7 +3460,7 @@
         {
           "kind": "class",
           "description": "",
-          "name": "m",
+          "name": "x",
           "members": [
             {
               "kind": "field",
@@ -3948,7 +3474,7 @@
             }
           ],
           "superclass": {
-            "name": "j",
+            "name": "W",
             "module": "/dist/svelte.js"
           },
           "tagName": "jp-menu",
@@ -3968,7 +3494,7 @@
           "kind": "js",
           "name": "default",
           "declaration": {
-            "name": "m",
+            "name": "x",
             "module": "dist/menu.wc.js"
           }
         }
@@ -3989,11 +3515,7 @@
             },
             {
               "kind": "field",
-              "name": "attachedInternals",
-              "inheritedFrom": {
-                "name": "Y",
-                "module": "dist/textarea.wc.js"
-              }
+              "name": "attachedInternals"
             },
             {
               "kind": "field",
@@ -4005,35 +3527,19 @@
             },
             {
               "kind": "field",
-              "name": "disabled",
-              "inheritedFrom": {
-                "name": "Y",
-                "module": "dist/textarea.wc.js"
-              }
+              "name": "disabled"
             },
             {
               "kind": "field",
-              "name": "required",
-              "inheritedFrom": {
-                "name": "Y",
-                "module": "dist/textarea.wc.js"
-              }
+              "name": "required"
             },
             {
               "kind": "field",
-              "name": "hint",
-              "inheritedFrom": {
-                "name": "Y",
-                "module": "dist/textarea.wc.js"
-              }
+              "name": "hint"
             },
             {
               "kind": "field",
-              "name": "value",
-              "inheritedFrom": {
-                "name": "Y",
-                "module": "dist/textarea.wc.js"
-              }
+              "name": "value"
             },
             {
               "kind": "field",
@@ -4041,44 +3547,24 @@
             },
             {
               "kind": "field",
-              "name": "id",
-              "inheritedFrom": {
-                "name": "Y",
-                "module": "dist/textarea.wc.js"
-              }
+              "name": "id"
             },
             {
               "kind": "field",
-              "name": "name",
-              "inheritedFrom": {
-                "name": "Y",
-                "module": "dist/textarea.wc.js"
-              }
+              "name": "name"
             },
             {
               "kind": "field",
-              "name": "label",
-              "inheritedFrom": {
-                "name": "Y",
-                "module": "dist/textarea.wc.js"
-              }
+              "name": "label"
             },
             {
               "kind": "field",
-              "name": "labelType",
-              "inheritedFrom": {
-                "name": "Y",
-                "module": "dist/textarea.wc.js"
-              }
+              "name": "labelType"
             },
             {
               "kind": "field",
               "name": "getValue",
-              "readonly": true,
-              "inheritedFrom": {
-                "name": "Y",
-                "module": "dist/textarea.wc.js"
-              }
+              "readonly": true
             },
             {
               "kind": "field",
@@ -4086,19 +3572,11 @@
             },
             {
               "kind": "field",
-              "name": "validationMessages",
-              "inheritedFrom": {
-                "name": "Y",
-                "module": "dist/textarea.wc.js"
-              }
+              "name": "validationMessages"
             },
             {
               "kind": "field",
-              "name": "requiredValidationMessage",
-              "inheritedFrom": {
-                "name": "Y",
-                "module": "dist/textarea.wc.js"
-              }
+              "name": "requiredValidationMessage"
             },
             {
               "kind": "field",
@@ -4123,83 +3601,7 @@
             {
               "kind": "field",
               "name": "reportValidity",
-              "readonly": true,
-              "inheritedFrom": {
-                "name": "Y",
-                "module": "dist/textarea.wc.js"
-              }
-            },
-            {
-              "kind": "field",
-              "name": "placeholder",
-              "inheritedFrom": {
-                "name": "Y",
-                "module": "dist/textarea.wc.js"
-              }
-            },
-            {
-              "kind": "field",
-              "name": "inputFocused",
-              "inheritedFrom": {
-                "name": "Y",
-                "module": "dist/textarea.wc.js"
-              }
-            },
-            {
-              "kind": "field",
-              "name": "rows",
-              "inheritedFrom": {
-                "name": "Y",
-                "module": "dist/textarea.wc.js"
-              }
-            },
-            {
-              "kind": "field",
-              "name": "readonly",
-              "inheritedFrom": {
-                "name": "Y",
-                "module": "dist/textarea.wc.js"
-              }
-            },
-            {
-              "kind": "field",
-              "name": "minlength",
-              "inheritedFrom": {
-                "name": "Y",
-                "module": "dist/textarea.wc.js"
-              }
-            },
-            {
-              "kind": "field",
-              "name": "maxlength",
-              "inheritedFrom": {
-                "name": "Y",
-                "module": "dist/textarea.wc.js"
-              }
-            },
-            {
-              "kind": "field",
-              "name": "minlengthValidationMessage",
-              "inheritedFrom": {
-                "name": "Y",
-                "module": "dist/textarea.wc.js"
-              }
-            },
-            {
-              "kind": "field",
-              "name": "maxlengthValidationMessage",
-              "inheritedFrom": {
-                "name": "Y",
-                "module": "dist/textarea.wc.js"
-              }
-            },
-            {
-              "kind": "field",
-              "name": "patternValidationMessage",
-              "inheritedFrom": {
-                "name": "Y",
-                "module": "dist/textarea.wc.js"
-              }
+              "readonly": true
             }
           ],
           "attributes": [
@@ -4209,11 +3611,7 @@
             },
             {
               "name": "attachedInternals",
-              "fieldName": "attachedInternals",
-              "inheritedFrom": {
-                "name": "Y",
-                "module": "dist/textarea.wc.js"
-              }
+              "fieldName": "attachedInternals"
             },
             {
               "name": "minSelects",
@@ -4225,35 +3623,19 @@
             },
             {
               "name": "disabled",
-              "fieldName": "disabled",
-              "inheritedFrom": {
-                "name": "Y",
-                "module": "dist/textarea.wc.js"
-              }
+              "fieldName": "disabled"
             },
             {
               "name": "required",
-              "fieldName": "required",
-              "inheritedFrom": {
-                "name": "Y",
-                "module": "dist/textarea.wc.js"
-              }
+              "fieldName": "required"
             },
             {
               "name": "hint",
-              "fieldName": "hint",
-              "inheritedFrom": {
-                "name": "Y",
-                "module": "dist/textarea.wc.js"
-              }
+              "fieldName": "hint"
             },
             {
               "name": "value",
-              "fieldName": "value",
-              "inheritedFrom": {
-                "name": "Y",
-                "module": "dist/textarea.wc.js"
-              }
+              "fieldName": "value"
             },
             {
               "name": "internalValue",
@@ -4261,43 +3643,23 @@
             },
             {
               "name": "id",
-              "fieldName": "id",
-              "inheritedFrom": {
-                "name": "Y",
-                "module": "dist/textarea.wc.js"
-              }
+              "fieldName": "id"
             },
             {
               "name": "name",
-              "fieldName": "name",
-              "inheritedFrom": {
-                "name": "Y",
-                "module": "dist/textarea.wc.js"
-              }
+              "fieldName": "name"
             },
             {
               "name": "label",
-              "fieldName": "label",
-              "inheritedFrom": {
-                "name": "Y",
-                "module": "dist/textarea.wc.js"
-              }
+              "fieldName": "label"
             },
             {
               "name": "labelType",
-              "fieldName": "labelType",
-              "inheritedFrom": {
-                "name": "Y",
-                "module": "dist/textarea.wc.js"
-              }
+              "fieldName": "labelType"
             },
             {
               "name": "getValue",
-              "fieldName": "getValue",
-              "inheritedFrom": {
-                "name": "Y",
-                "module": "dist/textarea.wc.js"
-              }
+              "fieldName": "getValue"
             },
             {
               "name": "service",
@@ -4305,19 +3667,11 @@
             },
             {
               "name": "validationMessages",
-              "fieldName": "validationMessages",
-              "inheritedFrom": {
-                "name": "Y",
-                "module": "dist/textarea.wc.js"
-              }
+              "fieldName": "validationMessages"
             },
             {
               "name": "requiredValidationMessage",
-              "fieldName": "requiredValidationMessage",
-              "inheritedFrom": {
-                "name": "Y",
-                "module": "dist/textarea.wc.js"
-              }
+              "fieldName": "requiredValidationMessage"
             },
             {
               "name": "minselectsValidationMessage",
@@ -4341,87 +3695,11 @@
             },
             {
               "name": "reportValidity",
-              "fieldName": "reportValidity",
-              "inheritedFrom": {
-                "name": "Y",
-                "module": "dist/textarea.wc.js"
-              }
-            },
-            {
-              "name": "placeholder",
-              "fieldName": "placeholder",
-              "inheritedFrom": {
-                "name": "Y",
-                "module": "dist/textarea.wc.js"
-              }
-            },
-            {
-              "name": "inputFocused",
-              "fieldName": "inputFocused",
-              "inheritedFrom": {
-                "name": "Y",
-                "module": "dist/textarea.wc.js"
-              }
-            },
-            {
-              "name": "rows",
-              "fieldName": "rows",
-              "inheritedFrom": {
-                "name": "Y",
-                "module": "dist/textarea.wc.js"
-              }
-            },
-            {
-              "name": "readonly",
-              "fieldName": "readonly",
-              "inheritedFrom": {
-                "name": "Y",
-                "module": "dist/textarea.wc.js"
-              }
-            },
-            {
-              "name": "minlength",
-              "fieldName": "minlength",
-              "inheritedFrom": {
-                "name": "Y",
-                "module": "dist/textarea.wc.js"
-              }
-            },
-            {
-              "name": "maxlength",
-              "fieldName": "maxlength",
-              "inheritedFrom": {
-                "name": "Y",
-                "module": "dist/textarea.wc.js"
-              }
-            },
-            {
-              "name": "minlengthValidationMessage",
-              "fieldName": "minlengthValidationMessage",
-              "inheritedFrom": {
-                "name": "Y",
-                "module": "dist/textarea.wc.js"
-              }
-            },
-            {
-              "name": "maxlengthValidationMessage",
-              "fieldName": "maxlengthValidationMessage",
-              "inheritedFrom": {
-                "name": "Y",
-                "module": "dist/textarea.wc.js"
-              }
-            },
-            {
-              "name": "patternValidationMessage",
-              "fieldName": "patternValidationMessage",
-              "inheritedFrom": {
-                "name": "Y",
-                "module": "dist/textarea.wc.js"
-              }
+              "fieldName": "reportValidity"
             }
           ],
           "superclass": {
-            "name": "Ye",
+            "name": "Pe",
             "module": "/dist/svelte.js"
           },
           "tagName": "jp-multisearch",
@@ -4630,7 +3908,7 @@
             }
           ],
           "superclass": {
-            "name": "Oe",
+            "name": "Ee",
             "module": "/dist/svelte.js"
           },
           "tagName": "jp-multiselect",
@@ -4733,7 +4011,7 @@
         {
           "kind": "class",
           "description": "",
-          "name": "R",
+          "name": "Q",
           "members": [
             {
               "kind": "field",
@@ -4800,7 +4078,7 @@
             }
           ],
           "superclass": {
-            "name": "V",
+            "name": "U",
             "module": "/dist/svelte.js"
           },
           "tagName": "jp-page-paginator",
@@ -4820,7 +4098,7 @@
           "kind": "js",
           "name": "default",
           "declaration": {
-            "name": "R",
+            "name": "Q",
             "module": "dist/page-paginator.wc.js"
           }
         }
@@ -5117,7 +4395,7 @@
         {
           "kind": "class",
           "description": "",
-          "name": "y",
+          "name": "R",
           "members": [
             {
               "kind": "field",
@@ -5183,7 +4461,7 @@
           "kind": "js",
           "name": "default",
           "declaration": {
-            "name": "y",
+            "name": "R",
             "module": "dist/progress-spinner.wc.js"
           }
         }
@@ -5400,46 +4678,6 @@
               "kind": "field",
               "name": "reportValidity",
               "readonly": true
-            },
-            {
-              "kind": "field",
-              "name": "title",
-              "inheritedFrom": {
-                "name": "E",
-                "module": "dist/confirm.wc.js"
-              }
-            },
-            {
-              "kind": "field",
-              "name": "message",
-              "inheritedFrom": {
-                "name": "E",
-                "module": "dist/confirm.wc.js"
-              }
-            },
-            {
-              "kind": "field",
-              "name": "reject",
-              "inheritedFrom": {
-                "name": "E",
-                "module": "dist/confirm.wc.js"
-              }
-            },
-            {
-              "kind": "field",
-              "name": "accept",
-              "inheritedFrom": {
-                "name": "E",
-                "module": "dist/confirm.wc.js"
-              }
-            },
-            {
-              "kind": "field",
-              "name": "closable",
-              "inheritedFrom": {
-                "name": "E",
-                "module": "dist/confirm.wc.js"
-              }
             }
           ],
           "attributes": [
@@ -5482,46 +4720,6 @@
             {
               "name": "reportValidity",
               "fieldName": "reportValidity"
-            },
-            {
-              "name": "title",
-              "fieldName": "title",
-              "inheritedFrom": {
-                "name": "E",
-                "module": "dist/confirm.wc.js"
-              }
-            },
-            {
-              "name": "message",
-              "fieldName": "message",
-              "inheritedFrom": {
-                "name": "E",
-                "module": "dist/confirm.wc.js"
-              }
-            },
-            {
-              "name": "reject",
-              "fieldName": "reject",
-              "inheritedFrom": {
-                "name": "E",
-                "module": "dist/confirm.wc.js"
-              }
-            },
-            {
-              "name": "accept",
-              "fieldName": "accept",
-              "inheritedFrom": {
-                "name": "E",
-                "module": "dist/confirm.wc.js"
-              }
-            },
-            {
-              "name": "closable",
-              "fieldName": "closable",
-              "inheritedFrom": {
-                "name": "E",
-                "module": "dist/confirm.wc.js"
-              }
             }
           ],
           "superclass": {
@@ -5653,7 +4851,7 @@
             }
           ],
           "superclass": {
-            "name": "C",
+            "name": "z",
             "module": "/dist/svelte.js"
           },
           "tagName": "jp-range",
@@ -5686,7 +4884,7 @@
         {
           "kind": "class",
           "description": "",
-          "name": "L",
+          "name": "K",
           "members": [
             {
               "kind": "field",
@@ -5703,6 +4901,46 @@
             {
               "kind": "field",
               "name": "style"
+            },
+            {
+              "kind": "field",
+              "name": "determinate",
+              "inheritedFrom": {
+                "name": "R",
+                "module": "dist/progress-spinner.wc.js"
+              }
+            },
+            {
+              "kind": "field",
+              "name": "progress",
+              "inheritedFrom": {
+                "name": "R",
+                "module": "dist/progress-spinner.wc.js"
+              }
+            },
+            {
+              "kind": "field",
+              "name": "radius",
+              "inheritedFrom": {
+                "name": "R",
+                "module": "dist/progress-spinner.wc.js"
+              }
+            },
+            {
+              "kind": "field",
+              "name": "stroke",
+              "inheritedFrom": {
+                "name": "R",
+                "module": "dist/progress-spinner.wc.js"
+              }
+            },
+            {
+              "kind": "field",
+              "name": "color",
+              "inheritedFrom": {
+                "name": "R",
+                "module": "dist/progress-spinner.wc.js"
+              }
             }
           ],
           "attributes": [
@@ -5721,6 +4959,46 @@
             {
               "name": "style",
               "fieldName": "style"
+            },
+            {
+              "name": "determinate",
+              "fieldName": "determinate",
+              "inheritedFrom": {
+                "name": "R",
+                "module": "dist/progress-spinner.wc.js"
+              }
+            },
+            {
+              "name": "progress",
+              "fieldName": "progress",
+              "inheritedFrom": {
+                "name": "R",
+                "module": "dist/progress-spinner.wc.js"
+              }
+            },
+            {
+              "name": "radius",
+              "fieldName": "radius",
+              "inheritedFrom": {
+                "name": "R",
+                "module": "dist/progress-spinner.wc.js"
+              }
+            },
+            {
+              "name": "stroke",
+              "fieldName": "stroke",
+              "inheritedFrom": {
+                "name": "R",
+                "module": "dist/progress-spinner.wc.js"
+              }
+            },
+            {
+              "name": "color",
+              "fieldName": "color",
+              "inheritedFrom": {
+                "name": "R",
+                "module": "dist/progress-spinner.wc.js"
+              }
             }
           ],
           "superclass": {
@@ -5744,7 +5022,7 @@
           "kind": "js",
           "name": "default",
           "declaration": {
-            "name": "L",
+            "name": "K",
             "module": "dist/review-stars.wc.js"
           }
         }
@@ -5763,8 +5041,8 @@
               "kind": "field",
               "name": "attachedInternals",
               "inheritedFrom": {
-                "name": "Y",
-                "module": "dist/textarea.wc.js"
+                "name": "Me",
+                "module": "dist/multisearch.wc.js"
               }
             },
             {
@@ -5775,48 +5053,48 @@
               "kind": "field",
               "name": "disabled",
               "inheritedFrom": {
-                "name": "Y",
-                "module": "dist/textarea.wc.js"
+                "name": "Me",
+                "module": "dist/multisearch.wc.js"
               }
             },
             {
               "kind": "field",
               "name": "required",
               "inheritedFrom": {
-                "name": "Y",
-                "module": "dist/textarea.wc.js"
+                "name": "Me",
+                "module": "dist/multisearch.wc.js"
               }
             },
             {
               "kind": "field",
               "name": "hint",
               "inheritedFrom": {
-                "name": "Y",
-                "module": "dist/textarea.wc.js"
+                "name": "Me",
+                "module": "dist/multisearch.wc.js"
               }
             },
             {
               "kind": "field",
               "name": "value",
               "inheritedFrom": {
-                "name": "Y",
-                "module": "dist/textarea.wc.js"
+                "name": "Me",
+                "module": "dist/multisearch.wc.js"
               }
             },
             {
               "kind": "field",
               "name": "id",
               "inheritedFrom": {
-                "name": "Y",
-                "module": "dist/textarea.wc.js"
+                "name": "Me",
+                "module": "dist/multisearch.wc.js"
               }
             },
             {
               "kind": "field",
               "name": "name",
               "inheritedFrom": {
-                "name": "Y",
-                "module": "dist/textarea.wc.js"
+                "name": "Me",
+                "module": "dist/multisearch.wc.js"
               }
             },
             {
@@ -5827,16 +5105,16 @@
               "kind": "field",
               "name": "label",
               "inheritedFrom": {
-                "name": "Y",
-                "module": "dist/textarea.wc.js"
+                "name": "Me",
+                "module": "dist/multisearch.wc.js"
               }
             },
             {
               "kind": "field",
               "name": "labelType",
               "inheritedFrom": {
-                "name": "Y",
-                "module": "dist/textarea.wc.js"
+                "name": "Me",
+                "module": "dist/multisearch.wc.js"
               }
             },
             {
@@ -5848,16 +5126,16 @@
               "name": "getValue",
               "readonly": true,
               "inheritedFrom": {
-                "name": "Y",
-                "module": "dist/textarea.wc.js"
+                "name": "Me",
+                "module": "dist/multisearch.wc.js"
               }
             },
             {
               "kind": "field",
               "name": "requiredValidationMessage",
               "inheritedFrom": {
-                "name": "Y",
-                "module": "dist/textarea.wc.js"
+                "name": "Me",
+                "module": "dist/multisearch.wc.js"
               }
             },
             {
@@ -5865,8 +5143,8 @@
               "name": "reportValidity",
               "readonly": true,
               "inheritedFrom": {
-                "name": "Y",
-                "module": "dist/textarea.wc.js"
+                "name": "Me",
+                "module": "dist/multisearch.wc.js"
               }
             },
             {
@@ -5913,8 +5191,8 @@
               "kind": "field",
               "name": "validationMessages",
               "inheritedFrom": {
-                "name": "Y",
-                "module": "dist/textarea.wc.js"
+                "name": "Me",
+                "module": "dist/multisearch.wc.js"
               }
             },
             {
@@ -5956,78 +5234,6 @@
                 "name": "Me",
                 "module": "dist/multisearch.wc.js"
               }
-            },
-            {
-              "kind": "field",
-              "name": "placeholder",
-              "inheritedFrom": {
-                "name": "Y",
-                "module": "dist/textarea.wc.js"
-              }
-            },
-            {
-              "kind": "field",
-              "name": "inputFocused",
-              "inheritedFrom": {
-                "name": "Y",
-                "module": "dist/textarea.wc.js"
-              }
-            },
-            {
-              "kind": "field",
-              "name": "rows",
-              "inheritedFrom": {
-                "name": "Y",
-                "module": "dist/textarea.wc.js"
-              }
-            },
-            {
-              "kind": "field",
-              "name": "readonly",
-              "inheritedFrom": {
-                "name": "Y",
-                "module": "dist/textarea.wc.js"
-              }
-            },
-            {
-              "kind": "field",
-              "name": "minlength",
-              "inheritedFrom": {
-                "name": "Y",
-                "module": "dist/textarea.wc.js"
-              }
-            },
-            {
-              "kind": "field",
-              "name": "maxlength",
-              "inheritedFrom": {
-                "name": "Y",
-                "module": "dist/textarea.wc.js"
-              }
-            },
-            {
-              "kind": "field",
-              "name": "minlengthValidationMessage",
-              "inheritedFrom": {
-                "name": "Y",
-                "module": "dist/textarea.wc.js"
-              }
-            },
-            {
-              "kind": "field",
-              "name": "maxlengthValidationMessage",
-              "inheritedFrom": {
-                "name": "Y",
-                "module": "dist/textarea.wc.js"
-              }
-            },
-            {
-              "kind": "field",
-              "name": "patternValidationMessage",
-              "inheritedFrom": {
-                "name": "Y",
-                "module": "dist/textarea.wc.js"
-              }
             }
           ],
           "attributes": [
@@ -6035,8 +5241,8 @@
               "name": "attachedInternals",
               "fieldName": "attachedInternals",
               "inheritedFrom": {
-                "name": "Y",
-                "module": "dist/textarea.wc.js"
+                "name": "Me",
+                "module": "dist/multisearch.wc.js"
               }
             },
             {
@@ -6047,48 +5253,48 @@
               "name": "disabled",
               "fieldName": "disabled",
               "inheritedFrom": {
-                "name": "Y",
-                "module": "dist/textarea.wc.js"
+                "name": "Me",
+                "module": "dist/multisearch.wc.js"
               }
             },
             {
               "name": "required",
               "fieldName": "required",
               "inheritedFrom": {
-                "name": "Y",
-                "module": "dist/textarea.wc.js"
+                "name": "Me",
+                "module": "dist/multisearch.wc.js"
               }
             },
             {
               "name": "hint",
               "fieldName": "hint",
               "inheritedFrom": {
-                "name": "Y",
-                "module": "dist/textarea.wc.js"
+                "name": "Me",
+                "module": "dist/multisearch.wc.js"
               }
             },
             {
               "name": "value",
               "fieldName": "value",
               "inheritedFrom": {
-                "name": "Y",
-                "module": "dist/textarea.wc.js"
+                "name": "Me",
+                "module": "dist/multisearch.wc.js"
               }
             },
             {
               "name": "id",
               "fieldName": "id",
               "inheritedFrom": {
-                "name": "Y",
-                "module": "dist/textarea.wc.js"
+                "name": "Me",
+                "module": "dist/multisearch.wc.js"
               }
             },
             {
               "name": "name",
               "fieldName": "name",
               "inheritedFrom": {
-                "name": "Y",
-                "module": "dist/textarea.wc.js"
+                "name": "Me",
+                "module": "dist/multisearch.wc.js"
               }
             },
             {
@@ -6099,16 +5305,16 @@
               "name": "label",
               "fieldName": "label",
               "inheritedFrom": {
-                "name": "Y",
-                "module": "dist/textarea.wc.js"
+                "name": "Me",
+                "module": "dist/multisearch.wc.js"
               }
             },
             {
               "name": "labelType",
               "fieldName": "labelType",
               "inheritedFrom": {
-                "name": "Y",
-                "module": "dist/textarea.wc.js"
+                "name": "Me",
+                "module": "dist/multisearch.wc.js"
               }
             },
             {
@@ -6119,24 +5325,24 @@
               "name": "getValue",
               "fieldName": "getValue",
               "inheritedFrom": {
-                "name": "Y",
-                "module": "dist/textarea.wc.js"
+                "name": "Me",
+                "module": "dist/multisearch.wc.js"
               }
             },
             {
               "name": "requiredValidationMessage",
               "fieldName": "requiredValidationMessage",
               "inheritedFrom": {
-                "name": "Y",
-                "module": "dist/textarea.wc.js"
+                "name": "Me",
+                "module": "dist/multisearch.wc.js"
               }
             },
             {
               "name": "reportValidity",
               "fieldName": "reportValidity",
               "inheritedFrom": {
-                "name": "Y",
-                "module": "dist/textarea.wc.js"
+                "name": "Me",
+                "module": "dist/multisearch.wc.js"
               }
             },
             {
@@ -6183,8 +5389,8 @@
               "name": "validationMessages",
               "fieldName": "validationMessages",
               "inheritedFrom": {
-                "name": "Y",
-                "module": "dist/textarea.wc.js"
+                "name": "Me",
+                "module": "dist/multisearch.wc.js"
               }
             },
             {
@@ -6226,78 +5432,6 @@
                 "name": "Me",
                 "module": "dist/multisearch.wc.js"
               }
-            },
-            {
-              "name": "placeholder",
-              "fieldName": "placeholder",
-              "inheritedFrom": {
-                "name": "Y",
-                "module": "dist/textarea.wc.js"
-              }
-            },
-            {
-              "name": "inputFocused",
-              "fieldName": "inputFocused",
-              "inheritedFrom": {
-                "name": "Y",
-                "module": "dist/textarea.wc.js"
-              }
-            },
-            {
-              "name": "rows",
-              "fieldName": "rows",
-              "inheritedFrom": {
-                "name": "Y",
-                "module": "dist/textarea.wc.js"
-              }
-            },
-            {
-              "name": "readonly",
-              "fieldName": "readonly",
-              "inheritedFrom": {
-                "name": "Y",
-                "module": "dist/textarea.wc.js"
-              }
-            },
-            {
-              "name": "minlength",
-              "fieldName": "minlength",
-              "inheritedFrom": {
-                "name": "Y",
-                "module": "dist/textarea.wc.js"
-              }
-            },
-            {
-              "name": "maxlength",
-              "fieldName": "maxlength",
-              "inheritedFrom": {
-                "name": "Y",
-                "module": "dist/textarea.wc.js"
-              }
-            },
-            {
-              "name": "minlengthValidationMessage",
-              "fieldName": "minlengthValidationMessage",
-              "inheritedFrom": {
-                "name": "Y",
-                "module": "dist/textarea.wc.js"
-              }
-            },
-            {
-              "name": "maxlengthValidationMessage",
-              "fieldName": "maxlengthValidationMessage",
-              "inheritedFrom": {
-                "name": "Y",
-                "module": "dist/textarea.wc.js"
-              }
-            },
-            {
-              "name": "patternValidationMessage",
-              "fieldName": "patternValidationMessage",
-              "inheritedFrom": {
-                "name": "Y",
-                "module": "dist/textarea.wc.js"
-              }
             }
           ],
           "superclass": {
@@ -6334,7 +5468,7 @@
         {
           "kind": "class",
           "description": "",
-          "name": "B",
+          "name": "w",
           "members": [
             {
               "kind": "field",
@@ -6429,7 +5563,7 @@
             }
           ],
           "superclass": {
-            "name": "k",
+            "name": "X",
             "module": "/dist/svelte.js"
           },
           "tagName": "jp-slider",
@@ -6449,7 +5583,7 @@
           "kind": "js",
           "name": "default",
           "declaration": {
-            "name": "B",
+            "name": "w",
             "module": "dist/slider.wc.js"
           }
         }
@@ -6622,7 +5756,7 @@
             }
           ],
           "superclass": {
-            "name": "me",
+            "name": "fe",
             "module": "/dist/svelte.js"
           },
           "tagName": "jp-table",
@@ -6655,7 +5789,7 @@
         {
           "kind": "class",
           "description": "",
-          "name": "J",
+          "name": "I",
           "members": [
             {
               "kind": "field",
@@ -6670,6 +5804,78 @@
               "kind": "field",
               "name": "previous",
               "readonly": true
+            },
+            {
+              "kind": "field",
+              "name": "value",
+              "inheritedFrom": {
+                "name": "K",
+                "module": "dist/review-stars.wc.js"
+              }
+            },
+            {
+              "kind": "field",
+              "name": "starsInput",
+              "inheritedFrom": {
+                "name": "K",
+                "module": "dist/review-stars.wc.js"
+              }
+            },
+            {
+              "kind": "field",
+              "name": "indicator",
+              "inheritedFrom": {
+                "name": "K",
+                "module": "dist/review-stars.wc.js"
+              }
+            },
+            {
+              "kind": "field",
+              "name": "style",
+              "inheritedFrom": {
+                "name": "K",
+                "module": "dist/review-stars.wc.js"
+              }
+            },
+            {
+              "kind": "field",
+              "name": "determinate",
+              "inheritedFrom": {
+                "name": "R",
+                "module": "dist/progress-spinner.wc.js"
+              }
+            },
+            {
+              "kind": "field",
+              "name": "progress",
+              "inheritedFrom": {
+                "name": "R",
+                "module": "dist/progress-spinner.wc.js"
+              }
+            },
+            {
+              "kind": "field",
+              "name": "radius",
+              "inheritedFrom": {
+                "name": "R",
+                "module": "dist/progress-spinner.wc.js"
+              }
+            },
+            {
+              "kind": "field",
+              "name": "stroke",
+              "inheritedFrom": {
+                "name": "R",
+                "module": "dist/progress-spinner.wc.js"
+              }
+            },
+            {
+              "kind": "field",
+              "name": "color",
+              "inheritedFrom": {
+                "name": "R",
+                "module": "dist/progress-spinner.wc.js"
+              }
             }
           ],
           "attributes": [
@@ -6684,10 +5890,82 @@
             {
               "name": "previous",
               "fieldName": "previous"
+            },
+            {
+              "name": "value",
+              "fieldName": "value",
+              "inheritedFrom": {
+                "name": "K",
+                "module": "dist/review-stars.wc.js"
+              }
+            },
+            {
+              "name": "starsInput",
+              "fieldName": "starsInput",
+              "inheritedFrom": {
+                "name": "K",
+                "module": "dist/review-stars.wc.js"
+              }
+            },
+            {
+              "name": "indicator",
+              "fieldName": "indicator",
+              "inheritedFrom": {
+                "name": "K",
+                "module": "dist/review-stars.wc.js"
+              }
+            },
+            {
+              "name": "style",
+              "fieldName": "style",
+              "inheritedFrom": {
+                "name": "K",
+                "module": "dist/review-stars.wc.js"
+              }
+            },
+            {
+              "name": "determinate",
+              "fieldName": "determinate",
+              "inheritedFrom": {
+                "name": "R",
+                "module": "dist/progress-spinner.wc.js"
+              }
+            },
+            {
+              "name": "progress",
+              "fieldName": "progress",
+              "inheritedFrom": {
+                "name": "R",
+                "module": "dist/progress-spinner.wc.js"
+              }
+            },
+            {
+              "name": "radius",
+              "fieldName": "radius",
+              "inheritedFrom": {
+                "name": "R",
+                "module": "dist/progress-spinner.wc.js"
+              }
+            },
+            {
+              "name": "stroke",
+              "fieldName": "stroke",
+              "inheritedFrom": {
+                "name": "R",
+                "module": "dist/progress-spinner.wc.js"
+              }
+            },
+            {
+              "name": "color",
+              "fieldName": "color",
+              "inheritedFrom": {
+                "name": "R",
+                "module": "dist/progress-spinner.wc.js"
+              }
             }
           ],
           "superclass": {
-            "name": "P",
+            "name": "K",
             "module": "/dist/svelte.js"
           },
           "tagName": "jp-tabs",
@@ -6707,7 +5985,7 @@
           "kind": "js",
           "name": "default",
           "declaration": {
-            "name": "J",
+            "name": "I",
             "module": "dist/tabs.wc.js"
           }
         }
@@ -6720,7 +5998,7 @@
         {
           "kind": "class",
           "description": "",
-          "name": "Y",
+          "name": "X",
           "members": [
             {
               "kind": "field",
@@ -6924,7 +6202,7 @@
           "kind": "js",
           "name": "default",
           "declaration": {
-            "name": "Y",
+            "name": "X",
             "module": "dist/textarea.wc.js"
           }
         }
@@ -6953,11 +6231,7 @@
             },
             {
               "kind": "field",
-              "name": "label",
-              "inheritedFrom": {
-                "name": "L",
-                "module": "dist/tooltip.wc.js"
-              }
+              "name": "label"
             },
             {
               "kind": "field",
@@ -6984,14 +6258,6 @@
               "kind": "field",
               "name": "reportValidity",
               "readonly": true
-            },
-            {
-              "kind": "field",
-              "name": "mode",
-              "inheritedFrom": {
-                "name": "L",
-                "module": "dist/tooltip.wc.js"
-              }
             }
           ],
           "attributes": [
@@ -7009,11 +6275,7 @@
             },
             {
               "name": "label",
-              "fieldName": "label",
-              "inheritedFrom": {
-                "name": "L",
-                "module": "dist/tooltip.wc.js"
-              }
+              "fieldName": "label"
             },
             {
               "name": "required",
@@ -7038,14 +6300,6 @@
             {
               "name": "reportValidity",
               "fieldName": "reportValidity"
-            },
-            {
-              "name": "mode",
-              "fieldName": "mode",
-              "inheritedFrom": {
-                "name": "L",
-                "module": "dist/tooltip.wc.js"
-              }
             }
           ],
           "superclass": {
@@ -7082,7 +6336,7 @@
         {
           "kind": "class",
           "description": "",
-          "name": "L",
+          "name": "H",
           "members": [
             {
               "kind": "field",
@@ -7104,7 +6358,7 @@
             }
           ],
           "superclass": {
-            "name": "_",
+            "name": "q",
             "module": "/dist/svelte.js"
           },
           "tagName": "jp-tooltip",
@@ -7124,7 +6378,7 @@
           "kind": "js",
           "name": "default",
           "declaration": {
-            "name": "L",
+            "name": "H",
             "module": "dist/tooltip.wc.js"
           }
         }
@@ -7137,7 +6391,7 @@
         {
           "kind": "class",
           "description": "",
-          "name": "z",
+          "name": "A",
           "members": [
             {
               "kind": "field",
@@ -7159,7 +6413,7 @@
             }
           ],
           "superclass": {
-            "name": "k",
+            "name": "T",
             "module": "/dist/svelte.js"
           },
           "tagName": "jp-tree",
@@ -7179,7 +6433,7 @@
           "kind": "js",
           "name": "default",
           "declaration": {
-            "name": "z",
+            "name": "A",
             "module": "dist/tree.wc.js"
           }
         }
