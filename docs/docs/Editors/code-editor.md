@@ -1,5 +1,5 @@
-import '../../static/c/code-editor.wc.js';
-import '../../static/c/code-editor.css';
+<!-- import '../../static/c/code-editor.wc.js';
+import '../../static/c/code-editor.css'; -->
 
 # Code Editor
 

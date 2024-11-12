@@ -1,5 +1,5 @@
-import '../../static/c/slider.wc.js';
-import '../../static/c/slider.css';
+<!-- import '../../static/c/slider.wc.js';
+import '../../static/c/slider.css'; -->
 
 # Slider
 

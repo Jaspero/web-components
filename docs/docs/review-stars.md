@@ -1,4 +1,4 @@
-import '../static/c/review-stars.wc.js';
+<!-- import '../static/c/review-stars.wc.js'; -->
 
 # Review stars
 

@@ -1,5 +1,5 @@
-import '../../static/c/radio.wc.js';
-import '../../static/c/radio.css';
+<!-- import '../../static/c/radio.wc.js';
+import '../../static/c/radio.css'; -->
 
 # Radio
 

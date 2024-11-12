@@ -1,4 +1,4 @@
-import '../static/c/alert.wc.js';
+<!-- import '../static/c/alert.wc.js'; -->
 
 # Alert
 

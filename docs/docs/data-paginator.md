@@ -1,4 +1,4 @@
-import '../static/c/data-paginator.wc.js';
+<!-- import '../static/c/data-paginator.wc.js'; -->
 
 # Data Paginator
 

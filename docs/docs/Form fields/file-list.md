@@ -1,4 +1,4 @@
-import '../../static/c/file-list.wc.js';
+<!-- import '../../static/c/file-list.wc.js'; -->
 
 # File list
 

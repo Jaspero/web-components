@@ -1,5 +1,5 @@
-import '../../static/c/textarea.wc.js';
-import '../../static/c/textarea.css';
+<!-- import '../../static/c/textarea.wc.js';
+import '../../static/c/textarea.css'; -->
 
 # Textarea
 

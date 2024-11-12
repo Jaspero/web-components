@@ -1,5 +1,5 @@
-import '../../static/c/multisearch.wc.js';
-import '../../static/c/multisearch.css';
+<!-- import '../../static/c/multisearch.wc.js';
+import '../../static/c/multisearch.css'; -->
 
 # Multisearch
 

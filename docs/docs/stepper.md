@@ -1,4 +1,4 @@
-import '../static/c/stepper.wc.js';
+<!-- import '../static/c/stepper.wc.js'; -->
 
 # Stepper
 

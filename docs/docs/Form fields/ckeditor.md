@@ -1,5 +1,5 @@
-import '../../static/c/ckeditor.wc.js';
-import '../../static/c/ckeditor.css';
+<!-- import '../../static/c/ckeditor.wc.js';
+import '../../static/c/ckeditor.css'; -->
 
 # CKEditor
 

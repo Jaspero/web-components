@@ -1,5 +1,5 @@
-import '../../static/c/datepicker.wc.js';
-import '../../static/c/datepicker.css';
+<!-- import '../../static/c/datepicker.wc.js';
+import '../../static/c/datepicker.css'; -->
 
 # Date Picker
 

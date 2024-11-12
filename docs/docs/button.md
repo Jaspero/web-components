@@ -1,4 +1,4 @@
-import '../static/c/button.wc.js';
+<!-- import '../static/c/button.wc.js'; -->
 
 # Button
 

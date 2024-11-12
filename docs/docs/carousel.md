@@ -1,4 +1,4 @@
-import '../static/c/carousel.wc.js';
+<!-- import '../static/c/carousel.wc.js'; -->
 
 # Carousel
 

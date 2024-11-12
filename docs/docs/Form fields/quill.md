@@ -1,5 +1,5 @@
-import '../../static/c/quill.wc.js';
-import '../../static/c/quill.css';
+<!-- import '../../static/c/quill.wc.js';
+import '../../static/c/quill.css'; -->
 
 # Quill
 

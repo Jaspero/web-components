@@ -1,5 +1,5 @@
-import '../../static/c/date-range.wc.js';
-import '../../static/c/date-range.css';
+<!-- import '../../static/c/date-range.wc.js';
+import '../../static/c/date-range.css'; -->
 
 # Date Range
 

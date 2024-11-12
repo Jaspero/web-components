@@ -1,5 +1,5 @@
-import '../static/c/progress-spinner.wc.js';
-import '../static/c/progress-spinner.css';
+<!-- import '../static/c/progress-spinner.wc.js';
+import '../static/c/progress-spinner.css'; -->
 
 # Progress-Spinner
 

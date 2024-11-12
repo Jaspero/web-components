@@ -1,5 +1,5 @@
-import '../../static/c/select.wc.js';
-import '../../static/c/select.css';
+<!-- import '../../static/c/select.wc.js';
+import '../../static/c/select.css'; -->
 
 # Select
 

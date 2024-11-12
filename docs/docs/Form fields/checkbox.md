@@ -1,5 +1,5 @@
-import '../../static/c/checkbox.wc.js';
-import '../../static/c/checkbox.css';
+<!-- import '../../static/c/checkbox.wc.js';
+import '../../static/c/checkbox.css'; -->
 
 # Checkbox
 

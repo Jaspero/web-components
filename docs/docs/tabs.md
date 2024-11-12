@@ -1,4 +1,4 @@
-import '../static/c/tabs.wc.js';
+<!-- import '../static/c/tabs.wc.js'; -->
 
 # Tabs
 

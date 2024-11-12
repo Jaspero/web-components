@@ -1,5 +1,5 @@
-import '../../static/c/chips.wc.js';
-import '../../static/c/chips.css';
+<!-- import '../../static/c/chips.wc.js';
+import '../../static/c/chips.css'; -->
 
 # Chips
 

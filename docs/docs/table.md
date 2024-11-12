@@ -1,4 +1,4 @@
-import '../static/c/table.wc.js';
+<!-- import '../static/c/table.wc.js'; -->
 
 # Table
 

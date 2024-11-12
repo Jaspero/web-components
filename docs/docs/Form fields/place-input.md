@@ -1,4 +1,4 @@
-import '../../static/c/place-input.wc.js';
+<!-- import '../../static/c/place-input.wc.js'; -->
 
 # Place Input
 

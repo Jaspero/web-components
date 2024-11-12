@@ -1,5 +1,5 @@
-import '../../static/c/file-upload.wc.js';
-import '../../static/c/file-upload.css';
+<!-- import '../../static/c/file-upload.wc.js';
+import '../../static/c/file-upload.css'; -->
 
 # File upload
 

@@ -1,5 +1,5 @@
-import '../../static/c/range.wc.js';
-import '../../static/c/range.css';
+<!-- import '../../static/c/range.wc.js';
+import '../../static/c/range.css'; -->
 
 # Range
 

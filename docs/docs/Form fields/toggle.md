@@ -1,6 +1,5 @@
-import '../../static/c/toggle.wc.js';
-import '../../static/c/toggle.css';
-
+<!-- import '../../static/c/toggle.wc.js';
+import '../../static/c/toggle.css'; -->
 
 # Toggle
 

@@ -1,4 +1,4 @@
-import '../static/c/tooltip.wc.js';
+<!-- import '../static/c/tooltip.wc.js'; -->
 
 # Tooltip
 

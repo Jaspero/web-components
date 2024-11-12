@@ -1,5 +1,5 @@
-import '../../static/c/autocomplete.wc.js';
-import '../../static/c/autocomplete.css';
+<!-- import '../../static/c/autocomplete.wc.js';
+import '../../static/c/autocomplete.css'; -->
 
 # Autocomplete
 

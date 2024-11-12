@@ -1,5 +1,5 @@
-import '../../static/c/multiselect.wc.js';
-import '../../static/c/multiselect.css';
+<!-- import '../../static/c/multiselect.wc.js';
+import '../../static/c/multiselect.css'; -->
 
 # Multiselect
 
