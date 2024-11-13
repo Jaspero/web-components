@@ -63,7 +63,7 @@
   let open = false;
   let bindingElement: HTMLButtonElement;
   let menuStyle: string;
-  let optionElements = []; // Array to store references to option buttons
+  let optionElements: any[] = []; // Array to store references to option buttons
   let searchTerm = '';
   let searchTimeout: any;
   let displayValue: string[] | null;
@@ -100,7 +100,7 @@
         minselectsValidationMessage || validationMessages.minselects || 'Below limit checks.',
         bindingElement
       );
-    } else if (selects > maxSelects) {
+    } else if (maxSelects != null && selects > maxSelects) {
       attachedInternals.setValidity(
         { customError: true },
         maxselectsValidationMessage || validationMessages.maxselects || 'Above limit checks.',
@@ -323,7 +323,7 @@
 
         const matchingIndex = options
           .map((el) => (el.label ? el.label : el.value))
-          .findIndex((option) => option.toLowerCase().includes(searchTerm.toLowerCase()));
+          .findIndex((option) => option.toLowerCase().startsWith(searchTerm.toLowerCase()));
 
         if (matchingIndex !== -1) {
           optionElements[matchingIndex].focus();
