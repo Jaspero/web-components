@@ -109,16 +109,6 @@
   let saveArrangementLoading = false;
   let importFileEl: HTMLInputElement;
   let importLoading = false;
-  const columnColors = [
-    '#ffffff',
-    '#ffffff',
-    '#ffffff',
-    '#ffffff',
-    '#ffffff',
-    '#ffffff',
-    '#ffffff',
-    '#ffffff'
-  ];
 
   const dispatch = createEventDispatcher();
 
@@ -550,16 +540,15 @@
       {#if headers}
         <tr>
           {#each headers as header, index}
-            {#if !header.disabled}<th
+            {#if !header.disabled}
+              <th
                 class:jp-async-table-sortable={allowArrangeColumns && header.sortable}
                 class:jp-async-table-sticky-first={freezeFirstColumn && index === 0}
                 class:jp-async-table-sticky-last={index === headers.length - 1 && freezeLastColumn}
                 class:jp-async-table-no-cursor={header.disableOrganize}
-                style="background-color: {hoveringOverColumnIndex === index
-                  ? '#D3D3D3'
-                  : columnColors[index % columnColors.length]};"
-                on:click={() => adjustSort(header)}
+                class:jp-async-table-hover-over={hoveringOverColumnIndex === index}
                 draggable={allowArrangeColumns && !header.disableOrganize}
+                on:click={() => adjustSort(header)}
                 on:dragstart={(e) => {
                   if (!header.disableOrganize) dragstart(e, header);
                 }}
@@ -589,7 +578,8 @@
                   <span class="jp-async-table-sortable">{sort.direction === 'asc' ? '↑' : '↓'}</span
                   >
                 {/if}
-              </th>{/if}
+              </th>
+            {/if}
           {/each}
         </tr>
       {/if}
@@ -604,9 +594,7 @@
                   class:jp-async-table-sticky-first={freezeFirstColumn && index === 0}
                   class:jp-async-table-sticky-last={index === headers.length - 1 &&
                     freezeLastColumn}
-                  style="background-color: {hoveringOverColumnIndex === index
-                    ? '#D3D3D3'
-                    : columnColors[index % columnColors.length]};"
+                  class:jp-async-table-hover-over={hoveringOverColumnIndex === index}
                   on:click={(e) => rowClick(row, index, header, e)}
                 >
                   {#await handleColumn(header, row, ind) then val}
@@ -667,9 +655,7 @@
           {#if !column.disableToggle}
             <label
               class="jp-async-table-arrange-column-label"
-              style:background-color={dialogHoveringOverColumnIndex === index
-                ? '#D3D3D3'
-                : columnColors[index % columnColors.length]}
+              class:jp-async-table-hover-over={hoveringOverColumnIndex === index}
             >
               <!-- svelte-ignore a11y-no-static-element-interactions -->
               <span

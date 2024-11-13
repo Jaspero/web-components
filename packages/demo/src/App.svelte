@@ -49,12 +49,12 @@
 
 <!-- <AssetManagerDemo /> -->
 <!-- <MultiSearchDemo /> -->
-<ChipsDemo/>
-<!-- <AsyncTableDemo />-->
+<!-- <ChipsDemo/> -->
+<AsyncTableDemo />
 <!-- <MultiSelectDemo /> -->
 <!-- <FileListDemo /> -->
 <!-- <Demos /> -->
-<InputDemo />
+<!-- <InputDemo /> -->
 <!-- <ImageGalleryDemo /> -->
 <!-- <DateRangeDemo /> -->
 <!-- <CkEditorDemo /> -->
