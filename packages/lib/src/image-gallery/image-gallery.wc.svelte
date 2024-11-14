@@ -106,6 +106,7 @@
 
     Array.from(container.children).forEach((child: Element, index: number) => {
       (child as HTMLElement).style.width = `${colWidth}px`;
+      (child as HTMLElement).style.display = `block`;
       sizes[index] = child.clientHeight;
 
       const col = columns.indexOf(Math.min(...columns));
@@ -232,6 +233,7 @@
 
     &-container {
       position: absolute;
+      display: none;
     }
     &-image {
       width: 100%;

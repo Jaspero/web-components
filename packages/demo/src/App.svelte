@@ -50,7 +50,7 @@
 <!-- <AssetManagerDemo /> -->
 <!-- <MultiSearchDemo /> -->
 <!-- <ChipsDemo/> -->
-<AsyncTableDemo />
+<!--<AsyncTableDemo />-->
 <!-- <MultiSelectDemo /> -->
 <!-- <FileListDemo /> -->
 <!-- <Demos /> -->
@@ -106,7 +106,7 @@
       <!-- <CarouselDemo /> -->
       <!-- <ConfirmDemo /> -->
       <!-- <DataPaginatorDemo /> -->
-      <!-- <ImageGalleryDemo /> -->
+       <ImageGalleryDemo />
       <!-- <LinkDemo /> -->
       <!-- <MenuDemo /> -->
       <!-- <PagePaginatorDemo/> -->
