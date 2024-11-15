@@ -18,6 +18,7 @@
   import { createEventDispatcher } from 'svelte';
   import type FileService from '../../types/file.service';
   import { formatDisplayFileName } from '../../utils/fileNameFormatter';
+  import './file-list.wc.pcss';
 
   import uploadIcon from '../../icons/upload.svg?raw';
   import externalLinkIcon from '../../icons/external-link.svg?raw';
@@ -47,15 +48,15 @@
   export let displayFormatFunction;
 
   let displayedFileNameString = '';
-  let grabbedEl = null;
+  let grabbedEl: { style: string; } | null = null;
   let grabbedIndex = -1;
   let startingY: number;
   let startingX: number;
-  let internalFiles = [];
+  let internalFiles: any[] = [];
   let browseFilesEl: HTMLInputElement;
   let loading = false;
   let hoveringFile = false;
-  let fileElements = [];
+  let fileElements: HTMLDivElement[] = [];
   let internalValue = '';
 
   export const getValue = () => internalValue.split(',').filter(Boolean);
@@ -108,7 +109,7 @@
     }
   }
 
-  function removeFile(index) {
+  function removeFile(index: number) {
     if (internalFiles[index].saved) {
       dispatch('removed', { url: internalFiles[index].url });
     }
@@ -131,7 +132,7 @@
     hoveringFile = false;
   }
 
-  const returnFileSize = (size) => {
+  const returnFileSize = (size: number) => {
     if (size < 1024) {
       return `${size} bytes`;
     } else if (size >= 1024 && size < 1048576) {
@@ -141,7 +142,7 @@
     }
   };
 
-  const filesToObjs = (files) =>
+  const filesToObjs = (files: any[]) =>
     files
       .filter((el) => {
         if (service && service.maxSize) {
@@ -177,7 +178,7 @@
     return new File([blob], filename);
   };
 
-  const loadFiles = async (value) => {
+  const loadFiles = async (value: string) => {
     if (Array.isArray(value)) {
       value = value.join(',');
     }
@@ -220,7 +221,7 @@
     ).filter(Boolean);
   };
 
-  function mousemove(e) {
+  function mousemove(e: { preventDefault: () => void; clientY: number; clientX: number; }) {
     if (grabbedEl) {
       e.preventDefault();
       grabbedEl.style.transform = 'translateY(' + (e.clientY - startingY) + 'px)';
@@ -278,17 +279,17 @@
 
 <!-- svelte-ignore a11y-no-static-element-interactions -->
 <div
-  class="dropzone"
-  class:fullBorder={hoveringFile}
+  class="jp-file-list-dropzone"
+  class:jp-file-list-dropzone-fullBorder={hoveringFile}
   on:dragover|preventDefault={() => (hoveringFile = true)}
 >
   {#if loading}
-    <div class="loader">
-      <div class="spinner"></div>
+    <div class="jp-file-list-loader">
+      <div class="jp-file-list-spinner"></div>
     </div>
   {:else if hoveringFile}
     <div
-      class="info"
+      class="jp-file-list-info"
       on:dragleave={() => (hoveringFile = false)}
       on:dragend={() => (hoveringFile = false)}
       on:drop|preventDefault={(e) => handleDrop(e)}
@@ -298,7 +299,7 @@
     </div>
   {:else if internalFiles.length === 0}
     <!-- svelte-ignore a11y-no-static-element-interactions -->
-    <div class="info" hidden={internalFiles.length !== 0}>
+    <div class="jp-file-list-info" hidden={internalFiles.length !== 0}>
       <!-- svelte-ignore a11y-missing-attribute -->
       <!-- svelte-ignore a11y-click-events-have-key-events -->
       <div>
@@ -307,23 +308,23 @@
       </div>
     </div>
   {:else}
-    <div class="files">
+    <div class="jp-file-list-files">
       {#each internalFiles as file, index}
         <!-- svelte-ignore a11y-mouse-events-have-key-events -->
         <div
-          class="file"
-          class:grab={sortable}
+          class="jp-file-list-file"
+          class:jp-file-list-file-grab={sortable}
           on:mousedown={(e) => mousedown(index, e)}
           bind:this={fileElements[index]}
         >
           <button
             type="button"
-            class="file-remove"
+            class="jp-file-list-file-remove"
             on:mousedown|preventDefault={() => removeFile(index)}
           >
             {@html deleteIcon}
           </button>
-          <div class="file-icon">
+          <div class="jp-file-list-file-icon">
             {#if file.src}
               {#if file.type === 'image'}
                 <img src={file.src} alt={file.name} />
@@ -333,7 +334,7 @@
                   <source src={file.src} />
                 </video>
               {:else if file.type === 'audio'}
-                <div class="audio-wrapper">
+                <div class="jp-file-list-audio-wrapper">
                   <audio controls>
                     <source src={file.src} />
                   </audio>
@@ -345,10 +346,10 @@
               {@html unknownFileIcon}
             {/if}
           </div>
-          <div class="file-name">
+          <div class="jp-file-list-file-name">
             {file.displayedName}
           </div>
-          <div class="file-info">
+          <div class="jp-file-list-file-info">
             <span>
               {file.size || ''}
             </span>
@@ -359,7 +360,7 @@
         </div>
       {/each}
     </div>
-    <button type="button" class="add-more" on:click|preventDefault={() => browseFilesEl.click()}>
+    <button type="button" class="jp-file-list-add-more" on:click|preventDefault={() => browseFilesEl.click()}>
       {@html plusIcon}
     </button>
   {/if}
@@ -374,228 +375,3 @@
   hidden
 />
 <input type="text" {id} {name} bind:value={internalValue} hidden />
-
-<style lang="postcss">
-  .grab {
-    cursor: grab;
-  }
-  .grab:active {
-    cursor: grabbing;
-  }
-  .dropzone {
-    position: relative;
-    background-color: #f4f4f4;
-    height: var(--file-list-height, auto);
-    min-height: var(--file-list-min-height, 500px);
-    width: 100%;
-    border-radius: 0.25rem;
-    border: 1px dashed #e6510030;
-  }
-
-  .fullBorder {
-    border: 1px dashed var(--primary-color);
-  }
-
-  .info {
-    width: 100%;
-    height: 100%;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    min-height: inherit;
-  }
-
-  .info a {
-    color: var(--primary-color);
-    cursor: pointer;
-  }
-
-  .info a:hover {
-    text-decoration: underline;
-  }
-
-  .files {
-    display: grid;
-    grid-template-columns: repeat(4, minmax(0, 1fr));
-    height: 100%;
-    padding: 1rem;
-    gap: 1rem;
-    overflow: auto;
-  }
-
-  .add-more {
-    position: absolute;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    cursor: pointer;
-    width: 40px;
-    height: 40px;
-    right: 20px;
-    bottom: 20px;
-    border-radius: 50%;
-    background-color: var(--primary-color);
-    fill: var(--text-on-primary);
-  }
-
-  .add-more svg {
-    height: 60%;
-  }
-
-  .file {
-    position: relative;
-    grid-column: span 1 / span 1;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-  }
-
-  .file-name {
-    width: 100%;
-    text-align: left;
-    font-size: 12px;
-    font-weight: 500;
-    line-height: 1.3;
-    margin-bottom: 5px;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    direction: rtl;
-  }
-
-  .file-info {
-    width: 100%;
-    padding: 0 5% 0 0;
-    display: flex;
-    justify-content: space-between;
-    color: #757575;
-    font-size: 11px;
-    font-weight: 400;
-  }
-
-  .file-remove {
-    cursor: pointer;
-    position: absolute;
-    top: 0;
-    right: 0;
-    padding: 0;
-    transform: translate(50%, -50%);
-  }
-
-  .file-icon {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    overflow: hidden;
-    background-color: var(--file-list-background-color, #e5e5e5);
-    fill: var(--text-on-primary);
-    width: 100%;
-    height: 100%;
-  }
-
-  .file-icon img,
-  .file-icon video {
-    aspect-ratio: 1 / 1;
-    object-fit: contain;
-    width: 100%;
-    height: 100%;
-    user-select: none;
-  }
-
-  .audio-wrapper {
-    width: 100%;
-    height: 100%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-  }
-
-  .audio-wrapper audio {
-    height: 100px;
-    width: 250px;
-  }
-
-  .file-icon svg {
-    height: 50%;
-  }
-
-  .loader {
-    margin-top: 50px;
-    width: 100%;
-    height: 100%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-  }
-
-  .spinner {
-    width: 70px;
-    height: 70px;
-    border-radius: 50%;
-    border: 5px solid var(--primary-color);
-    animation:
-      spinner-bulqg1 0.8s infinite linear alternate,
-      spinner-oaa3wk 1.6s infinite linear;
-  }
-
-  @media (max-width: 900px) {
-    .files {
-      grid-template-columns: repeat(3, minmax(0, 1fr));
-    }
-  }
-
-  @media (max-width: 600px) {
-    .files {
-      grid-template-columns: repeat(2, minmax(0, 1fr));
-    }
-  }
-
-  @keyframes spinner-bulqg1 {
-    0% {
-      clip-path: polygon(50% 50%, 0 0, 50% 0%, 50% 0%, 50% 0%, 50% 0%, 50% 0%);
-    }
-
-    12.5% {
-      clip-path: polygon(50% 50%, 0 0, 50% 0%, 100% 0%, 100% 0%, 100% 0%, 100% 0%);
-    }
-
-    25% {
-      clip-path: polygon(50% 50%, 0 0, 50% 0%, 100% 0%, 100% 100%, 100% 100%, 100% 100%);
-    }
-
-    50% {
-      clip-path: polygon(50% 50%, 0 0, 50% 0%, 100% 0%, 100% 100%, 50% 100%, 0% 100%);
-    }
-
-    62.5% {
-      clip-path: polygon(50% 50%, 100% 0, 100% 0%, 100% 0%, 100% 100%, 50% 100%, 0% 100%);
-    }
-
-    75% {
-      clip-path: polygon(50% 50%, 100% 100%, 100% 100%, 100% 100%, 100% 100%, 50% 100%, 0% 100%);
-    }
-
-    100% {
-      clip-path: polygon(50% 50%, 50% 100%, 50% 100%, 50% 100%, 50% 100%, 50% 100%, 0% 100%);
-    }
-  }
-
-  @keyframes spinner-oaa3wk {
-    0% {
-      transform: scaleY(1) rotate(0deg);
-    }
-
-    49.99% {
-      transform: scaleY(1) rotate(135deg);
-    }
-
-    50% {
-      transform: scaleY(-1) rotate(0deg);
-    }
-
-    100% {
-      transform: scaleY(-1) rotate(-135deg);
-    }
-  }
-</style>
