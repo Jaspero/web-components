@@ -12,6 +12,7 @@
   import type { TableSort } from '../types/table-sort.interface';
   import type { TableService } from '../types/table.service';
   import './async-table.wc.pcss';
+  import { clickOutside } from '../utils/click-outside';
 
   export let wording = {
     ARRANGE_COLUMNS: 'Arrange columns',
@@ -46,7 +47,11 @@
   let isOpen = false;
   let resolved: string[] = [];
 
-  const options = ['csv', 'json', 'xml'];
+  const options = [
+    { value: 'csv', label: 'CSV' },
+    { value: 'json', label: 'JSON' },
+    { value: 'xml', label: 'XML' }
+  ];
   const switchOptions = [
     {
       label: 'CSV',
@@ -295,7 +300,7 @@
 
   function dragover(event: DragEvent, index: number) {
     event.preventDefault();
-    
+
     if (headers[index].disableOrganize) {
       return;
     }
@@ -317,7 +322,7 @@
 
     hoveringOverColumnIndex = null;
     dialogHoveringOverColumnIndex = null;
-    
+
     const draggedColumnKey = event.dataTransfer!.getData('text/plain');
     const currentIndex = headers.findIndex((header) => header.key === draggedColumnKey);
 
@@ -519,12 +524,24 @@
           </button>
         {:else}
           <div class="jp-async-table-dropdown">
-            <button type="button" class="jp-async-table-button" on:click={() => (isOpen = !isOpen)}>Export</button>
+            <button type="button" class="jp-async-table-button" on:click={() => (isOpen = !isOpen)}
+              >Export</button
+            >
             {#if isOpen}
-              <ul class="jp-async-table-dropdown-menu">
+              <ul
+                class="jp-async-table-dropdown-menu"
+                use:clickOutside
+                on:click_outside={() => {
+                  isOpen = !isOpen;
+                }}
+              >
                 {#each options as option}
-                  <button type="button" class="jp-async-table-dropdown-option" on:click={() => handleOptionClick(option)}>
-                    {option}
+                  <button
+                    type="button"
+                    class="jp-async-table-dropdown-option"
+                    on:click={() => handleOptionClick(option.value)}
+                  >
+                    {option.label}
                   </button>
                 {/each}
               </ul>
