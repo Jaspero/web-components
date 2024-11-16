@@ -55,7 +55,7 @@
     right: 50%;
     transform: translateX(50%);
     margin: 1rem 0;
-    background-color: white;
+    background-color: var(--background-primary);
     box-shadow: 0 3px 15px 6px rgba(0, 0, 0, 0.2);
     border-radius: 0.5rem;
     z-index: 100;
