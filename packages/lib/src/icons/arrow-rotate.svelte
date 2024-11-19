@@ -19,6 +19,7 @@
     min-width: 1rem;
     min-height: 1rem;
     transition: 0.3s;
+    fill: var(--text-primary);
 
     &-rotate {
       transform: rotate(-180deg);
