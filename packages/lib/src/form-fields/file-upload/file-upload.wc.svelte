@@ -244,6 +244,7 @@
           type="text"
           {name}
           {id}
+          {required}
           on:focus={() => (inputFocused = true)}
           on:blur={() => (inputFocused = false)}
           on:change={() => checkImage()}
