@@ -21,6 +21,7 @@
   import './file-list.wc.pcss';
 
   import uploadIcon from '../../icons/upload.svg?raw';
+  import cropperIcon from '../../icons/open-cropper.svg?raw';
   import externalLinkIcon from '../../icons/external-link.svg?raw';
   import unknownFileIcon from '../../icons/unknown-file.svg?raw';
   import deleteIcon from '../../icons/delete.svg?raw';
@@ -46,9 +47,11 @@
   export let required = false;
   export let displayFormat = 'snake';
   export let displayFormatFunction;
+  let beingCropped: number | null = null;
+  let showCropper = false;
 
   let displayedFileNameString = '';
-  let grabbedEl: { style: string; } | null = null;
+  let grabbedEl: { style: string } | null = null;
   let grabbedIndex = -1;
   let startingY: number;
   let startingX: number;
@@ -64,6 +67,16 @@
   export const reportValidity = () => attachedInternals.reportValidity();
 
   const dispatch = createEventDispatcher();
+
+  function handleCrop(e: { detail: { objs: any; }; }, index: number) {
+    internalFiles = internalFiles.toSpliced(index, 1, e.detail.objs);
+    beingCropped = null;
+  }
+
+  function setShowCropper(index: number | null) {
+    beingCropped = index;
+    showCropper = true ? false : true;
+  }
 
   $: {
     internalValue = internalFiles
@@ -116,7 +129,7 @@
     internalFiles = internalFiles.filter((i, ind) => index !== ind);
   }
 
-  function handleFileInput(e) {
+  function handleFileInput(e: Event & { currentTarget: EventTarget & HTMLInputElement; }) {
     if (e.target.files.length) {
       internalFiles = internalFiles.concat(filesToObjs(Array.from(e.target.files)));
       dispatch('change', { unsaved: internalFiles.filter((el) => !el.saved).length });
@@ -124,7 +137,7 @@
     }
   }
 
-  function handleDrop(e) {
+  function handleDrop(e: DragEvent & { currentTarget: EventTarget & HTMLDivElement; }) {
     if (e.dataTransfer.files.length) {
       internalFiles = internalFiles.concat(filesToObjs(Array.from(e.dataTransfer.files)));
       dispatch('change', { unsaved: internalFiles.filter((el) => !el.saved).length });
@@ -174,7 +187,7 @@
         return obj;
       });
 
-  const blobToFile = (blob, filename) => {
+  const blobToFile = (blob: BlobPart | Promise<Blob>, filename: string) => {
     return new File([blob], filename);
   };
 
@@ -221,7 +234,7 @@
     ).filter(Boolean);
   };
 
-  function mousemove(e: { preventDefault: () => void; clientY: number; clientX: number; }) {
+  function mousemove(e: { preventDefault: () => void; clientY: number; clientX: number }) {
     if (grabbedEl) {
       e.preventDefault();
       grabbedEl.style.transform = 'translateY(' + (e.clientY - startingY) + 'px)';
@@ -324,10 +337,29 @@
           >
             {@html deleteIcon}
           </button>
+          <div class="jp-file-list-file-cropper">
+          <button
+          type="button"
+          on:mousedown|preventDefault={() => (beingCropped = index)}
+        >
+          {@html cropperIcon}
+        </button>
+      </div>
           <div class="jp-file-list-file-icon">
             {#if file.src}
               {#if file.type === 'image'}
-                <img src={file.src} alt={file.name} />
+                {#if index === beingCropped}
+                  <jp-cropper
+                    src={file.src}
+                    alt={file.name}
+                    name={file.name}
+                    style="width: 100%; height: 100%;"
+                    on:croppedImage={(e) => handleCrop(e, index)}
+                    on:exitCropper={() => (beingCropped = null)}
+                  />
+                {:else}
+                  <img src={file.src} alt={file.name} />
+                {/if}
               {:else if file.type === 'video'}
                 <!-- svelte-ignore a11y-media-has-caption -->
                 <video controls>
@@ -360,7 +392,11 @@
         </div>
       {/each}
     </div>
-    <button type="button" class="jp-file-list-add-more" on:click|preventDefault={() => browseFilesEl.click()}>
+    <button
+      type="button"
+      class="jp-file-list-add-more"
+      on:click|preventDefault={() => browseFilesEl.click()}
+    >
       {@html plusIcon}
     </button>
   {/if}

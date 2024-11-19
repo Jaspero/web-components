@@ -2,6 +2,7 @@
   import { onMount } from 'svelte';
   import '../../../../dist/file-list.wc.js';
   import '../../../../dist/file-list.css';
+  import '../../../../dist/cropper.wc.js';
 
   let el: HTMLDivElement;
   let fileList: any;

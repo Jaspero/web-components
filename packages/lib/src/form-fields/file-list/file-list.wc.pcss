@@ -20,6 +20,12 @@
     flex-direction: column;
     align-items: center;
 
+    &-cropper {
+      position: absolute;
+      left: 0;
+      padding: 2px;
+    }
+
     &-name {
       width: 100%;
       text-align: left;
@@ -51,6 +57,7 @@
       padding: 0;
       transform: translate(50%, -50%);
       border-color: transparent;
+      z-index: 10;
     }
 
     &-grab {
