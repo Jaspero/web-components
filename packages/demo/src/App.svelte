@@ -83,7 +83,7 @@
       <!-- <FileListDemo /> -->
       <!-- <FileUploadDemo /> -->
       <!-- <InputDemo /> -->
-      <!-- <MultiSearchDemo /> -->
+      <MultiSearchDemo />
       <!-- <MultiSelectDemo /> -->
       <!-- <QuillDemo /> -->
       <!-- <RadioDemo /> -->
@@ -106,7 +106,7 @@
       <!-- <CarouselDemo /> -->
       <!-- <ConfirmDemo /> -->
       <!-- <DataPaginatorDemo /> -->
-       <ImageGalleryDemo />
+       <!-- <ImageGalleryDemo /> -->
       <!-- <LinkDemo /> -->
       <!-- <MenuDemo /> -->
       <!-- <PagePaginatorDemo/> -->
