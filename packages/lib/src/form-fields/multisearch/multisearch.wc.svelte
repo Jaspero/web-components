@@ -65,17 +65,18 @@
   export let singleSelect = false;
   export let defaultSearch = false;
   export let defaultShow = 5;
-  let numberOfSelected: number = 0;
 
-  let isTabbing = false; // Variable to track if the user is tabbing
+  let numberOfSelected: number = 0;
+  let isTabbing = false;
   let open = false;
   let bindingElement: HTMLButtonElement;
   let menuStyle: string;
-  let optionElements: HTMLButtonElement[] = []; // Array to store references to option buttons
-  let searchTerm = ''; // focus search term
-  let searchTimeout: any; // focus search timeout
+  let optionElements: HTMLButtonElement[] = [];
+  let searchTerm = '';
+  let searchTimeout: any;
   let displayValue: string[];
   let searchFocused = false;
+  let inputEl: HTMLInputElement;
 
   const dispatch = createEventDispatcher();
 
@@ -396,6 +397,7 @@
   <input
     class="jp-multisearch-hidden-input"
     tabindex="-1"
+    bind:this={inputEl}
     bind:value={internalValue}
     {id}
     {name}

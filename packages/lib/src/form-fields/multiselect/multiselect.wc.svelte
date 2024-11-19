@@ -371,7 +371,6 @@
 
   <input
     class="jp-multiselect-input"
-    class:jp-multiselect-input-required={required}
     tabindex="-1"
     bind:value={internalValue}
     {required}
