@@ -47,6 +47,9 @@
   export let required = false;
   export let displayFormat = 'snake';
   export let displayFormatFunction;
+  export let cropperEnable = 'disabled';
+
+  let mandatoryCroped = 0;
   let beingCropped: number | null = null;
   let showCropper = false;
 
@@ -61,6 +64,15 @@
   let hoveringFile = false;
   let fileElements: HTMLDivElement[] = [];
   let internalValue = '';
+  function myFunction(){
+    mandatoryCroped++;
+  }
+
+  function handleMandatoryCrop(e: { detail: { objs: any } }, index: number) {
+    internalFiles = internalFiles.toSpliced(index, 1, e.detail.objs);
+    internalFiles[index].displayedName = internalFiles[index].name;
+    mandatoryCroped++;
+  }
 
   export const getValue = () => internalValue.split(',').filter(Boolean);
 
@@ -68,14 +80,11 @@
 
   const dispatch = createEventDispatcher();
 
-  function handleCrop(e: { detail: { objs: any; }; }, index: number) {
+  function handleCrop(e: { detail: { objs: any } }, index: number) {
     internalFiles = internalFiles.toSpliced(index, 1, e.detail.objs);
+    internalFiles[index].displayedName = internalFiles[index].name;
+    console.log(internalFiles);
     beingCropped = null;
-  }
-
-  function setShowCropper(index: number | null) {
-    beingCropped = index;
-    showCropper = true ? false : true;
   }
 
   $: {
@@ -129,7 +138,7 @@
     internalFiles = internalFiles.filter((i, ind) => index !== ind);
   }
 
-  function handleFileInput(e: Event & { currentTarget: EventTarget & HTMLInputElement; }) {
+  function handleFileInput(e: Event & { currentTarget: EventTarget & HTMLInputElement }) {
     if (e.target.files.length) {
       internalFiles = internalFiles.concat(filesToObjs(Array.from(e.target.files)));
       dispatch('change', { unsaved: internalFiles.filter((el) => !el.saved).length });
@@ -137,7 +146,7 @@
     }
   }
 
-  function handleDrop(e: DragEvent & { currentTarget: EventTarget & HTMLDivElement; }) {
+  function handleDrop(e: DragEvent & { currentTarget: EventTarget & HTMLDivElement }) {
     if (e.dataTransfer.files.length) {
       internalFiles = internalFiles.concat(filesToObjs(Array.from(e.dataTransfer.files)));
       dispatch('change', { unsaved: internalFiles.filter((el) => !el.saved).length });
@@ -320,7 +329,7 @@
         <a on:click={() => browseFilesEl.click()}>{wording.BROWSE_FILES}</a>
       </div>
     </div>
-  {:else}
+  {:else if cropperEnable != 'mandatory' || mandatoryCroped > internalFiles.length - 1}
     <div class="jp-file-list-files">
       {#each internalFiles as file, index}
         <!-- svelte-ignore a11y-mouse-events-have-key-events -->
@@ -337,18 +346,17 @@
           >
             {@html deleteIcon}
           </button>
-          <div class="jp-file-list-file-cropper">
-          <button
-          type="button"
-          on:mousedown|preventDefault={() => (beingCropped = index)}
-        >
-          {@html cropperIcon}
-        </button>
-      </div>
+          {#if file.type === 'image' && cropperEnable != 'disabled'}
+            <div class="jp-file-list-file-cropper">
+              <button type="button" on:mousedown|preventDefault={() => (beingCropped = index)}>
+                {@html cropperIcon}
+              </button>
+            </div>
+          {/if}
           <div class="jp-file-list-file-icon">
             {#if file.src}
               {#if file.type === 'image'}
-                {#if index === beingCropped}
+                {#if index === beingCropped && cropperEnable != 'disabled'}
                   <jp-cropper
                     src={file.src}
                     alt={file.name}
@@ -399,6 +407,25 @@
     >
       {@html plusIcon}
     </button>
+  {:else}
+    {#each internalFiles as file, index}
+      {#if index === mandatoryCroped}
+        {#if file.type === 'image'}
+          <div class="cropperContainer">
+            {#if file.src}
+              <jp-cropper
+                src={file.src}
+                alt={file.name}
+                mandatory={true}
+                on:croppedImage={(e) => handleMandatoryCrop(e, index)}
+              />
+            {/if}
+          </div>
+        {:else}
+          {myFunction()}
+        {/if}
+      {/if}
+    {/each}
   {/if}
 </div>
 

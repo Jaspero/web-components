@@ -14,13 +14,9 @@
 
   onMount(() => {
     fileList = document.createElement('jp-file-list') as any;
+    fileList.cropperEnable = 'mandatory';
     fileList.value = [
-      'https://placehold.co/600x400/000000/CCCCCC.png',
-      'https://placehold.co/600x400/000000/RRRRRR.png'
     ];
-    fileList.service = {
-      uploadFile: async () => 'https://placehold.co/200x200/eeeeee/CCCCCC.png'
-    };
 
     el.appendChild(fileList);
   });

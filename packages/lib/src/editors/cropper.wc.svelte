@@ -17,12 +17,11 @@
 <script lang="ts">
   import { onMount } from 'svelte';
   import { createEventDispatcher } from 'svelte';
-  import { clickOutside } from '../utils/click-outside';
 
   import checkIcon from '../icons/check.svg?raw';
   import backArrowIcon from '../icons/back-arrow.svg?raw';
 
-  export let src, alt : string;
+  export let src, alt: string;
   export let mandatory = false;
   export let aspectRatio: null | number = null;
   export let minCanvasHeight: null | number = null;
@@ -41,8 +40,17 @@
   export let maxImgWidth = '';
   export let position = '';
 
-  let croppedCanvas: { toDataURL: () => any; toBlob: (arg0: { (blob: any): void; (blob: any): void; }) => void; };
-  let img: HTMLImageElement, cropper: { getCroppedCanvas: () => any; element: { cropper: { getCroppedCanvas: () => any; }; }; };
+  let modifiedBackArrowIcon = backArrowIcon
+    .replace(/width="[^"]*"/, `max-width="1rem"`)
+    .replace(/height="[^"]*"/, `max-height="1rem"`)
+    .replace(/svg /, `svg transform="scale(1.3)" `);
+
+  let croppedCanvas: {
+    toDataURL: () => any;
+    toBlob: (arg0: { (blob: any): void; (blob: any): void }) => void;
+  };
+  let img: HTMLImageElement,
+    cropper: { getCroppedCanvas: () => any; element: { cropper: { getCroppedCanvas: () => any } } };
 
   onMount(() => {
     img.addEventListener('load', initCropper);
@@ -88,18 +96,18 @@
   }
 
   function handleCrop() {
-  croppedCanvas = cropper.getCroppedCanvas() || cropper.element.cropper.getCroppedCanvas();
+    croppedCanvas = cropper.getCroppedCanvas() || cropper.element.cropper.getCroppedCanvas();
 
-  if (croppedCanvas) {
-    croppedCanvas.toBlob((blob: BlobPart) => {
-      const file = new File([blob], alt, { type: 'image' });
-      const objs = fileToObj(file);
-      dispatch('croppedImage', { objs });
-    });
-  } else {
-    console.error('Unable to get cropped canvas');
+    if (croppedCanvas) {
+      croppedCanvas.toBlob((blob: BlobPart) => {
+        const file = new File([blob], alt, { type: 'image' });
+        const objs = fileToObj(file);
+        dispatch('croppedImage', { objs });
+      });
+    } else {
+      console.error('Unable to get cropped canvas');
+    }
   }
-}
   function handleCropToFile() {
     croppedCanvas = cropper.getCroppedCanvas();
     croppedCanvas.toBlob((blob: BlobPart) => {
@@ -129,25 +137,35 @@
     class:hidden={mandatory}
     style="background-color: var(--primary-color); "
   >
-    {@html backArrowIcon}
+    <div class="icon-conteiner">
+      {@html modifiedBackArrowIcon}
+    </div>
   </button>
   <button
     class="checkButton"
+    class:mandatory
     on:mousedown={handleCrop}
-    style="background-color: var(--primary-color);"
+    style="background-color: var(--primary-color); color: white;"
   >
-    {@html checkIcon}
+    <div class="icon-conteiner">
+      {@html checkIcon}
+    </div>
   </button>
 </div>
 
 <style>
+  .icon-conteiner{
+    max-width: 16px;
+    max-height: 16px;
+  }
   .backButton {
     position: relative;
     left: 20%;
-    max-width: 2rem;
-    max-height: 2rem;
+    width: 2rem;
+    height: 2rem;
     border-color: transparent;
     border-radius: 50%;
+    align-items: center;
   }
 
   .backButton.hidden {
@@ -157,16 +175,18 @@
 
   .checkButton {
     position: absolute;
+    align-items: center;
     border-color: transparent;
     border-radius: 50%;
     right: 20%;
-    max-width: 5rem;
-    max-height: 5rem;
+    width: 2rem;
+    height: 2rem;
   }
 
   .checkButton.mandatory {
     position: relative;
     right: 0%;
+    color: white;
     display: flex;
     margin-inline: auto;
   }
