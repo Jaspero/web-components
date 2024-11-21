@@ -161,6 +161,94 @@
               "kind": "field",
               "name": "clearSelection",
               "readonly": true
+            },
+            {
+              "kind": "field",
+              "name": "images",
+              "inheritedFrom": {
+                "name": "ie",
+                "module": "dist/image-gallery.wc.js"
+              }
+            },
+            {
+              "kind": "field",
+              "name": "enablePagination",
+              "inheritedFrom": {
+                "name": "ie",
+                "module": "dist/image-gallery.wc.js"
+              }
+            },
+            {
+              "kind": "field",
+              "name": "sliderBar",
+              "inheritedFrom": {
+                "name": "ie",
+                "module": "dist/image-gallery.wc.js"
+              }
+            },
+            {
+              "kind": "field",
+              "name": "autoSlide",
+              "inheritedFrom": {
+                "name": "ie",
+                "module": "dist/image-gallery.wc.js"
+              }
+            },
+            {
+              "kind": "field",
+              "name": "interval",
+              "inheritedFrom": {
+                "name": "ie",
+                "module": "dist/image-gallery.wc.js"
+              }
+            },
+            {
+              "kind": "field",
+              "name": "columnCount",
+              "inheritedFrom": {
+                "name": "ie",
+                "module": "dist/image-gallery.wc.js"
+              }
+            },
+            {
+              "kind": "field",
+              "name": "columnCountTable",
+              "inheritedFrom": {
+                "name": "ie",
+                "module": "dist/image-gallery.wc.js"
+              }
+            },
+            {
+              "kind": "field",
+              "name": "columnCountMobile",
+              "inheritedFrom": {
+                "name": "ie",
+                "module": "dist/image-gallery.wc.js"
+              }
+            },
+            {
+              "kind": "field",
+              "name": "gapX",
+              "inheritedFrom": {
+                "name": "ie",
+                "module": "dist/image-gallery.wc.js"
+              }
+            },
+            {
+              "kind": "field",
+              "name": "gapY",
+              "inheritedFrom": {
+                "name": "ie",
+                "module": "dist/image-gallery.wc.js"
+              }
+            },
+            {
+              "kind": "field",
+              "name": "enableGallery",
+              "inheritedFrom": {
+                "name": "ie",
+                "module": "dist/image-gallery.wc.js"
+              }
             }
           ],
           "attributes": [
@@ -203,6 +291,94 @@
             {
               "name": "clearSelection",
               "fieldName": "clearSelection"
+            },
+            {
+              "name": "images",
+              "fieldName": "images",
+              "inheritedFrom": {
+                "name": "ie",
+                "module": "dist/image-gallery.wc.js"
+              }
+            },
+            {
+              "name": "enablePagination",
+              "fieldName": "enablePagination",
+              "inheritedFrom": {
+                "name": "ie",
+                "module": "dist/image-gallery.wc.js"
+              }
+            },
+            {
+              "name": "sliderBar",
+              "fieldName": "sliderBar",
+              "inheritedFrom": {
+                "name": "ie",
+                "module": "dist/image-gallery.wc.js"
+              }
+            },
+            {
+              "name": "autoSlide",
+              "fieldName": "autoSlide",
+              "inheritedFrom": {
+                "name": "ie",
+                "module": "dist/image-gallery.wc.js"
+              }
+            },
+            {
+              "name": "interval",
+              "fieldName": "interval",
+              "inheritedFrom": {
+                "name": "ie",
+                "module": "dist/image-gallery.wc.js"
+              }
+            },
+            {
+              "name": "columnCount",
+              "fieldName": "columnCount",
+              "inheritedFrom": {
+                "name": "ie",
+                "module": "dist/image-gallery.wc.js"
+              }
+            },
+            {
+              "name": "columnCountTable",
+              "fieldName": "columnCountTable",
+              "inheritedFrom": {
+                "name": "ie",
+                "module": "dist/image-gallery.wc.js"
+              }
+            },
+            {
+              "name": "columnCountMobile",
+              "fieldName": "columnCountMobile",
+              "inheritedFrom": {
+                "name": "ie",
+                "module": "dist/image-gallery.wc.js"
+              }
+            },
+            {
+              "name": "gapX",
+              "fieldName": "gapX",
+              "inheritedFrom": {
+                "name": "ie",
+                "module": "dist/image-gallery.wc.js"
+              }
+            },
+            {
+              "name": "gapY",
+              "fieldName": "gapY",
+              "inheritedFrom": {
+                "name": "ie",
+                "module": "dist/image-gallery.wc.js"
+              }
+            },
+            {
+              "name": "enableGallery",
+              "fieldName": "enableGallery",
+              "inheritedFrom": {
+                "name": "ie",
+                "module": "dist/image-gallery.wc.js"
+              }
             }
           ],
           "superclass": {
@@ -239,7 +415,7 @@
         {
           "kind": "class",
           "description": "",
-          "name": "Qe",
+          "name": "Ke",
           "members": [
             {
               "kind": "field",
@@ -432,7 +608,7 @@
             }
           ],
           "superclass": {
-            "name": "Ot",
+            "name": "On",
             "module": "/dist/svelte.js"
           },
           "tagName": "jp-async-table",
@@ -452,7 +628,7 @@
           "kind": "js",
           "name": "default",
           "declaration": {
-            "name": "Qe",
+            "name": "Ke",
             "module": "dist/async-table.wc.js"
           }
         }
@@ -469,11 +645,7 @@
           "members": [
             {
               "kind": "field",
-              "name": "wording",
-              "inheritedFrom": {
-                "name": "ve",
-                "module": "dist/file-list.wc.js"
-              }
+              "name": "wording"
             },
             {
               "kind": "field",
@@ -481,11 +653,7 @@
             },
             {
               "kind": "field",
-              "name": "value",
-              "inheritedFrom": {
-                "name": "ve",
-                "module": "dist/file-list.wc.js"
-              }
+              "name": "value"
             },
             {
               "kind": "field",
@@ -497,11 +665,7 @@
             },
             {
               "kind": "field",
-              "name": "label",
-              "inheritedFrom": {
-                "name": "ve",
-                "module": "dist/file-list.wc.js"
-              }
+              "name": "label"
             },
             {
               "kind": "field",
@@ -509,19 +673,11 @@
             },
             {
               "kind": "field",
-              "name": "id",
-              "inheritedFrom": {
-                "name": "ve",
-                "module": "dist/file-list.wc.js"
-              }
+              "name": "id"
             },
             {
               "kind": "field",
-              "name": "name",
-              "inheritedFrom": {
-                "name": "ve",
-                "module": "dist/file-list.wc.js"
-              }
+              "name": "name"
             },
             {
               "kind": "field",
@@ -529,19 +685,11 @@
             },
             {
               "kind": "field",
-              "name": "attachedInternals",
-              "inheritedFrom": {
-                "name": "ve",
-                "module": "dist/file-list.wc.js"
-              }
+              "name": "attachedInternals"
             },
             {
               "kind": "field",
-              "name": "required",
-              "inheritedFrom": {
-                "name": "ve",
-                "module": "dist/file-list.wc.js"
-              }
+              "name": "required"
             },
             {
               "kind": "field",
@@ -561,11 +709,7 @@
             },
             {
               "kind": "field",
-              "name": "validationMessages",
-              "inheritedFrom": {
-                "name": "ve",
-                "module": "dist/file-list.wc.js"
-              }
+              "name": "validationMessages"
             },
             {
               "kind": "field",
@@ -586,103 +730,13 @@
             {
               "kind": "field",
               "name": "reportValidity",
-              "readonly": true,
-              "inheritedFrom": {
-                "name": "ve",
-                "module": "dist/file-list.wc.js"
-              }
-            },
-            {
-              "kind": "field",
-              "name": "service",
-              "inheritedFrom": {
-                "name": "ve",
-                "module": "dist/file-list.wc.js"
-              }
-            },
-            {
-              "kind": "field",
-              "name": "maxfiles",
-              "inheritedFrom": {
-                "name": "ve",
-                "module": "dist/file-list.wc.js"
-              }
-            },
-            {
-              "kind": "field",
-              "name": "minfiles",
-              "inheritedFrom": {
-                "name": "ve",
-                "module": "dist/file-list.wc.js"
-              }
-            },
-            {
-              "kind": "field",
-              "name": "maxfilesValidationMessage",
-              "inheritedFrom": {
-                "name": "ve",
-                "module": "dist/file-list.wc.js"
-              }
-            },
-            {
-              "kind": "field",
-              "name": "minfilesValidationMessage",
-              "inheritedFrom": {
-                "name": "ve",
-                "module": "dist/file-list.wc.js"
-              }
-            },
-            {
-              "kind": "field",
-              "name": "sortable",
-              "inheritedFrom": {
-                "name": "ve",
-                "module": "dist/file-list.wc.js"
-              }
-            },
-            {
-              "kind": "field",
-              "name": "displayFormat",
-              "inheritedFrom": {
-                "name": "ve",
-                "module": "dist/file-list.wc.js"
-              }
-            },
-            {
-              "kind": "field",
-              "name": "displayFormatFunction",
-              "inheritedFrom": {
-                "name": "ve",
-                "module": "dist/file-list.wc.js"
-              }
-            },
-            {
-              "kind": "field",
-              "name": "getValue",
-              "readonly": true,
-              "inheritedFrom": {
-                "name": "ve",
-                "module": "dist/file-list.wc.js"
-              }
-            },
-            {
-              "kind": "field",
-              "name": "save",
-              "readonly": true,
-              "inheritedFrom": {
-                "name": "ve",
-                "module": "dist/file-list.wc.js"
-              }
+              "readonly": true
             }
           ],
           "attributes": [
             {
               "name": "wording",
-              "fieldName": "wording",
-              "inheritedFrom": {
-                "name": "ve",
-                "module": "dist/file-list.wc.js"
-              }
+              "fieldName": "wording"
             },
             {
               "name": "options",
@@ -690,11 +744,7 @@
             },
             {
               "name": "value",
-              "fieldName": "value",
-              "inheritedFrom": {
-                "name": "ve",
-                "module": "dist/file-list.wc.js"
-              }
+              "fieldName": "value"
             },
             {
               "name": "asyncOptions",
@@ -706,11 +756,7 @@
             },
             {
               "name": "label",
-              "fieldName": "label",
-              "inheritedFrom": {
-                "name": "ve",
-                "module": "dist/file-list.wc.js"
-              }
+              "fieldName": "label"
             },
             {
               "name": "labelType",
@@ -718,19 +764,11 @@
             },
             {
               "name": "id",
-              "fieldName": "id",
-              "inheritedFrom": {
-                "name": "ve",
-                "module": "dist/file-list.wc.js"
-              }
+              "fieldName": "id"
             },
             {
               "name": "name",
-              "fieldName": "name",
-              "inheritedFrom": {
-                "name": "ve",
-                "module": "dist/file-list.wc.js"
-              }
+              "fieldName": "name"
             },
             {
               "name": "disabled",
@@ -738,19 +776,11 @@
             },
             {
               "name": "attachedInternals",
-              "fieldName": "attachedInternals",
-              "inheritedFrom": {
-                "name": "ve",
-                "module": "dist/file-list.wc.js"
-              }
+              "fieldName": "attachedInternals"
             },
             {
               "name": "required",
-              "fieldName": "required",
-              "inheritedFrom": {
-                "name": "ve",
-                "module": "dist/file-list.wc.js"
-              }
+              "fieldName": "required"
             },
             {
               "name": "placeholder",
@@ -770,11 +800,7 @@
             },
             {
               "name": "validationMessages",
-              "fieldName": "validationMessages",
-              "inheritedFrom": {
-                "name": "ve",
-                "module": "dist/file-list.wc.js"
-              }
+              "fieldName": "validationMessages"
             },
             {
               "name": "requiredValidationMessage",
@@ -794,91 +820,7 @@
             },
             {
               "name": "reportValidity",
-              "fieldName": "reportValidity",
-              "inheritedFrom": {
-                "name": "ve",
-                "module": "dist/file-list.wc.js"
-              }
-            },
-            {
-              "name": "service",
-              "fieldName": "service",
-              "inheritedFrom": {
-                "name": "ve",
-                "module": "dist/file-list.wc.js"
-              }
-            },
-            {
-              "name": "maxfiles",
-              "fieldName": "maxfiles",
-              "inheritedFrom": {
-                "name": "ve",
-                "module": "dist/file-list.wc.js"
-              }
-            },
-            {
-              "name": "minfiles",
-              "fieldName": "minfiles",
-              "inheritedFrom": {
-                "name": "ve",
-                "module": "dist/file-list.wc.js"
-              }
-            },
-            {
-              "name": "maxfilesValidationMessage",
-              "fieldName": "maxfilesValidationMessage",
-              "inheritedFrom": {
-                "name": "ve",
-                "module": "dist/file-list.wc.js"
-              }
-            },
-            {
-              "name": "minfilesValidationMessage",
-              "fieldName": "minfilesValidationMessage",
-              "inheritedFrom": {
-                "name": "ve",
-                "module": "dist/file-list.wc.js"
-              }
-            },
-            {
-              "name": "sortable",
-              "fieldName": "sortable",
-              "inheritedFrom": {
-                "name": "ve",
-                "module": "dist/file-list.wc.js"
-              }
-            },
-            {
-              "name": "displayFormat",
-              "fieldName": "displayFormat",
-              "inheritedFrom": {
-                "name": "ve",
-                "module": "dist/file-list.wc.js"
-              }
-            },
-            {
-              "name": "displayFormatFunction",
-              "fieldName": "displayFormatFunction",
-              "inheritedFrom": {
-                "name": "ve",
-                "module": "dist/file-list.wc.js"
-              }
-            },
-            {
-              "name": "getValue",
-              "fieldName": "getValue",
-              "inheritedFrom": {
-                "name": "ve",
-                "module": "dist/file-list.wc.js"
-              }
-            },
-            {
-              "name": "save",
-              "fieldName": "save",
-              "inheritedFrom": {
-                "name": "ve",
-                "module": "dist/file-list.wc.js"
-              }
+              "fieldName": "reportValidity"
             }
           ],
           "superclass": {
@@ -2519,7 +2461,7 @@
         {
           "kind": "class",
           "description": "",
-          "name": "ve",
+          "name": "fe",
           "members": [
             {
               "kind": "field",
@@ -2680,7 +2622,7 @@
             }
           ],
           "superclass": {
-            "name": "ke",
+            "name": "De",
             "module": "/dist/svelte.js"
           },
           "tagName": "jp-file-list",
@@ -2700,7 +2642,7 @@
           "kind": "js",
           "name": "default",
           "declaration": {
-            "name": "ve",
+            "name": "fe",
             "module": "dist/file-list.wc.js"
           }
         }
@@ -2850,7 +2792,7 @@
         {
           "kind": "class",
           "description": "",
-          "name": "ae",
+          "name": "ie",
           "members": [
             {
               "kind": "field",
@@ -2944,7 +2886,7 @@
             }
           ],
           "superclass": {
-            "name": "pe",
+            "name": "de",
             "module": "/dist/svelte.js"
           },
           "tagName": "jp-image-gallery",
@@ -2964,7 +2906,7 @@
           "kind": "js",
           "name": "default",
           "declaration": {
-            "name": "ae",
+            "name": "ie",
             "module": "dist/image-gallery.wc.js"
           }
         }
@@ -3507,7 +3449,7 @@
         {
           "kind": "class",
           "description": "",
-          "name": "Me",
+          "name": "Ve",
           "members": [
             {
               "kind": "field",
@@ -3699,7 +3641,7 @@
             }
           ],
           "superclass": {
-            "name": "Pe",
+            "name": "Xe",
             "module": "/dist/svelte.js"
           },
           "tagName": "jp-multisearch",
@@ -3719,7 +3661,7 @@
           "kind": "js",
           "name": "default",
           "declaration": {
-            "name": "Me",
+            "name": "Ve",
             "module": "dist/multisearch.wc.js"
           }
         }
@@ -3732,7 +3674,7 @@
         {
           "kind": "class",
           "description": "",
-          "name": "he",
+          "name": "$e",
           "members": [
             {
               "kind": "field",
@@ -3928,7 +3870,7 @@
           "kind": "js",
           "name": "default",
           "declaration": {
-            "name": "he",
+            "name": "$e",
             "module": "dist/multiselect.wc.js"
           }
         }
@@ -5039,11 +4981,7 @@
           "members": [
             {
               "kind": "field",
-              "name": "attachedInternals",
-              "inheritedFrom": {
-                "name": "Me",
-                "module": "dist/multisearch.wc.js"
-              }
+              "name": "attachedInternals"
             },
             {
               "kind": "field",
@@ -5051,51 +4989,27 @@
             },
             {
               "kind": "field",
-              "name": "disabled",
-              "inheritedFrom": {
-                "name": "Me",
-                "module": "dist/multisearch.wc.js"
-              }
+              "name": "disabled"
             },
             {
               "kind": "field",
-              "name": "required",
-              "inheritedFrom": {
-                "name": "Me",
-                "module": "dist/multisearch.wc.js"
-              }
+              "name": "required"
             },
             {
               "kind": "field",
-              "name": "hint",
-              "inheritedFrom": {
-                "name": "Me",
-                "module": "dist/multisearch.wc.js"
-              }
+              "name": "hint"
             },
             {
               "kind": "field",
-              "name": "value",
-              "inheritedFrom": {
-                "name": "Me",
-                "module": "dist/multisearch.wc.js"
-              }
+              "name": "value"
             },
             {
               "kind": "field",
-              "name": "id",
-              "inheritedFrom": {
-                "name": "Me",
-                "module": "dist/multisearch.wc.js"
-              }
+              "name": "id"
             },
             {
               "kind": "field",
-              "name": "name",
-              "inheritedFrom": {
-                "name": "Me",
-                "module": "dist/multisearch.wc.js"
-              }
+              "name": "name"
             },
             {
               "kind": "field",
@@ -5103,19 +5017,11 @@
             },
             {
               "kind": "field",
-              "name": "label",
-              "inheritedFrom": {
-                "name": "Me",
-                "module": "dist/multisearch.wc.js"
-              }
+              "name": "label"
             },
             {
               "kind": "field",
-              "name": "labelType",
-              "inheritedFrom": {
-                "name": "Me",
-                "module": "dist/multisearch.wc.js"
-              }
+              "name": "labelType"
             },
             {
               "kind": "field",
@@ -5124,126 +5030,22 @@
             {
               "kind": "field",
               "name": "getValue",
-              "readonly": true,
-              "inheritedFrom": {
-                "name": "Me",
-                "module": "dist/multisearch.wc.js"
-              }
+              "readonly": true
             },
             {
               "kind": "field",
-              "name": "requiredValidationMessage",
-              "inheritedFrom": {
-                "name": "Me",
-                "module": "dist/multisearch.wc.js"
-              }
+              "name": "requiredValidationMessage"
             },
             {
               "kind": "field",
               "name": "reportValidity",
-              "readonly": true,
-              "inheritedFrom": {
-                "name": "Me",
-                "module": "dist/multisearch.wc.js"
-              }
-            },
-            {
-              "kind": "field",
-              "name": "wording",
-              "inheritedFrom": {
-                "name": "Me",
-                "module": "dist/multisearch.wc.js"
-              }
-            },
-            {
-              "kind": "field",
-              "name": "minSelects",
-              "inheritedFrom": {
-                "name": "Me",
-                "module": "dist/multisearch.wc.js"
-              }
-            },
-            {
-              "kind": "field",
-              "name": "maxSelects",
-              "inheritedFrom": {
-                "name": "Me",
-                "module": "dist/multisearch.wc.js"
-              }
-            },
-            {
-              "kind": "field",
-              "name": "internalValue",
-              "inheritedFrom": {
-                "name": "Me",
-                "module": "dist/multisearch.wc.js"
-              }
-            },
-            {
-              "kind": "field",
-              "name": "service",
-              "inheritedFrom": {
-                "name": "Me",
-                "module": "dist/multisearch.wc.js"
-              }
-            },
-            {
-              "kind": "field",
-              "name": "validationMessages",
-              "inheritedFrom": {
-                "name": "Me",
-                "module": "dist/multisearch.wc.js"
-              }
-            },
-            {
-              "kind": "field",
-              "name": "minselectsValidationMessage",
-              "inheritedFrom": {
-                "name": "Me",
-                "module": "dist/multisearch.wc.js"
-              }
-            },
-            {
-              "kind": "field",
-              "name": "maxselectsValidationMessage",
-              "inheritedFrom": {
-                "name": "Me",
-                "module": "dist/multisearch.wc.js"
-              }
-            },
-            {
-              "kind": "field",
-              "name": "singleSelect",
-              "inheritedFrom": {
-                "name": "Me",
-                "module": "dist/multisearch.wc.js"
-              }
-            },
-            {
-              "kind": "field",
-              "name": "defaultSearch",
-              "inheritedFrom": {
-                "name": "Me",
-                "module": "dist/multisearch.wc.js"
-              }
-            },
-            {
-              "kind": "field",
-              "name": "defaultShow",
-              "inheritedFrom": {
-                "name": "Me",
-                "module": "dist/multisearch.wc.js"
-              }
+              "readonly": true
             }
           ],
           "attributes": [
             {
               "name": "attachedInternals",
-              "fieldName": "attachedInternals",
-              "inheritedFrom": {
-                "name": "Me",
-                "module": "dist/multisearch.wc.js"
-              }
+              "fieldName": "attachedInternals"
             },
             {
               "name": "options",
@@ -5251,51 +5053,27 @@
             },
             {
               "name": "disabled",
-              "fieldName": "disabled",
-              "inheritedFrom": {
-                "name": "Me",
-                "module": "dist/multisearch.wc.js"
-              }
+              "fieldName": "disabled"
             },
             {
               "name": "required",
-              "fieldName": "required",
-              "inheritedFrom": {
-                "name": "Me",
-                "module": "dist/multisearch.wc.js"
-              }
+              "fieldName": "required"
             },
             {
               "name": "hint",
-              "fieldName": "hint",
-              "inheritedFrom": {
-                "name": "Me",
-                "module": "dist/multisearch.wc.js"
-              }
+              "fieldName": "hint"
             },
             {
               "name": "value",
-              "fieldName": "value",
-              "inheritedFrom": {
-                "name": "Me",
-                "module": "dist/multisearch.wc.js"
-              }
+              "fieldName": "value"
             },
             {
               "name": "id",
-              "fieldName": "id",
-              "inheritedFrom": {
-                "name": "Me",
-                "module": "dist/multisearch.wc.js"
-              }
+              "fieldName": "id"
             },
             {
               "name": "name",
-              "fieldName": "name",
-              "inheritedFrom": {
-                "name": "Me",
-                "module": "dist/multisearch.wc.js"
-              }
+              "fieldName": "name"
             },
             {
               "name": "autocomplete",
@@ -5303,19 +5081,11 @@
             },
             {
               "name": "label",
-              "fieldName": "label",
-              "inheritedFrom": {
-                "name": "Me",
-                "module": "dist/multisearch.wc.js"
-              }
+              "fieldName": "label"
             },
             {
               "name": "labelType",
-              "fieldName": "labelType",
-              "inheritedFrom": {
-                "name": "Me",
-                "module": "dist/multisearch.wc.js"
-              }
+              "fieldName": "labelType"
             },
             {
               "name": "showClear",
@@ -5323,115 +5093,15 @@
             },
             {
               "name": "getValue",
-              "fieldName": "getValue",
-              "inheritedFrom": {
-                "name": "Me",
-                "module": "dist/multisearch.wc.js"
-              }
+              "fieldName": "getValue"
             },
             {
               "name": "requiredValidationMessage",
-              "fieldName": "requiredValidationMessage",
-              "inheritedFrom": {
-                "name": "Me",
-                "module": "dist/multisearch.wc.js"
-              }
+              "fieldName": "requiredValidationMessage"
             },
             {
               "name": "reportValidity",
-              "fieldName": "reportValidity",
-              "inheritedFrom": {
-                "name": "Me",
-                "module": "dist/multisearch.wc.js"
-              }
-            },
-            {
-              "name": "wording",
-              "fieldName": "wording",
-              "inheritedFrom": {
-                "name": "Me",
-                "module": "dist/multisearch.wc.js"
-              }
-            },
-            {
-              "name": "minSelects",
-              "fieldName": "minSelects",
-              "inheritedFrom": {
-                "name": "Me",
-                "module": "dist/multisearch.wc.js"
-              }
-            },
-            {
-              "name": "maxSelects",
-              "fieldName": "maxSelects",
-              "inheritedFrom": {
-                "name": "Me",
-                "module": "dist/multisearch.wc.js"
-              }
-            },
-            {
-              "name": "internalValue",
-              "fieldName": "internalValue",
-              "inheritedFrom": {
-                "name": "Me",
-                "module": "dist/multisearch.wc.js"
-              }
-            },
-            {
-              "name": "service",
-              "fieldName": "service",
-              "inheritedFrom": {
-                "name": "Me",
-                "module": "dist/multisearch.wc.js"
-              }
-            },
-            {
-              "name": "validationMessages",
-              "fieldName": "validationMessages",
-              "inheritedFrom": {
-                "name": "Me",
-                "module": "dist/multisearch.wc.js"
-              }
-            },
-            {
-              "name": "minselectsValidationMessage",
-              "fieldName": "minselectsValidationMessage",
-              "inheritedFrom": {
-                "name": "Me",
-                "module": "dist/multisearch.wc.js"
-              }
-            },
-            {
-              "name": "maxselectsValidationMessage",
-              "fieldName": "maxselectsValidationMessage",
-              "inheritedFrom": {
-                "name": "Me",
-                "module": "dist/multisearch.wc.js"
-              }
-            },
-            {
-              "name": "singleSelect",
-              "fieldName": "singleSelect",
-              "inheritedFrom": {
-                "name": "Me",
-                "module": "dist/multisearch.wc.js"
-              }
-            },
-            {
-              "name": "defaultSearch",
-              "fieldName": "defaultSearch",
-              "inheritedFrom": {
-                "name": "Me",
-                "module": "dist/multisearch.wc.js"
-              }
-            },
-            {
-              "name": "defaultShow",
-              "fieldName": "defaultShow",
-              "inheritedFrom": {
-                "name": "Me",
-                "module": "dist/multisearch.wc.js"
-              }
+              "fieldName": "reportValidity"
             }
           ],
           "superclass": {
@@ -5682,7 +5352,11 @@
           "members": [
             {
               "kind": "field",
-              "name": "wording"
+              "name": "wording",
+              "inheritedFrom": {
+                "name": "fe",
+                "module": "dist/file-list.wc.js"
+              }
             },
             {
               "kind": "field",
@@ -5698,7 +5372,11 @@
             },
             {
               "kind": "field",
-              "name": "service"
+              "name": "service",
+              "inheritedFrom": {
+                "name": "fe",
+                "module": "dist/file-list.wc.js"
+              }
             },
             {
               "kind": "field",
@@ -5715,12 +5393,155 @@
             {
               "kind": "field",
               "name": "freezeLastColumn"
+            },
+            {
+              "kind": "field",
+              "name": "attachedInternals",
+              "inheritedFrom": {
+                "name": "fe",
+                "module": "dist/file-list.wc.js"
+              }
+            },
+            {
+              "kind": "field",
+              "name": "value",
+              "inheritedFrom": {
+                "name": "fe",
+                "module": "dist/file-list.wc.js"
+              }
+            },
+            {
+              "kind": "field",
+              "name": "label",
+              "inheritedFrom": {
+                "name": "fe",
+                "module": "dist/file-list.wc.js"
+              }
+            },
+            {
+              "kind": "field",
+              "name": "id",
+              "inheritedFrom": {
+                "name": "fe",
+                "module": "dist/file-list.wc.js"
+              }
+            },
+            {
+              "kind": "field",
+              "name": "name",
+              "inheritedFrom": {
+                "name": "fe",
+                "module": "dist/file-list.wc.js"
+              }
+            },
+            {
+              "kind": "field",
+              "name": "maxfiles",
+              "inheritedFrom": {
+                "name": "fe",
+                "module": "dist/file-list.wc.js"
+              }
+            },
+            {
+              "kind": "field",
+              "name": "minfiles",
+              "inheritedFrom": {
+                "name": "fe",
+                "module": "dist/file-list.wc.js"
+              }
+            },
+            {
+              "kind": "field",
+              "name": "maxfilesValidationMessage",
+              "inheritedFrom": {
+                "name": "fe",
+                "module": "dist/file-list.wc.js"
+              }
+            },
+            {
+              "kind": "field",
+              "name": "minfilesValidationMessage",
+              "inheritedFrom": {
+                "name": "fe",
+                "module": "dist/file-list.wc.js"
+              }
+            },
+            {
+              "kind": "field",
+              "name": "validationMessages",
+              "inheritedFrom": {
+                "name": "fe",
+                "module": "dist/file-list.wc.js"
+              }
+            },
+            {
+              "kind": "field",
+              "name": "sortable",
+              "inheritedFrom": {
+                "name": "fe",
+                "module": "dist/file-list.wc.js"
+              }
+            },
+            {
+              "kind": "field",
+              "name": "required",
+              "inheritedFrom": {
+                "name": "fe",
+                "module": "dist/file-list.wc.js"
+              }
+            },
+            {
+              "kind": "field",
+              "name": "displayFormat",
+              "inheritedFrom": {
+                "name": "fe",
+                "module": "dist/file-list.wc.js"
+              }
+            },
+            {
+              "kind": "field",
+              "name": "displayFormatFunction",
+              "inheritedFrom": {
+                "name": "fe",
+                "module": "dist/file-list.wc.js"
+              }
+            },
+            {
+              "kind": "field",
+              "name": "getValue",
+              "readonly": true,
+              "inheritedFrom": {
+                "name": "fe",
+                "module": "dist/file-list.wc.js"
+              }
+            },
+            {
+              "kind": "field",
+              "name": "reportValidity",
+              "readonly": true,
+              "inheritedFrom": {
+                "name": "fe",
+                "module": "dist/file-list.wc.js"
+              }
+            },
+            {
+              "kind": "field",
+              "name": "save",
+              "readonly": true,
+              "inheritedFrom": {
+                "name": "fe",
+                "module": "dist/file-list.wc.js"
+              }
             }
           ],
           "attributes": [
             {
               "name": "wording",
-              "fieldName": "wording"
+              "fieldName": "wording",
+              "inheritedFrom": {
+                "name": "fe",
+                "module": "dist/file-list.wc.js"
+              }
             },
             {
               "name": "headers",
@@ -5736,7 +5557,11 @@
             },
             {
               "name": "service",
-              "fieldName": "service"
+              "fieldName": "service",
+              "inheritedFrom": {
+                "name": "fe",
+                "module": "dist/file-list.wc.js"
+              }
             },
             {
               "name": "showExport",
@@ -5753,6 +5578,142 @@
             {
               "name": "freezeLastColumn",
               "fieldName": "freezeLastColumn"
+            },
+            {
+              "name": "attachedInternals",
+              "fieldName": "attachedInternals",
+              "inheritedFrom": {
+                "name": "fe",
+                "module": "dist/file-list.wc.js"
+              }
+            },
+            {
+              "name": "value",
+              "fieldName": "value",
+              "inheritedFrom": {
+                "name": "fe",
+                "module": "dist/file-list.wc.js"
+              }
+            },
+            {
+              "name": "label",
+              "fieldName": "label",
+              "inheritedFrom": {
+                "name": "fe",
+                "module": "dist/file-list.wc.js"
+              }
+            },
+            {
+              "name": "id",
+              "fieldName": "id",
+              "inheritedFrom": {
+                "name": "fe",
+                "module": "dist/file-list.wc.js"
+              }
+            },
+            {
+              "name": "name",
+              "fieldName": "name",
+              "inheritedFrom": {
+                "name": "fe",
+                "module": "dist/file-list.wc.js"
+              }
+            },
+            {
+              "name": "maxfiles",
+              "fieldName": "maxfiles",
+              "inheritedFrom": {
+                "name": "fe",
+                "module": "dist/file-list.wc.js"
+              }
+            },
+            {
+              "name": "minfiles",
+              "fieldName": "minfiles",
+              "inheritedFrom": {
+                "name": "fe",
+                "module": "dist/file-list.wc.js"
+              }
+            },
+            {
+              "name": "maxfilesValidationMessage",
+              "fieldName": "maxfilesValidationMessage",
+              "inheritedFrom": {
+                "name": "fe",
+                "module": "dist/file-list.wc.js"
+              }
+            },
+            {
+              "name": "minfilesValidationMessage",
+              "fieldName": "minfilesValidationMessage",
+              "inheritedFrom": {
+                "name": "fe",
+                "module": "dist/file-list.wc.js"
+              }
+            },
+            {
+              "name": "validationMessages",
+              "fieldName": "validationMessages",
+              "inheritedFrom": {
+                "name": "fe",
+                "module": "dist/file-list.wc.js"
+              }
+            },
+            {
+              "name": "sortable",
+              "fieldName": "sortable",
+              "inheritedFrom": {
+                "name": "fe",
+                "module": "dist/file-list.wc.js"
+              }
+            },
+            {
+              "name": "required",
+              "fieldName": "required",
+              "inheritedFrom": {
+                "name": "fe",
+                "module": "dist/file-list.wc.js"
+              }
+            },
+            {
+              "name": "displayFormat",
+              "fieldName": "displayFormat",
+              "inheritedFrom": {
+                "name": "fe",
+                "module": "dist/file-list.wc.js"
+              }
+            },
+            {
+              "name": "displayFormatFunction",
+              "fieldName": "displayFormatFunction",
+              "inheritedFrom": {
+                "name": "fe",
+                "module": "dist/file-list.wc.js"
+              }
+            },
+            {
+              "name": "getValue",
+              "fieldName": "getValue",
+              "inheritedFrom": {
+                "name": "fe",
+                "module": "dist/file-list.wc.js"
+              }
+            },
+            {
+              "name": "reportValidity",
+              "fieldName": "reportValidity",
+              "inheritedFrom": {
+                "name": "fe",
+                "module": "dist/file-list.wc.js"
+              }
+            },
+            {
+              "name": "save",
+              "fieldName": "save",
+              "inheritedFrom": {
+                "name": "fe",
+                "module": "dist/file-list.wc.js"
+              }
             }
           ],
           "superclass": {
