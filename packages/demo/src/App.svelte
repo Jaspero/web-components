@@ -77,13 +77,13 @@
       <!-- <AutocompleteDemo /> -->
       <!-- <CheckboxDemo /> -->
       <!-- <ChipsDemo /> -->
-      <!-- <CkEditorDemo /> -->
+      <CkEditorDemo />
       <!-- <DateRangeDemo /> -->
       <!-- <DatepickerDemo /> -->
       <!-- <FileListDemo /> -->
       <!-- <FileUploadDemo /> -->
-      <!-- <InputDemo /> -->
-      <MultiSearchDemo />
+      <InputDemo />
+      <!-- <MultiSearchDemo /> -->
       <!-- <MultiSelectDemo /> -->
       <!-- <QuillDemo /> -->
       <!-- <RadioDemo /> -->
