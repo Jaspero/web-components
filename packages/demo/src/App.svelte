@@ -79,7 +79,7 @@
       <!-- <ChipsDemo /> -->
       <!-- <CkEditorDemo /> -->
       <!-- <DateRangeDemo /> -->
-      <!-- <DatepickerDemo /> -->
+      <DatepickerDemo />
       <!-- <FileListDemo /> -->
       <!-- <FileUploadDemo /> -->
       <!-- <InputDemo /> -->
