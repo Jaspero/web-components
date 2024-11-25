@@ -77,12 +77,12 @@
       <!-- <AutocompleteDemo /> -->
       <!-- <CheckboxDemo /> -->
       <!-- <ChipsDemo /> -->
-      <CkEditorDemo />
+      <!-- <CkEditorDemo /> -->
       <!-- <DateRangeDemo /> -->
       <!-- <DatepickerDemo /> -->
       <!-- <FileListDemo /> -->
       <!-- <FileUploadDemo /> -->
-      <InputDemo />
+      <!-- <InputDemo /> -->
       <!-- <MultiSearchDemo /> -->
       <!-- <MultiSelectDemo /> -->
       <!-- <QuillDemo /> -->
@@ -99,14 +99,14 @@
     </div>
     <div class="other editors">
       <!-- <AccordionDemo/> -->
-      <!-- <AlertDemo /> -->
+      <AlertDemo />
       <!-- <AssetManagerDemo /> -->
       <!-- <AsyncTableDemo /> -->
       <!-- <ButtonsDemo/> -->
       <!-- <CarouselDemo /> -->
       <!-- <ConfirmDemo /> -->
       <!-- <DataPaginatorDemo /> -->
-       <!-- <ImageGalleryDemo /> -->
+      <!-- <ImageGalleryDemo /> -->
       <!-- <LinkDemo /> -->
       <!-- <MenuDemo /> -->
       <!-- <PagePaginatorDemo/> -->
