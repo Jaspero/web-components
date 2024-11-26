@@ -6,6 +6,7 @@ import '../../static/c/select.css'; -->
 ### Description
 
 `<jp-select>` is a form component with `<select>` functionality.
+****
 
 ### Attributes
 
@@ -21,10 +22,14 @@ import '../../static/c/select.css'; -->
 |           label           |              |                           `string`                           |                  shows at the top of the field                  |
 |         labelType         |              |                  `'outside'` or `'inside'`                   |         whether label is inside or outside of the field         |
 |           hint            |              |                           `string`                           |                      shows below the field                      |
+<br></br>
+****
 
 ### Slots
 
 This component does not have any slots.
+<br></br>
+****
 
 ### Methods
 
@@ -32,11 +37,15 @@ This component does not have any slots.
   - returns form field value
 - `reportValidity`
   - triggers reportValidity
+<br></br>
+****
 
 ### Events
 
 - `value`
   - triggers when item is selected
+<br></br>
+****
 
 ### Demo
 
@@ -46,3 +55,5 @@ This component does not have any slots.
 
 <jp-select options='[{"value":"aaa"}, {"value":"bbb"}, {"value":"ccc"}]' label="Select"></jp-select>
 ```
+<br></br>
+****

@@ -6,6 +6,7 @@ import '../../static/c/file-upload.css'; -->
 ### Description
 
 `<jp-file-upload>` is a component with functionality of `<input type="file">`, but also supports url links.
+****
 
 ### Attributes
 
@@ -17,12 +18,16 @@ import '../../static/c/file-upload.css'; -->
 | labelType |          |   `'outside'` or `'inside'`   | whether label is inside or outside of the field |
 |  service  |    ✓     | [`FileService`](#fileservice) |                  file service                   |
 |   name    |    ✓     |           `string`            |            name of the form control             |
+<br></br>
+****
 
 ### Interfaces
 
 #### `FileService`
 
 Defines the accepted file types and provides a method to upload a file.
+<br></br>
+****
 
 ##### Properties
 
@@ -31,16 +36,21 @@ Defines the accepted file types and provides a method to upload a file.
 | acceptedFiles |      ✓       |                   `string`                    |                                        defines acceptable file types                                         |
 |    maxSize    |              |                   `number`                    |                                            max file size in bytes                                            |
 |  uploadFile   |              | `(file: any, id?: string) => Promise<string>` | uploads a file and returns a promise <br></br> which is a string that represents a link to the file location |
-
 <br></br>
+****
+
 
 ### Slots
 
 This component does not have any slots.
+<br></br>
+****
 
 ### Methods
 
 This component does not have any methods.
+<br></br>
+****
 
 ### Events
 
@@ -50,6 +60,8 @@ This component does not have any methods.
   - triggers when value (file) changes
 - `rejected`
   - triggers when added file is not accepted because it does not satisfy some service criteria
+<br></br>
+****
 
 ### Demo
 
@@ -59,3 +71,5 @@ This component does not have any methods.
 
 <jp-file-upload label="Upload a file"></jp-file-upload>
 ```
+<br></br>
+****

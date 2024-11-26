@@ -3,7 +3,6 @@
 ### Description
 
 `Date Formatter` is a custom formatter util designed for easier display of dates. It converts `Date` objects into different text or data representations providing two functions, `formatDisplayDate` and `formatReturnDate`.
-<br></br>
 ****
 
 ### Integration and Usage
@@ -123,3 +122,5 @@ Returns a date string formatted according to the chosen format for returning dat
 ### Events
 
 This util does not have any events.
+<br></br>
+****

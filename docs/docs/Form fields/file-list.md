@@ -5,6 +5,7 @@
 ### Description
 
 `<jp-file-list>` is a component with functionality of `<input multiple type="file">`, but also supports initial value in form of urls.
+****
 
 ### Attributes
 
@@ -21,12 +22,16 @@
 |         minfiles          |          |                  `number`                   |                 minimum number of files allowed                  |
 | minfilesValidationMessage |          |                  `string`                   | validation message for when component does not satisfy minfiles  |
 |    validationMessages     |          | `{[type]: string}` where `type` is `string` | compact way of writing validation messages in a single attribute |
+<br></br>
+****
 
 ### Interfaces
 
 #### `FileService`
 
 Defines the accepted file types and provides a method to upload a file.
+<br></br>
+****
 
 ##### Properties
 
@@ -35,12 +40,14 @@ Defines the accepted file types and provides a method to upload a file.
 | acceptedFiles |      ✓       |                   `string`                    |                                        defines acceptable file types                                         |
 |    maxSize    |              |                   `number`                    |                                            max file size in bytes                                            |
 |  uploadFile   |              | `(file: any, id?: string) => Promise<string>` | uploads a file and returns a promise <br></br> which is a string that represents a link to the file location |
-
 <br></br>
+****
 
 ### Slots
 
 This component does not have any slots.
+<br></br>
+****
 
 ### Methods
 
@@ -50,6 +57,8 @@ This component does not have any slots.
   - triggers reportValidity
 - `save`
   - async function that saves files and adds urls to value
+<br></br>
+****
 
 ### Events
 
@@ -61,6 +70,8 @@ This component does not have any slots.
   - triggers when new files are added and contains information about unsaved files
 - `rejected`
   - triggers when added file is not accepted because it does not satisfy some service criteria
+<br></br>
+****
 
 ### Demo
 
@@ -69,3 +80,5 @@ This component does not have any slots.
 
 <jp-file-list></jp-file-list>
 ```
+<br></br>
+****

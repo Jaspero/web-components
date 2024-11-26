@@ -3,7 +3,6 @@
 ### Description
 
 `JSON Pointer` is a custom util designed for handling parsing and traversal of JSON objects using a `JSON Pointer` which is a string syntax that allows referencing specific parts of JSON document.
-<br></br>
 ****
 
 ### Integration and Usage
@@ -57,3 +56,5 @@ Returns the value referenced by the JSON Pointer with the type `V`
 ### Events
 
 This util does not have any events.
+<br></br>
+****

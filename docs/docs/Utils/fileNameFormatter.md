@@ -3,7 +3,6 @@
 ### Description
 
 `File Name Formatter` is a custom formatter util designed for formatting a given file name for easier retrieval and readability.
-<br></br>
 ****
 
 ### Integration and Usage
@@ -82,3 +81,5 @@ Returns a date string formatted according to the chosen format for displaying fi
 ### Events
 
 This util does not have any events.
+<br></br>
+****

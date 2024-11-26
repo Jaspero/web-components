@@ -4,7 +4,6 @@
 
 `Bind` is a custom util representing a Svelte action designed for enabling two-way data binding between an HTML element's value and a variable.
 The util is used to synchronize element's value with the bound variable and updates every time when either of the values changes.
-<br></br>
 ****
 
 ### Integration and Usage
@@ -112,3 +111,5 @@ It contains a function:
 
 - [`bind`](#change-function)
   - triggers when the `value` in the `detail` property changes
+<br></br>
+****

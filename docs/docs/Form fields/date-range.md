@@ -6,6 +6,7 @@ import '../../static/c/date-range.css'; -->
 ### Description
 
 `<jp-date-range>` is a field component with `<input type="date">` from/to functionality.
+****
 
 ### Attributes
 
@@ -28,10 +29,14 @@ import '../../static/c/date-range.css'; -->
 |     minSelectibleDays     |                                          |                                `number`                             |              number of days that must be in range               |
 |     maxDateSelectible     |                                          |                                 `Date`                              |    Automatically set based on the value of maxSelectibleDays    |
 |     minDateSelectible     |                                          |                                 `Date`                              |    Automatically set based on the value of maxSelectibleDays    |
+<br></br>
+****
 
 ### Slots
 
 This component does not have any slots.
+<br></br>
+****
 
 ### Methods
 
@@ -39,11 +44,15 @@ This component does not have any slots.
   - returns form field value
 - `reportValidity`
   - triggers reportValidity
+<br></br>
+****
 
 ### Events
 
 - `value`
   - triggers when value of the field changes
+<br></br>
+****
 
 ### Demo
 
@@ -53,3 +62,5 @@ This component does not have any slots.
 
 <jp-date-range label="Pick a date range"></jp-date-range>
 ```
+<br></br>
+****

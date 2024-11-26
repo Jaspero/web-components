@@ -6,6 +6,7 @@ import '../../static/c/multisearch.css'; -->
 ### Description
 
 `<jp-multisearch>` is a component with a combination of search and multi select functionalities.
+****
 
 ### Attributes
 
@@ -29,12 +30,16 @@ import '../../static/c/multisearch.css'; -->
 |     validationMessages      |          | `{[type]: string}` where `type` is `string` | compact way of writing validation messages in a single attribute  |
 |        defaultSearch        |          |                  `boolean`                  |          determines if options are visible upon opening           |
 |      defaultShowNumber      |          |                  `number`                   |                determines number of visible options               |
+<br></br>
+****
 
 ### Interfaces
 
 #### `SearchService`
 
 Defines functions for getting select options.
+<br></br>
+****
 
 ##### Properties
 
@@ -45,12 +50,14 @@ Defines functions for getting select options.
 | loadMore  |                        | `(str: string) => Promise<Array<Option>>` | returns options given current search string |
 
 Where `Option` is `{ label?: string; value: string; selected?: boolean; disabled?: boolean }`
-
 <br></br>
+****
 
 ### Slots
 
 This component does not have any slots.
+<br></br>
+****
 
 ### Methods
 
@@ -58,11 +65,15 @@ This component does not have any slots.
   - returns form field value
 - `reportValidity`
   - triggers reportValidity
+<br></br>
+****
 
 ### Events
 
 - `value`
   - triggers when selected options change
+<br></br>
+****
 
 ### Demo
 
@@ -96,3 +107,5 @@ function multisearch(props) {
   return <div ref={el}></div>;
 }
 ```
+<br></br>
+****

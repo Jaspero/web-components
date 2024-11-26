@@ -6,6 +6,7 @@ import '../../static/c/toggle.css'; -->
 ### Description
 
 `<jp-toggle>` is on/off switch component.
+****
 
 ### Attributes
 
@@ -18,10 +19,14 @@ import '../../static/c/toggle.css'; -->
 |         disabled          |              | `boolean` |                determines if toggle is disabled                 |
 |         required          |              | `boolean` |        if true toggle needs to be check to pass validity        |
 | requiredValidationMessage |              | `string`  | validation message for when component does not satisfy required |
+<br></br>
+****
 
 ### Slots
 
 This component does not have any slots.
+<br></br>
+****
 
 ### Methods
 
@@ -29,11 +34,15 @@ This component does not have any slots.
   - returns form field value
 - `reportValidity`
   - triggers reportValidity
+<br></br>
+****
 
 ### Events
 
 - `value`
   - triggers when toggle is switched
+<br></br>
+****
 
 ### Demo
 
@@ -43,3 +52,5 @@ This component does not have any slots.
 
 <jp-toggle></jp-toggle>
 ```
+<br></br>
+****

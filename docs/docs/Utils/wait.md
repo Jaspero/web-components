@@ -3,7 +3,6 @@
 ### Description
 
 `Wait` is a custom util designed to pause the execution of a code for a specified duration. 
-<br></br>
 ****
 
 ### Integration and Usage
@@ -55,3 +54,5 @@ Event listeners are added to the script, waiting to either **resolve** the promi
 ### Events
 
 This util does not have any events.
+<br></br>
+****

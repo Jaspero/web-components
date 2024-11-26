@@ -6,6 +6,7 @@ import '../../static/c/datepicker.css'; -->
 ### Description
 
 `<jp-datepicker>` is a field component with `<input type="date">` functionality.
+****
 
 ### Attributes
 
@@ -25,10 +26,14 @@ import '../../static/c/datepicker.css'; -->
 |   displayFormatFunction   | if `displayFormat` <br></br> is `custom` |                       `(date:Date) => string`                       |                 custom display format function                  |
 |         minDate           |                                          |                              `string` \| `Date`                           |                    minimum date that can be selected                  |
 |         maxDate           |                                          |                              `string` \| `Date`                         |                    maximum date that can be selected                   |
+<br></br>
+****
 
 ### Slots
 
 This component does not have any slots.
+<br></br>
+****
 
 ### Methods
 
@@ -36,11 +41,15 @@ This component does not have any slots.
   - returns form field value
 - `reportValidity`
   - triggers reportValidity
+<br></br>
+****
 
 ### Events
 
 - `value`
   - triggers when value of the field changes
+<br></br>
+****
 
 ### Demo
 
@@ -50,3 +59,5 @@ This component does not have any slots.
 
 <jp-datepicker label="Pick a date"></jp-datepicker>
 ```
+<br></br>
+****

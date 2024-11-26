@@ -4,11 +4,10 @@
 
 ### Description
 
-`<jp-json-editor>` is a component to view, edit, format, and validate JSON.
-
-JSON editor **can be used as a form field**.
+`<jp-json-editor>` is a component to view, edit, format, and validate JSON. Editor **can be used as a form field**.
 
 It's a wrapper around https://github.com/josdejong/jsoneditor.
+****
 
 ### Attributes
 
@@ -19,6 +18,8 @@ It's a wrapper around https://github.com/josdejong/jsoneditor.
 |  label   |                                          |       `string`       |                            Shows at the top of the editor                             |
 |   name   | ✓ <br></br> (to be a valid form element) |       `string`       |                             native `name` on form element                             |
 |    id    |                                          |       `string`       |                              native `id` on form element                              |
+<br></br>
+****
 
 ### Dependencies
 
@@ -35,19 +36,27 @@ In order for this component to work you have to include the following
 ```html
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jsoneditor/9.10.2/jsoneditor.min.js"></script>
 ```
+<br></br>
+****
 
 ### Slots
 
 This component does not have any slots.
+<br></br>
+****
 
 ### Methods
 
 This component does not have any methods.
+<br></br>
+****
 
 ### Events
 
 - `value`
   - triggers when editor content changes
+<br></br>
+****
 
 ### Demo
 
@@ -56,3 +65,5 @@ This component does not have any methods.
 
 <jp-json-editor value='{"array": [1, 2, 3],"boolean": true,"color": "#82b92c","null": null,"number": 123,"object": { "a": "b", "c": "d" },"string": "Hello World"}'></jp-json-editor>
 ```
+<br></br>
+****

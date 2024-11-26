@@ -5,6 +5,7 @@
 ### Description
 
 `<jp-input>` is a field component with `<input>` functionality.
+****
 
 ### Attributes
 
@@ -38,6 +39,8 @@
 |          pattern           |              |                                           `string`                                            |                          pattern that input has to satisfy                          |
 |  patternValidationMessage  |              |                                           `string`                                            |           validation message for when component does not satisfy pattern            |
 |     validationMessages     |              |                          `{[type]: string}` where `type` is `string`                          |          compact way of writing validation messages in a single attribute           |
+<br></br>
+****
 
 ### Slots
 
@@ -47,6 +50,8 @@
   - renders in front of the input field
 - `suffix`
   - renders after the input field
+<br></br>
+****
 
 ### Methods
 
@@ -54,11 +59,15 @@
   - returns form field value
 - `reportValidity`
   - triggers reportValidity
+<br></br>
+****
 
 ### Events
 
 - `value`
   - triggers when value of the field changes
+<br></br>
+****
 
 ### Demo
 
@@ -68,3 +77,5 @@
 
 <jp-input label="Input"></jp-input>
 ```
+<br></br>
+****

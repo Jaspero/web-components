@@ -6,6 +6,7 @@ import '../../static/c/multiselect.css'; -->
 ### Description
 
 `<jp-multiselect>` is a field component with multi `<select>` functionality.
+****
 
 ### Attributes
 
@@ -26,10 +27,14 @@ import '../../static/c/multiselect.css'; -->
 |          labelType          |              |                                          `'outside'` or `'inside'`                                          |          whether label is inside or outside of the field          |
 |            hint             |              |                                                  `string`                                                   |                       shows below the field                       |
 |     validationMessages      |              |                                 `{[type]: string}` where `type` is `string`                                 | compact way of writing validation messages in a single attribute  |
+<br></br>
+****
 
 ### Slots
 
 This component does not have any slots.
+<br></br>
+****
 
 ### Methods
 
@@ -37,11 +42,15 @@ This component does not have any slots.
   - returns form field value
 - `reportValidity`
   - triggers reportValidity
+<br></br>
+****
 
 ### Events
 
 - `value`
   - triggers when one of the selections changes value
+<br></br>
+****
 
 ### Demo
 
@@ -54,3 +63,5 @@ This component does not have any slots.
   label="Multiselect"
 ></jp-multiselect>
 ```
+<br></br>
+****

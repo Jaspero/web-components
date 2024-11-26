@@ -3,7 +3,6 @@
 ### Description
 
 `Click outside` is a custom util representing a Svelte action designed for detecting when a user `clicks` outside of a specific HTML element. 
-<br></br>
 ****
 
 ### Integration and Usage
@@ -132,3 +131,5 @@ It contains a function:
 
 - [`click_outside`](#dispatch-function)
   - triggers when a `click` is detected outside the specified element or when the `Escape` key is pressed
+<br></br>
+****

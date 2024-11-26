@@ -5,11 +5,10 @@ import '../../static/c/code-editor.css'; -->
 
 ### Description
 
-`<jp-code-editor>` is a code editor component for the web.
-
-Code editor **can be used as a form field**.
+`<jp-code-editor>` is a code editor component for the web. Code editor **can be used as a form field**. 
 
 It's a wrapper around https://codemirror.net/5/.
+****
 
 ### Attributes
 
@@ -19,6 +18,8 @@ It's a wrapper around https://codemirror.net/5/.
 |  label   |                                          | `string` |                    Shows at the top of the editor                     |
 |   name   | ✓ <br></br> (to be a valid form element) | `string` |                     native `name` on form element                     |
 |    id    |                                          | `string` |                      native `id` on form element                      |
+<br></br>
+****
 
 ### Dependencies
 
@@ -36,19 +37,27 @@ In order for this component to work you have to include the following
 ```
 
 Depending on your editor options, you might need additional dependancies that you can find on https://cdnjs.com/libraries/codemirror/5.65.14
+<br></br>
+****
 
 ### Slots
 
 This component does not have any slots.
+<br></br>
+****
 
 ### Methods
 
 This component does not have any methods.
+<br></br>
+****
 
 ### Events
 
 - `value`
   - triggers when code changes
+<br></br>
+****
 
 ### Demo
 
@@ -58,3 +67,5 @@ This component does not have any methods.
 
 <jp-code-editor options='{"mode": "javascript"}'></jp-code-editor>
 ```
+<br></br>
+****

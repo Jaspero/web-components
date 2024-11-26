@@ -5,24 +5,33 @@
 ### Description
 
 `<jp-menu>` is a floating panel with options.
+****
 
 ### Attributes
 
 | **Name** | **Required** |    **Type**     |   **Description**   |
 | :------: | :----------: | :-------------: | :-----------------: |
 |  label   |              | `string` (HTML) | main button content |
+<br></br>
+****
 
 ### Slots
 
 Default slot is list of options (content of menu).
+<br></br>
+****
 
 ### Methods
 
 This component does not have any methods.
+<br></br>
+****
 
 ### Events
 
 This component does not have any events.
+<br></br>
+****
 
 ### Demo
 
@@ -41,3 +50,5 @@ This component does not have any events.
   </button>
 </jp-menu>
 ```
+<br></br>
+****

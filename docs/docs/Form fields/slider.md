@@ -6,6 +6,7 @@ import '../../static/c/slider.css'; -->
 ### Description
 
 `<jp-slider>` is a form component with `<input type="range">` functionality.
+****
 
 ### Attributes
 
@@ -19,20 +20,28 @@ import '../../static/c/slider.css'; -->
 |   min    |              | `number`  |                            minimal slider value                             |
 |   step   |              | `number`  |                  size of increment/decrement when sliding                   |
 | discrete |              | `boolean` | whether slider is smooth or in ticks <br></br> (when `false` step is `any`) |
+<br></br>
+****
 
 ### Slots
 
 This component does not have any slots.
+<br></br>
+****
 
 ### Methods
 
 - `getValue`
   - returns form field value
+<br></br>
+****
 
 ### Events
 
 - `value`
   - triggers when slider value changes
+<br></br>
+****
 
 ### Demo
 
@@ -42,3 +51,5 @@ This component does not have any slots.
 
 <jp-slider></jp-slider>
 ```
+<br></br>
+****

@@ -5,6 +5,7 @@
 ### Description
 
 `<jp-page-paginator>` is a component with a fuctionality of providing navigation for pages.
+****
 
 ### Attributes
 
@@ -12,10 +13,14 @@
 | :-------: | :----------: | :------: | :---------------------------------: |
 |  length   |      ✓       | `number` |        total number of pages        |
 | pageIndex |              | `number` | current page number starting from 1 |
+<br></br>
+****
 
 ### Slots
 
 This component does not have any slots.
+<br></br>
+****
 
 ### Methods
 
@@ -25,11 +30,15 @@ This component does not have any slots.
 - `firstPage`
 - `toPage`
   - takes page number as argument
+<br></br>
+****
 
 ### Events
 
 - `change`
   - triggers when the page changes
+<br></br>
+****
 
 ### Demo
 
@@ -38,3 +47,5 @@ This component does not have any slots.
 
 <jp-page-paginator></jp-page-paginator>
 ```
+<br></br>
+****

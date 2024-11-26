@@ -3,7 +3,6 @@
 ### Description
 
 `Script Loader` is a custom util designed to dynamically load external JavaScript files into an HTML document. 
-<br></br>
 ****
 
 ### Integration and Usage
@@ -74,3 +73,5 @@ Event listeners are added to the script, waiting to either **resolve** the promi
   - triggers when a script has been loaded
 - [`error`](#function-logic)
   - triggers when an error occurs while loading the script
+<br></br>
+****

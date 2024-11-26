@@ -3,6 +3,7 @@
 ### Description
 
 `renderConfirm` is a function that makes rendering `<jp-confirm>` easier.
+****
 
 ### Parameters
 
@@ -10,6 +11,8 @@
 | :------: | :----------: | :-------------------------: | :------------------------: |
 | options  |              |      `ConfirmOptions`       |     rendering options      |
 | callback |              | `(action?: string) => void` | called when confirm closes |
+<br></br>
+****
 
 ### Interfaces
 
@@ -25,3 +28,5 @@
 |  accept  |              |   `string`    |          accept button inner text          |
 | closable |              |   `boolean`   | determines if a confirmation can be closed |
 |   host   |              | `HTMLElement` |      element to append the confirm to      |
+<br></br>
+****

@@ -5,6 +5,7 @@
 ### Description
 
 `<jp-tooltip>` display informative text when users hover over, or tap an element.
+****
 
 ### Attributes
 
@@ -12,18 +13,26 @@
 | :------: | :----------: | :---------------------: | :-------------------------------------------: |
 |  label   |              |        `string`         |  main text that always appears on the screen  |
 |   mode   |              | `'static' or 'dynamic'` | whether tooltip displays on click or on hover |
+<br></br>
+****
 
 ### Slots
 
 Tooltip goes into the default slot.
+<br></br>
+****
 
 ### Methods
 
 This component does not have any methods.
+<br></br>
+****
 
 ### Events
 
 This component does not have any events.
+<br></br>
+****
 
 ### Demo
 
@@ -36,3 +45,5 @@ This component does not have any events.
   imperdiet purus tempus.
 </jp-tooltip>
 ```
+<br></br>
+****

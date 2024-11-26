@@ -8,6 +8,7 @@ import '../static/c/node-draggable.wc.js'; -->
 ### Description
 
 `<jp-tree>` is a component with nested, collapsable, drag and droppable content.
+****
 
 ### Attributes
 
@@ -15,22 +16,30 @@ import '../static/c/node-draggable.wc.js'; -->
 | :---------: | :----------: | :-------: | :---------------: |
 |    title    |              | `string`  | Title of the tree |
 | collapsable |              | `boolean` | collapse enabled  |
+<br></br>
+****
 
 ### Slots
 
 Slot should be a list of `<jp-node>`'s.
 If you want a node to be draggable, use `<jp-node-draggable>`.
 You can also nest trees by using `<jp-tree>` recursively.
+<br></br>
+****
 
 ### Methods
 
 This component does not have any methods.
 
 However, there is a `jpTreeStructure` function in `structure.js`. It takes a tree and returns object containing the structure of a tree. For it to work you have to assign `value` attribute to all nodes and subtrees.
+<br></br>
+****
 
 ### Events
 
 This component does not have any events.
+<br></br>
+****
 
 ### Demo
 
@@ -55,3 +64,5 @@ This component does not have any events.
   </jp-tree>
 </div>
 ```
+<br></br>
+****
