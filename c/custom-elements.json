@@ -60,7 +60,11 @@
           "members": [
             {
               "kind": "field",
-              "name": "title"
+              "name": "title",
+              "inheritedFrom": {
+                "name": "A",
+                "module": "dist/tree.wc.js"
+              }
             },
             {
               "kind": "field",
@@ -69,12 +73,24 @@
             {
               "kind": "field",
               "name": "state"
+            },
+            {
+              "kind": "field",
+              "name": "collapsable",
+              "inheritedFrom": {
+                "name": "A",
+                "module": "dist/tree.wc.js"
+              }
             }
           ],
           "attributes": [
             {
               "name": "title",
-              "fieldName": "title"
+              "fieldName": "title",
+              "inheritedFrom": {
+                "name": "A",
+                "module": "dist/tree.wc.js"
+              }
             },
             {
               "name": "message",
@@ -83,10 +99,18 @@
             {
               "name": "state",
               "fieldName": "state"
+            },
+            {
+              "name": "collapsable",
+              "fieldName": "collapsable",
+              "inheritedFrom": {
+                "name": "A",
+                "module": "dist/tree.wc.js"
+              }
             }
           ],
           "superclass": {
-            "name": "q",
+            "name": "A",
             "module": "/dist/svelte.js"
           },
           "tagName": "jp-alert",

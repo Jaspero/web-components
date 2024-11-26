@@ -14,7 +14,8 @@
       "attributes": [
         { "name": "title", "values": [] },
         { "name": "message", "values": [] },
-        { "name": "state", "values": [] }
+        { "name": "state", "values": [] },
+        { "name": "collapsable", "values": [] }
       ],
       "references": []
     },
