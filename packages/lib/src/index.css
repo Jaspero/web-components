@@ -19,7 +19,7 @@
 
   /* Background Colors */
   --background: #fafafa; /* Main background color for the app or website */
-  --background-primary: #ffffff; /* Main background color for the app or website */
+  --background-primary: #FFFFFF; /* Main background color for the app or website */
   --background-secondary: #e0e0e0; /* Darkened alternative background color, used for UI differentiation */
   --background-tertiary: rgba(0, 0, 0, 0.04); /* Often used for subtle distinctions in the UI */
   --background-tertiary-alt: rgba(255, 255, 255, 0.04);

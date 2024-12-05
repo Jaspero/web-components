@@ -31,7 +31,7 @@
     border: 1px solid var(--border-secondary, transparent);
 
     &:hover {
-      background-color: var(--hover-secondary-color)
+      background-color: var(--hover-secondary-color);
     }
 
     &:disabled {
@@ -142,7 +142,7 @@
     left: 0;
     width: 100%;
     height: 100%;
-    z-index: 1000;
+    z-index: 100;
     display: flex;
     justify-content: center;
 
@@ -153,16 +153,16 @@
       width: 100%;
       height: 100%;
       background-color: rgba(0, 0, 0, 0.5);
-      z-index: 1001;
+      z-index: 101;
     }
 
     &-inner {
       width: 500px;
       max-width: 100%;
-      z-index: 1002;
-      background-color: white;
-      border-radius: 0.25rem;
-      box-shadow: 0 3px 12px rgba(0, 0, 0, 0.16);
+      z-index: 102;
+      background-color: var(--background-primary);
+      border-radius: var(--border-radius, 0.25rem);
+      box-shadow: 0 3px 15px 6px rgba(0, 0, 0, 0.2);
       margin-top: 50px;
       padding: 1rem;
       display: flex;
@@ -237,23 +237,16 @@
     }
   }
 
-  &-arrange-columns-dialog-inner {
-    padding: 1rem;
-  }
-
   &-arrange-column-label {
     display: flex;
     align-items: center;
     user-select: none;
     padding: 0.5rem 0;
     transition: background-color 0.3s;
+    gap: 5px;
 
     &.hovered {
       background-color: transparent;
-    }
-
-    &:not(.hovered) {
-      background-color: #d3d3d3;
     }
 
     &.material-symbols-outlined {
@@ -267,7 +260,7 @@
   }
 
   &-hover-over {
-    background-color: var(--hover-over-color, #D3D3D3) !important;
+    background-color: var(--hover-over-color, #d3d3d3) !important;
   }
 
   &-dropdown {
@@ -277,7 +270,7 @@
     &-menu {
       position: absolute;
       z-index: 5;
-      background-color: #EFEFEF;
+      background-color: #efefef;
       border-radius: var(--border-radius, 0.25rem);
       box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
       border: 1px solid var(--border-secondary, transparent);
@@ -296,8 +289,13 @@
       transition: background-color 0.3s;
       text-align: left;
 
+      &:not(.jp-async-table-dropdown-option:first-child){
+        border-top: 1px solid rgba(0, 0, 0, .2);
+      }
+      
+
       &:hover {
-        background-color: #e0e0e0;
+        background-color: var(--hover-color);
       }
     }
   }
