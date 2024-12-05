@@ -18,6 +18,9 @@
       title: {
         color: string;
         font_size: string;
+      },
+      select: {
+        border: string;
       }
     },
     content: {
@@ -76,6 +79,9 @@
       title: {
         color: '#757575',
         font_size: '0.75rem'
+      },
+      select: {
+        border: '1px solid #f3f3f3'
       }
     },
     content: {
@@ -125,6 +131,7 @@
   let processed_data: { [key: string]: any }[];
   let sort_order: { [key: string]: 'asc' | 'desc' } = {};
   let search_value: string = '';
+  let date_range_key: string;
 
   /**
    * FUNCTIONS
@@ -229,6 +236,10 @@
     }));
   }
 
+  $: if (date_range_key) {
+    console.log(date_range_key);
+  }
+
   $: if (search_value?.length) {
     filter_data();
   }
@@ -241,7 +252,19 @@
 {#if dimensions}
   <div class="container">
     <div class="dimensions-picker"
-         style="--active-dimension-background: {config?.dimensions?.active_background || DEFAULT_CONFIG.dimensions.active_background}; --dimensions-picker-border: {config?.content?.toolbar?.input?.border || DEFAULT_CONFIG.content.toolbar.input.border}; --dimensions-picker-width: {config?.dimensions?.width || DEFAULT_CONFIG.dimensions.width}; --dimensions-picker-title-color: {config?.dimensions?.title?.color || DEFAULT_CONFIG.dimensions.title.color}; --dimensions-picker-title-font-size: {config?.dimensions?.title?.font_size || DEFAULT_CONFIG.dimensions.title.font_size};">
+         style="--active-dimension-background: {config?.dimensions?.active_background || DEFAULT_CONFIG.dimensions.active_background}; --dimensions-picker-border: {config?.content?.toolbar?.input?.border || DEFAULT_CONFIG.content.toolbar.input.border}; --dimensions-picker-width: {config?.dimensions?.width || DEFAULT_CONFIG.dimensions.width}; --dimensions-picker-title-color: {config?.dimensions?.title?.color || DEFAULT_CONFIG.dimensions.title.color}; --dimensions-picker-title-font-size: {config?.dimensions?.title?.font_size || DEFAULT_CONFIG.dimensions.title.font_size}; --dimensions-picker-select-border: {DEFAULT_CONFIG.dimensions.select.border};">
+      <span class="dimensions-picker-title">
+        Date Range Dimension
+      </span>
+
+      <select class="dimensions-picker-select" bind:value={date_range_key}>
+        {#each dimensions as dimension}
+          <option value={dimension.value}>
+            {dimension.label}
+          </option>
+        {/each}
+      </select>
+
       <span class="dimensions-picker-title">
         Dimensions
       </span>
@@ -249,12 +272,12 @@
       {#each dimensions as dimension}
         <div class="selected-dimension hidden" />
 
-        <div
+        <span
           class="cursor-pointer dimension {dimension.selected ? 'selected-dimension' : ''}"
           on:click={() => select_dimension(dimension.value)}
         >
           {dimension.label}
-        </div>
+        </span>
       {/each}
     </div>
 
@@ -405,9 +428,20 @@
         }
     }
 
+    .dimensions-picker-select {
+        border: var(--dimensions-picker-select-border);
+        padding: 0.5rem;
+        border-radius: 0.25rem;
+        width: 70%;
+    }
+
     .dimension {
         padding: 0.25rem;
         border-radius: 0.25rem;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        max-width: 100%;
     }
 
     .selected-dimension {
