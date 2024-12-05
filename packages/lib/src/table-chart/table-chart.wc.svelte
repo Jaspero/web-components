@@ -302,7 +302,7 @@
             <table>
               <tr class="table-head-row">
                 {#each selected_dimensions as dimension}
-                  <th on:click={() => sort_data(dimension.value)}>
+                  <th class="cursor-pointer" on:click={() => sort_data(dimension.value)}>
                     {dimension.label}
                     {#if sort_order[dimension.value] === 'asc'}↑{:else if sort_order[dimension.value] === 'desc'}↓{/if}
                   </th>
@@ -345,6 +345,12 @@
 
     .cursor-pointer {
         cursor: pointer;
+        -webkit-touch-callout: none;
+        -webkit-user-select: none;
+        -khtml-user-select: none;
+        -moz-user-select: none;
+        -ms-user-select: none;
+        user-select: none;
     }
 
     .cursor-text {
