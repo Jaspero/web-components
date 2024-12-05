@@ -11,6 +11,7 @@
   import type { TableHeader } from '../types/table-header.interface';
   import type { TableSort } from '../types/table-sort.interface';
   import type { TableService } from '../types/table.service';
+  import dragHandleIcon from '../../../lib/src/icons/drag-handle.svg?raw';
   import './async-table.wc.pcss';
 
   export let wording = {
@@ -128,6 +129,7 @@
     const { key, fallback, pipes } = header;
 
     let value: any;
+    
     try {
       value = get(row, key);
     } catch {
@@ -585,19 +587,19 @@
       {/if}
 
       {#if rows}
-        {#each rows as row, ind}
+        {#each rows as row, rowIndex}
           <tr class:jp-async-table-highlight={rowClickable}>
-            {#each headers as header, index}
+            {#each headers as header, columnIndex}
               {#if !header.disabled}
                 <td
                   class:jp-async-table-sortable={allowArrangeColumns && header.sortable}
-                  class:jp-async-table-sticky-first={freezeFirstColumn && index === 0}
-                  class:jp-async-table-sticky-last={index === headers.length - 1 &&
+                  class:jp-async-table-sticky-first={freezeFirstColumn && columnIndex === 0}
+                  class:jp-async-table-sticky-last={columnIndex === headers.length - 1 &&
                     freezeLastColumn}
-                  class:jp-async-table-hover-over={hoveringOverColumnIndex === index}
-                  on:click={(e) => rowClick(row, index, header, e)}
+                  class:jp-async-table-hover-over={hoveringOverColumnIndex === columnIndex}
+                  on:click={(e) => rowClick(row, rowIndex, header, e)}
                 >
-                  {#await handleColumn(header, row, ind) then val}
+                  {#await handleColumn(header, row, rowIndex) then val}
                     <span class="jp-async-table-cell">
                       {@html val}
                     </span>
@@ -678,13 +680,7 @@
                   if (!column.disableOrganize) drop(e, index);
                 }}
               >
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  height="24px"
-                  viewBox="0 -960 960 960"
-                  width="24px"
-                  fill="#5f6368"><path d="M160-360v-80h640v80H160Zm0-160v-80h640v80H160Z" /></svg
-                >
+              {@html dragHandleIcon}
               </span><input type="checkbox" value={true} bind:checked={column.enabled} />
               <span>{@html column.label}</span>
             </label>{/if}
