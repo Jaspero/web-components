@@ -3,6 +3,7 @@
 ### Description
 
 `renderAlert` is a function that makes rendering `<jp-alert>` easier.
+****
 
 ### Parameters
 
@@ -10,6 +11,8 @@
 | :------: | :----------: | :-------------------------: | :----------------------: |
 | options  |              |       `AlertOptions`        |    rendering options     |
 | callback |              | `(action?: string) => void` | called when alert closes |
+<br></br>
+****
 
 ### Interfaces
 
@@ -24,3 +27,5 @@
 |  state   |              | `'error'` or `'success'` |            type of alert            |
 |   host   |              |      `HTMLElement`       |   element to append the alert to    |
 | duration |              |         `number`         | duration of the appereance of alert |
+<br></br>
+****

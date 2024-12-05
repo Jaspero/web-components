@@ -1,10 +1,11 @@
-import '../static/c/alert.wc.js';
+<!-- import '../static/c/alert.wc.js'; -->
 
 # Alert
 
 ### Description
 
 `<jp-alert>` is a component with the functionality of displaying alert messages.
+****
 
 ### Attributes
 
@@ -13,19 +14,27 @@ import '../static/c/alert.wc.js';
 |  title   |              |         `string`         |     title of the alert      |
 | message  |              |         `string`         | information within an alert |
 |  state   |      ✓       | `'error'` or `'success'` |        type of alert        |
+<br></br>
+****
 
 ### Slots
 
 This component does not have any slots.
+<br></br>
+****
 
 ### Methods
 
 This component does not have any methods.
+<br></br>
+****
 
 ### Events
 
 - `close`
   - triggers when the "close" button is clicked
+<br></br>
+****
 
 ### Demo
 
@@ -48,3 +57,5 @@ function alert(props) {
   );
 }
 ```
+<br></br>
+****

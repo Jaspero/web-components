@@ -8,6 +8,7 @@ sidebar_position: 1
 
 - [Node.js](https://nodejs.org/en/download/) version 16.14 or above:
   - When installing Node.js, you are recommended to check all checkboxes related to dependencies.
+****
 
 ## Installing the package
 
@@ -20,6 +21,8 @@ npm i --save-exact @jaspero/web-components
 ```
 
 You can type this command into Command Prompt, Powershell, Terminal, or any other integrated terminal of your code editor.
+<br></br>
+****
 
 ## Component dependancies
 
@@ -32,6 +35,8 @@ For components to display properly, you'll need to import default styles and css
 Some components require additional imports to function properly.
 
 Simplest way to do this is to load the following scripts and stylesheets;
+<br></br>
+****
 
 ### Quill
 
@@ -42,6 +47,8 @@ Simplest way to do this is to load the following scripts and stylesheets;
 ```html
 <script src="https://cdn.quilljs.com/1.3.6/quill.js"></script>
 ```
+<br></br>
+****
 
 ### Code editor
 
@@ -55,6 +62,8 @@ Simplest way to do this is to load the following scripts and stylesheets;
 ```html
 <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.14/codemirror.min.js"></script>
 ```
+<br></br>
+****
 
 ### Json editor
 
@@ -69,3 +78,5 @@ Simplest way to do this is to load the following scripts and stylesheets;
 ```html
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jsoneditor/9.10.2/jsoneditor.min.js"></script>
 ```
+<br></br>
+****

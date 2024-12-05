@@ -1,11 +1,13 @@
-import '../../static/c/autocomplete.wc.js';
-import '../../static/c/autocomplete.css';
+<!-- import '../../static/c/autocomplete.wc.js';
+import '../../static/c/autocomplete.css'; -->
 
 # Autocomplete
 
 ### Description
 
 `<jp-autocomplete>` is a field component with a combination of `<input>` functionality and `<select>` functionality.
+****
+
 
 ### Attributes
 
@@ -29,10 +31,14 @@ import '../../static/c/autocomplete.css';
 |          pattern           |              |                  `string`                   |                          pattern that input has to satisfy                          |
 |  patternValidationMessage  |              |                  `string`                   |           validation message for when component does not satisfy pattern            |
 |     validationMessages     |              | `{[type]: string}` where `type` is `string` |          compact way of writing validation messages in a single attribute           |
+<br></br>
+****
 
 ### Slots
 
 This component does not have any slots.
+<br></br>
+****
 
 ### Methods
 
@@ -40,11 +46,15 @@ This component does not have any slots.
   - returns form field value
 - `reportValidity`
   - triggers reportValidity
+<br></br>
+****
 
 ### Events
 
 - `value`
   - triggers when value of the field changes
+<br></br>
+****
 
 ### Demo
 
@@ -54,3 +64,5 @@ This component does not have any slots.
 
 <jp-autocomplete options='["One", "Two", "Three"]' label="Autocomplete"></jp-autocomplete>
 ```
+<br></br>
+****

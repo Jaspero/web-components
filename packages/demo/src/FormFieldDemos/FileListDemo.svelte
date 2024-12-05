@@ -1,6 +1,7 @@
 <script lang="ts">
   import { onMount } from 'svelte';
   import '../../../../dist/file-list.wc.js';
+  import '../../../../dist/file-list.css';
 
   let el: HTMLDivElement;
   let fileList: any;

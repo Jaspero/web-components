@@ -1,11 +1,12 @@
-import '../static/c/async-table.wc.js';
-import '../static/c/async-table.css';
+<!-- import '../static/c/async-table.wc.js';
+import '../static/c/async-table.css'; -->
 
 # Async Table
 
 ### Description
 
 `<jp-async-table>` is a table component that loads its data asynchronously.
+****
 
 ### Attributes
 
@@ -17,6 +18,8 @@ import '../static/c/async-table.css';
 | showArrangingColumns |              |            `boolean`            |                should the button for arranging columns be shown                 |
 |      showExport      |              |            `boolean`            |                      should the button for export be shown                      |
 |  dropdownMenuExport  |              |            `boolean`            | should the button for export download csv or can you have more download options |
+<br></br>
+****
 
 <br></br>
 
@@ -39,7 +42,6 @@ Defines the structure of a table header.
 |       pipes       |              | [`TablePipe`](#tablepipe) |                            used for transforming table data                             |
 |     fallback      |              |           `any`           |       optional value used as a replacement if the specific value isn't available        |
 |     disabled      |              |         `boolean`         |    disabled headers aren't shown by default but are available when arranging columns    |
-
 <br></br>
 
 #### TablePipe
@@ -47,7 +49,6 @@ Defines the structure of a table header.
 - **value** (required, type: `any`) - represents a data element
 - **row** (type: `any`) - reference to the entire data row
 - **index** (type: `number`) - numerical position in the table
-
 <br></br>
 
 #### `TableSort`
@@ -60,7 +61,6 @@ Defines the sorting configuration of data.
 |:---------:|:------------:|:---------------:|:------------------------------------------------------------:|
 |    key    |      ✓       |    `string`     | used for describing the data field by which items are sorted |
 | direction |      ✓       | `asc` or `desc` |  determines if the sorting order is ascendant or descendant  |
-
 <br></br>
 
 #### `TableService`
@@ -76,8 +76,10 @@ Defines methods for fetching and loading more table data.
 |        export         | `function` |     retrieves all data that should be included when export is triggered by the table      |
 |    arrangeColumns     | `function` |                This method is intended for persisting column organization                 |
 | additionalExportTypes | `function` |          This method is intended for adding additional export types to function           |
+<br></br>
+****
 
-### AdditionalExportTypes
+### Additional Export Types
 
 Each export type contains three key properties:
 
@@ -85,6 +87,7 @@ Each export type contains three key properties:
 - **type**: File format for the export. By default, `csv`, `json`, and `xml` are supported.
 - **method**: A function that is triggered upon export. This function manipulates data and returns it in the desired
   format.
+<br></br>
 
 #### Example Structure
 
@@ -99,6 +102,8 @@ type AdditionalExportType = {
   };
 };
 ```
+<br></br>
+
 #### Example
 ```typescript
  {
@@ -115,12 +120,14 @@ type AdditionalExportType = {
     }
 }
 ```
-
 <br></br>
+****
 
 ### Slots
 
 This component does not have any slots.
+<br></br>
+****
 
 ### Methods
 
@@ -130,12 +137,15 @@ This component does not have any slots.
     - Adds a row to the end of the loaded dataset
 - `updateRow(value: any, index: number)`
     - Update row at index
+<br></br>
+****
 
 ### Events
 
 - `rowClick`
     - triggers when a row is clicked
-
+<br></br>
+****
 
 ### Demo
 
@@ -227,3 +237,5 @@ function asyncTable(props) {
     return <div ref={el}></div>;
   }
   ```
+<br></br>
+****

@@ -18,6 +18,7 @@
   export let columnCountMobile = 1;
   export let gapX = 10;
   export let gapY = 10;
+  export let enableGallery = true;
 
   let container: HTMLDivElement;
   let columns: number[] = [];
@@ -105,6 +106,7 @@
 
     Array.from(container.children).forEach((child: Element, index: number) => {
       (child as HTMLElement).style.width = `${colWidth}px`;
+      (child as HTMLElement).style.display = `block`;
       sizes[index] = child.clientHeight;
 
       const col = columns.indexOf(Math.min(...columns));
@@ -141,6 +143,10 @@
   }
 
   async function openCarousel(index: number) {
+    if (!enableGallery) {
+      return;
+    }
+
     scrollPosition = window.scrollY;
     currentIndex = index;
     focused = true;
@@ -227,6 +233,7 @@
 
     &-container {
       position: absolute;
+      display: none;
     }
     &-image {
       width: 100%;

@@ -1,6 +1,7 @@
 <script lang="ts">
   import '../../../../dist/alert.wc.js';
   import '../../../../dist/render-alert.js';
+  import '../../../../dist/alert.css';
   let showGood = false;
   let showBad = false;
 </script>

@@ -1,11 +1,12 @@
-import '../../static/c/checkbox.wc.js';
-import '../../static/c/checkbox.css';
+<!-- import '../../static/c/checkbox.wc.js';
+import '../../static/c/checkbox.css'; -->
 
 # Checkbox
 
 ### Description
 
 `<jp-checkbox>` is a form component with multi `<input type="checkbox">` functionality.
+****
 
 ### Attributes
 
@@ -20,10 +21,14 @@ import '../../static/c/checkbox.css';
 |         maxSelects          |              |                                                  `number`                                                  |                 maximum number of checks allowed                  |
 | maxselectsValidationMessage |              |                                                  `string`                                                  | validation message for when component does not satisfy maxSelects |
 |     validationMessages      |              |                                `{[type]: string}` where `type` is `string`                                 | compact way of writing validation messages in a single attribute  |
+<br></br>
+****
 
 ### Slots
 
 This component does not have any slots.
+<br></br>
+****
 
 ### Methods
 
@@ -31,11 +36,15 @@ This component does not have any slots.
   - returns form field value
 - `reportValidity`
   - triggers reportValidity
+<br></br>
+****
 
 ### Events
 
 - `value`
   - triggers when one of the checkboxes changes value
+<br></br>
+****
 
 ### Demo
 
@@ -49,3 +58,5 @@ This component does not have any slots.
     {"value": "lorem adasda", "label": "lorem adasda"}
 ]'></jp-checkbox>
 ```
+<br></br>
+****

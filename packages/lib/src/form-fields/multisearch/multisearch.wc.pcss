@@ -10,7 +10,7 @@
       content: ' *';
     }
 
-    input:required:invalid + .jp-multisearch-select {
+    input:required:user-invalid + .jp-multisearch-select {
       border-color: var(--danger-color);
     }
   }
@@ -100,6 +100,7 @@
       min-width: 1rem;
       min-height: 1rem;
       transition: 0.3s;
+      fill: currentColor;
 
       &-rotate {
         transform: rotate(-180deg);
@@ -156,6 +157,7 @@
       text-align: left;
       outline: none;
       transition: 0.3s;
+      background-color: inherit;
 
       &-selected {
         background-color: var(--background-tertiary);
@@ -220,6 +222,7 @@
       outline: none;
       border: 1px solid var(--border-primary);
       border-radius: 0.25rem;
+      background-color: inherit;
     }
   }
   &-overlay {

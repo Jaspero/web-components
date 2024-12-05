@@ -1,6 +1,6 @@
 .jp-async-table {
   background-color: var(--background-primary);
-  border-radius: 0.25rem;
+  border-radius: var(--border-radius, 0.25rem);
   box-shadow: 0 3px 12px rgba(0, 0, 0, 0.16);
 
   &-header {
@@ -21,14 +21,22 @@
     align-items: center;
     border: none;
     cursor: pointer;
-    border-radius: 0.25rem;
+    border-radius: var(--border-radius, 0.25rem);
     min-width: 4rem;
     height: 2.25rem;
     padding: 0 1rem;
     user-select: none;
+    transition: all 150ms cubic-bezier(0.4, 0, 0.2, 1);
+    background-color: var(--secondary-color);
+    border: 1px solid var(--border-secondary, transparent);
+
+    &:hover {
+      background-color: var(--hover-secondary-color);
+    }
 
     &:disabled {
       opacity: 0.5;
+      pointer-events: none;
     }
 
     &.jp-table-loading {
@@ -51,7 +59,7 @@
       font-size: 0.75rem;
       font-weight: normal;
       padding: 0.5rem;
-      border-bottom: 1px solid rgba(0, 0, 0, 0.16);
+      border-bottom: 1px solid var(--border-primary, rgba(0, 0, 0, 0.16));
     }
     th {
       position: sticky;
@@ -101,11 +109,7 @@
     padding: 1rem;
     display: flex;
     justify-content: space-between;
-
-    > button {
-      background-color: var(--primary-color);
-      color: var(--text-on-primary);
-    }
+    align-items: center;
   }
 
   &-sortable {
@@ -138,7 +142,7 @@
     left: 0;
     width: 100%;
     height: 100%;
-    z-index: 1000;
+    z-index: 100;
     display: flex;
     justify-content: center;
 
@@ -149,16 +153,16 @@
       width: 100%;
       height: 100%;
       background-color: rgba(0, 0, 0, 0.5);
-      z-index: 1001;
+      z-index: 101;
     }
 
     &-inner {
       width: 500px;
       max-width: 100%;
-      z-index: 1002;
-      background-color: white;
-      border-radius: 0.25rem;
-      box-shadow: 0 3px 12px rgba(0, 0, 0, 0.16);
+      z-index: 102;
+      background-color: var(--background-primary);
+      border-radius: var(--border-radius, 0.25rem);
+      box-shadow: 0 3px 15px 6px rgba(0, 0, 0, 0.2);
       margin-top: 50px;
       padding: 1rem;
       display: flex;
@@ -189,13 +193,13 @@
       bottom: 0;
       width: 0.5px;
       height: 100%;
-      background-color: rgba(0, 0, 0, 0.16);
+      background-color: var(--border-primary, rgba(0, 0, 0, 0.16));
     }
   }
 
   &-sticky-first,
   &-sticky-last {
-    z-index: 1;
+    z-index: 3 !important;
   }
 
   &-sticky-last {
@@ -211,7 +215,7 @@
       bottom: 0;
       width: 0.5px;
       height: 100%;
-      background-color: rgba(0, 0, 0, 0.16);
+      background-color: var(--border-primary, rgba(0, 0, 0, 0.16));
     }
   }
 
@@ -233,23 +237,16 @@
     }
   }
 
-  &-arrange-columns-dialog-inner {
-    padding: 1rem;
-  }
-
   &-arrange-column-label {
     display: flex;
     align-items: center;
     user-select: none;
     padding: 0.5rem 0;
     transition: background-color 0.3s;
+    gap: 5px;
 
     &.hovered {
       background-color: transparent;
-    }
-
-    &:not(.hovered) {
-      background-color: #d3d3d3;
     }
 
     &.material-symbols-outlined {
@@ -262,6 +259,10 @@
     pointer-events: none;
   }
 
+  &-hover-over {
+    background-color: var(--hover-over-color, #d3d3d3) !important;
+  }
+
   &-dropdown {
     position: relative;
     display: inline-block;
@@ -269,9 +270,10 @@
     &-menu {
       position: absolute;
       z-index: 5;
-      background-color: #EFEFEF;
-      border-radius: 4px;
+      background-color: #efefef;
+      border-radius: var(--border-radius, 0.25rem);
       box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+      border: 1px solid var(--border-secondary, transparent);
       margin-top: 5px;
       padding: 0;
       list-style: none;
@@ -287,8 +289,13 @@
       transition: background-color 0.3s;
       text-align: left;
 
+      &:not(.jp-async-table-dropdown-option:first-child){
+        border-top: 1px solid rgba(0, 0, 0, .2);
+      }
+      
+
       &:hover {
-        background-color: #e0e0e0;
+        background-color: var(--hover-color);
       }
     }
   }

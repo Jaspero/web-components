@@ -1,11 +1,12 @@
-import '../../static/c/chips.wc.js';
-import '../../static/c/chips.css';
+<!-- import '../../static/c/chips.wc.js';
+import '../../static/c/chips.css'; -->
 
 # Chips
 
 ### Description
 
 `<jp-chips>` is a field component that makes typed input iterative.
+****
 
 ### Attributes
 
@@ -28,10 +29,14 @@ import '../../static/c/chips.css';
 |          unique           |              |                  `boolean`                  |                determines if each chip has to be different                |
 |  uniqueValidationMessage  |              |                  `string`                   |       validation message for when component does not satisfy unique       |
 |    validationMessages     |              | `{[type]: string}` where `type` is `string` |     compact way of writing validation messages in a single attribute      |
+<br></br>
+****
 
 ### Slots
 
 This component does not have any slots.
+<br></br>
+****
 
 ### Methods
 
@@ -39,11 +44,15 @@ This component does not have any slots.
   - returns form field value
 - `reportValidity`
   - triggers reportValidity
+<br></br>
+****
 
 ### Events
 
 - `value`
   - triggers when chips/input changes
+<br></br>
+****
 
 ### Demo
 
@@ -53,3 +62,5 @@ This component does not have any slots.
 
 <jp-chips label="Chips" placeholder="Placeholder"></jp-chips>
 ```
+<br></br>
+****

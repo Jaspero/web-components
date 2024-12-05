@@ -74,6 +74,10 @@
         border: none;
         height: 100%;
         cursor: pointer;
+
+        & > svg {
+          fill: currentColor;
+        }
       }
 
       &-hidden {
@@ -91,6 +95,10 @@
 
       &-preview-button {
         position: relative;
+      }
+
+      & > svg {
+        fill: currentColor;
       }
     }
 
@@ -110,7 +118,7 @@
       width: 100%;
       white-space: nowrap;
       overflow: hidden;
-      font-family: serif;
+      font-family: inherit;
       transform: translateY(0.8rem);
       text-overflow: ellipsis;
       border: none;

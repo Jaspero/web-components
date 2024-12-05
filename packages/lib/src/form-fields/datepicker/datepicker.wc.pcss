@@ -143,6 +143,10 @@
         padding: 0.5rem 0.75rem;
         border-radius: 0.5rem;
 
+        > svg {
+          fill: currentColor;
+        }
+
         &:hover {
           background-color: var(--background-secondary);
         }
@@ -155,7 +159,7 @@
       display: flex;
       border: 0;
 
-      & button {
+      & > button {
         display: flex;
         justify-content: center;
         align-items: center;
@@ -164,6 +168,10 @@
         padding: 0;
         border: 0;
         border-radius: 50%;
+
+        > svg {
+          fill: currentColor;
+        }
 
         &:not(:disabled):hover {
           background-color: var(--background-secondary);

@@ -49,12 +49,12 @@
 
 <!-- <AssetManagerDemo /> -->
 <!-- <MultiSearchDemo /> -->
-<ChipsDemo/>
-<!-- <AsyncTableDemo />-->
+<!-- <ChipsDemo/> -->
+<!--<AsyncTableDemo />-->
 <!-- <MultiSelectDemo /> -->
 <!-- <FileListDemo /> -->
 <!-- <Demos /> -->
-<InputDemo />
+<!-- <InputDemo /> -->
 <!-- <ImageGalleryDemo /> -->
 <!-- <DateRangeDemo /> -->
 <!-- <CkEditorDemo /> -->
@@ -79,7 +79,7 @@
       <!-- <ChipsDemo /> -->
       <!-- <CkEditorDemo /> -->
       <!-- <DateRangeDemo /> -->
-      <!-- <DatepickerDemo /> -->
+      <DatepickerDemo />
       <!-- <FileListDemo /> -->
       <!-- <FileUploadDemo /> -->
       <!-- <InputDemo /> -->
@@ -99,7 +99,7 @@
     </div>
     <div class="other editors">
       <!-- <AccordionDemo/> -->
-      <!-- <AlertDemo /> -->
+      <AlertDemo />
       <!-- <AssetManagerDemo /> -->
       <!-- <AsyncTableDemo /> -->
       <!-- <ButtonsDemo/> -->

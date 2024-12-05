@@ -1,10 +1,11 @@
-import '../../static/c/place-input.wc.js';
+<!-- import '../../static/c/place-input.wc.js'; -->
 
 # Place Input
 
 ### Description
 
 `<jp-place-input>` is a field component with a place lookup functionality.
+****
 
 ### Attributes
 
@@ -34,22 +35,24 @@ import '../../static/c/place-input.wc.js';
 | requiredValidationMessage | | `string` | validation message for when component does not satisfy required |
 | resultValidationMessage | | `string` | validation message for when component cannot find results |
 | validationMessages | | `{[type]: string}` where `type` is `string` | compact way of writing validation messages in a single attribute |
+<br></br>
+****
 
 ## Dependencies
 
 ### Permissions
 In order for this component to work, `Places API`, `Geocoding API` and `Google Maps JS SDK` (or `Google Maps JS API`) permissions are required.
+
+Steps on how to enable `Places API` can be found at: <br></br>
+https://developers.google.com/maps/documentation/javascript/places#GetStarted
+
+Steps on how to enable `Geocoding API` can be found at: <br></br>
+https://developers.google.com/maps/documentation/javascript/geocoding#GetStarte
+
+Steps on how to enable `Google Maps JS SDK` or `Google Maps JS API` can be found at: <br></br>
+https://developers.google.com/maps/documentation/javascript/cloud-setup#enabling-apis
 <br></br>
-
-Steps on how to enable `Places API` can be found at https://developers.google.com/maps/documentation/javascript/places#GetStarted
-<br></br>
-
-Steps on how to enable `Geocoding API` can be found at https://developers.google.com/maps/documentation/javascript/geocoding#GetStarte
-<br></br>
-
-Steps on how to enable `Google Maps JS SDK` or `Google Maps JS API` can be found at https://developers.google.com/maps/documentation/javascript/cloud-setup#enabling-apis
-
-
+****
 
 ### Attributes
 
@@ -58,31 +61,40 @@ In order to use certain attributes you have to implement them in a certain way. 
 #### `apiKey`
 
 In order to be able to use a map, API key needs to be generated.
-Steps on how to create an API key can be found at https://developers.google.com/maps/documentation/javascript/get-api-key#create-api-keys
+Steps on how to create an API key can be found at: <br></br>
+https://developers.google.com/maps/documentation/javascript/get-api-key#create-api-keys
 
 #### `mapId`
 
 In order to be able to use a map, a mapId needs to be generated.
-Steps on how to create a mapId can be found at https://developers.google.com/maps/documentation/get-map-id
+Steps on how to create a mapId can be found at: <br></br>
+https://developers.google.com/maps/documentation/get-map-id
 
 #### `types`
 
-The attribute is used to reduce search to a more specific result with searching by type of the place. Array can contain up to 5 types and more about types can be found at <br></br>
+The attribute is used to reduce search to a more specific result with searching by type of the place. Array can contain up to 5 types and more about types can be found at: <br></br>
 https://developers.google.com/maps/documentation/places/web-service/autocomplete#types
 
 #### `componentRestriction`
 
-The attribute is used to restrict search to a more specific prediction. Restrictions are made for specified countries for which the maximum amount is an array of 5 provided countries. More about restrictions can be found at https://developers.google.com/maps/documentation/javascript/reference/places-autocomplete-service#ComponentRestrictions
+The attribute is used to restrict search to a more specific prediction. Restrictions are made for specified countries for which the maximum amount is an array of 5 provided countries. More about restrictions can be found at: <br></br>
+https://developers.google.com/maps/documentation/javascript/reference/places-autocomplete-service#ComponentRestrictions
+<br></br>
+****
 
 ### Slots
 
 This component does not have any slots.
+<br></br>
+****
 
 ### Methods
 - `getValue` 
   - returns form field value
 - `reportValidity` 
   - triggers reportValidity
+<br></br>
+****
 
 ### Events
 
@@ -92,6 +104,8 @@ This component does not have any slots.
   - triggers when value of the field changes if returnedValue is set to 'extended'
 - `latitude` 
   - triggers when value of the field changes if returnedValue is set to 'extended'
+<br></br>
+****
 
 ### Demo
 In order to be able to see the demo, api key needs to be filled as the `apiKey` property of the `placeInput` object, as well as the `mapId` property.
@@ -118,3 +132,5 @@ function placeInput(props){
 }
 
 ```
+<br></br>
+****

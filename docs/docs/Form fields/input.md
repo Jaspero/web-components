@@ -1,10 +1,11 @@
-import '../../static/c/input.wc.js';
+<!-- import '../../static/c/input.wc.js'; -->
 
 # Input
 
 ### Description
 
 `<jp-input>` is a field component with `<input>` functionality.
+****
 
 ### Attributes
 
@@ -37,6 +38,8 @@ import '../../static/c/input.wc.js';
 |  patternValidationMessage  |              |                                           `string`                                            |           validation message for when component does not satisfy pattern            |
 |     validationMessages     |              |                          `{[type]: string}` where `type` is `string`                          |          compact way of writing validation messages in a single attribute           |
 |     hideArrowsOnNumber     |              |                                           `boolean`                                           |                 determines if arrows on number type input are shown                 |
+<br></br>
+****
 
 ### Slots
 
@@ -46,6 +49,8 @@ import '../../static/c/input.wc.js';
   - renders in front of the input field
 - `suffix`
   - renders after the input field
+<br></br>
+****
 
 ### Methods
 
@@ -53,11 +58,15 @@ import '../../static/c/input.wc.js';
   - returns form field value
 - `reportValidity`
   - triggers reportValidity
+<br></br>
+****
 
 ### Events
 
 - `value`
   - triggers when value of the field changes
+<br></br>
+****
 
 ### Demo
 
@@ -67,3 +76,5 @@ import '../../static/c/input.wc.js';
 
 <jp-input label="Input"></jp-input>
 ```
+<br></br>
+****

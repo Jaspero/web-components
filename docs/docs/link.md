@@ -1,10 +1,11 @@
-import '../static/c/link.wc.js';
+<!-- import '../static/c/link.wc.js'; -->
 
 # Link
 
 ### Description
 
 `<jp-link>` is a component with `<link>` functionality.
+****
 
 ### Attributes
 
@@ -14,18 +15,26 @@ import '../static/c/link.wc.js';
 | variant  |              | `'basic'` \| `'raised'` \| `'stroked'` \| <br></br> `'flat'` \|`'icon'` \| `'fab'` \| `'mini-fab'` |           visual style           |
 |   href   |      ✓       |                                              `string`                                              | URL that the hyperlink points to |
 |  target  |              |                                              `string`                                              | where to display the linked URL  |
+<br></br>
+****
 
 ### Slots
 
 Used for customization of link's content.
+<br></br>
+****
 
 ### Methods
 
 This component does not have any methods.
+<br></br>
+****
 
 ### Events
 
 This component does not have any events.
+<br></br>
+****
 
 ### Demo
 
@@ -34,3 +43,5 @@ This component does not have any events.
 
 <jp-link> link </jp-link>
 ```
+<br></br>
+****

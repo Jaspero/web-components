@@ -54,9 +54,9 @@
   let loading = false;
   let lagTimeout: any;
   let bindingElement: HTMLDivElement;
-  let optionElements = []; // Array to store references to option buttons
+  let optionElements: any[] = []; // Array to store references to option buttons
   let menuStyle: string;
-  let filteredOptions = [];
+  let filteredOptions: string[] = [];
   let inputEl: HTMLInputElement;
   let open = false;
 
@@ -74,7 +74,15 @@
 
   $: {
     if (Array.isArray(options)) {
-      filteredOptions = options.filter((el) => el.toLowerCase().includes(value.toLowerCase()));
+      let filteredStart = options.filter((el) => el.toLowerCase().startsWith(value.toLowerCase()));
+
+      let filteredContains = options.filter(
+        (el) =>
+          el.toLowerCase().includes(value.toLowerCase()) &&
+          !el.toLowerCase().startsWith(value.toLowerCase())
+      );
+
+      filteredOptions = [...filteredStart, ...filteredContains];
     }
   }
 
