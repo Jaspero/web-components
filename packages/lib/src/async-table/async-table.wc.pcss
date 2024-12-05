@@ -31,7 +31,7 @@
     border: 1px solid var(--border-secondary, transparent);
 
     &:hover {
-      background-color: var(--hover-secondary-color)
+      background-color: var(--hover-secondary-color);
     }
 
     &:disabled {
@@ -260,7 +260,7 @@
   }
 
   &-hover-over {
-    background-color: var(--hover-over-color, #D3D3D3) !important;
+    background-color: var(--hover-over-color, #d3d3d3) !important;
   }
 
   &-dropdown {
@@ -270,7 +270,7 @@
     &-menu {
       position: absolute;
       z-index: 5;
-      background-color: #EFEFEF;
+      background-color: #efefef;
       border-radius: var(--border-radius, 0.25rem);
       box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
       border: 1px solid var(--border-secondary, transparent);
@@ -289,8 +289,13 @@
       transition: background-color 0.3s;
       text-align: left;
 
+      &:not(.jp-async-table-dropdown-option:first-child){
+        border-top: 1px solid rgba(0, 0, 0, .2);
+      }
+      
+
       &:hover {
-        background-color: #e0e0e0;
+        background-color: var(--hover-color);
       }
     }
   }
