@@ -5,6 +5,7 @@
   import InputDemo from './FormFieldDemos/InputDemo.svelte';
   import SelectDemo from './FormFieldDemos/SelectDemo.svelte';
   import MultiSelectDemo from './FormFieldDemos/MultiSelectDemo.svelte';
+  import TableChartDemo from './OtherDemos/TableChartDemo.svelte';
   /*import MultiSelectDemo from './FormFieldDemos/MultiSelectDemo.svelte';*/
   //FORM FIELDS
   /*import AutocompleteDemo from './FormFieldDemos/AutocompleteDemo.svelte';
@@ -55,16 +56,18 @@
 <!-- <AssetManagerDemo /> -->
 <!-- <MultiSearchDemo /> -->
 <!-- <ChipsDemo/> -->
-<AsyncTableDemo />
+<!--<AsyncTableDemo />-->
  <!--<MultiSelectDemo />-->
 <!-- <FileListDemo /> -->
 <!-- <Demos /> -->
- <InputDemo />
+<!-- <InputDemo />-->
 <!-- <ImageGalleryDemo /> -->
 <!-- <DateRangeDemo /> -->
 <!-- <CkEditorDemo /> -->
 <!-- <CkEditorDemo /> -->
 <!-- <RangeDemo /> -->
+
+<TableChartDemo />
 
 <div class="layout-container">
   <!--
@@ -89,11 +92,11 @@
       <!-- <FileUploadDemo /> -->
       <!-- <InputDemo /> -->
       <!-- <MultiSearchDemo /> -->
-       <MultiSelectDemo />
+<!--       <MultiSelectDemo />-->
       <!-- <QuillDemo /> -->
       <!-- <RadioDemo /> -->
       <!-- <RangeDemo /> -->
-       <SelectDemo />
+<!--       <SelectDemo />-->
       <!-- <SliderDemo /> -->
       <!-- <TextareaDemo /> -->
       <!-- <ToggleDemo /> -->
