@@ -1,8 +1,13 @@
 <script lang="ts">
   import '../../lib/src/index.css';
   import './style.css';
+  import AsyncTableDemo from './OtherDemos/AsyncTableDemo.svelte';
+  import InputDemo from './FormFieldDemos/InputDemo.svelte';
+  import SelectDemo from './FormFieldDemos/SelectDemo.svelte';
+  import MultiSelectDemo from './FormFieldDemos/MultiSelectDemo.svelte';
+  /*import MultiSelectDemo from './FormFieldDemos/MultiSelectDemo.svelte';*/
   //FORM FIELDS
-  import AutocompleteDemo from './FormFieldDemos/AutocompleteDemo.svelte';
+  /*import AutocompleteDemo from './FormFieldDemos/AutocompleteDemo.svelte';
   import CheckboxDemo from './FormFieldDemos/CheckboxDemo.svelte';
   import ChipsDemo from './FormFieldDemos/ChipsDemo.svelte';
   import CkEditorDemo from './FormFieldDemos/CkEditorDemo.svelte';
@@ -44,17 +49,17 @@
   import TooltipDemo from './OtherDemos/TooltipDemo.svelte';
   import TreeDemo from './OtherDemos/TreeDemo.svelte';
 
-  import Demos from './Demos.svelte';
+  import Demos from './Demos.svelte';*/
 </script>
 
 <!-- <AssetManagerDemo /> -->
 <!-- <MultiSearchDemo /> -->
 <!-- <ChipsDemo/> -->
-<!--<AsyncTableDemo />-->
-<!-- <MultiSelectDemo /> -->
+<AsyncTableDemo />
+ <!--<MultiSelectDemo />-->
 <!-- <FileListDemo /> -->
 <!-- <Demos /> -->
-<!-- <InputDemo /> -->
+ <InputDemo />
 <!-- <ImageGalleryDemo /> -->
 <!-- <DateRangeDemo /> -->
 <!-- <CkEditorDemo /> -->
@@ -79,16 +84,16 @@
       <!-- <ChipsDemo /> -->
       <!-- <CkEditorDemo /> -->
       <!-- <DateRangeDemo /> -->
-      <DatepickerDemo />
+      <!--<DatepickerDemo />-->
       <!-- <FileListDemo /> -->
       <!-- <FileUploadDemo /> -->
       <!-- <InputDemo /> -->
       <!-- <MultiSearchDemo /> -->
-      <!-- <MultiSelectDemo /> -->
+       <MultiSelectDemo />
       <!-- <QuillDemo /> -->
       <!-- <RadioDemo /> -->
       <!-- <RangeDemo /> -->
-      <!-- <SelectDemo /> -->
+       <SelectDemo />
       <!-- <SliderDemo /> -->
       <!-- <TextareaDemo /> -->
       <!-- <ToggleDemo /> -->
@@ -99,7 +104,7 @@
     </div>
     <div class="other editors">
       <!-- <AccordionDemo/> -->
-      <AlertDemo />
+      <!--<AlertDemo />-->
       <!-- <AssetManagerDemo /> -->
       <!-- <AsyncTableDemo /> -->
       <!-- <ButtonsDemo/> -->
