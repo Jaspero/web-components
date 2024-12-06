@@ -6,6 +6,7 @@
   import SelectDemo from './FormFieldDemos/SelectDemo.svelte';
   import MultiSelectDemo from './FormFieldDemos/MultiSelectDemo.svelte';
   import TableChartDemo from './OtherDemos/TableChartDemo.svelte';
+  import FileUploadDemo from './FormFieldDemos/FileUploadDemo.svelte';
   /*import MultiSelectDemo from './FormFieldDemos/MultiSelectDemo.svelte';*/
   //FORM FIELDS
   /*import AutocompleteDemo from './FormFieldDemos/AutocompleteDemo.svelte';
@@ -67,7 +68,7 @@
 <!-- <CkEditorDemo /> -->
 <!-- <RangeDemo /> -->
 
-<TableChartDemo />
+<!-- <TableChartDemo /> -->
 
 <div class="layout-container">
   <!--
@@ -89,7 +90,7 @@
       <!-- <DateRangeDemo /> -->
       <!--<DatepickerDemo />-->
       <!-- <FileListDemo /> -->
-      <!-- <FileUploadDemo /> -->
+      <FileUploadDemo />
       <!-- <InputDemo /> -->
       <!-- <MultiSearchDemo /> -->
 <!--       <MultiSelectDemo />-->
