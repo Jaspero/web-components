@@ -566,6 +566,7 @@
                 class:jp-async-table-sticky-last={index === headers.length - 1 && freezeLastColumn}
                 class:jp-async-table-no-cursor={header.disableOrganize}
                 class:jp-async-table-hover-over={hoveringOverColumnIndex === index}
+                class={`jp-async-table-cell-${header.key.slice(1).replace(/\//g, '(?!^)\/')}`}
                 draggable={allowArrangeColumns && !header.disableOrganize}
                 on:click={() => adjustSort(header)}
                 on:dragstart={(e) => {

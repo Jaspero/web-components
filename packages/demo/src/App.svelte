@@ -57,7 +57,7 @@
 <!-- <AssetManagerDemo /> -->
 <!-- <MultiSearchDemo /> -->
 <!-- <ChipsDemo/> -->
-<!--<AsyncTableDemo />-->
+<AsyncTableDemo />
  <!--<MultiSelectDemo />-->
 <!-- <FileListDemo /> -->
 <!-- <Demos /> -->
@@ -90,7 +90,7 @@
       <!-- <DateRangeDemo /> -->
       <!--<DatepickerDemo />-->
       <!-- <FileListDemo /> -->
-      <FileUploadDemo />
+      <!-- <FileUploadDemo /> -->
       <!-- <InputDemo /> -->
       <!-- <MultiSearchDemo /> -->
 <!--       <MultiSelectDemo />-->
