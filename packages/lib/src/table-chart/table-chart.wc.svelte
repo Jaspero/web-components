@@ -5,6 +5,13 @@
   }}
 />
 
+<svelte:head>
+  <script type="text/javascript" src="https://cdn.jsdelivr.net/jquery/latest/jquery.min.js"/>
+  <script type="text/javascript" src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"/>
+  <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"/>
+  <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css" />
+</svelte:head>
+
 <script lang="ts">
   /**
    * TYPES
@@ -133,6 +140,9 @@
   let search_value: string = '';
   let date_range_key: string;
 
+  let date_input_element: HTMLInputElement | null = null;
+  let date_range = { start: '', end: '' };
+
   /**
    * FUNCTIONS
    */
@@ -174,7 +184,20 @@
       .map(dimension => dimension.value)
       .filter(dimension => dimension !== 'value');
 
-    for (const item of data) {
+    let prefiltered_data = data;
+
+    if (date_range?.start?.length && date_range?.end?.length) {
+      const start_date = new Date(date_range.start);
+      const end_date = new Date(date_range.end);
+
+      prefiltered_data = prefiltered_data.filter(item => {
+        const item_date = new Date(item[date_range_key]);
+
+        return item_date >= start_date && item_date <= end_date;
+      });
+    }
+
+    for (const item of prefiltered_data) {
       const key = keys.map(field => getNestedValue(item, field) || '').join('_');
 
       if (!grouped_data[key]) {
@@ -236,16 +259,23 @@
     }));
   }
 
-  $: if (date_range_key) {
-    console.log(date_range_key);
-  }
-
   $: if (search_value?.length) {
     filter_data();
   }
 
   $: if (search_value.length === 0 && selected_dimensions?.length) {
     process_data();
+  }
+
+  $: if (date_input_element) {
+    new window.daterangepicker(date_input_element, {
+      opens: 'left',
+    }, (start, end) => {
+      date_range.start = start.format('YYYY-MM-DD');
+      date_range.end = end.format('YYYY-MM-DD');
+
+      process_data();
+    });
   }
 </script>
 
@@ -282,14 +312,12 @@
     </div>
 
     <div class="table-wrapper-container">
-      {#if (processed_data?.length || search_value?.length) && selected_dimensions?.length}
+      {#if (processed_data?.length || search_value?.length || date_range.start?.length || date_range.end?.length) && selected_dimensions?.length}
         <div class="filters-row"
              style="--filters-row-input-border: {config?.content?.toolbar?.input?.border || DEFAULT_CONFIG.content.toolbar.input.border}; --filters-row-button-border: {config?.content?.toolbar?.button?.border || DEFAULT_CONFIG.content.toolbar.button.border}; --filters-row-button-font-size: {config?.content?.toolbar?.button?.font_size || DEFAULT_CONFIG.content.toolbar.button.font_size}; --filters-row-button-hover-background-color: {config?.content?.toolbar?.button?.hover_background_color || DEFAULT_CONFIG.content.toolbar.button.hover_background_color};">
           <input class="filters-row-input cursor-text" type="text" placeholder="Search" bind:value={search_value}>
 
-          <div class="filters-row-button cursor-pointer">
-            Date
-          </div>
+          <input type="text" bind:this={date_input_element} placeholder="Select Date Range" />
         </div>
       {/if}
 
