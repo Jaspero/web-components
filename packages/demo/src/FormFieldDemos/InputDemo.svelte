@@ -27,6 +27,7 @@
   <jp-input label="required" required="true" />
   <jp-input label="readonly" readonly="true" />
   <jp-input label="type text" type="text" />
+  <jp-input label="type number without arrows" type="number" hideArrowsOnNumber=true/>
   <jp-input label="type password" type="password" />
   <jp-input label="type email" type="email" />
   <jp-input label="type tel" type="tel" />
