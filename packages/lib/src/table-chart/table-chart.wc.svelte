@@ -6,13 +6,12 @@
 />
 
 <svelte:head>
-  <script type="text/javascript" src="https://cdn.jsdelivr.net/jquery/latest/jquery.min.js"/>
-  <script type="text/javascript" src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"/>
-  <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"/>
-  <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css" />
+  <script src="https://cdn.jsdelivr.net/npm/@easepick/bundle@1.2.1/dist/index.umd.min.js"></script>
 </svelte:head>
 
 <script lang="ts">
+  import { onMount } from 'svelte';
+
   /**
    * TYPES
    */
@@ -140,6 +139,7 @@
   let search_value: string = '';
   let date_range_key: string;
 
+  let picker;
   let date_input_element: HTMLInputElement | null = null;
   let date_range = { start: '', end: '' };
 
@@ -248,9 +248,35 @@
     processed_data = (filtered_data?.length && filtered_data) || [];
   }
 
+  async function inject_date_picker() {
+    picker = new easepick.create({
+      element: date_input_element,
+      css: [
+        'https://cdn.jsdelivr.net/npm/@easepick/core@1.2.1/dist/index.css',
+        'https://cdn.jsdelivr.net/npm/@easepick/range-plugin@1.2.1/dist/index.css',
+      ],
+      plugins: ['RangePlugin'],
+      format: 'MM-DD-YYYY',
+      RangePlugin: {
+        tooltip: true,
+      }
+    });
+  }
+
+  function swap_elements(array, index1, index2) {
+    let temp = array[index1];
+
+    array[index1] = array[index2];
+
+    array[index2] = temp;
+
+    return array;
+  }
+
   /**
    * LIFECYCLE
    */
+
   $: if (data?.length) {
     dimensions = Object.keys(data[0]).map(curr => ({
       label: config?.dimensions?.capitalize ? curr.charAt(0).toUpperCase() + curr.slice(1) : curr,
@@ -268,15 +294,26 @@
   }
 
   $: if (date_input_element) {
-    new window.daterangepicker(date_input_element, {
-      opens: 'left',
-    }, (start, end) => {
-      date_range.start = start.format('YYYY-MM-DD');
-      date_range.end = end.format('YYYY-MM-DD');
-
-      process_data();
-    });
+    inject_date_picker();
   }
+
+  onMount(() => {
+    setInterval(() => {
+      if (picker) {
+        if (picker.getStartDate() || picker.getEndDate()) {
+          const start = swap_elements(picker.getStartDate().toLocaleDateString().split('/'), 0, 1).join('/');
+          const end = swap_elements(picker.getEndDate().toLocaleDateString().split('/'), 0, 1).join('/');
+
+          if (date_range.start !== start || date_range.end !== end) {
+            date_range.start = start;
+            date_range.end = end;
+
+            process_data();
+          }
+        }
+      }
+    }, 500);
+  })
 </script>
 
 {#if dimensions}
