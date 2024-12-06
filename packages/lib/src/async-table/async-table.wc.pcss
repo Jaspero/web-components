@@ -193,11 +193,6 @@
     }
   }
 
-  &-sticky-first,
-  &-sticky-last {
-    z-index: 3 !important;
-  }
-
   &-sticky-last {
     position: sticky;
     right: 0;
@@ -295,6 +290,16 @@
       }
     }
   }
+}
+
+td.jp-async-table-sticky-first,
+td.jp-async-table-sticky-last {
+  z-index: 3 !important;
+}
+
+th.jp-async-table-sticky-first,
+th.jp-async-table-sticky-last {
+  z-index: 4 !important;
 }
 
 @keyframes jp-table-spin {

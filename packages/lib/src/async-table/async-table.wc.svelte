@@ -566,7 +566,7 @@
                 class:jp-async-table-sticky-last={index === headers.length - 1 && freezeLastColumn}
                 class:jp-async-table-no-cursor={header.disableOrganize}
                 class:jp-async-table-hover-over={hoveringOverColumnIndex === index}
-                class={`jp-async-table-cell-${header.key.slice(1).replace(/\//g, '(?!^)\/')}`}
+                class={`jp-async-table-header-cell-${header.key.slice(1).replace(/\//g, '(?!^)\/')}`}
                 draggable={allowArrangeColumns && !header.disableOrganize}
                 on:click={() => adjustSort(header)}
                 on:dragstart={(e) => {
@@ -615,6 +615,7 @@
                   class:jp-async-table-sticky-last={columnIndex === headers.length - 1 &&
                     freezeLastColumn}
                   class:jp-async-table-hover-over={hoveringOverColumnIndex === columnIndex}
+                  class={`jp-async-table-cell-${header.key.slice(1).replace(/\//g, '(?!^)\/')}`}
                   on:click={(e) => rowClick(row, rowIndex, header, e)}
                 >
                   {#await handleColumn(header, row, rowIndex) then val}
