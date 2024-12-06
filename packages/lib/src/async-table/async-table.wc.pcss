@@ -8,11 +8,6 @@
     min-height: 68px;
     display: flex;
     justify-content: flex-end;
-
-    button {
-      background-color: var(--background-secondary);
-      color: var(--text-on-secondary);
-    }
   }
 
   &-button {
@@ -28,6 +23,7 @@
     user-select: none;
     transition: all 150ms cubic-bezier(0.4, 0, 0.2, 1);
     background-color: var(--secondary-color);
+    color: var(--secondary-contrast-color);
     border: 1px solid var(--border-secondary, transparent);
 
     &:hover {
@@ -197,11 +193,6 @@
     }
   }
 
-  &-sticky-first,
-  &-sticky-last {
-    z-index: 3 !important;
-  }
-
   &-sticky-last {
     position: sticky;
     right: 0;
@@ -299,6 +290,16 @@
       }
     }
   }
+}
+
+td.jp-async-table-sticky-first,
+td.jp-async-table-sticky-last {
+  z-index: 3 !important;
+}
+
+th.jp-async-table-sticky-first,
+th.jp-async-table-sticky-last {
+  z-index: 4 !important;
 }
 
 @keyframes jp-table-spin {

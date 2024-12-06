@@ -76,7 +76,7 @@
   $: {
     attachedInternals.checkValidity();
     attachedInternals.setFormValue(internalValue);
-    dispatch('value', { internalValue });
+    dispatch('value', { value: internalValue });
   }
 
   export async function save(id?: string) {
@@ -125,16 +125,14 @@
     handleLocalChange(event.target.files[0]);
   }
 
-  async function checkImage() {
-    if (!isLocal) {
-      const res = await fetch(internalValue);
-      const buff = await res.blob();
-      if (buff.type.startsWith('image/')) {
-        img = internalValue;
-      } else {
-        img = '';
-      }
+  async function checkImage(event: InputEvent) {
+
+    if (!event?.target) {
+      return;
     }
+
+    internalValue = (event.target as HTMLInputElement).value;
+    isLocal = false;
   }
 
   function showPreview() {
@@ -247,7 +245,7 @@
           {required}
           on:focus={() => (inputFocused = true)}
           on:blur={() => (inputFocused = false)}
-          on:change={() => checkImage()}
+          on:change={checkImage}
           bind:value={displayedFileNameString}
           disabled={isLocal}
         />

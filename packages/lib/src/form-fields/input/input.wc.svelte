@@ -44,6 +44,7 @@
   export let step: number | null | 'any' = null;
   export let suffix: string | null = null;
   export let prefix: string | null = null;
+  export let hideArrowsOnNumber = false;
   export let validationMessages: {
     required?: string;
     maxlength?: string;
@@ -257,6 +258,7 @@
       <input
         type="number"
         bind:this={inputEl}
+        class:jp-input-number-no-arrows={hideArrowsOnNumber}
         class:jp-input-field-padding={fieldPadding}
         class:jp-input-field-move-left={prefix}
         aria-hidden={disabled || readonly}
