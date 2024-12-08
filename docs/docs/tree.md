@@ -1,7 +1,7 @@
-<!-- import '../static/c/tree.wc.js';
+import '../static/c/tree.wc.js';
 import '../static/c/tree.css';
 import '../static/c/node.wc.js';
-import '../static/c/node-draggable.wc.js'; -->
+import '../static/c/node-draggable.wc.js';
 
 # Tree
 

@@ -1,5 +1,5 @@
-<!-- import '../../static/c/multisearch.wc.js';
-import '../../static/c/multisearch.css'; -->
+import '../../static/c/multisearch.wc.js';
+import '../../static/c/multisearch.css';
 
 # Multisearch
 
@@ -78,8 +78,8 @@ This component does not have any slots.
 ### Demo
 
 ```jsx live
-// import '../../static/c/multisearch.wc.js';
-// import '../../static/c/multisearch.css';
+// import '@jaspero/web-components/multisearch.wc.js';
+// import '@jaspero/web-components/multisearch.css';
 
 function multisearch(props) {
   let el = useRef(null);

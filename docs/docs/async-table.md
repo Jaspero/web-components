@@ -1,5 +1,5 @@
-<!-- import '../static/c/async-table.wc.js';
-import '../static/c/async-table.css'; -->
+import '../static/c/async-table.wc.js';
+import '../static/c/async-table.css';
 
 # Async Table
 

@@ -1,5 +1,5 @@
-<!-- import '../../static/c/slider.wc.js';
-import '../../static/c/slider.css'; -->
+import '../../static/c/slider.wc.js';
+import '../../static/c/slider.css';
 
 # Slider
 
@@ -46,8 +46,8 @@ This component does not have any slots.
 ### Demo
 
 ```jsx live
-// import '../../static/c/slider.wc.js';
-// import '../../static/c/slider.css';
+// import '@jaspero/web-components/slider.wc.js';
+// import '@jaspero/web-components/slider.css';
 
 <jp-slider></jp-slider>
 ```

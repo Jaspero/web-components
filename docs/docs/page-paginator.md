@@ -1,4 +1,4 @@
-<!-- import '../static/c/page-paginator.wc.js'; -->
+import '../static/c/page-paginator.wc.js';
 
 # Page Paginator
 

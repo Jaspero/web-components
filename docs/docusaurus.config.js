@@ -93,9 +93,8 @@ const config = {
       src: 'https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.14/mode/javascript/javascript.min.js'
     },
     {
-      src: '/web-components/c/index.js',
-      type: 'module'
-    }
+      src: 'https://cdn.ckeditor.com/ckeditor5/41.2.1/super-build/ckeditor.js'
+    },
   ],
 
   themeConfig:

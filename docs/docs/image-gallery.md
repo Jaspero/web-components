@@ -1,4 +1,4 @@
-<!-- import '../static/c/image-gallery.wc.js'; -->
+import '../static/c/image-gallery.wc.js';
 
 # Image Gallery
 

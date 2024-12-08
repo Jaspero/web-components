@@ -1,4 +1,5 @@
-<!-- import '../../static/c/input.wc.js'; -->
+import '../../static/c/input.wc.js';
+import '../../static/c/input.css';
 
 # Input
 
@@ -71,8 +72,8 @@
 ### Demo
 
 ```jsx live
-// import '../../static/c/input.wc.js';
-// import '../../static/c/input.css';
+// import '@jaspero/web-components/input.wc.js';
+// import '@jaspero/web-components/input.css';
 
 <jp-input label="Input"></jp-input>
 ```

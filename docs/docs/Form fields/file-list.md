@@ -1,4 +1,5 @@
-<!-- import '../../static/c/file-list.wc.js'; -->
+import '../../static/c/file-list.wc.js';
+import '../../static/c/file-list.css';
 
 # File list
 
@@ -76,7 +77,8 @@ This component does not have any slots.
 ### Demo
 
 ```jsx live
-// import '../../static/c/file-list.wc.js';
+// import '@jaspero/web-components/file-list.wc.js';
+// import '@jaspero/web-components/file-list.css';
 
 <jp-file-list></jp-file-list>
 ```

@@ -1,5 +1,5 @@
-<!-- import '../../static/c/file-upload.wc.js';
-import '../../static/c/file-upload.css'; -->
+import '../../static/c/file-upload.wc.js';
+import '../../static/c/file-upload.css';
 
 # File upload
 
@@ -66,8 +66,8 @@ This component does not have any methods.
 ### Demo
 
 ```jsx live
-// import '../../static/c/file-upload.wc.js';
-// import '../../static/c/file-upload.css';
+// import '@jaspero/web-components/file-upload.wc.js';
+// import '@jaspero/web-components/file-upload.css';
 
 <jp-file-upload label="Upload a file"></jp-file-upload>
 ```
