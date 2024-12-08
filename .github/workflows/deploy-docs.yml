@@ -22,10 +22,7 @@ jobs:
           node-version: 18
 
       - name: Install dependencies
-        run: |
-          npm i
-          npm i --save @jaspero/web-components@latest
-          npm list @jaspero/web-components
+        run: npm ci
       - name: Remove overflow hidden on playground
         run: |
           find node_modules/@docusaurus/theme-live-codeblock -name "*.css" -exec sed -i "s/overflow: hidden;/overflow: visible;/g" {} +
