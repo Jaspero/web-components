@@ -14,18 +14,7 @@
       "attributes": [
         { "name": "title", "values": [] },
         { "name": "message", "values": [] },
-        { "name": "state", "values": [] },
-        { "name": "disabled", "values": [] },
-        { "name": "id", "values": [] },
-        { "name": "max", "values": [] },
-        { "name": "min", "values": [] },
-        { "name": "value", "values": [] },
-        { "name": "step", "values": [] },
-        { "name": "name", "values": [] },
-        { "name": "discrete", "values": [] },
-        { "name": "required", "values": [] },
-        { "name": "label", "values": [] },
-        { "name": "getValue", "values": [] }
+        { "name": "state", "values": [] }
       ],
       "references": []
     },
@@ -42,18 +31,7 @@
         { "name": "selectable", "values": [] },
         { "name": "minSelected", "values": [] },
         { "name": "maxSelected", "values": [] },
-        { "name": "clearSelection", "values": [] },
-        { "name": "images", "values": [] },
-        { "name": "enablePagination", "values": [] },
-        { "name": "sliderBar", "values": [] },
-        { "name": "autoSlide", "values": [] },
-        { "name": "interval", "values": [] },
-        { "name": "columnCount", "values": [] },
-        { "name": "columnCountTable", "values": [] },
-        { "name": "columnCountMobile", "values": [] },
-        { "name": "gapX", "values": [] },
-        { "name": "gapY", "values": [] },
-        { "name": "enableGallery", "values": [] }
+        { "name": "clearSelection", "values": [] }
       ],
       "references": []
     },
@@ -163,13 +141,7 @@
         { "name": "label", "values": [] },
         { "name": "required", "values": [] },
         { "name": "getValue", "values": [] },
-        { "name": "reportValidity", "values": [] },
-        { "name": "images", "values": [] },
-        { "name": "imagesPerSlide", "values": [] },
-        { "name": "enablePagination", "values": [] },
-        { "name": "sliderBar", "values": [] },
-        { "name": "autoSlide", "values": [] },
-        { "name": "interval", "values": [] }
+        { "name": "reportValidity", "values": [] }
       ],
       "references": []
     },
@@ -221,12 +193,7 @@
         { "name": "validationMessages", "values": [] },
         { "name": "requiredValidationMessage", "values": [] },
         { "name": "getValue", "values": [] },
-        { "name": "save", "values": [] },
-        { "name": "disabled", "values": [] },
-        { "name": "max", "values": [] },
-        { "name": "min", "values": [] },
-        { "name": "step", "values": [] },
-        { "name": "discrete", "values": [] }
+        { "name": "save", "values": [] }
       ],
       "references": []
     },
@@ -252,23 +219,7 @@
         { "name": "message", "values": [] },
         { "name": "reject", "values": [] },
         { "name": "accept", "values": [] },
-        { "name": "closable", "values": [] },
-        { "name": "attachedInternals", "values": [] },
-        { "name": "options", "values": [] },
-        { "name": "required", "values": [] },
-        { "name": "value", "values": [] },
-        { "name": "name", "values": [] },
-        { "name": "inline", "values": [] },
-        { "name": "requiredValidationMessage", "values": [] },
-        { "name": "label", "values": [] },
-        { "name": "getValue", "values": [] },
-        { "name": "reportValidity", "values": [] },
-        { "name": "disabled", "values": [] },
-        { "name": "id", "values": [] },
-        { "name": "max", "values": [] },
-        { "name": "min", "values": [] },
-        { "name": "step", "values": [] },
-        { "name": "discrete", "values": [] }
+        { "name": "closable", "values": [] }
       ],
       "references": []
     },
@@ -368,9 +319,7 @@
         { "name": "displayFormatFunction", "values": [] },
         { "name": "getValue", "values": [] },
         { "name": "reportValidity", "values": [] },
-        { "name": "save", "values": [] },
-        { "name": "config", "values": [] },
-        { "name": "data", "values": [] }
+        { "name": "save", "values": [] }
       ],
       "references": []
     },
@@ -438,6 +387,7 @@
         { "name": "step", "values": [] },
         { "name": "suffix", "values": [] },
         { "name": "prefix", "values": [] },
+        { "name": "hideArrowsOnNumber", "values": [] },
         { "name": "validationMessages", "values": [] },
         { "name": "requiredValidationMessage", "values": [] },
         { "name": "minlengthValidationMessage", "values": [] },
@@ -448,29 +398,7 @@
         { "name": "validity", "values": [] },
         { "name": "validationMessage", "values": [] },
         { "name": "reportValidity", "values": [] },
-        { "name": "checkValidity", "values": [] },
-        { "name": "wording", "values": [] },
-        { "name": "allowArrangeColumns", "values": [] },
-        { "name": "showArrangingColumns", "values": [] },
-        { "name": "freezeFirstColumn", "values": [] },
-        { "name": "freezeLastColumn", "values": [] },
-        { "name": "showExport", "values": [] },
-        { "name": "showImport", "values": [] },
-        { "name": "rowClickable", "values": [] },
-        { "name": "headers", "values": [] },
-        { "name": "pageSizes", "values": [] },
-        { "name": "dropdownMenuExport", "values": [] },
-        { "name": "pageSize", "values": [] },
-        { "name": "sort", "values": [] },
-        { "name": "service", "values": [] },
-        { "name": "height", "values": [] },
-        { "name": "getData", "values": [] },
-        { "name": "rows", "values": [] },
-        { "name": "arrangeColumnDialog", "values": [] },
-        { "name": "showLoadMore", "values": [] },
-        { "name": "removeRow", "values": [] },
-        { "name": "addRow", "values": [] },
-        { "name": "updateRow", "values": [] }
+        { "name": "checkValidity", "values": [] }
       ],
       "references": []
     },
@@ -622,7 +550,9 @@
         { "name": "validity", "values": [] },
         { "name": "validationMessage", "values": [] },
         { "name": "reportValidity", "values": [] },
-        { "name": "checkValidity", "values": [] }
+        { "name": "checkValidity", "values": [] },
+        { "name": "config", "values": [] },
+        { "name": "data", "values": [] }
       ],
       "references": []
     },
@@ -673,13 +603,7 @@
         { "name": "requiredValidationMessage", "values": [] },
         { "name": "label", "values": [] },
         { "name": "getValue", "values": [] },
-        { "name": "reportValidity", "values": [] },
-        { "name": "disabled", "values": [] },
-        { "name": "id", "values": [] },
-        { "name": "max", "values": [] },
-        { "name": "min", "values": [] },
-        { "name": "step", "values": [] },
-        { "name": "discrete", "values": [] }
+        { "name": "reportValidity", "values": [] }
       ],
       "references": []
     },
@@ -708,14 +632,7 @@
         { "name": "value", "values": [] },
         { "name": "starsInput", "values": [] },
         { "name": "indicator", "values": [] },
-        { "name": "style", "values": [] },
-        { "name": "length", "values": [] },
-        { "name": "pageIndex", "values": [] },
-        { "name": "nextPage", "values": [] },
-        { "name": "prevPage", "values": [] },
-        { "name": "lastPage", "values": [] },
-        { "name": "firstPage", "values": [] },
-        { "name": "toPage", "values": [] }
+        { "name": "style", "values": [] }
       ],
       "references": []
     },
@@ -756,16 +673,12 @@
         { "name": "required", "values": [] },
         { "name": "label", "values": [] },
         { "name": "getValue", "values": [] },
-        { "name": "title", "values": [] },
-        { "name": "message", "values": [] },
-        { "name": "reject", "values": [] },
-        { "name": "accept", "values": [] },
-        { "name": "closable", "values": [] },
-        { "name": "attachedInternals", "values": [] },
-        { "name": "options", "values": [] },
-        { "name": "inline", "values": [] },
-        { "name": "requiredValidationMessage", "values": [] },
-        { "name": "reportValidity", "values": [] }
+        { "name": "images", "values": [] },
+        { "name": "imagesPerSlide", "values": [] },
+        { "name": "enablePagination", "values": [] },
+        { "name": "sliderBar", "values": [] },
+        { "name": "autoSlide", "values": [] },
+        { "name": "interval", "values": [] }
       ],
       "references": []
     },
@@ -777,17 +690,7 @@
         { "name": "step", "values": [] },
         { "name": "next", "values": [] },
         { "name": "previous", "values": [] },
-        { "name": "reset", "values": [] },
-        { "name": "disabled", "values": [] },
-        { "name": "id", "values": [] },
-        { "name": "max", "values": [] },
-        { "name": "min", "values": [] },
-        { "name": "value", "values": [] },
-        { "name": "name", "values": [] },
-        { "name": "discrete", "values": [] },
-        { "name": "required", "values": [] },
-        { "name": "label", "values": [] },
-        { "name": "getValue", "values": [] }
+        { "name": "reset", "values": [] }
       ],
       "references": []
     },
@@ -829,9 +732,7 @@
         { "name": "displayFormatFunction", "values": [] },
         { "name": "getValue", "values": [] },
         { "name": "reportValidity", "values": [] },
-        { "name": "save", "values": [] },
-        { "name": "config", "values": [] },
-        { "name": "data", "values": [] }
+        { "name": "save", "values": [] }
       ],
       "references": []
     },
@@ -890,14 +791,7 @@
         { "name": "reportValidity", "values": [] },
         { "name": "starsInput", "values": [] },
         { "name": "indicator", "values": [] },
-        { "name": "style", "values": [] },
-        { "name": "length", "values": [] },
-        { "name": "pageIndex", "values": [] },
-        { "name": "nextPage", "values": [] },
-        { "name": "prevPage", "values": [] },
-        { "name": "lastPage", "values": [] },
-        { "name": "firstPage", "values": [] },
-        { "name": "toPage", "values": [] }
+        { "name": "style", "values": [] }
       ],
       "references": []
     },
@@ -906,13 +800,7 @@
       "description": "\n---\n",
       "attributes": [
         { "name": "label", "values": [] },
-        { "name": "mode", "values": [] },
-        { "name": "images", "values": [] },
-        { "name": "imagesPerSlide", "values": [] },
-        { "name": "enablePagination", "values": [] },
-        { "name": "sliderBar", "values": [] },
-        { "name": "autoSlide", "values": [] },
-        { "name": "interval", "values": [] }
+        { "name": "mode", "values": [] }
       ],
       "references": []
     },

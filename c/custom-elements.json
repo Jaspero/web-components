@@ -56,7 +56,7 @@
         {
           "kind": "class",
           "description": "",
-          "name": "O",
+          "name": "S",
           "members": [
             {
               "kind": "field",
@@ -69,95 +69,6 @@
             {
               "kind": "field",
               "name": "state"
-            },
-            {
-              "kind": "field",
-              "name": "disabled",
-              "inheritedFrom": {
-                "name": "D",
-                "module": "dist/range.wc.js"
-              }
-            },
-            {
-              "kind": "field",
-              "name": "id",
-              "inheritedFrom": {
-                "name": "D",
-                "module": "dist/range.wc.js"
-              }
-            },
-            {
-              "kind": "field",
-              "name": "max",
-              "inheritedFrom": {
-                "name": "D",
-                "module": "dist/range.wc.js"
-              }
-            },
-            {
-              "kind": "field",
-              "name": "min",
-              "inheritedFrom": {
-                "name": "D",
-                "module": "dist/range.wc.js"
-              }
-            },
-            {
-              "kind": "field",
-              "name": "value",
-              "inheritedFrom": {
-                "name": "D",
-                "module": "dist/range.wc.js"
-              }
-            },
-            {
-              "kind": "field",
-              "name": "step",
-              "inheritedFrom": {
-                "name": "D",
-                "module": "dist/range.wc.js"
-              }
-            },
-            {
-              "kind": "field",
-              "name": "name",
-              "inheritedFrom": {
-                "name": "D",
-                "module": "dist/range.wc.js"
-              }
-            },
-            {
-              "kind": "field",
-              "name": "discrete",
-              "inheritedFrom": {
-                "name": "D",
-                "module": "dist/range.wc.js"
-              }
-            },
-            {
-              "kind": "field",
-              "name": "required",
-              "inheritedFrom": {
-                "name": "D",
-                "module": "dist/range.wc.js"
-              }
-            },
-            {
-              "kind": "field",
-              "name": "label",
-              "inheritedFrom": {
-                "name": "D",
-                "module": "dist/range.wc.js"
-              }
-            },
-            {
-              "kind": "field",
-              "name": "getValue",
-              "readonly": true,
-              "inheritedFrom": {
-                "name": "D",
-                "module": "dist/range.wc.js"
-              }
             }
           ],
           "attributes": [
@@ -172,98 +83,10 @@
             {
               "name": "state",
               "fieldName": "state"
-            },
-            {
-              "name": "disabled",
-              "fieldName": "disabled",
-              "inheritedFrom": {
-                "name": "D",
-                "module": "dist/range.wc.js"
-              }
-            },
-            {
-              "name": "id",
-              "fieldName": "id",
-              "inheritedFrom": {
-                "name": "D",
-                "module": "dist/range.wc.js"
-              }
-            },
-            {
-              "name": "max",
-              "fieldName": "max",
-              "inheritedFrom": {
-                "name": "D",
-                "module": "dist/range.wc.js"
-              }
-            },
-            {
-              "name": "min",
-              "fieldName": "min",
-              "inheritedFrom": {
-                "name": "D",
-                "module": "dist/range.wc.js"
-              }
-            },
-            {
-              "name": "value",
-              "fieldName": "value",
-              "inheritedFrom": {
-                "name": "D",
-                "module": "dist/range.wc.js"
-              }
-            },
-            {
-              "name": "step",
-              "fieldName": "step",
-              "inheritedFrom": {
-                "name": "D",
-                "module": "dist/range.wc.js"
-              }
-            },
-            {
-              "name": "name",
-              "fieldName": "name",
-              "inheritedFrom": {
-                "name": "D",
-                "module": "dist/range.wc.js"
-              }
-            },
-            {
-              "name": "discrete",
-              "fieldName": "discrete",
-              "inheritedFrom": {
-                "name": "D",
-                "module": "dist/range.wc.js"
-              }
-            },
-            {
-              "name": "required",
-              "fieldName": "required",
-              "inheritedFrom": {
-                "name": "D",
-                "module": "dist/range.wc.js"
-              }
-            },
-            {
-              "name": "label",
-              "fieldName": "label",
-              "inheritedFrom": {
-                "name": "D",
-                "module": "dist/range.wc.js"
-              }
-            },
-            {
-              "name": "getValue",
-              "fieldName": "getValue",
-              "inheritedFrom": {
-                "name": "D",
-                "module": "dist/range.wc.js"
-              }
             }
           ],
           "superclass": {
-            "name": "q",
+            "name": "w",
             "module": "/dist/svelte.js"
           },
           "tagName": "jp-alert",
@@ -283,7 +106,7 @@
           "kind": "js",
           "name": "default",
           "declaration": {
-            "name": "O",
+            "name": "S",
             "module": "dist/alert.wc.js"
           }
         }
@@ -296,7 +119,7 @@
         {
           "kind": "class",
           "description": "",
-          "name": "Ye",
+          "name": "Ve",
           "members": [
             {
               "kind": "field",
@@ -338,94 +161,6 @@
               "kind": "field",
               "name": "clearSelection",
               "readonly": true
-            },
-            {
-              "kind": "field",
-              "name": "images",
-              "inheritedFrom": {
-                "name": "ie",
-                "module": "dist/image-gallery.wc.js"
-              }
-            },
-            {
-              "kind": "field",
-              "name": "enablePagination",
-              "inheritedFrom": {
-                "name": "ie",
-                "module": "dist/image-gallery.wc.js"
-              }
-            },
-            {
-              "kind": "field",
-              "name": "sliderBar",
-              "inheritedFrom": {
-                "name": "ie",
-                "module": "dist/image-gallery.wc.js"
-              }
-            },
-            {
-              "kind": "field",
-              "name": "autoSlide",
-              "inheritedFrom": {
-                "name": "ie",
-                "module": "dist/image-gallery.wc.js"
-              }
-            },
-            {
-              "kind": "field",
-              "name": "interval",
-              "inheritedFrom": {
-                "name": "ie",
-                "module": "dist/image-gallery.wc.js"
-              }
-            },
-            {
-              "kind": "field",
-              "name": "columnCount",
-              "inheritedFrom": {
-                "name": "ie",
-                "module": "dist/image-gallery.wc.js"
-              }
-            },
-            {
-              "kind": "field",
-              "name": "columnCountTable",
-              "inheritedFrom": {
-                "name": "ie",
-                "module": "dist/image-gallery.wc.js"
-              }
-            },
-            {
-              "kind": "field",
-              "name": "columnCountMobile",
-              "inheritedFrom": {
-                "name": "ie",
-                "module": "dist/image-gallery.wc.js"
-              }
-            },
-            {
-              "kind": "field",
-              "name": "gapX",
-              "inheritedFrom": {
-                "name": "ie",
-                "module": "dist/image-gallery.wc.js"
-              }
-            },
-            {
-              "kind": "field",
-              "name": "gapY",
-              "inheritedFrom": {
-                "name": "ie",
-                "module": "dist/image-gallery.wc.js"
-              }
-            },
-            {
-              "kind": "field",
-              "name": "enableGallery",
-              "inheritedFrom": {
-                "name": "ie",
-                "module": "dist/image-gallery.wc.js"
-              }
             }
           ],
           "attributes": [
@@ -468,94 +203,6 @@
             {
               "name": "clearSelection",
               "fieldName": "clearSelection"
-            },
-            {
-              "name": "images",
-              "fieldName": "images",
-              "inheritedFrom": {
-                "name": "ie",
-                "module": "dist/image-gallery.wc.js"
-              }
-            },
-            {
-              "name": "enablePagination",
-              "fieldName": "enablePagination",
-              "inheritedFrom": {
-                "name": "ie",
-                "module": "dist/image-gallery.wc.js"
-              }
-            },
-            {
-              "name": "sliderBar",
-              "fieldName": "sliderBar",
-              "inheritedFrom": {
-                "name": "ie",
-                "module": "dist/image-gallery.wc.js"
-              }
-            },
-            {
-              "name": "autoSlide",
-              "fieldName": "autoSlide",
-              "inheritedFrom": {
-                "name": "ie",
-                "module": "dist/image-gallery.wc.js"
-              }
-            },
-            {
-              "name": "interval",
-              "fieldName": "interval",
-              "inheritedFrom": {
-                "name": "ie",
-                "module": "dist/image-gallery.wc.js"
-              }
-            },
-            {
-              "name": "columnCount",
-              "fieldName": "columnCount",
-              "inheritedFrom": {
-                "name": "ie",
-                "module": "dist/image-gallery.wc.js"
-              }
-            },
-            {
-              "name": "columnCountTable",
-              "fieldName": "columnCountTable",
-              "inheritedFrom": {
-                "name": "ie",
-                "module": "dist/image-gallery.wc.js"
-              }
-            },
-            {
-              "name": "columnCountMobile",
-              "fieldName": "columnCountMobile",
-              "inheritedFrom": {
-                "name": "ie",
-                "module": "dist/image-gallery.wc.js"
-              }
-            },
-            {
-              "name": "gapX",
-              "fieldName": "gapX",
-              "inheritedFrom": {
-                "name": "ie",
-                "module": "dist/image-gallery.wc.js"
-              }
-            },
-            {
-              "name": "gapY",
-              "fieldName": "gapY",
-              "inheritedFrom": {
-                "name": "ie",
-                "module": "dist/image-gallery.wc.js"
-              }
-            },
-            {
-              "name": "enableGallery",
-              "fieldName": "enableGallery",
-              "inheritedFrom": {
-                "name": "ie",
-                "module": "dist/image-gallery.wc.js"
-              }
             }
           ],
           "superclass": {
@@ -579,7 +226,7 @@
           "kind": "js",
           "name": "default",
           "declaration": {
-            "name": "Ye",
+            "name": "Ve",
             "module": "dist/asset-manager.wc.js"
           }
         }
@@ -1160,7 +807,7 @@
         {
           "kind": "class",
           "description": "",
-          "name": "q",
+          "name": "O",
           "members": [
             {
               "kind": "field",
@@ -1214,7 +861,7 @@
             }
           ],
           "superclass": {
-            "name": "C",
+            "name": "A",
             "module": "/dist/svelte.js"
           },
           "tagName": "jp-carousel",
@@ -1234,7 +881,7 @@
           "kind": "js",
           "name": "default",
           "declaration": {
-            "name": "q",
+            "name": "O",
             "module": "dist/carousel.wc.js"
           }
         }
@@ -1302,54 +949,6 @@
               "kind": "field",
               "name": "reportValidity",
               "readonly": true
-            },
-            {
-              "kind": "field",
-              "name": "images",
-              "inheritedFrom": {
-                "name": "q",
-                "module": "dist/carousel.wc.js"
-              }
-            },
-            {
-              "kind": "field",
-              "name": "imagesPerSlide",
-              "inheritedFrom": {
-                "name": "q",
-                "module": "dist/carousel.wc.js"
-              }
-            },
-            {
-              "kind": "field",
-              "name": "enablePagination",
-              "inheritedFrom": {
-                "name": "q",
-                "module": "dist/carousel.wc.js"
-              }
-            },
-            {
-              "kind": "field",
-              "name": "sliderBar",
-              "inheritedFrom": {
-                "name": "q",
-                "module": "dist/carousel.wc.js"
-              }
-            },
-            {
-              "kind": "field",
-              "name": "autoSlide",
-              "inheritedFrom": {
-                "name": "q",
-                "module": "dist/carousel.wc.js"
-              }
-            },
-            {
-              "kind": "field",
-              "name": "interval",
-              "inheritedFrom": {
-                "name": "q",
-                "module": "dist/carousel.wc.js"
-              }
             }
           ],
           "attributes": [
@@ -1404,58 +1003,10 @@
             {
               "name": "reportValidity",
               "fieldName": "reportValidity"
-            },
-            {
-              "name": "images",
-              "fieldName": "images",
-              "inheritedFrom": {
-                "name": "q",
-                "module": "dist/carousel.wc.js"
-              }
-            },
-            {
-              "name": "imagesPerSlide",
-              "fieldName": "imagesPerSlide",
-              "inheritedFrom": {
-                "name": "q",
-                "module": "dist/carousel.wc.js"
-              }
-            },
-            {
-              "name": "enablePagination",
-              "fieldName": "enablePagination",
-              "inheritedFrom": {
-                "name": "q",
-                "module": "dist/carousel.wc.js"
-              }
-            },
-            {
-              "name": "sliderBar",
-              "fieldName": "sliderBar",
-              "inheritedFrom": {
-                "name": "q",
-                "module": "dist/carousel.wc.js"
-              }
-            },
-            {
-              "name": "autoSlide",
-              "fieldName": "autoSlide",
-              "inheritedFrom": {
-                "name": "q",
-                "module": "dist/carousel.wc.js"
-              }
-            },
-            {
-              "name": "interval",
-              "fieldName": "interval",
-              "inheritedFrom": {
-                "name": "q",
-                "module": "dist/carousel.wc.js"
-              }
             }
           ],
           "superclass": {
-            "name": "N",
+            "name": "K",
             "module": "/dist/svelte.js"
           },
           "tagName": "jp-checkbox",
@@ -1488,7 +1039,7 @@
         {
           "kind": "class",
           "description": "",
-          "name": "G",
+          "name": "P",
           "members": [
             {
               "kind": "field",
@@ -1708,7 +1259,7 @@
           "kind": "js",
           "name": "default",
           "declaration": {
-            "name": "G",
+            "name": "P",
             "module": "dist/chips.wc.js"
           }
         }
@@ -1721,7 +1272,7 @@
         {
           "kind": "class",
           "description": "",
-          "name": "O",
+          "name": "L",
           "members": [
             {
               "kind": "field",
@@ -1733,27 +1284,15 @@
             },
             {
               "kind": "field",
-              "name": "value",
-              "inheritedFrom": {
-                "name": "D",
-                "module": "dist/range.wc.js"
-              }
+              "name": "value"
             },
             {
               "kind": "field",
-              "name": "id",
-              "inheritedFrom": {
-                "name": "D",
-                "module": "dist/range.wc.js"
-              }
+              "name": "id"
             },
             {
               "kind": "field",
-              "name": "name",
-              "inheritedFrom": {
-                "name": "D",
-                "module": "dist/range.wc.js"
-              }
+              "name": "name"
             },
             {
               "kind": "field",
@@ -1765,11 +1304,7 @@
             },
             {
               "kind": "field",
-              "name": "label",
-              "inheritedFrom": {
-                "name": "D",
-                "module": "dist/range.wc.js"
-              }
+              "name": "label"
             },
             {
               "kind": "field",
@@ -1777,11 +1312,7 @@
             },
             {
               "kind": "field",
-              "name": "required",
-              "inheritedFrom": {
-                "name": "D",
-                "module": "dist/range.wc.js"
-              }
+              "name": "required"
             },
             {
               "kind": "field",
@@ -1794,56 +1325,12 @@
             {
               "kind": "field",
               "name": "getValue",
-              "readonly": true,
-              "inheritedFrom": {
-                "name": "D",
-                "module": "dist/range.wc.js"
-              }
+              "readonly": true
             },
             {
               "kind": "field",
               "name": "save",
               "readonly": true
-            },
-            {
-              "kind": "field",
-              "name": "disabled",
-              "inheritedFrom": {
-                "name": "D",
-                "module": "dist/range.wc.js"
-              }
-            },
-            {
-              "kind": "field",
-              "name": "max",
-              "inheritedFrom": {
-                "name": "D",
-                "module": "dist/range.wc.js"
-              }
-            },
-            {
-              "kind": "field",
-              "name": "min",
-              "inheritedFrom": {
-                "name": "D",
-                "module": "dist/range.wc.js"
-              }
-            },
-            {
-              "kind": "field",
-              "name": "step",
-              "inheritedFrom": {
-                "name": "D",
-                "module": "dist/range.wc.js"
-              }
-            },
-            {
-              "kind": "field",
-              "name": "discrete",
-              "inheritedFrom": {
-                "name": "D",
-                "module": "dist/range.wc.js"
-              }
             }
           ],
           "attributes": [
@@ -1857,27 +1344,15 @@
             },
             {
               "name": "value",
-              "fieldName": "value",
-              "inheritedFrom": {
-                "name": "D",
-                "module": "dist/range.wc.js"
-              }
+              "fieldName": "value"
             },
             {
               "name": "id",
-              "fieldName": "id",
-              "inheritedFrom": {
-                "name": "D",
-                "module": "dist/range.wc.js"
-              }
+              "fieldName": "id"
             },
             {
               "name": "name",
-              "fieldName": "name",
-              "inheritedFrom": {
-                "name": "D",
-                "module": "dist/range.wc.js"
-              }
+              "fieldName": "name"
             },
             {
               "name": "height",
@@ -1889,11 +1364,7 @@
             },
             {
               "name": "label",
-              "fieldName": "label",
-              "inheritedFrom": {
-                "name": "D",
-                "module": "dist/range.wc.js"
-              }
+              "fieldName": "label"
             },
             {
               "name": "options",
@@ -1901,11 +1372,7 @@
             },
             {
               "name": "required",
-              "fieldName": "required",
-              "inheritedFrom": {
-                "name": "D",
-                "module": "dist/range.wc.js"
-              }
+              "fieldName": "required"
             },
             {
               "name": "validationMessages",
@@ -1917,55 +1384,11 @@
             },
             {
               "name": "getValue",
-              "fieldName": "getValue",
-              "inheritedFrom": {
-                "name": "D",
-                "module": "dist/range.wc.js"
-              }
+              "fieldName": "getValue"
             },
             {
               "name": "save",
               "fieldName": "save"
-            },
-            {
-              "name": "disabled",
-              "fieldName": "disabled",
-              "inheritedFrom": {
-                "name": "D",
-                "module": "dist/range.wc.js"
-              }
-            },
-            {
-              "name": "max",
-              "fieldName": "max",
-              "inheritedFrom": {
-                "name": "D",
-                "module": "dist/range.wc.js"
-              }
-            },
-            {
-              "name": "min",
-              "fieldName": "min",
-              "inheritedFrom": {
-                "name": "D",
-                "module": "dist/range.wc.js"
-              }
-            },
-            {
-              "name": "step",
-              "fieldName": "step",
-              "inheritedFrom": {
-                "name": "D",
-                "module": "dist/range.wc.js"
-              }
-            },
-            {
-              "name": "discrete",
-              "fieldName": "discrete",
-              "inheritedFrom": {
-                "name": "D",
-                "module": "dist/range.wc.js"
-              }
             }
           ],
           "superclass": {
@@ -1989,7 +1412,7 @@
           "kind": "js",
           "name": "default",
           "declaration": {
-            "name": "O",
+            "name": "L",
             "module": "dist/ckeditor.wc.js"
           }
         }
@@ -2119,136 +1542,6 @@
             {
               "kind": "field",
               "name": "closable"
-            },
-            {
-              "kind": "field",
-              "name": "attachedInternals",
-              "inheritedFrom": {
-                "name": "O",
-                "module": "dist/radio.wc.js"
-              }
-            },
-            {
-              "kind": "field",
-              "name": "options",
-              "inheritedFrom": {
-                "name": "O",
-                "module": "dist/radio.wc.js"
-              }
-            },
-            {
-              "kind": "field",
-              "name": "required",
-              "inheritedFrom": {
-                "name": "D",
-                "module": "dist/range.wc.js"
-              }
-            },
-            {
-              "kind": "field",
-              "name": "value",
-              "inheritedFrom": {
-                "name": "D",
-                "module": "dist/range.wc.js"
-              }
-            },
-            {
-              "kind": "field",
-              "name": "name",
-              "inheritedFrom": {
-                "name": "D",
-                "module": "dist/range.wc.js"
-              }
-            },
-            {
-              "kind": "field",
-              "name": "inline",
-              "inheritedFrom": {
-                "name": "O",
-                "module": "dist/radio.wc.js"
-              }
-            },
-            {
-              "kind": "field",
-              "name": "requiredValidationMessage",
-              "inheritedFrom": {
-                "name": "O",
-                "module": "dist/radio.wc.js"
-              }
-            },
-            {
-              "kind": "field",
-              "name": "label",
-              "inheritedFrom": {
-                "name": "D",
-                "module": "dist/range.wc.js"
-              }
-            },
-            {
-              "kind": "field",
-              "name": "getValue",
-              "readonly": true,
-              "inheritedFrom": {
-                "name": "D",
-                "module": "dist/range.wc.js"
-              }
-            },
-            {
-              "kind": "field",
-              "name": "reportValidity",
-              "readonly": true,
-              "inheritedFrom": {
-                "name": "O",
-                "module": "dist/radio.wc.js"
-              }
-            },
-            {
-              "kind": "field",
-              "name": "disabled",
-              "inheritedFrom": {
-                "name": "D",
-                "module": "dist/range.wc.js"
-              }
-            },
-            {
-              "kind": "field",
-              "name": "id",
-              "inheritedFrom": {
-                "name": "D",
-                "module": "dist/range.wc.js"
-              }
-            },
-            {
-              "kind": "field",
-              "name": "max",
-              "inheritedFrom": {
-                "name": "D",
-                "module": "dist/range.wc.js"
-              }
-            },
-            {
-              "kind": "field",
-              "name": "min",
-              "inheritedFrom": {
-                "name": "D",
-                "module": "dist/range.wc.js"
-              }
-            },
-            {
-              "kind": "field",
-              "name": "step",
-              "inheritedFrom": {
-                "name": "D",
-                "module": "dist/range.wc.js"
-              }
-            },
-            {
-              "kind": "field",
-              "name": "discrete",
-              "inheritedFrom": {
-                "name": "D",
-                "module": "dist/range.wc.js"
-              }
             }
           ],
           "attributes": [
@@ -2271,138 +1564,10 @@
             {
               "name": "closable",
               "fieldName": "closable"
-            },
-            {
-              "name": "attachedInternals",
-              "fieldName": "attachedInternals",
-              "inheritedFrom": {
-                "name": "O",
-                "module": "dist/radio.wc.js"
-              }
-            },
-            {
-              "name": "options",
-              "fieldName": "options",
-              "inheritedFrom": {
-                "name": "O",
-                "module": "dist/radio.wc.js"
-              }
-            },
-            {
-              "name": "required",
-              "fieldName": "required",
-              "inheritedFrom": {
-                "name": "D",
-                "module": "dist/range.wc.js"
-              }
-            },
-            {
-              "name": "value",
-              "fieldName": "value",
-              "inheritedFrom": {
-                "name": "D",
-                "module": "dist/range.wc.js"
-              }
-            },
-            {
-              "name": "name",
-              "fieldName": "name",
-              "inheritedFrom": {
-                "name": "D",
-                "module": "dist/range.wc.js"
-              }
-            },
-            {
-              "name": "inline",
-              "fieldName": "inline",
-              "inheritedFrom": {
-                "name": "O",
-                "module": "dist/radio.wc.js"
-              }
-            },
-            {
-              "name": "requiredValidationMessage",
-              "fieldName": "requiredValidationMessage",
-              "inheritedFrom": {
-                "name": "O",
-                "module": "dist/radio.wc.js"
-              }
-            },
-            {
-              "name": "label",
-              "fieldName": "label",
-              "inheritedFrom": {
-                "name": "D",
-                "module": "dist/range.wc.js"
-              }
-            },
-            {
-              "name": "getValue",
-              "fieldName": "getValue",
-              "inheritedFrom": {
-                "name": "D",
-                "module": "dist/range.wc.js"
-              }
-            },
-            {
-              "name": "reportValidity",
-              "fieldName": "reportValidity",
-              "inheritedFrom": {
-                "name": "O",
-                "module": "dist/radio.wc.js"
-              }
-            },
-            {
-              "name": "disabled",
-              "fieldName": "disabled",
-              "inheritedFrom": {
-                "name": "D",
-                "module": "dist/range.wc.js"
-              }
-            },
-            {
-              "name": "id",
-              "fieldName": "id",
-              "inheritedFrom": {
-                "name": "D",
-                "module": "dist/range.wc.js"
-              }
-            },
-            {
-              "name": "max",
-              "fieldName": "max",
-              "inheritedFrom": {
-                "name": "D",
-                "module": "dist/range.wc.js"
-              }
-            },
-            {
-              "name": "min",
-              "fieldName": "min",
-              "inheritedFrom": {
-                "name": "D",
-                "module": "dist/range.wc.js"
-              }
-            },
-            {
-              "name": "step",
-              "fieldName": "step",
-              "inheritedFrom": {
-                "name": "D",
-                "module": "dist/range.wc.js"
-              }
-            },
-            {
-              "name": "discrete",
-              "fieldName": "discrete",
-              "inheritedFrom": {
-                "name": "D",
-                "module": "dist/range.wc.js"
-              }
             }
           ],
           "superclass": {
-            "name": "O",
+            "name": "D",
             "module": "/dist/svelte.js"
           },
           "tagName": "jp-confirm",
@@ -3064,22 +2229,6 @@
               "kind": "field",
               "name": "save",
               "readonly": true
-            },
-            {
-              "kind": "field",
-              "name": "config",
-              "inheritedFrom": {
-                "name": "De",
-                "module": "dist/table-chart.wc.js"
-              }
-            },
-            {
-              "kind": "field",
-              "name": "data",
-              "inheritedFrom": {
-                "name": "De",
-                "module": "dist/table-chart.wc.js"
-              }
             }
           ],
           "attributes": [
@@ -3158,22 +2307,6 @@
             {
               "name": "save",
               "fieldName": "save"
-            },
-            {
-              "name": "config",
-              "fieldName": "config",
-              "inheritedFrom": {
-                "name": "De",
-                "module": "dist/table-chart.wc.js"
-              }
-            },
-            {
-              "name": "data",
-              "fieldName": "data",
-              "inheritedFrom": {
-                "name": "De",
-                "module": "dist/table-chart.wc.js"
-              }
             }
           ],
           "superclass": {
@@ -3210,7 +2343,7 @@
         {
           "kind": "class",
           "description": "",
-          "name": "Q",
+          "name": "X",
           "members": [
             {
               "kind": "field",
@@ -3314,7 +2447,7 @@
             }
           ],
           "superclass": {
-            "name": "ge",
+            "name": "ye",
             "module": "/dist/svelte.js"
           },
           "tagName": "jp-file-upload",
@@ -3334,7 +2467,7 @@
           "kind": "js",
           "name": "default",
           "declaration": {
-            "name": "Q",
+            "name": "X",
             "module": "dist/file-upload.wc.js"
           }
         }
@@ -3474,7 +2607,7 @@
         {
           "kind": "class",
           "description": "",
-          "name": "ae",
+          "name": "le",
           "members": [
             {
               "kind": "field",
@@ -3522,11 +2655,7 @@
             },
             {
               "kind": "field",
-              "name": "id",
-              "inheritedFrom": {
-                "name": "Ke",
-                "module": "dist/async-table.wc.js"
-              }
+              "name": "id"
             },
             {
               "kind": "field",
@@ -3571,6 +2700,10 @@
             {
               "kind": "field",
               "name": "prefix"
+            },
+            {
+              "kind": "field",
+              "name": "hideArrowsOnNumber"
             },
             {
               "kind": "field",
@@ -3620,185 +2753,6 @@
               "kind": "field",
               "name": "checkValidity",
               "readonly": true
-            },
-            {
-              "kind": "field",
-              "name": "wording",
-              "inheritedFrom": {
-                "name": "Ke",
-                "module": "dist/async-table.wc.js"
-              }
-            },
-            {
-              "kind": "field",
-              "name": "allowArrangeColumns",
-              "inheritedFrom": {
-                "name": "Ke",
-                "module": "dist/async-table.wc.js"
-              }
-            },
-            {
-              "kind": "field",
-              "name": "showArrangingColumns",
-              "inheritedFrom": {
-                "name": "Ke",
-                "module": "dist/async-table.wc.js"
-              }
-            },
-            {
-              "kind": "field",
-              "name": "freezeFirstColumn",
-              "inheritedFrom": {
-                "name": "Ke",
-                "module": "dist/async-table.wc.js"
-              }
-            },
-            {
-              "kind": "field",
-              "name": "freezeLastColumn",
-              "inheritedFrom": {
-                "name": "Ke",
-                "module": "dist/async-table.wc.js"
-              }
-            },
-            {
-              "kind": "field",
-              "name": "showExport",
-              "inheritedFrom": {
-                "name": "Ke",
-                "module": "dist/async-table.wc.js"
-              }
-            },
-            {
-              "kind": "field",
-              "name": "showImport",
-              "inheritedFrom": {
-                "name": "Ke",
-                "module": "dist/async-table.wc.js"
-              }
-            },
-            {
-              "kind": "field",
-              "name": "rowClickable",
-              "inheritedFrom": {
-                "name": "Ke",
-                "module": "dist/async-table.wc.js"
-              }
-            },
-            {
-              "kind": "field",
-              "name": "headers",
-              "inheritedFrom": {
-                "name": "Ke",
-                "module": "dist/async-table.wc.js"
-              }
-            },
-            {
-              "kind": "field",
-              "name": "pageSizes",
-              "inheritedFrom": {
-                "name": "Ke",
-                "module": "dist/async-table.wc.js"
-              }
-            },
-            {
-              "kind": "field",
-              "name": "dropdownMenuExport",
-              "inheritedFrom": {
-                "name": "Ke",
-                "module": "dist/async-table.wc.js"
-              }
-            },
-            {
-              "kind": "field",
-              "name": "pageSize",
-              "inheritedFrom": {
-                "name": "Ke",
-                "module": "dist/async-table.wc.js"
-              }
-            },
-            {
-              "kind": "field",
-              "name": "sort",
-              "inheritedFrom": {
-                "name": "Ke",
-                "module": "dist/async-table.wc.js"
-              }
-            },
-            {
-              "kind": "field",
-              "name": "service",
-              "inheritedFrom": {
-                "name": "Ke",
-                "module": "dist/async-table.wc.js"
-              }
-            },
-            {
-              "kind": "field",
-              "name": "height",
-              "inheritedFrom": {
-                "name": "Ke",
-                "module": "dist/async-table.wc.js"
-              }
-            },
-            {
-              "kind": "field",
-              "name": "getData",
-              "inheritedFrom": {
-                "name": "Ke",
-                "module": "dist/async-table.wc.js"
-              }
-            },
-            {
-              "kind": "field",
-              "name": "rows",
-              "inheritedFrom": {
-                "name": "Ke",
-                "module": "dist/async-table.wc.js"
-              }
-            },
-            {
-              "kind": "field",
-              "name": "arrangeColumnDialog",
-              "inheritedFrom": {
-                "name": "Ke",
-                "module": "dist/async-table.wc.js"
-              }
-            },
-            {
-              "kind": "field",
-              "name": "showLoadMore",
-              "inheritedFrom": {
-                "name": "Ke",
-                "module": "dist/async-table.wc.js"
-              }
-            },
-            {
-              "kind": "field",
-              "name": "removeRow",
-              "readonly": true,
-              "inheritedFrom": {
-                "name": "Ke",
-                "module": "dist/async-table.wc.js"
-              }
-            },
-            {
-              "kind": "field",
-              "name": "addRow",
-              "readonly": true,
-              "inheritedFrom": {
-                "name": "Ke",
-                "module": "dist/async-table.wc.js"
-              }
-            },
-            {
-              "kind": "field",
-              "name": "updateRow",
-              "readonly": true,
-              "inheritedFrom": {
-                "name": "Ke",
-                "module": "dist/async-table.wc.js"
-              }
             }
           ],
           "attributes": [
@@ -3848,11 +2802,7 @@
             },
             {
               "name": "id",
-              "fieldName": "id",
-              "inheritedFrom": {
-                "name": "Ke",
-                "module": "dist/async-table.wc.js"
-              }
+              "fieldName": "id"
             },
             {
               "name": "hint",
@@ -3899,6 +2849,10 @@
               "fieldName": "prefix"
             },
             {
+              "name": "hideArrowsOnNumber",
+              "fieldName": "hideArrowsOnNumber"
+            },
+            {
               "name": "validationMessages",
               "fieldName": "validationMessages"
             },
@@ -3941,186 +2895,10 @@
             {
               "name": "checkValidity",
               "fieldName": "checkValidity"
-            },
-            {
-              "name": "wording",
-              "fieldName": "wording",
-              "inheritedFrom": {
-                "name": "Ke",
-                "module": "dist/async-table.wc.js"
-              }
-            },
-            {
-              "name": "allowArrangeColumns",
-              "fieldName": "allowArrangeColumns",
-              "inheritedFrom": {
-                "name": "Ke",
-                "module": "dist/async-table.wc.js"
-              }
-            },
-            {
-              "name": "showArrangingColumns",
-              "fieldName": "showArrangingColumns",
-              "inheritedFrom": {
-                "name": "Ke",
-                "module": "dist/async-table.wc.js"
-              }
-            },
-            {
-              "name": "freezeFirstColumn",
-              "fieldName": "freezeFirstColumn",
-              "inheritedFrom": {
-                "name": "Ke",
-                "module": "dist/async-table.wc.js"
-              }
-            },
-            {
-              "name": "freezeLastColumn",
-              "fieldName": "freezeLastColumn",
-              "inheritedFrom": {
-                "name": "Ke",
-                "module": "dist/async-table.wc.js"
-              }
-            },
-            {
-              "name": "showExport",
-              "fieldName": "showExport",
-              "inheritedFrom": {
-                "name": "Ke",
-                "module": "dist/async-table.wc.js"
-              }
-            },
-            {
-              "name": "showImport",
-              "fieldName": "showImport",
-              "inheritedFrom": {
-                "name": "Ke",
-                "module": "dist/async-table.wc.js"
-              }
-            },
-            {
-              "name": "rowClickable",
-              "fieldName": "rowClickable",
-              "inheritedFrom": {
-                "name": "Ke",
-                "module": "dist/async-table.wc.js"
-              }
-            },
-            {
-              "name": "headers",
-              "fieldName": "headers",
-              "inheritedFrom": {
-                "name": "Ke",
-                "module": "dist/async-table.wc.js"
-              }
-            },
-            {
-              "name": "pageSizes",
-              "fieldName": "pageSizes",
-              "inheritedFrom": {
-                "name": "Ke",
-                "module": "dist/async-table.wc.js"
-              }
-            },
-            {
-              "name": "dropdownMenuExport",
-              "fieldName": "dropdownMenuExport",
-              "inheritedFrom": {
-                "name": "Ke",
-                "module": "dist/async-table.wc.js"
-              }
-            },
-            {
-              "name": "pageSize",
-              "fieldName": "pageSize",
-              "inheritedFrom": {
-                "name": "Ke",
-                "module": "dist/async-table.wc.js"
-              }
-            },
-            {
-              "name": "sort",
-              "fieldName": "sort",
-              "inheritedFrom": {
-                "name": "Ke",
-                "module": "dist/async-table.wc.js"
-              }
-            },
-            {
-              "name": "service",
-              "fieldName": "service",
-              "inheritedFrom": {
-                "name": "Ke",
-                "module": "dist/async-table.wc.js"
-              }
-            },
-            {
-              "name": "height",
-              "fieldName": "height",
-              "inheritedFrom": {
-                "name": "Ke",
-                "module": "dist/async-table.wc.js"
-              }
-            },
-            {
-              "name": "getData",
-              "fieldName": "getData",
-              "inheritedFrom": {
-                "name": "Ke",
-                "module": "dist/async-table.wc.js"
-              }
-            },
-            {
-              "name": "rows",
-              "fieldName": "rows",
-              "inheritedFrom": {
-                "name": "Ke",
-                "module": "dist/async-table.wc.js"
-              }
-            },
-            {
-              "name": "arrangeColumnDialog",
-              "fieldName": "arrangeColumnDialog",
-              "inheritedFrom": {
-                "name": "Ke",
-                "module": "dist/async-table.wc.js"
-              }
-            },
-            {
-              "name": "showLoadMore",
-              "fieldName": "showLoadMore",
-              "inheritedFrom": {
-                "name": "Ke",
-                "module": "dist/async-table.wc.js"
-              }
-            },
-            {
-              "name": "removeRow",
-              "fieldName": "removeRow",
-              "inheritedFrom": {
-                "name": "Ke",
-                "module": "dist/async-table.wc.js"
-              }
-            },
-            {
-              "name": "addRow",
-              "fieldName": "addRow",
-              "inheritedFrom": {
-                "name": "Ke",
-                "module": "dist/async-table.wc.js"
-              }
-            },
-            {
-              "name": "updateRow",
-              "fieldName": "updateRow",
-              "inheritedFrom": {
-                "name": "Ke",
-                "module": "dist/async-table.wc.js"
-              }
             }
           ],
           "superclass": {
-            "name": "Ke",
+            "name": "Re",
             "module": "/dist/svelte.js"
           },
           "tagName": "jp-input",
@@ -4140,7 +2918,7 @@
           "kind": "js",
           "name": "default",
           "declaration": {
-            "name": "ae",
+            "name": "le",
             "module": "dist/input.wc.js"
           }
         }
@@ -4559,7 +3337,7 @@
             }
           ],
           "superclass": {
-            "name": "_e",
+            "name": "We",
             "module": "/dist/svelte.js"
           },
           "tagName": "jp-multisearch",
@@ -4768,7 +3546,7 @@
             }
           ],
           "superclass": {
-            "name": "Oe",
+            "name": "Ee",
             "module": "/dist/svelte.js"
           },
           "tagName": "jp-multiselect",
@@ -5097,6 +3875,22 @@
               "kind": "field",
               "name": "checkValidity",
               "readonly": true
+            },
+            {
+              "kind": "field",
+              "name": "config",
+              "inheritedFrom": {
+                "name": "Be",
+                "module": "dist/table-chart.wc.js"
+              }
+            },
+            {
+              "kind": "field",
+              "name": "data",
+              "inheritedFrom": {
+                "name": "Be",
+                "module": "dist/table-chart.wc.js"
+              }
             }
           ],
           "attributes": [
@@ -5219,6 +4013,22 @@
             {
               "name": "checkValidity",
               "fieldName": "checkValidity"
+            },
+            {
+              "name": "config",
+              "fieldName": "config",
+              "inheritedFrom": {
+                "name": "Be",
+                "module": "dist/table-chart.wc.js"
+              }
+            },
+            {
+              "name": "data",
+              "fieldName": "data",
+              "inheritedFrom": {
+                "name": "Be",
+                "module": "dist/table-chart.wc.js"
+              }
             }
           ],
           "superclass": {
@@ -5495,7 +4305,7 @@
         {
           "kind": "class",
           "description": "",
-          "name": "O",
+          "name": "S",
           "members": [
             {
               "kind": "field",
@@ -5507,27 +4317,15 @@
             },
             {
               "kind": "field",
-              "name": "required",
-              "inheritedFrom": {
-                "name": "D",
-                "module": "dist/range.wc.js"
-              }
+              "name": "required"
             },
             {
               "kind": "field",
-              "name": "value",
-              "inheritedFrom": {
-                "name": "D",
-                "module": "dist/range.wc.js"
-              }
+              "name": "value"
             },
             {
               "kind": "field",
-              "name": "name",
-              "inheritedFrom": {
-                "name": "D",
-                "module": "dist/range.wc.js"
-              }
+              "name": "name"
             },
             {
               "kind": "field",
@@ -5539,73 +4337,17 @@
             },
             {
               "kind": "field",
-              "name": "label",
-              "inheritedFrom": {
-                "name": "D",
-                "module": "dist/range.wc.js"
-              }
+              "name": "label"
             },
             {
               "kind": "field",
               "name": "getValue",
-              "readonly": true,
-              "inheritedFrom": {
-                "name": "D",
-                "module": "dist/range.wc.js"
-              }
+              "readonly": true
             },
             {
               "kind": "field",
               "name": "reportValidity",
               "readonly": true
-            },
-            {
-              "kind": "field",
-              "name": "disabled",
-              "inheritedFrom": {
-                "name": "D",
-                "module": "dist/range.wc.js"
-              }
-            },
-            {
-              "kind": "field",
-              "name": "id",
-              "inheritedFrom": {
-                "name": "D",
-                "module": "dist/range.wc.js"
-              }
-            },
-            {
-              "kind": "field",
-              "name": "max",
-              "inheritedFrom": {
-                "name": "D",
-                "module": "dist/range.wc.js"
-              }
-            },
-            {
-              "kind": "field",
-              "name": "min",
-              "inheritedFrom": {
-                "name": "D",
-                "module": "dist/range.wc.js"
-              }
-            },
-            {
-              "kind": "field",
-              "name": "step",
-              "inheritedFrom": {
-                "name": "D",
-                "module": "dist/range.wc.js"
-              }
-            },
-            {
-              "kind": "field",
-              "name": "discrete",
-              "inheritedFrom": {
-                "name": "D",
-                "module": "dist/range.wc.js"
-              }
             }
           ],
           "attributes": [
@@ -5619,27 +4361,15 @@
             },
             {
               "name": "required",
-              "fieldName": "required",
-              "inheritedFrom": {
-                "name": "D",
-                "module": "dist/range.wc.js"
-              }
+              "fieldName": "required"
             },
             {
               "name": "value",
-              "fieldName": "value",
-              "inheritedFrom": {
-                "name": "D",
-                "module": "dist/range.wc.js"
-              }
+              "fieldName": "value"
             },
             {
               "name": "name",
-              "fieldName": "name",
-              "inheritedFrom": {
-                "name": "D",
-                "module": "dist/range.wc.js"
-              }
+              "fieldName": "name"
             },
             {
               "name": "inline",
@@ -5651,71 +4381,15 @@
             },
             {
               "name": "label",
-              "fieldName": "label",
-              "inheritedFrom": {
-                "name": "D",
-                "module": "dist/range.wc.js"
-              }
+              "fieldName": "label"
             },
             {
               "name": "getValue",
-              "fieldName": "getValue",
-              "inheritedFrom": {
-                "name": "D",
-                "module": "dist/range.wc.js"
-              }
+              "fieldName": "getValue"
             },
             {
               "name": "reportValidity",
               "fieldName": "reportValidity"
-            },
-            {
-              "name": "disabled",
-              "fieldName": "disabled",
-              "inheritedFrom": {
-                "name": "D",
-                "module": "dist/range.wc.js"
-              }
-            },
-            {
-              "name": "id",
-              "fieldName": "id",
-              "inheritedFrom": {
-                "name": "D",
-                "module": "dist/range.wc.js"
-              }
-            },
-            {
-              "name": "max",
-              "fieldName": "max",
-              "inheritedFrom": {
-                "name": "D",
-                "module": "dist/range.wc.js"
-              }
-            },
-            {
-              "name": "min",
-              "fieldName": "min",
-              "inheritedFrom": {
-                "name": "D",
-                "module": "dist/range.wc.js"
-              }
-            },
-            {
-              "name": "step",
-              "fieldName": "step",
-              "inheritedFrom": {
-                "name": "D",
-                "module": "dist/range.wc.js"
-              }
-            },
-            {
-              "name": "discrete",
-              "fieldName": "discrete",
-              "inheritedFrom": {
-                "name": "D",
-                "module": "dist/range.wc.js"
-              }
             }
           ],
           "superclass": {
@@ -5739,7 +4413,7 @@
           "kind": "js",
           "name": "default",
           "declaration": {
-            "name": "O",
+            "name": "S",
             "module": "dist/radio.wc.js"
           }
         }
@@ -5752,7 +4426,7 @@
         {
           "kind": "class",
           "description": "",
-          "name": "D",
+          "name": "H",
           "members": [
             {
               "kind": "field",
@@ -5847,7 +4521,7 @@
             }
           ],
           "superclass": {
-            "name": "Z",
+            "name": "C",
             "module": "/dist/svelte.js"
           },
           "tagName": "jp-range",
@@ -5867,7 +4541,7 @@
           "kind": "js",
           "name": "default",
           "declaration": {
-            "name": "D",
+            "name": "H",
             "module": "dist/range.wc.js"
           }
         }
@@ -5897,67 +4571,6 @@
             {
               "kind": "field",
               "name": "style"
-            },
-            {
-              "kind": "field",
-              "name": "length",
-              "inheritedFrom": {
-                "name": "Q",
-                "module": "dist/page-paginator.wc.js"
-              }
-            },
-            {
-              "kind": "field",
-              "name": "pageIndex",
-              "inheritedFrom": {
-                "name": "Q",
-                "module": "dist/page-paginator.wc.js"
-              }
-            },
-            {
-              "kind": "field",
-              "name": "nextPage",
-              "readonly": true,
-              "inheritedFrom": {
-                "name": "Q",
-                "module": "dist/page-paginator.wc.js"
-              }
-            },
-            {
-              "kind": "field",
-              "name": "prevPage",
-              "readonly": true,
-              "inheritedFrom": {
-                "name": "Q",
-                "module": "dist/page-paginator.wc.js"
-              }
-            },
-            {
-              "kind": "field",
-              "name": "lastPage",
-              "readonly": true,
-              "inheritedFrom": {
-                "name": "Q",
-                "module": "dist/page-paginator.wc.js"
-              }
-            },
-            {
-              "kind": "field",
-              "name": "firstPage",
-              "readonly": true,
-              "inheritedFrom": {
-                "name": "Q",
-                "module": "dist/page-paginator.wc.js"
-              }
-            },
-            {
-              "kind": "field",
-              "name": "toPage",
-              "readonly": true,
-              "inheritedFrom": {
-                "name": "Q",
-                "module": "dist/page-paginator.wc.js"
-              }
             }
           ],
           "attributes": [
@@ -5976,66 +4589,10 @@
             {
               "name": "style",
               "fieldName": "style"
-            },
-            {
-              "name": "length",
-              "fieldName": "length",
-              "inheritedFrom": {
-                "name": "Q",
-                "module": "dist/page-paginator.wc.js"
-              }
-            },
-            {
-              "name": "pageIndex",
-              "fieldName": "pageIndex",
-              "inheritedFrom": {
-                "name": "Q",
-                "module": "dist/page-paginator.wc.js"
-              }
-            },
-            {
-              "name": "nextPage",
-              "fieldName": "nextPage",
-              "inheritedFrom": {
-                "name": "Q",
-                "module": "dist/page-paginator.wc.js"
-              }
-            },
-            {
-              "name": "prevPage",
-              "fieldName": "prevPage",
-              "inheritedFrom": {
-                "name": "Q",
-                "module": "dist/page-paginator.wc.js"
-              }
-            },
-            {
-              "name": "lastPage",
-              "fieldName": "lastPage",
-              "inheritedFrom": {
-                "name": "Q",
-                "module": "dist/page-paginator.wc.js"
-              }
-            },
-            {
-              "name": "firstPage",
-              "fieldName": "firstPage",
-              "inheritedFrom": {
-                "name": "Q",
-                "module": "dist/page-paginator.wc.js"
-              }
-            },
-            {
-              "name": "toPage",
-              "fieldName": "toPage",
-              "inheritedFrom": {
-                "name": "Q",
-                "module": "dist/page-paginator.wc.js"
-              }
             }
           ],
           "superclass": {
-            "name": "Q",
+            "name": "V",
             "module": "/dist/svelte.js"
           },
           "tagName": "jp-review-stars",
@@ -6233,347 +4790,194 @@
           "members": [
             {
               "kind": "field",
-              "name": "disabled",
-              "inheritedFrom": {
-                "name": "D",
-                "module": "dist/range.wc.js"
-              }
+              "name": "disabled"
             },
             {
               "kind": "field",
-              "name": "id",
-              "inheritedFrom": {
-                "name": "D",
-                "module": "dist/range.wc.js"
-              }
+              "name": "id"
             },
             {
               "kind": "field",
-              "name": "max",
-              "inheritedFrom": {
-                "name": "D",
-                "module": "dist/range.wc.js"
-              }
+              "name": "max"
             },
             {
               "kind": "field",
-              "name": "min",
-              "inheritedFrom": {
-                "name": "D",
-                "module": "dist/range.wc.js"
-              }
+              "name": "min"
             },
             {
               "kind": "field",
-              "name": "value",
-              "inheritedFrom": {
-                "name": "D",
-                "module": "dist/range.wc.js"
-              }
+              "name": "value"
             },
             {
               "kind": "field",
-              "name": "step",
-              "inheritedFrom": {
-                "name": "D",
-                "module": "dist/range.wc.js"
-              }
+              "name": "step"
             },
             {
               "kind": "field",
-              "name": "name",
-              "inheritedFrom": {
-                "name": "D",
-                "module": "dist/range.wc.js"
-              }
+              "name": "name"
             },
             {
               "kind": "field",
-              "name": "discrete",
-              "inheritedFrom": {
-                "name": "D",
-                "module": "dist/range.wc.js"
-              }
+              "name": "discrete"
             },
             {
               "kind": "field",
-              "name": "required",
-              "inheritedFrom": {
-                "name": "D",
-                "module": "dist/range.wc.js"
-              }
+              "name": "required"
             },
             {
               "kind": "field",
-              "name": "label",
-              "inheritedFrom": {
-                "name": "D",
-                "module": "dist/range.wc.js"
-              }
+              "name": "label"
             },
             {
               "kind": "field",
               "name": "getValue",
-              "readonly": true,
-              "inheritedFrom": {
-                "name": "D",
-                "module": "dist/range.wc.js"
-              }
+              "readonly": true
             },
             {
               "kind": "field",
-              "name": "title",
-              "inheritedFrom": {
-                "name": "E",
-                "module": "dist/confirm.wc.js"
-              }
-            },
-            {
-              "kind": "field",
-              "name": "message",
-              "inheritedFrom": {
-                "name": "E",
-                "module": "dist/confirm.wc.js"
-              }
-            },
-            {
-              "kind": "field",
-              "name": "reject",
-              "inheritedFrom": {
-                "name": "E",
-                "module": "dist/confirm.wc.js"
-              }
-            },
-            {
-              "kind": "field",
-              "name": "accept",
-              "inheritedFrom": {
-                "name": "E",
-                "module": "dist/confirm.wc.js"
-              }
-            },
-            {
-              "kind": "field",
-              "name": "closable",
-              "inheritedFrom": {
-                "name": "E",
-                "module": "dist/confirm.wc.js"
-              }
-            },
-            {
-              "kind": "field",
-              "name": "attachedInternals",
+              "name": "images",
               "inheritedFrom": {
                 "name": "O",
-                "module": "dist/radio.wc.js"
+                "module": "dist/carousel.wc.js"
               }
             },
             {
               "kind": "field",
-              "name": "options",
+              "name": "imagesPerSlide",
               "inheritedFrom": {
                 "name": "O",
-                "module": "dist/radio.wc.js"
+                "module": "dist/carousel.wc.js"
               }
             },
             {
               "kind": "field",
-              "name": "inline",
+              "name": "enablePagination",
               "inheritedFrom": {
                 "name": "O",
-                "module": "dist/radio.wc.js"
+                "module": "dist/carousel.wc.js"
               }
             },
             {
               "kind": "field",
-              "name": "requiredValidationMessage",
+              "name": "sliderBar",
               "inheritedFrom": {
                 "name": "O",
-                "module": "dist/radio.wc.js"
+                "module": "dist/carousel.wc.js"
               }
             },
             {
               "kind": "field",
-              "name": "reportValidity",
-              "readonly": true,
+              "name": "autoSlide",
               "inheritedFrom": {
                 "name": "O",
-                "module": "dist/radio.wc.js"
+                "module": "dist/carousel.wc.js"
+              }
+            },
+            {
+              "kind": "field",
+              "name": "interval",
+              "inheritedFrom": {
+                "name": "O",
+                "module": "dist/carousel.wc.js"
               }
             }
           ],
           "attributes": [
             {
               "name": "disabled",
-              "fieldName": "disabled",
-              "inheritedFrom": {
-                "name": "D",
-                "module": "dist/range.wc.js"
-              }
+              "fieldName": "disabled"
             },
             {
               "name": "id",
-              "fieldName": "id",
-              "inheritedFrom": {
-                "name": "D",
-                "module": "dist/range.wc.js"
-              }
+              "fieldName": "id"
             },
             {
               "name": "max",
-              "fieldName": "max",
-              "inheritedFrom": {
-                "name": "D",
-                "module": "dist/range.wc.js"
-              }
+              "fieldName": "max"
             },
             {
               "name": "min",
-              "fieldName": "min",
-              "inheritedFrom": {
-                "name": "D",
-                "module": "dist/range.wc.js"
-              }
+              "fieldName": "min"
             },
             {
               "name": "value",
-              "fieldName": "value",
-              "inheritedFrom": {
-                "name": "D",
-                "module": "dist/range.wc.js"
-              }
+              "fieldName": "value"
             },
             {
               "name": "step",
-              "fieldName": "step",
-              "inheritedFrom": {
-                "name": "D",
-                "module": "dist/range.wc.js"
-              }
+              "fieldName": "step"
             },
             {
               "name": "name",
-              "fieldName": "name",
-              "inheritedFrom": {
-                "name": "D",
-                "module": "dist/range.wc.js"
-              }
+              "fieldName": "name"
             },
             {
               "name": "discrete",
-              "fieldName": "discrete",
-              "inheritedFrom": {
-                "name": "D",
-                "module": "dist/range.wc.js"
-              }
+              "fieldName": "discrete"
             },
             {
               "name": "required",
-              "fieldName": "required",
-              "inheritedFrom": {
-                "name": "D",
-                "module": "dist/range.wc.js"
-              }
+              "fieldName": "required"
             },
             {
               "name": "label",
-              "fieldName": "label",
-              "inheritedFrom": {
-                "name": "D",
-                "module": "dist/range.wc.js"
-              }
+              "fieldName": "label"
             },
             {
               "name": "getValue",
-              "fieldName": "getValue",
-              "inheritedFrom": {
-                "name": "D",
-                "module": "dist/range.wc.js"
-              }
+              "fieldName": "getValue"
             },
             {
-              "name": "title",
-              "fieldName": "title",
-              "inheritedFrom": {
-                "name": "E",
-                "module": "dist/confirm.wc.js"
-              }
-            },
-            {
-              "name": "message",
-              "fieldName": "message",
-              "inheritedFrom": {
-                "name": "E",
-                "module": "dist/confirm.wc.js"
-              }
-            },
-            {
-              "name": "reject",
-              "fieldName": "reject",
-              "inheritedFrom": {
-                "name": "E",
-                "module": "dist/confirm.wc.js"
-              }
-            },
-            {
-              "name": "accept",
-              "fieldName": "accept",
-              "inheritedFrom": {
-                "name": "E",
-                "module": "dist/confirm.wc.js"
-              }
-            },
-            {
-              "name": "closable",
-              "fieldName": "closable",
-              "inheritedFrom": {
-                "name": "E",
-                "module": "dist/confirm.wc.js"
-              }
-            },
-            {
-              "name": "attachedInternals",
-              "fieldName": "attachedInternals",
+              "name": "images",
+              "fieldName": "images",
               "inheritedFrom": {
                 "name": "O",
-                "module": "dist/radio.wc.js"
+                "module": "dist/carousel.wc.js"
               }
             },
             {
-              "name": "options",
-              "fieldName": "options",
+              "name": "imagesPerSlide",
+              "fieldName": "imagesPerSlide",
               "inheritedFrom": {
                 "name": "O",
-                "module": "dist/radio.wc.js"
+                "module": "dist/carousel.wc.js"
               }
             },
             {
-              "name": "inline",
-              "fieldName": "inline",
+              "name": "enablePagination",
+              "fieldName": "enablePagination",
               "inheritedFrom": {
                 "name": "O",
-                "module": "dist/radio.wc.js"
+                "module": "dist/carousel.wc.js"
               }
             },
             {
-              "name": "requiredValidationMessage",
-              "fieldName": "requiredValidationMessage",
+              "name": "sliderBar",
+              "fieldName": "sliderBar",
               "inheritedFrom": {
                 "name": "O",
-                "module": "dist/radio.wc.js"
+                "module": "dist/carousel.wc.js"
               }
             },
             {
-              "name": "reportValidity",
-              "fieldName": "reportValidity",
+              "name": "autoSlide",
+              "fieldName": "autoSlide",
               "inheritedFrom": {
                 "name": "O",
-                "module": "dist/radio.wc.js"
+                "module": "dist/carousel.wc.js"
+              }
+            },
+            {
+              "name": "interval",
+              "fieldName": "interval",
+              "inheritedFrom": {
+                "name": "O",
+                "module": "dist/carousel.wc.js"
               }
             }
           ],
           "superclass": {
-            "name": "E",
+            "name": "O",
             "module": "/dist/svelte.js"
           },
           "tagName": "jp-slider",
@@ -6606,7 +5010,7 @@
         {
           "kind": "class",
           "description": "",
-          "name": "A",
+          "name": "C",
           "members": [
             {
               "kind": "field",
@@ -6614,11 +5018,7 @@
             },
             {
               "kind": "field",
-              "name": "step",
-              "inheritedFrom": {
-                "name": "D",
-                "module": "dist/range.wc.js"
-              }
+              "name": "step"
             },
             {
               "kind": "field",
@@ -6634,87 +5034,6 @@
               "kind": "field",
               "name": "reset",
               "readonly": true
-            },
-            {
-              "kind": "field",
-              "name": "disabled",
-              "inheritedFrom": {
-                "name": "D",
-                "module": "dist/range.wc.js"
-              }
-            },
-            {
-              "kind": "field",
-              "name": "id",
-              "inheritedFrom": {
-                "name": "D",
-                "module": "dist/range.wc.js"
-              }
-            },
-            {
-              "kind": "field",
-              "name": "max",
-              "inheritedFrom": {
-                "name": "D",
-                "module": "dist/range.wc.js"
-              }
-            },
-            {
-              "kind": "field",
-              "name": "min",
-              "inheritedFrom": {
-                "name": "D",
-                "module": "dist/range.wc.js"
-              }
-            },
-            {
-              "kind": "field",
-              "name": "value",
-              "inheritedFrom": {
-                "name": "D",
-                "module": "dist/range.wc.js"
-              }
-            },
-            {
-              "kind": "field",
-              "name": "name",
-              "inheritedFrom": {
-                "name": "D",
-                "module": "dist/range.wc.js"
-              }
-            },
-            {
-              "kind": "field",
-              "name": "discrete",
-              "inheritedFrom": {
-                "name": "D",
-                "module": "dist/range.wc.js"
-              }
-            },
-            {
-              "kind": "field",
-              "name": "required",
-              "inheritedFrom": {
-                "name": "D",
-                "module": "dist/range.wc.js"
-              }
-            },
-            {
-              "kind": "field",
-              "name": "label",
-              "inheritedFrom": {
-                "name": "D",
-                "module": "dist/range.wc.js"
-              }
-            },
-            {
-              "kind": "field",
-              "name": "getValue",
-              "readonly": true,
-              "inheritedFrom": {
-                "name": "D",
-                "module": "dist/range.wc.js"
-              }
             }
           ],
           "attributes": [
@@ -6724,11 +5043,7 @@
             },
             {
               "name": "step",
-              "fieldName": "step",
-              "inheritedFrom": {
-                "name": "D",
-                "module": "dist/range.wc.js"
-              }
+              "fieldName": "step"
             },
             {
               "name": "next",
@@ -6741,90 +5056,10 @@
             {
               "name": "reset",
               "fieldName": "reset"
-            },
-            {
-              "name": "disabled",
-              "fieldName": "disabled",
-              "inheritedFrom": {
-                "name": "D",
-                "module": "dist/range.wc.js"
-              }
-            },
-            {
-              "name": "id",
-              "fieldName": "id",
-              "inheritedFrom": {
-                "name": "D",
-                "module": "dist/range.wc.js"
-              }
-            },
-            {
-              "name": "max",
-              "fieldName": "max",
-              "inheritedFrom": {
-                "name": "D",
-                "module": "dist/range.wc.js"
-              }
-            },
-            {
-              "name": "min",
-              "fieldName": "min",
-              "inheritedFrom": {
-                "name": "D",
-                "module": "dist/range.wc.js"
-              }
-            },
-            {
-              "name": "value",
-              "fieldName": "value",
-              "inheritedFrom": {
-                "name": "D",
-                "module": "dist/range.wc.js"
-              }
-            },
-            {
-              "name": "name",
-              "fieldName": "name",
-              "inheritedFrom": {
-                "name": "D",
-                "module": "dist/range.wc.js"
-              }
-            },
-            {
-              "name": "discrete",
-              "fieldName": "discrete",
-              "inheritedFrom": {
-                "name": "D",
-                "module": "dist/range.wc.js"
-              }
-            },
-            {
-              "name": "required",
-              "fieldName": "required",
-              "inheritedFrom": {
-                "name": "D",
-                "module": "dist/range.wc.js"
-              }
-            },
-            {
-              "name": "label",
-              "fieldName": "label",
-              "inheritedFrom": {
-                "name": "D",
-                "module": "dist/range.wc.js"
-              }
-            },
-            {
-              "name": "getValue",
-              "fieldName": "getValue",
-              "inheritedFrom": {
-                "name": "D",
-                "module": "dist/range.wc.js"
-              }
             }
           ],
           "superclass": {
-            "name": "D",
+            "name": "E",
             "module": "/dist/svelte.js"
           },
           "tagName": "jp-stepper",
@@ -6844,7 +5079,7 @@
           "kind": "js",
           "name": "default",
           "declaration": {
-            "name": "A",
+            "name": "C",
             "module": "dist/stepper.wc.js"
           }
         }
@@ -6857,7 +5092,7 @@
         {
           "kind": "class",
           "description": "",
-          "name": "De",
+          "name": "Be",
           "members": [
             {
               "kind": "field",
@@ -6879,7 +5114,7 @@
             }
           ],
           "superclass": {
-            "name": "Be",
+            "name": "Re",
             "module": "/dist/svelte.js"
           },
           "tagName": "jp-table-chart",
@@ -6899,7 +5134,7 @@
           "kind": "js",
           "name": "default",
           "declaration": {
-            "name": "De",
+            "name": "Be",
             "module": "dist/table-chart.wc.js"
           }
         }
@@ -7096,22 +5331,6 @@
                 "name": "fe",
                 "module": "dist/file-list.wc.js"
               }
-            },
-            {
-              "kind": "field",
-              "name": "config",
-              "inheritedFrom": {
-                "name": "De",
-                "module": "dist/table-chart.wc.js"
-              }
-            },
-            {
-              "kind": "field",
-              "name": "data",
-              "inheritedFrom": {
-                "name": "De",
-                "module": "dist/table-chart.wc.js"
-              }
             }
           ],
           "attributes": [
@@ -7294,22 +5513,6 @@
                 "name": "fe",
                 "module": "dist/file-list.wc.js"
               }
-            },
-            {
-              "name": "config",
-              "fieldName": "config",
-              "inheritedFrom": {
-                "name": "De",
-                "module": "dist/table-chart.wc.js"
-              }
-            },
-            {
-              "name": "data",
-              "fieldName": "data",
-              "inheritedFrom": {
-                "name": "De",
-                "module": "dist/table-chart.wc.js"
-              }
             }
           ],
           "superclass": {
@@ -7378,7 +5581,7 @@
             }
           ],
           "superclass": {
-            "name": "K",
+            "name": "P",
             "module": "/dist/svelte.js"
           },
           "tagName": "jp-tabs",
@@ -7699,67 +5902,6 @@
                 "name": "L",
                 "module": "dist/review-stars.wc.js"
               }
-            },
-            {
-              "kind": "field",
-              "name": "length",
-              "inheritedFrom": {
-                "name": "Q",
-                "module": "dist/page-paginator.wc.js"
-              }
-            },
-            {
-              "kind": "field",
-              "name": "pageIndex",
-              "inheritedFrom": {
-                "name": "Q",
-                "module": "dist/page-paginator.wc.js"
-              }
-            },
-            {
-              "kind": "field",
-              "name": "nextPage",
-              "readonly": true,
-              "inheritedFrom": {
-                "name": "Q",
-                "module": "dist/page-paginator.wc.js"
-              }
-            },
-            {
-              "kind": "field",
-              "name": "prevPage",
-              "readonly": true,
-              "inheritedFrom": {
-                "name": "Q",
-                "module": "dist/page-paginator.wc.js"
-              }
-            },
-            {
-              "kind": "field",
-              "name": "lastPage",
-              "readonly": true,
-              "inheritedFrom": {
-                "name": "Q",
-                "module": "dist/page-paginator.wc.js"
-              }
-            },
-            {
-              "kind": "field",
-              "name": "firstPage",
-              "readonly": true,
-              "inheritedFrom": {
-                "name": "Q",
-                "module": "dist/page-paginator.wc.js"
-              }
-            },
-            {
-              "kind": "field",
-              "name": "toPage",
-              "readonly": true,
-              "inheritedFrom": {
-                "name": "Q",
-                "module": "dist/page-paginator.wc.js"
-              }
             }
           ],
           "attributes": [
@@ -7830,62 +5972,6 @@
                 "name": "L",
                 "module": "dist/review-stars.wc.js"
               }
-            },
-            {
-              "name": "length",
-              "fieldName": "length",
-              "inheritedFrom": {
-                "name": "Q",
-                "module": "dist/page-paginator.wc.js"
-              }
-            },
-            {
-              "name": "pageIndex",
-              "fieldName": "pageIndex",
-              "inheritedFrom": {
-                "name": "Q",
-                "module": "dist/page-paginator.wc.js"
-              }
-            },
-            {
-              "name": "nextPage",
-              "fieldName": "nextPage",
-              "inheritedFrom": {
-                "name": "Q",
-                "module": "dist/page-paginator.wc.js"
-              }
-            },
-            {
-              "name": "prevPage",
-              "fieldName": "prevPage",
-              "inheritedFrom": {
-                "name": "Q",
-                "module": "dist/page-paginator.wc.js"
-              }
-            },
-            {
-              "name": "lastPage",
-              "fieldName": "lastPage",
-              "inheritedFrom": {
-                "name": "Q",
-                "module": "dist/page-paginator.wc.js"
-              }
-            },
-            {
-              "name": "firstPage",
-              "fieldName": "firstPage",
-              "inheritedFrom": {
-                "name": "Q",
-                "module": "dist/page-paginator.wc.js"
-              }
-            },
-            {
-              "name": "toPage",
-              "fieldName": "toPage",
-              "inheritedFrom": {
-                "name": "Q",
-                "module": "dist/page-paginator.wc.js"
-              }
             }
           ],
           "superclass": {
@@ -7931,54 +6017,6 @@
             {
               "kind": "field",
               "name": "mode"
-            },
-            {
-              "kind": "field",
-              "name": "images",
-              "inheritedFrom": {
-                "name": "q",
-                "module": "dist/carousel.wc.js"
-              }
-            },
-            {
-              "kind": "field",
-              "name": "imagesPerSlide",
-              "inheritedFrom": {
-                "name": "q",
-                "module": "dist/carousel.wc.js"
-              }
-            },
-            {
-              "kind": "field",
-              "name": "enablePagination",
-              "inheritedFrom": {
-                "name": "q",
-                "module": "dist/carousel.wc.js"
-              }
-            },
-            {
-              "kind": "field",
-              "name": "sliderBar",
-              "inheritedFrom": {
-                "name": "q",
-                "module": "dist/carousel.wc.js"
-              }
-            },
-            {
-              "kind": "field",
-              "name": "autoSlide",
-              "inheritedFrom": {
-                "name": "q",
-                "module": "dist/carousel.wc.js"
-              }
-            },
-            {
-              "kind": "field",
-              "name": "interval",
-              "inheritedFrom": {
-                "name": "q",
-                "module": "dist/carousel.wc.js"
-              }
             }
           ],
           "attributes": [
@@ -7989,54 +6027,6 @@
             {
               "name": "mode",
               "fieldName": "mode"
-            },
-            {
-              "name": "images",
-              "fieldName": "images",
-              "inheritedFrom": {
-                "name": "q",
-                "module": "dist/carousel.wc.js"
-              }
-            },
-            {
-              "name": "imagesPerSlide",
-              "fieldName": "imagesPerSlide",
-              "inheritedFrom": {
-                "name": "q",
-                "module": "dist/carousel.wc.js"
-              }
-            },
-            {
-              "name": "enablePagination",
-              "fieldName": "enablePagination",
-              "inheritedFrom": {
-                "name": "q",
-                "module": "dist/carousel.wc.js"
-              }
-            },
-            {
-              "name": "sliderBar",
-              "fieldName": "sliderBar",
-              "inheritedFrom": {
-                "name": "q",
-                "module": "dist/carousel.wc.js"
-              }
-            },
-            {
-              "name": "autoSlide",
-              "fieldName": "autoSlide",
-              "inheritedFrom": {
-                "name": "q",
-                "module": "dist/carousel.wc.js"
-              }
-            },
-            {
-              "name": "interval",
-              "fieldName": "interval",
-              "inheritedFrom": {
-                "name": "q",
-                "module": "dist/carousel.wc.js"
-              }
             }
           ],
           "superclass": {
@@ -8073,7 +6063,7 @@
         {
           "kind": "class",
           "description": "",
-          "name": "S",
+          "name": "C",
           "members": [
             {
               "kind": "field",
@@ -8115,7 +6105,7 @@
           "kind": "js",
           "name": "default",
           "declaration": {
-            "name": "S",
+            "name": "C",
             "module": "dist/tree.wc.js"
           }
         }
