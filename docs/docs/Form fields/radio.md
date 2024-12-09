@@ -1,5 +1,5 @@
-<!-- import '../../static/c/radio.wc.js';
-import '../../static/c/radio.css'; -->
+import '../../static/c/radio.wc.js';
+import '../../static/c/radio.css';
 
 # Radio
 
@@ -46,8 +46,8 @@ This component does not have any slots.
 ### Demo
 
 ```jsx live
-// import '../../static/c/radio.wc.js';
-// import '../../static/c/radio.css';
+// import '@jaspero/web-components/radio.wc.js';
+// import '@jaspero/web-components/radio.css';
 
 <jp-radio options='[{"value": "aaa"}, {"name": "bcb", "value":"bbb"}, {"value":"ccc"}]'></jp-radio>
 ```

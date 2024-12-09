@@ -1,5 +1,5 @@
-<!-- import '../../static/c/ckeditor.wc.js';
-import '../../static/c/ckeditor.css'; -->
+import '../../static/c/ckeditor.wc.js';
+import '../../static/c/ckeditor.css';
 
 # CKEditor
 
@@ -75,8 +75,8 @@ This component does not have any slots.
 ### Demo
 
 ```jsx live
-// import '../../static/c/ckeditor.wc.js';
-// import '../../static/c/ckeditor.css';
+// import '@jaspero/web-components/ckeditor.wc.js';
+// import '@jaspero/web-components/ckeditor.css';
 
 <jp-ckeditor value="<p>Blup</p>"></jp-ckeditor>
 ```

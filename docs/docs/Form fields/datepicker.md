@@ -1,5 +1,5 @@
-<!-- import '../../static/c/datepicker.wc.js';
-import '../../static/c/datepicker.css'; -->
+import '../../static/c/datepicker.wc.js';
+import '../../static/c/datepicker.css';
 
 # Date Picker
 
@@ -54,8 +54,8 @@ This component does not have any slots.
 ### Demo
 
 ```jsx live
-// import '../../static/c/datepicker.wc.js';
-// import '../../static/c/datepicker.css';
+// import '@jaspero/web-components/datepicker.wc.js';
+// import '@jaspero/web-components/datepicker.css';
 
 <jp-datepicker label="Pick a date"></jp-datepicker>
 ```

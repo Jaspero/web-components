@@ -1,4 +1,5 @@
-<!-- import '../static/c/alert.wc.js'; -->
+import '../static/c/alert.wc.js';
+import '../static/c/alert.css';
 
 # Alert
 
@@ -40,6 +41,7 @@ This component does not have any methods.
 
 ```jsx live
 // import '../static/c/alert.wc.js';
+// import '../static/c/alert.css';
 
 function alert(props) {
   const [show, setShow] = useState(false);

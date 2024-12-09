@@ -1,4 +1,4 @@
-<!-- import '../static/c/menu.wc.js'; -->
+import '../static/c/menu.wc.js';
 
 # Menu
 

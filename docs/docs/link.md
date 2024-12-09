@@ -1,4 +1,4 @@
-<!-- import '../static/c/link.wc.js'; -->
+import '../static/c/link.wc.js';
 
 # Link
 

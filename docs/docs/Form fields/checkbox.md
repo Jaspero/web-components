@@ -1,5 +1,5 @@
-<!-- import '../../static/c/checkbox.wc.js';
-import '../../static/c/checkbox.css'; -->
+import '../../static/c/checkbox.wc.js';
+import '../../static/c/checkbox.css';
 
 # Checkbox
 
@@ -49,8 +49,8 @@ This component does not have any slots.
 ### Demo
 
 ```jsx live
-// import '../../static/c/checkbox.wc.js';
-// import '../../static/c/checkbox.css';
+// import '@jaspero/web-components/checkbox.wc.js';
+// import '@jaspero/web-components/checkbox.css';
 
 <jp-checkbox options='[
     {"value": "aaa", "label": "aaa"},

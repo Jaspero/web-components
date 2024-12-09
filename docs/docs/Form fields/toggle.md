@@ -1,5 +1,5 @@
-<!-- import '../../static/c/toggle.wc.js';
-import '../../static/c/toggle.css'; -->
+import '../../static/c/toggle.wc.js';
+import '../../static/c/toggle.css';
 
 # Toggle
 
@@ -47,8 +47,8 @@ This component does not have any slots.
 ### Demo
 
 ```jsx live
-// import '../../static/c/toggle.wc.js';
-// import '../../static/c/toggle.css';
+// import '@jaspero/web-components/toggle.wc.js';
+// import '@jaspero/web-components/toggle.css';
 
 <jp-toggle></jp-toggle>
 ```

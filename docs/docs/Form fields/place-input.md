@@ -1,4 +1,4 @@
-<!-- import '../../static/c/place-input.wc.js'; -->
+import '../../static/c/place-input.wc.js';
 
 # Place Input
 
@@ -111,7 +111,7 @@ This component does not have any slots.
 In order to be able to see the demo, api key needs to be filled as the `apiKey` property of the `placeInput` object, as well as the `mapId` property.
 
 ```jsx live
-// import '../../static/c/place-input.wc.js';
+// import '@jaspero/web-components/place-input.wc.js';
 
 function placeInput(props){
   let el = useRef(null);

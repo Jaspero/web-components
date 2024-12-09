@@ -1,5 +1,5 @@
-<!-- import '../../static/c/multiselect.wc.js';
-import '../../static/c/multiselect.css'; -->
+import '../../static/c/multiselect.wc.js';
+import '../../static/c/multiselect.css';
 
 # Multiselect
 
@@ -55,8 +55,8 @@ This component does not have any slots.
 ### Demo
 
 ```jsx live
-// import '../../static/c/multiselect.wc.js';
-// import '../../static/c/multiselect.css';
+// import '@jaspero/web-components/multiselect.wc.js';
+// import '@jaspero/web-components/multiselect.css';
 
 <jp-multiselect
   options='[{"value":"aaa"}, {"value":"bbb"}, {"value":"ccc"}]'

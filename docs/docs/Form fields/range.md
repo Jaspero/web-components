@@ -1,5 +1,5 @@
-<!-- import '../../static/c/range.wc.js';
-import '../../static/c/range.css'; -->
+import '../../static/c/range.wc.js';
+import '../../static/c/range.css';
 
 # Range
 
@@ -46,8 +46,8 @@ This component does not have any slots.
 ### Demo
 
 ```jsx live
-// import '../../static/c/range.wc.js';
-// import '../../static/c/range.css';
+// import '@jaspero/web-components/range.wc.js';
+// import '@jaspero/web-components/range.css';
 
 <jp-range></jp-range>
 ```

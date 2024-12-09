@@ -1,5 +1,5 @@
-<!-- import '../../static/c/chips.wc.js';
-import '../../static/c/chips.css'; -->
+import '../../static/c/chips.wc.js';
+import '../../static/c/chips.css';
 
 # Chips
 
@@ -57,8 +57,8 @@ This component does not have any slots.
 ### Demo
 
 ```jsx live
-// import '../../static/c/chips.wc.js';
-// import '../../static/c/chips.css';
+// import '@jaspero/web-components/chips.wc.js';
+// import '@jaspero/web-components/chips.css';
 
 <jp-chips label="Chips" placeholder="Placeholder"></jp-chips>
 ```

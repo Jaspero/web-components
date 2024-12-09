@@ -1,5 +1,5 @@
-<!-- import '../../static/c/code-editor.wc.js';
-import '../../static/c/code-editor.css'; -->
+import '../../static/c/code-editor.wc.js';
+import '../../static/c/code-editor.css';
 
 # Code Editor
 
@@ -62,8 +62,8 @@ This component does not have any methods.
 ### Demo
 
 ```jsx live
-// import '../../static/c/code-editor.wc.js';
-// import '../../static/c/code-editor.css';
+// import '@jaspero/web-components/code-editor.wc.js';
+// import '@jaspero/web-components/code-editor.css';
 
 <jp-code-editor options='{"mode": "javascript"}'></jp-code-editor>
 ```

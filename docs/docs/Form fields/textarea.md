@@ -1,5 +1,5 @@
-<!-- import '../../static/c/textarea.wc.js';
-import '../../static/c/textarea.css'; -->
+import '../../static/c/textarea.wc.js';
+import '../../static/c/textarea.css';
 
 # Textarea
 
@@ -56,8 +56,8 @@ This component does not have any slots.
 ### Demo
 
 ```jsx live
-// import '../../static/c/textarea.wc.js';
-// import '../../static/c/textarea.css';
+// import '@jaspero/web-components/textarea.wc.js';
+// import '@jaspero/web-components/textarea.css';
 
 <jp-textarea label="Textarea"></jp-textarea>
 ```

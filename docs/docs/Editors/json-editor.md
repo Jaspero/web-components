@@ -1,4 +1,4 @@
-<!-- import '../../static/c/json-editor.wc.js'; -->
+import '../../static/c/json-editor.wc.js';
 
 # JSON Editor
 

@@ -1,5 +1,5 @@
-<!-- import '../../static/c/autocomplete.wc.js';
-import '../../static/c/autocomplete.css'; -->
+import '../../static/c/autocomplete.wc.js';
+import '../../static/c/autocomplete.css';
 
 # Autocomplete
 
@@ -59,8 +59,8 @@ This component does not have any slots.
 ### Demo
 
 ```jsx live
-// import '../../static/c/autocomplete.wc.js';
-// import '../../static/c/autocomplete.css';
+// import '@jaspero/web-components/autocomplete.wc.js';
+// import '@jaspero/web-components/autocomplete.css';
 
 <jp-autocomplete options='["One", "Two", "Three"]' label="Autocomplete"></jp-autocomplete>
 ```

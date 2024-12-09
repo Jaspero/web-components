@@ -1,5 +1,5 @@
-<!-- import '../../static/c/select.wc.js';
-import '../../static/c/select.css'; -->
+import '../../static/c/select.wc.js';
+import '../../static/c/select.css';
 
 # Select
 
@@ -50,8 +50,8 @@ This component does not have any slots.
 ### Demo
 
 ```jsx live
-// import '../../static/c/select.wc.js';
-// import '../../static/c/select.css';
+// import '@jaspero/web-components/select.wc.js';
+// import '@jaspero/web-components/select.css';
 
 <jp-select options='[{"value":"aaa"}, {"value":"bbb"}, {"value":"ccc"}]' label="Select"></jp-select>
 ```

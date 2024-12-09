@@ -1,5 +1,5 @@
-<!-- import '../../static/c/quill.wc.js';
-import '../../static/c/quill.css'; -->
+import '../../static/c/quill.wc.js';
+import '../../static/c/quill.css';
 
 # Quill
 
@@ -82,8 +82,8 @@ This component does not have any slots.
 ### Demo
 
 ```jsx live
-// import '../../static/c/quill.wc.js';
-// import '../../static/c/quill.css';
+// import '@jaspero/web-components/quill.wc.js';
+// import '@jaspero/web-components/quill.css';
 
 <jp-quill value="<p>Blup</p>"></jp-quill>
 ```
