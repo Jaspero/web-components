@@ -59,6 +59,8 @@
   let filteredOptions: string[] = [];
   let inputEl: HTMLInputElement;
   let open = false;
+  let wasInteractedWith = false;
+  let userInvalidElement = false;
 
   const dispatch = createEventDispatcher();
 
@@ -132,6 +134,7 @@
   }
 
   function toggleMenu(event?: any) {
+    wasInteractedWith = true;
     if (event && event.target && event.target.closest('.menu')) {
       return;
     }
@@ -217,6 +220,15 @@
     }
   }
 
+  $: {
+    value;
+    if (wasInteractedWith && !attachedInternals.checkValidity()) {
+      userInvalidElement = true;
+    } else {
+      userInvalidElement = false;
+    }
+  }
+
   onMount(() => {
     if (typeof options == 'string') {
       options = JSON.parse(options);
@@ -238,7 +250,11 @@
   bind:this={bindingElement}
   on:keydown={handleKeydown}
 >
-  <label class="jp-autocomplete-field" class:jp-autocomplete-field-disabled={disabled}>
+  <label
+    class="jp-autocomplete-field"
+    class:jp-autocomplete-field-disabled={disabled}
+    class:jp-autocomplete-field-user-invalid={userInvalidElement}
+  >
     {#if label && labelType === 'inside'}
       <span
         class="jp-autocomplete-field-label"
