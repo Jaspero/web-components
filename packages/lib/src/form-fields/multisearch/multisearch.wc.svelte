@@ -364,7 +364,7 @@
           const res = await service.getSingle(el);
 
           if (res) {
-            single = await service.getSingle(el);
+            single = res;
             single.selected = true;
           } else {
             single = { value: el, selected: true };
