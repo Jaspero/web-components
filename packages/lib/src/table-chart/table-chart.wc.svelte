@@ -6,7 +6,7 @@
 />
 
 <svelte:head>
-  <script src="https://cdn.jsdelivr.net/npm/@easepick/bundle@1.2.1/dist/index.umd.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/litepicker/dist/litepicker.js"></script>
 </svelte:head>
 
 <script lang="ts">
@@ -150,11 +150,10 @@
   let date_range_key: string;
   let search_element;
   let is_search_active = false;
-  let interval;
 
   let picker;
   let date_input_element: HTMLInputElement | null = null;
-  let date_range = { start: '', end: '', start_raw: null, end_raw: null };
+  let date_range = { start: null, end: null };
 
   /**
    * FUNCTIONS
@@ -199,14 +198,11 @@
 
     let prefiltered_data = data;
 
-    if (date_range?.start?.length && date_range?.end?.length) {
-      const start_date = new Date(date_range.start);
-      const end_date = new Date(date_range.end);
-
+    if (date_range?.start && date_range?.end) {
       prefiltered_data = prefiltered_data.filter(item => {
         const item_date = new Date(item[date_range_key]);
 
-        return item_date >= start_date && item_date <= end_date;
+        return item_date >= date_range.start && item_date <= date_range.end;
       });
     }
 
@@ -261,76 +257,6 @@
     processed_data = (filtered_data?.length && filtered_data) || [];
   }
 
-  async function inject_date_picker() {
-    picker?.destroy();
-
-    picker = new easepick.create({
-      element: date_input_element,
-      css: [
-        'https://cdn.jsdelivr.net/npm/@easepick/core@1.2.1/dist/index.css',
-        'https://cdn.jsdelivr.net/npm/@easepick/range-plugin@1.2.1/dist/index.css'
-      ],
-      plugins: ['RangePlugin'],
-      format: 'MM-DD-YYYY',
-      startDate: date_range?.start_raw,
-      endDate: date_range?.end_raw,
-      RangePlugin: {
-        tooltip: true,
-      },
-      setup(picker) {
-        picker.on('select', (e) => {
-          date_input_element.innerHTML = `<svg
-              xmlns="http://www.w3.org/2000/svg"
-              width="24"
-              height="24"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              stroke-width="2"
-              stroke-linecap="round"
-              stroke-linejoin="round"
-              class="lucide lucide-calendar-days">
-              <path d="M8 2v4"/>
-              <path d="M16 2v4"/>
-              <rect width="18" height="18" x="3" y="4" rx="2"/>
-              <path d="M3 10h18"/>
-              <path d="M8 14h.01"/>
-              <path d="M12 14h.01"/>
-              <path d="M16 14h.01"/>
-              <path d="M8 18h.01"/>
-              <path d="M12 18h.01"/>
-              <path d="M16 18h.01"/>
-            </svg>`;
-
-          const start = swap_elements(picker.getStartDate().toLocaleDateString().split('/'), 0, 1).join('/');
-          const end = swap_elements(picker.getEndDate().toLocaleDateString().split('/'), 0, 1).join('/');
-
-
-          if (date_range.start !== start || date_range.end !== end) {
-            date_range.start = start;
-            date_range.start_raw = picker.getStartDate();
-            date_range.end = end;
-            date_range.end_raw = picker.getEndDate();
-
-            process_data();
-
-            inject_date_picker();
-          }
-        });
-      },
-    });
-  }
-
-  function swap_elements(array, index1, index2) {
-    let temp = array[index1];
-
-    array[index1] = array[index2];
-
-    array[index2] = temp;
-
-    return array;
-  }
-
   function handle_search_focus() {
     is_search_active = true;
   }
@@ -349,10 +275,30 @@
     search_element.style.opacity = is_search_active ? 1 : 0;
   }
 
+  async function inject_date_picker() {
+    picker = new Litepicker({
+      element: date_input_element,
+      singleMode: false,
+      resetButton: true
+    });
+
+    picker.on('selected', (start, end) => {
+      date_range.start = new Date(start?.dateInstance);
+      date_range.end = new Date(end?.dateInstance);
+
+      process_data();
+    });
+
+    picker.on('clear:selection', () => {
+      date_range = { start: null, end: null };
+
+      process_data();
+    });
+  }
+
   /**
    * LIFECYCLE
    */
-
   $: if (data?.length) {
     dimensions = Object.keys(data[0]).map(curr => ({
       label: config?.dimensions?.capitalize ? curr.charAt(0).toUpperCase() + curr.slice(1) : curr,
@@ -369,7 +315,7 @@
     process_data();
   }
 
-  $: if (date_input_element) {
+  $: if (date_input_element && !picker) {
     inject_date_picker();
   }
 
@@ -378,26 +324,10 @@
   }
 
   onMount(() => {
-    setInterval(() => {
-      if (picker) {
-        if (picker.getStartDate() || picker.getEndDate()) {
-          const start = swap_elements(picker.getStartDate().toLocaleDateString().split('/'), 0, 1).join('/');
-          const end = swap_elements(picker.getEndDate().toLocaleDateString().split('/'), 0, 1).join('/');
-
-          if (date_range.start !== start || date_range.end !== end) {
-            date_range.start = start;
-            date_range.end = end;
-
-            process_data();
-          }
-        }
-      }
-    }, 500);
-
     return () => {
-      clearInterval(interval);
+      picker?.destroy();
     }
-  })
+  });
 </script>
 
 {#if dimensions}
@@ -434,7 +364,7 @@
     </div>
 
     <div class="table-wrapper-container">
-      {#if (processed_data?.length || search_value?.length || date_range.start?.length || date_range.end?.length) && selected_dimensions?.length}
+      {#if (processed_data?.length || search_value?.length || date_range?.start || date_range?.end) && selected_dimensions?.length}
         <div class="filters-row"
              style="--filters-row-input-border: {config?.content?.toolbar?.input?.border || DEFAULT_CONFIG.content.toolbar.input.border}; --filters-row-button-border: {config?.content?.toolbar?.button?.border || DEFAULT_CONFIG.content.toolbar.button.border}; --filters-row-button-font-size: {config?.content?.toolbar?.button?.font_size || DEFAULT_CONFIG.content.toolbar.button.font_size}; --filters-row-button-hover-background-color: {config?.content?.toolbar?.button?.hover_background_color || DEFAULT_CONFIG.content.toolbar.button.hover_background_color};">
           <input
@@ -466,17 +396,7 @@
             </svg>
           </div>
 
-          <div class="calendar-icon" bind:this={date_input_element} on:click={() => {
-            if (date_range?.start_raw) {
-              picker.setStartDate(date_range.start_raw);
-            }
-
-            if (date_range?.end_raw) {
-              picker.setEndDate(date_range.end_raw);
-            }
-
-            picker?.show();
-          }}>
+          <div class="calendar-icon" bind:this={date_input_element} on:click={() => picker?.show()}>
             <svg
               xmlns="http://www.w3.org/2000/svg"
               width="24"
