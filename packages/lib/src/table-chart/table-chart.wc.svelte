@@ -464,7 +464,7 @@
   </div>
 {:else}
   <div>
-    No data
+    No data available
   </div>
 {/if}
 
