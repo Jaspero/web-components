@@ -66,7 +66,7 @@
   let optionElements: any[] = []; // Array to store references to option buttons
   let searchTerm = '';
   let searchTimeout: any;
-  let displayValue: string[] | null;
+  let displayValue: string[] | null | string;
   let selectedItems = 0;
 
   const dispatch = createEventDispatcher();
@@ -118,7 +118,7 @@
 
     internalValue = sortedValue.map((el) => el.value).join(',');
 
-    displayValue = sortedValue.map((el) => (el.label ? el.label : el.value));
+    displayValue = sortedValue.map((el) => (el.label ? el.label : el.value)).join(', ');
 
     dispatch(
       'value',
