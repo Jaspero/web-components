@@ -240,7 +240,7 @@
 
     const rect = bindingElement.getBoundingClientRect();
     const availableSpaceBelow = window.innerHeight - rect.bottom;
-    const dropdownHeight = 385;
+    const dropdownHeight = 400;
 
     let style: string = '';
     if (availableSpaceBelow < dropdownHeight) {
