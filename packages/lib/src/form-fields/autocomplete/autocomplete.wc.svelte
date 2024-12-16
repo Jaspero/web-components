@@ -59,7 +59,7 @@
   let filteredOptions: string[] = [];
   let inputEl: HTMLInputElement;
   let open = false;
-  let wasInteractedWith = false;
+  let hadValue = false;
   let userInvalidElement = false;
 
   const dispatch = createEventDispatcher();
@@ -134,7 +134,6 @@
   }
 
   function toggleMenu(event?: any) {
-    wasInteractedWith = true;
     if (event && event.target && event.target.closest('.menu')) {
       return;
     }
@@ -221,8 +220,8 @@
   }
 
   $: {
-    value;
-    if (wasInteractedWith && !attachedInternals.checkValidity()) {
+    if(value) hadValue = true;
+    if (hadValue && !attachedInternals.checkValidity()) {
       userInvalidElement = true;
     } else {
       userInvalidElement = false;
