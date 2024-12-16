@@ -178,6 +178,8 @@
   let containerEl: HTMLDivElement;
   let editor: any;
   let textareaEl: HTMLTextAreaElement;
+  let hadValue = false;
+  let userInvalidElement = false;
 
   export async function save(id?: string) {
     const regex = /src="data:(.*?)"/g;
@@ -255,7 +257,8 @@
               const message =
                 requiredValidationMessage ||
                 validationMessages.required ||
-                textareaEl.validationMessage;
+                textareaEl.validationMessage ||
+                'Required';
 
               if (message) {
                 attachedInternals.setValidity({ valueMissing: true }, message, textareaEl);
@@ -278,6 +281,17 @@
     }
   });
   $: displayLabel = required ? `${label} *` : label;
+
+  $: {
+    if (internalValue) {
+      hadValue = true;
+    }
+    if (hadValue && !attachedInternals.checkValidity()) {
+      userInvalidElement = true;
+    } else {
+      userInvalidElement = false;
+    }
+  }
 </script>
 
 {#if label}
@@ -285,7 +299,11 @@
     {@html displayLabel}
   </div>
 {/if}
-<div class="jp-ckeditor" bind:this={wrapperEl}>
+<div
+  class="jp-ckeditor"
+  class:jp-ckeditor-user-invalid={userInvalidElement}
+  bind:this={wrapperEl}
+>
   <div bind:this={containerEl} />
 </div>
 <textarea
