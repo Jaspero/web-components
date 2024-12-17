@@ -23,6 +23,7 @@
   import folderIcon from '../../icons/folder.svg?raw';
   import eyeIcon from '../../icons/eye.svg?raw';
   import deleteIcon from '../../icons/delete.svg?raw';
+  import cropperIcon from '../../icons/open-cropper.svg?raw';
 
   export let label = '';
   export let labelType: 'inside' | 'outside' = 'inside';
@@ -44,6 +45,7 @@
     | 'dot'
     | 'sentence' = '';
   export let displayFormatFunction: (name: string) => string;
+  export let enableCropper = true;
 
   let previewStyle: string;
   let bindingElement: HTMLDivElement;
@@ -59,6 +61,7 @@
     (value && formatDisplayFileName(value, displayFormat, displayFormatFunction)) || '';
 
   const dispatch = createEventDispatcher();
+  let showCropper = false;
 
   export let service: FileService;
 
@@ -220,6 +223,22 @@
             {@html eyeIcon}
           </button>
         </div>
+
+        <div
+          class="jp-file-upload-field-icon jp-file-upload-field-icon-preview-button"
+          class:jp-file-upload-field-icon-hidden={!img || !enableCropper}
+        >
+          <button
+            type="button"
+            on:click|preventDefault={() => {
+              showCropper = true;
+              showPreview();
+              preview = false;
+            }}
+          >
+            {@html cropperIcon}
+          </button>
+        </div>
         {#if internalValue}
           <div class="jp-file-upload-field-icon">
             <button
@@ -257,13 +276,36 @@
 
 {#if preview}
   <div class="jp-file-upload-overlay">
-    <img
+    <div class="jp-file-upload-preview">
+      <img
+        style={previewStyle}
+        src={img}
+        alt="preview"
+        use:clickOutside
+        on:click_outside={() => (preview = false)}
+      />
+    </div>
+  </div>
+{/if}
+
+{#if showCropper}
+  <div class="jp-file-upload-overlay">
+    <jp-cropper
       class="jp-file-upload-preview"
-      style={previewStyle}
       src={img}
-      alt="preview"
+      alt={displayedFileNameString}
+      name="cropped"
+      style={previewStyle}
+      maxContainerWidth="300px"
+      maxContainerHeight="300px"
+      on:croppedImageFile={(e) => {
+        img = '';
+        handleLocalChange(e.detail.file);
+        showCropper = false;
+      }}
+      on:exitCropper={() => (showCropper = false)}
       use:clickOutside
-      on:click_outside={() => (preview = false)}
+      on:click_outside={() => (showCropper = false)}
     />
   </div>
 {/if}

@@ -51,7 +51,6 @@
 
   let mandatoryCroped = 0;
   let beingCropped: number | null = null;
-  let showCropper = false;
 
   let displayedFileNameString = '';
   let grabbedEl: { style: string } | null = null;
@@ -83,7 +82,6 @@
   function handleCrop(e: { detail: { objs: any } }, index: number) {
     internalFiles = internalFiles.toSpliced(index, 1, e.detail.objs);
     internalFiles[index].displayedName = internalFiles[index].name;
-    console.log(internalFiles);
     beingCropped = null;
   }
 

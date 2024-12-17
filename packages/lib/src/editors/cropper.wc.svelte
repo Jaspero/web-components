@@ -49,6 +49,7 @@
     toDataURL: () => any;
     toBlob: (arg0: { (blob: any): void; (blob: any): void }) => void;
   };
+
   let img: HTMLImageElement,
     cropper: { getCroppedCanvas: () => any; element: { cropper: { getCroppedCanvas: () => any } } };
 
@@ -100,7 +101,7 @@
 
     if (croppedCanvas) {
       croppedCanvas.toBlob((blob: BlobPart) => {
-        const file = new File([blob], alt, { type: 'image' });
+        const file = new File([blob], alt + '-cropped', { type: 'image' });
         const objs = fileToObj(file);
         dispatch('croppedImage', { objs });
       });
@@ -123,13 +124,13 @@
 
 <div
   class="container"
-  style={`max-height: ${maxImgHeight}; max-width: ${maxImgWidth}; position: ${position}`}
+  style={`max-height: ${maxContainerHeight}; max-width: ${maxContainerWidth}; position: ${position}`}
 >
   <img
     bind:this={img}
     {src}
     {alt}
-    style={`max-height: ${maxContainerHeight}; max-width: ${maxContainerWidth};`}
+    style={`max-height: ${maxImgHeight}; max-width: ${maxImgWidth};`}
   />
   <button
     class="backButton"
@@ -144,8 +145,10 @@
   <button
     class="checkButton"
     class:mandatory
-    on:mousedown={handleCrop}
-    style="background-color: var(--primary-color); color: white;"
+    on:mousedown={() => {
+      handleCrop();
+      handleCropToFile();
+    }}
   >
     <div class="icon-conteiner">
       {@html checkIcon}
@@ -154,7 +157,7 @@
 </div>
 
 <style>
-  .icon-conteiner{
+  .icon-conteiner {
     max-width: 16px;
     max-height: 16px;
   }
@@ -181,6 +184,8 @@
     right: 20%;
     width: 2rem;
     height: 2rem;
+    background-color: var(--primary-color);
+    color: white;
   }
 
   .checkButton.mandatory {
