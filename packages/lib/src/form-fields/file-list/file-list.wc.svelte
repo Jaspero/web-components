@@ -44,11 +44,12 @@
   export let validationMessages: { [key: string]: string } = {};
   export let sortable = true;
   export let required = false;
+  export let requiredValidationMessage: string;
   export let displayFormat = 'snake';
   export let displayFormatFunction;
 
   let displayedFileNameString = '';
-  let grabbedEl: { style: string; } | null = null;
+  let grabbedEl: { style: string } | null = null;
   let grabbedIndex = -1;
   let startingY: number;
   let startingX: number;
@@ -58,6 +59,8 @@
   let hoveringFile = false;
   let fileElements: HTMLDivElement[] = [];
   let internalValue = '';
+  let hadValue = false;
+  let userInvalidElement = false;
 
   export const getValue = () => internalValue.split(',').filter(Boolean);
 
@@ -80,6 +83,11 @@
       attachedInternals.setValidity(
         { customError: true },
         maxfilesValidationMessage || validationMessages.maxfiles || 'Too many files.'
+      );
+    } else if (required && internalFiles.length === 0) {
+      attachedInternals.setValidity(
+        { customError: true },
+        requiredValidationMessage || validationMessages.required || 'Required.'
       );
     } else {
       attachedInternals.setValidity({});
@@ -221,7 +229,7 @@
     ).filter(Boolean);
   };
 
-  function mousemove(e: { preventDefault: () => void; clientY: number; clientX: number; }) {
+  function mousemove(e: { preventDefault: () => void; clientY: number; clientX: number }) {
     if (grabbedEl) {
       e.preventDefault();
       grabbedEl.style.transform = 'translateY(' + (e.clientY - startingY) + 'px)';
@@ -266,6 +274,15 @@
     }
   }
   $: displayLabel = required ? `${label} *` : label;
+
+  $: {
+    if (internalFiles) hadValue = true;
+    if (hadValue && !attachedInternals.checkValidity()) {
+      userInvalidElement = true;
+    } else {
+      userInvalidElement = false;
+    }
+  }
 </script>
 
 <svelte:document on:mousemove={mousemove} on:mouseup={mouseup} />
@@ -280,6 +297,7 @@
 <!-- svelte-ignore a11y-no-static-element-interactions -->
 <div
   class="jp-file-list-dropzone"
+  class:jp-file-list-dropzone-user-invalid={userInvalidElement}
   class:jp-file-list-dropzone-fullBorder={hoveringFile}
   on:dragover|preventDefault={() => (hoveringFile = true)}
 >
@@ -360,7 +378,11 @@
         </div>
       {/each}
     </div>
-    <button type="button" class="jp-file-list-add-more" on:click|preventDefault={() => browseFilesEl.click()}>
+    <button
+      type="button"
+      class="jp-file-list-add-more"
+      on:click|preventDefault={() => browseFilesEl.click()}
+    >
       {@html plusIcon}
     </button>
   {/if}

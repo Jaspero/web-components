@@ -77,6 +77,8 @@
   let displayValue: string[];
   let searchFocused = false;
   let inputEl: HTMLInputElement;
+  let hadValue = false;
+  let userInvalidElement = false;
 
   const dispatch = createEventDispatcher();
 
@@ -386,6 +388,16 @@
       options = [];
     }
   }
+
+
+  $: {
+    if (internalValue) hadValue = true;
+    if (hadValue && !attachedInternals.checkValidity()) {
+      userInvalidElement = true;
+    } else {
+      userInvalidElement = false;
+    }
+  }
 </script>
 
 {#if label && labelType == 'outside'}
@@ -408,6 +420,7 @@
     type="button"
     class="jp-multisearch-select"
     class:jp-multisearch-select-toggled={open}
+    class:jp-multisearch-select-user-invalid={userInvalidElement}
     bind:this={bindingElement}
     disabled={disabled || valueLoad}
     on:click|preventDefault={toggleMenu}

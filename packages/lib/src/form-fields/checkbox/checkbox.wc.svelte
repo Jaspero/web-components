@@ -45,6 +45,8 @@
 
   const dispatch = createEventDispatcher();
   let checkedAmount: number = 0;
+  let wasValid = false;
+  let userInvalidElement = false;
 
   $: {
     if (value && Array.isArray(options)) {
@@ -63,7 +65,7 @@
   $: displayLabel = required ? `${label} *` : label;
 
   $: {
-    attachedInternals.checkValidity();
+    checkedAmount > 0  && attachedInternals.checkValidity() ? (wasValid = true) : '';
 
     if (required && checkedAmount === 0) {
       attachedInternals.setValidity(
@@ -86,8 +88,19 @@
         { customError: true },
         maxselectsValidationMessage || validationMessages.maxselects || 'Above limit checks.'
       );
+    } else if (required && checkedAmount === 0) {
+      attachedInternals.setValidity(
+        { customError: true },
+        requiredValidationMessage || validationMessages.required || 'Checkbox is required.'
+      );
     } else {
       attachedInternals.setValidity({});
+    }
+
+    if (wasValid && !attachedInternals.checkValidity()) {
+      userInvalidElement = true;
+    } else {
+      userInvalidElement = false;
     }
 
     dispatch(
@@ -105,7 +118,7 @@
 
 <div class="jp-checkbox">
   {#if label}
-    <div class="jp-checkbox-label">
+    <div class="jp-checkbox-label" class:jp-checkbox-label-user-invalid={userInvalidElement}>
       {@html displayLabel}
     </div>
   {/if}

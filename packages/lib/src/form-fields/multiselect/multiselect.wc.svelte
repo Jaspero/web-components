@@ -68,6 +68,8 @@
   let searchTimeout: any;
   let displayValue: string[] | null | string;
   let selectedItems = 0;
+  let hadValue = false;
+  let userInvalidElement = false;
 
   const dispatch = createEventDispatcher();
 
@@ -336,6 +338,16 @@
     }
   }
 
+  
+  $: {
+    if (internalValue) hadValue = true;
+    if (hadValue && !attachedInternals.checkValidity()) {
+      userInvalidElement = true;
+    } else {
+      userInvalidElement = false;
+    }
+  }
+
   onMount(() => {
     if (typeof options == 'string') {
       options = JSON.parse(options);
@@ -382,6 +394,7 @@
   <button
     type="button"
     class="jp-multiselect-select"
+    class:jp-multiselect-select-user-invalid={userInvalidElement}
     class:jp-multiselect-select-toggled={open}
     class:jp-multiselect-select-disabled={disabled}
     {disabled}
