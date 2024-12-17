@@ -120,6 +120,7 @@
     asyncTable.height = '500px';
     asyncTable.freezeFirstColumn = true;
     asyncTable.freezeLastColumn = true;
+    asyncTable.showResetToDefault = true;
     el.appendChild(asyncTable);
   });
 

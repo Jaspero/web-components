@@ -23,7 +23,8 @@
     LOADING: 'Loading',
     LOAD_MORE: 'Load more',
     PAGE_SIZE: 'Page size',
-    SAVE: 'Save'
+    SAVE: 'Save',
+    RESET: 'Reset'
   };
 
   export let allowArrangeColumns = true;
@@ -41,9 +42,11 @@
   export let service: TableService;
   export let id: string;
   export let height: string | null = null;
+  export let showResetToDefault = true;
 
   let additionalExportTypes = [];
   let activeHeaders: TableHeader[] = [];
+  const defaultHeaders = headers;
 
   let isOpen = false;
   let resolved: string[] = [];
@@ -134,7 +137,7 @@
     const { key, fallback, pipes } = header;
 
     let value: any;
-    
+
     try {
       value = get(row, key);
     } catch {
@@ -489,11 +492,23 @@
     exportDataGeneric(option);
     isOpen = false;
   };
+
+  function handleReset() {
+    headers = defaultHeaders;
+    headers.forEach((header) => {
+      header.disabled = false;
+    });
+  }
 </script>
 
 <div class="jp-async-table">
   {#if showArrangingColumns || showImport || showExport}
     <div class="jp-async-table-header">
+      {#if showResetToDefault}
+        <button on:click={handleReset} class="jp-async-table-button">
+          {wording.RESET}
+        </button>
+      {/if}
       {#if showArrangingColumns}
         &nbsp;
         <button type="button" on:click={arrangeColumns} class="jp-async-table-button">
@@ -566,7 +581,7 @@
                 class:jp-async-table-sticky-last={index === headers.length - 1 && freezeLastColumn}
                 class:jp-async-table-no-cursor={header.disableOrganize}
                 class:jp-async-table-hover-over={hoveringOverColumnIndex === index}
-                class={`jp-async-table-header-cell-${header.key.slice(1).replace(/\//g, '(?!^)\/')}`}
+                class={`jp-async-table-header-cell-${header.key.slice(1).replace(/\//g, '(?!^)/')}`}
                 draggable={allowArrangeColumns && !header.disableOrganize}
                 on:click={() => adjustSort(header)}
                 on:dragstart={(e) => {
@@ -615,7 +630,7 @@
                   class:jp-async-table-sticky-last={columnIndex === headers.length - 1 &&
                     freezeLastColumn}
                   class:jp-async-table-hover-over={hoveringOverColumnIndex === columnIndex}
-                  class={`jp-async-table-cell-${header.key.slice(1).replace(/\//g, '(?!^)\/')}`}
+                  class={`jp-async-table-cell-${header.key.slice(1).replace(/\//g, '(?!^)/')}`}
                   on:click={(e) => rowClick(row, rowIndex, header, e)}
                 >
                   {#await handleColumn(header, row, rowIndex) then val}
@@ -699,7 +714,7 @@
                   if (!column.disableOrganize) drop(e, index);
                 }}
               >
-              {@html dragHandleIcon}
+                {@html dragHandleIcon}
               </span><input type="checkbox" value={true} bind:checked={column.enabled} />
               <span>{@html column.label}</span>
             </label>{/if}
