@@ -18,6 +18,7 @@ import '../static/c/async-table.css';
 | showArrangingColumns |              |            `boolean`            |                should the button for arranging columns be shown                 |
 |      showExport      |              |            `boolean`            |                      should the button for export be shown                      |
 |  dropdownMenuExport  |              |            `boolean`            | should the button for export download csv or can you have more download options |
+|  showResetToDefault  |              |            `boolean`            |                should the button for reseting to default be shown               |
 <br></br>
 ****
 
