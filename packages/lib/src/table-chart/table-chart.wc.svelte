@@ -180,7 +180,7 @@
     }
 
     selected_dimensions.push({
-      label: 'Value',
+      label: 'value',
       value: 'value'
     });
   }
@@ -200,7 +200,7 @@
 
     if (date_range?.start && date_range?.end) {
       prefiltered_data = prefiltered_data.filter(item => {
-        const item_date = new Date(item[date_range_key]);
+        const item_date = new Date(Number(item[date_range_key]));
 
         return item_date >= date_range.start && item_date <= date_range.end;
       });
@@ -444,13 +444,17 @@
                   {#each selected_dimensions as dimension}
                     <td class="table-cell">
                       {#if typeof row[dimension.value] === 'object'}
-                        {#each Object.entries(row[dimension.value]) as [key, value]}
-                          <div>
-                            <b>{key}:</b> {value}
-                          </div>
-                        {/each}
+                        {#if Object.entries(row[dimension.value]).length}
+                          {#each Object.entries(row[dimension.value]) as [key, value]}
+                            <div>
+                              <b>{key}:</b> {value}
+                            </div>
+                          {/each}
+                        {:else}
+                          -
+                        {/if}
                       {:else}
-                        {row[dimension.value]}
+                        {row[dimension.value] ? row[dimension.value] : '-'}
                       {/if}
                     </td>
                   {/each}
