@@ -56,6 +56,8 @@
   let height = 'auto';
 
   let textareaEl;
+  let hadValue = false;
+  let userInvalidElement = false;
 
   export const reportValidity = () => attachedInternals.reportValidity();
 
@@ -109,6 +111,15 @@
       textareaEl.style.height = textareaEl.scrollHeight + 'px';
     }
   }
+
+  $: {
+    if (value) hadValue = true;
+    if (hadValue && !attachedInternals.checkValidity()) {
+      userInvalidElement = true;
+    } else {
+      userInvalidElement = false;
+    }
+  }
 </script>
 
 {#if label && labelType == 'outside'}
@@ -121,6 +132,7 @@
     class="jp-textarea-field"
     class:jp-textarea-field-disabled={disabled || readonly}
     class:jp-textarea-field-required={required}
+    class:jp-textarea-field-user-invalid={userInvalidElement}
   >
     {#if label && labelType == 'inside'}
       <span

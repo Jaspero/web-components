@@ -57,6 +57,8 @@
   let fileEl: HTMLInputElement;
   let displayedFileNameString =
     (value && formatDisplayFileName(value, displayFormat, displayFormatFunction)) || '';
+  let hadValue = false;
+  let userInvalidElement = false;
 
   const dispatch = createEventDispatcher();
 
@@ -74,6 +76,11 @@
   }
 
   $: {
+    if (required && internalValue.length === 0) {
+      attachedInternals.setValidity({ customError: true }, 'Required.');
+    } else {
+      attachedInternals.setValidity({});
+    }
     attachedInternals.checkValidity();
     attachedInternals.setFormValue(internalValue);
     dispatch('value', { value: internalValue });
@@ -126,7 +133,6 @@
   }
 
   async function checkImage(event: InputEvent) {
-
     if (!event?.target) {
       return;
     }
@@ -167,6 +173,15 @@
     });
   }
   $: displayLabel = required ? `${label} *` : label;
+
+  $: {
+    if (internalValue) hadValue = true;
+    if (hadValue && !attachedInternals.checkValidity()) {
+      userInvalidElement = true;
+    } else {
+      userInvalidElement = false;
+    }
+  }
 </script>
 
 {#if label && labelType == 'outside'}
@@ -178,6 +193,7 @@
   <!-- svelte-ignore a11y-no-static-element-interactions -->
   <div
     class="jp-file-upload-field"
+    class:jp-file-upload-field-user-invalid={userInvalidElement}
     bind:this={bindingElement}
     on:dragover|preventDefault={() => (hoveringFile = true)}
   >

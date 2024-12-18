@@ -77,6 +77,8 @@
   let displayValue: string[];
   let searchFocused = false;
   let inputEl: HTMLInputElement;
+  let hadValue = false;
+  let userInvalidElement = false;
 
   const dispatch = createEventDispatcher();
 
@@ -364,7 +366,7 @@
           const res = await service.getSingle(el);
 
           if (res) {
-            single = await service.getSingle(el);
+            single = res;
             single.selected = true;
           } else {
             single = { value: el, selected: true };
@@ -384,6 +386,16 @@
       loadValues(value);
     } else {
       options = [];
+    }
+  }
+
+
+  $: {
+    if (internalValue) hadValue = true;
+    if (hadValue && !attachedInternals.checkValidity()) {
+      userInvalidElement = true;
+    } else {
+      userInvalidElement = false;
     }
   }
 </script>
@@ -408,6 +420,7 @@
     type="button"
     class="jp-multisearch-select"
     class:jp-multisearch-select-toggled={open}
+    class:jp-multisearch-select-user-invalid={userInvalidElement}
     bind:this={bindingElement}
     disabled={disabled || valueLoad}
     on:click|preventDefault={toggleMenu}

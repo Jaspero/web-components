@@ -67,6 +67,8 @@
 
   let inputEl: HTMLInputElement;
   let focused = inputFocused;
+  let hadValue = false;
+  let userInvalidElement = false;
 
   const dispatch = createEventDispatcher();
 
@@ -123,6 +125,15 @@
       inputEl.focus();
     }
   });
+
+  $: {
+    if (value) hadValue = true;
+    if (hadValue && !attachedInternals.checkValidity()) {
+      userInvalidElement = true;
+    } else {
+      userInvalidElement = false;
+    }
+  }
 </script>
 
 {#if label && labelType === 'outside'}
@@ -131,7 +142,11 @@
   </div>
 {/if}
 <div class="jp-input" class:jp-input-has-hint={!!hint}>
-  <label class="jp-input-field" class:jp-input-field-disabled={disabled || readonly}>
+  <label
+    class="jp-input-field"
+    class:jp-input-field-disabled={disabled || readonly}
+    class:jp-input-field-user-invalid={userInvalidElement}
+  >
     {#if label && labelType === 'inside'}
       <span
         class="jp-input-field-label"

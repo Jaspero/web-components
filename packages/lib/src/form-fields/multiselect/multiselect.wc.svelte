@@ -66,8 +66,10 @@
   let optionElements: any[] = []; // Array to store references to option buttons
   let searchTerm = '';
   let searchTimeout: any;
-  let displayValue: string[] | null;
+  let displayValue: string[] | null | string;
   let selectedItems = 0;
+  let hadValue = false;
+  let userInvalidElement = false;
 
   const dispatch = createEventDispatcher();
 
@@ -118,7 +120,7 @@
 
     internalValue = sortedValue.map((el) => el.value).join(',');
 
-    displayValue = sortedValue.map((el) => (el.label ? el.label : el.value));
+    displayValue = sortedValue.map((el) => (el.label ? el.label : el.value)).join(', ');
 
     dispatch(
       'value',
@@ -336,6 +338,16 @@
     }
   }
 
+  
+  $: {
+    if (internalValue) hadValue = true;
+    if (hadValue && !attachedInternals.checkValidity()) {
+      userInvalidElement = true;
+    } else {
+      userInvalidElement = false;
+    }
+  }
+
   onMount(() => {
     if (typeof options == 'string') {
       options = JSON.parse(options);
@@ -382,6 +394,7 @@
   <button
     type="button"
     class="jp-multiselect-select"
+    class:jp-multiselect-select-user-invalid={userInvalidElement}
     class:jp-multiselect-select-toggled={open}
     class:jp-multiselect-select-disabled={disabled}
     {disabled}
