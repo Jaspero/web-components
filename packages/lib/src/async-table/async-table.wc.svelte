@@ -23,7 +23,8 @@
     LOADING: 'Loading',
     LOAD_MORE: 'Load more',
     PAGE_SIZE: 'Page size',
-    SAVE: 'Save'
+    SAVE: 'Save',
+    EMPTY_TABLE: 'Currently there is no data available'
   };
 
   export let allowArrangeColumns = true;
@@ -134,7 +135,7 @@
     const { key, fallback, pipes } = header;
 
     let value: any;
-    
+
     try {
       value = get(row, key);
     } catch {
@@ -566,7 +567,7 @@
                 class:jp-async-table-sticky-last={index === headers.length - 1 && freezeLastColumn}
                 class:jp-async-table-no-cursor={header.disableOrganize}
                 class:jp-async-table-hover-over={hoveringOverColumnIndex === index}
-                class={`jp-async-table-header-cell-${header.key.slice(1).replace(/\//g, '(?!^)\/')}`}
+                class={`jp-async-table-header-cell-${header.key.slice(1).replace(/\//g, '(?!^)/')}`}
                 draggable={allowArrangeColumns && !header.disableOrganize}
                 on:click={() => adjustSort(header)}
                 on:dragstart={(e) => {
@@ -615,7 +616,7 @@
                   class:jp-async-table-sticky-last={columnIndex === headers.length - 1 &&
                     freezeLastColumn}
                   class:jp-async-table-hover-over={hoveringOverColumnIndex === columnIndex}
-                  class={`jp-async-table-cell-${header.key.slice(1).replace(/\//g, '(?!^)\/')}`}
+                  class={`jp-async-table-cell-${header.key.slice(1).replace(/\//g, '(?!^)/')}`}
                   on:click={(e) => rowClick(row, rowIndex, header, e)}
                 >
                   {#await handleColumn(header, row, rowIndex) then val}
@@ -629,6 +630,9 @@
         {/each}
       {/if}
     </table>
+    {#if rows.length === 0}
+        <h1 class="jp-async-table-empty-message">{wording.EMPTY_TABLE}</h1>
+    {/if}
   </div>
 
   <div class="jp-async-table-actions">
@@ -699,7 +703,7 @@
                   if (!column.disableOrganize) drop(e, index);
                 }}
               >
-              {@html dragHandleIcon}
+                {@html dragHandleIcon}
               </span><input type="checkbox" value={true} bind:checked={column.enabled} />
               <span>{@html column.label}</span>
             </label>{/if}
