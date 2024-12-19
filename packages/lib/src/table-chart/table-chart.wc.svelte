@@ -16,6 +16,10 @@
    * TYPES
    */
   type Config = {
+    date_range: {
+      hidden: boolean;
+      key: string;
+    },
     dimensions: {
       background_color: string;
       capitalize: boolean;
@@ -82,6 +86,10 @@
    * CONSTS
    */
   const DEFAULT_CONFIG: Config = {
+    date_range: {
+      hidden: false,
+      key: 'date'
+    },
     dimensions: {
       background_color: '#f3f3f3',
       capitalize: false,
@@ -200,7 +208,7 @@
 
     if (date_range?.start && date_range?.end) {
       prefiltered_data = prefiltered_data.filter(item => {
-        const item_date = new Date(Number(item[date_range_key]));
+        const item_date = Number(item[date_range_key]) ? new Date(Number(item[date_range_key])) : new Date(item[date_range_key]);
 
         return item_date >= date_range.start && item_date <= date_range.end;
       });
@@ -307,6 +315,10 @@
     }));
   }
 
+  $: if (config?.date_range?.key) {
+    date_range_key = config.date_range.key;
+  }
+
   $: if (search_value?.length) {
     filter_data();
   }
@@ -334,17 +346,20 @@
   <div class="container">
     <div class="dimensions-picker"
          style="--dimensions-select-background-color: {config?.dimensions?.select?.background_color || DEFAULT_CONFIG?.dimensions?.select?.background_color}; --dimensions-active-text-color: {config?.dimensions?.active_color || DEFAULT_CONFIG.dimensions.active_color}; --dimensions-text-color: {config?.dimensions?.color || DEFAULT_CONFIG?.dimensions?.color}; --active-dimension-background: {config?.dimensions?.active_background || DEFAULT_CONFIG.dimensions.active_background}; --dimensions-picker-border: {config?.dimensions?.border || DEFAULT_CONFIG.dimensions.border}; --dimensions-picker-width: {config?.dimensions?.width || DEFAULT_CONFIG.dimensions.width}; --dimensions-picker-title-color: {config?.dimensions?.title?.color || DEFAULT_CONFIG.dimensions.title.color}; --dimensions-picker-title-font-size: {config?.dimensions?.title?.font_size || DEFAULT_CONFIG.dimensions.title.font_size}; --dimensions-picker-select-border: {config?.dimensions?.select?.border || DEFAULT_CONFIG.dimensions.select.border}; --dimensions-background-color: {config?.dimensions?.background_color || DEFAULT_CONFIG.dimensions.background_color};">
-      <span class="dimensions-picker-title">
-        Date Range Dimension
-      </span>
 
-      <select class="dimensions-picker-select" bind:value={date_range_key}>
-        {#each dimensions as dimension}
-          <option value={dimension.value}>
-            {dimension.label}
-          </option>
-        {/each}
-      </select>
+      {#if !config?.date_range?.hidden}
+        <span class="dimensions-picker-title">
+          Date Range Dimension
+        </span>
+
+        <select class="dimensions-picker-select" bind:value={date_range_key}>
+          {#each dimensions as dimension}
+            <option value={dimension.value}>
+              {dimension.label}
+            </option>
+          {/each}
+        </select>
+      {/if}
 
       <span class="dimensions-picker-title">
         Dimensions
