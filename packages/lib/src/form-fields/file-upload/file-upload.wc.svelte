@@ -53,7 +53,7 @@
   let file: any = null;
   let preview = false;
   let hoveringFile = false;
-  let internalValue: string;
+  let internalValue: File | string;
   let fileEl: HTMLInputElement;
   let displayedFileNameString =
     (value && formatDisplayFileName(value, displayFormat, displayFormatFunction)) || '';
@@ -68,9 +68,7 @@
 
   $: {
     internalValue = value;
-    if (value) {
-      checkImage();
-    } else {
+    if (!value) {
       img = '';
     }
   }
@@ -97,7 +95,7 @@
     return internalValue;
   }
 
-  async function handleLocalChange(f: { size: number; name: string }) {
+  async function handleLocalChange(f: File) {
     if (service && service.maxSize) {
       if (f.size > service.maxSize) {
         dispatch('rejected', { file: f.name, code: 'maxSize' });
@@ -106,9 +104,9 @@
     }
     isLocal = true;
     file = f;
-    internalValue = f.name;
+    internalValue = f;
     displayedFileNameString = formatDisplayFileName(
-      internalValue,
+      f.name,
       displayFormat,
       displayFormatFunction
     ) as string;

@@ -187,33 +187,38 @@
       Array.from(Array(startingDay).keys())
         .map((el) => prevMonthDays - el)
         .toReversed()
-        .map((el) => {
-          let obj = { day: el, month: month - 1, year: year, gray: true };
-          return obj;
-        })
+        .map((el) => ({
+          day: el,
+          month: month - 1,
+          year: year,
+          gray: true
+        }))
     ];
 
     mData = [
       ...mData,
-      Array.from(Array(thisMonthDays).keys()).map((el) => {
-        let obj = { day: el + 1, month: month, year: year, gray: false };
-        return obj;
-      })
+      Array.from(Array(thisMonthDays).keys()).map((el) => ({
+        day: el + 1,
+        month: month,
+        year: year,
+        gray: false
+      }))
     ];
 
     mData = [
       ...mData,
-      Array.from(Array(daysAfter).keys()).map((el) => {
-        let obj = { day: el + 1, month: month + 1, year: year, gray: true };
-        return obj;
-      })
+      Array.from(Array(daysAfter).keys()).map((el) => ({
+        day: el + 1,
+        month: month + 1,
+        year: year, gray: true
+      }))
     ];
 
     mData = mData.flat();
 
-    mData = Array.from(Array(6).keys()).map((el) => {
-      return mData.slice(el * 7, (el + 1) * 7);
-    });
+    mData = Array.from(Array(6).keys()).map((el) =>
+      mData.slice(el * 7, (el + 1) * 7)
+    );
 
     return mData;
   };
@@ -380,7 +385,7 @@
 </script>
 
 <div style="position: relative;">
-  {#if label && labelType == 'outside'}
+  {#if label && labelType === 'outside'}
     <div class="label">
       {@html displayLabel}
     </div>
@@ -397,7 +402,7 @@
     disabled={disabled || readonly}
     on:click|preventDefault={toggleMenu}
   >
-    {#if label && labelType == 'inside'}
+    {#if label && labelType === 'inside'}
       <span
         class="jp-datepicker-field-label"
         class:jp-datepicker-field-label-move={openPicker || internalValue}
@@ -405,7 +410,7 @@
       >
     {/if}
     <p
-      class={`jp-datepicker-field-input ${labelType == 'outside' || !label ? '' : 'jp-datepicker-field-input-padding'}`}
+      class={`jp-datepicker-field-input ${labelType === 'outside' || !label ? '' : 'jp-datepicker-field-input-padding'}`}
     >
       {displayedDateString}
     </p>
@@ -559,7 +564,7 @@
                   monthSelector = false;
                 }}
               >
-                <p>{pickerYear}</p>
+                <span>{pickerYear}</span>
                 {@html upArrowIcon}
               </button>
               <div class="jp-datepicker-menu-month-nav-buttons">
