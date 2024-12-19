@@ -16,6 +16,13 @@
    * TYPES
    */
   type Config = {
+    formatter: (value: string) => {},
+    data_formatting: {
+      [key: string]: {
+        label: string;
+        formatter: (value: string) => {}
+      }
+    },
     date_range: {
       hidden: boolean;
       key: string;
@@ -304,15 +311,19 @@
     });
   }
 
-  /**
-   * LIFECYCLE
-   */
-  $: if (data?.length) {
+  function set_dimensions() {
     dimensions = Object.keys(data[0]).map(curr => ({
       label: config?.dimensions?.capitalize ? curr.charAt(0).toUpperCase() + curr.slice(1) : curr,
       value: curr,
       selected: false
     }));
+  }
+
+  /**
+   * LIFECYCLE
+   */
+  $: if (data?.length) {
+    set_dimensions();
   }
 
   $: if (config?.date_range?.key) {
@@ -373,7 +384,11 @@
           style="color: {dimension.selected ? 'var(--dimensions-active-text-color)' : 'var(--dimensions-text-color)'}"
           on:click={() => select_dimension(dimension.value)}
         >
-          {dimension.label}
+          {#if config?.data_formatting?.[dimension.label]}
+            {config.data_formatting[dimension.label].label}
+          {:else}
+            {dimension.label}
+          {/if}
         </span>
       {/each}
     </div>
@@ -448,7 +463,11 @@
               <tr class="table-head-row">
                 {#each selected_dimensions as dimension}
                   <th class="cursor-pointer" on:click={() => sort_data(dimension.value)}>
-                    {dimension.label}
+                    {#if config?.data_formatting?.[dimension.label]}
+                      {config.data_formatting[dimension.label].label}
+                    {:else}
+                      {dimension.label}
+                    {/if}
                     {#if sort_order[dimension.value] === 'asc'}↑{:else if sort_order[dimension.value] === 'desc'}↓{/if}
                   </th>
                 {/each}
@@ -462,14 +481,31 @@
                         {#if Object.entries(row[dimension.value]).length}
                           {#each Object.entries(row[dimension.value]) as [key, value]}
                             <div>
-                              <b>{key}:</b> {value}
+                              <b>{key}:</b>
+                              {#if config?.formatter?.toString()}
+                                {#if config?.data_formatting?.[dimension.label]}
+                                  {value ? config.data_formatting[dimension.label].formatter(value) : '-'}
+                                {:else}
+                                  {value ? config.formatter(value) : '-'}
+                                {/if}
+                              {:else}
+                                {value ? value : '-'}
+                              {/if}
                             </div>
                           {/each}
                         {:else}
                           -
                         {/if}
                       {:else}
-                        {row[dimension.value] ? row[dimension.value] : '-'}
+                        {#if config?.formatter?.toString()}
+                          {#if config?.data_formatting?.[dimension.label]}
+                            {row[dimension.value] ? config.data_formatting[dimension.label].formatter(row[dimension.value]) : '-'}
+                          {:else}
+                            {row[dimension.value] ? config.formatter(row[dimension.value]) : '-'}
+                          {/if}
+                        {:else}
+                          {row[dimension.value] ? row[dimension.value] : '-'}
+                        {/if}
                       {/if}
                     </td>
                   {/each}
