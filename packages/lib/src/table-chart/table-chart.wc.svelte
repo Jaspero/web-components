@@ -76,7 +76,6 @@
         }
       }
       max_height: string;
-      max_width: string;
       background: string;
     }
   };
@@ -146,7 +145,6 @@
         }
       },
       max_height: '80vh',
-      max_width: '75vw',
       background: '#75757511'
     }
   };
@@ -454,10 +452,10 @@
       {/if}
 
       <div class="table-wrapper"
-           style="--table-wrapper-max-width: {config?.content?.max_width || DEFAULT_CONFIG.content.max_width}; --table-wrapper-max-height: {config?.content?.max_height || DEFAULT_CONFIG.content.max_height}; --table-wrapper-background: {config?.content?.background || DEFAULT_CONFIG.content.background};">
+           style="--table-wrapper-max-height: {config?.content?.max_height || DEFAULT_CONFIG.content.max_height}; --table-wrapper-background: {config?.content?.background || DEFAULT_CONFIG.content.background};">
         {#if selected_dimensions}
           <div
-            style="max-width: 60vw; --table-head-text-color: {config?.content?.table?.head?.color || DEFAULT_CONFIG.content.table.head.color}; --table-cell-background: {config?.content?.table?.cell?.background || DEFAULT_CONFIG.content.table.cell.background}; --table-container-background: {config?.content?.table?.container?.background || DEFAULT_CONFIG.content.table.container.background}; --table-container-padding: {config?.content?.table?.container?.padding || DEFAULT_CONFIG.content.table.container.padding}; --table-head-row-background: {config?.content?.table?.head?.background || DEFAULT_CONFIG.content.table.head.background}; --table-head-row-min-height: {config?.content?.table?.head?.min_height || DEFAULT_CONFIG.content.table.head.min_height}; --table-head-row-font-size: {config?.content?.table?.head?.font_size || DEFAULT_CONFIG.content.table.head.font_size}; --table-head-row-font-weight: {config?.content?.table?.head?.font_weight || DEFAULT_CONFIG.content.table.head.font_weight}; --table-head-row-padding: {config?.content?.table?.head?.padding || DEFAULT_CONFIG.content.table.head.padding}; --table-border: {config?.content?.table?.container?.border || DEFAULT_CONFIG.content.table.container.border}; --table-border-radius: {config?.content?.table?.container?.border_radius || DEFAULT_CONFIG.content.table.container.border_radius}; --table-border-color: {config?.content?.table?.container?.border_color || DEFAULT_CONFIG.content.table.container.border_color};"
+            style="--table-head-text-color: {config?.content?.table?.head?.color || DEFAULT_CONFIG.content.table.head.color}; --table-cell-background: {config?.content?.table?.cell?.background || DEFAULT_CONFIG.content.table.cell.background}; --table-container-background: {config?.content?.table?.container?.background || DEFAULT_CONFIG.content.table.container.background}; --table-container-padding: {config?.content?.table?.container?.padding || DEFAULT_CONFIG.content.table.container.padding}; --table-head-row-background: {config?.content?.table?.head?.background || DEFAULT_CONFIG.content.table.head.background}; --table-head-row-min-height: {config?.content?.table?.head?.min_height || DEFAULT_CONFIG.content.table.head.min_height}; --table-head-row-font-size: {config?.content?.table?.head?.font_size || DEFAULT_CONFIG.content.table.head.font_size}; --table-head-row-font-weight: {config?.content?.table?.head?.font_weight || DEFAULT_CONFIG.content.table.head.font_weight}; --table-head-row-padding: {config?.content?.table?.head?.padding || DEFAULT_CONFIG.content.table.head.padding}; --table-border: {config?.content?.table?.container?.border || DEFAULT_CONFIG.content.table.container.border}; --table-border-radius: {config?.content?.table?.container?.border_radius || DEFAULT_CONFIG.content.table.container.border_radius}; --table-border-color: {config?.content?.table?.container?.border_color || DEFAULT_CONFIG.content.table.container.border_color};"
           >
             <table>
               <tr class="table-head-row">
@@ -571,10 +569,6 @@
         background: var(--table-cell-background);
     }
 
-    .table-wrapper-container {
-        position: relative;
-    }
-
     .filters-row {
         height: 2.5rem;
         position: absolute;
@@ -611,9 +605,17 @@
         }
     }
 
+
+    .table-wrapper-container {
+        position: relative;
+        display: flex;
+        overflow-x: auto;
+    }
+
+
     .table-wrapper {
         margin-top: 3rem;
-        max-width: var(--table-wrapper-max-width);
+        width: 100%;
         max-height: var(--table-wrapper-max-height);
         overflow: auto;
         background: var(--table-container-background);
