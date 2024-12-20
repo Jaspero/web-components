@@ -1,12 +1,24 @@
 <script lang="ts">
   import '../../../../dist/table-chart.wc.js';
   import { onMount } from 'svelte';
+  // import { RUNS_DATA } from '../lib/consts/runs.const';
   import { TABLE_CHART_DATA } from '../lib/consts/table_data.const';
 
   /**
    * TYPES
    */
   type Config = {
+    formatter: (value: string) => {},
+    data_formatting: {
+      [key: string]: {
+        label: string;
+        formatter: (value: string) => {}
+      }
+    },
+    date_range: {
+      hidden: boolean;
+      key: string;
+    },
     dimensions: {
       capitalize: boolean;
       active_background: string;
@@ -48,7 +60,6 @@
         }
       }
       max_height: string;
-      max_width: string;
       background: string;
     }
   };
@@ -76,9 +87,22 @@
      * Table config
      */
     table.config = {
+      formatter: (value: string) => value + ' %',
+      data_formatting: {
+        project: {
+          label: 'Project',
+          formatter: (value: string) => {
+            return value.toLowerCase();
+          }
+        }
+      },
+      date_range: {
+        key: 'createdOn',
+        hidden: true
+      },
       dimensions: {
         capitalize: false,
-        active_background: '#f3f3f3',
+        active_background: '#e88c8c',
         border: '1px solid #E0E0E0',
         width: '15vw',
         title: {
@@ -88,7 +112,6 @@
       },
       content: {
         max_height: '80vh',
-        max_width: '75vw',
         background: '#75757511'
       }
     } as Config;
