@@ -16,69 +16,83 @@
    * TYPES
    */
   type Config = {
-    formatter: (value: string) => {},
-    data_formatting: {
+    sort_priority?: {
+      key?: string;
+      order?: string;
+    }[],
+    formatter?: (value: string) => {},
+    data_formatting?: {
       [key: string]: {
         label: string;
         formatter: (value: string) => {}
       }
     },
-    date_range: {
-      hidden: boolean;
-      key: string;
+    date_range?: {
+      hidden?: boolean;
+      key?: string;
     },
-    dimensions: {
-      background_color: string;
-      capitalize: boolean;
-      active_background: string;
-      border: string;
-      width: string;
-      color: string;
-      active_color: string;
-      title: {
-        color: string;
-        font_size: string;
+    dimensions?: {
+      background_color?: string;
+      capitalize?: boolean;
+      active_background?: string;
+      border?: string;
+      width?: string;
+      color?: string;
+      active_color?: string;
+      title?: {
+        color?: string;
+        font_size?: string;
       },
-      select: {
-        border: string;
-        background_color: string;
+      select?: {
+        border?: string;
+        background_color?: string;
       }
     },
-    content: {
-      toolbar: {
-        input: {
-          border: string;
+    content?: {
+      toolbar?: {
+        input?: {
+          border?: string;
         },
-        button: {
-          border: string;
-          font_size: string;
-          hover_background_color: string;
+        button?: {
+          border?: string;
+          font_size?: string;
+          hover_background_color?: string;
         }
       },
-      table: {
-        border_spacing: string;
-        border_collapse: string;
-        container: {
-          background: string;
-          padding: string;
-          border: string;
-          border_radius: string;
-          border_color: string;
+      table?: {
+        border_spacing?: string;
+        border_collapse?: string;
+        popover?: {
+          border?: string;
+          background_color?: string;
+          actions?: {
+            color?: string;
+            background_color?: string;
+            hover_background_color?: string;
+            border?: string;
+          }
         },
-        cell: {
-          background: string;
+        container?: {
+          background?: string;
+          padding?: string;
+          border?: string;
+          border_radius?: string;
+          border_color?: string;
         },
-        head: {
-          background: string;
-          min_height: string;
-          font_size: string;
-          font_weight: string;
-          padding: string;
-          color: string;
+        cell?: {
+          background?: string;
+        },
+        head?: {
+          background?: string;
+          min_height?: string;
+          font_size?: string;
+          font_weight?: string;
+          padding?: string;
+          color?: string;
         }
       }
-      max_height: string;
-      background: string;
+      max_height?: string;
+      background?: string;
     }
   };
 
@@ -94,6 +108,7 @@
    * CONSTS
    */
   const DEFAULT_CONFIG: Config = {
+    sort_priority: [],
     date_range: {
       hidden: false,
       key: 'date'
@@ -129,6 +144,16 @@
       table: {
         border_spacing: '2px',
         border_collapse: 'separate',
+        popover: {
+          border: '1px solid #b4b1b1',
+          background_color: '#f3f3f3',
+          actions: {
+            border: 'none',
+            color: '#757575',
+            background_color: '#f3f3f3',
+            hover_background_color: '#e8e8e8'
+          }
+        },
         head: {
           background: '#e3e3e3',
           min_height: '28px',
@@ -167,6 +192,7 @@
   let date_range_key: string;
   let search_element;
   let is_search_active = false;
+  let show_sort_popover = false;
 
   let picker;
   let date_input_element: HTMLInputElement | null = null;
@@ -240,11 +266,15 @@
     processed_data = Object.values(grouped_data);
 
     if (Object.keys(sort_order)?.length) {
-      sort_data(Object.keys(sort_order)[0], false);
+      sort_column_data(Object.keys(sort_order)[0], false);
     }
   }
 
-  function sort_data(dimension: string, reverse = true) {
+  function sort_column_data(dimension: string, reverse = true) {
+    if (config?.sort_priority?.length) {
+      return;
+    }
+
     if (reverse) {
       sort_order[dimension] = sort_order[dimension] === 'asc' ? 'desc' : 'asc';
     }
@@ -313,12 +343,87 @@
     });
   }
 
+  function add_column_to_sort() {
+    if (!config?.sort_priority) {
+      config.sort_priority = [];
+    }
+
+    if (config.sort_priority.length === selected_dimensions.length) {
+      return;
+    }
+
+    const filtered = selected_dimensions.filter((item) => {
+      return !config.sort_priority.map((it) => it.key).includes(item.label);
+    });
+
+    if (!filtered.length) {
+      return;
+    }
+
+    config.sort_priority = [
+      ...config.sort_priority,
+      {key: filtered[0].label, order: 'a-z'}
+    ];
+  }
+
   function set_dimensions() {
     dimensions = Object.keys(data[0]).map(curr => ({
       label: config?.dimensions?.capitalize ? curr.charAt(0).toUpperCase() + curr.slice(1) : curr,
       value: curr,
       selected: false
     }));
+  }
+
+  function move_column_up(index: number) {
+    const item = config.sort_priority[index];
+    const to_replace = config.sort_priority[index - 1];
+
+    config.sort_priority[index - 1] = item;
+    config.sort_priority[index] = to_replace;
+  }
+
+  function move_column_down(index: number) {
+    const item = config.sort_priority[index];
+    const to_replace = config.sort_priority[index + 1];
+
+    config.sort_priority[index + 1] = item;
+    config.sort_priority[index] = to_replace;
+  }
+
+  function remove_column(index: number) {
+    config.sort_priority = config.sort_priority.filter((item, i) => {
+      if (i === index) {
+        return false;
+      }
+
+      return true;
+    });
+  }
+
+  function clickOutside(node) {
+    const handleClick = (event) => {
+      if (node && !node.contains(event.target) && !event.defaultPrevented) {
+        node.dispatchEvent(
+          new CustomEvent('click_outside', node)
+        )
+      }
+    }
+
+    document.addEventListener('click', handleClick, true);
+
+    return {
+      destroy() {
+        document.removeEventListener('click', handleClick, true);
+      }
+    }
+  }
+
+  function sort_data_by_priority() {
+    if (!config?.sort_priority?.length) {
+      return;
+    }
+
+    // TODO: Implement sort data by priority
   }
 
   /**
@@ -330,6 +435,10 @@
 
   $: if (config?.date_range?.key) {
     date_range_key = config.date_range.key;
+  }
+
+  $: if (config?.sort_priority) {
+    sort_data_by_priority();
   }
 
   $: if (search_value?.length) {
@@ -428,6 +537,83 @@
             </svg>
           </div>
 
+          <div class="icon-button sort-button" on:click={() => (show_sort_popover = !show_sort_popover)}>
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="24"
+              height="24"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              class="lucide lucide-arrow-down-up">
+              <path d="m3 16 4 4 4-4"/>
+              <path d="M7 20V4"/>
+              <path d="m21 8-4-4-4 4"/>
+              <path d="M17 4v16"/>
+            </svg>
+
+            {#if config?.sort_priority?.length}
+              <div class="sort-indicator">
+                {config.sort_priority.length}
+              </div>
+            {/if}
+          </div>
+
+          <div class="sort-popover" use:clickOutside on:click_outside={() => (show_sort_popover = false)} style="display: {show_sort_popover ? 'block' : 'none'}; --sort-popover-border: {config?.content?.table?.popover?.border || DEFAULT_CONFIG.content?.table?.popover?.border}; --sort-popover-background: {config?.content?.table?.popover?.background_color || DEFAULT_CONFIG.content?.table?.popover?.background_color};">
+            <div class="sort-popover-head">
+              <span>Sort columns</span>
+
+              <div class="sort-popover-actions" style="--sort-popover-action-color: {config?.content?.table?.popover?.actions?.color || DEFAULT_CONFIG.content?.table?.popover?.actions?.color}; --sort-popover-action-background-color: {config?.content?.table?.popover?.actions?.background_color || DEFAULT_CONFIG.content?.table?.popover?.actions?.background_color}; --sort-popover-action-border: {config?.content?.table?.popover?.actions?.border || DEFAULT_CONFIG.content?.table?.popover?.actions?.border}; --sort-popover-action-hover-background-color: {config?.content?.table?.popover?.actions?.hover_background_color || DEFAULT_CONFIG.content?.table?.popover?.actions?.hover_background_color};">
+                <button class="sort-popover-action" on:click={() => add_column_to_sort()}>
+                  Add column
+                </button>
+              </div>
+            </div>
+
+            <div class="sort-popover-body">
+              {#if config?.sort_priority}
+                {#if config.sort_priority.length}
+                  {#each config.sort_priority as item, index}
+                    <div class="sort-popover-item">
+                    <span class="sort-popover-item-index">
+                      {index + 1}.
+                    </span>
+                      <select class="dimensions-picker-select" style="margin-right: 1rem;" bind:value={item.key}>
+                        {#each selected_dimensions as dimension}
+                          <option value={dimension.value}>
+                            {dimension.label}
+                          </option>
+                        {/each}
+                      </select>
+
+                      <select class="dimensions-picker-select" style="margin-right: 1rem;" bind:value={item.order}>
+                        {#each [{label: 'A-Z', value: 'a-z'}, {label: 'Z-A', value: 'z-a'}] as order}
+                          <option value={order.value}>
+                            {order.label}
+                          </option>
+                        {/each}
+                      </select>
+                      <div class="sort-popover-item-actions" style="--sort-popover-action-color: {config?.content?.table?.popover?.actions?.color || DEFAULT_CONFIG.content?.table?.popover?.actions?.color}; --sort-popover-action-background-color: {config?.content?.table?.popover?.actions?.background_color || DEFAULT_CONFIG.content?.table?.popover?.actions?.background_color}; --sort-popover-action-border: {config?.content?.table?.popover?.actions?.border || DEFAULT_CONFIG.content?.table?.popover?.actions?.border}; --sort-popover-action-hover-background-color: {config?.content?.table?.popover?.actions?.hover_background_color || DEFAULT_CONFIG.content?.table?.popover?.actions?.hover_background_color};">
+                        <button class="sort-popover-action" on:click={() => move_column_up(index)} disabled={index === 0}>
+                          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-move-up"><path d="M8 6L12 2L16 6"/><path d="M12 2V22"/></svg>
+                        </button>
+                        <button class="sort-popover-action" on:click={() => move_column_down(index)} disabled={(index + 1) === config.sort_priority.length}>
+                          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-move-down"><path d="M8 18L12 22L16 18"/><path d="M12 2V22"/></svg>
+                        </button>
+                        <button class="sort-popover-action" on:click={() => remove_column(index)}>
+                          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-trash-2"><path d="M3 6h18"/><path d="M19 6v14c0 1-1 2-2 2H7c-1 0-2-1-2-2V6"/><path d="M8 6V4c0-1 1-2 2-2h4c1 0 2 1 2 2v2"/><line x1="10" x2="10" y1="11" y2="17"/><line x1="14" x2="14" y1="11" y2="17"/></svg>
+                        </button>
+                      </div>
+                    </div>
+                  {/each}
+                {/if}
+              {/if}
+            </div>
+          </div>
+
           <div class="calendar-icon" bind:this={date_input_element} on:click={() => picker?.show()}>
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -464,13 +650,12 @@
             <table style="--border-spacing: {config?.content?.table?.border_spacing || DEFAULT_CONFIG.content.table.border_spacing}; --border-collapse: {config?.content?.table?.border_collapse || DEFAULT_CONFIG.content.table.border_collapse}">
               <tr class="table-head-row">
                 {#each selected_dimensions as dimension}
-                  <th class="cursor-pointer" on:click={() => sort_data(dimension.value)}>
+                  <th class={config?.sort_priority?.length ? '' : 'cursor-pointer'} on:click={() => sort_column_data(dimension.value)}>
                     {#if config?.data_formatting?.[dimension.label]}
                       {config.data_formatting[dimension.label].label}
                     {:else}
                       {dimension.label}
                     {/if}
-                    {#if sort_order[dimension.value] === 'asc'}↑{:else if sort_order[dimension.value] === 'desc'}↓{/if}
                   </th>
                 {/each}
               </tr>
@@ -557,6 +742,7 @@
     }
 
     .calendar-icon {
+        padding: 0.5rem;
         cursor: pointer;
         display: flex;
         align-items: center;
@@ -609,6 +795,95 @@
         }
     }
 
+    .lucide-arrow-down-up {
+        position: relative;
+    }
+
+    .sort-button {
+        position: relative;
+    }
+
+    .sort-indicator {
+        position:absolute; right:0; top:0; padding: 0.2rem; border-radius: 50%; background-color: #706d70; color: white; font-size: 10px;
+    }
+
+    .sort-popover {
+        cursor: default;
+        position: absolute;
+        top: 2.5rem;
+        right: 5rem;
+        z-index: 10;
+        display: flex;
+        flex-direction: column;
+        gap: 0.5rem;
+        border: var(--sort-popover-border);
+        border-radius: 0.25rem;
+        background-color: var(--sort-popover-background);
+        padding: 0.5rem;
+        width: 30vw;
+        min-height: 6vh;
+
+        &-head {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-left: 0.5rem;
+            margin-right: 0.5rem;
+        }
+
+        &-action {
+            cursor: pointer;
+            padding: 0.5rem;
+            border-radius: 0.25rem;
+            background-color: var(--sort-popover-action-background-color);
+            border: var(--sort-popover-action-border);
+            color: var(--sort-popover-action-color);
+        }
+
+        &-action:hover {
+            background-color: var(--sort-popover-action-hover-background-color);
+        }
+
+        &-actions {
+            display: flex;
+            gap: 0.5rem;
+        }
+
+        &-body {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+
+        &-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0.5rem;
+
+            &-index {
+                padding: 0.5rem;
+            }
+
+            &-action {
+                cursor: pointer;
+                padding: 0.5rem;
+                border-radius: 0.25rem;
+                background-color: var(--sort-popover-action-background-color);
+                border: var(--sort-popover-action-border);
+                color: var(--sort-popover-action-color);
+            }
+
+            &-action:hover {
+                background-color: var(--sort-popover-action-hover-background-color);
+            }
+
+            &-actions {
+                display: flex;
+                gap: 0.5rem;
+            }
+        }
+    }
 
     .table-wrapper-container {
         position: relative;
