@@ -610,8 +610,12 @@
         position: relative;
         display: flex;
         overflow-x: auto;
+        flex: 1;
     }
 
+    table {
+        width: 100%;
+    }
 
     .table-wrapper {
         margin-top: 3rem;
