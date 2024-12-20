@@ -56,6 +56,8 @@
         }
       },
       table: {
+        border_spacing: string;
+        border_collapse: string;
         container: {
           background: string;
           padding: string;
@@ -125,6 +127,8 @@
         }
       },
       table: {
+        border_spacing: '2px',
+        border_collapse: 'separate',
         head: {
           background: '#e3e3e3',
           min_height: '28px',
@@ -457,7 +461,7 @@
           <div
             style="--table-head-text-color: {config?.content?.table?.head?.color || DEFAULT_CONFIG.content.table.head.color}; --table-cell-background: {config?.content?.table?.cell?.background || DEFAULT_CONFIG.content.table.cell.background}; --table-container-background: {config?.content?.table?.container?.background || DEFAULT_CONFIG.content.table.container.background}; --table-container-padding: {config?.content?.table?.container?.padding || DEFAULT_CONFIG.content.table.container.padding}; --table-head-row-background: {config?.content?.table?.head?.background || DEFAULT_CONFIG.content.table.head.background}; --table-head-row-min-height: {config?.content?.table?.head?.min_height || DEFAULT_CONFIG.content.table.head.min_height}; --table-head-row-font-size: {config?.content?.table?.head?.font_size || DEFAULT_CONFIG.content.table.head.font_size}; --table-head-row-font-weight: {config?.content?.table?.head?.font_weight || DEFAULT_CONFIG.content.table.head.font_weight}; --table-head-row-padding: {config?.content?.table?.head?.padding || DEFAULT_CONFIG.content.table.head.padding}; --table-border: {config?.content?.table?.container?.border || DEFAULT_CONFIG.content.table.container.border}; --table-border-radius: {config?.content?.table?.container?.border_radius || DEFAULT_CONFIG.content.table.container.border_radius}; --table-border-color: {config?.content?.table?.container?.border_color || DEFAULT_CONFIG.content.table.container.border_color};"
           >
-            <table>
+            <table style="--border-spacing: {config?.content?.table?.border_spacing || DEFAULT_CONFIG.content.table.border_spacing}; --border-collapse: {config?.content?.table?.border_collapse || DEFAULT_CONFIG.content.table.border_collapse}">
               <tr class="table-head-row">
                 {#each selected_dimensions as dimension}
                   <th class="cursor-pointer" on:click={() => sort_data(dimension.value)}>
@@ -615,6 +619,8 @@
 
     table {
         width: 100%;
+        border-spacing: var(--border-spacing);
+        border-collapse: var(--border-collapse);
     }
 
     .table-wrapper {
