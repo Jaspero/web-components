@@ -12,9 +12,9 @@
   export let secondMonthSelected: number | string | null;
   export let firstMonthSelected: number | string | null;
   export let selectingFirst: boolean;
-  export let maxSelectibleDays: number;
-  export let maxDateSelectible: Date;
-  export let minDateSelectible: Date;
+  export let maxSelectableDays: number;
+  export let maxDateSelectable: Date;
+  export let minDateSelectable: Date;
 
   const dispatch = createEventDispatcher();
   function handleClick() {
@@ -28,10 +28,10 @@
     month: number,
     selectingFirst: boolean
   ): boolean {
-    if (!selectingFirst && maxSelectibleDays) {
+    if (!selectingFirst && maxSelectableDays) {
       if (
-        (year >= maxDateSelectible.getFullYear() && month > maxDateSelectible.getMonth()) ||
-        (month < minDateSelectible.getMonth() && year <= minDateSelectible.getFullYear())
+        (year >= maxDateSelectable.getFullYear() && month > maxDateSelectable.getMonth()) ||
+        (month < minDateSelectable.getMonth() && year <= minDateSelectable.getFullYear())
       ) {
         return true;
       }

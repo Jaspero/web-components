@@ -9,9 +9,9 @@
   export let firstYearSelected: number | null;
   export let secondYearSelected: number | null;
   export let selectingFirst: boolean;
-  export let maxSelectibleDays: number;
-  export let maxDateSelectible: Date;
-  export let minDateSelectible: Date;
+  export let maxSelectableDays: number;
+  export let maxDateSelectable: Date;
+  export let minDateSelectable: Date;
 
   const dispatch = createEventDispatcher();
   function handleClick() {
@@ -21,8 +21,8 @@
   }
 
   function isYearOutOfSelectableBounds(year: number, selectingFirst: boolean): boolean {
-    if (!selectingFirst && maxSelectibleDays) {
-      if (year > maxDateSelectible.getFullYear() || year < minDateSelectible.getFullYear()) {
+    if (!selectingFirst && maxSelectableDays) {
+      if (year > maxDateSelectable.getFullYear() || year < minDateSelectable.getFullYear()) {
         return true;
       }
     }

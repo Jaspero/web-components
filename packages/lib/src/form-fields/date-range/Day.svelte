@@ -12,10 +12,10 @@
   export let firstInternalValue = '';
   export let secondInternalValue = '';
   export let selectingFirst: boolean;
-  export let maxSelectibleDays: number;
-  export let minSelectibleDays: number;
-  export let maxDateSelectible: Date;
-  export let minDateSelectible: Date;
+  export let maxSelectableDays: number;
+  export let minSelectableDays: number;
+  export let maxDateSelectable: Date;
+  export let minDateSelectable: Date;
   let isOutOfBonuds: boolean;
 
   const dispatch = createEventDispatcher();
@@ -62,9 +62,9 @@
     day: number,
     selectingFirst: boolean
   ) {
-    if (!selectingFirst && maxSelectibleDays) {
+    if (!selectingFirst && maxSelectableDays) {
       const potentialDate = new Date(year, month, day);
-      if (potentialDate > maxDateSelectible || potentialDate < minDateSelectible) {
+      if (potentialDate > maxDateSelectable || potentialDate < minDateSelectable) {
         return true;
       }
     }
@@ -83,7 +83,7 @@
       if (
         ((potentialDate < minDateAfter && potentialDate > datePicked) ||
           (potentialDate > minDateBefore && potentialDate < datePicked)) &&
-        minSelectibleDays
+        minSelectableDays
       ) {
         return true;
       }
@@ -91,8 +91,8 @@
     return false;
   }
 
-  $: minDateBefore = calculateLimits.calculateRequiredBefore(firstInternalValue, minSelectibleDays);
-  $: minDateAfter = calculateLimits.calculateRequiredAfter(firstInternalValue, minSelectibleDays);
+  $: minDateBefore = calculateLimits.calculateRequiredBefore(firstInternalValue, minSelectableDays);
+  $: minDateAfter = calculateLimits.calculateRequiredAfter(firstInternalValue, minSelectableDays);
 
   $: isOutOfBonuds =
     isDateOutOfSelectableBounds(col.year, col.month, col.day, selectingFirst) ||
