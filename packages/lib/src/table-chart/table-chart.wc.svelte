@@ -195,9 +195,10 @@
   export let data: any[];
   export let sql: string;
   export let dimensions: Dimensions;
+  export let selected_dimensions: string[];
 
   let mapped_dimensions: Dimensions;
-  let selected_dimensions: Dimensions;
+  let active_dimensions: Dimensions;
   let processed_data: { [key: string]: any }[];
   let sort_order: { [key: string]: 'asc' | 'desc' } = {};
   let search_value: string = '';
@@ -235,7 +236,7 @@
   }
 
   function select_dimension(dimension: string) {
-    const index = mapped_dimensions.findIndex(curr => curr.value === dimension);
+    const index = mapped_dimensions.findIndex(curr => curr.label === dimension);
 
     mapped_dimensions[index].selected = !mapped_dimensions[index].selected;
 
@@ -243,7 +244,7 @@
       return acc.selected ? curr + 1 : curr;
     }, 0);
 
-    selected_dimensions = [];
+    active_dimensions = [];
 
     if (!any_selected) {
       return;
@@ -251,19 +252,18 @@
 
     for (const dimension of mapped_dimensions) {
       if (dimension.selected) {
-        selected_dimensions.push(dimension);
+        active_dimensions.push(dimension);
       }
     }
 
-    selected_dimensions.push({
+    active_dimensions.push({
       label: 'value',
       value: 'value'
     });
 
-
     const query_fields = [];
 
-    for (const dimension of selected_dimensions.filter((it) => it.label !== 'value')) {
+    for (const dimension of active_dimensions.filter((it) => it.label !== 'value')) {
       query_fields.push(dimension.label);
     }
     sql = `SELECT ${query_fields.join(', ')}
@@ -288,7 +288,7 @@
 
     const grouped_data: { [key: string]: any } = {};
 
-    const keys = selected_dimensions
+    const keys = active_dimensions
       .map(dimension => dimension.value)
       .filter(dimension => dimension !== 'value');
 
@@ -391,7 +391,7 @@
       } else {
         const query_fields = [];
 
-        for (const dimension of selected_dimensions.filter((it) => it.label !== 'value')) {
+        for (const dimension of active_dimensions.filter((it) => it.label !== 'value')) {
           query_fields.push(dimension.label);
         }
 
@@ -414,7 +414,7 @@
       } else {
         const query_fields = [];
 
-        for (const dimension of selected_dimensions.filter((it) => it.label !== 'value')) {
+        for (const dimension of active_dimensions.filter((it) => it.label !== 'value')) {
           query_fields.push(dimension.label);
         }
 
@@ -435,11 +435,11 @@
       config.sort_priority = [];
     }
 
-    if (config.sort_priority.length === selected_dimensions.length) {
+    if (config.sort_priority.length === active_dimensions.length) {
       return;
     }
 
-    const filtered = selected_dimensions.filter((item) => {
+    const filtered = active_dimensions.filter((item) => {
       return !config.sort_priority.map((it) => it.key).includes(item.label);
     });
 
@@ -534,6 +534,14 @@
   /**
    * LIFECYCLE
    */
+  $: if (selected_dimensions?.length && mapped_dimensions?.length) {
+    for (const dimension of selected_dimensions) {
+      select_dimension(dimension);
+    }
+
+    selected_dimensions = [];
+  }
+
   $: if (config?.type === 'sql' && !sql) {
     sql = `SELECT * FROM ${config.table}`;
 
@@ -583,7 +591,7 @@
     }
   }
 
-  $: if (search_value?.length === 0 && selected_dimensions?.length) {
+  $: if (search_value?.length === 0 && active_dimensions?.length) {
     process_data();
   }
 
@@ -643,7 +651,7 @@
     </div>
 
     <div class="table-wrapper-container">
-      {#if selected_dimensions?.length}
+      {#if active_dimensions?.length}
         <div class="filters-row"
              style="--filters-row-input-border: {config?.content?.toolbar?.input?.border || DEFAULT_CONFIG.content.toolbar.input.border}; --filters-row-button-border: {config?.content?.toolbar?.button?.border || DEFAULT_CONFIG.content.toolbar.button.border}; --filters-row-button-font-size: {config?.content?.toolbar?.button?.font_size || DEFAULT_CONFIG.content.toolbar.button.font_size}; --filters-row-button-hover-background-color: {config?.content?.toolbar?.button?.hover_background_color || DEFAULT_CONFIG.content.toolbar.button.hover_background_color};">
           <input
@@ -738,7 +746,7 @@
                       {index + 1}.
                     </span>
                       <select class="dimensions-picker-select" style="margin-right: 1rem;" bind:value={item.key}>
-                        {#each selected_dimensions as dimension}
+                        {#each active_dimensions as dimension}
                           <option value={dimension.value}>
                             {dimension.label}
                           </option>
@@ -799,13 +807,13 @@
 
       <div class="table-wrapper"
            style="--table-wrapper-max-height: {config?.content?.max_height || DEFAULT_CONFIG.content.max_height}; --table-wrapper-background: {config?.content?.background || DEFAULT_CONFIG.content.background};">
-        {#if selected_dimensions}
+        {#if active_dimensions}
           <div
             style="--table-head-text-color: {config?.content?.table?.head?.color || DEFAULT_CONFIG.content.table.head.color}; --table-cell-background: {config?.content?.table?.cell?.background || DEFAULT_CONFIG.content.table.cell.background}; --table-container-background: {config?.content?.table?.container?.background || DEFAULT_CONFIG.content.table.container.background}; --table-container-padding: {config?.content?.table?.container?.padding || DEFAULT_CONFIG.content.table.container.padding}; --table-head-row-background: {config?.content?.table?.head?.background || DEFAULT_CONFIG.content.table.head.background}; --table-head-row-min-height: {config?.content?.table?.head?.min_height || DEFAULT_CONFIG.content.table.head.min_height}; --table-head-row-font-size: {config?.content?.table?.head?.font_size || DEFAULT_CONFIG.content.table.head.font_size}; --table-head-row-font-weight: {config?.content?.table?.head?.font_weight || DEFAULT_CONFIG.content.table.head.font_weight}; --table-head-row-padding: {config?.content?.table?.head?.padding || DEFAULT_CONFIG.content.table.head.padding}; --table-border: {config?.content?.table?.container?.border || DEFAULT_CONFIG.content.table.container.border}; --table-border-radius: {config?.content?.table?.container?.border_radius || DEFAULT_CONFIG.content.table.container.border_radius}; --table-border-color: {config?.content?.table?.container?.border_color || DEFAULT_CONFIG.content.table.container.border_color};"
           >
             <table style="--border-spacing: {config?.content?.table?.border_spacing || DEFAULT_CONFIG.content.table.border_spacing}; --border-collapse: {config?.content?.table?.border_collapse || DEFAULT_CONFIG.content.table.border_collapse}">
               <tr class="table-head-row">
-                {#each selected_dimensions as dimension}
+                {#each active_dimensions as dimension}
                   <th class={config?.sort_priority?.length ? '' : 'cursor-pointer'} on:click={() => sort_column_data(dimension.value)}>
                     {#if config?.data_formatting?.[dimension.label]}
                       {config.data_formatting[dimension.label].label}
@@ -818,7 +826,7 @@
 
               {#each processed_data as row}
                 <tr>
-                  {#each selected_dimensions as dimension}
+                  {#each active_dimensions as dimension}
                     <td class="table-cell">
                       {#if typeof row[dimension.value] === 'object'}
                         {#if Object.entries(row[dimension.value]).length}
