@@ -137,7 +137,11 @@
         color: var(--text-on-primary);
       }
     }
-  }
+      &-active {
+            background-color: var(--primary-color) !important;
+            color: var(--text-on-primary);
+          }
+    }
 
   &-menu {
     z-index: 100;
@@ -222,7 +226,7 @@
         &-cell {
           & button {
             flex: 1 1 0;
-            padding: 0.5rem 1rem;
+            padding: 0.75rem 1rem;
             width: 100%;
             border: 0;
             border-radius: 999px;

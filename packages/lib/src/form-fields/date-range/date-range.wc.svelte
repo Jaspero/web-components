@@ -92,158 +92,83 @@
     'Dec'
   ];
   let yearPickerIndex = 0;
-  let presetLabels = [
-    'Today',
-    'Yesterday',
-    'Last 7 days',
-    'Last 30 days',
-    'Last 90 days',
-    'Last 12 months',
-    'Last year',
-    'This year'
-  ];
-
+  
+  const date = new Date();
+  const createRelativeDate = (days = 0, months = 0, years = 0) => {
+    const newDate = new Date(date);
+    if (days) newDate.setDate(date.getDate() + days);
+    if (months) newDate.setMonth(date.getMonth() + months);
+    if (years) newDate.setFullYear(date.getFullYear() + years);
+    return newDate;
+  };
+  const yesterday = createRelativeDate(-1);
+  const sevenDaysAgo = createRelativeDate(-7);
+  const thirtyDaysAgo = createRelativeDate(-30);
+  const nintyDaysAgo = createRelativeDate(-90);
+  const twelveMonthsAgo = createRelativeDate(0, -12);
+  const firstDayOfLastYear = new Date(date.getFullYear() - 1, 0, 1);
+  const lastDayOfLastYear = new Date(date.getFullYear() - 1, 11, 31);
+  const firstDayOfThisYear = new Date(date.getFullYear(), 0, 1);
 
   function handlePresets(label: string) {
-    const date = new Date();
-    const internalMinDate = minDate ? (minDate instanceof Date ? minDate : new Date(minDate)) : null;
-    const internalMaxDate = maxDate ? (maxDate instanceof Date ? maxDate : new Date(maxDate)) : null;
-    
-    if (label == 'Today') {
-      const isDateInBounds = (internalMinDate && date.getTime() < internalMinDate.getTime()) || (internalMaxDate && date.getTime() > internalMaxDate.getTime());
-      if ((!isDateInBounds || !internalMaxDate && !internalMinDate)) {
-        firstDateSelected = date.getDate();
-        firstMonthSelected = date.getMonth();
-        firstYearSelected = date.getFullYear();
-        secondDateSelected = date.getDate();
-        secondMonthSelected = date.getMonth();
-        secondYearSelected = date.getFullYear();
-
-        pickerMonth = date.getMonth();
-        pickerYear = date.getFullYear();
-      }
-    }
-    if (label == 'Yesterday') {
+    const setDates = (start: Date, end: Date) => {
+      firstDateSelected = start.getDate();
+      firstMonthSelected = start.getMonth();
+      firstYearSelected = start.getFullYear();
+      secondDateSelected = end.getDate();
+      secondMonthSelected = end.getMonth();
+      secondYearSelected = end.getFullYear();
+      pickerMonth = start.getMonth();
+      pickerYear = start.getFullYear();
+    };
+    const updatePreset = (index: number) => {
+      presets = presets.map((preset, i) => ({
+        ...preset,
+        active: i === index,
+      }));
+    };
+    if (label === 'Today') {
+      setDates(date, date); 
+      updatePreset(0);
+    } else if (label === 'Yesterday') {
       const yesterday = new Date(date);
       yesterday.setDate(date.getDate() - 1);
-      const isDateInBounds = (internalMinDate && yesterday.getTime() < internalMinDate.getTime()) || (internalMaxDate && yesterday.getTime() > internalMaxDate.getTime());
-      if ((!isDateInBounds || !internalMaxDate && !internalMinDate)) {
-        firstDateSelected = yesterday.getDate();
-        firstMonthSelected = yesterday.getMonth();
-        firstYearSelected = yesterday.getFullYear();
-        secondDateSelected = yesterday.getDate();
-        secondMonthSelected = yesterday.getMonth();
-        secondYearSelected = yesterday.getFullYear();
-
-        pickerMonth = yesterday.getMonth();
-        pickerYear = yesterday.getFullYear();
-      }
-    }
-    if (label == 'Last 7 days') {
+      setDates(yesterday, yesterday); 
+      updatePreset(1);
+    } else if (label === 'Last 7 days') {
       const sevenDaysAgo = new Date(date);
       sevenDaysAgo.setDate(date.getDate() - 7);
-      if (isOutOfMaxBounds(sevenDaysAgo, sevenDaysAgo.getFullYear(), sevenDaysAgo.getMonth(), sevenDaysAgo.getDate())) {
-        console.log('blob');
-        if (isOutOfMinBounds(sevenDaysAgo, sevenDaysAgo.getFullYear(), sevenDaysAgo.getMonth(), sevenDaysAgo.getDate())) {  
-          firstDateSelected = sevenDaysAgo.getDate();
-      firstMonthSelected = sevenDaysAgo.getMonth();
-      firstYearSelected = sevenDaysAgo.getFullYear();
-      secondDateSelected = date.getDate();
-      secondMonthSelected = date.getMonth();
-      secondYearSelected = date.getFullYear();
-
-      pickerMonth = sevenDaysAgo.getMonth();
-      pickerYear = sevenDaysAgo.getFullYear();
-        } else {
-          //neki dani su ne selectani ali neki jesu pa trebamo nac maxdate i sam selectat do tog
-          console.log('njama');
-          firstDateSelected = sevenDaysAgo.getDate();
-      firstMonthSelected = sevenDaysAgo.getMonth();
-      firstYearSelected = sevenDaysAgo.getFullYear();
-      secondDateSelected = internalMaxDate.getDate();
-      secondMonthSelected = internalMaxDate.getMonth();
-      secondYearSelected = internalMaxDate.getFullYear();
-
-      pickerMonth = sevenDaysAgo.getMonth();
-      pickerYear = sevenDaysAgo.getFullYear();
-        }
-      }
-    }
-    if (label == 'Last 30 days') {
+      setDates(sevenDaysAgo, date);
+      updatePreset(2);
+    } else if (label === 'Last 30 days') {
       const thirtyDaysAgo = new Date(date);
       thirtyDaysAgo.setDate(date.getDate() - 30);
-
-      firstDateSelected = thirtyDaysAgo.getDate();
-      firstMonthSelected = thirtyDaysAgo.getMonth();
-      firstYearSelected = thirtyDaysAgo.getFullYear();
-      secondDateSelected = date.getDate();
-      secondMonthSelected = date.getMonth();
-      secondYearSelected = date.getFullYear();
-
-      pickerMonth = thirtyDaysAgo.getMonth();
-      pickerYear = thirtyDaysAgo.getFullYear();
-    }
-    if (label == 'Last 90 days') {
-      const nintyDaysAgo = new Date(date);
-      nintyDaysAgo.setDate(date.getDate() - 90);
-
-      firstDateSelected = nintyDaysAgo.getDate();
-      firstMonthSelected = nintyDaysAgo.getMonth();
-      firstYearSelected = nintyDaysAgo.getFullYear();
-      secondDateSelected = date.getDate();
-      secondMonthSelected = date.getMonth();
-      secondYearSelected = date.getFullYear();
-
-      pickerMonth = nintyDaysAgo.getMonth();
-      pickerYear = nintyDaysAgo.getFullYear();
-    }
-    if (label == 'Last 12 months') {
-      const twelveMonthsAgo = new Date(date.getFullYear(), date.getMonth(), date.getDate());
+      setDates(thirtyDaysAgo, date);
+      updatePreset(3);
+    } else if (label === 'Last 90 days') {
+      const ninetyDaysAgo = new Date(date);
+      ninetyDaysAgo.setDate(date.getDate() - 90);
+      setDates(ninetyDaysAgo, date);
+      updatePreset(4);
+    } else if (label === 'Last 12 months') {
+      const twelveMonthsAgo = new Date(date);
       twelveMonthsAgo.setMonth(date.getMonth() - 12);
-
-      firstDateSelected = twelveMonthsAgo.getDate();
-      firstMonthSelected = twelveMonthsAgo.getMonth();
-      firstYearSelected = twelveMonthsAgo.getFullYear();
-      secondDateSelected = date.getDate();
-      secondMonthSelected = date.getMonth();
-      secondYearSelected = date.getFullYear();
-
-      pickerMonth = twelveMonthsAgo.getMonth();
-      pickerYear = twelveMonthsAgo.getFullYear();
-    }
-    if (label == 'Last year') {
+      setDates(twelveMonthsAgo, date);
+      updatePreset(5);
+    } else if (label === 'Last year') {
       const firstDayOfLastYear = new Date(date.getFullYear() - 1, 0, 1);
-
-      const lastDayOfLastYear = new Date(
-        firstDayOfLastYear.getFullYear(),
-        firstDayOfLastYear.getMonth() + 12,
-        0
-      );
-
-      firstDateSelected = firstDayOfLastYear.getDate();
-      firstMonthSelected = firstDayOfLastYear.getMonth();
-      firstYearSelected = firstDayOfLastYear.getFullYear();
-      secondDateSelected = lastDayOfLastYear.getDate();
-      secondMonthSelected = lastDayOfLastYear.getMonth();
-      secondYearSelected = lastDayOfLastYear.getFullYear();
-
-      pickerMonth = firstDayOfLastYear.getMonth();
-      pickerYear = firstDayOfLastYear.getFullYear();
-    }
-    if (label == 'This year') {
+      const lastDayOfLastYear = new Date(firstDayOfLastYear.getFullYear(), 12, 0);
+      setDates(firstDayOfLastYear, lastDayOfLastYear);
+      updatePreset(6);
+    } else if (label === 'This year') {
       const firstDayOfThisYear = new Date(date.getFullYear(), 0, 1);
-
-      firstDateSelected = firstDayOfThisYear.getDate();
-      firstMonthSelected = firstDayOfThisYear.getMonth();
-      firstYearSelected = firstDayOfThisYear.getFullYear();
-      secondDateSelected = date.getDate();
-      secondMonthSelected = date.getMonth();
-      secondYearSelected = date.getFullYear();
-
-      pickerMonth = firstDayOfThisYear.getMonth();
-      pickerYear = firstDayOfThisYear.getFullYear();
+      const internalMaxDate = maxDate ? (maxDate instanceof Date ? maxDate : new Date(maxDate)) : null;
+      const isOutOfBounds = isOutOfMaxBounds(internalMaxDate, date.getFullYear(), date.getMonth(), date.getDate());
+      setDates(firstDayOfThisYear, isOutOfBounds ? internalMaxDate : date);
+      updatePreset(7);
     }
   }
+
 
   function handleYearSelected(event: { detail: { year: any } }) {
     const { year } = event.detail;
@@ -571,6 +496,17 @@
     }
   }
   $: displayLabel = required ? `${label} *` : label;
+
+  $: presets = [
+    {label: 'Today', disabled: isOutOfMaxBounds(internalMaxDate, date.getFullYear(), date.getMonth(), date.getDate()) || isOutOfMinBounds(internalMinDate, date.getFullYear(), date.getMonth(), date.getDate()), active: false},
+    {label: 'Yesterday', disabled: isOutOfMaxBounds(internalMaxDate, yesterday.getFullYear(), yesterday.getMonth(), yesterday.getDate()) || isOutOfMinBounds(internalMinDate, yesterday.getFullYear(), yesterday.getMonth(), yesterday.getDate()), active: false},
+    {label: 'Last 7 days', disabled: isOutOfMinBounds(internalMinDate, sevenDaysAgo.getFullYear(), sevenDaysAgo.getMonth(), sevenDaysAgo.getDate()) || isOutOfMaxBounds(internalMaxDate, date.getFullYear(), date.getMonth(), date.getDate()), active: false},
+    {label: 'Last 30 days', disabled: isOutOfMinBounds(internalMinDate, thirtyDaysAgo.getFullYear(), thirtyDaysAgo.getMonth(), thirtyDaysAgo.getDate()) || isOutOfMaxBounds(internalMaxDate, date.getFullYear(), date.getMonth(), date.getDate()), active: false},
+    {label: 'Last 90 days', disabled: isOutOfMinBounds(internalMinDate, nintyDaysAgo.getFullYear(), nintyDaysAgo.getMonth(), nintyDaysAgo.getDate()) || isOutOfMaxBounds(internalMaxDate, date.getFullYear(), date.getMonth(), date.getDate()), active: false},
+    {label: 'Last 12 months', disabled: isOutOfMinBounds(internalMinDate, twelveMonthsAgo.getFullYear(), twelveMonthsAgo.getMonth(), twelveMonthsAgo.getDate()) || isOutOfMaxBounds(internalMaxDate, date.getFullYear(), date.getMonth(), date.getDate()), active: false},
+    {label: 'Last year', disabled: isOutOfMinBounds(internalMinDate, firstDayOfLastYear.getFullYear(), firstDayOfLastYear.getMonth(), firstDayOfLastYear.getDate()) || isOutOfMaxBounds(internalMaxDate, lastDayOfLastYear.getFullYear(), lastDayOfLastYear.getMonth(), lastDayOfLastYear.getDate()), active: false},
+    {label: 'This year', disabled: isOutOfMaxBounds(internalMaxDate, firstDayOfThisYear.getFullYear(), firstDayOfThisYear.getMonth(), firstDayOfThisYear.getDate()) || isOutOfMinBounds(internalMinDate, firstDayOfThisYear.getFullYear(), firstDayOfThisYear.getMonth(), firstDayOfThisYear.getDate()), active: false}
+  ];
 </script>
 
 {#if label && labelType == 'outside'}
@@ -811,13 +747,15 @@
       {#if enablePreset}
         {#if !monthSelector && !yearSelector && minSelectableDays == null && maxSelectableDays == null}
           <div class="jp-date-range-presets">
-            {#each presetLabels as label}
+            {#each presets as preset, index}
               <button
                 type="button"
+                class:jp-date-range-presets-active={preset.active}
+                disabled={preset.disabled}
                 on:click={() => {
-                  handlePresets(label);
+                  handlePresets(preset.label);
                 }}
-                >{label}
+                >{preset.label}
               </button>
             {/each}
           </div>

@@ -1,7 +1,7 @@
 <script lang="ts">
   import '../../../../dist/date-range.wc';
   import '../../../../dist/date-range.css';
-  const minDate = new Date(2024, 9, 10);
+  const minDate = new Date(2025, 1, 10);
   const maxDate = new Date(2024, 9, 27);
   //note: new Date has indexed months so january is 0, feb is 1 etc.
 </script>
@@ -16,7 +16,7 @@
   <jp-date-range label="datepicker display format full" displayFormat="full" />
   <jp-date-range minSelectableDays="2" label="minSelectableDays" />
   <jp-date-range maxSelectableDays="10" label="maxSelectableDays" />
-  <jp-date-range minDate="2024-10-2" label="minDate string format" />
+  <jp-date-range minDate="2025-1-5" label="minDate string format" />
   <jp-date-range {minDate} label="minDate date format" />
   <jp-date-range maxDate="2025-1-3" label="maxDate string format" />
   <jp-date-range {maxDate} label="maxDate date format" />
