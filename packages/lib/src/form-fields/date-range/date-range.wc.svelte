@@ -339,6 +339,7 @@
       pickerMonth = secondMonthSelected;
       pickerYear = secondYearSelected;
       attachedInternals.setValidity({});
+      value = '';
     } else {
       if (required) {
         attachedInternals.setValidity(
