@@ -16,6 +16,8 @@
    * TYPES
    */
   type Config = {
+    type: 'sql' | 'data',
+    table?: string;
     sort_priority?: {
       key?: string;
       order?: string;
@@ -65,6 +67,9 @@
         popover?: {
           border?: string;
           background_color?: string;
+          indicator: {
+            background_color: string;
+          },
           actions?: {
             color?: string;
             background_color?: string;
@@ -108,6 +113,8 @@
    * CONSTS
    */
   const DEFAULT_CONFIG: Config = {
+    type: 'sql',
+    table: '',
     sort_priority: [],
     date_range: {
       hidden: false,
@@ -147,6 +154,9 @@
         popover: {
           border: '1px solid #b4b1b1',
           background_color: '#f3f3f3',
+          indicator: {
+            background_color: '#757575'
+          },
           actions: {
             border: 'none',
             color: '#757575',
@@ -183,8 +193,10 @@
    */
   export let config: Config;
   export let data: any[];
+  export let sql: string;
+  export let dimensions: Dimensions;
 
-  let dimensions: Dimensions;
+  let mapped_dimensions: Dimensions;
   let selected_dimensions: Dimensions;
   let processed_data: { [key: string]: any }[];
   let sort_order: { [key: string]: 'asc' | 'desc' } = {};
@@ -201,12 +213,33 @@
   /**
    * FUNCTIONS
    */
+  function add_date_range_filter() {
+    const date_range_millis = {
+      start: date_range?.start?.getTime(),
+      end: date_range?.end?.getTime()
+    };
+
+    if (date_range?.end && date_range?.start) {
+      return `WHERE PARSE_NUMERIC(${date_range_key}) <= ${date_range_millis.end} AND PARSE_NUMERIC(${date_range_key}) >= ${date_range_millis.start}`
+    }
+
+    if (date_range?.end && !date_range?.start) {
+      return `WHERE PARSE_NUMERIC(${date_range_key}) <= ${date_range_millis.end}`;
+    }
+
+    if (date_range?.start && !date_range?.end) {
+      return `WHERE PARSE_NUMERIC(${date_range_key}) >= ${date_range_millis.start}`;
+    }
+
+    return '';
+  }
+
   function select_dimension(dimension: string) {
-    const index = dimensions.findIndex(curr => curr.value === dimension);
+    const index = mapped_dimensions.findIndex(curr => curr.value === dimension);
 
-    dimensions[index].selected = !dimensions[index].selected;
+    mapped_dimensions[index].selected = !mapped_dimensions[index].selected;
 
-    const any_selected = dimensions.reduce((curr, acc) => {
+    const any_selected = mapped_dimensions.reduce((curr, acc) => {
       return acc.selected ? curr + 1 : curr;
     }, 0);
 
@@ -216,7 +249,7 @@
       return;
     }
 
-    for (const dimension of dimensions) {
+    for (const dimension of mapped_dimensions) {
       if (dimension.selected) {
         selected_dimensions.push(dimension);
       }
@@ -226,6 +259,21 @@
       label: 'value',
       value: 'value'
     });
+
+
+    const query_fields = [];
+
+    for (const dimension of selected_dimensions.filter((it) => it.label !== 'value')) {
+      query_fields.push(dimension.label);
+    }
+    sql = `SELECT ${query_fields.join(', ')}
+      FROM ${config.table} ${add_date_range_filter()}
+      GROUP BY ${query_fields.join(', ')}`.trim();
+
+    window.postMessage({
+      name: 'sql',
+      value: sql
+    });
   }
 
   function getNestedValue(obj: any, path: string): any {
@@ -233,6 +281,11 @@
   }
 
   function process_data() {
+    if (config?.type === 'sql') {
+      processed_data = data;
+      return;
+    }
+
     const grouped_data: { [key: string]: any } = {};
 
     const keys = selected_dimensions
@@ -333,13 +386,47 @@
       date_range.start = new Date(start?.dateInstance);
       date_range.end = new Date(end?.dateInstance);
 
-      process_data();
+      if (config.type === 'data') {
+        process_data();
+      } else {
+        const query_fields = [];
+
+        for (const dimension of selected_dimensions.filter((it) => it.label !== 'value')) {
+          query_fields.push(dimension.label);
+        }
+
+        sql = `SELECT ${query_fields.join(', ')}
+        FROM ${config.table} ${add_date_range_filter()}
+        GROUP BY ${query_fields.join(', ')}`.trim();
+
+        window.postMessage({
+          name: 'sql',
+          value: sql
+        });
+      }
     });
 
     picker.on('clear:selection', () => {
       date_range = { start: null, end: null };
 
-      process_data();
+      if (config.type === 'data') {
+        process_data();
+      } else {
+        const query_fields = [];
+
+        for (const dimension of selected_dimensions.filter((it) => it.label !== 'value')) {
+          query_fields.push(dimension.label);
+        }
+
+        sql = `SELECT ${query_fields.join(', ')}
+        FROM ${config.table} ${add_date_range_filter()}
+        GROUP BY ${query_fields.join(', ')}`.trim();
+
+        window.postMessage({
+          name: 'sql',
+          value: sql
+        });
+      }
     });
   }
 
@@ -367,7 +454,7 @@
   }
 
   function set_dimensions() {
-    dimensions = Object.keys(data[0]).map(curr => ({
+    mapped_dimensions = Object.keys(data[0]).map(curr => ({
       label: config?.dimensions?.capitalize ? curr.charAt(0).toUpperCase() + curr.slice(1) : curr,
       value: curr,
       selected: false
@@ -426,11 +513,54 @@
     // TODO: Implement sort data by priority
   }
 
+  function export_csv() {
+    const csv = processed_data.map((item) => {
+      return Object.values(item).join(',');
+    }).join('\n');
+
+    const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
+    const url = URL.createObjectURL(blob);
+
+    const link = document.createElement('a');
+    link.setAttribute('href', url);
+    link.setAttribute('download', `reports_${Date.now()}.csv`);
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+
+    URL.revokeObjectURL(url);
+  }
+
   /**
    * LIFECYCLE
    */
-  $: if (data?.length) {
+  $: if (config?.type === 'sql' && !sql) {
+    sql = `SELECT * FROM ${config.table}`;
+
+    window.postMessage({
+      name: 'sql',
+      value: sql
+    });
+  }
+
+  $: if (dimensions?.length) {
+    mapped_dimensions = dimensions.map(curr => ({
+      label: config?.dimensions?.capitalize ? curr.charAt(0).toUpperCase() + curr.slice(1) : curr,
+      value: curr,
+      selected: false
+    }));
+  }
+
+  $: if (data?.length && config?.type === 'data') {
     set_dimensions();
+  }
+
+  $: if (data?.length) {
+    processed_data = data;
+  }
+
+  $: if (data && !data.length) {
+    processed_data = [];
   }
 
   $: if (config?.date_range?.key) {
@@ -442,10 +572,18 @@
   }
 
   $: if (search_value?.length) {
-    filter_data();
+    if (config.type === 'data') {
+      filter_data();
+    } else if (config.type === 'sql') {
+      const filtered_data = processed_data.filter(item => {
+        return Object.values(item).some(value => JSON.stringify(value).toLowerCase().includes(search_value.toLowerCase()));
+      });
+
+      processed_data = (filtered_data?.length && filtered_data) || [];
+    }
   }
 
-  $: if (search_value.length === 0 && selected_dimensions?.length) {
+  $: if (search_value?.length === 0 && selected_dimensions?.length) {
     process_data();
   }
 
@@ -464,7 +602,7 @@
   });
 </script>
 
-{#if dimensions}
+{#if mapped_dimensions}
   <div class="container">
     <div class="dimensions-picker"
          style="--dimensions-select-background-color: {config?.dimensions?.select?.background_color || DEFAULT_CONFIG?.dimensions?.select?.background_color}; --dimensions-active-text-color: {config?.dimensions?.active_color || DEFAULT_CONFIG.dimensions.active_color}; --dimensions-text-color: {config?.dimensions?.color || DEFAULT_CONFIG?.dimensions?.color}; --active-dimension-background: {config?.dimensions?.active_background || DEFAULT_CONFIG.dimensions.active_background}; --dimensions-picker-border: {config?.dimensions?.border || DEFAULT_CONFIG.dimensions.border}; --dimensions-picker-width: {config?.dimensions?.width || DEFAULT_CONFIG.dimensions.width}; --dimensions-picker-title-color: {config?.dimensions?.title?.color || DEFAULT_CONFIG.dimensions.title.color}; --dimensions-picker-title-font-size: {config?.dimensions?.title?.font_size || DEFAULT_CONFIG.dimensions.title.font_size}; --dimensions-picker-select-border: {config?.dimensions?.select?.border || DEFAULT_CONFIG.dimensions.select.border}; --dimensions-background-color: {config?.dimensions?.background_color || DEFAULT_CONFIG.dimensions.background_color};">
@@ -475,7 +613,7 @@
         </span>
 
         <select class="dimensions-picker-select" bind:value={date_range_key}>
-          {#each dimensions as dimension}
+          {#each mapped_dimensions as dimension}
             <option value={dimension.value}>
               {dimension.label}
             </option>
@@ -487,7 +625,7 @@
         Dimensions
       </span>
 
-      {#each dimensions as dimension}
+      {#each mapped_dimensions as dimension}
         <div class="selected-dimension hidden" />
 
         <span
@@ -505,7 +643,7 @@
     </div>
 
     <div class="table-wrapper-container">
-      {#if (processed_data?.length || search_value?.length || date_range?.start || date_range?.end) && selected_dimensions?.length}
+      {#if selected_dimensions?.length}
         <div class="filters-row"
              style="--filters-row-input-border: {config?.content?.toolbar?.input?.border || DEFAULT_CONFIG.content.toolbar.input.border}; --filters-row-button-border: {config?.content?.toolbar?.button?.border || DEFAULT_CONFIG.content.toolbar.button.border}; --filters-row-button-font-size: {config?.content?.toolbar?.button?.font_size || DEFAULT_CONFIG.content.toolbar.button.font_size}; --filters-row-button-hover-background-color: {config?.content?.toolbar?.button?.hover_background_color || DEFAULT_CONFIG.content.toolbar.button.hover_background_color};">
           <input
@@ -537,6 +675,24 @@
             </svg>
           </div>
 
+          <div class="icon-button" on:click={() => export_csv()} style="display: {is_search_active ? 'none' : 'block'}">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="24"
+              height="24"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              class="lucide lucide-download">
+              <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+              <polyline points="7 10 12 15 17 10"/>
+              <line x1="12" x2="12" y1="15" y2="3"/>
+            </svg>
+          </div>
+
           <div class="icon-button sort-button" on:click={() => (show_sort_popover = !show_sort_popover)}>
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -556,7 +712,7 @@
             </svg>
 
             {#if config?.sort_priority?.length}
-              <div class="sort-indicator">
+              <div class="sort-indicator" style="--sort-indicator-background: {config?.content?.table?.popover?.indicator?.background_color || DEFAULT_CONFIG.content?.table?.popover?.indicator?.background_color};">
                 {config.sort_priority.length}
               </div>
             {/if}
@@ -575,7 +731,7 @@
 
             <div class="sort-popover-body">
               {#if config?.sort_priority}
-                {#if config.sort_priority.length}
+                {#if config.sort_priority?.length}
                   {#each config.sort_priority as item, index}
                     <div class="sort-popover-item">
                     <span class="sort-popover-item-index">
@@ -676,7 +832,11 @@
                                   {value ? config.formatter(value) : '-'}
                                 {/if}
                               {:else}
-                                {value ? value : '-'}
+                                {#if config?.data_formatting?.[dimension.label]}
+                                  {value ? config.data_formatting[dimension.label].formatter(value) : '-'}
+                                {:else}
+                                  {value ? value : '-'}
+                                {/if}
                               {/if}
                             </div>
                           {/each}
@@ -691,7 +851,11 @@
                             {row[dimension.value] ? config.formatter(row[dimension.value]) : '-'}
                           {/if}
                         {:else}
-                          {row[dimension.value] ? row[dimension.value] : '-'}
+                          {#if config?.data_formatting?.[dimension.label]}
+                            {row[dimension.value] ? config.data_formatting[dimension.label].formatter(row[dimension.value]) : '-'}
+                          {:else}
+                            {row[dimension.value] ? row[dimension.value] : '-'}
+                          {/if}
                         {/if}
                       {/if}
                     </td>
@@ -703,10 +867,6 @@
         {/if}
       </div>
     </div>
-  </div>
-{:else}
-  <div>
-    No data available
   </div>
 {/if}
 
@@ -804,7 +964,18 @@
     }
 
     .sort-indicator {
-        position:absolute; right:0; top:0; padding: 0.2rem; border-radius: 50%; background-color: #706d70; color: white; font-size: 10px;
+        position: absolute;
+        right: -7px;
+        top: 0;
+        padding: 0.2rem;
+        border-radius: 50%;
+        background-color: var(--sort-indicator-background);
+        color: white;
+        font-size: 10px;
+        width: 1.2rem;
+        display: flex;
+        justify-content: center;
+        align-items: center;
     }
 
     .sort-popover {
