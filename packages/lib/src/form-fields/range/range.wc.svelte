@@ -29,8 +29,11 @@
   export let discrete: boolean = true; //if true -> ticks, false -> smooth
   export let required = false;
   export let label = '';
+  export let showValue = false;
   let internalValue = [min, max];
   export const getValue = () => internalValue;
+  export let startLabel = '';	
+  export let endLabel = '';
 
   const dispatch = createEventDispatcher();
 
@@ -38,10 +41,14 @@
     const slider = event.currentTarget as HTMLElement;
     const rect = slider.getBoundingClientRect();
     const percentage = (event.clientX - rect.left) / rect.width;
-    const clickValue = Math.min(Math.max(parseInt(min) + percentage * (parseInt(max) - parseInt(min)), min), max);
+    const clickValue = Math.min(
+      Math.max(parseInt(min) + percentage * (parseInt(max) - parseInt(min)), min),
+      max
+    );
 
     const roundedValue = Math.round(clickValue / step) * step;
-    const index = Math.abs(clickValue - internalValue[0]) <= Math.abs(clickValue - internalValue[1]) ? 0 : 1;
+    const index =
+      Math.abs(clickValue - internalValue[0]) <= Math.abs(clickValue - internalValue[1]) ? 0 : 1;
     internalValue[index] = roundedValue;
   }
 
@@ -103,3 +110,10 @@
     bind:value={internalValue[1]}
   />
 </div>
+
+{#if showValue}
+<div class="jp-range-value">
+  <div>{startLabel} {internalValue[0]}</div>
+  <div>{endLabel} {internalValue[1]}</div>
+</div>
+{/if}
