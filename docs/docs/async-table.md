@@ -15,9 +15,16 @@ import '../static/c/async-table.css';
 |       headers        |      ✓       | [`TableHeader[]`](#tableheader) |                                  column names                                   |
 |         sort         |      ✓       |    [`TableSort`](#tablesort)    |                       current sorting state of the table                        |
 |       service        |      ✓       | [`TableService`](#tableservice) |                               table data service                                |
+|  allowArrangeColumns |              |            `boolean`            |              should be the button for allowing arrangement of columns           |
 | showArrangingColumns |              |            `boolean`            |                should the button for arranging columns be shown                 |
-|      showExport      |              |            `boolean`            |                      should the button for export be shown                      |
+|      showExport      |              |            `boolean`            |                      should the button for export to be shown                   |
+|      showImport      |              |            `boolean`            |                      should be the button for import to be shown                |
 |  dropdownMenuExport  |              |            `boolean`            | should the button for export download csv or can you have more download options |
+|     rowClickable     |              |            `boolean`            |                        determines if the row is clickable                       |
+|          id          |              |            `string`             |                                 unique identifier                               |
+|        height        |              |       `string` | `null`         |                        determines height of the component                       |
+|      pageSizes       |              |            `number[]`           |                                array of page sizes                              |
+|       wording        |              |        `Array<{ARRANGE_COLUMNS: string, EXPORT: string, IMPORT: string, SELECT: string, LOADING: string, LOAD_MORE: string, PAGE_SIZE: string, SAVE: string, EMPTY_TABLE: string}>`                                                                      |             contains labels and messages used across the component              |
 <br></br>
 ****
 

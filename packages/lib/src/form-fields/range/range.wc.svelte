@@ -34,6 +34,17 @@
 
   const dispatch = createEventDispatcher();
 
+  function handleRangeClick(event: MouseEvent) {
+    const slider = event.currentTarget as HTMLElement;
+    const rect = slider.getBoundingClientRect();
+    const percentage = (event.clientX - rect.left) / rect.width;
+    const clickValue = Math.min(Math.max(parseInt(min) + percentage * (parseInt(max) - parseInt(min)), min), max);
+
+    const roundedValue = Math.round(clickValue / step) * step;
+    const index = Math.abs(clickValue - internalValue[0]) <= Math.abs(clickValue - internalValue[1]) ? 0 : 1;
+    internalValue[index] = roundedValue;
+  }
+
   $: low = Math.round(100 * ((internalValue[0] - min) / (max - min)));
   $: high = Math.round(100 * ((internalValue[1] - min) / (max - min)));
 
@@ -65,7 +76,7 @@
     {@html displayLabel}
   {/if}
 </div>
-<div class="jp-range-slider">
+<div class="jp-range-slider" on:click={handleRangeClick}>
   <div class="jp-range-progress" style={`left: ${low}%; right: ${100 - high}%`}></div>
   <input
     type="range"
