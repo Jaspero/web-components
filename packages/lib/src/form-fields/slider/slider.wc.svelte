@@ -56,7 +56,8 @@
     value;
     updateBubblePosition();
   }
-  
+
+  $: low = Math.round(100 * ((value - min) / (max - min)));
   $: dispatch('value', { value });
   $: displayLabel = required ? `${label} *` : label;
 </script>
@@ -69,6 +70,7 @@
 {#if showValue}
   <div class="jp-slider-container" style="padding-top: 20px;">
     <div class="jp-slider-bubble" class:jp-slider-bubble-disabled={disabled} bind:this={bubble}>{value}</div>
+    <div class="jp-slider-progress" style={`right: ${100-low}%;`}></div>
     <input
       type="range"
       class="jp-slider-range-input"
@@ -84,6 +86,7 @@
   </div>
   {:else}
   <div class="jp-slider-container">
+    <div class="jp-slider-progress" style={`right: ${100-low}%;`}></div>
     <input
       type="range"
       class="jp-slider-range-input"
