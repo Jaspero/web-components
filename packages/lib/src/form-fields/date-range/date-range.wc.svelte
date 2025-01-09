@@ -29,12 +29,12 @@
     isOutOfMaxBounds,
     isOutOfMinBounds
   } from './calculate-limits/min-date';
-
   import calendarIcon from '../../icons/calendar.svg?raw';
   import dropdownArrowExpandedIcon from '../../icons/dropdown-arrow-expanded.svg?raw';
   import leftArrowIcon from '../../icons/left-arrow.svg?raw';
   import rightArrowIcon from '../../icons/right-arrow.svg?raw';
   import upArrowIcon from '../../icons/up-arrow.svg?raw';
+
   export let attachedInternals: ElementInternals;
   export let value: string = '';
   export let firstInternalValue: string = '';
@@ -213,6 +213,7 @@
         secondYearSelected = year;
         secondMonthSelected = month;
       }
+
       selectingFirst = true;
     }
   }
@@ -311,8 +312,8 @@
     );
   }
 
-  function toggleMenu(event) {
-    if (event && event.target && event.target.closest('.menu')) {
+  function toggleMenu(event: MouseEvent) {
+    if (event && event.target && (event.target as HTMLElement).closest('.menu')) {
       return;
     }
 
@@ -415,6 +416,7 @@
       pickerMonth = secondMonthSelected;
       pickerYear = secondYearSelected;
       attachedInternals.setValidity({});
+      value = '';
     } else {
       if (required) {
         attachedInternals.setValidity(

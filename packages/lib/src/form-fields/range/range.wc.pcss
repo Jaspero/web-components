@@ -2,7 +2,6 @@
   &-slider {
     position: relative;
     min-width: 300px;
-    width: 1px;
     height: 4px;
     background-color: #ccc;
     border-radius: 4px;
@@ -59,9 +58,10 @@
     }
 
     &-container {
-      width: 100%;
       text-align: left;
-      margin-bottom: 15px;
+      padding: 0 0 1rem 0.75rem;
+      margin: .5rem 0 .2rem 0;
+      font-size: .875rem;
     }
   }
 
@@ -105,5 +105,12 @@
         box-shadow: 0 0 0 10px rgba(255, 85, 0, 0.1);
       }
     }
+  }
+  &-value{
+    position: relative;
+    display: flex;
+    justify-content: space-between;
+    padding:0 1rem;
+    font-size: .875rem;
   }
 }
