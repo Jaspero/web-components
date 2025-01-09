@@ -196,6 +196,7 @@
   export let sql: string;
   export let dimensions: Dimensions;
   export let selected_dimensions: string[];
+  export let loading = false;
 
   let mapped_dimensions: Dimensions;
   let active_dimensions: Dimensions;
@@ -610,272 +611,282 @@
   });
 </script>
 
-{#if mapped_dimensions}
+{#if loading}
   <div class="container">
-    <div class="dimensions-picker"
-         style="--dimensions-select-background-color: {config?.dimensions?.select?.background_color || DEFAULT_CONFIG?.dimensions?.select?.background_color}; --dimensions-active-text-color: {config?.dimensions?.active_color || DEFAULT_CONFIG.dimensions.active_color}; --dimensions-text-color: {config?.dimensions?.color || DEFAULT_CONFIG?.dimensions?.color}; --active-dimension-background: {config?.dimensions?.active_background || DEFAULT_CONFIG.dimensions.active_background}; --dimensions-picker-border: {config?.dimensions?.border || DEFAULT_CONFIG.dimensions.border}; --dimensions-picker-width: {config?.dimensions?.width || DEFAULT_CONFIG.dimensions.width}; --dimensions-picker-title-color: {config?.dimensions?.title?.color || DEFAULT_CONFIG.dimensions.title.color}; --dimensions-picker-title-font-size: {config?.dimensions?.title?.font_size || DEFAULT_CONFIG.dimensions.title.font_size}; --dimensions-picker-select-border: {config?.dimensions?.select?.border || DEFAULT_CONFIG.dimensions.select.border}; --dimensions-background-color: {config?.dimensions?.background_color || DEFAULT_CONFIG.dimensions.background_color};">
+    <div class="dimensions-picker-skeleton">
+    </div>
 
-      {#if !config?.date_range?.hidden}
+    <div class="table-container-skeleton">
+    </div>
+  </div>
+{:else}
+  {#if mapped_dimensions}
+    <div class="container">
+      <div class="dimensions-picker"
+           style="--dimensions-select-background-color: {config?.dimensions?.select?.background_color || DEFAULT_CONFIG?.dimensions?.select?.background_color}; --dimensions-active-text-color: {config?.dimensions?.active_color || DEFAULT_CONFIG.dimensions.active_color}; --dimensions-text-color: {config?.dimensions?.color || DEFAULT_CONFIG?.dimensions?.color}; --active-dimension-background: {config?.dimensions?.active_background || DEFAULT_CONFIG.dimensions.active_background}; --dimensions-picker-border: {config?.dimensions?.border || DEFAULT_CONFIG.dimensions.border}; --dimensions-picker-width: {config?.dimensions?.width || DEFAULT_CONFIG.dimensions.width}; --dimensions-picker-title-color: {config?.dimensions?.title?.color || DEFAULT_CONFIG.dimensions.title.color}; --dimensions-picker-title-font-size: {config?.dimensions?.title?.font_size || DEFAULT_CONFIG.dimensions.title.font_size}; --dimensions-picker-select-border: {config?.dimensions?.select?.border || DEFAULT_CONFIG.dimensions.select.border}; --dimensions-background-color: {config?.dimensions?.background_color || DEFAULT_CONFIG.dimensions.background_color};">
+
+        {#if !config?.date_range?.hidden}
         <span class="dimensions-picker-title">
           Date Range Dimension
         </span>
 
-        <select class="dimensions-picker-select" bind:value={date_range_key}>
-          {#each mapped_dimensions as dimension}
-            <option value={dimension.value}>
-              {dimension.label}
-            </option>
-          {/each}
-        </select>
-      {/if}
+          <select class="dimensions-picker-select" bind:value={date_range_key}>
+            {#each mapped_dimensions as dimension}
+              <option value={dimension.value}>
+                {dimension.label}
+              </option>
+            {/each}
+          </select>
+        {/if}
 
-      <span class="dimensions-picker-title">
+        <span class="dimensions-picker-title">
         Dimensions
       </span>
 
-      {#each mapped_dimensions as dimension}
-        <div class="selected-dimension hidden" />
+        {#each mapped_dimensions as dimension}
+          <div class="selected-dimension hidden" />
 
-        <span
-          class="cursor-pointer dimension {dimension.selected ? 'selected-dimension' : ''}"
-          style="color: {dimension.selected ? 'var(--dimensions-active-text-color)' : 'var(--dimensions-text-color)'}"
-          on:click={() => select_dimension(dimension.value)}
-        >
+          <span
+            class="cursor-pointer dimension {dimension.selected ? 'selected-dimension' : ''}"
+            style="color: {dimension.selected ? 'var(--dimensions-active-text-color)' : 'var(--dimensions-text-color)'}"
+            on:click={() => select_dimension(dimension.value)}
+          >
           {#if config?.data_formatting?.[dimension.label]}
             {config.data_formatting[dimension.label].label}
           {:else}
             {dimension.label}
           {/if}
         </span>
-      {/each}
-    </div>
+        {/each}
+      </div>
 
-    <div class="table-wrapper-container">
-      {#if active_dimensions?.length}
-        <div class="filters-row"
-             style="--filters-row-input-border: {config?.content?.toolbar?.input?.border || DEFAULT_CONFIG.content.toolbar.input.border}; --filters-row-button-border: {config?.content?.toolbar?.button?.border || DEFAULT_CONFIG.content.toolbar.button.border}; --filters-row-button-font-size: {config?.content?.toolbar?.button?.font_size || DEFAULT_CONFIG.content.toolbar.button.font_size}; --filters-row-button-hover-background-color: {config?.content?.toolbar?.button?.hover_background_color || DEFAULT_CONFIG.content.toolbar.button.hover_background_color};">
-          <input
-            class="filters-row-input cursor-text"
-            type="text"
-            placeholder="Search"
-            bind:this={search_element}
-            bind:value={search_value}
-            on:focus={handle_search_focus}
-            on:blur={handle_search_blur}
-            style="transition: opacity 0.5s ease;"
-          />
+      <div class="table-wrapper-container">
+        {#if active_dimensions?.length}
+          <div class="filters-row"
+               style="--filters-row-input-border: {config?.content?.toolbar?.input?.border || DEFAULT_CONFIG.content.toolbar.input.border}; --filters-row-button-border: {config?.content?.toolbar?.button?.border || DEFAULT_CONFIG.content.toolbar.button.border}; --filters-row-button-font-size: {config?.content?.toolbar?.button?.font_size || DEFAULT_CONFIG.content.toolbar.button.font_size}; --filters-row-button-hover-background-color: {config?.content?.toolbar?.button?.hover_background_color || DEFAULT_CONFIG.content.toolbar.button.hover_background_color};">
+            <input
+              class="filters-row-input cursor-text"
+              type="text"
+              placeholder="Search"
+              bind:this={search_element}
+              bind:value={search_value}
+              on:focus={handle_search_focus}
+              on:blur={handle_search_blur}
+              style="transition: opacity 0.5s ease;"
+            />
 
-          <div class="icon-button" on:click={() => (is_search_active = true)} style="display: {is_search_active ? 'none' : 'block'}">
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              width="24"
-              height="24"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              stroke-width="2"
-              stroke-linecap="round"
-              stroke-linejoin="round"
-              class="lucide lucide-search"
-            >
-              <circle cx="11" cy="11" r="8"/>
-              <path d="m21 21-4.3-4.3"/>
-            </svg>
-          </div>
-
-          <div class="icon-button" on:click={() => export_csv()} style="display: {is_search_active ? 'none' : 'block'}">
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              width="24"
-              height="24"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              stroke-width="2"
-              stroke-linecap="round"
-              stroke-linejoin="round"
-              class="lucide lucide-download">
-              <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
-              <polyline points="7 10 12 15 17 10"/>
-              <line x1="12" x2="12" y1="15" y2="3"/>
-            </svg>
-          </div>
-
-          <div class="icon-button sort-button" on:click={() => (show_sort_popover = !show_sort_popover)}>
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              width="24"
-              height="24"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              stroke-width="2"
-              stroke-linecap="round"
-              stroke-linejoin="round"
-              class="lucide lucide-arrow-down-up">
-              <path d="m3 16 4 4 4-4"/>
-              <path d="M7 20V4"/>
-              <path d="m21 8-4-4-4 4"/>
-              <path d="M17 4v16"/>
-            </svg>
-
-            {#if config?.sort_priority?.length}
-              <div class="sort-indicator" style="--sort-indicator-background: {config?.content?.table?.popover?.indicator?.background_color || DEFAULT_CONFIG.content?.table?.popover?.indicator?.background_color};">
-                {config.sort_priority.length}
-              </div>
-            {/if}
-          </div>
-
-          <div class="sort-popover" use:clickOutside on:click_outside={() => (show_sort_popover = false)} style="display: {show_sort_popover ? 'block' : 'none'}; --sort-popover-border: {config?.content?.table?.popover?.border || DEFAULT_CONFIG.content?.table?.popover?.border}; --sort-popover-background: {config?.content?.table?.popover?.background_color || DEFAULT_CONFIG.content?.table?.popover?.background_color};">
-            <div class="sort-popover-head">
-              <span>Sort columns</span>
-
-              <div class="sort-popover-actions" style="--sort-popover-action-color: {config?.content?.table?.popover?.actions?.color || DEFAULT_CONFIG.content?.table?.popover?.actions?.color}; --sort-popover-action-background-color: {config?.content?.table?.popover?.actions?.background_color || DEFAULT_CONFIG.content?.table?.popover?.actions?.background_color}; --sort-popover-action-border: {config?.content?.table?.popover?.actions?.border || DEFAULT_CONFIG.content?.table?.popover?.actions?.border}; --sort-popover-action-hover-background-color: {config?.content?.table?.popover?.actions?.hover_background_color || DEFAULT_CONFIG.content?.table?.popover?.actions?.hover_background_color};">
-                <button class="sort-popover-action" on:click={() => add_column_to_sort()}>
-                  Add column
-                </button>
-              </div>
+            <div class="icon-button" on:click={() => (is_search_active = true)} style="display: {is_search_active ? 'none' : 'block'}">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="24"
+                height="24"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                class="lucide lucide-search"
+              >
+                <circle cx="11" cy="11" r="8"/>
+                <path d="m21 21-4.3-4.3"/>
+              </svg>
             </div>
 
-            <div class="sort-popover-body">
-              {#if config?.sort_priority}
-                {#if config.sort_priority?.length}
-                  {#each config.sort_priority as item, index}
-                    <div class="sort-popover-item">
+            <div class="icon-button" on:click={() => export_csv()} style="display: {is_search_active ? 'none' : 'block'}">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="24"
+                height="24"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                class="lucide lucide-download">
+                <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+                <polyline points="7 10 12 15 17 10"/>
+                <line x1="12" x2="12" y1="15" y2="3"/>
+              </svg>
+            </div>
+
+            <div class="icon-button sort-button" on:click={() => (show_sort_popover = !show_sort_popover)}>
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="24"
+                height="24"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                class="lucide lucide-arrow-down-up">
+                <path d="m3 16 4 4 4-4"/>
+                <path d="M7 20V4"/>
+                <path d="m21 8-4-4-4 4"/>
+                <path d="M17 4v16"/>
+              </svg>
+
+              {#if config?.sort_priority?.length}
+                <div class="sort-indicator" style="--sort-indicator-background: {config?.content?.table?.popover?.indicator?.background_color || DEFAULT_CONFIG.content?.table?.popover?.indicator?.background_color};">
+                  {config.sort_priority.length}
+                </div>
+              {/if}
+            </div>
+
+            <div class="sort-popover" use:clickOutside on:click_outside={() => (show_sort_popover = false)} style="display: {show_sort_popover ? 'block' : 'none'}; --sort-popover-border: {config?.content?.table?.popover?.border || DEFAULT_CONFIG.content?.table?.popover?.border}; --sort-popover-background: {config?.content?.table?.popover?.background_color || DEFAULT_CONFIG.content?.table?.popover?.background_color};">
+              <div class="sort-popover-head">
+                <span>Sort columns</span>
+
+                <div class="sort-popover-actions" style="--sort-popover-action-color: {config?.content?.table?.popover?.actions?.color || DEFAULT_CONFIG.content?.table?.popover?.actions?.color}; --sort-popover-action-background-color: {config?.content?.table?.popover?.actions?.background_color || DEFAULT_CONFIG.content?.table?.popover?.actions?.background_color}; --sort-popover-action-border: {config?.content?.table?.popover?.actions?.border || DEFAULT_CONFIG.content?.table?.popover?.actions?.border}; --sort-popover-action-hover-background-color: {config?.content?.table?.popover?.actions?.hover_background_color || DEFAULT_CONFIG.content?.table?.popover?.actions?.hover_background_color};">
+                  <button class="sort-popover-action" on:click={() => add_column_to_sort()}>
+                    Add column
+                  </button>
+                </div>
+              </div>
+
+              <div class="sort-popover-body">
+                {#if config?.sort_priority}
+                  {#if config.sort_priority?.length}
+                    {#each config.sort_priority as item, index}
+                      <div class="sort-popover-item">
                     <span class="sort-popover-item-index">
                       {index + 1}.
                     </span>
-                      <select class="dimensions-picker-select" style="margin-right: 1rem;" bind:value={item.key}>
-                        {#each active_dimensions as dimension}
-                          <option value={dimension.value}>
-                            {dimension.label}
-                          </option>
-                        {/each}
-                      </select>
+                        <select class="dimensions-picker-select" style="margin-right: 1rem;" bind:value={item.key}>
+                          {#each active_dimensions as dimension}
+                            <option value={dimension.value}>
+                              {dimension.label}
+                            </option>
+                          {/each}
+                        </select>
 
-                      <select class="dimensions-picker-select" style="margin-right: 1rem;" bind:value={item.order}>
-                        {#each [{label: 'A-Z', value: 'a-z'}, {label: 'Z-A', value: 'z-a'}] as order}
-                          <option value={order.value}>
-                            {order.label}
-                          </option>
-                        {/each}
-                      </select>
-                      <div class="sort-popover-item-actions" style="--sort-popover-action-color: {config?.content?.table?.popover?.actions?.color || DEFAULT_CONFIG.content?.table?.popover?.actions?.color}; --sort-popover-action-background-color: {config?.content?.table?.popover?.actions?.background_color || DEFAULT_CONFIG.content?.table?.popover?.actions?.background_color}; --sort-popover-action-border: {config?.content?.table?.popover?.actions?.border || DEFAULT_CONFIG.content?.table?.popover?.actions?.border}; --sort-popover-action-hover-background-color: {config?.content?.table?.popover?.actions?.hover_background_color || DEFAULT_CONFIG.content?.table?.popover?.actions?.hover_background_color};">
-                        <button class="sort-popover-action" on:click={() => move_column_up(index)} disabled={index === 0}>
-                          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-move-up"><path d="M8 6L12 2L16 6"/><path d="M12 2V22"/></svg>
-                        </button>
-                        <button class="sort-popover-action" on:click={() => move_column_down(index)} disabled={(index + 1) === config.sort_priority.length}>
-                          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-move-down"><path d="M8 18L12 22L16 18"/><path d="M12 2V22"/></svg>
-                        </button>
-                        <button class="sort-popover-action" on:click={() => remove_column(index)}>
-                          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-trash-2"><path d="M3 6h18"/><path d="M19 6v14c0 1-1 2-2 2H7c-1 0-2-1-2-2V6"/><path d="M8 6V4c0-1 1-2 2-2h4c1 0 2 1 2 2v2"/><line x1="10" x2="10" y1="11" y2="17"/><line x1="14" x2="14" y1="11" y2="17"/></svg>
-                        </button>
+                        <select class="dimensions-picker-select" style="margin-right: 1rem;" bind:value={item.order}>
+                          {#each [{label: 'A-Z', value: 'a-z'}, {label: 'Z-A', value: 'z-a'}] as order}
+                            <option value={order.value}>
+                              {order.label}
+                            </option>
+                          {/each}
+                        </select>
+                        <div class="sort-popover-item-actions" style="--sort-popover-action-color: {config?.content?.table?.popover?.actions?.color || DEFAULT_CONFIG.content?.table?.popover?.actions?.color}; --sort-popover-action-background-color: {config?.content?.table?.popover?.actions?.background_color || DEFAULT_CONFIG.content?.table?.popover?.actions?.background_color}; --sort-popover-action-border: {config?.content?.table?.popover?.actions?.border || DEFAULT_CONFIG.content?.table?.popover?.actions?.border}; --sort-popover-action-hover-background-color: {config?.content?.table?.popover?.actions?.hover_background_color || DEFAULT_CONFIG.content?.table?.popover?.actions?.hover_background_color};">
+                          <button class="sort-popover-action" on:click={() => move_column_up(index)} disabled={index === 0}>
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-move-up"><path d="M8 6L12 2L16 6"/><path d="M12 2V22"/></svg>
+                          </button>
+                          <button class="sort-popover-action" on:click={() => move_column_down(index)} disabled={(index + 1) === config.sort_priority.length}>
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-move-down"><path d="M8 18L12 22L16 18"/><path d="M12 2V22"/></svg>
+                          </button>
+                          <button class="sort-popover-action" on:click={() => remove_column(index)}>
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-trash-2"><path d="M3 6h18"/><path d="M19 6v14c0 1-1 2-2 2H7c-1 0-2-1-2-2V6"/><path d="M8 6V4c0-1 1-2 2-2h4c1 0 2 1 2 2v2"/><line x1="10" x2="10" y1="11" y2="17"/><line x1="14" x2="14" y1="11" y2="17"/></svg>
+                          </button>
+                        </div>
                       </div>
-                    </div>
-                  {/each}
+                    {/each}
+                  {/if}
                 {/if}
-              {/if}
+              </div>
+            </div>
+
+            <div class="calendar-icon" bind:this={date_input_element} on:click={() => picker?.show()}>
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="24"
+                height="24"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                class="lucide lucide-calendar-days">
+                <path d="M8 2v4"/>
+                <path d="M16 2v4"/>
+                <rect width="18" height="18" x="3" y="4" rx="2"/>
+                <path d="M3 10h18"/>
+                <path d="M8 14h.01"/>
+                <path d="M12 14h.01"/>
+                <path d="M16 14h.01"/>
+                <path d="M8 18h.01"/>
+                <path d="M12 18h.01"/>
+                <path d="M16 18h.01"/>
+              </svg>
             </div>
           </div>
+        {/if}
 
-          <div class="calendar-icon" bind:this={date_input_element} on:click={() => picker?.show()}>
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              width="24"
-              height="24"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              stroke-width="2"
-              stroke-linecap="round"
-              stroke-linejoin="round"
-              class="lucide lucide-calendar-days">
-              <path d="M8 2v4"/>
-              <path d="M16 2v4"/>
-              <rect width="18" height="18" x="3" y="4" rx="2"/>
-              <path d="M3 10h18"/>
-              <path d="M8 14h.01"/>
-              <path d="M12 14h.01"/>
-              <path d="M16 14h.01"/>
-              <path d="M8 18h.01"/>
-              <path d="M12 18h.01"/>
-              <path d="M16 18h.01"/>
-            </svg>
-          </div>
-        </div>
-      {/if}
-
-      <div class="table-wrapper"
-           style="--table-wrapper-max-height: {config?.content?.max_height || DEFAULT_CONFIG.content.max_height}; --table-wrapper-background: {config?.content?.background || DEFAULT_CONFIG.content.background};">
-        {#if active_dimensions}
-          <div
-            style="--table-head-text-color: {config?.content?.table?.head?.color || DEFAULT_CONFIG.content.table.head.color}; --table-cell-background: {config?.content?.table?.cell?.background || DEFAULT_CONFIG.content.table.cell.background}; --table-container-background: {config?.content?.table?.container?.background || DEFAULT_CONFIG.content.table.container.background}; --table-container-padding: {config?.content?.table?.container?.padding || DEFAULT_CONFIG.content.table.container.padding}; --table-head-row-background: {config?.content?.table?.head?.background || DEFAULT_CONFIG.content.table.head.background}; --table-head-row-min-height: {config?.content?.table?.head?.min_height || DEFAULT_CONFIG.content.table.head.min_height}; --table-head-row-font-size: {config?.content?.table?.head?.font_size || DEFAULT_CONFIG.content.table.head.font_size}; --table-head-row-font-weight: {config?.content?.table?.head?.font_weight || DEFAULT_CONFIG.content.table.head.font_weight}; --table-head-row-padding: {config?.content?.table?.head?.padding || DEFAULT_CONFIG.content.table.head.padding}; --table-border: {config?.content?.table?.container?.border || DEFAULT_CONFIG.content.table.container.border}; --table-border-radius: {config?.content?.table?.container?.border_radius || DEFAULT_CONFIG.content.table.container.border_radius}; --table-border-color: {config?.content?.table?.container?.border_color || DEFAULT_CONFIG.content.table.container.border_color};"
-          >
-            <table style="--border-spacing: {config?.content?.table?.border_spacing || DEFAULT_CONFIG.content.table.border_spacing}; --border-collapse: {config?.content?.table?.border_collapse || DEFAULT_CONFIG.content.table.border_collapse}">
-              <tr class="table-head-row">
-                {#each active_dimensions as dimension}
-                  <th class={config?.sort_priority?.length ? '' : 'cursor-pointer'} on:click={() => sort_column_data(dimension.value)}>
-                    {#if config?.data_formatting?.[dimension.label]}
-                      {config.data_formatting[dimension.label].label}
-                    {:else}
-                      {dimension.label}
-                    {/if}
-                  </th>
-                {/each}
-              </tr>
-
-              {#each processed_data as row}
-                <tr>
+        <div class="table-wrapper"
+             style="--table-wrapper-max-height: {config?.content?.max_height || DEFAULT_CONFIG.content.max_height}; --table-wrapper-background: {config?.content?.background || DEFAULT_CONFIG.content.background};">
+          {#if active_dimensions}
+            <div
+              style="--table-head-text-color: {config?.content?.table?.head?.color || DEFAULT_CONFIG.content.table.head.color}; --table-cell-background: {config?.content?.table?.cell?.background || DEFAULT_CONFIG.content.table.cell.background}; --table-container-background: {config?.content?.table?.container?.background || DEFAULT_CONFIG.content.table.container.background}; --table-container-padding: {config?.content?.table?.container?.padding || DEFAULT_CONFIG.content.table.container.padding}; --table-head-row-background: {config?.content?.table?.head?.background || DEFAULT_CONFIG.content.table.head.background}; --table-head-row-min-height: {config?.content?.table?.head?.min_height || DEFAULT_CONFIG.content.table.head.min_height}; --table-head-row-font-size: {config?.content?.table?.head?.font_size || DEFAULT_CONFIG.content.table.head.font_size}; --table-head-row-font-weight: {config?.content?.table?.head?.font_weight || DEFAULT_CONFIG.content.table.head.font_weight}; --table-head-row-padding: {config?.content?.table?.head?.padding || DEFAULT_CONFIG.content.table.head.padding}; --table-border: {config?.content?.table?.container?.border || DEFAULT_CONFIG.content.table.container.border}; --table-border-radius: {config?.content?.table?.container?.border_radius || DEFAULT_CONFIG.content.table.container.border_radius}; --table-border-color: {config?.content?.table?.container?.border_color || DEFAULT_CONFIG.content.table.container.border_color};"
+            >
+              <table style="--border-spacing: {config?.content?.table?.border_spacing || DEFAULT_CONFIG.content.table.border_spacing}; --border-collapse: {config?.content?.table?.border_collapse || DEFAULT_CONFIG.content.table.border_collapse}">
+                <tr class="table-head-row">
                   {#each active_dimensions as dimension}
-                    <td class="table-cell">
-                      {#if typeof row[dimension.value] === 'object'}
-                        {#if Object.entries(row[dimension.value]).length}
-                          {#each Object.entries(row[dimension.value]) as [key, value]}
-                            <div>
-                              <b>{key}:</b>
-                              {#if config?.formatter?.toString()}
-                                {#if config?.data_formatting?.[dimension.label]}
-                                  {value ? config.data_formatting[dimension.label].formatter(value) : '-'}
-                                {:else}
-                                  {value ? config.formatter(value) : '-'}
-                                {/if}
-                              {:else}
-                                {#if config?.data_formatting?.[dimension.label]}
-                                  {value ? config.data_formatting[dimension.label].formatter(value) : '-'}
-                                {:else}
-                                  {value ? value : '-'}
-                                {/if}
-                              {/if}
-                            </div>
-                          {/each}
-                        {:else}
-                          -
-                        {/if}
+                    <th class={config?.sort_priority?.length ? '' : 'cursor-pointer'} on:click={() => sort_column_data(dimension.value)}>
+                      {#if config?.data_formatting?.[dimension.label]}
+                        {config.data_formatting[dimension.label].label}
                       {:else}
-                        {#if config?.formatter?.toString()}
-                          {#if config?.data_formatting?.[dimension.label]}
-                            {row[dimension.value] ? config.data_formatting[dimension.label].formatter(row[dimension.value]) : '-'}
-                          {:else}
-                            {row[dimension.value] ? config.formatter(row[dimension.value]) : '-'}
-                          {/if}
-                        {:else}
-                          {#if config?.data_formatting?.[dimension.label]}
-                            {row[dimension.value] ? config.data_formatting[dimension.label].formatter(row[dimension.value]) : '-'}
-                          {:else}
-                            {row[dimension.value] ? row[dimension.value] : '-'}
-                          {/if}
-                        {/if}
+                        {dimension.label}
                       {/if}
-                    </td>
+                    </th>
                   {/each}
                 </tr>
-              {/each}
-            </table>
-          </div>
-        {/if}
+
+                {#each processed_data as row}
+                  <tr>
+                    {#each active_dimensions as dimension}
+                      <td class="table-cell">
+                        {#if typeof row[dimension.value] === 'object'}
+                          {#if Object.entries(row[dimension.value]).length}
+                            {#each Object.entries(row[dimension.value]) as [key, value]}
+                              <div>
+                                <b>{key}:</b>
+                                {#if config?.formatter?.toString()}
+                                  {#if config?.data_formatting?.[dimension.label]}
+                                    {value ? config.data_formatting[dimension.label].formatter(value) : '-'}
+                                  {:else}
+                                    {value ? config.formatter(value) : '-'}
+                                  {/if}
+                                {:else}
+                                  {#if config?.data_formatting?.[dimension.label]}
+                                    {value ? config.data_formatting[dimension.label].formatter(value) : '-'}
+                                  {:else}
+                                    {value ? value : '-'}
+                                  {/if}
+                                {/if}
+                              </div>
+                            {/each}
+                          {:else}
+                            -
+                          {/if}
+                        {:else}
+                          {#if config?.formatter?.toString()}
+                            {#if config?.data_formatting?.[dimension.label]}
+                              {row[dimension.value] ? config.data_formatting[dimension.label].formatter(row[dimension.value]) : '-'}
+                            {:else}
+                              {row[dimension.value] ? config.formatter(row[dimension.value]) : '-'}
+                            {/if}
+                          {:else}
+                            {#if config?.data_formatting?.[dimension.label]}
+                              {row[dimension.value] ? config.data_formatting[dimension.label].formatter(row[dimension.value]) : '-'}
+                            {:else}
+                              {row[dimension.value] ? row[dimension.value] : '-'}
+                            {/if}
+                          {/if}
+                        {/if}
+                      </td>
+                    {/each}
+                  </tr>
+                {/each}
+              </table>
+            </div>
+          {/if}
+        </div>
       </div>
     </div>
-  </div>
+  {/if}
 {/if}
 
 <style lang="postcss">
@@ -1103,6 +1114,42 @@
         &-title {
             color: var(--dimensions-picker-title-color);
             font-size: var(--dimensions-picker-title-font-size);
+        }
+
+        &-skeleton {
+            height: 40vh;
+            width: 17vw;
+            background-color: #f0f0f0;
+            animation: pulse 2s infinite;
+            @keyframes pulse {
+                0% {
+                    opacity: 1;
+                }
+                50% {
+                    opacity: 0.5;
+                }
+                100% {
+                    opacity: 1;
+                }
+            }
+        }
+    }
+
+    .table-container-skeleton {
+        height: 40vh;
+        width: 100%;
+        background-color: #f0f0f0;
+        animation: pulse 2s infinite;
+        @keyframes pulse {
+            0% {
+                opacity: 1;
+            }
+            50% {
+                opacity: 0.5;
+            }
+            100% {
+                opacity: 1;
+            }
         }
     }
 
