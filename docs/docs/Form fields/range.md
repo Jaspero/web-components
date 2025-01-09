@@ -10,16 +10,19 @@ import '../../static/c/range.css';
 
 ### Attributes
 
-| **Name** | **Required** |      **Type**      |                               **Description**                               |
-| :------: | :----------: | :----------------: | :-------------------------------------------------------------------------: |
-|  value   |              | `[number, number]` |                                   setter                                    |
-|   name   |      ✓       |      `string`      |                          name of the form control                           |
-|    id    |              |      `string`      |                              unique identifier                              |
-| disabled |              |     `boolean`      |                      determines if slider is disabled                       |
-|   max    |              |      `number`      |                            maximal slider value                             |
-|   min    |              |      `number`      |                            minimal slider value                             |
-|   step   |              |      `number`      |                  size of increment/decrement when sliding                   |
-| discrete |              |     `boolean`      | whether slider is smooth or in ticks <br></br> (when `false` step is `any`) |
+|  **Name**  | **Required** |      **Type**      |                               **Description**                               |
+|  :------:  | :----------: | :----------------: | :-------------------------------------------------------------------------: |
+|   value    |              | `[number, number]` |                                   setter                                    |
+|    name    |      ✓       |      `string`      |                          name of the form control                           |
+|     id     |              |      `string`      |                              unique identifier                              |
+|  disabled  |              |     `boolean`      |                      determines if slider is disabled                       |
+|    max     |              |      `number`      |                            maximal slider value                             |
+|    min     |              |      `number`      |                            minimal slider value                             |
+|    step    |              |      `number`      |                  size of increment/decrement when sliding                   |
+|  discrete  |              |     `boolean`      | whether slider is smooth or in ticks <br></br> (when `false` step is `any`) |
+|  showValue |              |     `boolean`      |                        determines if values are shown                       |
+| startLabel |              |      `string`      |                       message shown before start value                      |
+|  endLabel  |              |      `string`      |                        message shown before end value                       |
 <br></br>
 ****
 
