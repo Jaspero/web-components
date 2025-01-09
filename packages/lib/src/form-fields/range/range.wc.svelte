@@ -34,12 +34,18 @@
   export const getValue = () => internalValue;
 
   const dispatch = createEventDispatcher();
+
   let leftSlider: HTMLInputElement;
   let leftBubble: HTMLDivElement;
   let rightSlider: HTMLInputElement;
   let rightBubble: HTMLDivElement;
 
   function handleRangeClick(event: MouseEvent) {
+    if (disabled) {
+      event.preventDefault();
+      return;
+    }
+
     const slider = event.currentTarget as HTMLElement;
     const rect = slider.getBoundingClientRect();
     const percentage = (event.clientX - rect.left) / rect.width;
