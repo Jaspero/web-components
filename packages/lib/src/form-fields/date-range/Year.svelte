@@ -9,9 +9,9 @@
   export let firstYearSelected: number | null;
   export let secondYearSelected: number | null;
   export let selectingFirst: boolean;
-  export let maxSelectibleDays: number;
-  export let maxDateSelectible: Date;
-  export let minDateSelectible: Date;
+  export let maxSelectableDays: number;
+  export let maxDateSelectable: Date;
+  export let minDateSelectable: Date;
 
   const dispatch = createEventDispatcher();
   function handleClick() {
@@ -21,15 +21,15 @@
   }
 
   function isYearOutOfSelectableBounds(year: number, selectingFirst: boolean): boolean {
-    if (!selectingFirst && maxSelectibleDays) {
-      if (year > maxDateSelectible.getFullYear() || year < minDateSelectible.getFullYear()) {
+    if (!selectingFirst && maxSelectableDays) {
+      if (year > maxDateSelectable.getFullYear() || year < minDateSelectable.getFullYear()) {
         return true;
       }
     }
     return false;
   }
 
-  $: isOutOfBonuds = isYearOutOfSelectableBounds(year, selectingFirst);
+  $: isOutOfBounds = isYearOutOfSelectableBounds(year, selectingFirst);
   $: isOutOfMax = calculateLimits.isOutOfMaxBounds(internalMaxDate, year, 0, 1);
   $: isOutOfMin = calculateLimits.isOutOfMinBounds(internalMinDate, year, 11, 31);
 </script>
@@ -40,8 +40,8 @@
     ? Number(firstYearSelected) <= year && secondYearSelected >= year
     : firstYearSelected == year}
   on:click|preventDefault={handleClick}
-  class:jp-date-range-menu-year-row-cell-disabled={isOutOfMax || isOutOfMin || isOutOfBonuds}
-  disabled={isOutOfMax || isOutOfMin || isOutOfBonuds}
+  class:jp-date-range-menu-year-row-cell-disabled={isOutOfMax || isOutOfMin || isOutOfBounds}
+  disabled={isOutOfMax || isOutOfMin || isOutOfBounds}
 >
   {year}
 </button>

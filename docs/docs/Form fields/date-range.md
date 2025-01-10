@@ -25,10 +25,10 @@ import '../../static/c/date-range.css';
 |   displayFormatFunction   | if `displayFormat` <br></br> is `custom` |                       `(date:Date) => string`                       |                 custom display format function                  |
 |           minDate         |                                          |                          `string \| Date `                          |        earliest date that can be selected by the user.          |
 |           maxDate         |                                          |                          `string \| Date `                          |          last date that can be selected by the user.            |
-|     maxSelectibleDays     |                                          |                                `number`                             |               number of days that can be in range               |
-|     minSelectibleDays     |                                          |                                `number`                             |              number of days that must be in range               |
-|     maxDateSelectible     |                                          |                                 `Date`                              |    Automatically set based on the value of maxSelectibleDays    |
-|     minDateSelectible     |                                          |                                 `Date`                              |    Automatically set based on the value of maxSelectibleDays    |
+|     maxSelectableDays     |                                          |                                `number`                             |               number of days that can be in range               |
+|     minSelectableDays     |                                          |                                `number`                             |              number of days that must be in range               |
+|     maxDateSelectable     |                                          |                                 `Date`                              |    Automatically set based on the value of maxSelectableDays    |
+|     minDateSelectable     |                                          |                                 `Date`                              |    Automatically set based on the value of maxSelectableDays    |
 <br></br>
 ****
 

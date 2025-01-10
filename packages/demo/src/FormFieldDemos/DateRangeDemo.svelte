@@ -26,8 +26,8 @@
   <jp-date-range label="datepicker display format medium" displayFormat="medium" />
   <jp-date-range label="datepicker display format long" displayFormat="long" />
   <jp-date-range label="datepicker display format full" displayFormat="full" />
-  <jp-date-range minSelectibleDays="2" label="minSelectibleDays" />
-  <jp-date-range maxSelectibleDays="10" label="maxSelectibleDays" />
+  <jp-date-range minSelectableDays="2" label="minSelectableDays" />
+  <jp-date-range maxSelectableDays="10" label="maxSelectableDays" />
   <jp-date-range minDate="2024-10-2" label="minDate string format" />
   <jp-date-range {minDate} label="minDate date format" />
   <jp-date-range maxDate="2024-10-2" label="maxDate string format" />
