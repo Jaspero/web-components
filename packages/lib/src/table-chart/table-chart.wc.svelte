@@ -10,7 +10,7 @@
 </svelte:head>
 
 <script lang="ts">
-  import { onMount } from 'svelte';
+  import { createEventDispatcher, onMount } from 'svelte';
 
   /**
    * TYPES
@@ -212,6 +212,8 @@
   let date_input_element: HTMLInputElement | null = null;
   let date_range = { start: null, end: null };
 
+  const dispatch = createEventDispatcher();
+
   /**
    * FUNCTIONS
    */
@@ -267,13 +269,23 @@
     for (const dimension of active_dimensions.filter((it) => it.label !== 'value')) {
       query_fields.push(dimension.label);
     }
+
     sql = `SELECT ${query_fields.join(', ')}
       FROM ${config.table} ${add_date_range_filter()}
       GROUP BY ${query_fields.join(', ')}`.trim();
 
-    window.postMessage({
-      name: 'sql',
-      value: sql
+    const date_range_millis = {
+      start: date_range?.start?.getTime(),
+      end: date_range?.end?.getTime()
+    };
+
+    dispatch('sql', {
+      fields: query_fields,
+      date_range: {
+        start: date_range_millis.start,
+        end: date_range_millis.end
+      },
+      sql
     });
   }
 
@@ -400,9 +412,18 @@
         FROM ${config.table} ${add_date_range_filter()}
         GROUP BY ${query_fields.join(', ')}`.trim();
 
-        window.postMessage({
-          name: 'sql',
-          value: sql
+        const date_range_millis = {
+          start: date_range?.start?.getTime(),
+          end: date_range?.end?.getTime()
+        };
+
+        dispatch('sql', {
+          fields: query_fields,
+          date_range: {
+            start: date_range_millis.start,
+            end: date_range_millis.end
+          },
+          sql
         });
       }
     });
@@ -423,9 +444,18 @@
         FROM ${config.table} ${add_date_range_filter()}
         GROUP BY ${query_fields.join(', ')}`.trim();
 
-        window.postMessage({
-          name: 'sql',
-          value: sql
+        const date_range_millis = {
+          start: date_range?.start?.getTime(),
+          end: date_range?.end?.getTime()
+        };
+
+        dispatch('sql', {
+          fields: query_fields,
+          date_range: {
+            start: date_range_millis.start,
+            end: date_range_millis.end
+          },
+          sql
         });
       }
     });
@@ -532,6 +562,19 @@
     URL.revokeObjectURL(url);
   }
 
+  function dispatchSql() {
+    sql = `SELECT * FROM ${config.table}`;
+
+    dispatch('sql', {
+      fields: [],
+      date_range: {
+        start: null,
+        end: null
+      },
+      sql
+    });
+  }
+
   /**
    * LIFECYCLE
    */
@@ -544,12 +587,7 @@
   }
 
   $: if (config?.type === 'sql' && !sql) {
-    sql = `SELECT * FROM ${config.table}`;
-
-    window.postMessage({
-      name: 'sql',
-      value: sql
-    });
+    dispatchSql();
   }
 
   $: if (dimensions?.length) {
