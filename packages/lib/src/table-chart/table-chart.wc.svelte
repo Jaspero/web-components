@@ -235,7 +235,7 @@
   }
 
   function select_dimension(dimension: string) {
-    const index = mapped_dimensions.findIndex((curr) => curr.label === dimension);
+    const index = mapped_dimensions.findIndex((curr) => curr.value === dimension);
 
     mapped_dimensions[index].selected = !mapped_dimensions[index].selected;
 
