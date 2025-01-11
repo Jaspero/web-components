@@ -262,8 +262,8 @@
 
     const query_fields = [];
 
-    for (const dimension of active_dimensions.filter((it) => it.label !== 'value')) {
-      query_fields.push(dimension.label);
+    for (const dimension of active_dimensions.filter((it) => it.value !== 'value')) {
+      query_fields.push(dimension.value);
     }
 
     sql = `SELECT ${query_fields.join(', ')}
@@ -436,8 +436,8 @@
       } else {
         const query_fields = [];
 
-        for (const dimension of active_dimensions.filter((it) => it.label !== 'value')) {
-          query_fields.push(dimension.label);
+        for (const dimension of active_dimensions.filter((it) => it.value !== 'value')) {
+          query_fields.push(dimension.value);
         }
 
         sql = `SELECT ${query_fields.join(', ')}
