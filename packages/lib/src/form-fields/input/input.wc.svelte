@@ -57,6 +57,8 @@
   export let maxlengthValidationMessage: string;
   export let patternValidationMessage: string;
   export let typeValidationMessage: string;
+  export let allowNumberInputShorcut = false;
+  export let shiftStep = 10;
 
   export const getValue = () => value;
 
@@ -295,6 +297,11 @@
         bind:value
         on:focus={() => (focused = true)}
         on:blur={() => (focused = false)}
+        on:keydown={(e) => {
+          if (allowNumberInputShorcut && e.key === 'Shift') {
+            value = Number(value) + shiftStep;
+          }
+        }}
       />
     {:else if type === 'time'}
       <input
