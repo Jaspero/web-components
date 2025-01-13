@@ -126,8 +126,7 @@
      * Table config
      */
     table.config = {
-      type: 'sql',
-      table: 'assessments',
+      type: 'data',
       formatter: (value: string) => value + ' %',
       data_formatting: {
         project: {
@@ -152,6 +151,20 @@
         }
       },
       content: {
+        toolbar: {
+          search: {
+            display: true
+          },
+          export: {
+            display: false
+          },
+          sort: {
+            display: false
+          },
+          date_filter: {
+            display: true
+          },
+        },
         max_height: '80vh',
         background: '#75757511'
       }
