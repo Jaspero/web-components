@@ -782,7 +782,15 @@
               on:click={() => toggle_group(group)}
               style="font-weight: bold; color: var(--group-header-color);"
             >
-              {group}
+              <span>
+                {group}
+              </span>
+
+              {#if !$expanded_groups?.includes(group)}
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-chevron-up"><path d="m18 15-6-6-6 6"/></svg>
+              {:else}
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-chevron-down"><path d="m6 9 6 6 6-6"/></svg>
+              {/if}
             </div>
 
             {#if $expanded_groups}
@@ -1209,8 +1217,19 @@
     position: relative;
   }
 
+  .group {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+
   .group-header {
+    width: 95%;
     padding: 0.5rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
   }
 
   .group-content {
