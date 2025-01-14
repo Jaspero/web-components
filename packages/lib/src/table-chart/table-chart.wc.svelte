@@ -7,6 +7,7 @@
 
 <script lang="ts">
   import { createEventDispatcher, onMount } from 'svelte';
+  import { writable } from 'svelte/store';
 
   /**
    * TYPES
@@ -30,6 +31,7 @@
       key?: string;
     };
     dimensions?: {
+      group_header_color?: string;
       background_color?: string;
       capitalize?: boolean;
       active_background?: string;
@@ -113,6 +115,7 @@
     label: string;
     value: string;
     selected?: boolean;
+    group?: string;
   };
 
   type Dimensions = Dimension[];
@@ -129,6 +132,7 @@
       key: 'date'
     },
     dimensions: {
+      group_header_color: '#757575',
       background_color: '#f3f3f3',
       capitalize: false,
       active_background: '#f3f3f3',
@@ -215,6 +219,7 @@
   let search_element: HTMLElement;
   let is_search_active = false;
   let show_sort_popover = false;
+  let expanded_groups = writable([]);
 
   let picker: any;
   let date_input_element: HTMLInputElement | null = null;
@@ -228,6 +233,14 @@
   /**
    * FUNCTIONS
    */
+  function toggle_group(group) {
+    if ($expanded_groups.includes(group)) {
+      expanded_groups.set($expanded_groups.filter((it) => (it !== group)));
+    } else {
+      expanded_groups.set([...$expanded_groups, group]);
+    }
+  }
+
   function add_date_range_filter() {
     const date_range_millis = {
       start: date_range?.start?.getTime(),
@@ -528,6 +541,7 @@
     mapped_dimensions = Object.keys(data[0]).map((curr) => ({
       label: config?.dimensions?.capitalize ? curr.charAt(0).toUpperCase() + curr.slice(1) : curr,
       value: curr,
+      group: curr?.group,
       selected: false
     }));
   }
@@ -646,12 +660,13 @@
       return {
         label: item.label,
         value: item.value,
+        group: item?.group,
         selected: false
       };
     });
   }
 
-  $: if (data?.length && config?.type === 'data') {
+  $: if (data?.length && config?.type === 'data' && !dimensions?.length) {
     set_dimensions();
   }
 
@@ -754,22 +769,63 @@
 
       <span class="dimensions-picker-title"> Dimensions </span>
 
-      {#each mapped_dimensions as dimension}
-        <div class="selected-dimension hidden" />
+      {#if mapped_dimensions?.length}
+        {@const groups = mapped_dimensions
+          .map((dimension) => dimension.group)
+          .filter(Boolean)
+          .filter((value, index, array) => array.indexOf(value) === index)}
 
-        <span
-          class="cursor-pointer dimension {dimension.selected ? 'selected-dimension' : ''}"
-          style="color: {dimension.selected
-            ? 'var(--dimensions-active-text-color)'
-            : 'var(--dimensions-text-color)'}"
-          on:click={() => select_dimension(dimension.value)}
-        >
+        {#each groups as group}
+          <div class="group" style="--group-header-color: {config?.dimensions.group_header_color || DEFAULT_CONFIG.dimensions.group_header_color}">
+            <div
+              class="group-header cursor-pointer"
+              on:click={() => toggle_group(group)}
+              style="font-weight: bold; color: var(--group-header-color);"
+            >
+              {group}
+            </div>
+
+            {#if $expanded_groups}
+              <div class="group-content" style="display: {!$expanded_groups.includes(group) ? 'flex': 'none'}">
+                {#each mapped_dimensions.filter((dim) => dim.group === group) as dimension}
+                  <div class="selected-dimension hidden" />
+
+                  <span
+                    class="cursor-pointer dimension {dimension.selected ? 'selected-dimension' : ''}"
+                    style="color: {dimension.selected
+          ? 'var(--dimensions-active-text-color)'
+          : 'var(--dimensions-text-color)'}"
+                    on:click={() => select_dimension(dimension.value)}
+                  >
           {#if config?.data_formatting?.[dimension.label]}
             {config.data_formatting[dimension.label].label}
           {:else}
             {dimension.label}
           {/if}
         </span>
+                {/each}
+              </div>
+            {/if}
+          </div>
+        {/each}
+      {/if}
+
+      {#each mapped_dimensions.filter((dim) => (!dim?.group?.length)) as dimension}
+        <div class="selected-dimension hidden" />
+
+        <span
+          class="cursor-pointer dimension {dimension.selected ? 'selected-dimension' : ''}"
+          style="color: {dimension.selected
+              ? 'var(--dimensions-active-text-color)'
+              : 'var(--dimensions-text-color)'}"
+          on:click={() => select_dimension(dimension.value)}
+        >
+              {#if config?.data_formatting?.[dimension.label]}
+                {config.data_formatting[dimension.label].label}
+              {:else}
+                {dimension.label}
+              {/if}
+            </span>
       {/each}
     </div>
 
@@ -1151,6 +1207,18 @@
 
   .lucide-arrow-down-up {
     position: relative;
+  }
+
+  .group-header {
+    padding: 0.5rem;
+  }
+
+  .group-content {
+    padding-left: 1rem;
+    padding-bottom: 0.2rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.2rem;
   }
 
   .sort-button {
