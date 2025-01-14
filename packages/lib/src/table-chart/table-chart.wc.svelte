@@ -52,16 +52,16 @@
       toolbar?: {
         search?: {
           display: boolean;
-        },
+        };
         export?: {
           display: boolean;
-        },
+        };
         sort?: {
           display: boolean;
-        },
+        };
         date_filter?: {
           display: boolean;
-        },
+        };
         input?: {
           border?: string;
         };
@@ -219,7 +219,7 @@
   let search_element: HTMLElement;
   let is_search_active = false;
   let show_sort_popover = false;
-  let expanded_groups = writable([]);
+  let expanded_groups = writable<string[]>([]);
 
   let picker: any;
   let date_input_element: HTMLInputElement | null = null;
@@ -233,9 +233,9 @@
   /**
    * FUNCTIONS
    */
-  function toggle_group(group) {
+  function toggle_group(group: string) {
     if ($expanded_groups.includes(group)) {
-      expanded_groups.set($expanded_groups.filter((it) => (it !== group)));
+      expanded_groups.set($expanded_groups.filter((it) => it !== group));
     } else {
       expanded_groups.set([...$expanded_groups, group]);
     }
@@ -337,7 +337,7 @@
           ? new Date(Number(item[date_range_key]))
           : new Date(item[date_range_key]);
 
-        return item_date >= date_range.start && item_date <= date_range.end;
+        return item_date >= date_range.start! && item_date <= date_range.end!;
       });
     }
 
@@ -427,6 +427,7 @@
   }
 
   async function inject_date_picker() {
+    // @ts-ignore
     picker = new Litepicker({
       element: date_input_element,
       singleMode: false,
@@ -538,7 +539,7 @@
   }
 
   function set_dimensions() {
-    mapped_dimensions = Object.keys(data[0]).map((curr) => ({
+    mapped_dimensions = Object.keys(data[0]).map((curr: any) => ({
       label: config?.dimensions?.capitalize ? curr.charAt(0).toUpperCase() + curr.slice(1) : curr,
       value: curr,
       group: curr?.group,
@@ -650,11 +651,10 @@
 
   $: if (dimensions?.length) {
     mapped_dimensions = dimensions.map((curr) => {
-
       const item = typeof curr === 'string' ? { label: curr, value: curr } : curr;
 
       if (typeof curr === 'string' && config?.dimensions?.capitalize) {
-        item.label = item.label.charAt(0).toUpperCase() + item.label.slice(1)
+        item.label = item.label.charAt(0).toUpperCase() + item.label.slice(1);
       }
 
       return {
@@ -776,7 +776,11 @@
           .filter((value, index, array) => array.indexOf(value) === index)}
 
         {#each groups as group}
-          <div class="group" style="--group-header-color: {config?.dimensions.group_header_color || DEFAULT_CONFIG.dimensions.group_header_color}">
+          <div
+            class="group"
+            style="--group-header-color: {config?.dimensions.group_header_color ||
+              DEFAULT_CONFIG.dimensions.group_header_color}"
+          >
             <div
               class="group-header cursor-pointer"
               on:click={() => toggle_group(group)}
@@ -794,23 +798,28 @@
             </div>
 
             {#if $expanded_groups}
-              <div class="group-content" style="display: {!$expanded_groups.includes(group) ? 'flex': 'none'}">
+              <div
+                class="group-content"
+                style="display: {!$expanded_groups.includes(group) ? 'flex' : 'none'}"
+              >
                 {#each mapped_dimensions.filter((dim) => dim.group === group) as dimension}
                   <div class="selected-dimension hidden" />
 
                   <span
-                    class="cursor-pointer dimension {dimension.selected ? 'selected-dimension' : ''}"
+                    class="cursor-pointer dimension {dimension.selected
+                      ? 'selected-dimension'
+                      : ''}"
                     style="color: {dimension.selected
-          ? 'var(--dimensions-active-text-color)'
-          : 'var(--dimensions-text-color)'}"
+                      ? 'var(--dimensions-active-text-color)'
+                      : 'var(--dimensions-text-color)'}"
                     on:click={() => select_dimension(dimension.value)}
                   >
-          {#if config?.data_formatting?.[dimension.label]}
-            {config.data_formatting[dimension.label].label}
-          {:else}
-            {dimension.label}
-          {/if}
-        </span>
+                    {#if config?.data_formatting?.[dimension.label]}
+                      {config.data_formatting[dimension.label].label}
+                    {:else}
+                      {dimension.label}
+                    {/if}
+                  </span>
                 {/each}
               </div>
             {/if}
@@ -818,190 +827,315 @@
         {/each}
       {/if}
 
-      {#each mapped_dimensions.filter((dim) => (!dim?.group?.length)) as dimension}
+      {#each mapped_dimensions.filter((dim) => !dim?.group?.length) as dimension}
         <div class="selected-dimension hidden" />
 
         <span
           class="cursor-pointer dimension {dimension.selected ? 'selected-dimension' : ''}"
           style="color: {dimension.selected
-              ? 'var(--dimensions-active-text-color)'
-              : 'var(--dimensions-text-color)'}"
+            ? 'var(--dimensions-active-text-color)'
+            : 'var(--dimensions-text-color)'}"
           on:click={() => select_dimension(dimension.value)}
         >
-              {#if config?.data_formatting?.[dimension.label]}
-                {config.data_formatting[dimension.label].label}
-              {:else}
-                {dimension.label}
-              {/if}
-            </span>
+          {#if config?.data_formatting?.[dimension.label]}
+            {config.data_formatting[dimension.label].label}
+          {:else}
+            {dimension.label}
+          {/if}
+        </span>
       {/each}
     </div>
 
-      <div class="table-wrapper-container">
-        {#if active_dimensions?.length}
-          <div class="filters-row"
-               style="--filters-row-input-border: {config?.content?.toolbar?.input?.border || DEFAULT_CONFIG.content.toolbar.input.border}; --filters-row-button-border: {config?.content?.toolbar?.button?.border || DEFAULT_CONFIG.content.toolbar.button.border}; --filters-row-button-font-size: {config?.content?.toolbar?.button?.font_size || DEFAULT_CONFIG.content.toolbar.button.font_size}; --filters-row-button-hover-background-color: {config?.content?.toolbar?.button?.hover_background_color || DEFAULT_CONFIG.content.toolbar.button.hover_background_color};">
+    <div class="table-wrapper-container">
+      {#if active_dimensions?.length}
+        <div
+          class="filters-row"
+          style="--filters-row-input-border: {config?.content?.toolbar?.input?.border ||
+            DEFAULT_CONFIG.content.toolbar.input.border}; --filters-row-button-border: {config
+            ?.content?.toolbar?.button?.border ||
+            DEFAULT_CONFIG.content.toolbar.button.border}; --filters-row-button-font-size: {config
+            ?.content?.toolbar?.button?.font_size ||
+            DEFAULT_CONFIG.content.toolbar.button
+              .font_size}; --filters-row-button-hover-background-color: {config?.content?.toolbar
+            ?.button?.hover_background_color ||
+            DEFAULT_CONFIG.content.toolbar.button.hover_background_color};"
+        >
+          {#if config?.content?.toolbar?.search?.display || config?.content?.toolbar?.search?.display === undefined}
+            <input
+              class="filters-row-input cursor-text"
+              type="text"
+              placeholder="Search"
+              bind:this={search_element}
+              bind:value={search_value}
+              on:focus={handle_search_focus}
+              on:blur={handle_search_blur}
+              style="transition: opacity 0.5s ease;"
+            />
 
-            {#if (config?.content?.toolbar?.search?.display) || (config?.content?.toolbar?.search?.display === undefined)}
-              <input
-                class="filters-row-input cursor-text"
-                type="text"
-                placeholder="Search"
-                bind:this={search_element}
-                bind:value={search_value}
-                on:focus={handle_search_focus}
-                on:blur={handle_search_blur}
-                style="transition: opacity 0.5s ease;"
-              />
+            <div
+              class="icon-button"
+              on:click={() => (is_search_active = true)}
+              style="display: {is_search_active ? 'none' : 'block'}"
+            >
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="24"
+                height="24"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                class="lucide lucide-search"
+              >
+                <circle cx="11" cy="11" r="8" />
+                <path d="m21 21-4.3-4.3" />
+              </svg>
+            </div>
+          {/if}
 
-              <div class="icon-button" on:click={() => (is_search_active = true)} style="display: {is_search_active ? 'none' : 'block'}">
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  width="24"
-                  height="24"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="currentColor"
-                  stroke-width="2"
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                  class="lucide lucide-search"
+          {#if config?.content?.toolbar?.export?.display || config?.content?.toolbar?.export?.display === undefined}
+            <div
+              class="icon-button"
+              on:click={() => export_csv()}
+              style="display: {is_search_active ? 'none' : 'block'}"
+            >
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="24"
+                height="24"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                class="lucide lucide-download"
+              >
+                <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
+                <polyline points="7 10 12 15 17 10" />
+                <line x1="12" x2="12" y1="15" y2="3" />
+              </svg>
+            </div>
+          {/if}
+
+          {#if config?.content?.toolbar?.sort?.display || config?.content?.toolbar?.sort?.display === undefined}
+            <div
+              class="icon-button sort-button"
+              on:click={() => (show_sort_popover = !show_sort_popover)}
+            >
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="24"
+                height="24"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                class="lucide lucide-arrow-down-up"
+              >
+                <path d="m3 16 4 4 4-4" />
+                <path d="M7 20V4" />
+                <path d="m21 8-4-4-4 4" />
+                <path d="M17 4v16" />
+              </svg>
+
+              {#if config?.sort_priority?.length}
+                <div
+                  class="sort-indicator"
+                  style="--sort-indicator-background: {config?.content?.table?.popover?.indicator
+                    ?.background_color ||
+                    DEFAULT_CONFIG.content?.table?.popover?.indicator?.background_color};"
                 >
-                  <circle cx="11" cy="11" r="8"/>
-                  <path d="m21 21-4.3-4.3"/>
-                </svg>
+                  {config.sort_priority.length}
+                </div>
+              {/if}
+            </div>
+
+            <div
+              class="sort-popover"
+              use:clickOutside
+              on:click_outside={() => (show_sort_popover = false)}
+              style="display: {show_sort_popover ? 'block' : 'none'}; --sort-popover-border: {config
+                ?.content?.table?.popover?.border ||
+                DEFAULT_CONFIG.content?.table?.popover?.border}; --sort-popover-background: {config
+                ?.content?.table?.popover?.background_color ||
+                DEFAULT_CONFIG.content?.table?.popover?.background_color};"
+            >
+              <div class="sort-popover-head">
+                <span>Sort columns</span>
+
+                <div
+                  class="sort-popover-actions"
+                  style="--sort-popover-action-color: {config?.content?.table?.popover?.actions
+                    ?.color ||
+                    DEFAULT_CONFIG.content?.table?.popover?.actions
+                      ?.color}; --sort-popover-action-background-color: {config?.content?.table
+                    ?.popover?.actions?.background_color ||
+                    DEFAULT_CONFIG.content?.table?.popover?.actions
+                      ?.background_color}; --sort-popover-action-border: {config?.content?.table
+                    ?.popover?.actions?.border ||
+                    DEFAULT_CONFIG.content?.table?.popover?.actions
+                      ?.border}; --sort-popover-action-hover-background-color: {config?.content
+                    ?.table?.popover?.actions?.hover_background_color ||
+                    DEFAULT_CONFIG.content?.table?.popover?.actions?.hover_background_color};"
+                >
+                  <button class="sort-popover-action" on:click={() => add_column_to_sort()}>
+                    Add column
+                  </button>
+                </div>
               </div>
-            {/if}
 
-          {#if (config?.content?.toolbar?.export?.display) || (config?.content?.toolbar?.export?.display === undefined)}
-              <div class="icon-button" on:click={() => export_csv()} style="display: {is_search_active ? 'none' : 'block'}"
-            >    <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  width="24"
-                  height="24"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="currentColor"
-                  stroke-width="2"
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                  class="lucide lucide-download">
-                  <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
-                  <polyline points="7 10 12 15 17 10"/>
-                  <line x1="12" x2="12" y1="15" y2="3"/>
-                </svg>
-              </div>
-            {/if}
+              <div class="sort-popover-body">
+                {#if config?.sort_priority}
+                  {#if config.sort_priority?.length}
+                    {#each config.sort_priority as item, index}
+                      <div class="sort-popover-item">
+                        <span class="sort-popover-item-index">
+                          {index + 1}.
+                        </span>
+                        <select
+                          class="dimensions-picker-select"
+                          style="margin-right: 1rem;"
+                          bind:value={item.key}
+                        >
+                          {#each active_dimensions as dimension}
+                            <option value={dimension.value}>
+                              {dimension.label}
+                            </option>
+                          {/each}
+                        </select>
 
-          {#if (config?.content?.toolbar?.sort?.display) || (config?.content?.toolbar?.sort?.display === undefined)}
-              <div class="icon-button sort-button" on:click={() => (show_sort_popover = !show_sort_popover)}>
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  width="24"
-                  height="24"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="currentColor"
-                  stroke-width="2"
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                  class="lucide lucide-arrow-down-up">
-                  <path d="m3 16 4 4 4-4"/>
-                  <path d="M7 20V4"/>
-                  <path d="m21 8-4-4-4 4"/>
-                  <path d="M17 4v16"/>
-                </svg>
-
-                {#if config?.sort_priority?.length}
-                  <div class="sort-indicator" style="--sort-indicator-background: {config?.content?.table?.popover?.indicator?.background_color || DEFAULT_CONFIG.content?.table?.popover?.indicator?.background_color};">
-                    {config.sort_priority.length}
-                  </div>
+                        <select
+                          class="dimensions-picker-select"
+                          style="margin-right: 1rem;"
+                          bind:value={item.order}
+                        >
+                          {#each [{ label: 'A-Z', value: 'a-z' }, { label: 'Z-A', value: 'z-a' }] as order}
+                            <option value={order.value}>
+                              {order.label}
+                            </option>
+                          {/each}
+                        </select>
+                        <div
+                          class="sort-popover-item-actions"
+                          style="--sort-popover-action-color: {config?.content?.table?.popover
+                            ?.actions?.color ||
+                            DEFAULT_CONFIG.content?.table?.popover?.actions
+                              ?.color}; --sort-popover-action-background-color: {config?.content
+                            ?.table?.popover?.actions?.background_color ||
+                            DEFAULT_CONFIG.content?.table?.popover?.actions
+                              ?.background_color}; --sort-popover-action-border: {config?.content
+                            ?.table?.popover?.actions?.border ||
+                            DEFAULT_CONFIG.content?.table?.popover?.actions
+                              ?.border}; --sort-popover-action-hover-background-color: {config
+                            ?.content?.table?.popover?.actions?.hover_background_color ||
+                            DEFAULT_CONFIG.content?.table?.popover?.actions
+                              ?.hover_background_color};"
+                        >
+                          <button
+                            class="sort-popover-action"
+                            on:click={() => move_column_up(index)}
+                            disabled={index === 0}
+                          >
+                            <svg
+                              xmlns="http://www.w3.org/2000/svg"
+                              width="16"
+                              height="16"
+                              viewBox="0 0 24 24"
+                              fill="none"
+                              stroke="currentColor"
+                              stroke-width="2"
+                              stroke-linecap="round"
+                              stroke-linejoin="round"
+                              class="lucide lucide-move-up"
+                              ><path d="M8 6L12 2L16 6" /><path d="M12 2V22" /></svg
+                            >
+                          </button>
+                          <button
+                            class="sort-popover-action"
+                            on:click={() => move_column_down(index)}
+                            disabled={index + 1 === config.sort_priority.length}
+                          >
+                            <svg
+                              xmlns="http://www.w3.org/2000/svg"
+                              width="16"
+                              height="16"
+                              viewBox="0 0 24 24"
+                              fill="none"
+                              stroke="currentColor"
+                              stroke-width="2"
+                              stroke-linecap="round"
+                              stroke-linejoin="round"
+                              class="lucide lucide-move-down"
+                              ><path d="M8 18L12 22L16 18" /><path d="M12 2V22" /></svg
+                            >
+                          </button>
+                          <button class="sort-popover-action" on:click={() => remove_column(index)}>
+                            <svg
+                              xmlns="http://www.w3.org/2000/svg"
+                              width="16"
+                              height="16"
+                              viewBox="0 0 24 24"
+                              fill="none"
+                              stroke="currentColor"
+                              stroke-width="2"
+                              stroke-linecap="round"
+                              stroke-linejoin="round"
+                              class="lucide lucide-trash-2"
+                              ><path d="M3 6h18" /><path
+                                d="M19 6v14c0 1-1 2-2 2H7c-1 0-2-1-2-2V6"
+                              /><path d="M8 6V4c0-1 1-2 2-2h4c1 0 2 1 2 2v2" /><line
+                                x1="10"
+                                x2="10"
+                                y1="11"
+                                y2="17"
+                              /><line x1="14" x2="14" y1="11" y2="17" /></svg
+                            >
+                          </button>
+                        </div>
+                      </div>
+                    {/each}
+                  {/if}
                 {/if}
               </div>
+            </div>
+          {/if}
 
-              <div class="sort-popover" use:clickOutside on:click_outside={() => (show_sort_popover = false)} style="display: {show_sort_popover ? 'block' : 'none'}; --sort-popover-border: {config?.content?.table?.popover?.border || DEFAULT_CONFIG.content?.table?.popover?.border}; --sort-popover-background: {config?.content?.table?.popover?.background_color || DEFAULT_CONFIG.content?.table?.popover?.background_color};">
-                <div class="sort-popover-head">
-                  <span>Sort columns</span>
-
-                  <div class="sort-popover-actions" style="--sort-popover-action-color: {config?.content?.table?.popover?.actions?.color || DEFAULT_CONFIG.content?.table?.popover?.actions?.color}; --sort-popover-action-background-color: {config?.content?.table?.popover?.actions?.background_color || DEFAULT_CONFIG.content?.table?.popover?.actions?.background_color}; --sort-popover-action-border: {config?.content?.table?.popover?.actions?.border || DEFAULT_CONFIG.content?.table?.popover?.actions?.border}; --sort-popover-action-hover-background-color: {config?.content?.table?.popover?.actions?.hover_background_color || DEFAULT_CONFIG.content?.table?.popover?.actions?.hover_background_color};">
-                    <button class="sort-popover-action" on:click={() => add_column_to_sort()}>
-                      Add column
-                    </button>
-                  </div>
-                </div>
-
-                <div class="sort-popover-body">
-                  {#if config?.sort_priority}
-                    {#if config.sort_priority?.length}
-                      {#each config.sort_priority as item, index}
-                        <div class="sort-popover-item">
-                      <span class="sort-popover-item-index">
-                        {index + 1}.
-                      </span>
-                          <select class="dimensions-picker-select" style="margin-right: 1rem;" bind:value={item.key}>
-                            {#each active_dimensions as dimension}
-                              <option value={dimension.value}>
-                                {dimension.label}
-                              </option>
-                            {/each}
-                          </select>
-
-                          <select class="dimensions-picker-select" style="margin-right: 1rem;" bind:value={item.order}
-                        >    {#each [{label: 'A-Z', value: 'a-z'}, {label: 'Z-A', value: 'z-a'}] as order}
-                              <option value={order.value}>
-                                {order.label}
-                              </option>
-                            {/each}
-                          </select>
-                          <div class="sort-popover-item-actions" style="--sort-popover-action-color: {config?.content?.table?.popover?.actions?.color || DEFAULT_CONFIG.content?.table?.popover?.actions?.color}; --sort-popover-action-background-color: {config?.content?.table?.popover?.actions?.background_color || DEFAULT_CONFIG.content?.table?.popover?.actions?.background_color}; --sort-popover-action-border: {config?.content?.table?.popover?.actions?.border || DEFAULT_CONFIG.content?.table?.popover?.actions?.border}; --sort-popover-action-hover-background-color: {config?.content?.table?.popover?.actions?.hover_background_color || DEFAULT_CONFIG.content?.table?.popover?.actions?.hover_background_color};"
-                        >
-                        <button
-                          class="sort-popover-action"
-                          on:click={() => move_column_up(index)}
-                          disabled={index === 0}
-                          >    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-move-up"><path d="M8 6L12 2L16 6"/><path d="M12 2V22"/></svg>
-                            </button>
-                            <button class="sort-popover-action" on:click={() => move_column_down(index)} disabled={index + 1 === config.sort_priority.length}
-                          >    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-move-down"><path d="M8 18L12 22L16 18"/><path d="M12 2V22"/></svg>
-                            </button>
-                            <button class="sort-popover-action" on:click={() => remove_column(index)}>
-                              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-trash-2"><path d="M3 6h18"/><path d="M19 6v14c0 1-1 2-2 2H7c-1 0-2-1-2-2V6"/><path d="M8 6V4c0-1 1-2 2-2h4c1 0 2 1 2 2v2"/><line x1="10" x2="10" y1="11" y2="17"/><line x1="14" x2="14" y1="11" y2="17"/></svg>
-                            </button>
-                          </div>
-                        </div>
-                      {/each}
-                    {/if}
-                  {/if}
-                </div>
-              </div>
-            {/if}
-
-          {#if (config?.content?.toolbar?.date_filter?.display) || (config?.content?.toolbar?.date_filter?.display === undefined)}
-              <div class="calendar-icon" bind:this={date_input_element} on:click={() => picker?.show()}>
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  width="24"
-                  height="24"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="currentColor"
-                  stroke-width="2"
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                  class="lucide lucide-calendar-days"
-              >    <path d="M8 2v4"/>
-                  <path d="M16 2v4"/>
-                  <rect width="18" height="18" x="3" y="4" rx="2"/>
-                  <path d="M3 10h18"/>
-                  <path d="M8 14h.01"/>
-                  <path d="M12 14h.01"/>
-                  <path d="M16 14h.01"/>
-                  <path d="M8 18h.01"/>
-                  <path d="M12 18h.01"/>
-                  <path d="M16 18h.01"/>
-                </svg>
-              </div>
-            {/if}
+          {#if config?.content?.toolbar?.date_filter?.display || config?.content?.toolbar?.date_filter?.display === undefined}
+            <div
+              class="calendar-icon"
+              bind:this={date_input_element}
+              on:click={() => picker?.show()}
+            >
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="24"
+                height="24"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                class="lucide lucide-calendar-days"
+              >
+                <path d="M8 2v4" />
+                <path d="M16 2v4" />
+                <rect width="18" height="18" x="3" y="4" rx="2" />
+                <path d="M3 10h18" />
+                <path d="M8 14h.01" />
+                <path d="M12 14h.01" />
+                <path d="M16 14h.01" />
+                <path d="M8 18h.01" />
+                <path d="M12 18h.01" />
+                <path d="M16 18h.01" />
+              </svg>
+            </div>
+          {/if}
         </div>
       {/if}
 
@@ -1059,9 +1193,41 @@
                       {#if config?.sort_priority?.length}
                         {#if config.sort_priority.find((item) => item.key === dimension.value)}
                           {#if config.sort_priority.find((item) => item.key === dimension.value).order === 'a-z'}
-                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-arrow-down-a-z"><path d="m3 16 4 4 4-4"/><path d="M7 20V4"/><path d="M20 8h-5"/><path d="M15 10V6.5a2.5 2.5 0 0 1 5 0V10"/><path d="M15 14h5l-5 6h5"/></svg>
+                            <svg
+                              xmlns="http://www.w3.org/2000/svg"
+                              width="16"
+                              height="16"
+                              viewBox="0 0 24 24"
+                              fill="none"
+                              stroke="currentColor"
+                              stroke-width="2"
+                              stroke-linecap="round"
+                              stroke-linejoin="round"
+                              class="lucide lucide-arrow-down-a-z"
+                              ><path d="m3 16 4 4 4-4" /><path d="M7 20V4" /><path
+                                d="M20 8h-5"
+                              /><path d="M15 10V6.5a2.5 2.5 0 0 1 5 0V10" /><path
+                                d="M15 14h5l-5 6h5"
+                              /></svg
+                            >
                           {:else}
-                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-arrow-down-z-a"><path d="m3 16 4 4 4-4"/><path d="M7 4v16"/><path d="M15 4h5l-5 6h5"/><path d="M15 20v-3.5a2.5 2.5 0 0 1 5 0V20"/><path d="M20 18h-5"/></svg>
+                            <svg
+                              xmlns="http://www.w3.org/2000/svg"
+                              width="16"
+                              height="16"
+                              viewBox="0 0 24 24"
+                              fill="none"
+                              stroke="currentColor"
+                              stroke-width="2"
+                              stroke-linecap="round"
+                              stroke-linejoin="round"
+                              class="lucide lucide-arrow-down-z-a"
+                              ><path d="m3 16 4 4 4-4" /><path d="M7 4v16" /><path
+                                d="M15 4h5l-5 6h5"
+                              /><path d="M15 20v-3.5a2.5 2.5 0 0 1 5 0V20" /><path
+                                d="M20 18h-5"
+                              /></svg
+                            >
                           {/if}
                         {/if}
                       {/if}
