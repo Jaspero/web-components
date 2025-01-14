@@ -290,7 +290,7 @@
       end: date_range?.end?.getTime()
     };
 
-    dispatch('sql', {
+    dispatch_event('sql', {
       fields: query_fields,
       date_range: {
         start: date_range_millis.start,
@@ -432,13 +432,20 @@
           end: date_range?.end?.getTime()
         };
 
-        dispatch('sql', {
+        dispatch_event('sql', {
           fields: query_fields,
           date_range: {
             start: date_range_millis.start,
             end: date_range_millis.end
           },
           sql
+        });
+
+        dispatch_event('date_range', {
+          date_range: {
+            start: date_range_millis.start,
+            end: date_range_millis.end
+          }
         });
       }
     });
@@ -464,13 +471,20 @@
           end: date_range?.end?.getTime()
         };
 
-        dispatch('sql', {
+        dispatch_event('sql', {
           fields: query_fields,
           date_range: {
             start: date_range_millis.start,
             end: date_range_millis.end
           },
           sql
+        });
+
+        dispatch_event('date_range', {
+          date_range: {
+            start: date_range_millis.start,
+            end: date_range_millis.end
+          }
         });
       }
     });
@@ -494,6 +508,10 @@
     }
 
     config.sort_priority = [...config.sort_priority, { key: filtered[0].label, order: 'a-z' }];
+
+    dispatch_event('sort', {
+      sort_priority: config?.sort_priority
+    });
   }
 
   function set_dimensions() {
@@ -510,6 +528,10 @@
 
     config.sort_priority[index - 1] = item;
     config.sort_priority[index] = to_replace;
+
+    dispatch_event('sort', {
+      sort_priority: config?.sort_priority
+    });
   }
 
   function move_column_down(index: number) {
@@ -518,11 +540,19 @@
 
     config.sort_priority[index + 1] = item;
     config.sort_priority[index] = to_replace;
+
+    dispatch_event('sort', {
+      sort_priority: config?.sort_priority
+    });
   }
 
   function remove_column(index: number) {
     config.sort_priority = config?.sort_priority?.filter((item, i) => {
       return i !== index;
+    });
+
+    dispatch_event('sort', {
+      sort_priority: config?.sort_priority
     });
   }
 
@@ -560,19 +590,14 @@
     document.body.removeChild(link);
 
     URL.revokeObjectURL(url);
+
+    dispatch_event('export', {
+      data: processed_data
+    });
   }
 
-  function dispatchSql() {
-    sql = `SELECT * FROM ${config.table}`;
-
-    dispatch('sql', {
-      fields: [],
-      date_range: {
-        start: null,
-        end: null
-      },
-      sql
-    });
+  function dispatch_event(name: string, payload: { [key: string]: any }) {
+    dispatch(name, payload);
   }
 
   /**
@@ -587,7 +612,16 @@
   }
 
   $: if (config?.type === 'sql' && !sql) {
-    dispatchSql();
+    sql = `SELECT * FROM ${config.table}`;
+
+    dispatch_event('sql', {
+      fields: [],
+      date_range: {
+        start: null,
+        end: null
+      },
+      sql
+    });
   }
 
   $: if (dimensions?.length) {
@@ -635,10 +669,18 @@
 
       processed_data = (filtered_data?.length && filtered_data) || [];
     }
+
+    dispatch_event('search', {
+      value: search_value
+    });
   }
 
   $: if (search_value?.length === 0 && active_dimensions?.length) {
     process_data();
+
+    dispatch_event('search', {
+      value: search_value
+    });
   }
 
   $: if (date_input_element && !picker) {
