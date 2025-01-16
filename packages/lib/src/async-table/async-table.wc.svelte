@@ -43,11 +43,9 @@
   export let id: string;
   export let height: string | null = null;
   export let showResetToDefault = true;
-
+  export let defaultHeaders: TableHeader[] = [];
   let additionalExportTypes = [];
   let activeHeaders: TableHeader[] = [];
-  const defaultHeaders = headers;
-
   let isOpen = false;
   let resolved: string[] = [];
 
@@ -483,6 +481,9 @@
           });
       }
     }
+    if (service.getDefault) {
+      defaultHeaders = await service.getDefault();
+    }
 
     activeHeaders = headers.filter((it) => !it.disabled);
     await getData();
@@ -493,11 +494,9 @@
     isOpen = false;
   };
 
-  function handleReset() {
-    headers = defaultHeaders;
-    headers.forEach((header) => {
-      header.disabled = false;
-    });
+  async function handleReset() {
+    headers = JSON.parse(JSON.stringify(defaultHeaders));
+    activeHeaders = headers.filter((it) => !it.disabled);
   }
 </script>
 

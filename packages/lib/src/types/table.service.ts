@@ -13,4 +13,7 @@ export interface TableService<T = any> {
   adjustSort?: (sort: TableSort) => Promise<void>;
   export?: () => Promise<T[]>;
   import?: (file: File) => Promise<T[]>;
+  setDefault?: (
+  ) => Promise<void>;
+  getDefault?: () => Promise<Array<{ key: string; disabled?: boolean; label: string }>>;	
 }

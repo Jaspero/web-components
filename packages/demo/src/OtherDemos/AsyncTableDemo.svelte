@@ -39,7 +39,7 @@
   onMount(() => {
     const asyncTable = document.createElement('jp-async-table') as any;
     asyncTable.dropdownMenuExport = true;
-    asyncTable.headers = [
+    asyncTable.defaultHeaders = [
       {
         key: '/name',
         label: 'Name'
@@ -71,6 +71,7 @@
         disabled: true
       }
     ];
+    asyncTable.headers = asyncTable.defaultHeaders;
     asyncTable.service = {
       get: async () => {
         let rows = [...Array(100).keys()].map(() => ({
@@ -110,6 +111,13 @@
         const storedValue = localStorage.getItem(id);
         return storedValue ? JSON.parse(storedValue) : null;
       },
+      setDefault: async () => {
+        localStorage.setItem('default', JSON.stringify(asyncTable.defaultHeaders));
+      },
+      getDefault: async () => {
+        const storedValue = localStorage.getItem('default');
+        return storedValue ? JSON.parse(storedValue) : null;
+      },
       adjustPageSize: async () => {},
       adjustSort: async () => {}
     };
@@ -122,6 +130,7 @@
     asyncTable.freezeLastColumn = true;
     asyncTable.showResetToDefault = true;
     el.appendChild(asyncTable);
+    asyncTable.service.setDefault();
   });
 
   function applyFilters() {
