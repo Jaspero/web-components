@@ -29,12 +29,12 @@
     isOutOfMaxBounds,
     isOutOfMinBounds
   } from './calculate-limits/min-date';
-
   import calendarIcon from '../../icons/calendar.svg?raw';
   import dropdownArrowExpandedIcon from '../../icons/dropdown-arrow-expanded.svg?raw';
   import leftArrowIcon from '../../icons/left-arrow.svg?raw';
   import rightArrowIcon from '../../icons/right-arrow.svg?raw';
   import upArrowIcon from '../../icons/up-arrow.svg?raw';
+
   export let attachedInternals: ElementInternals;
   export let value: string = '';
   export let firstInternalValue: string = '';
@@ -52,10 +52,11 @@
   export let minDate: string | Date;
   export let maxDate: string | Date;
   export let selectingFirst = true;
-  export let maxSelectibleDays: number;
-  export let minSelectibleDays: number;
-  export let maxDateSelectible: Date;
-  export let minDateSelectible: Date;
+  export let maxSelectableDays: number;
+  export let minSelectableDays: number;
+  export let maxDateSelectable: Date;
+  export let minDateSelectable: Date;
+
   let firstSelectedDateObject = new Date();
   let secondSelectedDateObject = new Date();
   let displayedDateString = '';
@@ -135,6 +136,7 @@
         secondYearSelected = year;
         secondMonthSelected = month;
       }
+
       selectingFirst = true;
     }
   }
@@ -215,7 +217,7 @@
   ) {
     return (
       isOutOfMinBounds(internalMinDate, year, month, day) ||
-      (minDateAllowed > new Date(year, month, day) && !selectingFirst && maxSelectibleDays)
+      (minDateAllowed > new Date(year, month, day) && !selectingFirst && maxSelectableDays)
     );
   }
 
@@ -229,12 +231,12 @@
   ) {
     return (
       isOutOfMaxBounds(internalMaxDate, year, month, day) ||
-      (maxDateAllowed < new Date(year, month, day) && !selectingFirst && maxSelectibleDays)
+      (maxDateAllowed < new Date(year, month, day) && !selectingFirst && maxSelectableDays)
     );
   }
 
-  function toggleMenu(event) {
-    if (event && event.target && event.target.closest('.menu')) {
+  function toggleMenu(event: MouseEvent) {
+    if (event && event.target && (event.target as HTMLElement).closest('.menu')) {
       return;
     }
 
@@ -259,8 +261,8 @@
     openPicker = !openPicker;
   }
 
-  $: maxDateSelectible = calculateMaxDate(firstInternalValue, maxSelectibleDays);
-  $: minDateSelectible = calculateMinDate(firstInternalValue, maxSelectibleDays);
+  $: maxDateSelectable = calculateMaxDate(firstInternalValue, maxSelectableDays);
+  $: minDateSelectable = calculateMinDate(firstInternalValue, maxSelectableDays);
 
   $: internalMinDate = minDate ? (minDate instanceof Date ? minDate : new Date(minDate)) : null;
   $: internalMaxDate = maxDate ? (maxDate instanceof Date ? maxDate : new Date(maxDate)) : null;
@@ -270,7 +272,7 @@
     pickerYear,
     pickerMonth,
     1,
-    minDateSelectible,
+    minDateSelectable,
     selectingFirst
   );
   $: internalMaxMonthCheck = checkMaxBounds(
@@ -278,7 +280,7 @@
     pickerYear,
     pickerMonth,
     31,
-    maxDateSelectible,
+    maxDateSelectable,
     selectingFirst
   );
 
@@ -287,7 +289,7 @@
     pickerYear,
     0,
     1,
-    minDateSelectible,
+    minDateSelectable,
     selectingFirst
   );
   $: internalMaxYearCheck = checkMaxBounds(
@@ -295,7 +297,7 @@
     pickerYear,
     11,
     31,
-    maxDateSelectible,
+    maxDateSelectable,
     selectingFirst
   );
 
@@ -304,7 +306,7 @@
     2024 + yearPickerIndex * 4 * 6,
     0,
     1,
-    minDateSelectible,
+    minDateSelectable,
     selectingFirst
   );
   $: internalMaxYearPageCheck = checkMaxBounds(
@@ -312,7 +314,7 @@
     2024 + yearPickerIndex * 4 * 6,
     11,
     31,
-    maxDateSelectible,
+    maxDateSelectable,
     selectingFirst
   );
 
@@ -337,6 +339,7 @@
       pickerMonth = secondMonthSelected;
       pickerYear = secondYearSelected;
       attachedInternals.setValidity({});
+      value = '';
     } else {
       if (required) {
         attachedInternals.setValidity(
@@ -509,11 +512,11 @@
             <div class="jp-date-range-table-row">
               {#each row as col}
                 <Day
-                  {minDateSelectible}
-                  {maxDateSelectible}
+                  {minDateSelectable}
+                  {maxDateSelectable}
                   {col}
-                  {minSelectibleDays}
-                  {maxSelectibleDays}
+                  {minSelectableDays}
+                  {maxSelectableDays}
                   {selectingFirst}
                   {firstDateSelected}
                   {internalMaxDate}
@@ -574,15 +577,15 @@
               {#each row as year}
                 <div class="jp-date-range-menu-year-row-cell">
                   <Year
-                    {minDateSelectible}
-                    {maxDateSelectible}
+                    {minDateSelectable}
+                    {maxDateSelectable}
                     {internalMaxDate}
                     {internalMinDate}
                     {firstYearSelected}
                     {secondYearSelected}
                     {year}
                     {selectingFirst}
-                    {maxSelectibleDays}
+                    {maxSelectableDays}
                     on:yearSelected={handleYearSelected}
                   />
                 </div>
@@ -629,8 +632,8 @@
             {#each monthMap as month, index}
               <div class="jp-date-range-menu-month-grid-cell">
                 <Month
-                  {minDateSelectible}
-                  {maxDateSelectible}
+                  {minDateSelectable}
+                  {maxDateSelectable}
                   {index}
                   {month}
                   {pickerYear}
@@ -641,7 +644,7 @@
                   {firstYearSelected}
                   {secondYearSelected}
                   {selectingFirst}
-                  {maxSelectibleDays}
+                  {maxSelectableDays}
                   on:monthSelected={handleMonthSelected}
                 />
               </div>

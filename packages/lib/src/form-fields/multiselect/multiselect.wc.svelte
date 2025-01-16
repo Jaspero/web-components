@@ -30,7 +30,7 @@
     label?: string;
     value: string;
     selected?: boolean;
-    selectedOrder?: number;
+    selectedOrder?: number | null;
     disabled?: boolean;
   }> = [];
   export let disabled = false;
@@ -47,7 +47,7 @@
   export const getValue = () =>
     options
       .filter((el) => el.selected)
-      .sort((a, b) => a.selectedOrder - b.selectedOrder)
+      .sort((a, b) => (a.selectedOrder ?? 0) - (b.selectedOrder ?? 0))
       .map((el) => el.value);
 
   export let validationMessages: {
@@ -116,7 +116,7 @@
 
     const sortedValue = options
       .filter((el) => el.selected)
-      .sort((a, b) => a.selectedOrder - b.selectedOrder);
+      .sort((a, b) => (a.selectedOrder ?? 0) - (b.selectedOrder ?? 0));
 
     internalValue = sortedValue.map((el) => el.value).join(',');
 
@@ -165,7 +165,9 @@
     } else {
       value.forEach((el, index) => {
         const ref = options[options.findIndex((o) => o.value == el)];
-
+        if (ref == undefined) {
+          return;
+        }
         ref.selected = true;
         ref.selectedOrder = index;
       });

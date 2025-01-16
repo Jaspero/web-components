@@ -12,11 +12,11 @@
   export let firstInternalValue = '';
   export let secondInternalValue = '';
   export let selectingFirst: boolean;
-  export let maxSelectibleDays: number;
-  export let minSelectibleDays: number;
-  export let maxDateSelectible: Date;
-  export let minDateSelectible: Date;
-  let isOutOfBonuds: boolean;
+  export let maxSelectableDays: number;
+  export let minSelectableDays: number;
+  export let maxDateSelectable: Date;
+  export let minDateSelectable: Date;
+  let isOutOfBounds: boolean;
 
   const dispatch = createEventDispatcher();
 
@@ -62,9 +62,9 @@
     day: number,
     selectingFirst: boolean
   ) {
-    if (!selectingFirst && maxSelectibleDays) {
+    if (!selectingFirst && maxSelectableDays) {
       const potentialDate = new Date(year, month, day);
-      if (potentialDate > maxDateSelectible || potentialDate < minDateSelectible) {
+      if (potentialDate > maxDateSelectable || potentialDate < minDateSelectable) {
         return true;
       }
     }
@@ -83,7 +83,7 @@
       if (
         ((potentialDate < minDateAfter && potentialDate > datePicked) ||
           (potentialDate > minDateBefore && potentialDate < datePicked)) &&
-        minSelectibleDays
+        minSelectableDays
       ) {
         return true;
       }
@@ -91,10 +91,10 @@
     return false;
   }
 
-  $: minDateBefore = calculateLimits.calculateRequiredBefore(firstInternalValue, minSelectibleDays);
-  $: minDateAfter = calculateLimits.calculateRequiredAfter(firstInternalValue, minSelectibleDays);
+  $: minDateBefore = calculateLimits.calculateRequiredBefore(firstInternalValue, minSelectableDays);
+  $: minDateAfter = calculateLimits.calculateRequiredAfter(firstInternalValue, minSelectableDays);
 
-  $: isOutOfBonuds =
+  $: isOutOfBounds =
     isDateOutOfSelectableBounds(col.year, col.month, col.day, selectingFirst) ||
     isDateOutOfMinRequiredBounds(col.year, col.month, col.day, selectingFirst);
   $: isOutOfMax = calculateLimits.isOutOfMaxBounds(internalMaxDate, col.year, col.month, col.day);
@@ -137,8 +137,8 @@
     class:jp-date-range-table-cell-lastValue={isLastValue && !isOnlyValue}
     class:jp-date-range-table-cell-onlyValue={isOnlyValue}
     on:click|preventDefault={handleClick}
-    class:jp-date-range-table-cell-disabled={isOutOfMax || isOutOfMin || isOutOfBonuds}
-    disabled={isOutOfMax || isOutOfMin || isOutOfBonuds}
+    class:jp-date-range-table-cell-disabled={isOutOfMax || isOutOfMin || isOutOfBounds}
+    disabled={isOutOfMax || isOutOfMin || isOutOfBounds}
   >
     {col.day}
   </button>

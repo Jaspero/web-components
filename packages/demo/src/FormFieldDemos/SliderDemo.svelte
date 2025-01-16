@@ -4,14 +4,17 @@
 </script>
 
 <form>
+  <jp-slider showValue=true/>
+  <jp-slider label="slider" showValue=true />
+  <jp-slider label="slider disabled" disabled="true" showValue=true />
+  <jp-slider label="slider required" required="true" showValue=true />
+  <jp-slider label="slider max" max="70" showValue=true />
+  <jp-slider label="slider min" min="20" showValue=true />
+  <jp-slider label="slider step" step="10" showValue=true />
+  <jp-slider label="slider discrete" discrete="true" showValue=true />
   <jp-slider />
-  <jp-slider label="slider" />
-  <jp-slider label="slider disabled" disabled="true" />
-  <jp-slider label="slider required" required="true" />
-  <jp-slider label="slider max" max="70" />
-  <jp-slider label="slider min" min="20" />
-  <jp-slider label="slider step" step="10" />
-  <jp-slider label="slider discrele" discrete="true" />
+  <jp-slider />
+  <jp-slider />
 
   <button type="submit">submit</button>
 </form>

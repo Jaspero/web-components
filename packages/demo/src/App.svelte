@@ -4,26 +4,21 @@
   import AsyncTableDemo from './OtherDemos/AsyncTableDemo.svelte';
   import InputDemo from './FormFieldDemos/InputDemo.svelte';
   import SelectDemo from './FormFieldDemos/SelectDemo.svelte';
-  import MultiSelectDemo from './FormFieldDemos/MultiSelectDemo.svelte';
   import TableChartDemo from './OtherDemos/TableChartDemo.svelte';
   import FileUploadDemo from './FormFieldDemos/FileUploadDemo.svelte';
-  /*import MultiSelectDemo from './FormFieldDemos/MultiSelectDemo.svelte';*/
+  import MultiSelectDemo from './FormFieldDemos/MultiSelectDemo.svelte';
   //FORM FIELDS
-  /*import AutocompleteDemo from './FormFieldDemos/AutocompleteDemo.svelte';
+  import AutocompleteDemo from './FormFieldDemos/AutocompleteDemo.svelte';
   import CheckboxDemo from './FormFieldDemos/CheckboxDemo.svelte';
   import ChipsDemo from './FormFieldDemos/ChipsDemo.svelte';
   import CkEditorDemo from './FormFieldDemos/CkEditorDemo.svelte';
   import DateRangeDemo from './FormFieldDemos/DateRangeDemo.svelte';
   import DatepickerDemo from './FormFieldDemos/DatepickerDemo.svelte';
   import FileListDemo from './FormFieldDemos/FileListDemo.svelte';
-  import FileUploadDemo from './FormFieldDemos/FileUploadDemo.svelte';
-  import InputDemo from './FormFieldDemos/InputDemo.svelte';
   import MultiSearchDemo from './FormFieldDemos/MultiSearchDemo.svelte';
-  import MultiSelectDemo from './FormFieldDemos/MultiSelectDemo.svelte';
   import QuillDemo from './FormFieldDemos/QuillDemo.svelte';
   import RadioDemo from './FormFieldDemos/RadioDemo.svelte';
   import RangeDemo from './FormFieldDemos/RangeDemo.svelte';
-  import SelectDemo from './FormFieldDemos/SelectDemo.svelte';
   import SliderDemo from './FormFieldDemos/SliderDemo.svelte';
   import TextareaDemo from './FormFieldDemos/TextareaDemo.svelte';
   import ToggleDemo from './FormFieldDemos/ToggleDemo.svelte';
@@ -34,7 +29,6 @@
   import AccordionDemo from './OtherDemos/AccordionDemo.svelte';
   import AlertDemo from './OtherDemos/AlertDemo.svelte';
   import AssetManagerDemo from './OtherDemos/AssetManagerDemo.svelte';
-  import AsyncTableDemo from './OtherDemos/AsyncTableDemo.svelte';
   import ButtonsDemo from './OtherDemos/ButtonsDemo.svelte';
   import CarouselDemo from './OtherDemos/CarouselDemo.svelte';
   import ConfirmDemo from './OtherDemos/ConfirmDemo.svelte';
@@ -51,7 +45,7 @@
   import TooltipDemo from './OtherDemos/TooltipDemo.svelte';
   import TreeDemo from './OtherDemos/TreeDemo.svelte';
 
-  import Demos from './Demos.svelte';*/
+  import Demos from './Demos.svelte';
 </script>
 
 <!-- <AssetManagerDemo /> -->
@@ -87,10 +81,10 @@
       <!-- <CheckboxDemo /> -->
       <!-- <ChipsDemo /> -->
       <!-- <CkEditorDemo /> -->
-      <!-- <DateRangeDemo /> -->
+      <DateRangeDemo />
       <!--<DatepickerDemo />-->
       <!-- <FileListDemo /> -->
-      <FileUploadDemo />
+      <!-- <FileUploadDemo /> -->
       <!-- <InputDemo /> -->
       <!-- <MultiSearchDemo /> -->
 <!--       <MultiSelectDemo />-->

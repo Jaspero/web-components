@@ -25,6 +25,7 @@
     PAGE_SIZE: 'Page size',
     SAVE: 'Save',
     RESET: 'Reset'
+    EMPTY_TABLE: 'Currently there is no data available'
   };
 
   export let allowArrangeColumns = true;
@@ -643,6 +644,9 @@
         {/each}
       {/if}
     </table>
+    {#if rows.length === 0}
+        <h1 class="jp-async-table-empty-message">{wording.EMPTY_TABLE}</h1>
+    {/if}
   </div>
 
   <div class="jp-async-table-actions">
