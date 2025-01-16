@@ -9,6 +9,7 @@
 </script>
 
 <form>
+  <jp-input label="number shortcut allowed" type="number" allowNumberInputShorcut=true />
   <jp-input label="default" />
   <jp-input label="prefix" prefix="prefix" />
   <jp-input label="suffix" suffix="suffix" />
