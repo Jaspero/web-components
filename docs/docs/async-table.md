@@ -19,6 +19,7 @@ import '../static/c/async-table.css';
 |      showExport      |              |            `boolean`            |                      should the button for export be shown                      |
 |  dropdownMenuExport  |              |            `boolean`            | should the button for export download csv or can you have more download options |
 |  showResetToDefault  |              |            `boolean`            |                should the button for reseting to default be shown               |
+|    defaultHeaders    |              | [`TableHeader[]`](#tableheader) |                              default table headers.                             |
 <br></br>
 ****
 
@@ -77,6 +78,8 @@ Defines methods for fetching and loading more table data.
 |        export         | `function` |     retrieves all data that should be included when export is triggered by the table      |
 |    arrangeColumns     | `function` |                This method is intended for persisting column organization                 |
 | additionalExportTypes | `function` |          This method is intended for adding additional export types to function           |
+|      setDefault       | `function` |                 This method is intended for adding default Headers state                  |
+|      getDefault       | `function` |                This method is intended for getting default Headers state                  |
 <br></br>
 ****
 

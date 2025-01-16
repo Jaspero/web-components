@@ -495,7 +495,7 @@
   };
 
   async function handleReset() {
-    headers = JSON.parse(JSON.stringify(defaultHeaders));
+    headers = [...defaultHeaders];
     activeHeaders = headers.filter((it) => !it.disabled);
   }
 </script>

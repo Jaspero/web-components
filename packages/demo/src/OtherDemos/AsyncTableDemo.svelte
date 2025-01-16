@@ -71,7 +71,7 @@
         disabled: true
       }
     ];
-    asyncTable.headers = asyncTable.defaultHeaders;
+    asyncTable.headers =  JSON.parse(JSON.stringify(asyncTable.defaultHeaders));
     asyncTable.service = {
       get: async () => {
         let rows = [...Array(100).keys()].map(() => ({
