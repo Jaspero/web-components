@@ -24,6 +24,7 @@
     LOAD_MORE: 'Load more',
     PAGE_SIZE: 'Page size',
     SAVE: 'Save',
+    RESET: 'Reset'
     EMPTY_TABLE: 'Currently there is no data available'
   };
 
@@ -42,10 +43,10 @@
   export let service: TableService;
   export let id: string;
   export let height: string | null = null;
-
+  export let showResetToDefault = true;
+  export let defaultHeaders: TableHeader[] = [];
   let additionalExportTypes = [];
   let activeHeaders: TableHeader[] = [];
-
   let isOpen = false;
   let resolved: string[] = [];
 
@@ -481,6 +482,9 @@
           });
       }
     }
+    if (service.getDefault) {
+      defaultHeaders = await service.getDefault();
+    }
 
     activeHeaders = headers.filter((it) => !it.disabled);
     await getData();
@@ -490,11 +494,21 @@
     exportDataGeneric(option);
     isOpen = false;
   };
+
+  async function handleReset() {
+    headers = JSON.parse(JSON.stringify(defaultHeaders));
+    activeHeaders = headers.filter((it) => !it.disabled);
+  }
 </script>
 
 <div class="jp-async-table">
   {#if showArrangingColumns || showImport || showExport}
     <div class="jp-async-table-header">
+      {#if showResetToDefault}
+        <button on:click={handleReset} class="jp-async-table-button">
+          {wording.RESET}
+        </button>
+      {/if}
       {#if showArrangingColumns}
         &nbsp;
         <button type="button" on:click={arrangeColumns} class="jp-async-table-button">
