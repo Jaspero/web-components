@@ -99,11 +99,25 @@
   let element: HTMLElement;
   let table;
 
-  $: if (element) {
-    window.addEventListener('message', (message) => {
-      if (message.data.name === 'sql') {
-        console.log(message.data.value);
-      }
+  function setEventListeners(element: HTMLElement) {
+    element.addEventListener('export', (a) => {
+      console.log(a);
+    });
+
+    element.addEventListener('sql', (b) => {
+      console.log(b);
+    });
+
+    element.addEventListener('sort', (c) => {
+      console.log(c);
+    });
+
+    element.addEventListener('date_range', (d) => {
+      console.log(d);
+    });
+
+    element.addEventListener('search', (e) => {
+      console.log(e);
     });
   }
 
@@ -120,14 +134,35 @@
      * Table data
      */
     table.data = TABLE_CHART_DATA;
-    table.dimensions = Object.keys(TABLE_CHART_DATA[0])
+    table.dimensions = Object.keys(TABLE_CHART_DATA[0]).map((it, i) => {
+      let group = 'Group 1';
+
+      if (i >= 5 && i < 10) {
+        group = 'Group 2';
+      }
+
+      if (i >= 10 && i < 12) {
+        group = 'Group 3';
+      }
+
+      if (i >= 12) {
+        group = null;
+      }
+
+      return {
+        label: it,
+        value: it,
+        group
+      }
+    });
+
+    table.class = 'jp-table-chart';
 
     /**
      * Table config
      */
     table.config = {
-      type: 'sql',
-      table: 'assessments',
+      type: 'data',
       formatter: (value: string) => value + ' %',
       data_formatting: {
         project: {
@@ -152,12 +187,32 @@
         }
       },
       content: {
+        toolbar: {
+          search: {
+            display: true
+          },
+          export: {
+            display: false
+          },
+          sort: {
+            display: true
+          },
+          date_filter: {
+            display: true
+          },
+        },
         max_height: '80vh',
         background: '#75757511'
       }
     } as Config;
 
     element.appendChild(table);
+
+    const el = document.querySelector('.jp-table-chart');
+
+    if (el) {
+      setEventListeners(el);
+    }
   });
 </script>
 

@@ -16,7 +16,7 @@
   export let minSelectableDays: number;
   export let maxDateSelectable: Date;
   export let minDateSelectable: Date;
-  let isOutOfBonuds: boolean;
+  let isOutOfBounds: boolean;
 
   const dispatch = createEventDispatcher();
 
@@ -94,7 +94,7 @@
   $: minDateBefore = calculateLimits.calculateRequiredBefore(firstInternalValue, minSelectableDays);
   $: minDateAfter = calculateLimits.calculateRequiredAfter(firstInternalValue, minSelectableDays);
 
-  $: isOutOfBonuds =
+  $: isOutOfBounds =
     isDateOutOfSelectableBounds(col.year, col.month, col.day, selectingFirst) ||
     isDateOutOfMinRequiredBounds(col.year, col.month, col.day, selectingFirst);
   $: isOutOfMax = calculateLimits.isOutOfMaxBounds(internalMaxDate, col.year, col.month, col.day);
@@ -137,8 +137,8 @@
     class:jp-date-range-table-cell-lastValue={isLastValue && !isOnlyValue}
     class:jp-date-range-table-cell-onlyValue={isOnlyValue}
     on:click|preventDefault={handleClick}
-    class:jp-date-range-table-cell-disabled={isOutOfMax || isOutOfMin || isOutOfBonuds}
-    disabled={isOutOfMax || isOutOfMin || isOutOfBonuds}
+    class:jp-date-range-table-cell-disabled={isOutOfMax || isOutOfMin || isOutOfBounds}
+    disabled={isOutOfMax || isOutOfMin || isOutOfBounds}
   >
     {col.day}
   </button>

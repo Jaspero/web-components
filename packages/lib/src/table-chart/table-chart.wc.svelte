@@ -5,35 +5,33 @@
   }}
 />
 
-<svelte:head>
-  <script src="https://cdn.jsdelivr.net/npm/litepicker/dist/litepicker.js"></script>
-</svelte:head>
-
 <script lang="ts">
-  import { onMount } from 'svelte';
+  import { createEventDispatcher, onMount } from 'svelte';
+  import { writable } from 'svelte/store';
 
   /**
    * TYPES
    */
   type Config = {
-    type: 'sql' | 'data',
+    type: 'sql' | 'data';
     table?: string;
     sort_priority?: {
       key?: string;
       order?: string;
-    }[],
-    formatter?: (value: string) => {},
+    }[];
+    formatter?: (value: string) => {};
     data_formatting?: {
       [key: string]: {
         label: string;
-        formatter: (value: string) => {}
-      }
-    },
+        formatter: (value: string) => {};
+      };
+    };
     date_range?: {
       hidden?: boolean;
       key?: string;
-    },
+    };
     dimensions?: {
+      group_header_color?: string;
       background_color?: string;
       capitalize?: boolean;
       active_background?: string;
@@ -44,23 +42,35 @@
       title?: {
         color?: string;
         font_size?: string;
-      },
+      };
       select?: {
         border?: string;
         background_color?: string;
-      }
-    },
+      };
+    };
     content?: {
       toolbar?: {
+        search?: {
+          display: boolean;
+        };
+        export?: {
+          display: boolean;
+        };
+        sort?: {
+          display: boolean;
+        };
+        date_filter?: {
+          display: boolean;
+        };
         input?: {
           border?: string;
-        },
+        };
         button?: {
           border?: string;
           font_size?: string;
           hover_background_color?: string;
-        }
-      },
+        };
+      };
       table?: {
         border_spacing?: string;
         border_collapse?: string;
@@ -69,24 +79,24 @@
           background_color?: string;
           indicator: {
             background_color: string;
-          },
+          };
           actions?: {
             color?: string;
             background_color?: string;
             hover_background_color?: string;
             border?: string;
-          }
-        },
+          };
+        };
         container?: {
           background?: string;
           padding?: string;
           border?: string;
           border_radius?: string;
           border_color?: string;
-        },
+        };
         cell?: {
           background?: string;
-        },
+        };
         head?: {
           background?: string;
           min_height?: string;
@@ -94,17 +104,18 @@
           font_weight?: string;
           padding?: string;
           color?: string;
-        }
-      }
+        };
+      };
       max_height?: string;
       background?: string;
-    }
+    };
   };
 
   type Dimension = {
     label: string;
     value: string;
-    selected: boolean;
+    selected?: boolean;
+    group?: string;
   };
 
   type Dimensions = Dimension[];
@@ -121,6 +132,7 @@
       key: 'date'
     },
     dimensions: {
+      group_header_color: '#757575',
       background_color: '#f3f3f3',
       capitalize: false,
       active_background: '#f3f3f3',
@@ -204,17 +216,31 @@
   let sort_order: { [key: string]: 'asc' | 'desc' } = {};
   let search_value: string = '';
   let date_range_key: string;
-  let search_element;
+  let search_element: HTMLElement;
   let is_search_active = false;
   let show_sort_popover = false;
+  let expanded_groups = writable<string[]>([]);
 
-  let picker;
+  let picker: any;
   let date_input_element: HTMLInputElement | null = null;
-  let date_range = { start: null, end: null };
+  let date_range: {
+    start: Date | null;
+    end: Date | null;
+  } = { start: null, end: null };
+
+  const dispatch = createEventDispatcher();
 
   /**
    * FUNCTIONS
    */
+  function toggle_group(group: string) {
+    if ($expanded_groups.includes(group)) {
+      expanded_groups.set($expanded_groups.filter((it) => it !== group));
+    } else {
+      expanded_groups.set([...$expanded_groups, group]);
+    }
+  }
+
   function add_date_range_filter() {
     const date_range_millis = {
       start: date_range?.start?.getTime(),
@@ -222,7 +248,7 @@
     };
 
     if (date_range?.end && date_range?.start) {
-      return `WHERE PARSE_NUMERIC(${date_range_key}) <= ${date_range_millis.end} AND PARSE_NUMERIC(${date_range_key}) >= ${date_range_millis.start}`
+      return `WHERE PARSE_NUMERIC(${date_range_key}) <= ${date_range_millis.end} AND PARSE_NUMERIC(${date_range_key}) >= ${date_range_millis.start}`;
     }
 
     if (date_range?.end && !date_range?.start) {
@@ -237,7 +263,7 @@
   }
 
   function select_dimension(dimension: string) {
-    const index = mapped_dimensions.findIndex(curr => curr.label === dimension);
+    const index = mapped_dimensions.findIndex((curr) => curr.value === dimension);
 
     mapped_dimensions[index].selected = !mapped_dimensions[index].selected;
 
@@ -264,16 +290,26 @@
 
     const query_fields = [];
 
-    for (const dimension of active_dimensions.filter((it) => it.label !== 'value')) {
-      query_fields.push(dimension.label);
+    for (const dimension of active_dimensions.filter((it) => it.value !== 'value')) {
+      query_fields.push(dimension.value);
     }
+
     sql = `SELECT ${query_fields.join(', ')}
       FROM ${config.table} ${add_date_range_filter()}
       GROUP BY ${query_fields.join(', ')}`.trim();
 
-    window.postMessage({
-      name: 'sql',
-      value: sql
+    const date_range_millis = {
+      start: date_range?.start?.getTime(),
+      end: date_range?.end?.getTime()
+    };
+
+    dispatch_event('sql', {
+      fields: query_fields,
+      date_range: {
+        start: date_range_millis.start,
+        end: date_range_millis.end
+      },
+      sql
     });
   }
 
@@ -290,21 +326,23 @@
     const grouped_data: { [key: string]: any } = {};
 
     const keys = active_dimensions
-      .map(dimension => dimension.value)
-      .filter(dimension => dimension !== 'value');
+      .map((dimension) => dimension.value)
+      .filter((dimension) => dimension !== 'value');
 
     let prefiltered_data = data;
 
     if (date_range?.start && date_range?.end) {
-      prefiltered_data = prefiltered_data.filter(item => {
-        const item_date = Number(item[date_range_key]) ? new Date(Number(item[date_range_key])) : new Date(item[date_range_key]);
+      prefiltered_data = prefiltered_data.filter((item) => {
+        const item_date = Number(item[date_range_key])
+          ? new Date(Number(item[date_range_key]))
+          : new Date(item[date_range_key]);
 
-        return item_date >= date_range.start && item_date <= date_range.end;
+        return item_date >= date_range.start! && item_date <= date_range.end!;
       });
     }
 
     for (const item of prefiltered_data) {
-      const key = keys.map(field => getNestedValue(item, field) || '').join('_');
+      const key = keys.map((field) => getNestedValue(item, field) || '').join('_');
 
       if (!grouped_data[key]) {
         grouped_data[key] = { value: 0 };
@@ -326,6 +364,16 @@
 
   function sort_column_data(dimension: string, reverse = true) {
     if (config?.sort_priority?.length) {
+      for (let i = 0; i < config.sort_priority.length; i++) {
+        if (config.sort_priority[i].key === dimension) {
+          config.sort_priority[i].order = config.sort_priority[i].order === 'a-z' ? 'z-a' : 'a-z';
+
+          dispatch_event('sort', {
+            sort_priority: config?.sort_priority
+          });
+          break;
+        }
+      }
       return;
     }
 
@@ -351,8 +399,10 @@
   function filter_data() {
     process_data();
 
-    const filtered_data = processed_data.filter(item => {
-      return Object.values(item).some(value => JSON.stringify(value).toLowerCase().includes(search_value.toLowerCase()));
+    const filtered_data = processed_data.filter((item) => {
+      return Object.values(item).some((value) =>
+        JSON.stringify(value).toLowerCase().includes(search_value.toLowerCase())
+      );
     });
 
     processed_data = (filtered_data?.length && filtered_data) || [];
@@ -373,17 +423,18 @@
       return;
     }
 
-    search_element.style.opacity = is_search_active ? 1 : 0;
+    search_element.style.opacity = is_search_active ? '1' : '0';
   }
 
   async function inject_date_picker() {
+    // @ts-ignore
     picker = new Litepicker({
       element: date_input_element,
       singleMode: false,
       resetButton: true
     });
 
-    picker.on('selected', (start, end) => {
+    picker.on('selected', (start: any, end: any) => {
       date_range.start = new Date(start?.dateInstance);
       date_range.end = new Date(end?.dateInstance);
 
@@ -392,17 +443,33 @@
       } else {
         const query_fields = [];
 
-        for (const dimension of active_dimensions.filter((it) => it.label !== 'value')) {
-          query_fields.push(dimension.label);
+        for (const dimension of active_dimensions.filter((it) => it.value !== 'value')) {
+          query_fields.push(dimension.value);
         }
 
         sql = `SELECT ${query_fields.join(', ')}
         FROM ${config.table} ${add_date_range_filter()}
         GROUP BY ${query_fields.join(', ')}`.trim();
 
-        window.postMessage({
-          name: 'sql',
-          value: sql
+        const date_range_millis = {
+          start: date_range?.start?.getTime(),
+          end: date_range?.end?.getTime()
+        };
+
+        dispatch_event('sql', {
+          fields: query_fields,
+          date_range: {
+            start: date_range_millis.start,
+            end: date_range_millis.end
+          },
+          sql
+        });
+
+        dispatch_event('date_range', {
+          date_range: {
+            start: date_range_millis.start,
+            end: date_range_millis.end
+          }
         });
       }
     });
@@ -415,17 +482,33 @@
       } else {
         const query_fields = [];
 
-        for (const dimension of active_dimensions.filter((it) => it.label !== 'value')) {
-          query_fields.push(dimension.label);
+        for (const dimension of active_dimensions.filter((it) => it.value !== 'value')) {
+          query_fields.push(dimension.value);
         }
 
         sql = `SELECT ${query_fields.join(', ')}
         FROM ${config.table} ${add_date_range_filter()}
         GROUP BY ${query_fields.join(', ')}`.trim();
 
-        window.postMessage({
-          name: 'sql',
-          value: sql
+        const date_range_millis = {
+          start: date_range?.start?.getTime(),
+          end: date_range?.end?.getTime()
+        };
+
+        dispatch_event('sql', {
+          fields: query_fields,
+          date_range: {
+            start: date_range_millis.start,
+            end: date_range_millis.end
+          },
+          sql
+        });
+
+        dispatch_event('date_range', {
+          date_range: {
+            start: date_range_millis.start,
+            end: date_range_millis.end
+          }
         });
       }
     });
@@ -441,61 +524,69 @@
     }
 
     const filtered = active_dimensions.filter((item) => {
-      return !config.sort_priority.map((it) => it.key).includes(item.label);
+      return !config?.sort_priority?.map((it) => it.key).includes(item.label);
     });
 
     if (!filtered.length) {
       return;
     }
 
-    config.sort_priority = [
-      ...config.sort_priority,
-      {key: filtered[0].label, order: 'a-z'}
-    ];
+    config.sort_priority = [...config.sort_priority, { key: filtered[0].label, order: 'a-z' }];
+
+    dispatch_event('sort', {
+      sort_priority: config?.sort_priority
+    });
   }
 
   function set_dimensions() {
-    mapped_dimensions = Object.keys(data[0]).map(curr => ({
+    mapped_dimensions = Object.keys(data[0]).map((curr: any) => ({
       label: config?.dimensions?.capitalize ? curr.charAt(0).toUpperCase() + curr.slice(1) : curr,
       value: curr,
+      group: curr?.group,
       selected: false
     }));
   }
 
   function move_column_up(index: number) {
-    const item = config.sort_priority[index];
-    const to_replace = config.sort_priority[index - 1];
+    const item = config?.sort_priority?.[index];
+    const to_replace = config?.sort_priority?.[index - 1];
 
     config.sort_priority[index - 1] = item;
     config.sort_priority[index] = to_replace;
-  }
 
-  function move_column_down(index: number) {
-    const item = config.sort_priority[index];
-    const to_replace = config.sort_priority[index + 1];
-
-    config.sort_priority[index + 1] = item;
-    config.sort_priority[index] = to_replace;
-  }
-
-  function remove_column(index: number) {
-    config.sort_priority = config.sort_priority.filter((item, i) => {
-      if (i === index) {
-        return false;
-      }
-
-      return true;
+    dispatch_event('sort', {
+      sort_priority: config?.sort_priority
     });
   }
 
-  function clickOutside(node) {
-    const handleClick = (event) => {
+  function move_column_down(index: number) {
+    const item = config?.sort_priority?.[index];
+    const to_replace = config?.sort_priority?.[index + 1];
+
+    config.sort_priority[index + 1] = item;
+    config.sort_priority[index] = to_replace;
+
+    dispatch_event('sort', {
+      sort_priority: config?.sort_priority
+    });
+  }
+
+  function remove_column(index: number) {
+    config.sort_priority = config?.sort_priority?.filter((item, i) => {
+      return i !== index;
+    });
+
+    dispatch_event('sort', {
+      sort_priority: config?.sort_priority
+    });
+  }
+
+  function clickOutside(node: any) {
+    const handleClick = (event: any) => {
       if (node && !node.contains(event.target) && !event.defaultPrevented) {
-        node.dispatchEvent(
-          new CustomEvent('click_outside', node)
-        )
+        node.dispatchEvent(new CustomEvent('click_outside', node));
       }
-    }
+    };
 
     document.addEventListener('click', handleClick, true);
 
@@ -503,21 +594,15 @@
       destroy() {
         document.removeEventListener('click', handleClick, true);
       }
-    }
-  }
-
-  function sort_data_by_priority() {
-    if (!config?.sort_priority?.length) {
-      return;
-    }
-
-    // TODO: Implement sort data by priority
+    };
   }
 
   function export_csv() {
-    const csv = processed_data.map((item) => {
-      return Object.values(item).join(',');
-    }).join('\n');
+    const csv = processed_data
+      .map((item) => {
+        return Object.values(item).join(',');
+      })
+      .join('\n');
 
     const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
     const url = URL.createObjectURL(blob);
@@ -530,6 +615,14 @@
     document.body.removeChild(link);
 
     URL.revokeObjectURL(url);
+
+    dispatch_event('export', {
+      data: processed_data
+    });
+  }
+
+  function dispatch_event(name: string, payload: { [key: string]: any }) {
+    dispatch(name, payload);
   }
 
   /**
@@ -546,21 +639,34 @@
   $: if (config?.type === 'sql' && !sql) {
     sql = `SELECT * FROM ${config.table}`;
 
-    window.postMessage({
-      name: 'sql',
-      value: sql
+    dispatch_event('sql', {
+      fields: [],
+      date_range: {
+        start: null,
+        end: null
+      },
+      sql
     });
   }
 
   $: if (dimensions?.length) {
-    mapped_dimensions = dimensions.map(curr => ({
-      label: config?.dimensions?.capitalize ? curr.charAt(0).toUpperCase() + curr.slice(1) : curr,
-      value: curr,
-      selected: false
-    }));
+    mapped_dimensions = dimensions.map((curr) => {
+      const item = typeof curr === 'string' ? { label: curr, value: curr } : curr;
+
+      if (typeof curr === 'string' && config?.dimensions?.capitalize) {
+        item.label = item.label.charAt(0).toUpperCase() + item.label.slice(1);
+      }
+
+      return {
+        label: item.label,
+        value: item.value,
+        group: item?.group,
+        selected: false
+      };
+    });
   }
 
-  $: if (data?.length && config?.type === 'data') {
+  $: if (data?.length && config?.type === 'data' && !dimensions?.length) {
     set_dimensions();
   }
 
@@ -576,24 +682,30 @@
     date_range_key = config.date_range.key;
   }
 
-  $: if (config?.sort_priority) {
-    sort_data_by_priority();
-  }
-
   $: if (search_value?.length) {
     if (config.type === 'data') {
       filter_data();
     } else if (config.type === 'sql') {
-      const filtered_data = processed_data.filter(item => {
-        return Object.values(item).some(value => JSON.stringify(value).toLowerCase().includes(search_value.toLowerCase()));
+      const filtered_data = processed_data.filter((item) => {
+        return Object.values(item).some((value) =>
+          JSON.stringify(value).toLowerCase().includes(search_value.toLowerCase())
+        );
       });
 
       processed_data = (filtered_data?.length && filtered_data) || [];
     }
+
+    dispatch_event('search', {
+      value: search_value
+    });
   }
 
   $: if (search_value?.length === 0 && active_dimensions?.length) {
     process_data();
+
+    dispatch_event('search', {
+      value: search_value
+    });
   }
 
   $: if (date_input_element && !picker) {
@@ -607,63 +719,148 @@
   onMount(() => {
     return () => {
       picker?.destroy();
-    }
+    };
   });
 </script>
 
+<svelte:head>
+  <script src="https://cdn.jsdelivr.net/npm/litepicker/dist/litepicker.js"></script>
+</svelte:head>
+
 {#if loading}
   <div class="container">
-    <div class="dimensions-picker-skeleton">
-    </div>
+    <div class="dimensions-picker-skeleton"></div>
 
-    <div class="table-container-skeleton">
-    </div>
+    <div class="table-container-skeleton"></div>
   </div>
-{:else}
-  {#if mapped_dimensions}
-    <div class="container">
-      <div class="dimensions-picker"
-           style="--dimensions-select-background-color: {config?.dimensions?.select?.background_color || DEFAULT_CONFIG?.dimensions?.select?.background_color}; --dimensions-active-text-color: {config?.dimensions?.active_color || DEFAULT_CONFIG.dimensions.active_color}; --dimensions-text-color: {config?.dimensions?.color || DEFAULT_CONFIG?.dimensions?.color}; --active-dimension-background: {config?.dimensions?.active_background || DEFAULT_CONFIG.dimensions.active_background}; --dimensions-picker-border: {config?.dimensions?.border || DEFAULT_CONFIG.dimensions.border}; --dimensions-picker-width: {config?.dimensions?.width || DEFAULT_CONFIG.dimensions.width}; --dimensions-picker-title-color: {config?.dimensions?.title?.color || DEFAULT_CONFIG.dimensions.title.color}; --dimensions-picker-title-font-size: {config?.dimensions?.title?.font_size || DEFAULT_CONFIG.dimensions.title.font_size}; --dimensions-picker-select-border: {config?.dimensions?.select?.border || DEFAULT_CONFIG.dimensions.select.border}; --dimensions-background-color: {config?.dimensions?.background_color || DEFAULT_CONFIG.dimensions.background_color};">
+{:else if mapped_dimensions}
+  <div class="container">
+    <div
+      class="dimensions-picker"
+      style="--dimensions-select-background-color: {config?.dimensions?.select?.background_color ||
+        DEFAULT_CONFIG?.dimensions?.select
+          ?.background_color}; --dimensions-active-text-color: {config?.dimensions?.active_color ||
+        DEFAULT_CONFIG.dimensions.active_color}; --dimensions-text-color: {config?.dimensions
+        ?.color || DEFAULT_CONFIG?.dimensions?.color}; --active-dimension-background: {config
+        ?.dimensions?.active_background ||
+        DEFAULT_CONFIG.dimensions.active_background}; --dimensions-picker-border: {config
+        ?.dimensions?.border ||
+        DEFAULT_CONFIG.dimensions.border}; --dimensions-picker-width: {config?.dimensions?.width ||
+        DEFAULT_CONFIG.dimensions.width}; --dimensions-picker-title-color: {config?.dimensions
+        ?.title?.color ||
+        DEFAULT_CONFIG.dimensions.title.color}; --dimensions-picker-title-font-size: {config
+        ?.dimensions?.title?.font_size ||
+        DEFAULT_CONFIG.dimensions.title.font_size}; --dimensions-picker-select-border: {config
+        ?.dimensions?.select?.border ||
+        DEFAULT_CONFIG.dimensions.select.border}; --dimensions-background-color: {config?.dimensions
+        ?.background_color || DEFAULT_CONFIG.dimensions.background_color};"
+    >
+      {#if !config?.date_range?.hidden}
+        <span class="dimensions-picker-title"> Date Range Dimension </span>
 
-        {#if !config?.date_range?.hidden}
-        <span class="dimensions-picker-title">
-          Date Range Dimension
-        </span>
+        <select class="dimensions-picker-select" bind:value={date_range_key}>
+          {#each mapped_dimensions as dimension}
+            <option value={dimension.value}>
+              {dimension.label}
+            </option>
+          {/each}
+        </select>
+      {/if}
 
-          <select class="dimensions-picker-select" bind:value={date_range_key}>
-            {#each mapped_dimensions as dimension}
-              <option value={dimension.value}>
-                {dimension.label}
-              </option>
-            {/each}
-          </select>
-        {/if}
+      <span class="dimensions-picker-title"> Dimensions </span>
 
-        <span class="dimensions-picker-title">
-        Dimensions
-      </span>
+      {#if mapped_dimensions?.length}
+        {@const groups = mapped_dimensions
+          .map((dimension) => dimension.group)
+          .filter(Boolean)
+          .filter((value, index, array) => array.indexOf(value) === index)}
 
-        {#each mapped_dimensions as dimension}
-          <div class="selected-dimension hidden" />
-
-          <span
-            class="cursor-pointer dimension {dimension.selected ? 'selected-dimension' : ''}"
-            style="color: {dimension.selected ? 'var(--dimensions-active-text-color)' : 'var(--dimensions-text-color)'}"
-            on:click={() => select_dimension(dimension.value)}
+        {#each groups as group}
+          <div
+            class="group"
+            style="--group-header-color: {config?.dimensions.group_header_color ||
+              DEFAULT_CONFIG.dimensions.group_header_color}"
           >
+            <div
+              class="group-header cursor-pointer"
+              on:click={() => toggle_group(group)}
+              style="font-weight: bold; color: var(--group-header-color);"
+            >
+              <span>
+                {group}
+              </span>
+
+              {#if !$expanded_groups?.includes(group)}
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-chevron-up"><path d="m18 15-6-6-6 6"/></svg>
+              {:else}
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-chevron-down"><path d="m6 9 6 6 6-6"/></svg>
+              {/if}
+            </div>
+
+            {#if $expanded_groups}
+              <div
+                class="group-content"
+                style="display: {!$expanded_groups.includes(group) ? 'flex' : 'none'}"
+              >
+                {#each mapped_dimensions.filter((dim) => dim.group === group) as dimension}
+                  <div class="selected-dimension hidden" />
+
+                  <span
+                    class="cursor-pointer dimension {dimension.selected
+                      ? 'selected-dimension'
+                      : ''}"
+                    style="color: {dimension.selected
+                      ? 'var(--dimensions-active-text-color)'
+                      : 'var(--dimensions-text-color)'}"
+                    on:click={() => select_dimension(dimension.value)}
+                  >
+                    {#if config?.data_formatting?.[dimension.label]}
+                      {config.data_formatting[dimension.label].label}
+                    {:else}
+                      {dimension.label}
+                    {/if}
+                  </span>
+                {/each}
+              </div>
+            {/if}
+          </div>
+        {/each}
+      {/if}
+
+      {#each mapped_dimensions.filter((dim) => !dim?.group?.length) as dimension}
+        <div class="selected-dimension hidden" />
+
+        <span
+          class="cursor-pointer dimension {dimension.selected ? 'selected-dimension' : ''}"
+          style="color: {dimension.selected
+            ? 'var(--dimensions-active-text-color)'
+            : 'var(--dimensions-text-color)'}"
+          on:click={() => select_dimension(dimension.value)}
+        >
           {#if config?.data_formatting?.[dimension.label]}
             {config.data_formatting[dimension.label].label}
           {:else}
             {dimension.label}
           {/if}
         </span>
-        {/each}
-      </div>
+      {/each}
+    </div>
 
-      <div class="table-wrapper-container">
-        {#if active_dimensions?.length}
-          <div class="filters-row"
-               style="--filters-row-input-border: {config?.content?.toolbar?.input?.border || DEFAULT_CONFIG.content.toolbar.input.border}; --filters-row-button-border: {config?.content?.toolbar?.button?.border || DEFAULT_CONFIG.content.toolbar.button.border}; --filters-row-button-font-size: {config?.content?.toolbar?.button?.font_size || DEFAULT_CONFIG.content.toolbar.button.font_size}; --filters-row-button-hover-background-color: {config?.content?.toolbar?.button?.hover_background_color || DEFAULT_CONFIG.content.toolbar.button.hover_background_color};">
+    <div class="table-wrapper-container">
+      {#if active_dimensions?.length}
+        <div
+          class="filters-row"
+          style="--filters-row-input-border: {config?.content?.toolbar?.input?.border ||
+            DEFAULT_CONFIG.content.toolbar.input.border}; --filters-row-button-border: {config
+            ?.content?.toolbar?.button?.border ||
+            DEFAULT_CONFIG.content.toolbar.button.border}; --filters-row-button-font-size: {config
+            ?.content?.toolbar?.button?.font_size ||
+            DEFAULT_CONFIG.content.toolbar.button
+              .font_size}; --filters-row-button-hover-background-color: {config?.content?.toolbar
+            ?.button?.hover_background_color ||
+            DEFAULT_CONFIG.content.toolbar.button.hover_background_color};"
+        >
+          {#if config?.content?.toolbar?.search?.display || config?.content?.toolbar?.search?.display === undefined}
             <input
               class="filters-row-input cursor-text"
               type="text"
@@ -675,7 +872,11 @@
               style="transition: opacity 0.5s ease;"
             />
 
-            <div class="icon-button" on:click={() => (is_search_active = true)} style="display: {is_search_active ? 'none' : 'block'}">
+            <div
+              class="icon-button"
+              on:click={() => (is_search_active = true)}
+              style="display: {is_search_active ? 'none' : 'block'}"
+            >
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 width="24"
@@ -688,12 +889,18 @@
                 stroke-linejoin="round"
                 class="lucide lucide-search"
               >
-                <circle cx="11" cy="11" r="8"/>
-                <path d="m21 21-4.3-4.3"/>
+                <circle cx="11" cy="11" r="8" />
+                <path d="m21 21-4.3-4.3" />
               </svg>
             </div>
+          {/if}
 
-            <div class="icon-button" on:click={() => export_csv()} style="display: {is_search_active ? 'none' : 'block'}">
+          {#if config?.content?.toolbar?.export?.display || config?.content?.toolbar?.export?.display === undefined}
+            <div
+              class="icon-button"
+              on:click={() => export_csv()}
+              style="display: {is_search_active ? 'none' : 'block'}"
+            >
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 width="24"
@@ -704,14 +911,20 @@
                 stroke-width="2"
                 stroke-linecap="round"
                 stroke-linejoin="round"
-                class="lucide lucide-download">
-                <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
-                <polyline points="7 10 12 15 17 10"/>
-                <line x1="12" x2="12" y1="15" y2="3"/>
+                class="lucide lucide-download"
+              >
+                <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
+                <polyline points="7 10 12 15 17 10" />
+                <line x1="12" x2="12" y1="15" y2="3" />
               </svg>
             </div>
+          {/if}
 
-            <div class="icon-button sort-button" on:click={() => (show_sort_popover = !show_sort_popover)}>
+          {#if config?.content?.toolbar?.sort?.display || config?.content?.toolbar?.sort?.display === undefined}
+            <div
+              class="icon-button sort-button"
+              on:click={() => (show_sort_popover = !show_sort_popover)}
+            >
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 width="24"
@@ -722,25 +935,54 @@
                 stroke-width="2"
                 stroke-linecap="round"
                 stroke-linejoin="round"
-                class="lucide lucide-arrow-down-up">
-                <path d="m3 16 4 4 4-4"/>
-                <path d="M7 20V4"/>
-                <path d="m21 8-4-4-4 4"/>
-                <path d="M17 4v16"/>
+                class="lucide lucide-arrow-down-up"
+              >
+                <path d="m3 16 4 4 4-4" />
+                <path d="M7 20V4" />
+                <path d="m21 8-4-4-4 4" />
+                <path d="M17 4v16" />
               </svg>
 
               {#if config?.sort_priority?.length}
-                <div class="sort-indicator" style="--sort-indicator-background: {config?.content?.table?.popover?.indicator?.background_color || DEFAULT_CONFIG.content?.table?.popover?.indicator?.background_color};">
+                <div
+                  class="sort-indicator"
+                  style="--sort-indicator-background: {config?.content?.table?.popover?.indicator
+                    ?.background_color ||
+                    DEFAULT_CONFIG.content?.table?.popover?.indicator?.background_color};"
+                >
                   {config.sort_priority.length}
                 </div>
               {/if}
             </div>
 
-            <div class="sort-popover" use:clickOutside on:click_outside={() => (show_sort_popover = false)} style="display: {show_sort_popover ? 'block' : 'none'}; --sort-popover-border: {config?.content?.table?.popover?.border || DEFAULT_CONFIG.content?.table?.popover?.border}; --sort-popover-background: {config?.content?.table?.popover?.background_color || DEFAULT_CONFIG.content?.table?.popover?.background_color};">
+            <div
+              class="sort-popover"
+              use:clickOutside
+              on:click_outside={() => (show_sort_popover = false)}
+              style="display: {show_sort_popover ? 'block' : 'none'}; --sort-popover-border: {config
+                ?.content?.table?.popover?.border ||
+                DEFAULT_CONFIG.content?.table?.popover?.border}; --sort-popover-background: {config
+                ?.content?.table?.popover?.background_color ||
+                DEFAULT_CONFIG.content?.table?.popover?.background_color};"
+            >
               <div class="sort-popover-head">
                 <span>Sort columns</span>
 
-                <div class="sort-popover-actions" style="--sort-popover-action-color: {config?.content?.table?.popover?.actions?.color || DEFAULT_CONFIG.content?.table?.popover?.actions?.color}; --sort-popover-action-background-color: {config?.content?.table?.popover?.actions?.background_color || DEFAULT_CONFIG.content?.table?.popover?.actions?.background_color}; --sort-popover-action-border: {config?.content?.table?.popover?.actions?.border || DEFAULT_CONFIG.content?.table?.popover?.actions?.border}; --sort-popover-action-hover-background-color: {config?.content?.table?.popover?.actions?.hover_background_color || DEFAULT_CONFIG.content?.table?.popover?.actions?.hover_background_color};">
+                <div
+                  class="sort-popover-actions"
+                  style="--sort-popover-action-color: {config?.content?.table?.popover?.actions
+                    ?.color ||
+                    DEFAULT_CONFIG.content?.table?.popover?.actions
+                      ?.color}; --sort-popover-action-background-color: {config?.content?.table
+                    ?.popover?.actions?.background_color ||
+                    DEFAULT_CONFIG.content?.table?.popover?.actions
+                      ?.background_color}; --sort-popover-action-border: {config?.content?.table
+                    ?.popover?.actions?.border ||
+                    DEFAULT_CONFIG.content?.table?.popover?.actions
+                      ?.border}; --sort-popover-action-hover-background-color: {config?.content
+                    ?.table?.popover?.actions?.hover_background_color ||
+                    DEFAULT_CONFIG.content?.table?.popover?.actions?.hover_background_color};"
+                >
                   <button class="sort-popover-action" on:click={() => add_column_to_sort()}>
                     Add column
                   </button>
@@ -752,10 +994,14 @@
                   {#if config.sort_priority?.length}
                     {#each config.sort_priority as item, index}
                       <div class="sort-popover-item">
-                    <span class="sort-popover-item-index">
-                      {index + 1}.
-                    </span>
-                        <select class="dimensions-picker-select" style="margin-right: 1rem;" bind:value={item.key}>
+                        <span class="sort-popover-item-index">
+                          {index + 1}.
+                        </span>
+                        <select
+                          class="dimensions-picker-select"
+                          style="margin-right: 1rem;"
+                          bind:value={item.key}
+                        >
                           {#each active_dimensions as dimension}
                             <option value={dimension.value}>
                               {dimension.label}
@@ -763,22 +1009,92 @@
                           {/each}
                         </select>
 
-                        <select class="dimensions-picker-select" style="margin-right: 1rem;" bind:value={item.order}>
-                          {#each [{label: 'A-Z', value: 'a-z'}, {label: 'Z-A', value: 'z-a'}] as order}
+                        <select
+                          class="dimensions-picker-select"
+                          style="margin-right: 1rem;"
+                          bind:value={item.order}
+                        >
+                          {#each [{ label: 'A-Z', value: 'a-z' }, { label: 'Z-A', value: 'z-a' }] as order}
                             <option value={order.value}>
                               {order.label}
                             </option>
                           {/each}
                         </select>
-                        <div class="sort-popover-item-actions" style="--sort-popover-action-color: {config?.content?.table?.popover?.actions?.color || DEFAULT_CONFIG.content?.table?.popover?.actions?.color}; --sort-popover-action-background-color: {config?.content?.table?.popover?.actions?.background_color || DEFAULT_CONFIG.content?.table?.popover?.actions?.background_color}; --sort-popover-action-border: {config?.content?.table?.popover?.actions?.border || DEFAULT_CONFIG.content?.table?.popover?.actions?.border}; --sort-popover-action-hover-background-color: {config?.content?.table?.popover?.actions?.hover_background_color || DEFAULT_CONFIG.content?.table?.popover?.actions?.hover_background_color};">
-                          <button class="sort-popover-action" on:click={() => move_column_up(index)} disabled={index === 0}>
-                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-move-up"><path d="M8 6L12 2L16 6"/><path d="M12 2V22"/></svg>
+                        <div
+                          class="sort-popover-item-actions"
+                          style="--sort-popover-action-color: {config?.content?.table?.popover
+                            ?.actions?.color ||
+                            DEFAULT_CONFIG.content?.table?.popover?.actions
+                              ?.color}; --sort-popover-action-background-color: {config?.content
+                            ?.table?.popover?.actions?.background_color ||
+                            DEFAULT_CONFIG.content?.table?.popover?.actions
+                              ?.background_color}; --sort-popover-action-border: {config?.content
+                            ?.table?.popover?.actions?.border ||
+                            DEFAULT_CONFIG.content?.table?.popover?.actions
+                              ?.border}; --sort-popover-action-hover-background-color: {config
+                            ?.content?.table?.popover?.actions?.hover_background_color ||
+                            DEFAULT_CONFIG.content?.table?.popover?.actions
+                              ?.hover_background_color};"
+                        >
+                          <button
+                            class="sort-popover-action"
+                            on:click={() => move_column_up(index)}
+                            disabled={index === 0}
+                          >
+                            <svg
+                              xmlns="http://www.w3.org/2000/svg"
+                              width="16"
+                              height="16"
+                              viewBox="0 0 24 24"
+                              fill="none"
+                              stroke="currentColor"
+                              stroke-width="2"
+                              stroke-linecap="round"
+                              stroke-linejoin="round"
+                              class="lucide lucide-move-up"
+                              ><path d="M8 6L12 2L16 6" /><path d="M12 2V22" /></svg
+                            >
                           </button>
-                          <button class="sort-popover-action" on:click={() => move_column_down(index)} disabled={(index + 1) === config.sort_priority.length}>
-                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-move-down"><path d="M8 18L12 22L16 18"/><path d="M12 2V22"/></svg>
+                          <button
+                            class="sort-popover-action"
+                            on:click={() => move_column_down(index)}
+                            disabled={index + 1 === config.sort_priority.length}
+                          >
+                            <svg
+                              xmlns="http://www.w3.org/2000/svg"
+                              width="16"
+                              height="16"
+                              viewBox="0 0 24 24"
+                              fill="none"
+                              stroke="currentColor"
+                              stroke-width="2"
+                              stroke-linecap="round"
+                              stroke-linejoin="round"
+                              class="lucide lucide-move-down"
+                              ><path d="M8 18L12 22L16 18" /><path d="M12 2V22" /></svg
+                            >
                           </button>
                           <button class="sort-popover-action" on:click={() => remove_column(index)}>
-                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-trash-2"><path d="M3 6h18"/><path d="M19 6v14c0 1-1 2-2 2H7c-1 0-2-1-2-2V6"/><path d="M8 6V4c0-1 1-2 2-2h4c1 0 2 1 2 2v2"/><line x1="10" x2="10" y1="11" y2="17"/><line x1="14" x2="14" y1="11" y2="17"/></svg>
+                            <svg
+                              xmlns="http://www.w3.org/2000/svg"
+                              width="16"
+                              height="16"
+                              viewBox="0 0 24 24"
+                              fill="none"
+                              stroke="currentColor"
+                              stroke-width="2"
+                              stroke-linecap="round"
+                              stroke-linejoin="round"
+                              class="lucide lucide-trash-2"
+                              ><path d="M3 6h18" /><path
+                                d="M19 6v14c0 1-1 2-2 2H7c-1 0-2-1-2-2V6"
+                              /><path d="M8 6V4c0-1 1-2 2-2h4c1 0 2 1 2 2v2" /><line
+                                x1="10"
+                                x2="10"
+                                y1="11"
+                                y2="17"
+                              /><line x1="14" x2="14" y1="11" y2="17" /></svg
+                            >
                           </button>
                         </div>
                       </div>
@@ -787,8 +1103,14 @@
                 {/if}
               </div>
             </div>
+          {/if}
 
-            <div class="calendar-icon" bind:this={date_input_element} on:click={() => picker?.show()}>
+          {#if config?.content?.toolbar?.date_filter?.display || config?.content?.toolbar?.date_filter?.display === undefined}
+            <div
+              class="calendar-icon"
+              bind:this={date_input_element}
+              on:click={() => picker?.show()}
+            >
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 width="24"
@@ -799,393 +1121,499 @@
                 stroke-width="2"
                 stroke-linecap="round"
                 stroke-linejoin="round"
-                class="lucide lucide-calendar-days">
-                <path d="M8 2v4"/>
-                <path d="M16 2v4"/>
-                <rect width="18" height="18" x="3" y="4" rx="2"/>
-                <path d="M3 10h18"/>
-                <path d="M8 14h.01"/>
-                <path d="M12 14h.01"/>
-                <path d="M16 14h.01"/>
-                <path d="M8 18h.01"/>
-                <path d="M12 18h.01"/>
-                <path d="M16 18h.01"/>
+                class="lucide lucide-calendar-days"
+              >
+                <path d="M8 2v4" />
+                <path d="M16 2v4" />
+                <rect width="18" height="18" x="3" y="4" rx="2" />
+                <path d="M3 10h18" />
+                <path d="M8 14h.01" />
+                <path d="M12 14h.01" />
+                <path d="M16 14h.01" />
+                <path d="M8 18h.01" />
+                <path d="M12 18h.01" />
+                <path d="M16 18h.01" />
               </svg>
             </div>
-          </div>
-        {/if}
+          {/if}
+        </div>
+      {/if}
 
-        <div class="table-wrapper"
-             style="--table-wrapper-max-height: {config?.content?.max_height || DEFAULT_CONFIG.content.max_height}; --table-wrapper-background: {config?.content?.background || DEFAULT_CONFIG.content.background};">
-          {#if active_dimensions}
-            <div
-              style="--table-head-text-color: {config?.content?.table?.head?.color || DEFAULT_CONFIG.content.table.head.color}; --table-cell-background: {config?.content?.table?.cell?.background || DEFAULT_CONFIG.content.table.cell.background}; --table-container-background: {config?.content?.table?.container?.background || DEFAULT_CONFIG.content.table.container.background}; --table-container-padding: {config?.content?.table?.container?.padding || DEFAULT_CONFIG.content.table.container.padding}; --table-head-row-background: {config?.content?.table?.head?.background || DEFAULT_CONFIG.content.table.head.background}; --table-head-row-min-height: {config?.content?.table?.head?.min_height || DEFAULT_CONFIG.content.table.head.min_height}; --table-head-row-font-size: {config?.content?.table?.head?.font_size || DEFAULT_CONFIG.content.table.head.font_size}; --table-head-row-font-weight: {config?.content?.table?.head?.font_weight || DEFAULT_CONFIG.content.table.head.font_weight}; --table-head-row-padding: {config?.content?.table?.head?.padding || DEFAULT_CONFIG.content.table.head.padding}; --table-border: {config?.content?.table?.container?.border || DEFAULT_CONFIG.content.table.container.border}; --table-border-radius: {config?.content?.table?.container?.border_radius || DEFAULT_CONFIG.content.table.container.border_radius}; --table-border-color: {config?.content?.table?.container?.border_color || DEFAULT_CONFIG.content.table.container.border_color};"
+      <div
+        class="table-wrapper"
+        style="--table-wrapper-max-height: {config?.content?.max_height ||
+          DEFAULT_CONFIG.content.max_height}; --table-wrapper-background: {config?.content
+          ?.background || DEFAULT_CONFIG.content.background};"
+      >
+        {#if active_dimensions}
+          <div
+            style="--table-head-text-color: {config?.content?.table?.head?.color ||
+              DEFAULT_CONFIG.content.table.head.color}; --table-cell-background: {config?.content
+              ?.table?.cell?.background ||
+              DEFAULT_CONFIG.content.table.cell.background}; --table-container-background: {config
+              ?.content?.table?.container?.background ||
+              DEFAULT_CONFIG.content.table.container.background}; --table-container-padding: {config
+              ?.content?.table?.container?.padding ||
+              DEFAULT_CONFIG.content.table.container.padding}; --table-head-row-background: {config
+              ?.content?.table?.head?.background ||
+              DEFAULT_CONFIG.content.table.head.background}; --table-head-row-min-height: {config
+              ?.content?.table?.head?.min_height ||
+              DEFAULT_CONFIG.content.table.head.min_height}; --table-head-row-font-size: {config
+              ?.content?.table?.head?.font_size ||
+              DEFAULT_CONFIG.content.table.head.font_size}; --table-head-row-font-weight: {config
+              ?.content?.table?.head?.font_weight ||
+              DEFAULT_CONFIG.content.table.head.font_weight}; --table-head-row-padding: {config
+              ?.content?.table?.head?.padding ||
+              DEFAULT_CONFIG.content.table.head.padding}; --table-border: {config?.content?.table
+              ?.container?.border ||
+              DEFAULT_CONFIG.content.table.container.border}; --table-border-radius: {config
+              ?.content?.table?.container?.border_radius ||
+              DEFAULT_CONFIG.content.table.container.border_radius}; --table-border-color: {config
+              ?.content?.table?.container?.border_color ||
+              DEFAULT_CONFIG.content.table.container.border_color};"
+          >
+            <table
+              style="--border-spacing: {config?.content?.table?.border_spacing ||
+                DEFAULT_CONFIG.content.table.border_spacing}; --border-collapse: {config?.content
+                ?.table?.border_collapse || DEFAULT_CONFIG.content.table.border_collapse}"
             >
-              <table style="--border-spacing: {config?.content?.table?.border_spacing || DEFAULT_CONFIG.content.table.border_spacing}; --border-collapse: {config?.content?.table?.border_collapse || DEFAULT_CONFIG.content.table.border_collapse}">
-                <tr class="table-head-row">
-                  {#each active_dimensions as dimension}
-                    <th class={config?.sort_priority?.length ? '' : 'cursor-pointer'} on:click={() => sort_column_data(dimension.value)}>
+              <tr class="table-head-row">
+                {#each active_dimensions as dimension}
+                  <th
+                    class={config?.sort_priority?.length ? '' : 'cursor-pointer'}
+                    on:click={() => sort_column_data(dimension.value)}
+                  >
+                    <div style="display: flex; align-items: center; gap: 8px;">
                       {#if config?.data_formatting?.[dimension.label]}
                         {config.data_formatting[dimension.label].label}
                       {:else}
                         {dimension.label}
                       {/if}
-                    </th>
-                  {/each}
-                </tr>
 
-                {#each processed_data as row}
-                  <tr>
-                    {#each active_dimensions as dimension}
-                      <td class="table-cell">
-                        {#if typeof row[dimension.value] === 'object'}
-                          {#if Object.entries(row[dimension.value]).length}
-                            {#each Object.entries(row[dimension.value]) as [key, value]}
-                              <div>
-                                <b>{key}:</b>
-                                {#if config?.formatter?.toString()}
-                                  {#if config?.data_formatting?.[dimension.label]}
-                                    {value ? config.data_formatting[dimension.label].formatter(value) : '-'}
-                                  {:else}
-                                    {value ? config.formatter(value) : '-'}
-                                  {/if}
-                                {:else}
-                                  {#if config?.data_formatting?.[dimension.label]}
-                                    {value ? config.data_formatting[dimension.label].formatter(value) : '-'}
-                                  {:else}
-                                    {value ? value : '-'}
-                                  {/if}
-                                {/if}
-                              </div>
-                            {/each}
+                      {#if config?.sort_priority?.length}
+                        {#if config.sort_priority.find((item) => item.key === dimension.value)}
+                          {#if config.sort_priority.find((item) => item.key === dimension.value).order === 'a-z'}
+                            <svg
+                              xmlns="http://www.w3.org/2000/svg"
+                              width="16"
+                              height="16"
+                              viewBox="0 0 24 24"
+                              fill="none"
+                              stroke="currentColor"
+                              stroke-width="2"
+                              stroke-linecap="round"
+                              stroke-linejoin="round"
+                              class="lucide lucide-arrow-down-a-z"
+                              ><path d="m3 16 4 4 4-4" /><path d="M7 20V4" /><path
+                                d="M20 8h-5"
+                              /><path d="M15 10V6.5a2.5 2.5 0 0 1 5 0V10" /><path
+                                d="M15 14h5l-5 6h5"
+                              /></svg
+                            >
                           {:else}
-                            -
-                          {/if}
-                        {:else}
-                          {#if config?.formatter?.toString()}
-                            {#if config?.data_formatting?.[dimension.label]}
-                              {row[dimension.value] ? config.data_formatting[dimension.label].formatter(row[dimension.value]) : '-'}
-                            {:else}
-                              {row[dimension.value] ? config.formatter(row[dimension.value]) : '-'}
-                            {/if}
-                          {:else}
-                            {#if config?.data_formatting?.[dimension.label]}
-                              {row[dimension.value] ? config.data_formatting[dimension.label].formatter(row[dimension.value]) : '-'}
-                            {:else}
-                              {row[dimension.value] ? row[dimension.value] : '-'}
-                            {/if}
+                            <svg
+                              xmlns="http://www.w3.org/2000/svg"
+                              width="16"
+                              height="16"
+                              viewBox="0 0 24 24"
+                              fill="none"
+                              stroke="currentColor"
+                              stroke-width="2"
+                              stroke-linecap="round"
+                              stroke-linejoin="round"
+                              class="lucide lucide-arrow-down-z-a"
+                              ><path d="m3 16 4 4 4-4" /><path d="M7 4v16" /><path
+                                d="M15 4h5l-5 6h5"
+                              /><path d="M15 20v-3.5a2.5 2.5 0 0 1 5 0V20" /><path
+                                d="M20 18h-5"
+                              /></svg
+                            >
                           {/if}
                         {/if}
-                      </td>
-                    {/each}
-                  </tr>
+                      {/if}
+                    </div>
+                  </th>
                 {/each}
-              </table>
-            </div>
-          {/if}
-        </div>
+              </tr>
+
+              {#each processed_data as row}
+                <tr>
+                  {#each active_dimensions as dimension}
+                    <td class="table-cell">
+                      {#if typeof row[dimension.value] === 'object'}
+                        {#if Object.entries(row[dimension.value]).length}
+                          {#each Object.entries(row[dimension.value]) as [key, value]}
+                            <div>
+                              <b>{key}:</b>
+                              {#if config?.formatter?.toString()}
+                                {#if config?.data_formatting?.[dimension.label]}
+                                  {value
+                                    ? config.data_formatting[dimension.label].formatter(value)
+                                    : '-'}
+                                {:else}
+                                  {value ? config.formatter(value) : '-'}
+                                {/if}
+                              {:else if config?.data_formatting?.[dimension.label]}
+                                {value
+                                  ? config.data_formatting[dimension.label].formatter(value)
+                                  : '-'}
+                              {:else}
+                                {value ? value : '-'}
+                              {/if}
+                            </div>
+                          {/each}
+                        {:else}
+                          -
+                        {/if}
+                      {:else if config?.formatter?.toString()}
+                        {#if config?.data_formatting?.[dimension.label]}
+                          {row[dimension.value]
+                            ? config.data_formatting[dimension.label].formatter(
+                                row[dimension.value]
+                              )
+                            : '-'}
+                        {:else}
+                          {row[dimension.value] ? config.formatter(row[dimension.value]) : '-'}
+                        {/if}
+                      {:else if config?.data_formatting?.[dimension.label]}
+                        {row[dimension.value]
+                          ? config.data_formatting[dimension.label].formatter(row[dimension.value])
+                          : '-'}
+                      {:else}
+                        {row[dimension.value] ? row[dimension.value] : '-'}
+                      {/if}
+                    </td>
+                  {/each}
+                </tr>
+              {/each}
+            </table>
+          </div>
+        {/if}
       </div>
     </div>
-  {/if}
+  </div>
 {/if}
 
 <style lang="postcss">
-    .hidden {
-        display: none;
+  .hidden {
+    display: none;
+  }
+
+  .cursor-pointer {
+    cursor: pointer;
+  }
+
+  .cursor-text {
+    cursor: text;
+  }
+
+  .container {
+    margin: 0;
+    padding: 0;
+    display: flex;
+    gap: 0.5rem;
+  }
+
+  .icon-button {
+    border: none;
+    background: none;
+    cursor: pointer;
+    padding: 0.5rem;
+    border-radius: 0.25rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .calendar-icon {
+    padding: 0.5rem;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .calendar-icon svg {
+    width: 24px;
+    height: 24px;
+  }
+
+  .table-cell {
+    padding: 0.5rem 1rem;
+    background: var(--table-cell-background);
+  }
+
+  .filters-row {
+    height: 2.5rem;
+    position: absolute;
+    top: 0;
+    right: 0;
+    z-index: 10;
+    display: flex;
+    gap: 0.5rem;
+    justify-content: end;
+    left: 14rem;
+
+    &-input {
+      color: black;
+      border: var(--filters-row-input-border);
+      padding: 0.5rem;
+      border-radius: 0.25rem;
+      transition: opacity 0.3s ease;
+      max-width: 200px;
+      opacity: 0;
     }
 
-    .cursor-pointer {
+    &-button {
+      border: var(--filters-row-button-border);
+      font-size: var(--filters-row-button-font-size);
+      padding: 0.5rem;
+      border-radius: 0.25rem;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    &-button:hover {
+      background-color: var(--filters-row-button-hover-background-color);
+    }
+  }
+
+  .lucide-arrow-down-up {
+    position: relative;
+  }
+
+  .group {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+
+  .group-header {
+    width: 95%;
+    padding: 0.5rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+
+  .group-content {
+    padding-left: 1rem;
+    padding-bottom: 0.2rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.2rem;
+  }
+
+  .sort-button {
+    position: relative;
+  }
+
+  .sort-indicator {
+    position: absolute;
+    right: -7px;
+    top: 0;
+    padding: 0.2rem;
+    border-radius: 50%;
+    background-color: var(--sort-indicator-background);
+    color: white;
+    font-size: 10px;
+    width: 1.2rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .sort-popover {
+    cursor: default;
+    position: absolute;
+    top: 2.5rem;
+    right: 5rem;
+    z-index: 10;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    border: var(--sort-popover-border);
+    border-radius: 0.25rem;
+    background-color: var(--sort-popover-background);
+    padding: 0.5rem;
+    width: 30vw;
+    min-height: 6vh;
+
+    &-head {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-left: 0.5rem;
+      margin-right: 0.5rem;
+    }
+
+    &-action {
+      cursor: pointer;
+      padding: 0.5rem;
+      border-radius: 0.25rem;
+      background-color: var(--sort-popover-action-background-color);
+      border: var(--sort-popover-action-border);
+      color: var(--sort-popover-action-color);
+    }
+
+    &-action:hover {
+      background-color: var(--sort-popover-action-hover-background-color);
+    }
+
+    &-actions {
+      display: flex;
+      gap: 0.5rem;
+    }
+
+    &-body {
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+    }
+
+    &-item {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 0.5rem;
+
+      &-index {
+        padding: 0.5rem;
+      }
+
+      &-action {
         cursor: pointer;
-    }
-
-    .cursor-text {
-        cursor: text;
-    }
-
-    .container {
-        margin: 0;
-        padding: 0;
-        display: flex;
-        gap: 0.5rem;
-    }
-
-    .icon-button {
-        border: none;
-        background: none;
-        cursor: pointer;
         padding: 0.5rem;
         border-radius: 0.25rem;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-    }
+        background-color: var(--sort-popover-action-background-color);
+        border: var(--sort-popover-action-border);
+        color: var(--sort-popover-action-color);
+      }
 
-    .calendar-icon {
-        padding: 0.5rem;
-        cursor: pointer;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-    }
+      &-action:hover {
+        background-color: var(--sort-popover-action-hover-background-color);
+      }
 
-    .calendar-icon svg {
-        width: 24px;
-        height: 24px;
-    }
-
-    .table-cell {
-        padding: 0.5rem 1rem;
-        background: var(--table-cell-background);
-    }
-
-    .filters-row {
-        height: 2.5rem;
-        position: absolute;
-        top: 0;
-        right: 0;
-        z-index: 10;
+      &-actions {
         display: flex;
         gap: 0.5rem;
-        justify-content: end;
-        left: 14rem;
+      }
+    }
+  }
 
-        &-input {
-            color: black;
-            border: var(--filters-row-input-border);
-            padding: 0.5rem;
-            border-radius: 0.25rem;
-            transition: opacity 0.3s ease;
-            max-width: 200px;
-            opacity: 0;
+  .table-wrapper-container {
+    position: relative;
+    display: flex;
+    overflow-x: auto;
+    flex: 1;
+  }
+
+  table {
+    width: 100%;
+    border-spacing: var(--border-spacing);
+    border-collapse: var(--border-collapse);
+  }
+
+  .table-wrapper {
+    margin-top: 3rem;
+    width: 100%;
+    max-height: var(--table-wrapper-max-height);
+    overflow: auto;
+    background: var(--table-container-background);
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    flex: 1 1 0;
+  }
+
+  .dimensions-picker {
+    border: var(--dimensions-picker-border);
+    width: var(--dimensions-picker-width);
+    background-color: var(--dimensions-background-color);
+    padding: 0.5rem;
+    border-radius: 0.25rem;
+    display: flex;
+    gap: 0.5rem;
+    align-items: start;
+    flex-direction: column;
+
+    &-title {
+      color: var(--dimensions-picker-title-color);
+      font-size: var(--dimensions-picker-title-font-size);
+    }
+
+    &-skeleton {
+      height: 40vh;
+      width: 17vw;
+      background-color: #f0f0f0;
+      animation: pulse 2s infinite;
+      @keyframes pulse {
+        0% {
+          opacity: 1;
         }
-
-        &-button {
-            border: var(--filters-row-button-border);
-            font-size: var(--filters-row-button-font-size);
-            padding: 0.5rem;
-            border-radius: 0.25rem;
-            display: flex;
-            justify-content: center;
-            align-items: center;
+        50% {
+          opacity: 0.5;
         }
-
-        &-button:hover {
-            background-color: var(--filters-row-button-hover-background-color);
+        100% {
+          opacity: 1;
         }
+      }
     }
+  }
 
-    .lucide-arrow-down-up {
-        position: relative;
+  .table-container-skeleton {
+    height: 40vh;
+    width: 100%;
+    background-color: #f0f0f0;
+    animation: pulse 2s infinite;
+    @keyframes pulse {
+      0% {
+        opacity: 1;
+      }
+      50% {
+        opacity: 0.5;
+      }
+      100% {
+        opacity: 1;
+      }
     }
+  }
 
-    .sort-button {
-        position: relative;
-    }
+  .dimensions-picker-select {
+    border: var(--dimensions-picker-select-border);
+    background-color: var(--dimensions-select-background-color);
+    padding: 0.5rem;
+    border-radius: 0.25rem;
+    width: 70%;
+  }
 
-    .sort-indicator {
-        position: absolute;
-        right: -7px;
-        top: 0;
-        padding: 0.2rem;
-        border-radius: 50%;
-        background-color: var(--sort-indicator-background);
-        color: white;
-        font-size: 10px;
-        width: 1.2rem;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-    }
+  .dimension {
+    padding: 0.25rem;
+    border-radius: 0.25rem;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 100%;
+  }
 
-    .sort-popover {
-        cursor: default;
-        position: absolute;
-        top: 2.5rem;
-        right: 5rem;
-        z-index: 10;
-        display: flex;
-        flex-direction: column;
-        gap: 0.5rem;
-        border: var(--sort-popover-border);
-        border-radius: 0.25rem;
-        background-color: var(--sort-popover-background);
-        padding: 0.5rem;
-        width: 30vw;
-        min-height: 6vh;
+  .selected-dimension {
+    background-color: var(--active-dimension-background);
+  }
 
-        &-head {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-left: 0.5rem;
-            margin-right: 0.5rem;
-        }
+  .table-head-row {
+    min-height: var(--table-head-row-min-height);
+    background-color: var(--table-head-row-background);
+    position: sticky;
+    top: 0;
+    z-index: 2;
+  }
 
-        &-action {
-            cursor: pointer;
-            padding: 0.5rem;
-            border-radius: 0.25rem;
-            background-color: var(--sort-popover-action-background-color);
-            border: var(--sort-popover-action-border);
-            color: var(--sort-popover-action-color);
-        }
-
-        &-action:hover {
-            background-color: var(--sort-popover-action-hover-background-color);
-        }
-
-        &-actions {
-            display: flex;
-            gap: 0.5rem;
-        }
-
-        &-body {
-            display: flex;
-            flex-direction: column;
-            gap: 0.5rem;
-        }
-
-        &-item {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 0.5rem;
-
-            &-index {
-                padding: 0.5rem;
-            }
-
-            &-action {
-                cursor: pointer;
-                padding: 0.5rem;
-                border-radius: 0.25rem;
-                background-color: var(--sort-popover-action-background-color);
-                border: var(--sort-popover-action-border);
-                color: var(--sort-popover-action-color);
-            }
-
-            &-action:hover {
-                background-color: var(--sort-popover-action-hover-background-color);
-            }
-
-            &-actions {
-                display: flex;
-                gap: 0.5rem;
-            }
-        }
-    }
-
-    .table-wrapper-container {
-        position: relative;
-        display: flex;
-        overflow-x: auto;
-        flex: 1;
-    }
-
-    table {
-        width: 100%;
-        border-spacing: var(--border-spacing);
-        border-collapse: var(--border-collapse);
-    }
-
-    .table-wrapper {
-        margin-top: 3rem;
-        width: 100%;
-        max-height: var(--table-wrapper-max-height);
-        overflow: auto;
-        background: var(--table-container-background);
-        display: flex;
-        flex-direction: column;
-        gap: 0.5rem;
-        flex: 1 1 0;
-    }
-
-    .dimensions-picker {
-        border: var(--dimensions-picker-border);
-        width: var(--dimensions-picker-width);
-        background-color: var(--dimensions-background-color);
-        padding: 0.5rem;
-        border-radius: 0.25rem;
-        display: flex;
-        gap: 0.5rem;
-        align-items: start;
-        flex-direction: column;
-
-        &-title {
-            color: var(--dimensions-picker-title-color);
-            font-size: var(--dimensions-picker-title-font-size);
-        }
-
-        &-skeleton {
-            height: 40vh;
-            width: 17vw;
-            background-color: #f0f0f0;
-            animation: pulse 2s infinite;
-            @keyframes pulse {
-                0% {
-                    opacity: 1;
-                }
-                50% {
-                    opacity: 0.5;
-                }
-                100% {
-                    opacity: 1;
-                }
-            }
-        }
-    }
-
-    .table-container-skeleton {
-        height: 40vh;
-        width: 100%;
-        background-color: #f0f0f0;
-        animation: pulse 2s infinite;
-        @keyframes pulse {
-            0% {
-                opacity: 1;
-            }
-            50% {
-                opacity: 0.5;
-            }
-            100% {
-                opacity: 1;
-            }
-        }
-    }
-
-    .dimensions-picker-select {
-        border: var(--dimensions-picker-select-border);
-        background-color: var(--dimensions-select-background-color);
-        padding: 0.5rem;
-        border-radius: 0.25rem;
-        width: 70%;
-    }
-
-    .dimension {
-        padding: 0.25rem;
-        border-radius: 0.25rem;
-        white-space: nowrap;
-        overflow: hidden;
-        text-overflow: ellipsis;
-        max-width: 100%;
-    }
-
-    .selected-dimension {
-        background-color: var(--active-dimension-background);
-    }
-
-    .table-head-row {
-        min-height: var(--table-head-row-min-height);
-        background-color: var(--table-head-row-background);
-        position: sticky;
-        top: 0;
-        z-index: 2;
-    }
-
-    .table-head-row th {
-        font-size: var(--table-head-row-font-size);
-        font-weight: var(--table-head-row-font-weight);
-        padding: var(--table-head-row-padding);
-        color: var(--table-head-text-color);
-    }
+  .table-head-row th {
+    font-size: var(--table-head-row-font-size);
+    font-weight: var(--table-head-row-font-weight);
+    padding: var(--table-head-row-padding);
+    color: var(--table-head-text-color);
+  }
 </style>

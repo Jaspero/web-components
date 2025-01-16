@@ -39,7 +39,7 @@
     return false;
   }
 
-  $: isOutOfBonuds = isMonthOutOfSelectableBounds(pickerYear, index, selectingFirst);
+  $: isOutOfBounds = isMonthOutOfSelectableBounds(pickerYear, index, selectingFirst);
   $: isOutOfMax = calculateLimits.isOutOfMaxBounds(internalMaxDate, pickerYear, index, 1);
   $: isOutOfMin = calculateLimits.isOutOfMinBounds(internalMinDate, pickerYear, index, 31);
 </script>
@@ -58,8 +58,8 @@
       ) >= parseInt(`${pickerYear}${index + 1 < 10 ? '0' : ''}${index + 1}`, 10)
     : firstMonthSelected == (index < 0 ? '11' : index > 11 ? '0' : index) &&
       firstYearSelected == pickerYear + (index < 0 ? -1 : index > 11 ? 1 : 0)}
-  class:jp-date-range-menu-month-grid-cell-disabled={isOutOfMax || isOutOfMin || isOutOfBonuds}
-  disabled={isOutOfMax || isOutOfMin || isOutOfBonuds}
+  class:jp-date-range-menu-month-grid-cell-disabled={isOutOfMax || isOutOfMin || isOutOfBounds}
+  disabled={isOutOfMax || isOutOfMin || isOutOfBounds}
 >
   {month}
 </button>

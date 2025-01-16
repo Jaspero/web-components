@@ -29,7 +29,7 @@
     return false;
   }
 
-  $: isOutOfBonuds = isYearOutOfSelectableBounds(year, selectingFirst);
+  $: isOutOfBounds = isYearOutOfSelectableBounds(year, selectingFirst);
   $: isOutOfMax = calculateLimits.isOutOfMaxBounds(internalMaxDate, year, 0, 1);
   $: isOutOfMin = calculateLimits.isOutOfMinBounds(internalMinDate, year, 11, 31);
 </script>
@@ -40,8 +40,8 @@
     ? Number(firstYearSelected) <= year && secondYearSelected >= year
     : firstYearSelected == year}
   on:click|preventDefault={handleClick}
-  class:jp-date-range-menu-year-row-cell-disabled={isOutOfMax || isOutOfMin || isOutOfBonuds}
-  disabled={isOutOfMax || isOutOfMin || isOutOfBonuds}
+  class:jp-date-range-menu-year-row-cell-disabled={isOutOfMax || isOutOfMin || isOutOfBounds}
+  disabled={isOutOfMax || isOutOfMin || isOutOfBounds}
 >
   {year}
 </button>

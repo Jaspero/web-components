@@ -39,6 +39,8 @@ import '../../static/c/input.css';
 |  patternValidationMessage  |              |                                           `string`                                            |           validation message for when component does not satisfy pattern            |
 |     validationMessages     |              |                          `{[type]: string}` where `type` is `string`                          |          compact way of writing validation messages in a single attribute           |
 |     hideArrowsOnNumber     |              |                                           `boolean`                                           |                 determines if arrows on number type input are shown                 |
+|   allowNumberInputShorcut  |              |                                           `boolean`                                           |       determines if keyboard shortcut for adjusting a numeric input is enabled      |
+|          shiftStep         |              |                                           `number`                                            |                        determines step value of keyboard shortcut                   |
 <br></br>
 ****
 
