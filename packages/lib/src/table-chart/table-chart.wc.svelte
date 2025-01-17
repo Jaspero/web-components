@@ -600,11 +600,32 @@
   }
 
   function export_csv() {
-    const csv = processed_data
-      .map((item) => {
-        return Object.values(item).join(',');
-      })
-      .join('\n');
+    if (!processed_data || processed_data.length === 0) {
+      console.error('No data available for export');
+      return;
+    }
+
+    const headers = Object.keys(processed_data[0]);
+
+    const csv = [
+      headers.join(','),
+      ...processed_data.map((item) =>
+        headers
+          .map((key) => {
+            const value = item[key];
+            if (Array.isArray(value)) {
+              return `"${value.join('|')}"`;
+            } else if (typeof value === 'object' && value !== null) {
+              return `"${JSON.stringify(value).replace(/"/g, '""')}"`;
+            } else if (value === null || value === undefined) {
+              return '';
+            } else {
+              return `"${String(value).replace(/"/g, '""')}"`;
+            }
+          })
+          .join(',')
+      ),
+    ].join('\n');
 
     const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
     const url = URL.createObjectURL(blob);
