@@ -262,10 +262,12 @@
     return '';
   }
 
-  function select_dimension(dimension: string) {
-    const index = mapped_dimensions.findIndex((curr) => curr.value === dimension);
+  function select_dimension(dimension: string, update_mapped = false) {
+    if (update_mapped) {
+      const index = mapped_dimensions.findIndex((curr) => curr.value === dimension);
 
-    mapped_dimensions[index].selected = !mapped_dimensions[index].selected;
+      mapped_dimensions[index].selected = !mapped_dimensions[index].selected;
+    }
 
     const any_selected = mapped_dimensions.reduce((curr, acc) => {
       return acc.selected ? curr + 1 : curr;
@@ -625,15 +627,32 @@
     dispatch(name, payload);
   }
 
-  /**
-   * LIFECYCLE
-   */
-  $: if (selected_dimensions?.length && mapped_dimensions?.length) {
+  function set_mapped_dimensions() {
+    mapped_dimensions = dimensions.map((curr) => {
+      const item = typeof curr === 'string' ? { label: curr, value: curr } : curr;
+
+      if (typeof curr === 'string' && config?.dimensions?.capitalize) {
+        item.label = item.label.charAt(0).toUpperCase() + item.label.slice(1);
+      }
+
+      return {
+        label: item.label,
+        value: item.value,
+        group: item?.group,
+        selected: selected_dimensions.includes(curr.value)
+      };
+    });
+
     for (const dimension of selected_dimensions) {
       select_dimension(dimension);
     }
+  }
 
-    selected_dimensions = [];
+  /**
+   * LIFECYCLE
+   */
+  $: if (selected_dimensions?.length) {
+    set_mapped_dimensions();
   }
 
   $: if (config?.type === 'sql' && !sql) {
@@ -649,7 +668,7 @@
     });
   }
 
-  $: if (dimensions?.length) {
+  $: if (dimensions?.length && !selected_dimensions.length) {
     mapped_dimensions = dimensions.map((curr) => {
       const item = typeof curr === 'string' ? { label: curr, value: curr } : curr;
 
@@ -812,7 +831,7 @@
                     style="color: {dimension.selected
                       ? 'var(--dimensions-active-text-color)'
                       : 'var(--dimensions-text-color)'}"
-                    on:click={() => select_dimension(dimension.value)}
+                    on:click={() => select_dimension(dimension.value, true)}
                   >
                     {#if config?.data_formatting?.[dimension.label]}
                       {config.data_formatting[dimension.label].label}
