@@ -49,12 +49,12 @@
   export let displayFormatFunction;
 
   let displayedFileNameString = '';
-  let grabbedEl: { style: string } | null = null;
+  let grabbedEl: HTMLElement | null = null;
   let grabbedIndex = -1;
   let startingY: number;
   let startingX: number;
   let internalFiles: any[] = [];
-  let browseFilesEl: HTMLInputElement;
+  let browseFilesEl: HTMLInputElement | null = null;
   let loading = false;
   let hoveringFile = false;
   let fileElements: HTMLDivElement[] = [];
@@ -124,7 +124,7 @@
     internalFiles = internalFiles.filter((i, ind) => index !== ind);
   }
 
-  function handleFileInput(e) {
+  function handleFileInput(e: any) {
     if (e.target.files.length) {
       internalFiles = internalFiles.concat(filesToObjs(Array.from(e.target.files)));
       dispatch('change', { unsaved: internalFiles.filter((el) => !el.saved).length });
@@ -163,7 +163,7 @@
           el.name,
           displayFormat,
           displayFormatFunction
-        );
+        )!;
         let obj: any = {
           name: el.name,
           size: returnFileSize(el.size),
@@ -240,7 +240,7 @@
   function mouseup(e: any) {
     if (grabbedEl) {
       e.preventDefault();
-      const fileEl = e.target.closest('.file');
+      const fileEl = e.target.closest('.jp-file-list-file');
       if (fileEl) {
         const i = [...fileEl.parentNode.children].indexOf(fileEl);
         const tmp = internalFiles[i];
@@ -283,6 +283,7 @@
       userInvalidElement = false;
     }
   }
+
 </script>
 
 <svelte:document on:mousemove={mousemove} on:mouseup={mouseup} />
