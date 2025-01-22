@@ -1284,7 +1284,7 @@
                         {#if Object.entries(row[dimension.value]).length}
                           {#each Object.entries(row[dimension.value]) as [key, value]}
                             <div>
-                              <b>{key}:</b>
+<!--                              <b>{key}:</b>-->
                               {#if config?.formatter?.toString()}
                                 {#if config?.data_formatting?.[dimension.label]}
                                   {value
