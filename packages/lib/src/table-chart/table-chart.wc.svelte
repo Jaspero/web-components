@@ -1388,7 +1388,7 @@
     position: absolute;
     top: 0;
     right: 0;
-    z-index: 10;
+    z-index: 0;
     display: flex;
     gap: 0.5rem;
     justify-content: end;
