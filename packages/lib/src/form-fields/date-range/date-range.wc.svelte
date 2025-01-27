@@ -56,7 +56,7 @@
   export let minSelectableDays: number;
   export let maxDateSelectable: Date;
   export let minDateSelectable: Date;
-
+  export let enablePreset: boolean = true;
   let firstSelectedDateObject = new Date();
   let secondSelectedDateObject = new Date();
   let displayedDateString = '';
@@ -92,6 +92,83 @@
     'Dec'
   ];
   let yearPickerIndex = 0;
+  
+  const date = new Date();
+  const createRelativeDate = (days = 0, months = 0, years = 0) => {
+    const newDate = new Date(date);
+    if (days) newDate.setDate(date.getDate() + days);
+    if (months) newDate.setMonth(date.getMonth() + months);
+    if (years) newDate.setFullYear(date.getFullYear() + years);
+    return newDate;
+  };
+  const yesterday = createRelativeDate(-1);
+  const sevenDaysAgo = createRelativeDate(-7);
+  const thirtyDaysAgo = createRelativeDate(-30);
+  const nintyDaysAgo = createRelativeDate(-90);
+  const twelveMonthsAgo = createRelativeDate(0, -12);
+  const firstDayOfLastYear = new Date(date.getFullYear() - 1, 0, 1);
+  const lastDayOfLastYear = new Date(date.getFullYear() - 1, 11, 31);
+  const firstDayOfThisYear = new Date(date.getFullYear(), 0, 1);
+
+  function handlePresets(label: string) {
+    const setDates = (start: Date, end: Date) => {
+      firstDateSelected = start.getDate();
+      firstMonthSelected = start.getMonth();
+      firstYearSelected = start.getFullYear();
+      secondDateSelected = end.getDate();
+      secondMonthSelected = end.getMonth();
+      secondYearSelected = end.getFullYear();
+      pickerMonth = start.getMonth();
+      pickerYear = start.getFullYear();
+    };
+    const updatePreset = (index: number) => {
+      presets = presets.map((preset, i) => ({
+        ...preset,
+        active: i === index,
+      }));
+    };
+    if (label === 'Today') {
+      setDates(date, date); 
+      updatePreset(0);
+    } else if (label === 'Yesterday') {
+      const yesterday = new Date(date);
+      yesterday.setDate(date.getDate() - 1);
+      setDates(yesterday, yesterday); 
+      updatePreset(1);
+    } else if (label === 'Last 7 days') {
+      const sevenDaysAgo = new Date(date);
+      sevenDaysAgo.setDate(date.getDate() - 7);
+      setDates(sevenDaysAgo, date);
+      updatePreset(2);
+    } else if (label === 'Last 30 days') {
+      const thirtyDaysAgo = new Date(date);
+      thirtyDaysAgo.setDate(date.getDate() - 30);
+      setDates(thirtyDaysAgo, date);
+      updatePreset(3);
+    } else if (label === 'Last 90 days') {
+      const ninetyDaysAgo = new Date(date);
+      ninetyDaysAgo.setDate(date.getDate() - 90);
+      setDates(ninetyDaysAgo, date);
+      updatePreset(4);
+    } else if (label === 'Last 12 months') {
+      const twelveMonthsAgo = new Date(date);
+      twelveMonthsAgo.setMonth(date.getMonth() - 12);
+      setDates(twelveMonthsAgo, date);
+      updatePreset(5);
+    } else if (label === 'Last year') {
+      const firstDayOfLastYear = new Date(date.getFullYear() - 1, 0, 1);
+      const lastDayOfLastYear = new Date(firstDayOfLastYear.getFullYear(), 12, 0);
+      setDates(firstDayOfLastYear, lastDayOfLastYear);
+      updatePreset(6);
+    } else if (label === 'This year') {
+      const firstDayOfThisYear = new Date(date.getFullYear(), 0, 1);
+      const internalMaxDate = maxDate ? (maxDate instanceof Date ? maxDate : new Date(maxDate)) : null;
+      const isOutOfBounds = isOutOfMaxBounds(internalMaxDate, date.getFullYear(), date.getMonth(), date.getDate());
+      setDates(firstDayOfThisYear, isOutOfBounds ? internalMaxDate : date);
+      updatePreset(7);
+    }
+  }
+
 
   function handleYearSelected(event: { detail: { year: any } }) {
     const { year } = event.detail;
@@ -421,6 +498,17 @@
     }
   }
   $: displayLabel = required ? `${label} *` : label;
+
+  $: presets = [
+    {label: 'Today', disabled: isOutOfMaxBounds(internalMaxDate, date.getFullYear(), date.getMonth(), date.getDate()) || isOutOfMinBounds(internalMinDate, date.getFullYear(), date.getMonth(), date.getDate()), active: false},
+    {label: 'Yesterday', disabled: isOutOfMaxBounds(internalMaxDate, yesterday.getFullYear(), yesterday.getMonth(), yesterday.getDate()) || isOutOfMinBounds(internalMinDate, yesterday.getFullYear(), yesterday.getMonth(), yesterday.getDate()), active: false},
+    {label: 'Last 7 days', disabled: isOutOfMinBounds(internalMinDate, sevenDaysAgo.getFullYear(), sevenDaysAgo.getMonth(), sevenDaysAgo.getDate()) || isOutOfMaxBounds(internalMaxDate, date.getFullYear(), date.getMonth(), date.getDate()), active: false},
+    {label: 'Last 30 days', disabled: isOutOfMinBounds(internalMinDate, thirtyDaysAgo.getFullYear(), thirtyDaysAgo.getMonth(), thirtyDaysAgo.getDate()) || isOutOfMaxBounds(internalMaxDate, date.getFullYear(), date.getMonth(), date.getDate()), active: false},
+    {label: 'Last 90 days', disabled: isOutOfMinBounds(internalMinDate, nintyDaysAgo.getFullYear(), nintyDaysAgo.getMonth(), nintyDaysAgo.getDate()) || isOutOfMaxBounds(internalMaxDate, date.getFullYear(), date.getMonth(), date.getDate()), active: false},
+    {label: 'Last 12 months', disabled: isOutOfMinBounds(internalMinDate, twelveMonthsAgo.getFullYear(), twelveMonthsAgo.getMonth(), twelveMonthsAgo.getDate()) || isOutOfMaxBounds(internalMaxDate, date.getFullYear(), date.getMonth(), date.getDate()), active: false},
+    {label: 'Last year', disabled: isOutOfMinBounds(internalMinDate, firstDayOfLastYear.getFullYear(), firstDayOfLastYear.getMonth(), firstDayOfLastYear.getDate()) || isOutOfMaxBounds(internalMaxDate, lastDayOfLastYear.getFullYear(), lastDayOfLastYear.getMonth(), lastDayOfLastYear.getDate()), active: false},
+    {label: 'This year', disabled: isOutOfMaxBounds(internalMaxDate, firstDayOfThisYear.getFullYear(), firstDayOfThisYear.getMonth(), firstDayOfThisYear.getDate()) || isOutOfMinBounds(internalMinDate, firstDayOfThisYear.getFullYear(), firstDayOfThisYear.getMonth(), firstDayOfThisYear.getDate()), active: false}
+  ];
 </script>
 
 {#if label && labelType == 'outside'}
@@ -462,195 +550,218 @@
 {#if openPicker}
   <div class="jp-date-range-overlay">
     <div
-      class="jp-date-range-menu"
+      class="jp-date-range-overlay-content"
       use:clickOutside
       on:click_outside={() => (openPicker = false)}
       style={menuStyle}
     >
-      <div class="jp-date-range-menu-nav">
-        <button
-          type="button"
-          class="jp-date-range-menu-nav-date"
-          on:click|preventDefault={() => (yearSelector = true)}
-        >
-          <p>{monthMap[pickerMonth]}, {pickerYear}</p>
-          {@html dropdownArrowExpandedIcon}
-        </button>
-        <div class="jp-date-range-menu-nav-buttons">
+      <div class="jp-date-range-menu">
+        <div class="jp-date-range-menu-nav">
           <button
             type="button"
-            on:click|preventDefault={() => (pickerMonth = pickerMonth - 1)}
-            class:jp-date-range-menu-nav-buttons-disabled={Boolean(internalMinMonthCheck)}
-            disabled={Boolean(internalMinMonthCheck)}
+            class="jp-date-range-menu-nav-date"
+            on:click|preventDefault={() => (yearSelector = true)}
           >
-            {@html leftArrowIcon}
+            <p>{monthMap[pickerMonth]}, {pickerYear}</p>
+            {@html dropdownArrowExpandedIcon}
           </button>
-          <button
-            type="button"
-            on:click|preventDefault={() => (pickerMonth = pickerMonth + 1)}
-            class:jp-date-range-menu-nav-buttons-disabled={Boolean(internalMaxMonthCheck)}
-            disabled={Boolean(internalMaxMonthCheck)}
-          >
-            {@html rightArrowIcon}
-          </button>
+          <div class="jp-date-range-menu-nav-buttons">
+            <button
+              type="button"
+              on:click|preventDefault={() => (pickerMonth = pickerMonth - 1)}
+              class:jp-date-range-menu-nav-buttons-disabled={Boolean(internalMinMonthCheck)}
+              disabled={Boolean(internalMinMonthCheck)}
+            >
+              {@html leftArrowIcon}
+            </button>
+            <button
+              type="button"
+              on:click|preventDefault={() => (pickerMonth = pickerMonth + 1)}
+              class:jp-date-range-menu-nav-buttons-disabled={Boolean(internalMaxMonthCheck)}
+              disabled={Boolean(internalMaxMonthCheck)}
+            >
+              {@html rightArrowIcon}
+            </button>
+          </div>
         </div>
-      </div>
 
-      <div>
-        <div class="jp-date-range-table">
-          <div class="jp-date-range-table-row">
-            {#each daysMap as day}
-              <div class="jp-date-range-table-cell">
-                {day}
+        <div>
+          <div class="jp-date-range-table">
+            <div class="jp-date-range-table-row">
+              {#each daysMap as day}
+                <div class="jp-date-range-table-cell">
+                  {day}
+                </div>
+              {/each}
+            </div>
+          </div>
+
+          <div class="jp-date-range-table">
+            {#each pickerRows as row}
+              <div class="jp-date-range-table-row">
+                {#each row as col}
+                  <Day
+                    {minDateSelectable}
+                    {maxDateSelectable}
+                    {col}
+                    {minSelectableDays}
+                    {maxSelectableDays}
+                    {selectingFirst}
+                    {firstDateSelected}
+                    {internalMaxDate}
+                    {internalMinDate}
+                    {firstInternalValue}
+                    {secondInternalValue}
+                    {firstMonthSelected}
+                    {firstYearSelected}
+                    {secondYearSelected}
+                    on:dateSelected={handleSelect}
+                  ></Day>
+                {/each}
               </div>
             {/each}
           </div>
         </div>
 
-        <div class="jp-date-range-table">
-          {#each pickerRows as row}
-            <div class="jp-date-range-table-row">
-              {#each row as col}
-                <Day
-                  {minDateSelectable}
-                  {maxDateSelectable}
-                  {col}
-                  {minSelectableDays}
-                  {maxSelectableDays}
-                  {selectingFirst}
-                  {firstDateSelected}
-                  {internalMaxDate}
-                  {internalMinDate}
-                  {firstInternalValue}
-                  {secondInternalValue}
-                  {firstMonthSelected}
-                  {firstYearSelected}
-                  {secondYearSelected}
-                  on:dateSelected={handleSelect}
-                ></Day>
-              {/each}
-            </div>
-          {/each}
-        </div>
-      </div>
-
-      {#if yearSelector}
-        <div class="jp-date-range-menu-year">
-          <div class="jp-date-range-menu-year-nav">
-            <button
-              type="button"
-              class="jp-date-range-menu-year-nav-date"
-              on:click|stopPropagation={() => (yearSelector = false)}
-            >
-              <p>
-                {pickerYearRows[0][0]} - {pickerYearRows[pickerYearRows.length - 1][
-                  pickerYearRows[pickerYearRows.length - 1].length - 1
-                ]}
-              </p>
-              {@html upArrowIcon}
-            </button>
-            <div class="jp-date-range-menu-year-nav-buttons">
+        {#if yearSelector}
+          <div class="jp-date-range-menu-year">
+            <div class="jp-date-range-menu-year-nav">
               <button
                 type="button"
-                on:click|preventDefault={() => yearPickerIndex--}
-                class:jp-date-range-menu-year-nav-buttons-disabled={Boolean(
-                  internalMinYearPageCheck
-                )}
-                disabled={Boolean(internalMinYearPageCheck)}
+                class="jp-date-range-menu-year-nav-date"
+                on:click|stopPropagation={() => (yearSelector = false)}
               >
-                {@html leftArrowIcon}
+                <p>
+                  {pickerYearRows[0][0]} - {pickerYearRows[pickerYearRows.length - 1][
+                    pickerYearRows[pickerYearRows.length - 1].length - 1
+                  ]}
+                </p>
+                {@html upArrowIcon}
               </button>
-              <button
-                type="button"
-                on:click|preventDefault={() => yearPickerIndex++}
-                class:jp-date-range-menu-year-nav-buttons-disabled={Boolean(
-                  internalMaxYearPageCheck
-                )}
-                disabled={Boolean(internalMaxYearPageCheck)}
-              >
-                {@html rightArrowIcon}
-              </button>
+              <div class="jp-date-range-menu-year-nav-buttons">
+                <button
+                  type="button"
+                  on:click|preventDefault={() => yearPickerIndex--}
+                  class:jp-date-range-menu-year-nav-buttons-disabled={Boolean(
+                    internalMinYearPageCheck
+                  )}
+                  disabled={Boolean(internalMinYearPageCheck)}
+                >
+                  {@html leftArrowIcon}
+                </button>
+                <button
+                  type="button"
+                  on:click|preventDefault={() => yearPickerIndex++}
+                  class:jp-date-range-menu-year-nav-buttons-disabled={Boolean(
+                    internalMaxYearPageCheck
+                  )}
+                  disabled={Boolean(internalMaxYearPageCheck)}
+                >
+                  {@html rightArrowIcon}
+                </button>
+              </div>
             </div>
+            {#each pickerYearRows as row}
+              <div class="jp-date-range-menu-year-row">
+                {#each row as year}
+                  <div class="jp-date-range-menu-year-row-cell">
+                    <Year
+                      {minDateSelectable}
+                      {maxDateSelectable}
+                      {internalMaxDate}
+                      {internalMinDate}
+                      {firstYearSelected}
+                      {secondYearSelected}
+                      {year}
+                      {selectingFirst}
+                      {maxSelectableDays}
+                      on:yearSelected={handleYearSelected}
+                    />
+                  </div>
+                {/each}
+              </div>
+            {/each}
           </div>
-          {#each pickerYearRows as row}
-            <div class="jp-date-range-menu-year-row">
-              {#each row as year}
-                <div class="jp-date-range-menu-year-row-cell">
-                  <Year
+        {/if}
+
+        {#if monthSelector}
+          <div class="jp-date-range-menu-month">
+            <div class="jp-date-range-menu-month-nav">
+              <button
+                type="button"
+                class="jp-date-range-menu-month-nav-date"
+                on:click|stopPropagation={() => {
+                  monthSelector = false;
+                }}
+              >
+                <p>{pickerYear}</p>
+                {@html upArrowIcon}
+              </button>
+              <div class="jp-date-range-menu-month-nav-buttons">
+                <button
+                  type="button"
+                  on:click|preventDefault={() => (pickerYear = pickerYear - 1)}
+                  class:jp-date-range-menu-month-nav-buttons-disabled={Boolean(
+                    internalMinYearCheck
+                  )}
+                  disabled={Boolean(internalMinYearCheck)}
+                >
+                  {@html leftArrowIcon}
+                </button>
+                <button
+                  type="button"
+                  on:click|preventDefault={() => (pickerYear = pickerYear + 1)}
+                  class:jp-date-range-menu-month-nav-buttons-disabled={Boolean(
+                    internalMaxYearCheck
+                  )}
+                  disabled={Boolean(internalMaxYearCheck)}
+                >
+                  {@html rightArrowIcon}
+                </button>
+              </div>
+            </div>
+
+            <div class="jp-date-range-menu-month-grid">
+              {#each monthMap as month, index}
+                <div class="jp-date-range-menu-month-grid-cell">
+                  <Month
                     {minDateSelectable}
                     {maxDateSelectable}
+                    {index}
+                    {month}
+                    {pickerYear}
                     {internalMaxDate}
                     {internalMinDate}
+                    {firstMonthSelected}
+                    {secondMonthSelected}
                     {firstYearSelected}
                     {secondYearSelected}
-                    {year}
                     {selectingFirst}
                     {maxSelectableDays}
-                    on:yearSelected={handleYearSelected}
+                    on:monthSelected={handleMonthSelected}
                   />
                 </div>
               {/each}
             </div>
-          {/each}
-        </div>
-      {/if}
-
-      {#if monthSelector}
-        <div class="jp-date-range-menu-month">
-          <div class="jp-date-range-menu-month-nav">
-            <button
-              type="button"
-              class="jp-date-range-menu-month-nav-date"
-              on:click|stopPropagation={() => {
-                monthSelector = false;
-              }}
-            >
-              <p>{pickerYear}</p>
-              {@html upArrowIcon}
-            </button>
-            <div class="jp-date-range-menu-month-nav-buttons">
-              <button
-                type="button"
-                on:click|preventDefault={() => (pickerYear = pickerYear - 1)}
-                class:jp-date-range-menu-month-nav-buttons-disabled={Boolean(internalMinYearCheck)}
-                disabled={Boolean(internalMinYearCheck)}
-              >
-                {@html leftArrowIcon}
-              </button>
-              <button
-                type="button"
-                on:click|preventDefault={() => (pickerYear = pickerYear + 1)}
-                class:jp-date-range-menu-month-nav-buttons-disabled={Boolean(internalMaxYearCheck)}
-                disabled={Boolean(internalMaxYearCheck)}
-              >
-                {@html rightArrowIcon}
-              </button>
-            </div>
           </div>
-
-          <div class="jp-date-range-menu-month-grid">
-            {#each monthMap as month, index}
-              <div class="jp-date-range-menu-month-grid-cell">
-                <Month
-                  {minDateSelectable}
-                  {maxDateSelectable}
-                  {index}
-                  {month}
-                  {pickerYear}
-                  {internalMaxDate}
-                  {internalMinDate}
-                  {firstMonthSelected}
-                  {secondMonthSelected}
-                  {firstYearSelected}
-                  {secondYearSelected}
-                  {selectingFirst}
-                  {maxSelectableDays}
-                  on:monthSelected={handleMonthSelected}
-                />
-              </div>
+        {/if}
+      </div>
+      {#if enablePreset}
+        {#if !monthSelector && !yearSelector && minSelectableDays == null && maxSelectableDays == null}
+          <div class="jp-date-range-presets">
+            {#each presets as preset, index}
+              <button
+                type="button"
+                class:jp-date-range-presets-active={preset.active}
+                disabled={preset.disabled}
+                on:click={() => {
+                  handlePresets(preset.label);
+                }}
+                >{preset.label}
+              </button>
             {/each}
           </div>
-        </div>
+        {/if}
       {/if}
     </div>
   </div>
