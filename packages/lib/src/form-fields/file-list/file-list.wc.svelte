@@ -25,6 +25,7 @@
   import unknownFileIcon from '../../icons/unknown-file.svg?raw';
   import deleteIcon from '../../icons/delete.svg?raw';
   import plusIcon from '../../icons/add-more.svg?raw';
+
   export let wording = {
     DROP_YOUR_FILES_HERE: 'Drop your files here',
     BROWSE_FILES: 'Browse files',
@@ -47,6 +48,10 @@
   export let requiredValidationMessage: string;
   export let displayFormat = 'snake';
   export let displayFormatFunction;
+  export let innerContent: string;
+  export let openbrowse = () => {
+    browseFilesEl!.click();
+  };
 
   let displayedFileNameString = '';
   let grabbedEl: HTMLElement | null = null;
@@ -283,7 +288,6 @@
       userInvalidElement = false;
     }
   }
-
 </script>
 
 <svelte:document on:mousemove={mousemove} on:mouseup={mouseup} />
@@ -321,10 +325,14 @@
     <div class="jp-file-list-info" hidden={internalFiles.length !== 0}>
       <!-- svelte-ignore a11y-missing-attribute -->
       <!-- svelte-ignore a11y-click-events-have-key-events -->
-      <div>
-        {wording.DROP_FILES_HERE_OR}
-        <a on:click={() => browseFilesEl.click()}>{wording.BROWSE_FILES}</a>
-      </div>
+      {#if innerContent}
+        {@html innerContent}
+      {:else}
+        <div>
+          {wording.DROP_FILES_HERE_OR}
+          <a on:click={openbrowse}>{wording.BROWSE_FILES}</a>
+        </div>
+      {/if}
     </div>
   {:else}
     <div class="jp-file-list-files">
@@ -379,11 +387,7 @@
         </div>
       {/each}
     </div>
-    <button
-      type="button"
-      class="jp-file-list-add-more"
-      on:click|preventDefault={() => browseFilesEl.click()}
-    >
+    <button type="button" class="jp-file-list-add-more" on:click|preventDefault={openbrowse}>
       {@html plusIcon}
     </button>
   {/if}
