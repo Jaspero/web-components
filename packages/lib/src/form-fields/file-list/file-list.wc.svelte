@@ -127,6 +127,7 @@
       dispatch('removed', { url: internalFiles[index].url });
     }
     internalFiles = internalFiles.filter((i, ind) => index !== ind);
+    dispatch('change', { unsaved: internalFiles.filter((el) => !el.saved).length });
   }
 
   function handleFileInput(e: any) {
