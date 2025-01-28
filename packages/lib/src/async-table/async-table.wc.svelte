@@ -123,8 +123,21 @@
     rows = rows.filter((it) => it[key] !== value);
   }
 
+  // @deprecated use pushRow instead
   export async function addRow(value: any) {
     rows = [...rows, value];
+  }
+
+  export async function pushRow(value: any) {
+    rows = [...rows, value];
+  }
+
+  export async function unshiftRow(value: any) {
+    rows = [value, ...rows];
+  }
+
+  export async function addRowToPosition(value: any, index: number) {
+    rows = [...rows.slice(0, index), value, ...rows.slice(index)];
   }
 
   export async function updateRow(value: any, index: number) {
