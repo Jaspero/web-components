@@ -104,7 +104,7 @@
     loading = false;
     scrollToTop();
   };
-  export let rows: any[] = [];
+  export let rows: any[];
   export let arrangeColumnDialog = false;
   export let showLoadMore = true;
 
@@ -643,8 +643,8 @@
         {/each}
       {/if}
     </table>
-    {#if rows.length === 0}
-        <h1 class="jp-async-table-empty-message">{wording.EMPTY_TABLE}</h1>
+    {#if rows?.length === 0}
+      <h1 class="jp-async-table-empty-message">{wording.EMPTY_TABLE}</h1>
     {/if}
   </div>
 
