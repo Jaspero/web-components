@@ -37,7 +37,7 @@
       <button
         type="button"
         class="jp-alert-container-header-close"
-        on:click|preventDefault={() => dispatch('close')}
+        on:click|preventDefault|stopPropagation={() => dispatch('close')}
       >
         {@html clearIcon}
       </button>
