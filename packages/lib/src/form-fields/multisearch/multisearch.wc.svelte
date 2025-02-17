@@ -95,18 +95,7 @@
   }
 
   $: {
-    options = options.reduce(
-      (acc, el) => {
-        if (el.selected) {
-          acc.unshift(el);
-        } else {
-          acc.push(el);
-        }
-        return acc;
-      },
-      [] as any
-    );
-
+    options = options.filter((el) => el.selected).concat(options.filter((el) => !el.selected));
     const selects = options.filter((el) => el.selected).length;
     if (selects == 0 && required) {
       attachedInternals.setValidity(
@@ -157,7 +146,7 @@
     const searchResults = await service.search(searchValue);
     options = [
       ...options,
-      ...searchResults.map((el) => {
+      ...searchResults.filter(el => !options.find(el2 => el2.value === el.value)).map((el) => {
         el.selected = false;
         return el;
       })
@@ -172,7 +161,7 @@
     const searchResults = await service.search('');
     options = [
       ...options,
-      ...searchResults.map((el) => {
+      ...searchResults.filter(el => !options.find(el2 => el2.value === el.value)).map((el) => {
         el.selected = false;
         return el;
       })
@@ -387,6 +376,7 @@
         }
 
         options = [...options, single];
+        console.log(5, options);
       })
     );
     valueLoad = false;

@@ -81,12 +81,12 @@
       <!-- <CheckboxDemo /> -->
       <!-- <ChipsDemo /> -->
       <!-- <CkEditorDemo /> -->
-      <DateRangeDemo />
+<!--      <DateRangeDemo />-->
       <!--<DatepickerDemo />-->
       <!-- <FileListDemo /> -->
       <!-- <FileUploadDemo /> -->
       <!-- <InputDemo /> -->
-      <!-- <MultiSearchDemo /> -->
+       <MultiSearchDemo />
 <!--       <MultiSelectDemo />-->
       <!-- <QuillDemo /> -->
       <!-- <RadioDemo /> -->
