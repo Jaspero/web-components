@@ -95,7 +95,18 @@
   }
 
   $: {
-    options = options.filter((el) => el.selected).concat(options.filter((el) => !el.selected));
+    options = options.reduce(
+      (acc, el) => {
+        if (el.selected) {
+          acc.unshift(el);
+        } else {
+          acc.push(el);
+        }
+        return acc;
+      },
+      [] as any
+    );
+
     const selects = options.filter((el) => el.selected).length;
     if (selects == 0 && required) {
       attachedInternals.setValidity(
