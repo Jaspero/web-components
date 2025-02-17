@@ -525,7 +525,8 @@
                 type="button"
                 on:click|preventDefault|stopPropagation={async () => {
                   loadingMore = true;
-                  options = options.concat(await service.loadMore(searchValue));
+                  const newValue = await service.loadMore(searchValue);
+                  options = options.concat(newValue).filter((el) => !options.find((el2) => el2.value === el.value));
                   loadingMore = false;
                 }}
               >
