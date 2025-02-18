@@ -375,7 +375,10 @@
           single = { value: el, selected: true };
         }
 
-        options = [...options, single].filter(it => !options.find(it2 => it2.value === it.value));
+        options = [
+          ...options,
+          ...!options.find(opt => opt.value === single.value) ? [single] : []
+        ];
       })
     );
     valueLoad = false;
@@ -388,7 +391,6 @@
       options = [];
     }
   }
-
 
   $: {
     if (internalValue) hadValue = true;
