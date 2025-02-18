@@ -375,8 +375,7 @@
           single = { value: el, selected: true };
         }
 
-        options = [...options, single];
-        console.log(5, options);
+        options = [...options, single].filter(it => !options.find(it2 => it2.value === it.value));
       })
     );
     valueLoad = false;
