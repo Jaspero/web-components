@@ -364,10 +364,6 @@
     }
     searchValue = '';
     displayValue = [];
-    Promise.resolve().then(() => {
-      options.forEach((opt) => (opt.selected = false));
-      dispatch('value', singleSelect ? '' : []);
-    });
   }
   async function loadValues(value: string) {
     valueLoad = true;

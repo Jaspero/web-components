@@ -2,7 +2,7 @@
   import { onMount } from 'svelte';
   import '../../../../dist/multisearch.wc.js';
   import '../../../../dist/multisearch.css';
-  export let showClearButton: boolean=true; 
+  export let showClearButton = true;
   let el: HTMLDivElement;
 
   const options = [
