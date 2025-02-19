@@ -87,6 +87,8 @@
       <!-- <FileUploadDemo /> -->
       <!-- <InputDemo /> -->
        <MultiSearchDemo />
+       <MultiSearchDemo showClearButton={true}/>
+       <MultiSearchDemo showClearButton={false}/>
 <!--       <MultiSelectDemo />-->
       <!-- <QuillDemo /> -->
       <!-- <RadioDemo /> -->

@@ -30,6 +30,7 @@ import '../../static/c/multisearch.css';
 |     validationMessages      |          | `{[type]: string}` where `type` is `string` | compact way of writing validation messages in a single attribute  |
 |        defaultSearch        |          |                  `boolean`                  |          determines if options are visible upon opening           |
 |      defaultShowNumber      |          |                  `number`                   |                determines number of visible options               |
+|      showClearButton        |          |                  `boolean`                  |determines whether the delete button is displayed when an input exists, defaults to true|
 <br></br>
 ****
 
@@ -86,6 +87,7 @@ function multisearch(props) {
   useEffect(() => {
     const multisearch = document.createElement('jp-multisearch');
     multisearch.value = 'aaa, bbb';
+    multisearch.showClearButton = true;
     multisearch.service = {
       i: 0,
       async search(str) {

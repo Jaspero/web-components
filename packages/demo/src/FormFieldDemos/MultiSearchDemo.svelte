@@ -2,7 +2,7 @@
   import { onMount } from 'svelte';
   import '../../../../dist/multisearch.wc.js';
   import '../../../../dist/multisearch.css';
-
+  export let showClearButton = true;
   let el: HTMLDivElement;
 
   const options = [
@@ -78,6 +78,7 @@
     multisearch.label = 'Multisearch';
     multisearch.defaultSearch = true;
     multisearch.defaultShow = 3;
+    multisearch.showClearButton = showClearButton;
     multisearch.service = {
       i: 0,
       async search(str: string) {

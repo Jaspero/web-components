@@ -22,6 +22,7 @@
   import './multisearch.wc.pcss';
   import ArrowRotate from '../../icons/arrow-rotate.svelte';
   import checkmarkIcon from '../../icons/checkmark.svg?raw';
+  import closeCrossIcon from '../../icons/close-cross.svg?raw';
 
   let options: Array<{
     label?: string;
@@ -37,6 +38,7 @@
   export let wording = {
     LOADING: 'Loading...'
   };
+  export let showClearButton = true;
   export let attachedInternals: ElementInternals;
   export let minSelects = 0;
   export let maxSelects: number | null = null;
@@ -355,6 +357,14 @@
     }
   }
 
+  function clearInput(event?: MouseEvent) {
+    if (event) {
+      event.preventDefault();
+      event.stopPropagation();
+    }
+    searchValue = '';
+    displayValue = [];
+  }
   async function loadValues(value: string) {
     valueLoad = true;
     const values = Array.isArray(value) ? value : value.split(',');
@@ -384,6 +394,8 @@
     valueLoad = false;
   }
 
+  $: hasInput = Boolean(searchValue || (displayValue && displayValue.length));
+  
   $: {
     if (value) {
       loadValues(value);
@@ -447,6 +459,16 @@
     >
       {displayValue || ''}
     </span>
+    {#if showClearButton && hasInput}
+    <button
+      type="button"
+      class="jp-multisearch-clear-button"
+      on:click={clearInput}
+      aria-label="Clear selection"
+    >
+      {@html closeCrossIcon}
+    </button>
+  {/if}
 
     <ArrowRotate {open} />
   </button>
