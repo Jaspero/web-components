@@ -287,7 +287,7 @@
 {/if}
 <div class="jp-select" class:jp-select-has-hint={hint}>
   {#if showClear && value}
-    <button class="jp-select-clear" on:click={clearSelection}>
+    <button type="button" class="jp-select-clear" on:click={clearSelection}>
       {@html clearIcon}
     </button>
   {/if}
