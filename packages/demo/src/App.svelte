@@ -81,14 +81,16 @@
       <!-- <CheckboxDemo /> -->
       <!-- <ChipsDemo /> -->
       <!-- <CkEditorDemo /> -->
-<!--      <DateRangeDemo />-->
+      <DateRangeDemo />
+      <DateRangeDemo showClearButton={true}/>
+      <DateRangeDemo showClearButton={false}/>
       <!--<DatepickerDemo />-->
       <!-- <FileListDemo /> -->
       <!-- <FileUploadDemo /> -->
       <!-- <InputDemo /> -->
-      <DatepickerDemo />
-      <DatepickerDemo showClearButton={true}/>
-      <DatepickerDemo showClearButton={false}/>
+      <!--<DatepickerDemo />-->
+      <!--<DatepickerDemo showClearButton={true}/>-->
+      <!--<DatepickerDemo showClearButton={false}/>-->
       <!-- <MultiSearchDemo />-->
       <!--<MultiSearchDemo showClearButton={true}/>-->
       <!--<MultiSearchDemo showClearButton={false}/>-->
