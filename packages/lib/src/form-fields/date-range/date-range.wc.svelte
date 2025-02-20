@@ -288,13 +288,13 @@
 
     dispatch('value', { value: '' });
     openPicker = false;
-}
+  }
 
   $: hasInput = Boolean(
     (firstInternalValue || secondInternalValue || displayedDateString) ||
     (firstYearSelected !== null && firstMonthSelected !== null && firstDateSelected !== null) ||
     (secondYearSelected !== null && secondMonthSelected !== null && secondDateSelected !== null)
-);
+  );
 
   $: maxDateSelectable = calculateMaxDate(firstInternalValue, maxSelectableDays);
   $: minDateSelectable = calculateMinDate(firstInternalValue, maxSelectableDays);
