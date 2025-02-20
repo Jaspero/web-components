@@ -86,9 +86,12 @@
       <!-- <FileListDemo /> -->
       <!-- <FileUploadDemo /> -->
       <!-- <InputDemo /> -->
-       <MultiSearchDemo />
-       <MultiSearchDemo showClearButton={true}/>
-       <MultiSearchDemo showClearButton={false}/>
+      <DatepickerDemo />
+      <DatepickerDemo showClearButton={true}/>
+      <DatepickerDemo showClearButton={false}/>
+      <!-- <MultiSearchDemo />-->
+      <!--<MultiSearchDemo showClearButton={true}/>-->
+      <!--<MultiSearchDemo showClearButton={false}/>-->
 <!--       <MultiSelectDemo />-->
       <!-- <QuillDemo /> -->
       <!-- <RadioDemo /> -->

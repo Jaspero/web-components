@@ -21,6 +21,7 @@
   import upArrowIcon from '../../icons/up-arrow.svg?raw';
   import leftArrowIcon from '../../icons/left-arrow.svg?raw';
   import rightArrowIcon from '../../icons/right-arrow.svg?raw';
+  import closeCrossIcon from '../../icons/close-cross.svg?raw';
   import { clickOutside } from '../../utils/click-outside';
   import { createEventDispatcher } from 'svelte';
   import { formatDisplayDate, formatReturnDate } from '../../utils/dateFormatter';
@@ -31,6 +32,7 @@
   import { isOutOfMinBounds } from './is-out-of-min-bounds';
   import './datepicker.wc.pcss';
 
+  export let showClearButton = true;
   export let attachedInternals: ElementInternals;
   export let value = '';
   export let internalValue = '';
@@ -66,8 +68,8 @@
   let bindingElement: HTMLButtonElement;
   let menuStyle: string;
   let yearSelected: number | null = null;
-  let monthSelected: number;
-  let dateSelected: number;
+  let monthSelected: number | null= null;
+  let dateSelected: number | null= null;
   let pickerYear = new Date(Date.now()).getFullYear();
   let pickerMonth = new Date(Date.now()).getMonth();
   let pickerRows;
@@ -246,6 +248,30 @@
     openPicker = !openPicker;
   }
 
+  function clearInput(event?: MouseEvent) {
+    if (event) {
+      event.preventDefault();
+      event.stopPropagation();
+    }
+
+    yearSelected = null;
+    monthSelected = null;
+    dateSelected = null;
+    displayedDateString = '';
+    internalValue = '';
+    dates = [];
+    selectedDates = [];
+
+    if (attachedInternals) {
+      attachedInternals.setFormValue('');
+    }
+
+    dispatch('value', { value: '' });
+    openPicker = false;
+}
+
+  $: hasInput = Boolean(displayedDateString || internalValue || yearSelected !== null || (dates && dates.length > 0) || (selectedDates && selectedDates.length > 0));
+
   $: {
     if (openPicker) {
       document.documentElement.style.overflowY = 'hidden';
@@ -414,6 +440,17 @@
     >
       {displayedDateString}
     </p>
+
+    {#if showClearButton && hasInput}
+    <button
+      type="button"
+      class="jp-datepicker-clear-button"
+      on:click={clearInput}
+      aria-label="Clear selection"
+    >
+      {@html closeCrossIcon}
+    </button>
+  {/if}
 
     <span class="jp-datepicker-field-icon">
       {@html calendarIcon}
