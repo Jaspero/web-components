@@ -68,8 +68,8 @@
   let bindingElement: HTMLButtonElement;
   let menuStyle: string;
   let yearSelected: number | null = null;
-  let monthSelected: number | null=null;
-  let dateSelected: number | null=null;
+  let monthSelected: number | null= null;
+  let dateSelected: number | null= null;
   let pickerYear = new Date(Date.now()).getFullYear();
   let pickerMonth = new Date(Date.now()).getMonth();
   let pickerRows;
@@ -249,32 +249,29 @@
   }
 
   function clearInput(event?: MouseEvent) {
-  if (event) {
-    event.preventDefault();
-    event.stopPropagation();
-  }
-  yearSelected = null;
-  monthSelected = null;
-  dateSelected = null;
-  displayedDateString = '';
-  internalValue = '';
-  dates = [];
-  selectedDates = [];
+    if (event) {
+      event.preventDefault();
+      event.stopPropagation();
+    }
 
-  if (attachedInternals) {
-    attachedInternals.setFormValue('');
-  }
-  dispatch('value', { value: '' });
-  openPicker = false;
+    yearSelected = null;
+    monthSelected = null;
+    dateSelected = null;
+    displayedDateString = '';
+    internalValue = '';
+    dates = [];
+    selectedDates = [];
+
+    if (attachedInternals) {
+      attachedInternals.setFormValue('');
+    }
+
+    dispatch('value', { value: '' });
+    openPicker = false;
 }
 
-  $: hasInput = Boolean(
-  displayedDateString || 
-  internalValue || 
-  yearSelected !== null || 
-  (dates && dates.length > 0) || 
-  (selectedDates && selectedDates.length > 0)
-);
+  $: hasInput = Boolean(displayedDateString || internalValue || yearSelected !== null || (dates && dates.length > 0) || (selectedDates && selectedDates.length > 0));
+
   $: {
     if (openPicker) {
       document.documentElement.style.overflowY = 'hidden';
