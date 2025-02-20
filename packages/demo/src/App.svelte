@@ -11,15 +11,16 @@
   import AutocompleteDemo from './FormFieldDemos/AutocompleteDemo.svelte';
   import CheckboxDemo from './FormFieldDemos/CheckboxDemo.svelte';
   import ChipsDemo from './FormFieldDemos/ChipsDemo.svelte';
-  import CkEditorDemo from './FormFieldDemos/CkEditorDemo.svelte';
-  import DateRangeDemo from './FormFieldDemos/DateRangeDemo.svelte';
+  import CkEditorDemo from './FormFieldDemos/CkEditorDemo.svelte'; */
+  import DateRangeDemo from './FormFieldDemos/DateRangeDemo.svelte'; /* 
   import DatepickerDemo from './FormFieldDemos/DatepickerDemo.svelte';
   import FileListDemo from './FormFieldDemos/FileListDemo.svelte';
   import MultiSearchDemo from './FormFieldDemos/MultiSearchDemo.svelte';
   import QuillDemo from './FormFieldDemos/QuillDemo.svelte';
   import RadioDemo from './FormFieldDemos/RadioDemo.svelte';
-  import RangeDemo from './FormFieldDemos/RangeDemo.svelte';
-  import SliderDemo from './FormFieldDemos/SliderDemo.svelte';
+  import RangeDemo from './FormFieldDemos/RangeDemo.svelte'; 
+  import SelectDemo from './FormFieldDemos/SelectDemo.svelte';
+  import SliderDemo from './FormFieldDemos/SliderDemo.svelte'; 
   import TextareaDemo from './FormFieldDemos/TextareaDemo.svelte';
   import ToggleDemo from './FormFieldDemos/ToggleDemo.svelte';
   //EDITORS
@@ -96,7 +97,7 @@
       <!-- <QuillDemo /> -->
       <!-- <RadioDemo /> -->
       <!-- <RangeDemo /> -->
-<!--       <SelectDemo />-->
+      <!-- <SelectDemo /> -->
       <!-- <SliderDemo /> -->
       <!-- <TextareaDemo /> -->
       <!-- <ToggleDemo /> -->
