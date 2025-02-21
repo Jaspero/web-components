@@ -70,6 +70,11 @@
       border-radius: 0.25rem;
       border: 2px solid transparent;
 
+      &-focused {
+        background: var(--background-tertiary);
+        border: 2px solid black;
+      }
+
       & button {
         display: flex;
         justify-content: center;
@@ -79,6 +84,13 @@
         border: none;
         height: 100%;
         cursor: pointer;
+
+        &:focus-visible {
+          outline: none;
+          border-radius: 0.25rem;
+          box-shadow: 0 0 0 2px black;
+          background: var(--background-tertiary);
+        }
 
         & > svg {
           fill: currentColor;
