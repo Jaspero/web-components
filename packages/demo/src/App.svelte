@@ -81,12 +81,12 @@
       <!-- <CheckboxDemo /> -->
       <!-- <ChipsDemo /> -->
       <!-- <CkEditorDemo /> -->
-      <DateRangeDemo />
-      <DateRangeDemo showClearButton={true}/>
-      <DateRangeDemo showClearButton={false}/>
+      <!--<DateRangeDemo /> -->
+      <!--<DateRangeDemo showClearButton={true}/>-->
+      <!--<DateRangeDemo showClearButton={false}/>-->
       <!--<DatepickerDemo />-->
       <!-- <FileListDemo /> -->
-      <!-- <FileUploadDemo /> -->
+      <FileUploadDemo />
       <!-- <InputDemo /> -->
       <!--<DatepickerDemo />-->
       <!--<DatepickerDemo showClearButton={true}/>-->
