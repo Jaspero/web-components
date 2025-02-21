@@ -59,6 +59,7 @@
     (value && formatDisplayFileName(value, displayFormat, displayFormatFunction)) || '';
   let hadValue = false;
   let userInvalidElement = false;
+  let fileInputFocused = false;
 
   const dispatch = createEventDispatcher();
 
@@ -212,7 +213,7 @@
       {/if}
 
       <div class="jp-file-upload-field-icons">
-        <label for={name} class="jp-file-upload-field-icon jp-file-upload-field-icon-upload">
+        <label for={name} class="jp-file-upload-field-icon jp-file-upload-field-icon-upload" class:jp-file-upload-field-icon-focused={fileInputFocused}>
           <input
             type="file"
             id={name}
@@ -220,6 +221,9 @@
             accept={service && service.acceptedFiles}
             bind:this={fileEl}
             on:change={filePicked}
+            on:focus={() => fileInputFocused = true}
+            on:blur={() => fileInputFocused = false}
+            tabindex="0"
           />
           {@html folderIcon}
         </label>
