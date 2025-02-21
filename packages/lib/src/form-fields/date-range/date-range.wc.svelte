@@ -34,7 +34,9 @@
   import leftArrowIcon from '../../icons/left-arrow.svg?raw';
   import rightArrowIcon from '../../icons/right-arrow.svg?raw';
   import upArrowIcon from '../../icons/up-arrow.svg?raw';
+  import closeCrossIcon from '../../icons/close-cross.svg?raw';
 
+  export let showClearButton = true;
   export let attachedInternals: ElementInternals;
   export let value: string = '';
   export let firstInternalValue: string = '';
@@ -260,6 +262,39 @@
     menuStyle = style;
     openPicker = !openPicker;
   }
+  function clearInput(event?: MouseEvent) {
+    if (event) {
+      event.preventDefault();
+      event.stopPropagation();
+    }
+
+    firstYearSelected = null;
+    firstMonthSelected = null;
+    firstDateSelected = null;
+    secondYearSelected = null;
+    secondMonthSelected = null;
+    secondDateSelected = null;
+
+    displayedDateString = '';
+    firstInternalValue = '';
+    secondInternalValue = '';
+    value = '';
+
+    selectingFirst = true;
+
+    if (attachedInternals) {
+      attachedInternals.setFormValue('');
+    }
+
+    dispatch('value', { value: '' });
+    openPicker = false;
+  }
+
+  $: hasInput = Boolean(
+    (firstInternalValue || secondInternalValue || displayedDateString) ||
+    (firstYearSelected !== null && firstMonthSelected !== null && firstDateSelected !== null) ||
+    (secondYearSelected !== null && secondMonthSelected !== null && secondDateSelected !== null)
+  );
 
   $: maxDateSelectable = calculateMaxDate(firstInternalValue, maxSelectableDays);
   $: minDateSelectable = calculateMinDate(firstInternalValue, maxSelectableDays);
@@ -450,6 +485,17 @@
   >
     {displayedDateString}
   </p>
+
+    {#if showClearButton && hasInput}
+    <button
+      type="button"
+      class="jp-datepicker-clear-button"
+      on:click={clearInput}
+      aria-label="Clear selection"
+    >
+      {@html closeCrossIcon}
+    </button>
+  {/if}
 
   <span class="jp-date-range-field-icon">
     {@html calendarIcon}
