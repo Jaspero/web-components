@@ -508,7 +508,7 @@
             class="jp-multisearch-search-input"
             bind:value={searchValue}
             on:input={() =>
-              (!loadingSearch && (searchValue != '' || !defaultSearch)) && handleSearch()
+              !loadingSearch && handleSearch()
             }
             on:focus={() => (searchFocused = true)}
             on:blur={() => (searchFocused = false)}
