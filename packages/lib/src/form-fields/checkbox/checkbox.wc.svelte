@@ -65,7 +65,7 @@
   $: displayLabel = required ? `${label} *` : label;
 
   $: {
-    checkedAmount > 0  && attachedInternals.checkValidity() ? (wasValid = true) : '';
+    checkedAmount > 0 && attachedInternals.checkValidity() ? (wasValid = true) : '';
 
     if (required && checkedAmount === 0) {
       attachedInternals.setValidity(

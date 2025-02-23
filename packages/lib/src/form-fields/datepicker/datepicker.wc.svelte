@@ -68,8 +68,8 @@
   let bindingElement: HTMLButtonElement;
   let menuStyle: string;
   let yearSelected: number | null = null;
-  let monthSelected: number | null= null;
-  let dateSelected: number | null= null;
+  let monthSelected: number | null = null;
+  let dateSelected: number | null = null;
   let pickerYear = new Date(Date.now()).getFullYear();
   let pickerMonth = new Date(Date.now()).getMonth();
   let pickerRows;
@@ -212,15 +212,14 @@
       Array.from(Array(daysAfter).keys()).map((el) => ({
         day: el + 1,
         month: month + 1,
-        year: year, gray: true
+        year: year,
+        gray: true
       }))
     ];
 
     mData = mData.flat();
 
-    mData = Array.from(Array(6).keys()).map((el) =>
-      mData.slice(el * 7, (el + 1) * 7)
-    );
+    mData = Array.from(Array(6).keys()).map((el) => mData.slice(el * 7, (el + 1) * 7));
 
     return mData;
   };
@@ -268,9 +267,15 @@
 
     dispatch('value', { value: '' });
     openPicker = false;
-}
+  }
 
-  $: hasInput = Boolean(displayedDateString || internalValue || yearSelected !== null || (dates && dates.length > 0) || (selectedDates && selectedDates.length > 0));
+  $: hasInput = Boolean(
+    displayedDateString ||
+      internalValue ||
+      yearSelected !== null ||
+      (dates && dates.length > 0) ||
+      (selectedDates && selectedDates.length > 0)
+  );
 
   $: {
     if (openPicker) {
@@ -442,15 +447,15 @@
     </p>
 
     {#if showClearButton && hasInput}
-    <button
-      type="button"
-      class="jp-datepicker-clear-button"
-      on:click={clearInput}
-      aria-label="Clear selection"
-    >
-      {@html closeCrossIcon}
-    </button>
-  {/if}
+      <button
+        type="button"
+        class="jp-datepicker-clear-button"
+        on:click={clearInput}
+        aria-label="Clear selection"
+      >
+        {@html closeCrossIcon}
+      </button>
+    {/if}
 
     <span class="jp-datepicker-field-icon">
       {@html calendarIcon}

@@ -9,7 +9,7 @@
   import { createEventDispatcher } from 'svelte';
   import './alert.wc.pcss';
   import clearIcon from '../../../lib/src/icons/clear.svg?raw';
-  
+
   export let title = '';
   export let message = '';
   export let state = 'error';

@@ -220,7 +220,7 @@
   }
 
   $: {
-    if(value) hadValue = true;
+    if (value) hadValue = true;
     if (hadValue && !attachedInternals.checkValidity()) {
       userInvalidElement = true;
     } else {

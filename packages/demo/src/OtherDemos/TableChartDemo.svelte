@@ -8,23 +8,23 @@
    * TYPES
    */
   type Config = {
-    type: 'sql' | 'data',
+    type: 'sql' | 'data';
     table?: string;
     sort_priority?: {
       key?: string;
       order?: string;
-    }[],
-    formatter?: (value: string) => {},
+    }[];
+    formatter?: (value: string) => {};
     data_formatting?: {
       [key: string]: {
         label: string;
-        formatter: (value: string) => {}
-      }
-    },
+        formatter: (value: string) => {};
+      };
+    };
     date_range?: {
       hidden?: boolean;
       key?: string;
-    },
+    };
     dimensions?: {
       background_color?: string;
       capitalize?: boolean;
@@ -36,23 +36,23 @@
       title?: {
         color?: string;
         font_size?: string;
-      },
+      };
       select?: {
         border?: string;
         background_color?: string;
-      }
-    },
+      };
+    };
     content?: {
       toolbar?: {
         input?: {
           border?: string;
-        },
+        };
         button?: {
           border?: string;
           font_size?: string;
           hover_background_color?: string;
-        }
-      },
+        };
+      };
       table?: {
         border_spacing?: string;
         border_collapse?: string;
@@ -61,24 +61,24 @@
           background_color?: string;
           indicator: {
             background_color: string;
-          },
+          };
           actions?: {
             color?: string;
             background_color?: string;
             hover_background_color?: string;
             border?: string;
-          }
-        },
+          };
+        };
         container?: {
           background?: string;
           padding?: string;
           border?: string;
           border_radius?: string;
           border_color?: string;
-        },
+        };
         cell?: {
           background?: string;
-        },
+        };
         head?: {
           background?: string;
           min_height?: string;
@@ -86,11 +86,11 @@
           font_weight?: string;
           padding?: string;
           color?: string;
-        }
-      }
+        };
+      };
       max_height?: string;
       background?: string;
-    }
+    };
   };
 
   /**
@@ -153,7 +153,7 @@
         label: it,
         value: it,
         group
-      }
+      };
     });
 
     table.class = 'jp-table-chart';
@@ -199,7 +199,7 @@
           },
           date_filter: {
             display: true
-          },
+          }
         },
         max_height: '80vh',
         background: '#75757511'

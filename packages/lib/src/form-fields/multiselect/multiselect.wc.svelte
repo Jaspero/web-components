@@ -340,7 +340,6 @@
     }
   }
 
-  
   $: {
     if (internalValue) hadValue = true;
     if (hadValue && !attachedInternals.checkValidity()) {

@@ -9,7 +9,7 @@
 </script>
 
 <form>
-  <jp-input label="number shortcut allowed" type="number" allowNumberInputShorcut=true />
+  <jp-input label="number shortcut allowed" type="number" allowNumberInputShorcut="true" />
   <jp-input label="default" />
   <jp-input label="prefix" prefix="prefix" />
   <jp-input label="suffix" suffix="suffix" />
@@ -28,7 +28,7 @@
   <jp-input label="required" required="true" />
   <jp-input label="readonly" readonly="true" />
   <jp-input label="type text" type="text" />
-  <jp-input label="type number without arrows" type="number" hideArrowsOnNumber=true/>
+  <jp-input label="type number without arrows" type="number" hideArrowsOnNumber="true" />
   <jp-input label="type password" type="password" />
   <jp-input label="type email" type="email" />
   <jp-input label="type tel" type="tel" />

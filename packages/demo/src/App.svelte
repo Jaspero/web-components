@@ -52,7 +52,7 @@
 <!-- <MultiSearchDemo /> -->
 <!-- <ChipsDemo/> -->
 <!-- <AsyncTableDemo /> -->
- <!--<MultiSelectDemo />-->
+<!--<MultiSelectDemo />-->
 <!-- <FileListDemo /> -->
 <!-- <Demos /> -->
 <!-- <InputDemo />-->
@@ -81,9 +81,9 @@
       <!-- <CheckboxDemo /> -->
       <!-- <ChipsDemo /> -->
       <!-- <CkEditorDemo /> -->
-      <DateRangeDemo />
-      <DateRangeDemo showClearButton={true}/>
-      <DateRangeDemo showClearButton={false}/>
+      <!-- <DateRangeDemo />
+      <DateRangeDemo showClearButton={true} />
+      <DateRangeDemo showClearButton={false} /> -->
       <!--<DatepickerDemo />-->
       <!-- <FileListDemo /> -->
       <!-- <FileUploadDemo /> -->
@@ -91,14 +91,14 @@
       <!--<DatepickerDemo />-->
       <!--<DatepickerDemo showClearButton={true}/>-->
       <!--<DatepickerDemo showClearButton={false}/>-->
-      <!-- <MultiSearchDemo />-->
+      <MultiSearchDemo />
       <!--<MultiSearchDemo showClearButton={true}/>-->
       <!--<MultiSearchDemo showClearButton={false}/>-->
-<!--       <MultiSelectDemo />-->
+      <!--       <MultiSelectDemo />-->
       <!-- <QuillDemo /> -->
       <!-- <RadioDemo /> -->
       <!-- <RangeDemo /> -->
-<!--       <SelectDemo />-->
+      <!--       <SelectDemo />-->
       <!-- <SliderDemo /> -->
       <!-- <TextareaDemo /> -->
       <!-- <ToggleDemo /> -->

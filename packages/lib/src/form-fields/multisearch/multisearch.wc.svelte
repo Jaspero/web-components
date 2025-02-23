@@ -65,7 +65,7 @@
   export let minselectsValidationMessage: string;
   export let maxselectsValidationMessage: string;
   export let singleSelect = false;
-  export let defaultSearch = false;
+  export let defaultSearch = true;
   export let defaultShow = 5;
 
   let numberOfSelected: number = 0;
@@ -148,10 +148,12 @@
     const searchResults = await service.search(searchValue);
     options = [
       ...options,
-      ...searchResults.filter(el => !options.find(el2 => el2.value === el.value)).map((el) => {
-        el.selected = false;
-        return el;
-      })
+      ...searchResults
+        .filter((el) => !options.find((el2) => el2.value === el.value))
+        .map((el) => {
+          el.selected = false;
+          return el;
+        })
     ] as any;
     loadingSearch = false;
   }
@@ -163,10 +165,12 @@
     const searchResults = await service.search('');
     options = [
       ...options,
-      ...searchResults.filter(el => !options.find(el2 => el2.value === el.value)).map((el) => {
-        el.selected = false;
-        return el;
-      })
+      ...searchResults
+        .filter((el) => !options.find((el2) => el2.value === el.value))
+        .map((el) => {
+          el.selected = false;
+          return el;
+        })
     ] as any;
 
     options = options.slice(0, numberOfSelected + Math.max(0, defaultShow - numberOfSelected));
@@ -365,6 +369,7 @@
     searchValue = '';
     displayValue = [];
   }
+
   async function loadValues(value: string) {
     valueLoad = true;
     const values = Array.isArray(value) ? value : value.split(',');
@@ -387,7 +392,7 @@
 
         options = [
           ...options,
-          ...!options.find(opt => opt.value === single.value) ? [single] : []
+          ...(!options.find((opt) => opt.value === single.value) ? [single] : [])
         ];
       })
     );
@@ -395,7 +400,7 @@
   }
 
   $: hasInput = Boolean(searchValue || (displayValue && displayValue.length));
-  
+
   $: {
     if (value) {
       loadValues(value);
@@ -437,9 +442,11 @@
     class:jp-multisearch-select-user-invalid={userInvalidElement}
     bind:this={bindingElement}
     disabled={disabled || valueLoad}
-    on:click|preventDefault={toggleMenu}
-    on:click={() => {
-      if (defaultSearch && !loadingSearch) handleDefaultSearch();
+    on:click|preventDefault={() => {
+      toggleMenu();
+      if (defaultSearch && !loadingSearch) {
+        handleDefaultSearch();
+      }
     }}
     on:keydown={handleKeydown}
   >
@@ -460,15 +467,15 @@
       {displayValue || ''}
     </span>
     {#if showClearButton && hasInput}
-    <button
-      type="button"
-      class="jp-multisearch-clear-button"
-      on:click={clearInput}
-      aria-label="Clear selection"
-    >
-      {@html closeCrossIcon}
-    </button>
-  {/if}
+      <button
+        type="button"
+        class="jp-multisearch-clear-button"
+        on:click={clearInput}
+        aria-label="Clear selection"
+      >
+        {@html closeCrossIcon}
+      </button>
+    {/if}
 
     <ArrowRotate {open} />
   </button>
@@ -490,26 +497,23 @@
         style={menuStyle}
         role="dialog"
       >
-        {#if service.search}
-          <div class="jp-multisearch-search-field">
-            <span
-              class="jp-multisearch-search-label"
-              class:jp-multisearch-search-label-move={searchFocused || searchValue}>Search</span
-            >
-            <input
-              name="search"
-              type="text"
-              class="jp-multisearch-search-input"
-              bind:value={searchValue}
-              on:input={() => {
-                if (!loadingSearch && (searchValue != '' || !defaultSearch)) handleSearch();
-                if (!loadingSearch && searchValue == '' && defaultSearch) handleDefaultSearch();
-              }}
-              on:focus={() => (searchFocused = true)}
-              on:blur={() => (searchFocused = false)}
-            />
-          </div>
-        {/if}
+        <div class="jp-multisearch-search-field">
+          <span
+            class="jp-multisearch-search-label"
+            class:jp-multisearch-search-label-move={searchFocused || searchValue}>Search</span
+          >
+          <input
+            name="search"
+            type="text"
+            class="jp-multisearch-search-input"
+            bind:value={searchValue}
+            on:input={() =>
+              (!loadingSearch && (searchValue != '' || !defaultSearch)) && handleSearch()
+            }
+            on:focus={() => (searchFocused = true)}
+            on:blur={() => (searchFocused = false)}
+          />
+        </div>
         <div class="jp-multisearch-menu-buttons">
           {#each options as option, index (option)}
             <button
@@ -549,7 +553,9 @@
                 on:click|preventDefault|stopPropagation={async () => {
                   loadingMore = true;
                   const newValue = await service.loadMore(searchValue);
-                  options = options.concat(newValue).filter((el) => !options.find((el2) => el2.value === el.value));
+                  options = options
+                    .concat(newValue)
+                    .filter((el) => !options.find((el2) => el2.value === el.value));
                   loadingMore = false;
                 }}
               >

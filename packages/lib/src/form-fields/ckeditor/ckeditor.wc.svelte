@@ -299,11 +299,7 @@
     {@html displayLabel}
   </div>
 {/if}
-<div
-  class="jp-ckeditor"
-  class:jp-ckeditor-user-invalid={userInvalidElement}
-  bind:this={wrapperEl}
->
+<div class="jp-ckeditor" class:jp-ckeditor-user-invalid={userInvalidElement} bind:this={wrapperEl}>
   <div bind:this={containerEl} />
 </div>
 <textarea

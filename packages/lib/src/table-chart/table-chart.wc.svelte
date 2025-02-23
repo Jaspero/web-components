@@ -624,7 +624,7 @@
             }
           })
           .join(',')
-      ),
+      )
     ].join('\n');
 
     const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
@@ -831,9 +831,31 @@
               </span>
 
               {#if !$expanded_groups?.includes(group)}
-                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-chevron-up"><path d="m18 15-6-6-6 6"/></svg>
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="16"
+                  height="16"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  class="lucide lucide-chevron-up"><path d="m18 15-6-6-6 6" /></svg
+                >
               {:else}
-                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-chevron-down"><path d="m6 9 6 6 6-6"/></svg>
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="16"
+                  height="16"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  class="lucide lucide-chevron-down"><path d="m6 9 6 6 6-6" /></svg
+                >
               {/if}
             </div>
 
@@ -1284,7 +1306,7 @@
                         {#if Object.entries(row[dimension.value]).length}
                           {#each Object.entries(row[dimension.value]) as [key, value]}
                             <div>
-<!--                              <b>{key}:</b>-->
+                              <!--                              <b>{key}:</b>-->
                               {#if config?.formatter?.toString()}
                                 {#if config?.data_formatting?.[dimension.label]}
                                   {value

@@ -27,7 +27,7 @@ jobs:
         run: npm run build:lib
 
       # - name: Build Manifest
-      #   run: npm run build:manifest      
+      #   run: npm run build:manifest
 
       - name: Release
         run: npm run semantic-release || true

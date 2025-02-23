@@ -291,9 +291,11 @@
   }
 
   $: hasInput = Boolean(
-    (firstInternalValue || secondInternalValue || displayedDateString) ||
-    (firstYearSelected !== null && firstMonthSelected !== null && firstDateSelected !== null) ||
-    (secondYearSelected !== null && secondMonthSelected !== null && secondDateSelected !== null)
+    firstInternalValue ||
+      secondInternalValue ||
+      displayedDateString ||
+      (firstYearSelected !== null && firstMonthSelected !== null && firstDateSelected !== null) ||
+      (secondYearSelected !== null && secondMonthSelected !== null && secondDateSelected !== null)
   );
 
   $: maxDateSelectable = calculateMaxDate(firstInternalValue, maxSelectableDays);
@@ -486,7 +488,7 @@
     {displayedDateString}
   </p>
 
-    {#if showClearButton && hasInput}
+  {#if showClearButton && hasInput}
     <button
       type="button"
       class="jp-datepicker-clear-button"
