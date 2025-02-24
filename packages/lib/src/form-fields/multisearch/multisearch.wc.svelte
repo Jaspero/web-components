@@ -381,6 +381,9 @@
     }
     searchValue = '';
     displayValue = [];
+    options.forEach((el) => {
+      el.selected = false;
+    });
   }
 
   async function loadValues(value: string) {
