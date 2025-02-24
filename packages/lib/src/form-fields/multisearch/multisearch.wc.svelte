@@ -143,8 +143,9 @@
   }
 
   async function handleSearch() {
-    options = options.filter((el) => el.selected);
+    if(loadingSearch) return;
     loadingSearch = true;
+    options = options.filter((el) => el.selected);
     const searchResults = await service.search(searchValue);
     options = [
       ...options,
@@ -157,6 +158,18 @@
     ] as any;
     loadingSearch = false;
   }
+
+  const debounce = (mainFunction : any, delay : number) => {
+    let timer : number;
+    return (...args: any) => {
+      clearTimeout(timer);
+      timer = setTimeout(() => {
+        mainFunction(...args);
+      }, delay);
+    };
+  };
+
+  const debouncedHandleSearch = debounce(handleSearch, 200);
 
   async function handleDefaultSearch() {
     options = options.filter((el) => el.selected);
@@ -507,9 +520,7 @@
             type="text"
             class="jp-multisearch-search-input"
             bind:value={searchValue}
-            on:input={() =>
-              !loadingSearch && handleSearch()
-            }
+            on:input={() => debouncedHandleSearch()}
             on:focus={() => (searchFocused = true)}
             on:blur={() => (searchFocused = false)}
           />
