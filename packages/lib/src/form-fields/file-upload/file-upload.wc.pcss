@@ -67,7 +67,13 @@
       align-items: center;
       width: 2rem;
       height: 2rem;
-      border-radius: 50%;
+      border-radius: 0.25rem;
+      border: 2px solid transparent;
+
+      &-focused {
+        background: var(--background-tertiary);
+        border: 2px solid black;
+      }
 
       & button {
         display: flex;
@@ -78,6 +84,13 @@
         border: none;
         height: 100%;
         cursor: pointer;
+
+        &:focus-visible {
+          outline: none;
+          border-radius: 0.25rem;
+          box-shadow: 0 0 0 2px black;
+          background: var(--background-tertiary);
+        }
 
         & > svg {
           fill: currentColor;
@@ -90,6 +103,7 @@
 
       &:hover {
         background: var(--background-tertiary);
+        border: 2px solid black;
       }
 
       &-upload {
