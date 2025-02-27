@@ -49,6 +49,11 @@
   export let displayFormat = 'snake';
   export let displayFormatFunction;
   export let innerContent: string;
+  export let itemWidth: string;
+  export let itemHeight: string;
+  export let assetWidth = '300px';
+  export let assetHeight = '150px';
+  export let assetObjectFit = 'contain';
   export let openbrowse = () => {
     browseFilesEl!.click();
   };
@@ -339,9 +344,11 @@
     <div class="jp-file-list-files">
       {#each internalFiles as file, index}
         <!-- svelte-ignore a11y-mouse-events-have-key-events -->
-        <div
+        <div 
           class="jp-file-list-file"
           class:jp-file-list-file-grab={sortable}
+          style:width={itemWidth}
+          style:height={itemHeight} 
           on:mousedown={(e) => mousedown(index, e)}
           bind:this={fileElements[index]}
         >
@@ -355,10 +362,10 @@
           <div class="jp-file-list-file-icon">
             {#if file.src}
               {#if file.type === 'image'}
-                <img src={file.src} alt={file.name} />
+                <img style:width={assetWidth} style:height={assetHeight} style:object-fit={assetObjectFit} src={file.src} alt={file.name} />
               {:else if file.type === 'video'}
                 <!-- svelte-ignore a11y-media-has-caption -->
-                <video controls>
+                <video style:width={assetWidth} style:height={assetHeight} style:object-fit={assetObjectFit} controls>
                   <source src={file.src} />
                 </video>
               {:else if file.type === 'audio'}

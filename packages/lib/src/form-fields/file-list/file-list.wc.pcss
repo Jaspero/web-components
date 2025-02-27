@@ -54,6 +54,7 @@
       right: 0;
       padding: 0;
       transform: translate(50%, -50%);
+      background: none;
       border-color: transparent;
     }
 
@@ -77,8 +78,6 @@
 
       & img,
       & video {
-        aspect-ratio: 1 / 1;
-        object-fit: contain;
         width: 100%;
         height: 100%;
         user-select: none;
@@ -91,8 +90,8 @@
   }
 
   &-files {
-    display: grid;
-    grid-template-columns: repeat(4, minmax(0, 1fr));
+    display: flex;
+    flex-wrap: wrap;
     height: 100%;
     padding: 1rem;
     gap: 1rem;

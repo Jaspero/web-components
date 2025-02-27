@@ -10,19 +10,24 @@ import '../../static/c/file-list.css';
 
 ### Attributes
 
-|           Name            | Required |                    Type                     |                           Description                            |
-| :-----------------------: | :------: | :-----------------------------------------: | :--------------------------------------------------------------: |
-|           value           |          | `string` (list of urls separated by comma)  |                              setter                              |
-|           label           |          |               `string` (HTML)               |                    displayed above the field                     |
-|            id             |          |                  `string`                   |                        unique identifier                         |
-|           name            |    ✓     |                  `string`                   |                     name of the form control                     |
-|          service          |    ✓     |        [`FileService`](#fileservice)        |                           file service                           |
-|         sortable          |          |                  `boolean`                  |               enables/disables drag and drop sort                |
-|         maxfiles          |          |                  `number`                   |                 maximum number of files allowed                  |
-| maxfilesValidationMessage |          |                  `string`                   | validation message for when component does not satisfy maxfiles  |
-|         minfiles          |          |                  `number`                   |                 minimum number of files allowed                  |
-| minfilesValidationMessage |          |                  `string`                   | validation message for when component does not satisfy minfiles  |
-|    validationMessages     |          | `{[type]: string}` where `type` is `string` | compact way of writing validation messages in a single attribute |
+|           Name            | Required |                    Type                     |                                  Description                                  |
+| :-----------------------: | :------: | :-----------------------------------------: | :---------------------------------------------------------------------------: |
+|           value           |          | `string` (list of urls separated by comma)  |                                    setter                                     |
+|           label           |          |               `string` (HTML)               |                           displayed above the field                           |
+|            id             |          |                  `string`                   |                               unique identifier                               |
+|           name            |    ✓     |                  `string`                   |                           name of the form control                            |
+|          service          |    ✓     |        [`FileService`](#fileservice)        |                                 file service                                  |
+|         sortable          |          |                  `boolean`                  |                      enables/disables drag and drop sort                      |
+|         maxfiles          |          |                  `number`                   |                        maximum number of files allowed                        |
+| maxfilesValidationMessage |          |                  `string`                   |        validation message for when component does not satisfy maxfiles        |
+|         minfiles          |          |                  `number`                   |                        minimum number of files allowed                        |
+| minfilesValidationMessage |          |                  `string`                   |        validation message for when component does not satisfy minfiles        |
+|    validationMessages     |          | `{[type]: string}` where `type` is `string` |       compact way of writing validation messages in a single attribute        |
+|         itemWidth         |          |                  `string`                   |      Define the width of the item. You need to add the unit (i.e. "px")       |
+|        itemHeight         |          |                  `string`                   |      Define the height of the item. You need to add the unit (i.e. "px")      |
+|        assetHeight        |          |                  `string`                   | Define the height of the image or video. You need to add the unit (i.e. "px") |
+|        assetWidth         |          |                  `string`                   | Define the height of the image or video. You need to add the unit (i.e. "px") |
+|      assetObjectFit       |          |                  `string`                   |        Define the o of the item. You need to add the unit (i.e. "px")         |
 <br></br>
 ****
 
