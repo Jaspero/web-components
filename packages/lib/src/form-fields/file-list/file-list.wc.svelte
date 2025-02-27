@@ -102,13 +102,13 @@
     dispatch('value', { value: internalValue });
   }
 
-  export async function save() {
+  export async function save(id?: string) {
     loading = true;
     try {
       await Promise.allSettled(
         internalFiles.map(async (el) => {
           if (!el.saved) {
-            const url = await service.uploadFile(el.file);
+            const url = await service.uploadFile(el.file, id);
             el.saved = true;
             el.url = url;
           }
