@@ -133,6 +133,10 @@ textarea {
   padding: 0;
 }
 
+button {
+  color: unset!important;
+}
+
 button,
 select {
   text-transform: none;
