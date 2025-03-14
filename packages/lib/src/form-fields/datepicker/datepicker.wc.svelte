@@ -552,11 +552,11 @@
                 class="jp-datepicker-menu-year-nav-date"
                 on:click|stopPropagation={() => (yearSelector = false)}
               >
-                <p>
+                <div>
                   {pickerYearRows[0][0]} - {pickerYearRows[pickerYearRows.length - 1][
                     pickerYearRows[pickerYearRows.length - 1].length - 1
                   ]}
-                </p>
+                </div>
                 {@html upArrowIcon}
               </button>
               <div class="jp-datepicker-menu-year-nav-buttons">
