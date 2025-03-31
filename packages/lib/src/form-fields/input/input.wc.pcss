@@ -153,11 +153,18 @@
       outline: none;
       border-radius: 0.25rem;
       background: transparent;
+      color: var(--text-primary);
 
       &[type='color'] {
         position: absolute;
         visibility: hidden;
         opacity: 0;
+      }
+
+      &[type='time']::-webkit-calendar-picker-indicator {
+        mix-blend-mode: difference;
+        opacity: 0.8;
+        color-scheme: dark;
       }
 
       &[class='jp-input-field-move-left'] {
