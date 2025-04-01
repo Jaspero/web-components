@@ -92,7 +92,7 @@
           background: var(--background-tertiary);
         }
 
-        & > svg {
+        &>svg {
           fill: currentColor;
         }
       }
@@ -115,7 +115,7 @@
         position: relative;
       }
 
-      & > svg {
+      &>svg {
         fill: currentColor;
       }
     }
@@ -158,16 +158,22 @@
     border: 2px dashed var(--primary-color);
   }
 
-  &-preview {
-    z-index: 1;
+  &-preview-container {
     position: absolute;
+    top: 100%;
+    right: 0;
+    background-color: var(--background-primary);
+    padding: 0.5rem;
+    border-radius: 0.5rem;
+    box-shadow: 0 3px 12px 3px rgba(0, 0, 0, 0.16);
+    z-index: 10;
+  }
+
+  &-preview {
     max-width: 300px;
     max-height: 300px;
     width: auto;
     height: auto;
-    background-color: var(--background-primary);
-    border-radius: 0.5rem;
-    box-shadow: 0 3px 12px 3px rgba(0, 0, 0, 0.16);
   }
 
   &-overlay {

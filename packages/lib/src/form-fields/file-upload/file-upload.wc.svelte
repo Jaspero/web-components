@@ -213,7 +213,11 @@
       {/if}
 
       <div class="jp-file-upload-field-icons">
-        <label for={name} class="jp-file-upload-field-icon jp-file-upload-field-icon-upload" class:jp-file-upload-field-icon-focused={fileInputFocused}>
+        <label
+          for={name}
+          class="jp-file-upload-field-icon jp-file-upload-field-icon-upload"
+          class:jp-file-upload-field-icon-focused={fileInputFocused}
+        >
           <input
             type="file"
             id={name}
@@ -221,8 +225,8 @@
             accept={service && service.acceptedFiles}
             bind:this={fileEl}
             on:change={filePicked}
-            on:focus={() => fileInputFocused = true}
-            on:blur={() => fileInputFocused = false}
+            on:focus={() => (fileInputFocused = true)}
+            on:blur={() => (fileInputFocused = false)}
             tabindex="0"
           />
           {@html folderIcon}
@@ -268,19 +272,19 @@
           disabled={isLocal}
         />
       </span>
+
+      {#if preview}
+        <div class="jp-file-upload-preview-container">
+          <img
+            class="jp-file-upload-preview"
+            style={previewStyle}
+            src={img}
+            alt="preview"
+            use:clickOutside
+            on:click_outside={() => (preview = false)}
+          />
+        </div>
+      {/if}
     {/if}
   </div>
 </div>
-
-{#if preview}
-  <div class="jp-file-upload-overlay">
-    <img
-      class="jp-file-upload-preview"
-      style={previewStyle}
-      src={img}
-      alt="preview"
-      use:clickOutside
-      on:click_outside={() => (preview = false)}
-    />
-  </div>
-{/if}
