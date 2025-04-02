@@ -85,7 +85,7 @@
       <DateRangeDemo showClearButton={true} />
       <DateRangeDemo showClearButton={false} /> -->
       <!--<DatepickerDemo />-->
-      <FileListDemo />
+      <!-- <FileListDemo /> -->
       <!-- <FileUploadDemo /> -->
       <!-- <InputDemo /> -->
       <!--<DatepickerDemo />-->
@@ -101,7 +101,7 @@
       <!--       <SelectDemo />-->
       <!-- <SliderDemo /> -->
       <!-- <TextareaDemo /> -->
-      <!-- <ToggleDemo /> -->
+      <ToggleDemo />
     </div>
     <div class="editors">
       <!-- <CodeEditorDemo /> -->
