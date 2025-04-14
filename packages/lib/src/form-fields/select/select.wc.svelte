@@ -156,6 +156,17 @@
 
     let nextIndex;
 
+    // If the menu is closed and an arrow key or letter is pressed, open it
+    if (
+      !open &&
+      (event.key === 'ArrowDown' || event.key === 'ArrowUp' || /^[a-z\d]$/i.test(event.key))
+    ) {
+      toggleMenu();
+      setTimeout(() => handleKeydown(event), 10); // Reprocess the key after opening the menu
+
+      return;
+    }
+
     // Check if menu is open
     if (open) {
       // Close menu on Escape

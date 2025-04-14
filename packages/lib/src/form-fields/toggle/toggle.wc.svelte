@@ -55,22 +55,26 @@
   $: displayLabel = required ? `${label} *` : label;
 </script>
 
-{#if label}
-  <span class="jp-toggle-label" class:jp-toggle-label-small={size === 'small'}
-    >{@html displayLabel}</span
-  >
-{/if}
-<label class={'jp-toggle-switch-' + size}>
-  <input
-    class="jp-toggle-switch-input"
-    type="checkbox"
-    {name}
-    {disabled}
-    {required}
-    bind:checked={value}
-    value={true}
-    hidden
-    bind:this={checkboxEl}
-  />
-  <span class="jp-toggle-slider round" class:jp-toggle-slider-pointer={!disabled}></span>
-</label>
+<div class="jp-toggle-container">
+  <label class="jp-toggle-label-container">
+    <div class={'jp-toggle-switch-' + size}>
+      <input
+        class="jp-toggle-switch-input"
+        type="checkbox"
+        {name}
+        {disabled}
+        {required}
+        bind:checked={value}
+        value={true}
+        hidden
+        bind:this={checkboxEl}
+      />
+      <span class="jp-toggle-slider round" class:jp-toggle-slider-pointer={!disabled}></span>
+    </div>
+    {#if label}
+      <span class="jp-toggle-label" class:jp-toggle-label-small={size === 'small'}
+        >{@html displayLabel}</span
+      >
+    {/if}
+  </label>
+</div>

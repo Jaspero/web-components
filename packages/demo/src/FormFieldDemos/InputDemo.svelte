@@ -9,9 +9,10 @@
 </script>
 
 <form>
-  <jp-input label="number shortcut allowed" type="number" allowNumberInputShorcut="true" />
-  <jp-input label="default" />
-  <jp-input label="prefix" prefix="prefix" />
+  <jp-input label="number shortcut allowed" type="time" allowNumberInputShorcut="true" />
+  <!-- 
+    <jp-input label="default" />
+    <jp-input label="prefix" prefix="prefix" />
   <jp-input label="suffix" suffix="suffix" />
   <jp-input label="prefix outside" labelType="outside" prefix="prefix" />
   <jp-input label="suffix outside" labelType="outside" suffix="suffix" />
@@ -36,5 +37,5 @@
   <jp-input label="type color" type="color" />
   <jp-input label="pattern 'pattern'" pattern="pattern" />
   <button type="submit">submit</button>
-  <jp-input label="" />
+  <jp-input label="" /> -->
 </form>
