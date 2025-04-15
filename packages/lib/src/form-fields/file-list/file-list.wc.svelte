@@ -47,18 +47,17 @@
   export let required = false;
   export let requiredValidationMessage: string;
   export let displayFormat = 'snake';
-  export let displayFormatFunction;
+  export let displayFormatFunction: (name: string) => string;
   export let innerContent: string;
-  export let itemWidth: string;
-  export let itemHeight: string;
+  export let itemWidth = '300px';
+  export let itemHeight = '150px';
   export let assetWidth = '300px';
   export let assetHeight = '150px';
   export let assetObjectFit = 'contain';
-  export let openbrowse = () => {
-    browseFilesEl!.click();
-  };
+  export let openbrowse = () => browseFilesEl!.click();
+  export const getValue = () => internalValue.split(',').filter(Boolean);
+  export const reportValidity = () => attachedInternals.reportValidity();
 
-  let displayedFileNameString = '';
   let grabbedEl: HTMLElement | null = null;
   let grabbedIndex = -1;
   let startingY: number;
@@ -71,10 +70,6 @@
   let internalValue = '';
   let hadValue = false;
   let userInvalidElement = false;
-
-  export const getValue = () => internalValue.split(',').filter(Boolean);
-
-  export const reportValidity = () => attachedInternals.reportValidity();
 
   const dispatch = createEventDispatcher();
 
@@ -170,17 +165,16 @@
         } else return true;
       })
       .map((el) => {
-        displayedFileNameString = formatDisplayFileName(
-          el.name,
-          displayFormat,
-          displayFormatFunction
-        )!;
         let obj: any = {
           name: el.name,
           size: returnFileSize(el.size),
           file: el,
           saved: false,
-          displayedName: displayedFileNameString
+          displayedName: formatDisplayFileName(
+            el.name,
+            displayFormat,
+            displayFormatFunction
+          )
         };
 
         const type = el['type'].split('/')[0];
@@ -193,7 +187,7 @@
         return obj;
       });
 
-  const blobToFile = (blob, filename) => {
+  const blobToFile = (blob: Blob, filename: string) => {
     return new File([blob], filename);
   };
 
@@ -258,7 +252,7 @@
         internalFiles[i] = internalFiles[grabbedIndex];
         internalFiles[grabbedIndex] = tmp;
       }
-      grabbedEl.style = '';
+      grabbedEl.style = `width:${itemWidth};height:${itemHeight};`;
       grabbedEl = null;
     }
   }
