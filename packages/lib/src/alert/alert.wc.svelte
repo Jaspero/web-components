@@ -28,34 +28,29 @@
   });
 </script>
 
-
 <div class="jp-alert jp-alert-{state}" style="--success-c: {successColor}; --warning-c: {warningColor}; --basic-c: {basicColor}">
-  <div class="jp-alert-container">
-    <div class="jp-alert-container-header">
-      <div class="jp-alert-container-header-inner">
-        {#if title}
-          <h2 class="jp-alert-container-header-title">
-            {@html title}
-          </h2>
-        {/if}
-      </div>
-      <button
-        type="button"
-        class="jp-alert-container-header-close"
-        on:click={(event) => {
+  <div class="jp-alert-content">
+    {#if title}
+      <div class="jp-alert-content-title">{@html title}</div>
+    {/if}
+    {#if message}
+      <div class="jp-alert-content-message">{@html message}</div>
+    {/if}
+  </div>
+  <div class="jp-alert-close">
+    <button
+            type="button"
+            class="jp-alert-close-button"
+            on:click={(event) => {
           event.preventDefault();
           event.stopImmediatePropagation();
           dispatch('close');
         }}
-      >
-        {@html clearIcon}
-      </button>
-    </div>
-    {#if message}
-      <p class="jp-alert-container-message">
-        {@html message}
-      </p>
-    {/if}
-    <div class="jp-alert-container-bar"></div>
+    >
+      {@html clearIcon}
+    </button>
+  </div>
+  <div class="jp-alert-progress">
+    <div class="jp-alert-progress-bar"></div>
   </div>
 </div>

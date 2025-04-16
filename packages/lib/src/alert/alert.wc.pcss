@@ -1,103 +1,71 @@
 .jp-alert {
-  position: fixed;
-  bottom: 2rem;
-  left: 50%;
-  transform: translateX(-50%);
-  background-color: var(--background-primary);
-  box-shadow: 0 3px 15px 6px rgba(0, 0, 0, 0.2);
-  border-radius: .5rem .5rem .125rem .125rem;
-  max-width: 40rem;
-  overflow: hidden;
-  width: 100%;
-  z-index: 100;
-
-  &-container {
+    position: fixed;
+    bottom: 2rem;
+    left: 50%;
+    transform: translateX(-50%);
     display: flex;
-    flex-direction: column;
-    gap: 0.5rem;
+    flex-wrap: wrap;
+    background-color: white;
+    box-shadow: 0 2px 6px rgba(0,0,0,.08);
+    border-radius: .25rem;
+    max-width: 40rem;
     width: 100%;
 
-    &-header {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      padding: .75rem 1rem;
-      gap: 1rem;
-
-      &-inner {
-        display: flex;
-      }
-
-      &-icon {
-        font-size: 1.5rem;
-        margin-right: 0.5rem;
-      }
-
-      &-title {
+    &-content {
         flex: 1 1 0;
-        font-size: 1.5rem;
-        font-weight: bold;
-        margin: 0;
-      }
-
-      &-close {
         display: flex;
-        justify-content: center;
-        align-items: center;
-        padding: .25rem;
-        width: 1.25rem;
-        height: 1.25rem;
-        border: none;
-        background: none;
+        flex-direction: column;
+        gap: .5rem;
+        padding: 1rem;
 
-        > svg {
-          fill: currentColor;
+        &-title {
+            font-size: 1.5rem;
         }
-      }
+        &-message {
+        }
     }
 
-    &-message {
-      font-size: 0.875rem;
-      padding: 0 2rem .5rem 1rem ;
-      margin: 0;
+    &-close {
+        padding: .5rem;
+        &-button {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            width: .75rem;
+            height: .75rem;
+            border: none;
+            padding: 0;
+            cursor: pointer;
+            background-color: transparent;
+        }
     }
 
-    &-bar {
-      animation: fill-bar 5s linear;
-      height: 3px;
-      background-color: var(--basic-c);
-      border-radius: 1rem;
+    &-progress {
+        width: 100%;
+        &-bar {
+            animation: fill-bar 5s linear;
+            height: 3px;
+            background-color: var(--basic-c);
+        }
     }
-  }
-}
 
-.jp-alert-success {
-  .jp-alert-container-bar {
-    background-color: var(--success-c);
-  }
-}
-
-.jp-alert-error {
-  .jp-alert-container-bar {
-    background-color: var(--warning-c);
-  }
-}
-
-@media (max-width: 600px) {
-  .jp-alert {
-    bottom: 1rem;
-    right: 1rem;
-    left: 1rem;
-    transform: unset;
-    max-width: calc(100% - 2rem);
-  }
+    &-warning {
+        .jp-alert-progress-bar {
+            background-color: var(--warning-c);
+        }
+    }
+    &-success {
+        .jp-alert-progress-bar {
+            background-color: var(--success-c);
+        }
+    }
 }
 
 @keyframes fill-bar {
-  from {
-    width: 0;
-  }
-  to {
-    width: 100%;
-  }
+    from {
+        width: 0;
+    }
+    to {
+        width: 100%;
+    }
 }
