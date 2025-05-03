@@ -105,7 +105,6 @@
             <input
               type="text"
               class:jp-grid-edit-bold={(boldFirstCol && j === 0) || (boldFirstRow && i === 0)}
-              placeholder={`Row ${i} Col ${j}`}
               bind:value={value[i][j]}
               on:mouseenter={() => ((hoveredRow = i), (hoveredCol = j))}
               on:blur={() => dispatch('change', { value })}
