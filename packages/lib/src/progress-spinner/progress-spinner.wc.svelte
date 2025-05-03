@@ -7,6 +7,7 @@
 
 <script lang="ts">
   import ProgressSpinnerIcon from '../icons/progress-spinner.svelte';
+  
   export let determinate: boolean = false;
   export let progress: number = 0;
   export let radius: number = 60;
