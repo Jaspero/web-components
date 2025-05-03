@@ -46,7 +46,10 @@
   import TreeDemo from './OtherDemos/TreeDemo.svelte';
 
   import Demos from './Demos.svelte';
+  import GridEditDemo from './FormFieldDemos/GridEditDemo.svelte';
 </script>
+
+<GridEditDemo />
 
 <!-- <AssetManagerDemo /> -->
 <!-- <MultiSearchDemo /> -->
@@ -101,7 +104,7 @@
       <!--       <SelectDemo />-->
       <!-- <SliderDemo /> -->
       <!-- <TextareaDemo /> -->
-      <ToggleDemo />
+      <!-- <ToggleDemo /> -->
     </div>
     <div class="editors">
       <!-- <CodeEditorDemo /> -->

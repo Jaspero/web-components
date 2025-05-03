@@ -1,0 +1,95 @@
+.jp-grid-edit {
+  display: flex;
+  width: 100%;
+  position: relative;
+  padding: 20px;
+
+  &-row {
+    border: 1px solid var(--border-primary);
+    width: 100%;
+  }
+
+  &-col {
+
+		position: relative;
+
+    input {
+      border: none;
+      width: 100%;
+      padding: 0.75rem;
+      border-bottom: 1px solid var(--border-primary);
+    }
+  }
+
+  &-bold {
+    font-weight: bold;
+  }
+
+  &-row-remove,
+  &-col-remove {
+    border: none;
+    position: absolute;
+    opacity: 0;
+    cursor: pointer;
+    background: none;
+    padding: 0.15rem;
+    box-sizing: border-box;
+    background-color: var(--background-secondary);
+    color: var(--text-secondary);
+    border-radius: 0.25rem;
+		width: 20px;
+		height: 20px;
+		display: flex;
+		justify-content: center;
+  }
+
+  &-row-remove {
+    top: calc(50% - 10px);
+		left: -10px;
+  }
+
+  &-col-remove {
+    top: -10px;
+    left: calc(50% - 10px);
+  }
+
+  &-row-add,
+  &-col-add {
+    border: none;
+    position: absolute;
+    opacity: 0;
+    cursor: pointer;
+    background: none;
+    padding: 0.15rem;
+    box-sizing: border-box;
+
+    &-inner {
+      background-color: var(--background-secondary);
+      color: var(--text-secondary);
+      border-radius: 0.25rem;
+      width: 100%;
+      height: 100%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+  }
+
+  &-row-add {
+    top: 20px;
+    right: 0px;
+    width: 20px;
+    height: calc(100% - 40px);
+  }
+
+  &-col-add {
+    bottom: 0px;
+    left: 20px;
+    height: 20px;
+    width: calc(100% - 40px);
+  }
+
+  &-active {
+    opacity: 1;
+  }
+}
