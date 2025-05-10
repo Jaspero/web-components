@@ -54,6 +54,8 @@
   export let assetWidth = '300px';
   export let assetHeight = '150px';
   export let assetObjectFit = 'contain';
+  export let showName = false;
+  export let showSize = false;
   export let openbrowse = () => browseFilesEl!.click();
   export const getValue = () => internalValue.split(',').filter(Boolean);
   export const reportValidity = () => attachedInternals.reportValidity();
@@ -375,17 +377,21 @@
               {@html unknownFileIcon}
             {/if}
           </div>
-          <div class="jp-file-list-file-name">
-            {file.displayedName}
-          </div>
-          <div class="jp-file-list-file-info">
-            <span>
-              {file.size || ''}
-            </span>
-            <span style="color: rgb(26 151 26)">
-              {file.saved ? wording.SAVED : ''}
-            </span>
-          </div>
+          {#if showName}
+            <div class="jp-file-list-file-name">
+              {file.displayedName}
+            </div>
+          {/if}
+          {#if showSize}
+            <div class="jp-file-list-file-info">
+              <span>
+                {file.size || ''}
+              </span>
+              <span style="color: rgb(26 151 26)">
+                {file.saved ? wording.SAVED : ''}
+              </span>
+            </div>
+          {/if}
         </div>
       {/each}
     </div>

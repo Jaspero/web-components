@@ -49,14 +49,13 @@
   import GridEditDemo from './FormFieldDemos/GridEditDemo.svelte';
 </script>
 
-<GridEditDemo />
-
+<!-- <GridEditDemo /> -->
 <!-- <AssetManagerDemo /> -->
 <!-- <MultiSearchDemo /> -->
 <!-- <ChipsDemo/> -->
 <!-- <AsyncTableDemo /> -->
-<!--<MultiSelectDemo />-->
-<!-- <FileListDemo /> -->
+<!-- <MultiSelectDemo />-->
+<FileListDemo />
 <!-- <Demos /> -->
 <!-- <InputDemo />-->
 <!-- <ImageGalleryDemo /> -->
