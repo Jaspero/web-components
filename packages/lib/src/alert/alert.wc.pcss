@@ -1,75 +1,84 @@
 .jp-alert {
-    position: fixed;
-    bottom: 2rem;
-    left: 50%;
-    transform: translateX(-50%);
+  position: fixed;
+  bottom: 2rem;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  flex-wrap: wrap;
+  background-color: var(--background-primary);
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
+  border-radius: 0.25rem;
+  max-width: 40rem;
+  width: 100%;
+  z-index: 10000;
+
+  &-content {
+    flex: 1 1 0;
     display: flex;
-    flex-wrap: wrap;
-    background-color: white;
-    box-shadow: 0 2px 6px rgba(0,0,0,.08);
-    border-radius: .25rem;
-    max-width: 40rem;
+    flex-direction: column;
+    gap: 0.5rem;
+    padding: 1rem;
+
+    &-title {
+      font-size: 1.5rem;
+    }
+  }
+
+  &-close {
+    padding: 0.5rem;
+    &-button {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      width: 0.75rem;
+      height: 0.75rem;
+      border: none;
+      padding: 0;
+      cursor: pointer;
+      background-color: transparent;
+    }
+  }
+
+  &-progress {
     width: 100%;
+    &-bar {
+      animation: fill-bar 5s linear;
+      height: 3px;
+      background-color: var(--secondary-color);
+    }
+  }
 
-    &-content {
-        flex: 1 1 0;
-        display: flex;
-        flex-direction: column;
-        gap: .5rem;
-        padding: 1rem;
-
-        &-title {
-            font-size: 1.5rem;
-        }
-        &-message {
-        }
+  &-warning {
+    .jp-alert-progress-bar {
+      background-color: var(--warning-color);
     }
 
-    &-close {
-        padding: .5rem;
-        &-button {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            width: .75rem;
-            height: .75rem;
-            border: none;
-            padding: 0;
-            cursor: pointer;
-            background-color: transparent;
-        }
+    .jp-alert-content-title,
+    .jp-alert-content-message {
+      color: var(--warning-color);
+    }
+  }
+  &-success {
+    .jp-alert-progress-bar {
+      background-color: var(--success-color);
     }
 
-    &-progress {
-        width: 100%;
-        &-bar {
-            animation: fill-bar 5s linear;
-            height: 3px;
-            background-color: var(--basic-c);
-        }
+    .jp-alert-content-title,
+    .jp-alert-content-message {
+      color: var(--success-color);
     }
-
-    &-warning {
-        .jp-alert-progress-bar {
-            background-color: var(--warning-c);
-        }
-    }
-    &-success {
-        .jp-alert-progress-bar {
-            background-color: var(--success-c);
-        }
-    }
+  }
 }
 
 @keyframes fill-bar {
-    from {
-        width: 0;
-    }
-    to {
-        width: 100%;
-    }
+  from {
+    width: 0;
+  }
+  to {
+    width: 100%;
+  }
 }
 
 @media (max-width: 700px) {
-    max-width: calc(100vw - 2rem);
+  max-width: calc(100vw - 2rem);
 }
