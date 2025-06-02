@@ -13,9 +13,6 @@
   export let title = '';
   export let message = '';
   export let state: 'success' | 'error' | '' = '';
-  export let successColor = '#3a8c3d';
-  export let warningColor = '#f44336';
-  export let basicColor = '#ABABAB';
 
   const dispatch = createEventDispatcher();
 
@@ -28,7 +25,7 @@
   });
 </script>
 
-<div class="jp-alert jp-alert-{state}" style="--success-c: {successColor}; --warning-c: {warningColor}; --basic-c: {basicColor}">
+<div class="jp-alert jp-alert-{state}">
   <div class="jp-alert-content">
     {#if title}
       <div class="jp-alert-content-title">{@html title}</div>
@@ -39,13 +36,13 @@
   </div>
   <div class="jp-alert-close">
     <button
-            type="button"
-            class="jp-alert-close-button"
-            on:click={(event) => {
-          event.preventDefault();
-          event.stopImmediatePropagation();
-          dispatch('close');
-        }}
+      type="button"
+      class="jp-alert-close-button"
+      on:click={(event) => {
+        event.preventDefault();
+        event.stopImmediatePropagation();
+        dispatch('close');
+      }}
     >
       {@html clearIcon}
     </button>
