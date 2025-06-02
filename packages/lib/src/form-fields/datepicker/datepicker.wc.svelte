@@ -260,6 +260,7 @@
     internalValue = '';
     dates = [];
     selectedDates = [];
+    datePicked = false;
 
     if (attachedInternals) {
       attachedInternals.setFormValue('');
@@ -316,71 +317,40 @@
   $: pickerRows = getPickerRows(pickerMonth, pickerYear);
 
   $: {
-    if (enableMultiple) {
+    if (enableMultiple && yearSelected != null && monthSelected != null && dateSelected != null) {
       if (datePicked) {
-        internalValue = `${yearSelected}-${monthSelected + 1 < 10 ? '0' : ''}${monthSelected + 1}-${
-          dateSelected < 10 ? '0' : ''
-        }${dateSelected}`;
-        dates.push(internalValue);
-
-        for (let i = dates.length - 1; i > 0; --i) {
-          let currTime = new Date(dates[i]).getTime();
-          let prevTime = new Date(dates[i - 1]).getTime();
-          if (currTime < prevTime) {
-            const temp = dates[i];
-            dates[i] = dates[i - 1];
-            dates[i - 1] = temp;
-          }
+        internalValue = `${yearSelected}-${monthSelected + 1 < 10 ? '0' : ''}${monthSelected + 1}-${dateSelected < 10 ? '0' : ''}${dateSelected}`;
+        if (!dates.includes(internalValue)) {
+          dates.push(internalValue);
         }
-        let tempList: (string | undefined)[] = [];
-        dates.forEach((elem) => {
-          selectedDateObject = new Date(elem);
-          let selectedDateObjectString = formatDisplayDate(
-            selectedDateObject,
-            displayFormat,
-            displayFormatFunction
-          );
-          tempList.push(selectedDateObjectString);
-        });
 
-        displayedDateString = tempList.join(separator);
+        dates.sort((a, b) => new Date(a).getTime() - new Date(b).getTime());
+
+        let displayList = dates.map((elem) =>
+          formatDisplayDate(new Date(elem), displayFormat, displayFormatFunction)
+        );
+        displayedDateString = displayList.join(separator);
+
         attachedInternals.setValidity({});
-        attachedInternals.setFormValue(internalValue);
-        returnDate = displayedDateString;
-        dispatch('value', { value: returnDate });
+        attachedInternals.setFormValue(dates.join(separator));
+        returnDate = dates.join(separator);
+
+        dispatch('value', { value: dates.join(separator) });
       } else {
-        if (dates.length > 0) {
-          internalValue = `${yearSelected}-${monthSelected + 1 < 10 ? '0' : ''}${
-            monthSelected + 1
-          }-${dateSelected < 10 ? '0' : ''}${dateSelected}`;
-          let toDelete = new Date(internalValue).getTime();
+        internalValue = `${yearSelected}-${monthSelected + 1 < 10 ? '0' : ''}${monthSelected + 1}-${dateSelected < 10 ? '0' : ''}${dateSelected}`;
+        const toDeleteTime = new Date(internalValue).getTime();
+        dates = dates.filter((d) => new Date(d).getTime() !== toDeleteTime);
 
-          for (let i = 0; i < dates.length; i++) {
-            let currTime = new Date(dates[i]).getTime();
-            if (currTime == toDelete) {
-              dates.splice(i, 1);
-            }
-          }
-          let tempList: (string | undefined)[] = [];
-          dates.forEach((elem) => {
-            selectedDateObject = new Date(elem);
-            let selectedDateObjectString = formatDisplayDate(
-              selectedDateObject,
-              displayFormat,
-              displayFormatFunction
-            );
-            tempList.push(selectedDateObjectString);
-          });
+        let displayList = dates.map((elem) =>
+          formatDisplayDate(new Date(elem), displayFormat, displayFormatFunction)
+        );
+        displayedDateString = displayList.join(separator);
 
-          displayedDateString = tempList.join(separator);
-          attachedInternals.setValidity({});
-          attachedInternals.setFormValue(internalValue);
-          returnDate = displayedDateString;
-          dispatch('value', { value: returnDate });
-        } else {
-          displayedDateString = '';
-          dispatch('value', { value: '' });
-        }
+        attachedInternals.setValidity({});
+        attachedInternals.setFormValue(dates.join(separator));
+        returnDate = dates.join(separator);
+
+        dispatch('value', { value: dates.join(separator) });
       }
     } else {
       if (yearSelected) {
