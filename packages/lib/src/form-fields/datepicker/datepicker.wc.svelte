@@ -23,7 +23,7 @@
   import rightArrowIcon from '../../icons/right-arrow.svg?raw';
   import closeCrossIcon from '../../icons/close-cross.svg?raw';
   import { clickOutside } from '../../utils/click-outside';
-  import { createEventDispatcher } from 'svelte';
+  import { createEventDispatcher, tick } from 'svelte';
   import { formatDisplayDate, formatReturnDate } from '../../utils/dateFormatter';
   import Day from '../datepicker/Day.svelte';
   import Month from '../datepicker/Month.svelte';
@@ -53,11 +53,7 @@
   export let readonly = false;
 
   let selectedDateObject = new Date();
-  let displayedDateString = formatDisplayDate(
-    selectedDateObject,
-    displayFormat,
-    displayFormatFunction
-  );
+  let displayedDateString = '';
   let returnDate = formatDisplayDate(selectedDateObject, displayFormat, returnFormatFunction);
   let selectedDates: { year: any; month: any; day: any }[] = [];
   let date: { year: number; month: number; day: number };
@@ -277,10 +273,10 @@
 
   $: hasInput = Boolean(
     displayedDateString ||
-      internalValue ||
-      yearSelected !== null ||
-      (dates && dates.length > 0) ||
-      (selectedDates && selectedDates.length > 0)
+    internalValue ||
+    yearSelected !== null ||
+    (dates && dates.length > 0) ||
+    (selectedDates && selectedDates.length > 0)
   );
 
   $: {
@@ -293,14 +289,137 @@
 
   $: {
     if (value) {
-      const tmp = new Date(value);
-      yearSelected = tmp.getFullYear();
-      monthSelected = tmp.getMonth();
-      dateSelected = tmp.getDate();
-      pickerMonth = tmp.getMonth();
-      pickerYear = tmp.getFullYear();
+      if (enableMultiple) {
+        const valueArray = typeof value === 'string' ? value.split(separator) : [value];
+        dates = [];
+        selectedDates = [];
+
+        valueArray.forEach((dateValue) => {
+          if (dateValue && dateValue.trim()) {
+            try {
+              const tmp = new Date(dateValue.trim());
+              if (!isNaN(tmp.getTime())) {
+                const isoString = `${tmp.getFullYear()}-${tmp.getMonth() + 1 < 10 ? '0' : ''}${tmp.getMonth() + 1}-${tmp.getDate() < 10 ? '0' : ''}${tmp.getDate()}`;
+                if (!dates.includes(isoString)) {
+                  dates.push(isoString);
+                }
+
+                const dateObj = { year: tmp.getFullYear(), month: tmp.getMonth(), day: tmp.getDate() };
+                if (!selectedDates.some(d => d.year === dateObj.year && d.month === dateObj.month && d.day === dateObj.day)) {
+                  selectedDates.push(dateObj);
+                }
+              }
+            } catch (e) {
+              console.warn('Invalid date value:', dateValue);
+            }
+          }
+        });
+
+        dates.sort((a, b) => new Date(a).getTime() - new Date(b).getTime());
+
+        let displayList = dates.map((elem) =>
+          formatDisplayDate(new Date(elem), displayFormat, displayFormatFunction)
+        );
+
+        displayedDateString = displayList.join(separator);
+
+        if (dates.length > 0) {
+          const firstDate = new Date(dates[0]);
+          pickerMonth = firstDate.getMonth();
+          pickerYear = firstDate.getFullYear();
+        }
+      } else {
+        const tmp = new Date(value);
+        if (!isNaN(tmp.getTime())) {
+          yearSelected = tmp.getFullYear();
+          monthSelected = tmp.getMonth();
+          dateSelected = tmp.getDate();
+          pickerMonth = tmp.getMonth();
+          pickerYear = tmp.getFullYear();
+
+          selectedDateObject = tmp;
+          displayedDateString = formatDisplayDate(
+            selectedDateObject,
+            displayFormat,
+            displayFormatFunction
+          );
+        }
+      }
+    } else {
+      if (enableMultiple) {
+        dates = [];
+        selectedDates = [];
+        displayedDateString = '';
+      } else {
+        yearSelected = null;
+        monthSelected = null;
+        dateSelected = null;
+        displayedDateString = '';
+      }
     }
   }
+
+  $: if (enableMultiple) {
+    if (dates.length > 0) {
+      let displayList = dates.map((elem) =>
+        formatDisplayDate(new Date(elem), displayFormat, displayFormatFunction)
+      );
+      displayedDateString = displayList.join(separator);
+
+      let returnValues = dates.map((elem) =>
+        formatReturnDate(new Date(elem), returnFormat, returnFormatFunction)
+      );
+
+      attachedInternals.setValidity({});
+      attachedInternals.setFormValue(dates.join(separator));
+
+      returnDate = returnValues.join(separator);
+      dispatch('value', { value: returnValues.join(separator) });
+    } else {
+      displayedDateString = '';
+      if (required) {
+        attachedInternals.setValidity(
+          { valueMissing: true },
+          requiredValidationMessage || `Date is required.`,
+          bindingElement
+        );
+      }
+      attachedInternals.setFormValue('');
+      dispatch('value', { value: '' });
+    }
+  }
+
+  $: if (!enableMultiple) {
+    if (yearSelected) {
+      internalValue = `${yearSelected}-${monthSelected + 1 < 10 ? '0' : ''}${monthSelected + 1}-${
+        dateSelected < 10 ? '0' : ''
+      }${dateSelected}`;
+      selectedDateObject = new Date(internalValue);
+      displayedDateString = formatDisplayDate(
+        selectedDateObject,
+        displayFormat,
+        displayFormatFunction
+      );
+      attachedInternals.setValidity({});
+      attachedInternals.setFormValue(internalValue);
+      dispatch('value', {
+        value: formatReturnDate(selectedDateObject, returnFormat, returnFormatFunction)
+      });
+    } else {
+      if (required) {
+        attachedInternals.setValidity(
+          { valueMissing: true },
+          requiredValidationMessage || `Date is required.`,
+          bindingElement
+        );
+      }
+      displayedDateString = '';
+      attachedInternals.setFormValue('');
+      dispatch('value', { value: '' });
+    }
+    attachedInternals.checkValidity();
+  }
+
   $: if (monthSelected == 12 && yearSelected) {
     monthSelected = 0;
     yearSelected++;
@@ -321,80 +440,6 @@
 
   $: pickerRows = getPickerRows(pickerMonth, pickerYear);
 
-  $: {
-    if (enableMultiple && yearSelected != null && monthSelected != null && dateSelected != null) {
-      if (datePicked) {
-        internalValue = `${yearSelected}-${monthSelected + 1 < 10 ? '0' : ''}${monthSelected + 1}-${dateSelected < 10 ? '0' : ''}${dateSelected}`;
-        if (!dates.includes(internalValue)) {
-          dates.push(internalValue);
-        }
-
-        dates.sort((a, b) => new Date(a).getTime() - new Date(b).getTime());
-
-        let displayList = dates.map((elem) =>
-          formatDisplayDate(new Date(elem), displayFormat, displayFormatFunction)
-        );
-        displayedDateString = displayList.join(separator);
-
-        let returnValues = dates.map((elem) =>
-          formatReturnDate(new Date(elem), returnFormat, returnFormatFunction)
-        );
-
-        attachedInternals.setValidity({});
-        attachedInternals.setFormValue(dates.join(separator));
-
-        returnDate = returnValues.join(separator);
-        dispatch('value', { value: returnValues.join(separator) });
-      } else {
-        internalValue = `${yearSelected}-${monthSelected + 1 < 10 ? '0' : ''}${monthSelected + 1}-${dateSelected < 10 ? '0' : ''}${dateSelected}`;
-        const toDeleteTime = new Date(internalValue).getTime();
-        dates = dates.filter((d) => new Date(d).getTime() !== toDeleteTime);
-
-        let displayList = dates.map((elem) =>
-          formatDisplayDate(new Date(elem), displayFormat, displayFormatFunction)
-        );
-        displayedDateString = displayList.join(separator);
-
-        let returnValues = dates.map((elem) =>
-          formatReturnDate(new Date(elem), returnFormat, returnFormatFunction)
-        );
-
-        attachedInternals.setValidity({});
-        attachedInternals.setFormValue(dates.join(separator));
-
-        returnDate = returnValues.join(separator);
-        dispatch('value', { value: returnValues.join(separator) });
-      }
-    } else {
-      if (yearSelected) {
-        internalValue = `${yearSelected}-${monthSelected + 1 < 10 ? '0' : ''}${monthSelected + 1}-${
-          dateSelected < 10 ? '0' : ''
-        }${dateSelected}`;
-        selectedDateObject = new Date(internalValue);
-        displayedDateString = formatDisplayDate(
-          selectedDateObject,
-          displayFormat,
-          displayFormatFunction
-        );
-        attachedInternals.setValidity({});
-        attachedInternals.setFormValue(internalValue);
-        dispatch('value', {
-          value: formatReturnDate(selectedDateObject, returnFormat, returnFormatFunction)
-        });
-      } else {
-        if (required) {
-          attachedInternals.setValidity(
-            { valueMissing: true },
-            requiredValidationMessage || `Date is required.`,
-            bindingElement
-          );
-        }
-        displayedDateString = '';
-        dispatch('value', { value: '' });
-      }
-      attachedInternals.checkValidity();
-    }
-  }
   $: displayLabel = required ? `${label} *` : label;
 </script>
 
@@ -419,8 +464,8 @@
     {#if label && labelType === 'inside'}
       <span
         class="jp-datepicker-field-label"
-        class:jp-datepicker-field-label-move={openPicker || internalValue}
-        >{@html displayLabel}</span
+        class:jp-datepicker-field-label-move={openPicker || internalValue || displayLabel}
+      >{@html displayLabel}</span
       >
     {/if}
     <p
@@ -537,7 +582,7 @@
               >
                 <p>
                   {pickerYearRows[0][0]} - {pickerYearRows[pickerYearRows.length - 1][
-                    pickerYearRows[pickerYearRows.length - 1].length - 1
+                pickerYearRows[pickerYearRows.length - 1].length - 1
                   ]}
                 </p>
                 {@html upArrowIcon}

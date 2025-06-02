@@ -55,7 +55,7 @@
 <!-- <ChipsDemo/> -->
 <!-- <AsyncTableDemo /> -->
 <!-- <MultiSelectDemo />-->
-<FileListDemo />
+<!--<FileListDemo />-->
 <!-- <Demos /> -->
 <!-- <InputDemo />-->
 <!-- <ImageGalleryDemo /> -->
@@ -86,7 +86,7 @@
       <!-- <DateRangeDemo />
       <DateRangeDemo showClearButton={true} />
       <DateRangeDemo showClearButton={false} /> -->
-      <!--<DatepickerDemo />-->
+      <DatepickerDemo />
       <!-- <FileListDemo /> -->
       <!-- <FileUploadDemo /> -->
       <!-- <InputDemo /> -->

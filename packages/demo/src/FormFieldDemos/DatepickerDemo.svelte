@@ -8,14 +8,15 @@
 </script>
 
 <form>
-  <jp-datepicker {showClearButton} />
-  <jp-datepicker label="datepicker" {showClearButton} />
-  <jp-datepicker label="datepicker label outside" labelType="outside" {showClearButton} />
-  <jp-datepicker label="datepicker enable multiple" enableMultiple="true" {showClearButton} />
-  <jp-datepicker
+<!--  <jp-datepicker {showClearButton} />-->
+<!--  <jp-datepicker label="datepicker" {showClearButton} />-->
+<!--  <jp-datepicker label="datepicker label outside" labelType="outside" {showClearButton} />-->
+  <jp-datepicker value="Wed Jun 25 2025 02:00:00 GMT+0200 (Central European Summer Time), Thu Jun 26 2025 02:00:00 GMT+0200 (Central European Summer Time)"
+                 label="datepicker enable multiple" enableMultiple="true" {showClearButton} />
+  <!--<jp-datepicker
     label="datepicker enable multiple separator"
     enableMultiple="true"
-    separator="--"
+    separator="&#45;&#45;"
     {showClearButton}
   />
   <jp-datepicker label="datepicker required" required="true" {showClearButton} />
@@ -31,6 +32,11 @@
   <jp-datepicker label="datepicker minDate date" {minDate} {showClearButton} />
   <jp-datepicker label="datepicker maxDate string" maxDate="2024-10-27" {showClearButton} />
   <jp-datepicker label="datepicker maxDate date" {maxDate} {showClearButton} />
-
-  <button type="submit">submit</button>
+-->
+  <button type="button" on:click="{() => {
+    const datepicker = document.querySelector('jp-datepicker');
+    if (datepicker) {
+      console.log(datepicker);
+    }
+  }}">submit</button>
 </form>
