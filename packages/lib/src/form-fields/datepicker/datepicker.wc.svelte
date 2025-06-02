@@ -159,7 +159,12 @@
   );
 
   export const getValue = () => {
-    if (yearSelected) {
+    if (enableMultiple && dates.length > 0) {
+      let returnValues = dates.map((elem) =>
+        formatReturnDate(new Date(elem), returnFormat, returnFormatFunction)
+      );
+      return returnValues.join(separator);
+    } else if (yearSelected) {
       return formatReturnDate(selectedDateObject, returnFormat, returnFormatFunction);
     } else {
       return '';
@@ -331,11 +336,15 @@
         );
         displayedDateString = displayList.join(separator);
 
+        let returnValues = dates.map((elem) =>
+          formatReturnDate(new Date(elem), returnFormat, returnFormatFunction)
+        );
+
         attachedInternals.setValidity({});
         attachedInternals.setFormValue(dates.join(separator));
-        returnDate = dates.join(separator);
 
-        dispatch('value', { value: dates.join(separator) });
+        returnDate = returnValues.join(separator);
+        dispatch('value', { value: returnValues.join(separator) });
       } else {
         internalValue = `${yearSelected}-${monthSelected + 1 < 10 ? '0' : ''}${monthSelected + 1}-${dateSelected < 10 ? '0' : ''}${dateSelected}`;
         const toDeleteTime = new Date(internalValue).getTime();
@@ -346,11 +355,15 @@
         );
         displayedDateString = displayList.join(separator);
 
+        let returnValues = dates.map((elem) =>
+          formatReturnDate(new Date(elem), returnFormat, returnFormatFunction)
+        );
+
         attachedInternals.setValidity({});
         attachedInternals.setFormValue(dates.join(separator));
-        returnDate = dates.join(separator);
 
-        dispatch('value', { value: dates.join(separator) });
+        returnDate = returnValues.join(separator);
+        dispatch('value', { value: returnValues.join(separator) });
       }
     } else {
       if (yearSelected) {
