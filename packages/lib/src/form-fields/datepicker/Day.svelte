@@ -21,7 +21,7 @@
   $: colDate = new Date(col.year, col.month, col.day, 2).getTime();
 
   $: {
-    if (allowedDateTimestamps.length > 0) {
+    if (allowedDateTimestamps.length) {
       notAllowed = !allowedDateTimestamps.includes(colDate);
     }
   }
