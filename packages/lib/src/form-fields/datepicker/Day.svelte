@@ -21,10 +21,8 @@
   $: colDate = new Date(col.year, col.month, col.day, 2).getTime();
 
   $: {
-    if (allowedDateTimestamps.includes(colDate)) {
-      notAllowed = false;
-    } else {
-      notAllowed = true;
+    if (allowedDateTimestamps.length > 0) {
+      notAllowed = !allowedDateTimestamps.includes(colDate);
     }
   }
 
