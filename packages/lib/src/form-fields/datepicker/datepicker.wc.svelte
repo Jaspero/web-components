@@ -131,6 +131,8 @@
     } else {
       selectedDates.push(date);
     }
+
+    selectedDates = [...selectedDates];
   }
 
   $: internalMinDate = minDate ? (minDate instanceof Date ? minDate : new Date(minDate)) : null;
@@ -272,10 +274,10 @@
 
   $: hasInput = Boolean(
     displayedDateString ||
-    internalValue ||
-    yearSelected !== null ||
-    (dates && dates.length > 0) ||
-    (selectedDates && selectedDates.length > 0)
+      internalValue ||
+      yearSelected !== null ||
+      (dates && dates.length > 0) ||
+      (selectedDates && selectedDates.length > 0)
   );
 
   $: {
@@ -300,6 +302,14 @@
               .padStart(2, '0')}`;
           });
 
+        selectedDates = dates.map((dateStr) => {
+          const d = new Date(dateStr);
+          return {
+            year: d.getFullYear(),
+            month: d.getMonth(),
+            day: d.getDate()
+          };
+        });
         displayedDateString = dates
           .map((d) => formatDisplayDate(new Date(d), displayFormat, displayFormatFunction))
           .join(separator);
@@ -347,14 +357,17 @@
 
   $: {
     if (enableMultiple && yearSelected != null && monthSelected != null && dateSelected != null) {
-      if (datePicked) {
+      if (selectedDates) {
         internalValue = `${yearSelected}-${monthSelected + 1 < 10 ? '0' : ''}${monthSelected + 1}-${dateSelected < 10 ? '0' : ''}${dateSelected}`;
         if (!dates.includes(internalValue)) {
           dates.push(internalValue);
         }
+        const toDeleteTime = selectedDates.map((date) => {
+          return Date.UTC(date.year, date.month, date.day);
+        });
 
+        dates = dates.filter((d) => toDeleteTime.includes(new Date(d).getTime()));
         dates.sort((a, b) => new Date(a).getTime() - new Date(b).getTime());
-
         let displayList = dates.map((elem) =>
           formatDisplayDate(new Date(elem), displayFormat, displayFormatFunction)
         );
@@ -370,8 +383,11 @@
         dispatch('value', { value: returnValues.join(separator) });
       } else {
         internalValue = `${yearSelected}-${monthSelected + 1 < 10 ? '0' : ''}${monthSelected + 1}-${dateSelected < 10 ? '0' : ''}${dateSelected}`;
-        const toDeleteTime = new Date(internalValue).getTime();
-        dates = dates.filter((d) => new Date(d).getTime() !== toDeleteTime);
+        const toDeleteTime = selectedDates.map((date) => {
+          return Date.UTC(date.year, date.month, date.day);
+        });
+
+        dates = dates.filter((d) => toDeleteTime.includes(new Date(d).getTime()));
 
         let displayList = dates.map((elem) =>
           formatDisplayDate(new Date(elem), displayFormat, displayFormatFunction)
@@ -442,7 +458,7 @@
       <span
         class="jp-datepicker-field-label"
         class:jp-datepicker-field-label-move={openPicker || internalValue}
-      >{@html displayLabel}</span
+        >{@html displayLabel}</span
       >
     {/if}
     <p
@@ -559,7 +575,7 @@
               >
                 <p>
                   {pickerYearRows[0][0]} - {pickerYearRows[pickerYearRows.length - 1][
-                pickerYearRows[pickerYearRows.length - 1].length - 1
+                    pickerYearRows[pickerYearRows.length - 1].length - 1
                   ]}
                 </p>
                 {@html upArrowIcon}
