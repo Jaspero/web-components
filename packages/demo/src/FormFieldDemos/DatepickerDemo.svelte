@@ -11,8 +11,9 @@
 <!--  <jp-datepicker {showClearButton} />-->
 <!--  <jp-datepicker label="datepicker" {showClearButton} />-->
 <!--  <jp-datepicker label="datepicker label outside" labelType="outside" {showClearButton} />-->
-  <jp-datepicker value="Wed Jun 25 2025 02:00:00 GMT+0200 (Central European Summer Time), Thu Jun 26 2025 02:00:00 GMT+0200 (Central European Summer Time)"
-                 label="datepicker enable multiple" enableMultiple="true" {showClearButton} />
+  <jp-datepicker value="2025-06-04T00:00:00.000Z, 2025-06-05T00:00:00.000Z"
+                 label="datepicker enable multiple" enableMultiple="true" returnFormat="iso" {showClearButton} />
+<!--  <jp-datepicker label="datepicker enable multiple" enableMultiple="true" returnFormat="iso" {showClearButton} />-->
   <!--<jp-datepicker
     label="datepicker enable multiple separator"
     enableMultiple="true"
@@ -36,7 +37,7 @@
   <button type="button" on:click="{() => {
     const datepicker = document.querySelector('jp-datepicker');
     if (datepicker) {
-      console.log(datepicker);
+      console.log(datepicker.getValue());
     }
   }}">submit</button>
 </form>
