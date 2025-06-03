@@ -51,7 +51,8 @@
   export let maxDate: string | Date;
   export let disabled = false;
   export let readonly = false;
-
+  export let allowedDates = '';
+  let allowedDateTimestamps: number[];
   let selectedDateObject = new Date();
   let displayedDateString = '';
   let selectedDates: { year: any; month: any; day: any }[] = [];
@@ -335,6 +336,13 @@
     }
   }
 
+  $: {
+    if (allowedDates) {
+      allowedDateTimestamps = allowedDates.split(separator).map((v) => {
+        return new Date(v).getTime();
+      });
+    }
+  }
   $: if (monthSelected == 12 && yearSelected) {
     monthSelected = 0;
     yearSelected++;
@@ -555,6 +563,7 @@
                       {dateSelected}
                       {enableMultiple}
                       {selectedDates}
+                      {allowedDateTimestamps}
                       on:dateSelected={handleDateSelected}
                       on:multipleDatesSelected={handleMultipleSelects}
                     ></Day>

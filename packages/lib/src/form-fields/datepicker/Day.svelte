@@ -10,12 +10,23 @@
   export let yearSelected: number | null;
   export let enableMultiple: boolean;
   export let selectedDates: any[] = [];
+  export let allowedDateTimestamps: any[] = [];
 
   let isDatePicked = false;
   let date = null;
+  let notAllowed = false;
 
   $: isOutOfMax = isOutOfMaxBounds(internalMaxDate, col.year, col.month, col.day);
   $: isOutOfMin = isOutOfMinBounds(internalMinDate, col.year, col.month, col.day);
+  $: colDate = new Date(col.year, col.month, col.day, 2).getTime();
+
+  $: {
+    if (allowedDateTimestamps.includes(colDate)) {
+      notAllowed = false;
+    } else {
+      notAllowed = true;
+    }
+  }
 
   const dispatch = createEventDispatcher();
 
@@ -61,7 +72,7 @@
       }
       handleMultipleClicks();
     }}
-    disabled={isOutOfMin || isOutOfMax}
+    disabled={isOutOfMin || isOutOfMax || notAllowed}
   >
     {col.day}
   </button>
@@ -71,7 +82,7 @@
     class:gray={col.gray}
     class:active={dateSelected == col.day && monthSelected == col.month && yearSelected == col.year}
     on:click|preventDefault={handleClick}
-    disabled={isOutOfMin || isOutOfMax}
+    disabled={isOutOfMin || isOutOfMax || notAllowed}
   >
     {col.day}
   </button>

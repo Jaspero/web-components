@@ -26,6 +26,7 @@ import '../../static/c/datepicker.css';
 |   displayFormatFunction   | if `displayFormat` <br></br> is `custom` |                       `(date:Date) => string`                       |                 custom display format function                  |
 |         minDate           |                                          |                              `string` \| `Date`                           |                    minimum date that can be selected                  |
 |         maxDate           |                                          |                              `string` \| `Date`                         |                    maximum date that can be selected                   |
+|      allowedDates         |                                          |                     `Date()` constructor param                      |                    dates that can be picked                     |
 <br></br>
 ****
 

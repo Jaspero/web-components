@@ -11,7 +11,7 @@
 <!--  <jp-datepicker {showClearButton} />-->
 <!--  <jp-datepicker label="datepicker" {showClearButton} />-->
 <!--  <jp-datepicker label="datepicker label outside" labelType="outside" {showClearButton} />-->
-  <jp-datepicker value="2025-06-04T00:00:00.000Z, 2025-06-05T00:00:00.000Z"
+  <jp-datepicker allowedDates="2025-06-04T00:00:00.000Z, 2025-06-05T00:00:00.000Z"
                  label="datepicker enable multiple" enableMultiple="true" returnFormat="iso" {showClearButton} />
 <!--  <jp-datepicker label="datepicker enable multiple" enableMultiple="true" returnFormat="iso" {showClearButton} />-->
   <!--<jp-datepicker
