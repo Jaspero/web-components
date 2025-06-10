@@ -56,6 +56,7 @@
   export let assetObjectFit = 'contain';
   export let showName = false;
   export let showSize = false;
+  export let forceFileType = '';
   export let openbrowse = () => browseFilesEl!.click();
   export const getValue = () => internalValue.split(',').filter(Boolean);
   export const reportValidity = () => attachedInternals.reportValidity();
@@ -212,11 +213,14 @@
               size: '',
               file: urlFile,
               saved: true,
-              url: url,
+              url,
               external: true
             };
 
-            if (/\.jpg|\.png|\.jpeg|\.webp|\.svg|\.gif/.test(url)) {
+            if (forceFileType) {
+              obj.src = url;
+              obj.type = forceFileType;
+            } else if (/\.jpg|\.png|\.jpeg|\.webp|\.svg|\.gif/.test(url)) {
               obj.src = url;
               obj.type = 'image';
             } else if (/\.mp4|\.mov/.test(url)) {
