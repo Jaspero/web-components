@@ -29,6 +29,7 @@
   export let height: string | null = null;
   export let width: string | null = null;
   export let label = '';
+  export let cleanPaste = true;
   export let options: any = {
     toolbar: {
       items: [
@@ -271,6 +272,38 @@
           attachedInternals.setFormValue(internalValue || '');
           dispatch('value', internalValue || '');
         });
+
+        if (cleanPaste) {
+          const writer = editor.editing.view._writer;
+
+          function parseChild(child: any) {
+            if (child.name === 'a') {
+              writer.remove(child);
+            }
+
+            if (child._attrs) {
+              writer.removeAttribute('style', child);
+              writer.removeAttribute('class', child);
+            }
+
+            if (child.getChildren) {
+              const children = child.getChildren() as IterableIterator<Element>;
+
+              for (const child of children) {
+                parseChild(child);
+              }
+            }
+          }
+
+          editor.plugins.get('ClipboardPipeline').on('inputTransformation', (evt, data) => {
+            const content = data.content;
+            const children = content.getChildren() as IterableIterator<Element>;
+
+            for (const child of children) {
+              parseChild(child);
+            }
+          });
+        }
       })
       .catch(console.error);
   });

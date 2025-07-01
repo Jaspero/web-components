@@ -55,13 +55,12 @@
 <!-- <ChipsDemo/> -->
 <!-- <AsyncTableDemo /> -->
 <!-- <MultiSelectDemo />-->
-<!--<FileListDemo />-->
+<!-- <FileListDemo /> -->
 <!-- <Demos /> -->
 <!-- <InputDemo />-->
 <!-- <ImageGalleryDemo /> -->
 <!-- <DateRangeDemo /> -->
-<!-- <CkEditorDemo /> -->
-<!-- <CkEditorDemo /> -->
+<CkEditorDemo />
 <!-- <RangeDemo /> -->
 
 <!-- <TableChartDemo /> -->
