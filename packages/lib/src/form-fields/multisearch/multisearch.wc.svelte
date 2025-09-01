@@ -186,7 +186,7 @@
         })
     ] as any;
 
-    options = options.slice(0, numberOfSelected + Math.max(0, defaultShow - numberOfSelected));
+    options = options.slice(0, numberOfSelected + defaultShow);
     loadingSearch = false;
   }
 
