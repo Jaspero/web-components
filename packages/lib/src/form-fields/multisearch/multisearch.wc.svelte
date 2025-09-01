@@ -449,7 +449,6 @@
   <input
     class="jp-multisearch-hidden-input"
     tabindex="-1"
-    bind:this={inputEl}
     bind:value={internalValue}
     {id}
     {name}
