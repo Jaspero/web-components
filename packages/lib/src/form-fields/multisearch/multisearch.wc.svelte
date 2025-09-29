@@ -51,10 +51,20 @@
   export let name = '';
   export let label = '';
   export let labelType: 'inside' | 'outside' = 'inside';
-  export const getValue = () =>
-    singleSelect
-      ? options.find((el) => el.selected)?.value
-      : options.filter((el) => el.selected).map((el) => el.value);
+  export const getValue = () => {
+
+    if (singleSelect) {
+      const found = options.find((el) => el.selected);
+
+      if (!found) {
+        return '';
+      }
+
+      return found.value;
+    }
+
+    return options.filter((el) => el.selected).map((el) => el.value);
+  };
   export let service: SearchService;
   export let validationMessages: {
     required?: string;
@@ -66,9 +76,7 @@
   export let maxselectsValidationMessage: string;
   export let singleSelect = false;
   export let defaultSearch = true;
-  export let defaultShow = 5;
 
-  let numberOfSelected: number = 0;
   let isTabbing = false;
   let open = false;
   let bindingElement: HTMLButtonElement;
@@ -78,7 +86,6 @@
   let searchTimeout: any;
   let displayValue: string[];
   let searchFocused = false;
-  let inputEl: HTMLInputElement;
   let hadValue = false;
   let userInvalidElement = false;
 
@@ -173,7 +180,6 @@
 
   async function handleDefaultSearch() {
     options = options.filter((el) => el.selected);
-    numberOfSelected = options.length;
     loadingSearch = true;
     const searchResults = await service.search('');
     options = [
@@ -185,8 +191,6 @@
           return el;
         })
     ] as any;
-
-    options = options.slice(0, numberOfSelected + Math.max(0, defaultShow - numberOfSelected));
     loadingSearch = false;
   }
 
@@ -381,6 +385,7 @@
     }
     searchValue = '';
     displayValue = [];
+    internalValue = '';
     options.forEach((el) => {
       el.selected = false;
     });
@@ -444,7 +449,6 @@
   <input
     class="jp-multisearch-hidden-input"
     tabindex="-1"
-    bind:this={inputEl}
     bind:value={internalValue}
     {id}
     {name}
