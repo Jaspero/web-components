@@ -332,6 +332,15 @@
           color: var(--text-on-primary);
         }
 
+        &.current-date {
+          border: 2px solid var(--primary-color);
+          font-weight: 600;
+        }
+
+        &.current-date.active {
+          border: 2px solid var(--text-on-primary);
+        }
+
         &:disabled:hover {
           background-color: var(--background-tertiary) !important;
           color: var(--text-secondary);

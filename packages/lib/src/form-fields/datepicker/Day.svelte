@@ -19,6 +19,13 @@
   $: isOutOfMax = isOutOfMaxBounds(internalMaxDate, col.year, col.month, col.day);
   $: isOutOfMin = isOutOfMinBounds(internalMinDate, col.year, col.month, col.day);
   $: colDate = new Date(col.year, col.month, col.day, 2).getTime();
+  $: isCurrentDate = (() => {
+    const today = new Date();
+    return col.year === today.getFullYear() && 
+           col.month === today.getMonth() && 
+           col.day === today.getDate() && 
+           !col.gray;
+  })();
 
   $: {
     if (allowedDateTimestamps.length) {
@@ -53,6 +60,7 @@
     class:active={selectedDates.some(
       (e) => e.year === col.year && e.month === col.month && e.day === col.day
     )}
+    class:current-date={isCurrentDate}
     on:click|preventDefault={() => {
       dateSelected = col.day;
       yearSelected = col.year;
@@ -79,6 +87,7 @@
     type="button"
     class:gray={col.gray}
     class:active={dateSelected == col.day && monthSelected == col.month && yearSelected == col.year}
+    class:current-date={isCurrentDate}
     on:click|preventDefault={handleClick}
     disabled={isOutOfMin || isOutOfMax || notAllowed}
   >
