@@ -486,7 +486,7 @@
     >
       {displayValue || ''}
     </span>
-    {#if showClearButton && hasInput}
+    {#if showClearButton && hasInput && !disabled}
       <button
         type="button"
         class="jp-multisearch-clear-button"
