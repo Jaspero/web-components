@@ -18,7 +18,7 @@
 
   $: isOutOfMax = isOutOfMaxBounds(internalMaxDate, col.year, col.month, col.day);
   $: isOutOfMin = isOutOfMinBounds(internalMinDate, col.year, col.month, col.day);
-  $: colDate = new Date(col.year, col.month, col.day, 2).getTime();
+  $: colDate = Date.UTC(col.year, col.month, col.day);
   $: isCurrentDate = (() => {
     const today = new Date();
     return col.year === today.getFullYear() && 

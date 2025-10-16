@@ -12,7 +12,7 @@
 <!--  <jp-datepicker label="datepicker" {showClearButton} />-->
 <!--  <jp-datepicker label="datepicker label outside" labelType="outside" {showClearButton} />-->
   <jp-datepicker allowedDates="2025-10-20T00:00:00.000Z, 2025-10-24T00:00:00.000Z, 2025-11-24T00:00:00.000Z"
-                 label="datepicker enable multiple 22" enableMultiple="true" returnFormat="iso" {showClearButton} />
+                 label="datepicker enable multiple 22" returnFormat="iso" {showClearButton} />
 <!--  <jp-datepicker label="datepicker enable multiple" enableMultiple="true" returnFormat="iso" {showClearButton} />-->
   <!--<jp-datepicker
     label="datepicker enable multiple separator"

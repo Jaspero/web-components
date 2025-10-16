@@ -340,7 +340,7 @@
     if (allowedDates) {
       allowedDateTimestamps = allowedDates.split(separator).map((v) => {
         const d = new Date(v);
-        return new Date(d.getFullYear(), d.getMonth(), d.getDate(), 2).getTime();
+        return Date.UTC(d.getFullYear(), d.getMonth(), d.getDate());
       });
     }
   }
