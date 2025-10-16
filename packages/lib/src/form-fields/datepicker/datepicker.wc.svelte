@@ -476,7 +476,7 @@
       {displayedDateString}
     </p>
 
-    {#if showClearButton && hasInput}
+    {#if showClearButton && hasInput && !disabled}
       <button
         type="button"
         class="jp-datepicker-clear-button"
