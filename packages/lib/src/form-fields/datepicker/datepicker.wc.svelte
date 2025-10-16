@@ -339,7 +339,8 @@
   $: {
     if (allowedDates) {
       allowedDateTimestamps = allowedDates.split(separator).map((v) => {
-        return new Date(v).getTime();
+        const d = new Date(v);
+        return new Date(d.getFullYear(), d.getMonth(), d.getDate(), 2).getTime();
       });
     }
   }

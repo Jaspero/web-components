@@ -60,7 +60,7 @@
 <!-- <InputDemo />-->
 <!-- <ImageGalleryDemo /> -->
 <!-- <DateRangeDemo /> -->
-<CkEditorDemo />
+<!--<CkEditorDemo />-->
 <!-- <RangeDemo /> -->
 
 <!-- <TableChartDemo /> -->
