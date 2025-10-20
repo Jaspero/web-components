@@ -541,7 +541,7 @@
         {:else}
           <div class="jp-async-table-dropdown">
             <button type="button" class="jp-async-table-button" on:click={() => (isOpen = !isOpen)}
-              >Export</button
+              >{wording.EXPORT}</button
             >
             {#if isOpen}
               <ul
