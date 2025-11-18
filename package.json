@@ -26,7 +26,7 @@
     "concurrently": "9.0.1",
     "custom-element-vs-code-integration": "1.4.1",
     "firebase": "11.2.0",
-    "glob": "11.0.0",
+    "glob": "11.1.0",
     "postcss": "8.4.47",
     "postcss-nested": "6.2.0",
     "prettier": "3.3.3",
