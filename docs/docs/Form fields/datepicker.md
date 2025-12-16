@@ -27,6 +27,7 @@ import '../../static/c/datepicker.css';
 |         minDate           |                                          |                              `string` \| `Date`                           |                    minimum date that can be selected                  |
 |         maxDate           |                                          |                              `string` \| `Date`                         |                    maximum date that can be selected                   |
 |      allowedDates         |                                          |                     `Date()` constructor param                      |                    dates that can be picked                     |
+|  focusNextAvailableDate  |                                          |                              `boolean`                              | when enabled, automatically focuses calendar on next available date from allowedDates when picker opens |
 <br></br>
 ****
 

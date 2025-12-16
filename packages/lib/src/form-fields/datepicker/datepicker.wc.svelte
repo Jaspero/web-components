@@ -52,6 +52,7 @@
   export let disabled = false;
   export let readonly = false;
   export let allowedDates = '';
+  export let focusNextAvailableDate = false;
   let allowedDateTimestamps: number[];
   let selectedDateObject = new Date();
   let displayedDateString = '';
@@ -273,6 +274,29 @@
     openPicker = false;
   }
 
+  function findNextAvailableDate(): { year: number; month: number } | null {
+    if (!allowedDateTimestamps || allowedDateTimestamps.length === 0) {
+      return null;
+    }
+
+    const today = new Date();
+    const todayUTC = Date.UTC(today.getFullYear(), today.getMonth(), today.getDate());
+
+    const nextDate = allowedDateTimestamps
+      .filter((timestamp) => timestamp >= todayUTC)
+      .sort((a, b) => a - b)[0];
+
+    if (!nextDate) {
+      return null;
+    }
+
+    const nextDateObj = new Date(nextDate);
+    return {
+      year: nextDateObj.getUTCFullYear(),
+      month: nextDateObj.getUTCMonth()
+    };
+  }
+
   $: hasInput = Boolean(
     displayedDateString ||
       internalValue ||
@@ -344,6 +368,23 @@
       });
     }
   }
+
+  $: {
+    if (
+      openPicker &&
+      focusNextAvailableDate &&
+      allowedDateTimestamps &&
+      allowedDateTimestamps.length > 0 &&
+      !value
+    ) {
+      const nextDate = findNextAvailableDate();
+      if (nextDate) {
+        pickerYear = nextDate.year;
+        pickerMonth = nextDate.month;
+      }
+    }
+  }
+
   $: if (monthSelected == 12 && yearSelected) {
     monthSelected = 0;
     yearSelected++;
