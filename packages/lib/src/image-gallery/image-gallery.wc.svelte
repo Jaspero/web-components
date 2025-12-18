@@ -57,9 +57,9 @@
   async function keydownFunction(e: KeyboardEvent) {
     if (e.key === 'Escape') {
       closeCarousel();
-    } else if (e.key === 'ArrowLeft') {
+    } else if (e.key === 'ArrowLeft' && images.length > 1) {
       prevImage();
-    } else if (e.key === 'ArrowRight') {
+    } else if (e.key === 'ArrowRight' && images.length > 1) {
       nextImage();
     }
   }
@@ -85,6 +85,18 @@
 
   function layout() {
     if (!container || !container.offsetParent) {
+      return;
+    }
+
+    if (images.length === 1) {
+      const child = container.children[0] as HTMLElement;
+      if (child) {
+        child.style.width = '100%';
+        child.style.display = 'block';
+        child.style.transform = 'none';
+        child.style.position = 'relative';
+      }
+      container.style.height = 'auto';
       return;
     }
 
@@ -196,8 +208,10 @@
           <img class="jp-image-gallery-slider-image" src={image.src} alt={image.alt} />
         {/each}
       </div>
-      <button type="button" class="jp-image-gallery-prev" on:click={prevImage}> &larr; </button>
-      <button type="button" class="jp-image-gallery-next" on:click={nextImage}> &rarr; </button>
+      {#if images.length > 1}
+        <button type="button" class="jp-image-gallery-prev" on:click={prevImage}> &larr; </button>
+        <button type="button" class="jp-image-gallery-next" on:click={nextImage}> &rarr; </button>
+      {/if}
       <button type="button" class="jp-image-gallery-close" on:click={closeCarousel}>
         &times;
       </button>
