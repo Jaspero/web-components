@@ -482,16 +482,17 @@
     if (service.getColumnOrder) {
       const pulledHeaders = await service.getColumnOrder(id);
       if (pulledHeaders) {
-        headers = headers
-          .map((header) => {
-            header.disabled = !pulledHeaders.find((it) => header.id ?  it.key === header.id : it.key === header.key);
-            return header;
-          })
-          .sort((a, b) => {
-            const aIndex = pulledHeaders.findIndex((it) => it.key === a.key);
-            const bIndex = pulledHeaders.findIndex((it) => it.key === b.key);
-            return aIndex - bIndex;
-          });
+        headers = pulledHeaders.reduce((acc: TableHeader[], pulledHeader) => {
+          const foundHeader = headers.find((it) =>
+            it.id ? it.id === pulledHeader.key : it.key === pulledHeader.key
+          );
+
+          if (foundHeader) {
+            acc.push(foundHeader as TableHeader);
+          }
+
+          return acc;
+        }, []);
       }
     }
 
