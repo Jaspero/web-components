@@ -484,7 +484,7 @@
       if (pulledHeaders) {
         headers = headers
           .map((header) => {
-            header.disabled = !pulledHeaders.find((it) => it.key === header.key);
+            header.disabled = !pulledHeaders.find((it) => header.id ?  it.key === header.id : it.key === header.key);
             return header;
           })
           .sort((a, b) => {
