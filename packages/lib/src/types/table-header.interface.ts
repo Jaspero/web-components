@@ -3,6 +3,8 @@ import type { TablePipe } from './table-pipe.type';
 export interface TableHeader {
   label: string;
   key: string;
+  // When a key isn't unique we can use an id to differentiate
+  id?: string; 
   sortable?: boolean;
   sortMethod?: (direction: 'asc' | 'desc', one?: any, two?: any) => 1 | -1 | 0;
   pipes?: TablePipe[];

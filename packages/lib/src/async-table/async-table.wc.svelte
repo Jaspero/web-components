@@ -414,7 +414,7 @@
       await service.arrangeColumns(
         id,
         headers.map((header) => ({
-          key: header.key,
+          key: header.id || header.key,
           disabled: header.disabled
         }))
       );
