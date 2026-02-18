@@ -15,8 +15,8 @@
   },
   "dependencies": {
     "@docusaurus/core": "3.0.0",
-    "@docusaurus/preset-classic": "3.0.0",
-    "@docusaurus/theme-live-codeblock": "^3.0.0",
+    "@docusaurus/preset-classic": "3.9.2",
+    "@docusaurus/theme-live-codeblock": "^3.9.2",
     "@jaspero/web-components": "^1.181.2",
     "@mdx-js/react": "^3.0.0",
     "accessibility": "^6.0.7",
