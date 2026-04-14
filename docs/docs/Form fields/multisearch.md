@@ -73,6 +73,8 @@ This component does not have any slots.
 
 - `value`
   - triggers when selected options change
+- `itemremove`
+  - triggers when a selected option is removed (deselected in the menu or cleared via the clear control); `detail` is `{ value: string; label?: string }`
 <br></br>
 ****
 

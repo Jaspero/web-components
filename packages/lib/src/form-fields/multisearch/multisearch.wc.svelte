@@ -383,6 +383,9 @@
       event.preventDefault();
       event.stopPropagation();
     }
+    for (const el of options.filter((o) => o.selected)) {
+      dispatch('itemremove', { value: el.value, label: el.label });
+    }
     searchValue = '';
     displayValue = [];
     internalValue = '';
@@ -548,6 +551,9 @@
                   });
                   open = false;
                 } else {
+                  if (option.selected) {
+                    dispatch('itemremove', { value: option.value, label: option.label });
+                  }
                   option.selected = !option.selected;
                 }
               }}
