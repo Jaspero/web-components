@@ -73,10 +73,6 @@ This component does not have any slots.
 
 - `value`
   - triggers when selected options change
-- `change`
-  - triggers when selected options change (same timing and `detail` as `value`); use in host apps for `addEventListener('change', …)` to react to filter / selection updates
-- `itemremove`
-  - triggers when a selected option is removed (deselected in the menu or cleared via the clear control); `detail` is `{ value: string; label?: string }`
 <br></br>
 ****
 

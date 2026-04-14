@@ -141,12 +141,12 @@
       .filter((el) => el.selected)
       .map((el) => (el.label ? el.label : el.value));
 
-    const nextValue = singleSelect
-      ? options.find((el) => el.selected)?.value
-      : options.filter((el) => el.selected).map((el) => el.value);
-
-    dispatch('value', nextValue);
-    dispatch('change', nextValue);
+    dispatch(
+      'value',
+      singleSelect
+        ? options.find((el) => el.selected)?.value
+        : options.filter((el) => el.selected).map((el) => el.value)
+    );
   }
 
   async function handleSearch() {
@@ -383,9 +383,6 @@
       event.preventDefault();
       event.stopPropagation();
     }
-    for (const el of options.filter((o) => o.selected)) {
-      dispatch('itemremove', { value: el.value, label: el.label });
-    }
     searchValue = '';
     displayValue = [];
     internalValue = '';
@@ -551,9 +548,6 @@
                   });
                   open = false;
                 } else {
-                  if (option.selected) {
-                    dispatch('itemremove', { value: option.value, label: option.label });
-                  }
                   option.selected = !option.selected;
                 }
               }}

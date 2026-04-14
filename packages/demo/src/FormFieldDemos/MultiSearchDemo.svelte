@@ -69,7 +69,6 @@
 
   let isRequired = true; // Set to true or false based on your requirement
   let isOpen = false;
-  let lastItemRemoved: string | null = null;
   onMount(() => {
     const multisearch = document.createElement('jp-multisearch') as HTMLJpMultisearchElement;
     // Set initial options
@@ -123,10 +122,6 @@
       const selectedValue = (event as CustomEvent).detail;
       multisearch.value = selectedValue || ''; // Maintain placeholder if no value is selected
     });
-    multisearch.addEventListener('itemremove', (event: Event) => {
-      const d = (event as CustomEvent<{ value: string; label?: string }>).detail;
-      lastItemRemoved = d?.label ?? d?.value ?? null;
-    });
     // Listen to the open event
     multisearch.addEventListener('click', () => {
       isOpen = !isOpen;
@@ -137,8 +132,5 @@
 
 <form>
   <div bind:this={el} />
-  {#if lastItemRemoved}
-    <p>Last itemremove: {lastItemRemoved}</p>
-  {/if}
   <button type="submit">Submit</button>
 </form>
