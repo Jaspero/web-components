@@ -1,7 +1,6 @@
 import { defineConfig } from 'vite';
 import { svelte } from '@sveltejs/vite-plugin-svelte';
 import { transform } from 'esbuild';
-import { viteStaticCopy } from 'vite-plugin-static-copy';
 import { sync } from 'glob';
 import dts from 'vite-plugin-dts';
 
@@ -28,7 +27,11 @@ export default defineConfig({
       output: {
         inlineDynamicImports: false,
         chunkFileNames: '[name].js',
-        manualChunks: { svelte: ['svelte'] }
+        manualChunks(id) {
+          if (id.includes('node_modules/svelte')) {
+            return 'svelte';
+          }
+        }
       }
     }
   },
@@ -40,7 +43,10 @@ export default defineConfig({
       }
     }),
     svelte({
-      include: /\.wc\.svelte$/ as any
+      include: /\.wc\.svelte$/ as any,
+      compilerOptions: {
+        customElement: true
+      }
     }),
     {
       apply: 'build',

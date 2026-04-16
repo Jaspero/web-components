@@ -1239,7 +1239,8 @@
                 DEFAULT_CONFIG.content.table.border_spacing}; --border-collapse: {config?.content
                 ?.table?.border_collapse || DEFAULT_CONFIG.content.table.border_collapse}"
             >
-              <tr class="table-head-row">
+              <thead>
+                <tr class="table-head-row">
                 {#each active_dimensions as dimension}
                   <th
                     class={config?.sort_priority?.length ? '' : 'cursor-pointer'}
@@ -1296,8 +1297,9 @@
                     </div>
                   </th>
                 {/each}
-              </tr>
-
+                </tr>
+              </thead>
+              <tbody>
               {#each processed_data as row}
                 <tr>
                   {#each active_dimensions as dimension}
@@ -1348,6 +1350,7 @@
                   {/each}
                 </tr>
               {/each}
+              </tbody>
             </table>
           </div>
         {/if}

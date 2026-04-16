@@ -14,7 +14,10 @@ export default defineConfig({
   plugins: [
     svelte({
       exclude: /\.wc\.svelte$/ as any,
-      hot: false
+      hot: false,
+      compilerOptions: {
+        customElement: false
+      }
     }),
     svelte({
       include: /\.wc\.svelte$/ as any,
